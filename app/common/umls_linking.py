@@ -2,19 +2,26 @@
 
 from __future__ import annotations
 
-from typing import Dict, Sequence, Tuple
+from typing import TYPE_CHECKING, Any, Dict, Sequence, Tuple
 
+if TYPE_CHECKING:
+    from spacy.tokens import Doc as SpacyDoc
+else:  # pragma: no cover - type-only alias
+    SpacyDoc = Any
+
+spacy: Any | None = None
 try:  # pragma: no cover - optional dependency
     import spacy
-    from spacy.tokens import Doc
 except ImportError:  # pragma: no cover - optional dependency
-    spacy = None  # type: ignore
-    Doc = None  # type: ignore
+    pass
 
+_SCISPACY_LINKER: Any | None = None
 try:  # pragma: no cover - optional dependency
-    from scispacy.linking import EntityLinker
+    from scispacy.linking import EntityLinker as _ImportedEntityLinker  # type: ignore[import-untyped]
+
+    _SCISPACY_LINKER = _ImportedEntityLinker
 except ImportError:  # pragma: no cover - optional dependency
-    EntityLinker = None  # type: ignore
+    pass
 
 
 class UmlsLinker:
@@ -25,9 +32,9 @@ class UmlsLinker:
         self._nlp = None
         self._available = False
         self._cache: Dict[Tuple[int, Tuple[int, int]], list[str]] = {}
-        self._doc_cache: Dict[int, Doc] = {}
+        self._doc_cache: Dict[int, SpacyDoc] = {}
 
-        if spacy is None or EntityLinker is None:  # pragma: no cover - optional dependency
+        if spacy is None or _SCISPACY_LINKER is None:  # pragma: no cover - optional dependency
             return
 
         try:
@@ -67,15 +74,17 @@ class UmlsLinker:
             results[(start, end)] = list(self._cache[key])
         return results
 
-    def _ensure_doc(self, text: str) -> Doc | None:
+    def _ensure_doc(self, text: str) -> SpacyDoc | None:
         if not self.available:  # pragma: no cover - guard path
+            return None
+        if self._nlp is None:  # pragma: no cover - defensive guard
             return None
         doc_hash = hash(text)
         if doc_hash not in self._doc_cache:
-            self._doc_cache[doc_hash] = self._nlp(text)  # type: ignore[arg-type]
+            self._doc_cache[doc_hash] = self._nlp(text)
         return self._doc_cache[doc_hash]
 
-    def _link_single_span(self, doc: Doc | None, start: int, end: int) -> list[str]:
+    def _link_single_span(self, doc: SpacyDoc | None, start: int, end: int) -> list[str]:
         if doc is None:
             return []
         span = doc.char_span(start, end)

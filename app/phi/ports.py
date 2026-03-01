@@ -7,7 +7,7 @@ implementations for HIPAA-ready vaults or scrubbers.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol, TypedDict, runtime_checkable
+from typing import Any, Protocol, TypedDict, runtime_checkable
 
 from app.phi.models import AuditAction
 
@@ -54,15 +54,15 @@ class PHIAuditLoggerPort(Protocol):
         self,
         *,
         action: AuditAction,
-        phi_vault_id=None,
-        procedure_data_id=None,
+        phi_vault_id: object | None = None,
+        procedure_data_id: object | None = None,
         user_id: str,
         user_email: str | None = None,
         user_role: str | None = None,
         ip_address: str | None = None,
         user_agent: str | None = None,
         request_id: str | None = None,
-        metadata: dict | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         """Persist a structured audit record (no raw PHI allowed)."""
 

@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped"
 """Prediction service that wraps the trained CPT classifier.
 
 Includes:
@@ -66,7 +67,7 @@ class MLCoderService:
             logger.exception("Failed to load ML artifacts: %s", exc)
             self.available = False
 
-    def predict(self, text: str, threshold: float = 0.5) -> List[Dict[str, float | str]]:
+    def predict(self, text: str, threshold: float = 0.5) -> list[dict[str, float | str]]:
         """Return ML predictions for the supplied text above a probability threshold."""
 
         if not self.available or not self.pipeline or not self.mlb:
@@ -87,7 +88,7 @@ class MLCoderService:
 
         prob_array = probabilities[0]
 
-        results: List[Dict[str, float | str]] = []
+        results: list[dict[str, float | str]] = []
         for code, score in zip(self.mlb.classes_, prob_array):
             confidence = float(score)
             if confidence >= threshold:

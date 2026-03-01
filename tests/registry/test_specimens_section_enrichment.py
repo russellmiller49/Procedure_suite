@@ -20,7 +20,10 @@ def test_enrich_specimens_from_specimen_section_populates_bal_item() -> None:
     specimens = record.specimens.specimens_collected
     assert specimens is not None
     assert len(specimens) == 1
-    assert specimens[0].type == "BAL"
-    assert str(specimens[0].location or "").upper() == "LUL"
-    assert set(specimens[0].sent_for or []) >= {"Cytology", "Microbiology", "Other"}
-
+    item = specimens[0]
+    item_type = item.get("type") if isinstance(item, dict) else getattr(item, "type", None)
+    item_location = item.get("location") if isinstance(item, dict) else getattr(item, "location", None)
+    item_sent_for = item.get("sent_for") if isinstance(item, dict) else getattr(item, "sent_for", None)
+    assert item_type == "BAL"
+    assert str(item_location or "").upper() == "LUL"
+    assert set(item_sent_for or []) >= {"Cytology", "Microbiology", "Other"}

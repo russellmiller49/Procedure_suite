@@ -10,10 +10,11 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
+_rapid_fuzz: Any | None = None
 try:
     from rapidfuzz import fuzz as _rapid_fuzz
 except Exception:  # pragma: no cover - fallback path only
-    _rapid_fuzz = None
+    pass
 
 _WORD_RE = re.compile(r"[A-Za-z0-9]+(?:/[A-Za-z0-9]+)?")
 _NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")

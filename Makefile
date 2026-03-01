@@ -15,7 +15,8 @@ REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
 DEVICE ?= cpu
 PRODIGY_EPOCHS ?= 1
 DEPS_PYTHON ?= python3.11
-PIP_COMPILE_ARGS := --upgrade --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
+PIP_COMPILE_BASE_ARGS := --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
+PIP_COMPILE_UPGRADE_ARGS := --upgrade $(PIP_COMPILE_BASE_ARGS)
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -33,12 +34,13 @@ test:
 
 deps-compile:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
-	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_ARGS) --output-file=requirements.txt requirements.in
+	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_UPGRADE_ARGS) --output-file=requirements.txt requirements.in
 
 deps-check:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
 	@tmp_file=$$(mktemp); \
-	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_ARGS) --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
+	cp requirements.txt $$tmp_file; \
+	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_BASE_ARGS) --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
 	if ! diff -u $$tmp_file requirements.txt >/dev/null; then \
 		echo "requirements.txt is out of sync with requirements.in. Run: make deps-compile"; \
 		diff -u $$tmp_file requirements.txt || true; \

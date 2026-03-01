@@ -1016,8 +1016,13 @@ class ClinicalGuardrails:
 
         count = len(sizes)
         if count:
+            raw_existing_count = blvr.get("number_of_valves")
             try:
-                existing_count = int(blvr.get("number_of_valves")) if blvr.get("number_of_valves") is not None else None
+                existing_count = (
+                    int(raw_existing_count)
+                    if isinstance(raw_existing_count, (int, float, str))
+                    else None
+                )
             except Exception:
                 existing_count = None
             if existing_count is None or existing_count < count:
@@ -1080,7 +1085,8 @@ class ClinicalGuardrails:
             target_lobe = _infer_target_lobe(segment)
             if target_lobe is None:
                 continue
-            valve_type = placement.get("valve_type")
+            valve_type_raw = placement.get("valve_type")
+            valve_type = valve_type_raw if isinstance(valve_type_raw, str) else None
             if valve_type not in ("Zephyr (Pulmonx)", "Spiration (Olympus)"):
                 continue
             valve_size = str(placement.get("valve_size") or "").strip()

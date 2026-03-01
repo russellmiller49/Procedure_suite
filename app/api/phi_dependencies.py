@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 import os
 from functools import lru_cache
-from typing import Iterator
+from typing import Any, Iterator
 
 from fastapi import Depends
 from sqlalchemy import create_engine
@@ -24,23 +24,25 @@ from app.phi.adapters import (
     StubScrubber,
 )
 from app.phi.adapters.fernet_encryption import FernetEncryptionAdapter
+from app.phi.ports import PHIAuditLoggerPort, PHIEncryptionPort, PHIScrubberPort
 
 logger = logging.getLogger(__name__)
 
 
 def _default_db_url() -> str:
-    return os.getenv("PHI_DATABASE_URL") or os.getenv(
-        "DATABASE_URL", "sqlite:///./phi_demo.db"
-    )
+    phi_url = os.getenv("PHI_DATABASE_URL")
+    if phi_url:
+        return phi_url
+    return os.getenv("DATABASE_URL", "sqlite:///./phi_demo.db")
 
 
 DATABASE_URL = _default_db_url()
 
 
-def _engine_kwargs(url: str) -> dict:
+def _engine_kwargs(url: str) -> dict[str, Any]:
     """Configure engine options for SQLite vs Postgres."""
 
-    kwargs: dict = {}
+    kwargs: dict[str, Any] = {}
     if url.startswith("sqlite"):
         kwargs["connect_args"] = {"check_same_thread": False}
         # In-memory SQLite needs StaticPool to share state across connections
@@ -63,7 +65,7 @@ def get_phi_session() -> Iterator[Session]:
         db.close()
 
 
-def _get_encryption_adapter():
+def _get_encryption_adapter() -> PHIEncryptionPort:
     mode = os.getenv("PHI_ENCRYPTION_MODE", "fernet").lower()
     if mode == "demo":
         return InsecureDemoEncryptionAdapter()
@@ -71,7 +73,7 @@ def _get_encryption_adapter():
 
 
 @lru_cache
-def _get_scrubber():
+def _get_scrubber() -> PHIScrubberPort:
     mode = os.getenv("PHI_SCRUBBER_MODE", "presidio").lower()
     if mode == "stub":
         return StubScrubber()
@@ -103,7 +105,7 @@ def get_phi_service(db: Session = _phi_session_dep) -> PHIService:
 
     encryption = _get_encryption_adapter()
     scrubber = _get_scrubber()
-    audit_logger = DatabaseAuditLogger(db)
+    audit_logger: PHIAuditLoggerPort = DatabaseAuditLogger(db)
     return PHIService(
         session=db,
         encryption=encryption,
@@ -112,7 +114,7 @@ def get_phi_service(db: Session = _phi_session_dep) -> PHIService:
     )
 
 
-def get_phi_scrubber():
+def get_phi_scrubber() -> PHIScrubberPort | None:
     """Get the PHI scrubber as a FastAPI dependency.
 
     Returns the cached scrubber instance, or None if unavailable.

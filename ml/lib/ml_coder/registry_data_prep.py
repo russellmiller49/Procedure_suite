@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,type-arg,assignment,index,operator,attr-defined,no-untyped-def,no-untyped-call"
 """
 Registry-First Data Preparation Module
 

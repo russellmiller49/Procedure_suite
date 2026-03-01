@@ -36,7 +36,8 @@ class RegistryMappingResult:
     @property
     def stations_sampled_count(self) -> int:
         """Number of unique stations sampled."""
-        linear_ebus = self.record.procedures_performed.linear_ebus
+        procedures = getattr(self.record, "procedures_performed", None)
+        linear_ebus = getattr(procedures, "linear_ebus", None)
         if linear_ebus and linear_ebus.stations_sampled:
             return len(linear_ebus.stations_sampled)
         return 0

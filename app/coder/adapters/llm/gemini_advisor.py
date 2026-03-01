@@ -27,7 +27,7 @@ if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
     load_dotenv(_env_path, override=False)
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Optional
+from typing import Any, Optional
 
 from observability.logging_config import get_logger
 from app.infra.cache import get_llm_memory_cache
@@ -120,22 +120,26 @@ Return ONLY the JSON array, no other text.
     def version(self) -> str:
         return self.model_name
 
-    def _get_client(self) -> object:
+    def _get_client(self) -> object | None:
         """Lazily initialize the Gemini client."""
         if self._client is None:
             try:
                 import google.generativeai as genai
 
-                genai.configure(api_key=self.api_key)
-                self._client = genai.GenerativeModel(self.model_name)
+                configure_fn = getattr(genai, "configure", None)
+                model_cls = getattr(genai, "GenerativeModel", None)
+                if not callable(configure_fn) or model_cls is None:
+                    raise RuntimeError("google.generativeai client is unavailable")
+                configure_fn(api_key=self.api_key)
+                self._client = model_cls(self.model_name)
             except ImportError:
                 logger.warning(
                     "google-generativeai not installed. LLM advisor will return empty suggestions."
                 )
-                return None  # type: ignore
+                return None
             except Exception as e:
                 logger.error(f"Failed to initialize Gemini client: {e}")
-                return None  # type: ignore
+                return None
 
         return self._client
 
@@ -237,7 +241,7 @@ Return ONLY the JSON array, no other text.
     def suggest_with_context(
         self,
         report_text: str,
-        context: dict,
+        context: dict[str, Any],
     ) -> list[LLMCodeSuggestion]:
         """Get code suggestions with ML context for hybrid pipeline.
 
@@ -435,7 +439,7 @@ class MockLLMAdvisor(LLMAdvisorPort):
     def __init__(self, suggestions: list[LLMCodeSuggestion] | None = None):
         self._suggestions = suggestions or []
         self._context_suggestions: list[LLMCodeSuggestion] | None = None
-        self._last_context: dict | None = None
+        self._last_context: dict[str, Any] | None = None
 
     @property
     def version(self) -> str:
@@ -445,7 +449,7 @@ class MockLLMAdvisor(LLMAdvisorPort):
         return self._suggestions
 
     def suggest_with_context(
-        self, report_text: str, context: dict
+        self, report_text: str, context: dict[str, Any]
     ) -> list[LLMCodeSuggestion]:
         """Mock context-aware suggestion for hybrid pipeline testing."""
         self._last_context = context
@@ -464,6 +468,6 @@ class MockLLMAdvisor(LLMAdvisorPort):
         self._context_suggestions = suggestions
 
     @property
-    def last_context(self) -> dict | None:
+    def last_context(self) -> dict[str, Any] | None:
         """Get the last context passed to suggest_with_context."""
         return self._last_context

@@ -24,10 +24,10 @@ class EBUSEvidenceExtractor:
     def __init__(self, llm: GeminiLLM | DeterministicStubLLM | None = None):
         self._llm = llm or self._create_llm()
 
-    def _create_llm(self):
+    def _create_llm(self) -> GeminiLLM | DeterministicStubLLM:
         use_stub = os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
         if use_stub:
-            return DeterministicStubLLM(payload=[])
+            return DeterministicStubLLM(payload={})
         return GeminiLLM()
 
     def extract(self, scrubbed_text: str) -> List[EBUSNodeEvidence]:

@@ -34,8 +34,8 @@ class CPTInfo:
     description: Optional[str]
     groups: List[str]
     is_add_on: bool
-    rvus: Optional[dict]
-    fee_schedule: Optional[dict]
+    rvus: Optional[dict[str, Any]]
+    fee_schedule: Optional[dict[str, Any]]
     cms_rvu: Optional[CmsRvuInfo]
 
 
@@ -88,8 +88,8 @@ class IPCodingKnowledgeBase:
         self.metadata: Dict[str, Any] = self.raw.get("metadata", {})
         self.code_to_groups: Dict[str, Set[str]] = {}
         self.add_on_codes: Set[str] = set()
-        self.cpt_rvus: Dict[str, dict] = self.raw.get("rvus", {})
-        self.last_group_evidence: Dict[str, dict] = {}
+        self.cpt_rvus: Dict[str, dict[str, Any]] = self.raw.get("rvus", {})
+        self.last_group_evidence: Dict[str, dict[str, Any]] = {}
         self.cms_rvu_meta: Dict[str, Any] = {}
         self.cms_rvus: Dict[str, CmsRvuInfo] = {}
         self._fee_schedules: Dict[str, Dict[str, Any]] = {}
@@ -331,7 +331,11 @@ class IPCodingKnowledgeBase:
 
     # ---- bundling helpers (using canonical rules) ----
 
-    def apply_bundling(self, codes: Iterable[str], return_decisions: bool = False):
+    def apply_bundling(
+        self,
+        codes: Iterable[str],
+        return_decisions: bool = False,
+    ) -> list[str] | tuple[list[str], list[dict[str, Any]]]:
         """
         Apply bundling rules derived from canonical sources:
         - ip_golden_knowledge_v2_2.json global rules
@@ -351,14 +355,19 @@ class IPCodingKnowledgeBase:
         original_codes = list(codes)
         norm_to_original: Dict[str, List[str]] = {}
         norm_codes: Set[str] = set()
-        bundling_decisions: List[dict] = []
+        bundling_decisions: List[dict[str, Any]] = []
 
         for c in original_codes:
             n = self._normalize_code(c)
             norm_codes.add(n)
             norm_to_original.setdefault(n, []).append(c)
 
-        def record_bundle(bundled_code: str, dominant_code: str, rule_name: str, reason: str):
+        def record_bundle(
+            bundled_code: str,
+            dominant_code: str,
+            rule_name: str,
+            reason: str,
+        ) -> None:
             """Helper to record a bundling decision."""
             if bundled_code in norm_codes:
                 info = self.get_cpt_info(bundled_code)
@@ -504,7 +513,7 @@ class IPCodingKnowledgeBase:
         """
         text = note_text.lower()
         matched_groups: Set[str] = set()
-        evidence: Dict[str, dict] = {}
+        evidence: Dict[str, dict[str, Any]] = {}
 
         # Helper to check for procedure ACTION verbs (not just presence of a word)
         def has_action_verb(text: str, verb_patterns: list[str]) -> bool:

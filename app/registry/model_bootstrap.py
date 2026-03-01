@@ -64,7 +64,7 @@ def _download_s3_to_path(uri: str, dest: Path) -> None:
 def _download_s3_prefix(bucket: str, prefix: str, dest_dir: Path) -> None:
     """Download all objects under an S3 prefix into dest_dir, preserving relative paths."""
     # Lazy import so local dev can run without boto3 unless bootstrap is enabled.
-    import boto3  # type: ignore
+    import boto3
 
     client = boto3.client("s3")
     paginator = client.get_paginator("list_objects_v2")
@@ -113,7 +113,10 @@ def _read_bootstrap_state(runtime_dir: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
     try:
-        return json.loads(path.read_text())
+        payload = json.loads(path.read_text())
+        if isinstance(payload, dict):
+            return payload
+        return {}
     except Exception:
         return {}
 
@@ -135,7 +138,7 @@ def _resolve_latest_onnx_source_uri(configured_uri: str) -> str | None:
     prefix = key if key.endswith("/") else f"{key}/"
 
     # Lazy import so local dev can run without boto3 unless bootstrap is enabled.
-    import boto3  # type: ignore
+    import boto3
 
     client = boto3.client("s3")
 
@@ -197,7 +200,7 @@ def _ensure_registry_bundle_from_s3_prefix(uri: str, backend: str, runtime_dir: 
     prefix = key if key.endswith("/") else f"{key}/"
 
     # Lazy import so local dev can run without boto3 unless bootstrap is enabled.
-    import boto3  # type: ignore
+    import boto3
 
     client = boto3.client("s3")
 
@@ -362,14 +365,14 @@ def _ensure_registry_bundle_from_s3_prefix(uri: str, backend: str, runtime_dir: 
             _download_s3_prefix(bucket=bucket, prefix=tokenizer_prefix, dest_dir=bundle_root / "tokenizer")
 
             model_version = prefix.strip("/").split("/")[-1] if prefix.strip("/") else None
-            manifest: dict[str, Any] = {
+            torch_manifest: dict[str, Any] = {
                 "model_backend": "pytorch",
                 "model_version": model_version,
                 "source_uri": resolved_uri,
                 "configured_source_uri": configured_uri,
                 "source_type": "s3_prefix",
             }
-            (bundle_root / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+            (bundle_root / "manifest.json").write_text(json.dumps(torch_manifest, indent=2, sort_keys=True))
             _replace_tree(bundle_root, runtime_dir)
 
         return read_registry_manifest()

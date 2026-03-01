@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from typing import Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 
 _STATION_RE = re.compile(r"station[s]?\s*(?P<station>[0-9]{1,2}[LR]?)", re.IGNORECASE)
@@ -19,7 +19,7 @@ _LATERALITY_MAP = {
 }
 
 
-def _infer_type(text: str, hints: Optional[Dict]) -> str:
+def _infer_type(text: str, hints: Optional[Dict[str, Any]]) -> str:
     blob = f"{text} {(hints or {}).get('procedure_type','')}".lower()
     if "ebus" in blob or "tbna" in blob:
         return "ebus_tbna"
@@ -38,7 +38,7 @@ def _infer_type(text: str, hints: Optional[Dict]) -> str:
     return "bronchoscopy"
 
 
-def _infer_laterality(text: str, hints: Optional[Dict]) -> Optional[str]:
+def _infer_laterality(text: str, hints: Optional[Dict[str, Any]]) -> Optional[str]:
     for key, val in (hints or {}).items():
         if key.lower().startswith("laterality") and val:
             return str(val).lower()
@@ -61,7 +61,7 @@ def _extract_stations(text: str) -> List[str]:
     return ordered
 
 
-def _extract_targets(text: str) -> List[Dict]:
+def _extract_targets(text: str) -> List[Dict[str, Any]]:
     stations = _extract_stations(text)
     passes = _PASSES_RE.findall(text)
     pass_count = int(passes[0]) if passes else 3
@@ -77,7 +77,7 @@ def _extract_targets(text: str) -> List[Dict]:
     return targets
 
 
-def normalize_dictation(text: str, hints: Optional[Dict] = None) -> Dict:
+def normalize_dictation(text: str, hints: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Return normalized fields compatible with ProcedureCore."""
     hints = hints or {}
     proc_type = _infer_type(text, hints)

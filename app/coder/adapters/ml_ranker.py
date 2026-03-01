@@ -9,7 +9,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 from observability.logging_config import get_logger
 
@@ -208,7 +208,7 @@ class MLCoderPredictorAdapter(MLRankerPort):
         predictions = self._predictor.predict_proba(note_text)
         for pred in predictions:
             if pred.cpt == code:
-                return pred.prob
+                return float(cast(float, pred.prob))
         return 0.0
 
     @property

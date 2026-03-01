@@ -10,7 +10,7 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Optional, Set
+from typing import Any, Optional, Set
 
 from app.domain.knowledge_base.models import ProcedureInfo, NCCIPair
 from app.domain.knowledge_base.repository import KnowledgeBaseRepository
@@ -61,9 +61,9 @@ def _validate_filename_semver_matches_version(kb_version: object, kb_path: Path)
 class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
     """Adapter that loads KB from the ip_coding_billing JSON format."""
 
-    def __init__(self, data_path: str | Path, *, raw_data: dict | None = None):
+    def __init__(self, data_path: str | Path, *, raw_data: dict[str, Any] | None = None):
         self._data_path = Path(data_path)
-        self._raw_data: dict = {}
+        self._raw_data: dict[str, Any] = {}
         self._raw_data_provided = raw_data is not None
         self._procedures: dict[str, ProcedureInfo] = {}
         self._ncci_pairs: dict[str, list[NCCIPair]] = {}
@@ -128,12 +128,17 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
     def _to_float(value: object) -> float:
         if value is None:
             return 0.0
+        if not isinstance(value, (int, float, str)):
+            return 0.0
         try:
             return float(value)
         except (TypeError, ValueError):
             return 0.0
 
-    def _pick_latest_cms_financials(self, entry: dict) -> tuple[dict, int] | tuple[None, None]:
+    def _pick_latest_cms_financials(
+        self,
+        entry: dict[str, Any],
+    ) -> tuple[dict[str, Any], int] | tuple[None, None]:
         financials = entry.get("financials")
         if not isinstance(financials, dict):
             return None, None
@@ -156,7 +161,7 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             return None, None
         return payload, year
 
-    def _lookup_fee_schedule_description(self, code: str, entry: dict) -> str | None:
+    def _lookup_fee_schedule_description(self, code: str, entry: dict[str, Any]) -> str | None:
         fee_schedules = self._raw_data.get("fee_schedules")
         if not isinstance(fee_schedules, dict) or not fee_schedules:
             return None
@@ -198,7 +203,7 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
 
         return None
 
-    def _load_procedures_from_master_index(self, master_index: dict) -> None:
+    def _load_procedures_from_master_index(self, master_index: dict[str, Any]) -> None:
         """Load ProcedureInfo from KB master_code_index (authoritative)."""
         for code, entry in master_index.items():
             if not isinstance(code, str):
@@ -222,7 +227,8 @@ class JsonKnowledgeBaseAdapter(KnowledgeBaseRepository):
             category = str(entry.get("family") or "general")
 
             cms_financials, cms_year = self._pick_latest_cms_financials(entry)
-            simplified = entry.get("rvu_simplified") if isinstance(entry.get("rvu_simplified"), dict) else {}
+            simplified_raw = entry.get("rvu_simplified")
+            simplified: dict[str, Any] = simplified_raw if isinstance(simplified_raw, dict) else {}
 
             work_rvu = self._to_float(
                 (cms_financials or {}).get("work_rvu") if isinstance(cms_financials, dict) else None

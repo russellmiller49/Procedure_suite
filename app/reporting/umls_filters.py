@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from config.settings import UmlsSettings
+
+if TYPE_CHECKING:
+    from app.umls.ip_umls_store import DistilledUmlsStore
 
 
 _logger = logging.getLogger(__name__)
 
 
-def _get_store():
+def _get_store() -> DistilledUmlsStore | None:
     settings = UmlsSettings()
     if not settings.enable_linker:
         return None
@@ -47,4 +50,3 @@ def umls_cui(term: Any, category: str | None = None) -> str | None:
 
 
 __all__ = ["umls_cui", "umls_pref"]
-

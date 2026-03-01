@@ -8,7 +8,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from app.api.phi_demo_store import get_phi_demo_store
+from app.api.phi_demo_store import PhiDemoCase, get_phi_demo_store
 
 router = APIRouter(prefix="/api/v1/phi-demo", tags=["phi-demo"])
 
@@ -35,7 +35,7 @@ class AttachProcedureRequest(BaseModel):
     procedure_id: str
 
 
-def _serialize_case(case) -> PhiDemoCaseResponse:
+def _serialize_case(case: PhiDemoCase) -> PhiDemoCaseResponse:
     return PhiDemoCaseResponse(**case.to_dict())
 
 

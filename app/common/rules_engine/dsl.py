@@ -86,15 +86,15 @@ def _resolve_var(identifier: Any, context: Mapping[str, Any]) -> Any:
 
 def _compare(operator: str, left: Any, right: Any) -> bool:
     if operator == "==":
-        return left == right
+        return bool(left == right)
     if operator == "!=":
-        return left != right
+        return bool(left != right)
     if operator == ">":
-        return left > right
+        return bool(left > right)
     if operator == ">=":
-        return left >= right
+        return bool(left >= right)
     if operator == "<":
-        return left < right
+        return bool(left < right)
     if operator == "<=":
-        return left <= right
+        return bool(left <= right)
     raise KeyError(operator)

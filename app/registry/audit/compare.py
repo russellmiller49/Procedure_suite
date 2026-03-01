@@ -111,10 +111,10 @@ def build_audit_compare_report(
     ]
 
     # Ensure we always have prob populated for audit codes (defensive).
-    for pred in missing_in_derived:
-        if pred.prob == 0.0 and pred.cpt in audit_index:
+    for omitted_pred in missing_in_derived:
+        if omitted_pred.prob == 0.0 and omitted_pred.cpt in audit_index:
             # This should not happen; record for debugging if it does.
-            report_warnings.append(f"Missing prob for ML audit code {pred.cpt}; defaulted to 0.0")
+            report_warnings.append(f"Missing prob for ML audit code {omitted_pred.cpt}; defaulted to 0.0")
 
     return AuditCompareReport(
         derived_codes=derived_list,

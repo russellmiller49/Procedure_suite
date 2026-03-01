@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import subprocess
+from typing import Any
 
 from fastapi import APIRouter, Depends, Request
 
@@ -133,7 +134,7 @@ def _qapipeline_result_to_response(
             error_code=result.coder.error_code,
         )
 
-    active_results = []
+    active_results: list[ModuleResult[Any]] = []
     if registry_result:
         active_results.append(registry_result)
     if reporter_result:

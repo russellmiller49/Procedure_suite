@@ -40,7 +40,14 @@ def test_extraction_first_applies_modifier_22_from_apply_to_header(monkeypatch: 
 
     assert result.record.billing is not None
     cpt = result.record.billing.cpt_codes or []
-    match = next((item for item in cpt if str(item.code) == "31647"), None)
+    match = next(
+        (
+            item
+            for item in cpt
+            if str(item.get("code") if isinstance(item, dict) else getattr(item, "code", "")) == "31647"
+        ),
+        None,
+    )
     assert match is not None
-    assert "22" in (match.modifiers or [])
-
+    modifiers = match.get("modifiers") if isinstance(match, dict) else getattr(match, "modifiers", None)
+    assert "22" in (modifiers or [])

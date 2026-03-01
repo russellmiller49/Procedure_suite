@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, cast
 
 from app.api.adapters.response_adapter import build_v3_evidence_payload
 from app.api.normalization import simplify_billing_cpt_codes
@@ -19,7 +19,7 @@ def shape_registry_payload(
     codes: list[str] | None = None,
 ) -> dict[str, Any]:
     """Convert a registry record + evidence into a JSON-safe, null-pruned payload."""
-    payload = _prune_none(record.model_dump(exclude_none=True))
+    payload = cast(dict[str, Any], _prune_none(record.model_dump(exclude_none=True)))
     simplify_billing_cpt_codes(payload)
     add_procedure_summaries(payload)
     payload["evidence"] = build_v3_evidence_payload(

@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 import uuid
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, cast
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
@@ -19,7 +19,6 @@ from app.registry.schema import RegistryRecord
 from app.registry_store.dependencies import get_registry_store_db
 from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
 from app.vault.models import UserPatientVault
-
 
 router = APIRouter(tags=["registry-case"])
 
@@ -56,18 +55,20 @@ def _collect_leaf_paths(value: Any, path: str) -> list[str]:
             return [path or "/"]
         out: list[str] = []
         for key, child in value.items():
-            child_path = f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            child_path = (
+                f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            )
             out.extend(_collect_leaf_paths(child, child_path))
         return out
 
     if isinstance(value, list):
         if not value:
             return [path or "/"]
-        out: list[str] = []
+        out_list: list[str] = []
         for idx, child in enumerate(value):
             child_path = f"{path}/{idx}" if path else f"/{idx}"
-            out.extend(_collect_leaf_paths(child, child_path))
-        return out
+            out_list.extend(_collect_leaf_paths(child, child_path))
+        return out_list
 
     return [path or "/"]
 
@@ -77,7 +78,9 @@ def _changed_leaf_paths(old: Any, new: Any, path: str = "") -> list[str]:
         changed: list[str] = []
         keys = set(old.keys()) | set(new.keys())
         for key in sorted(keys):
-            child_path = f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            child_path = (
+                f"{path}/{_escape_pointer_token(key)}" if path else f"/{_escape_pointer_token(key)}"
+            )
             if key not in old:
                 changed.extend(_collect_leaf_paths(new[key], child_path))
                 continue
@@ -93,11 +96,11 @@ def _changed_leaf_paths(old: Any, new: Any, path: str = "") -> list[str]:
         if len(old) != len(new):
             return [path or "/"]
 
-        changed: list[str] = []
+        changed_list: list[str] = []
         for idx, (left, right) in enumerate(zip(old, new, strict=False)):
             child_path = f"{path}/{idx}" if path else f"/{idx}"
-            changed.extend(_changed_leaf_paths(left, right, child_path))
-        return changed
+            changed_list.extend(_changed_leaf_paths(left, right, child_path))
+        return changed_list
 
     if old != new:
         return [path or "/"]
@@ -169,8 +172,12 @@ class RegistryCaseRebuildRequest(BaseModel):
 
 
 def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSummary:
-    metadata = row.metadata_json if isinstance(row.metadata_json, dict) else {}
-    structured_data = metadata.get("structured_data") if isinstance(metadata.get("structured_data"), dict) else None
+    metadata: dict[str, Any] = row.metadata_json if isinstance(row.metadata_json, dict) else {}
+    structured_data = (
+        metadata.get("structured_data")
+        if isinstance(metadata.get("structured_data"), dict)
+        else None
+    )
     extracted_json = row.extracted_json if isinstance(row.extracted_json, dict) else None
     event_id = str(row.id)
     return RegistryCaseEventSummary(
@@ -179,7 +186,7 @@ def _build_event_summary(row: RegistryAppendedDocument) -> RegistryCaseEventSumm
         created_at=row.created_at.isoformat(),
         event_type=str(getattr(row, "event_type", row.document_kind or "pathology")),
         document_kind=str(row.document_kind or ""),
-        source_type=row.source_type,
+        source_type=cast(str | None, getattr(row, "source_type", None)),
         source_modality=getattr(row, "source_modality", None),
         event_subtype=getattr(row, "event_subtype", None),
         relative_day_offset=getattr(row, "relative_day_offset", None),
@@ -217,7 +224,9 @@ def _build_synthetic_procedure_event(
         has_note_text = bool(str(source_run.note_text or "").strip())
 
     if not created_at:
-        created_at = case_record.created_at.isoformat() if case_record.created_at else _utcnow().isoformat()
+        created_at = (
+            case_record.created_at.isoformat() if case_record.created_at else _utcnow().isoformat()
+        )
 
     return RegistryCaseEventSummary(
         id=run_id,
@@ -243,7 +252,9 @@ def _build_case_response(
     source_run: RegistryRun | None = None,
 ) -> RegistryCaseResponse:
     events = [_build_event_summary(row) for row in append_rows]
-    synthetic_procedure = _build_synthetic_procedure_event(case_record=case_record, source_run=source_run)
+    synthetic_procedure = _build_synthetic_procedure_event(
+        case_record=case_record, source_run=source_run
+    )
     if synthetic_procedure is not None:
         events.append(synthetic_procedure)
 
@@ -297,9 +308,13 @@ def get_registry_case(
         .order_by(RegistryAppendedDocument.created_at.desc())
         .limit(200)
     )
-    append_rows = db.execute(append_stmt).scalars().all()
-    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
-    return _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
+    append_rows = list(db.execute(append_stmt).scalars().all())
+    source_run = (
+        db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    )
+    return _build_case_response(
+        case_record=case_record, append_rows=append_rows, source_run=source_run
+    )
 
 
 @router.patch(
@@ -355,11 +370,12 @@ def patch_registry_case(
             "source": "manual",
         }
 
-    case_record.registry_json = validated.model_dump(exclude_none=True, mode="json")
-    case_record.manual_overrides = manual_overrides
-    case_record.schema_version = _schema_version()
-    case_record.version = current_version + 1
-    case_record.updated_at = _utcnow()
+    case_record_any = cast(Any, case_record)
+    case_record_any.registry_json = validated.model_dump(exclude_none=True, mode="json")
+    case_record_any.manual_overrides = manual_overrides
+    case_record_any.schema_version = _schema_version()
+    case_record_any.version = current_version + 1
+    case_record_any.updated_at = _utcnow()
     db.add(case_record)
     db.commit()
     db.refresh(case_record)
@@ -373,9 +389,13 @@ def patch_registry_case(
         .order_by(RegistryAppendedDocument.created_at.desc())
         .limit(200)
     )
-    append_rows = db.execute(append_stmt).scalars().all()
-    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
-    return _build_case_response(case_record=case_record, append_rows=append_rows, source_run=source_run)
+    append_rows = list(db.execute(append_stmt).scalars().all())
+    source_run = (
+        db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    )
+    return _build_case_response(
+        case_record=case_record, append_rows=append_rows, source_run=source_run
+    )
 
 
 @router.post(
@@ -401,13 +421,15 @@ def rebuild_registry_case(
 
     rebuild_opts = payload or RegistryCaseRebuildRequest()
 
-    # Reset canonical snapshot so replay starts from baseline/default rather than stale merged state.
-    case_record.registry_json = RegistryRecord().model_dump(exclude_none=True, mode="json")
-    case_record.schema_version = _schema_version()
-    case_record.source_run_id = None
+    # Reset canonical snapshot so replay starts from baseline/default
+    # rather than stale merged state.
+    case_record_any = cast(Any, case_record)
+    case_record_any.registry_json = RegistryRecord().model_dump(exclude_none=True, mode="json")
+    case_record_any.schema_version = _schema_version()
+    case_record_any.source_run_id = None
     if rebuild_opts.reset_manual_overrides:
-        case_record.manual_overrides = {}
-    case_record.updated_at = _utcnow()
+        case_record_any.manual_overrides = {}
+    case_record_any.updated_at = _utcnow()
     db.add(case_record)
 
     append_stmt_all: Select[tuple[RegistryAppendedDocument]] = (
@@ -420,9 +442,10 @@ def rebuild_registry_case(
     )
     append_rows_all = list(db.execute(append_stmt_all).scalars().all())
     for row in append_rows_all:
-        row.aggregated_at = None
-        row.aggregation_version = None
-        row.extracted_json = None
+        row_any = cast(Any, row)
+        row_any.aggregated_at = None
+        row_any.aggregation_version = None
+        row_any.extracted_json = None
         db.add(row)
 
     aggregator = CaseAggregator(strategy="reprocess_all")
@@ -444,8 +467,10 @@ def rebuild_registry_case(
         .order_by(RegistryAppendedDocument.created_at.desc())
         .limit(200)
     )
-    append_rows_recent = db.execute(append_stmt_recent).scalars().all()
-    source_run = db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    append_rows_recent = list(db.execute(append_stmt_recent).scalars().all())
+    source_run = (
+        db.get(RegistryRun, case_record.source_run_id) if case_record.source_run_id else None
+    )
     return _build_case_response(
         case_record=case_record,
         append_rows=append_rows_recent,

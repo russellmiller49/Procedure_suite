@@ -12,6 +12,7 @@ import json
 import os
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 from config.settings import KnowledgeSettings
 
@@ -802,8 +803,9 @@ Return empty array [] if no specimens documented.""".strip(),
 }
 
 
-def _load_schema() -> dict:
-    return json.loads(_SCHEMA_PATH.read_text())
+def _load_schema() -> dict[str, Any]:
+    raw = json.loads(_SCHEMA_PATH.read_text())
+    return raw if isinstance(raw, dict) else {}
 
 
 def _env_flag(name: str, default: bool = False) -> bool:
@@ -830,7 +832,7 @@ def _normalize_active_families(value: object) -> set[str] | None:
     return None
 
 
-def _build_field_instructions(schema_properties: dict[str, dict]) -> dict[str, str]:
+def _build_field_instructions(schema_properties: dict[str, dict[str, Any]]) -> dict[str, str]:
     """Build per-field instruction text from schema properties."""
     instructions: dict[str, str] = {}
     for name, prop in schema_properties.items():
@@ -877,7 +879,7 @@ def _registry_record_model_json_schema() -> str:
     return json.dumps(RegistryRecord.model_json_schema(), indent=2)
 
 
-def build_registry_extraction_prompt(note_text: str, context: dict | None = None) -> str:
+def build_registry_extraction_prompt(note_text: str, context: dict[str, object] | None = None) -> str:
     """Schema-driven extraction prompt (v3).
 
     Embeds the full Pydantic JSON schema so the model sees nested structures
@@ -888,7 +890,12 @@ def build_registry_extraction_prompt(note_text: str, context: dict | None = None
 
     # Optional CPT guidance (hybrid flow only). Extraction-first typically omits this.
     verified_section = ""
-    verified_codes = context.get("verified_cpt_codes") or []
+    verified_codes_raw = context.get("verified_cpt_codes")
+    verified_codes = (
+        list(verified_codes_raw)
+        if isinstance(verified_codes_raw, (list, tuple, set, frozenset))
+        else []
+    )
     if verified_codes:
         coder_difficulty = context.get("coder_difficulty") or "unknown"
         hybrid_source = context.get("hybrid_source") or "unknown"
@@ -978,7 +985,7 @@ def _load_registry_prompt_for_families(active_families_frozen: frozenset[str] | 
     return f"{load_system_prompt()}\n\n{PROMPT_HEADER}\n\n" + "\n".join(lines)
 
 
-def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
+def build_registry_prompt(note_text: str, context: dict[str, object] | None = None) -> str:
     """Build the registry extraction prompt with optional CPT context.
 
     Args:
@@ -1006,7 +1013,12 @@ def build_registry_prompt(note_text: str, context: dict | None = None) -> str:
 
     # Build verified CPT section if codes are provided
     verified_section = ""
-    verified_codes = context.get("verified_cpt_codes") or []
+    verified_codes_raw = context.get("verified_cpt_codes")
+    verified_codes = (
+        list(verified_codes_raw)
+        if isinstance(verified_codes_raw, (list, tuple, set, frozenset))
+        else []
+    )
     if verified_codes:
         coder_difficulty = context.get("coder_difficulty") or "unknown"
         hybrid_source = context.get("hybrid_source") or "unknown"

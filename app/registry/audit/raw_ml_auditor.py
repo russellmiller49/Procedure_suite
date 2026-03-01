@@ -269,7 +269,7 @@ class RegistryFlagAuditor:
 
             tokenizer_path = self._model_dir / "tokenizer"
             if tokenizer_path.exists():
-                self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
+                self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))  # type: ignore[no-untyped-call]
                 logger.info("Loaded tokenizer")
 
             # Check for model files

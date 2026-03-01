@@ -7,7 +7,7 @@ deployments.
 
 from __future__ import annotations
 
-from app.phi.ports import PHIScrubberPort, ScrubResult
+from app.phi.ports import PHIScrubberPort, ScrubResult, ScrubbedEntity
 
 
 class StubScrubber(PHIScrubberPort):
@@ -16,7 +16,7 @@ class StubScrubber(PHIScrubberPort):
 
     def scrub(self, text: str, document_type: str | None = None, specialty: str | None = None) -> ScrubResult:
         # Simple demo behavior: redact the first "Patient" token if present.
-        entities = []
+        entities: list[ScrubbedEntity] = []
         scrubbed_text = text
         target = "Patient"
         if target in text:

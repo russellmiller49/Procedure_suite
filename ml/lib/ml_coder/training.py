@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,type-arg"
 """Training utilities for the CPT multi-label classifier."""
 
 from __future__ import annotations

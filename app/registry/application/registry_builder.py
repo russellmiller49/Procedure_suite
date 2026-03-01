@@ -176,12 +176,14 @@ class V2RegistryBuilder(RegistryBuilderProtocol):
     def build_entry(
         self,
         procedure_id: str,
-        patient: PatientInfoV2,
-        procedure: ProcedureInfoV2,
+        patient: PatientInfoV2 | PatientInfoV3,
+        procedure: ProcedureInfoV2 | ProcedureInfoV3,
         registry_fields: dict[str, Any],
         metadata: dict[str, Any],
     ) -> IPRegistryV2:
         """Build an IPRegistryV2 entry."""
+        if not isinstance(patient, PatientInfoV2) or not isinstance(procedure, ProcedureInfoV2):
+            raise TypeError("V2RegistryBuilder requires V2 patient/procedure models")
         entry_data: dict[str, Any] = {
             "patient": patient,
             "procedure": procedure,
@@ -298,12 +300,14 @@ class V3RegistryBuilder(RegistryBuilderProtocol):
     def build_entry(
         self,
         procedure_id: str,
-        patient: PatientInfoV3,
-        procedure: ProcedureInfoV3,
+        patient: PatientInfoV2 | PatientInfoV3,
+        procedure: ProcedureInfoV2 | ProcedureInfoV3,
         registry_fields: dict[str, Any],
         metadata: dict[str, Any],
     ) -> IPRegistryV3:
         """Build an IPRegistryV3 entry."""
+        if not isinstance(patient, PatientInfoV3) or not isinstance(procedure, ProcedureInfoV3):
+            raise TypeError("V3RegistryBuilder requires V3 patient/procedure models")
         entry_data: dict[str, Any] = {
             "patient": patient,
             "procedure": procedure,
@@ -319,8 +323,9 @@ class V3RegistryBuilder(RegistryBuilderProtocol):
 
         # Backfill risk_assessment from common legacy metadata keys.
         risk_raw = metadata.get("risk_assessment")
-        if hasattr(risk_raw, "model_dump"):
-            risk_assessment: dict[str, Any] = dict(risk_raw.model_dump())
+        risk_model_dump = getattr(risk_raw, "model_dump", None)
+        if callable(risk_model_dump):
+            risk_assessment: dict[str, Any] = dict(risk_model_dump())
         elif isinstance(risk_raw, dict):
             risk_assessment = dict(risk_raw)
         else:

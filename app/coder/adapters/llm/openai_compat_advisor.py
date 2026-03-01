@@ -126,7 +126,7 @@ def _openai_request_id(response: httpx.Response) -> str | None:
     for header_name in ("x-request-id", "request-id", "x-openai-request-id", "openai-request-id"):
         value = response.headers.get(header_name)
         if value:
-            return value
+            return str(value)
     return None
 
 
@@ -202,12 +202,12 @@ def _error_suggests_tools_unsupported(*, message: str, error_param: str | None) 
 
 
 def _build_unsupported_param_retry_payload(
-    payload: dict,
+    payload: dict[str, Any],
     *,
     message: str,
     error_param: str | None,
-) -> tuple[dict, list[str]]:
-    retry_payload: dict = dict(payload)
+) -> tuple[dict[str, Any], list[str]]:
+    retry_payload: dict[str, Any] = dict(payload)
     removed: list[str] = []
 
     def _pop(key: str) -> None:
@@ -306,7 +306,7 @@ Return ONLY the JSON array, no other text.
     ):
         self.model_name = model_name
         self.allowed_codes = set(allowed_codes) if allowed_codes else set()
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
+        self.api_key: str = str(api_key or os.getenv("OPENAI_API_KEY", ""))
         self.base_url = _normalize_openai_base_url(os.getenv("OPENAI_BASE_URL", "https://api.openai.com"))
         self._offline = _truthy_env("OPENAI_OFFLINE") or not bool(self.api_key)
 
@@ -342,7 +342,7 @@ Return ONLY the JSON array, no other text.
     def suggest_with_context(
         self,
         report_text: str,
-        context: dict,
+        context: dict[str, Any],
         *,
         task: str | None = None,
     ) -> list[LLMCodeSuggestion]:
@@ -406,7 +406,7 @@ Return ONLY the JSON array, no other text.
             if isinstance(cached, str) and cached:
                 return cached
 
-        payload: dict = {
+        payload: dict[str, Any] = {
             "model": model_name,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.0,
@@ -421,7 +421,7 @@ Return ONLY the JSON array, no other text.
         client = _get_persistent_client(self.base_url, self.api_key)
 
         removed_on_retry: list[str] = []
-        attempt_payload: dict = payload
+        attempt_payload: dict[str, Any] = payload
         data: dict[str, Any] = {}
 
         for attempt in range(5):

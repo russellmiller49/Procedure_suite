@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -80,7 +80,10 @@ class ReviewActionRequest(BaseModel):
     """Request body for submitting a review action."""
 
     suggestion_id: str = Field(..., description="ID of the CodeSuggestion being reviewed")
-    action: str = Field(..., description="Review action: 'accept', 'reject', or 'modify'")
+    action: str = Field(
+        ...,
+        description="Review action: 'accept', 'reject', or 'modify'",
+    )
     reviewer_id: str = Field(..., description="ID of the clinician reviewer")
     notes: str | None = Field(None, description="Optional notes about the decision")
     modified_code: str | None = Field(None, description="Modified CPT code if action is 'modify'")
@@ -115,7 +118,7 @@ class ReviewActionResponse(BaseModel):
     """Response from review action endpoint."""
 
     suggestion_id: str
-    action: str
+    action: Literal["accept", "reject", "modify"]
     final_code: FinalCode | None
     message: str
 
@@ -189,7 +192,7 @@ def suggest_codes(
     request: SuggestCodesRequest,
     coding_service: CodingService = _coding_service_dep,
     store: ProcedureStore = _procedure_store_dep,
-    phi_db=_phi_session_dep,
+    phi_db: Any = _phi_session_dep,
 ) -> SuggestCodesResponse:
     """Trigger rule+LLM pipeline, persist CodeSuggestion[].
 
@@ -246,8 +249,8 @@ def suggest_codes(
 
     if proc is not None:
         # Always prefer scrubbed text from reviewed procedure
-        report_text = proc.scrubbed_text
-        procedure_type = procedure_type or proc.document_type or "unknown"
+        report_text = str(getattr(proc, "scrubbed_text", report_text))
+        procedure_type = procedure_type or str(getattr(proc, "document_type", "") or "unknown")
 
     logger.info(
         "Suggest codes requested",
@@ -418,6 +421,7 @@ def review_suggestion(
                 "'modify'."
             ),
         )
+    action = cast(Literal["accept", "reject", "modify"], request.action)
 
     # Find the suggestion
     suggestions = store.get_suggestions(proc_id)
@@ -437,7 +441,7 @@ def review_suggestion(
     # Create the review action
     review = ReviewAction(
         suggestion_id=request.suggestion_id,
-        action=request.action,
+        action=action,
         reviewer_id=request.reviewer_id,
         notes=request.notes,
         modified_code=request.modified_code,
@@ -448,7 +452,7 @@ def review_suggestion(
     final_code: FinalCode | None = None
     message = ""
 
-    if request.action == "accept":
+    if action == "accept":
         final_code = FinalCode(
             code=suggestion.code,
             description=suggestion.description,
@@ -460,7 +464,7 @@ def review_suggestion(
         )
         message = f"Code {suggestion.code} accepted and added to final codes."
 
-    elif request.action == "modify":
+    elif action == "modify":
         if not request.modified_code:
             raise HTTPException(
                 status_code=400,
@@ -524,7 +528,7 @@ def review_suggestion(
 
     return ReviewActionResponse(
         suggestion_id=request.suggestion_id,
-        action=request.action,
+        action=action,
         final_code=final_code,
         message=message,
     )
@@ -1033,7 +1037,7 @@ def run_unified_extraction(
     registry_service: RegistryService = _registry_service_dep,
     coding_service: CodingService = _coding_service_dep,
     store: ProcedureStore = _procedure_store_dep,
-    phi_db=_phi_session_dep,
+    phi_db: Any = _phi_session_dep,
 ) -> UnifiedExtractResponse:
     """Run unified extraction-first pipeline on a PHI-reviewed procedure.
 
@@ -1097,7 +1101,7 @@ def run_unified_extraction(
         raise HTTPException(status_code=404, detail="Procedure not found or missing scrubbed text")
 
     # Use the scrubbed text from the reviewed procedure
-    scrubbed_text = proc.scrubbed_text
+    scrubbed_text = str(getattr(proc, "scrubbed_text", ""))
 
     logger.info(
         "Unified extraction requested",
@@ -1138,6 +1142,7 @@ def run_unified_extraction(
                 rationale = rationales.get(code, "")
 
                 # Determine review flag
+                review_flag: Literal["required", "recommended", "optional"]
                 if extraction_result.needs_manual_review:
                     review_flag = "required"
                 elif extraction_result.audit_warnings:
@@ -1146,16 +1151,16 @@ def run_unified_extraction(
                     review_flag = "optional"
 
                 suggestions.append(CodeSuggestion(
-                    id=f"{proc_id}_{code}",
+                    suggestion_id=f"{proc_id}_{code}",
                     code=code,
                     description=description,
                     source="extraction_first",
-                    confidence=base_confidence,
+                    final_confidence=base_confidence,
                     review_flag=review_flag,
                     reasoning=ReasoningFields(
                         rule_paths=["registry_to_cpt"],
                         confidence=base_confidence,
-                        rationale=rationale,
+                        explanation=rationale,
                     ),
                 ))
 

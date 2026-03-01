@@ -4,21 +4,26 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Any, List
+from typing import List, Protocol
 
 from app.common.llm import DeterministicStubLLM, GeminiLLM
 from app.coder.sectionizer import accordion_truncate, max_llm_input_tokens, sectionizer_enabled
 from app.coder.types import PeripheralLesionEvidence
 
 
+class _PeripheralLLM(Protocol):
+    def generate(self, prompt: str) -> str:
+        ...
+
+
 class PeripheralLesionExtractor:
     """Extract structured peripheral lesion data from scrubbed notes."""
 
-    def __init__(self, llm_client: Any | None = None):
+    def __init__(self, llm_client: _PeripheralLLM | None = None):
         self._llm = llm_client
         self._offline = os.getenv("GEMINI_OFFLINE", "").lower() in ("1", "true", "yes")
 
-    def _ensure_llm(self):
+    def _ensure_llm(self) -> _PeripheralLLM:
         if self._llm is None:
             if self._offline:
                 self._llm = DeterministicStubLLM(payload={"lesions": []})

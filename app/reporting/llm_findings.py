@@ -956,7 +956,11 @@ def _apply_findings_backfill(
 
         if proc_key == "tbna_conventional":
             stations = _dedupe_keep_order(
-                [normalize_station(tok) for tok in anatomy_tokens if normalize_station(tok)]
+                [
+                    station
+                    for tok in anatomy_tokens
+                    if (station := normalize_station(tok)) is not None
+                ]
             )
             if stations:
                 existing = procedures_payload.get("tbna_conventional") if isinstance(

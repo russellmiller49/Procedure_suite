@@ -115,10 +115,10 @@ def merge_relations_shadow_mode(
 def iter_relation_tasks(
     *,
     case_id: str,
-    entities_by_id: dict[str, dict],
+    entities_by_id: dict[str, dict[str, Any]],
     relations: Iterable[LinkProposal],
     source: str,
-) -> Iterable[dict]:
+) -> Iterable[dict[str, Any]]:
     """Utility for silver-data generation: produce one JSON-serializable task per edge."""
 
     for edge in relations:

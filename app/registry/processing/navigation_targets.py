@@ -184,16 +184,16 @@ def _normalize_lobe(value: str | None) -> str | None:
     return None
 
 
-def _coerce_float(value: str | None) -> float | None:
+def _coerce_float(value: Any) -> float | None:
     if value is None:
         return None
     try:
-        return float(value)
+        return float(str(value).strip())
     except Exception:
         return None
 
 
-def _coerce_int(value: str | None) -> int | None:
+def _coerce_int(value: Any) -> int | None:
     if value is None:
         return None
     raw = str(value).strip()
@@ -612,10 +612,12 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
                 if til_confirmed is True and til_method:
                     target["confirmation_method"] = til_method
                     if til_method_meta:
+                        method_start = _coerce_int(til_method_meta.get("start")) or 0
+                        method_end = _coerce_int(til_method_meta.get("end")) or 0
                         evidence["confirmation_method"] = {
                             "text": str(til_method_meta.get("text") or ""),
-                            "start": int(loc_offset + int(til_method_meta.get("start") or 0)),
-                            "end": int(loc_offset + int(til_method_meta.get("end") or 0)),
+                            "start": int(loc_offset + method_start),
+                            "end": int(loc_offset + method_end),
                         }
                     if til_method == "CBCT":
                         target["cbct_til_confirmed"] = True
@@ -775,7 +777,7 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         seen_locations: set[str] = set()
         ebus_stop_re = re.compile(r"(?i)\bebus[-\s]*findings\b")
         for idx, engage in enumerate(engage_matches):
-            segment = (engage.group("segment") or "").strip() or None
+            engage_segment = (engage.group("segment") or "").strip() or None
             lobe = _normalize_lobe(engage.group("lobe")) or None
             bronchus = (engage.group("bronchus") or "").strip()
 
@@ -785,10 +787,10 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             if stop_match:
                 section = section[: stop_match.start()]
 
-            if segment and lobe and bronchus:
-                location_text = f"{segment} of {lobe} ({bronchus})"
-            elif segment and lobe:
-                location_text = f"{segment} of {lobe}"
+            if engage_segment and lobe and bronchus:
+                location_text = f"{engage_segment} of {lobe} ({bronchus})"
+            elif engage_segment and lobe:
+                location_text = f"{engage_segment} of {lobe}"
             elif lobe:
                 location_text = f"{lobe} target"
             else:
@@ -805,69 +807,69 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
 
             # Local window: look for lesion size near the engage statement.
             window = section[:800]
-            lesion_size_mm: float | None = None
+            engage_lesion_size_mm: float | None = None
             cm = _TARGET_LESION_SIZE_CM_RE.search(window)
             if cm:
-                lesion_size_mm = _coerce_float(cm.group(1))
-                if lesion_size_mm is not None:
-                    lesion_size_mm *= 10.0
+                engage_lesion_size_mm = _coerce_float(cm.group(1))
+                if engage_lesion_size_mm is not None:
+                    engage_lesion_size_mm *= 10.0
             else:
                 mm = _TARGET_LESION_SIZE_MM_RE.search(window)
                 if mm:
-                    lesion_size_mm = _coerce_float(mm.group(1))
+                    engage_lesion_size_mm = _coerce_float(mm.group(1))
 
-            target: dict[str, Any] = {
+            engage_target: dict[str, Any] = {
                 "target_number": len(targets) + 1,
                 "target_location_text": location_text,
             }
             if lobe:
-                target["target_lobe"] = lobe
-            if segment:
-                target["target_segment"] = segment
-            if lesion_size_mm is not None:
-                target["lesion_size_mm"] = lesion_size_mm
+                engage_target["target_lobe"] = lobe
+            if engage_segment:
+                engage_target["target_segment"] = engage_segment
+            if engage_lesion_size_mm is not None:
+                engage_target["lesion_size_mm"] = engage_lesion_size_mm
 
             rebus_match = _REBUS_VIEW_RE.search(section)
             if rebus_match:
                 view = (rebus_match.group(1) or "").strip().title()
                 if view:
-                    target["rebus_used"] = True
-                    target["rebus_view"] = view
+                    engage_target["rebus_used"] = True
+                    engage_target["rebus_view"] = view
 
-            tools: list[str] = []
+            engage_tools: list[str] = []
 
             tbna_match = re.search(r"(?i)\btransbronchial\s+needle\s+aspiration\b|\btbna\b", section)
             if tbna_match:
                 tbna_window = section[tbna_match.start() : tbna_match.start() + 700]
-                gauges: list[int] = []
+                engage_gauges: list[int] = []
                 for gm in _NEEDLE_GAUGE_RE.finditer(tbna_window):
                     raw = (gm.group(1) or "").strip()
                     try:
                         g = int(raw)
                     except Exception:
                         g = None
-                    if g is not None and g not in gauges:
-                        gauges.append(g)
-                gauge_label = "/".join(f"{g}G" for g in gauges) if gauges else None
-                tools.append(f"Needle ({gauge_label})" if gauge_label else "Needle")
+                    if g is not None and g not in engage_gauges:
+                        engage_gauges.append(g)
+                gauge_label = "/".join(f"{g}G" for g in engage_gauges) if engage_gauges else None
+                engage_tools.append(f"Needle ({gauge_label})" if gauge_label else "Needle")
 
                 m_total = _TOTAL_SAMPLES_RE.search(tbna_window)
                 m_passes = _PASSES_RE.search(tbna_window) if not m_total else None
                 m_count = m_total or m_passes
                 if m_count:
                     try:
-                        target["number_of_needle_passes"] = int(m_count.group(1))
+                        engage_target["number_of_needle_passes"] = int(m_count.group(1))
                     except Exception:
                         pass
 
             cryo_match = _CRYO_RE.search(section)
             if cryo_match:
-                tools.append("Cryoprobe")
+                engage_tools.append("Cryoprobe")
                 cryo_window = section[cryo_match.start() : cryo_match.start() + 900]
                 m_total = _TOTAL_SAMPLES_RE.search(cryo_window)
                 if m_total:
                     try:
-                        target["number_of_cryo_biopsies"] = int(m_total.group(1))
+                        engage_target["number_of_cryo_biopsies"] = int(m_total.group(1))
                     except Exception:
                         pass
 
@@ -876,27 +878,27 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
                 section,
             )
             if forceps_match:
-                tools.append("Forceps")
+                engage_tools.append("Forceps")
                 forceps_window = section[forceps_match.start() : forceps_match.start() + 500]
                 spec_match = _SPECIMEN_COUNT_RE.search(forceps_window)
                 if spec_match:
                     try:
-                        target["number_of_forceps_biopsies"] = int(spec_match.group(1))
+                        engage_target["number_of_forceps_biopsies"] = int(spec_match.group(1))
                     except Exception:
                         pass
 
             brush_match = re.search(r"(?i)\bbrushings?\b|\bcytology\s+brush\b", section)
             if brush_match:
-                tools.append("Brush")
+                engage_tools.append("Brush")
 
-            if tools:
-                target["sampling_tools_used"] = tools
+            if engage_tools:
+                engage_target["sampling_tools_used"] = engage_tools
 
             ct_char = _detect_ct_characteristics(window)
             if ct_char:
-                target["ct_characteristics"] = ct_char
+                engage_target["ct_characteristics"] = ct_char
 
-            targets.append(target)
+            targets.append(engage_target)
 
         return targets
 
@@ -918,7 +920,7 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             return f"nodule #{m.group(1)}"
         return None
 
-    targets: list[dict[str, Any]] = []
+    parsed_targets: list[dict[str, Any]] = []
     for idx, match in enumerate(matches):
         header_raw = match.group("header") or ""
         header = _canonical_header(header_raw)
@@ -937,52 +939,52 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
         if match_mode in {"nodule_header", "numbered_target"}:
             lobe = _infer_lobe_from_text(header_raw) or lobe
 
-        segment: str | None = None
-        location_text: str | None = header_raw.strip() if match_mode == "numbered_target" else None
+        section_segment: str | None = None
+        section_location_text: str | None = header_raw.strip() if match_mode == "numbered_target" else None
 
-        engage = _ENGAGE_LOCATION_RE.search(section)
-        if engage:
-            segment = (engage.group("segment") or "").strip() or None
-            lobe = _normalize_lobe(engage.group("lobe")) or lobe
-            bronchus = (engage.group("bronchus") or "").strip()
-            if segment and lobe and bronchus:
-                location_text = f"{segment} of {lobe} ({bronchus})"
-            elif segment and lobe:
-                location_text = f"{segment} of {lobe}"
+        engage_match = _ENGAGE_LOCATION_RE.search(section)
+        if engage_match:
+            section_segment = (engage_match.group("segment") or "").strip() or None
+            lobe = _normalize_lobe(engage_match.group("lobe")) or lobe
+            bronchus = (engage_match.group("bronchus") or "").strip()
+            if section_segment and lobe and bronchus:
+                section_location_text = f"{section_segment} of {lobe} ({bronchus})"
+            elif section_segment and lobe:
+                section_location_text = f"{section_segment} of {lobe}"
 
-        if not location_text and lobe:
+        if not section_location_text and lobe:
             # Prefer a meaningful sentence when present; otherwise fall back to the header lobe.
             target_line = _first_line_containing(section, re.compile(r"(?i)\btarget\s+lesion\b"))
-            location_text = target_line or f"{lobe} target"
+            section_location_text = target_line or f"{lobe} target"
 
         # When we have rich nodule headers, include the nodule identifier to avoid collapsing
         # multiple targets that share the same segment (common in RUL RB1 #1/#2 workflows).
-        if match_mode == "nodule_header" and location_text:
+        if match_mode == "nodule_header" and section_location_text:
             suffix = _header_label_suffix(header_raw)
-            if suffix and suffix.lower() not in location_text.lower():
-                location_text = f"{location_text} {suffix}"
+            if suffix and suffix.lower() not in section_location_text.lower():
+                section_location_text = f"{section_location_text} {suffix}"
 
-        lesion_size_mm: float | None = None
+        section_lesion_size_mm: float | None = None
         cm = _TARGET_LESION_SIZE_CM_RE.search(section)
         if cm:
-            lesion_size_mm = _coerce_float(cm.group(1))
-            if lesion_size_mm is not None:
-                lesion_size_mm *= 10.0
+            section_lesion_size_mm = _coerce_float(cm.group(1))
+            if section_lesion_size_mm is not None:
+                section_lesion_size_mm *= 10.0
         else:
             mm = _TARGET_LESION_SIZE_MM_RE.search(section)
             if mm:
-                lesion_size_mm = _coerce_float(mm.group(1))
+                section_lesion_size_mm = _coerce_float(mm.group(1))
 
-        if lesion_size_mm is None and match_mode == "numbered_target":
+        if section_lesion_size_mm is None and match_mode == "numbered_target":
             size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*cm\b", header_raw)
             if size_match:
-                lesion_size_mm = _coerce_float(size_match.group(1))
-                if lesion_size_mm is not None:
-                    lesion_size_mm *= 10.0
+                section_lesion_size_mm = _coerce_float(size_match.group(1))
+                if section_lesion_size_mm is not None:
+                    section_lesion_size_mm *= 10.0
             else:
                 size_match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*mm\b", header_raw)
                 if size_match:
-                    lesion_size_mm = _coerce_float(size_match.group(1))
+                    section_lesion_size_mm = _coerce_float(size_match.group(1))
 
         rebus_view: str | None = None
         rebus_match = _REBUS_VIEW_RE.search(section_text)
@@ -992,21 +994,21 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
 
         fiducial_placed, fiducial_details, fiducial_local_span = _fiducial_in_section(section_text)
 
-        evidence: dict[str, dict[str, object]] = {}
+        section_evidence: dict[str, dict[str, object]] = {}
 
-        target: dict[str, Any] = {
+        section_target: dict[str, Any] = {
             "target_number": idx + 1,
-            "target_location_text": _truncate_location(location_text or "Unknown target"),
+            "target_location_text": _truncate_location(section_location_text or "Unknown target"),
         }
         if lobe:
-            target["target_lobe"] = lobe
-        if segment:
-            target["target_segment"] = segment
-        if lesion_size_mm is not None:
-            target["lesion_size_mm"] = lesion_size_mm
+            section_target["target_lobe"] = lobe
+        if section_segment:
+            section_target["target_segment"] = section_segment
+        if section_lesion_size_mm is not None:
+            section_target["lesion_size_mm"] = section_lesion_size_mm
         if rebus_view is not None:
-            target["rebus_used"] = True
-            target["rebus_view"] = rebus_view
+            section_target["rebus_used"] = True
+            section_target["rebus_view"] = rebus_view
 
         ct_char, ct_match = _match_ct_characteristics(section_text)
         ct_base_offset = section_offset
@@ -1014,9 +1016,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             ct_char, ct_match = _match_ct_characteristics(header_text)
             ct_base_offset = header_offset
         if ct_char is not None:
-            target["ct_characteristics"] = ct_char
+            section_target["ct_characteristics"] = ct_char
             if ct_match:
-                evidence["ct_characteristics"] = {
+                section_evidence["ct_characteristics"] = {
                     "text": ct_match.group(0).strip(),
                     "start": int(ct_base_offset + ct_match.start()),
                     "end": int(ct_base_offset + ct_match.end()),
@@ -1028,9 +1030,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             pleural_mm, pleural_match = _extract_distance_from_pleura_mm(header_text)
             pleural_base_offset = header_offset
         if pleural_mm is not None:
-            target["distance_from_pleura_mm"] = pleural_mm
+            section_target["distance_from_pleura_mm"] = pleural_mm
             if pleural_match:
-                evidence["distance_from_pleura_mm"] = {
+                section_evidence["distance_from_pleura_mm"] = {
                     "text": pleural_match.group(0).strip(),
                     "start": int(pleural_base_offset + pleural_match.start()),
                     "end": int(pleural_base_offset + pleural_match.end()),
@@ -1042,9 +1044,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             suv_max, suv_match = _extract_pet_suv_max(header_text)
             suv_base_offset = header_offset
         if suv_max is not None:
-            target["pet_suv_max"] = suv_max
+            section_target["pet_suv_max"] = suv_max
             if suv_match:
-                evidence["pet_suv_max"] = {
+                section_evidence["pet_suv_max"] = {
                     "text": suv_match.group(0).strip(),
                     "start": int(suv_base_offset + suv_match.start()),
                     "end": int(suv_base_offset + suv_match.end()),
@@ -1056,9 +1058,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             bronchus_sign, bs_match = _extract_bronchus_sign(header_text)
             bs_base_offset = header_offset
         if bronchus_sign is not None:
-            target["bronchus_sign"] = bronchus_sign
+            section_target["bronchus_sign"] = bronchus_sign
             if bs_match:
-                evidence["bronchus_sign"] = {
+                section_evidence["bronchus_sign"] = {
                     "text": bs_match.group(0).strip(),
                     "start": int(bs_base_offset + bs_match.start()),
                     "end": int(bs_base_offset + bs_match.end()),
@@ -1070,9 +1072,9 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             reg_err, reg_match = _extract_registration_error_mm(header_text)
             reg_base_offset = header_offset
         if reg_err is not None:
-            target["registration_error_mm"] = reg_err
+            section_target["registration_error_mm"] = reg_err
             if reg_match:
-                evidence["registration_error_mm"] = {
+                section_evidence["registration_error_mm"] = {
                     "text": reg_match.group(0).strip(),
                     "start": int(reg_base_offset + reg_match.start()),
                     "end": int(reg_base_offset + reg_match.end()),
@@ -1084,36 +1086,40 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             til_confirmed, til_match, til_method, til_method_meta = _extract_tool_in_lesion_confirmation(header_text)
             til_base_offset = header_offset
         if til_confirmed is not None:
-            target["tool_in_lesion_confirmed"] = til_confirmed
+            section_target["tool_in_lesion_confirmed"] = til_confirmed
             if til_match:
-                evidence["tool_in_lesion_confirmed"] = {
+                section_evidence["tool_in_lesion_confirmed"] = {
                     "text": til_match.group(0).strip(),
                     "start": int(til_base_offset + til_match.start()),
                     "end": int(til_base_offset + til_match.end()),
                 }
             if til_confirmed is True and til_method:
-                target["confirmation_method"] = til_method
+                section_target["confirmation_method"] = til_method
                 if til_method_meta:
-                    evidence["confirmation_method"] = {
+                    method_start = _coerce_int(til_method_meta.get("start")) or 0
+                    method_end = _coerce_int(til_method_meta.get("end")) or 0
+                    section_evidence["confirmation_method"] = {
                         "text": str(til_method_meta.get("text") or ""),
-                        "start": int(til_base_offset + int(til_method_meta.get("start") or 0)),
-                        "end": int(til_base_offset + int(til_method_meta.get("end") or 0)),
+                        "start": int(til_base_offset + method_start),
+                        "end": int(til_base_offset + method_end),
                     }
                 if til_method == "CBCT":
-                    target["cbct_til_confirmed"] = True
+                    section_target["cbct_til_confirmed"] = True
 
-        if evidence:
-            target["_evidence"] = evidence
+        if section_evidence:
+            section_target["_evidence"] = section_evidence
         if fiducial_placed:
-            target["fiducial_marker_placed"] = True
+            section_target["fiducial_marker_placed"] = True
         if fiducial_details:
-            target["fiducial_marker_details"] = fiducial_details
+            section_target["fiducial_marker_details"] = fiducial_details
         if fiducial_placed and fiducial_local_span:
             fid_start = section_offset + int(fiducial_local_span[0])
             fid_end = section_offset + int(fiducial_local_span[1])
             fid_text = (fiducial_details or "").strip()
             if fid_text and fid_end > fid_start:
-                existing_evidence = target.get("_evidence") if isinstance(target.get("_evidence"), dict) else {}
+                existing_evidence = (
+                    section_target.get("_evidence") if isinstance(section_target.get("_evidence"), dict) else {}
+                )
                 if not isinstance(existing_evidence, dict):
                     existing_evidence = {}
                 existing_evidence.setdefault(
@@ -1132,28 +1138,28 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
                         "end": int(fid_end),
                     },
                 )
-                target["_evidence"] = existing_evidence
+                section_target["_evidence"] = existing_evidence
 
         # Light-touch sampling hints (used for downstream aggregation).
         cryo_match = _CRYO_RE.search(section_text)
         if cryo_match:
-            target.setdefault("sampling_tools_used", []).append("Cryoprobe")
+            section_target.setdefault("sampling_tools_used", []).append("Cryoprobe")
             window = section_text[cryo_match.start() : cryo_match.start() + 600]
             samples = _TOTAL_SAMPLES_RE.search(window)
             if samples:
                 try:
-                    target["number_of_cryo_biopsies"] = int(samples.group(1))
+                    section_target["number_of_cryo_biopsies"] = int(samples.group(1))
                 except Exception:
                     pass
 
         tbna_match = re.search(r"(?i)\btransbronchial\s+needle\s+aspiration\b|\btbna\b", section_text)
         if tbna_match:
-            target.setdefault("sampling_tools_used", []).append("Needle")
+            section_target.setdefault("sampling_tools_used", []).append("Needle")
             window = section_text[tbna_match.start() : tbna_match.start() + 600]
             samples = _TOTAL_SAMPLES_RE.search(window)
             if samples:
                 try:
-                    target["number_of_needle_passes"] = int(samples.group(1))
+                    section_target["number_of_needle_passes"] = int(samples.group(1))
                 except Exception:
                     pass
 
@@ -1162,25 +1168,25 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             section_text,
         )
         if brush_match:
-            target.setdefault("sampling_tools_used", []).append("Brush")
+            section_target.setdefault("sampling_tools_used", []).append("Brush")
 
         forceps_match = re.search(
             r"(?i)\bforceps\s+biops(?:y|ies)\b|\btransbronchial\s+forceps\s+biops(?:y|ies)\b",
             section_text,
         )
         if forceps_match:
-            target.setdefault("sampling_tools_used", []).append("Forceps")
+            section_target.setdefault("sampling_tools_used", []).append("Forceps")
             window = section_text[forceps_match.start() : forceps_match.start() + 500]
             spec_match = _SPECIMEN_COUNT_RE.search(window)
             if spec_match:
                 try:
-                    target["number_of_forceps_biopsies"] = int(spec_match.group(1))
+                    section_target["number_of_forceps_biopsies"] = int(spec_match.group(1))
                 except Exception:
                     pass
 
-        targets.append(target)
+        parsed_targets.append(section_target)
 
-    return targets
+    return parsed_targets
 
 
 def extract_cryobiopsy_sites(note_text: str) -> list[dict[str, Any]]:

@@ -231,7 +231,7 @@ def get_coding_service() -> CodingService:
                 )
                 logger.info("LLM advisor enabled: openai_compat")
         else:
-            api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
+            api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
             if api_key:
                 llm_advisor = GeminiAdvisorAdapter(
                     model_name=config.model_version,

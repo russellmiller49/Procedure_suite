@@ -53,7 +53,7 @@ class EvidenceContext:
         evidence: Dict[str, Any],
         registry: Dict[str, Any],
         candidates_from_text: Set[str],
-        term_hits: Dict[str, list],
+        term_hits: Dict[str, list[Any]],
         navigation_context: Dict[str, Any],
         radial_context: Dict[str, Any],
         note_text: str = "",
@@ -92,7 +92,11 @@ class EvidenceContext:
             text_lower=note_text.lower() if note_text else "",
         )
 
-    def get_evidence(self, key: str, default: Optional[Dict] = None) -> Dict[str, Any]:
+    def get_evidence(
+        self,
+        key: str,
+        default: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         """Get evidence for a specific group key.
 
         Args:
@@ -102,7 +106,8 @@ class EvidenceContext:
         Returns:
             Evidence dictionary for the key
         """
-        return self.evidence.get(key, default or {})
+        value = self.evidence.get(key, default or {})
+        return value if isinstance(value, dict) else (default or {})
 
     def has_group(self, group: str) -> bool:
         """Check if a specific group is present.
@@ -135,7 +140,7 @@ class EvidenceContext:
         Returns:
             Value at the path, or None if not found
         """
-        current = self.registry
+        current: Any = self.registry
         for key in path:
             if not isinstance(current, dict):
                 return None

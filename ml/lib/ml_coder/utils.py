@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Iterable, List
 
-import pandas as pd
+import pandas as pd  # type: ignore[import-untyped]
 
 __all__ = ["clean_cpt_codes", "join_codes"]
 

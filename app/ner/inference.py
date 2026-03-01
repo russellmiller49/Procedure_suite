@@ -123,13 +123,13 @@ class GranularNERPredictor:
         self.context_chars = context_chars
         self.available = False
 
-        self._tokenizer = None
-        self._model = None
+        self._tokenizer: Any | None = None
+        self._model: Any | None = None
         self._label2id: Dict[str, int] = {}
         self._id2label: Dict[int, str] = {}
-        self._device = None
+        self._device: torch.device | None = None
         self._use_onnx = False
-        self._onnx_session = None
+        self._onnx_session: Any | None = None
         self._onnx_input_names: List[str] = []
 
         # Determine device
@@ -200,9 +200,9 @@ class GranularNERPredictor:
         if onnx_path is not None:
             self._load_label_map(model_root)
             tokenizer_dir = model_root / "tokenizer" if (model_root / "tokenizer").exists() else model_root
-            self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_dir))
+            self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_dir))  # type: ignore[no-untyped-call]
 
-            import onnxruntime as ort
+            import onnxruntime as ort  # type: ignore[import-untyped]
 
             sess_options = ort.SessionOptions()
             sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
@@ -220,7 +220,7 @@ class GranularNERPredictor:
         self._load_label_map(model_root)
 
         # Load tokenizer
-        self._tokenizer = AutoTokenizer.from_pretrained(str(model_root))
+        self._tokenizer = AutoTokenizer.from_pretrained(str(model_root))  # type: ignore[no-untyped-call]
 
         # Load model
         self._model = AutoModelForTokenClassification.from_pretrained(str(model_root))
@@ -253,6 +253,12 @@ class GranularNERPredictor:
                 raw_text=note_text,
                 inference_time_ms=0.0,
             )
+        if self._tokenizer is None:
+            return NERExtractionResult(
+                entities=[],
+                raw_text=note_text,
+                inference_time_ms=0.0,
+            )
 
         start_time = time.time()
 
@@ -272,6 +278,12 @@ class GranularNERPredictor:
         offset_mapping = encoding.pop("offset_mapping")[0].tolist()
 
         if self._use_onnx:
+            if self._onnx_session is None:
+                return NERExtractionResult(
+                    entities=[],
+                    raw_text=note_text,
+                    inference_time_ms=0.0,
+                )
             inputs = {}
             for name in self._onnx_input_names:
                 if name in encoding:
@@ -293,6 +305,12 @@ class GranularNERPredictor:
             predictions = np.argmax(probs, axis=-1).tolist()
             confidence_scores = np.max(probs, axis=-1).tolist()
         else:
+            if self._model is None:
+                return NERExtractionResult(
+                    entities=[],
+                    raw_text=note_text,
+                    inference_time_ms=0.0,
+                )
             # Move to device
             input_ids = encoding["input_ids"].to(self._device)
             attention_mask = encoding["attention_mask"].to(self._device)
@@ -339,7 +357,7 @@ class GranularNERPredictor:
         self,
         predictions: List[int],
         confidence_scores: List[float],
-        offset_mapping: List[tuple],
+        offset_mapping: List[tuple[int, int]],
         text: str,
     ) -> List[NEREntity]:
         """

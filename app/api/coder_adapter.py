@@ -8,6 +8,7 @@ to the legacy CoderOutput/CodeDecision format expected by existing clients.
 from __future__ import annotations
 
 import re
+from typing import Any
 
 from app.coder.schema import (
     BundleDecision,
@@ -66,7 +67,7 @@ def convert_suggestion_to_code_decision(
         rationale = [f"Suggested by {suggestion.source} engine"]
 
     # Build context dict
-    context: dict = {
+    context: dict[str, Any] = {
         "hybrid_decision": suggestion.hybrid_decision,
         "review_flag": suggestion.review_flag,
         "evidence_verified": suggestion.evidence_verified,
@@ -85,7 +86,7 @@ def convert_suggestion_to_code_decision(
         display_code = f"+{base_code}"
 
     # Add RVU data if KB available
-    rvu_data: dict = {}
+    rvu_data: dict[str, Any] = {}
     if kb_repo:
         proc_info = kb_repo.get_procedure_info(base_code)
         if proc_info:

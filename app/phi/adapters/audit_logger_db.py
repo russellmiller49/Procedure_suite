@@ -6,27 +6,29 @@ raw PHI content.
 
 from __future__ import annotations
 
+from typing import Any
+
 from app.phi.models import AuditAction, AuditLog
 from app.phi.ports import PHIAuditLoggerPort
 
 
 class DatabaseAuditLogger(PHIAuditLoggerPort):
-    def __init__(self, session):
+    def __init__(self, session: Any) -> None:
         self._session = session
 
     def log_action(
         self,
         *,
         action: AuditAction,
-        phi_vault_id=None,
-        procedure_data_id=None,
+        phi_vault_id: object | None = None,
+        procedure_data_id: object | None = None,
         user_id: str,
         user_email: str | None = None,
         user_role: str | None = None,
         ip_address: str | None = None,
         user_agent: str | None = None,
         request_id: str | None = None,
-        metadata: dict | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         audit = AuditLog(
             phi_vault_id=phi_vault_id,

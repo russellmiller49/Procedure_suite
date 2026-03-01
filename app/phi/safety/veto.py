@@ -144,7 +144,7 @@ def _span_has_any_label(tags: List[str], start: int, end: int, labels: set[str])
 
 def _reconstruct_span_text(tokens: List[str], start: int, end: int) -> str:
     """Reconstruct surface text from a span of tokens, handling wordpieces."""
-    result = []
+    result: list[str] = []
     for i in range(start, end + 1):
         tok = tokens[i]
         if tok.startswith("##"):

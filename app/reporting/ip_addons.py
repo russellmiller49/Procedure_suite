@@ -123,7 +123,10 @@ def list_categories() -> list[str]:
     """
     _load_addons()
     if _ADDONS_DATA:
-        return _ADDONS_DATA.get("categories", list(_ADDONS_BY_CATEGORY.keys()))
+        categories = _ADDONS_DATA.get("categories")
+        if isinstance(categories, list):
+            return [str(category) for category in categories if isinstance(category, str)]
+        return list(_ADDONS_BY_CATEGORY.keys())
     return []
 
 

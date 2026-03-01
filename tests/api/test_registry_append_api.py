@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import uuid
+from datetime import UTC, datetime
 
 import pytest
 from fastapi.testclient import TestClient
@@ -39,7 +39,7 @@ def _auth(user_id: str) -> dict[str, str]:
 
 
 def _seed_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     db.add(
         UserPatientVault(
             user_id=user_id,
@@ -56,7 +56,9 @@ def _seed_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
 
 def test_append_requires_user_header(client: TestClient) -> None:
     case_id = uuid.uuid4()
-    resp = client.post(f"/api/v1/registry/{case_id}/append", json={"note": "pathology", "already_scrubbed": True})
+    resp = client.post(
+        f"/api/v1/registry/{case_id}/append", json={"note": "pathology", "already_scrubbed": True}
+    )
     assert resp.status_code == 401
 
 
@@ -131,14 +133,20 @@ def test_append_supports_structured_only_pipeline_bypass(client: TestClient, app
         },
     )
     assert res.status_code == 200
-    row = append_db.query(RegistryAppendedDocument).filter_by(id=uuid.UUID(res.json()["append_id"])).one()
+    row = (
+        append_db.query(RegistryAppendedDocument)
+        .filter_by(id=uuid.UUID(res.json()["append_id"]))
+        .one()
+    )
     assert row.note_text == ""
     assert row.event_type == "clinical_update"
     assert row.relative_day_offset == -3
     assert row.metadata_json.get("structured_data", {}).get("hospital_admission") is True
 
 
-def test_append_rejects_when_note_and_structured_data_missing(client: TestClient, append_db) -> None:
+def test_append_rejects_when_note_and_structured_data_missing(
+    client: TestClient, append_db
+) -> None:
     case_id = uuid.uuid4()
     _seed_case(append_db, user_id="user_a", registry_uuid=case_id)
     res = client.post(
@@ -163,7 +171,11 @@ def test_append_accepts_legacy_document_kind_alias(client: TestClient, append_db
         },
     )
     assert res.status_code == 200
-    row = append_db.query(RegistryAppendedDocument).filter_by(id=uuid.UUID(res.json()["append_id"])).one()
+    row = (
+        append_db.query(RegistryAppendedDocument)
+        .filter_by(id=uuid.UUID(res.json()["append_id"]))
+        .one()
+    )
     assert row.document_kind == "imaging"
     assert row.event_type == "imaging"
     assert row.relative_day_offset == -7

@@ -41,7 +41,7 @@ def download_s3_to_path(bucket: str, key: str, dest_path: Path) -> None:
     os.close(fd)
     tmp_path = Path(tmp_name)
     try:
-        import boto3
+        import boto3  # type: ignore[import-untyped]
 
         boto3.client("s3").download_file(bucket, key, str(tmp_path))
         os.replace(tmp_path, dest_path)
@@ -261,4 +261,3 @@ __all__ = [
     "normalize_strict",
     "parse_s3_uri",
 ]
-

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Literal, TYPE_CHECKING
+from typing import Any, Literal, TYPE_CHECKING, cast
 
 from pydantic import BaseModel, Field
 
@@ -62,7 +62,7 @@ def _normalize_payload(payload: BaseModel | dict[str, Any] | None) -> dict[str, 
     if isinstance(payload, dict):
         return payload
     try:
-        return dict(payload)  # type: ignore[arg-type]
+        return dict(payload)
     except Exception:
         return {}
 
@@ -90,15 +90,15 @@ def _expand_list_paths(payload: Any, field_path: str) -> list[str]:
 def _compare(value: Any, op: str, target: Any) -> bool:
     try:
         if op == "lt":
-            return value < target
+            return bool(value < target)
         if op == "lte":
-            return value <= target
+            return bool(value <= target)
         if op == "eq":
-            return value == target
+            return bool(value == target)
         if op == "gt":
-            return value > target
+            return bool(value > target)
         if op == "gte":
-            return value >= target
+            return bool(value >= target)
     except Exception:
         return False
     return False
@@ -110,8 +110,9 @@ class ValidationEngine:
         self.schemas = schema_registry
 
     def _field_configs(self, meta: "TemplateMeta") -> dict[str, FieldConfig]:
-        if getattr(meta, "field_configs", None):
-            return meta.field_configs  # type: ignore[return-value]
+        existing_field_configs = getattr(meta, "field_configs", None)
+        if isinstance(existing_field_configs, dict) and existing_field_configs:
+            return cast(dict[str, FieldConfig], existing_field_configs)
         configs: dict[str, FieldConfig] = {}
         for path in getattr(meta, "required_fields", []) or []:
             configs[path] = FieldConfig(path=path, required=True, critical=True)

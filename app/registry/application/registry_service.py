@@ -619,9 +619,12 @@ class RegistryService:
         )
 
         # 3. Run Extractor with Coder Hints
+        coder_difficulty = (
+            coder_result.difficulty.value if coder_result.difficulty is not None else "unknown"
+        )
         extraction_context = {
             "verified_cpt_codes": coder_result.codes,
-            "coder_difficulty": coder_result.difficulty.value,
+            "coder_difficulty": coder_difficulty,
             "hybrid_source": coder_result.source,
             "ml_metadata": coder_result.metadata.get("ml_result"),
             "schema_version": "v3",
@@ -647,7 +650,7 @@ class RegistryService:
             RegistryExtractionResult(
                 record=merged_record,
                 cpt_codes=coder_result.codes,
-                coder_difficulty=coder_result.difficulty.value,
+                coder_difficulty=coder_difficulty,
                 coder_source=coder_result.source,
                 mapped_fields=mapped_fields,
                 warnings=list(engine_warnings),
@@ -748,11 +751,11 @@ class RegistryService:
                 totals = EndoSoftCleanMeta()
                 cleaned_bodies: list[str] = []
                 for body, page_type in zip(doc.page_texts, fp.page_types or [], strict=False):
-                    clean_body, page_meta = clean_endosoft_page_with_meta(body, page_type)
+                    clean_body, endosoft_page_meta = clean_endosoft_page_with_meta(body, page_type)
                     cleaned_bodies.append(clean_body)
-                    totals.masked_footer_lines += page_meta.masked_footer_lines
-                    totals.masked_caption_lines += page_meta.masked_caption_lines
-                    totals.masked_dedup_blocks += page_meta.masked_dedup_blocks
+                    totals.masked_footer_lines += endosoft_page_meta.masked_footer_lines
+                    totals.masked_caption_lines += endosoft_page_meta.masked_caption_lines
+                    totals.masked_dedup_blocks += endosoft_page_meta.masked_dedup_blocks
 
                 if cleaned_bodies:
                     preprocessed_note_text = doc.reassemble(cleaned_page_bodies=cleaned_bodies)
@@ -772,8 +775,8 @@ class RegistryService:
             elif fp.vendor == "provation" and fp.confidence >= 0.75:
                 from app.text_cleaning.provation_cleaner import clean_provation
 
-                page_meta = clean_provation(doc.page_texts, fp.page_types)
-                cleaned_bodies = [p.clean_text for p in page_meta]
+                provation_page_meta = clean_provation(doc.page_texts, fp.page_types)
+                cleaned_bodies = [p.clean_text for p in provation_page_meta]
                 if cleaned_bodies:
                     preprocessed_note_text = doc.reassemble(cleaned_page_bodies=cleaned_bodies)
                     sums = {
@@ -782,7 +785,7 @@ class RegistryService:
                         "masked_consecutive_line_dupes": 0,
                         "masked_block_dupes": 0,
                     }
-                    for p in page_meta:
+                    for p in provation_page_meta:
                         metrics = p.metrics or {}
                         for k in list(sums.keys()):
                             try:
@@ -927,9 +930,10 @@ class RegistryService:
 
                 # Get record from Path A (NER → Registry → Rules)
                 path_a_details = parallel_result.path_a_result.details
-                record = path_a_details.get("record")
-
-                if record is None:
+                record_candidate = path_a_details.get("record")
+                if isinstance(record_candidate, RegistryRecord):
+                    record = record_candidate
+                else:
                     # Fallback: create empty record if NER pathway failed
                     record = RegistryRecord()
                     warnings.append("Parallel NER path_a produced no record; using empty record")
@@ -2341,9 +2345,11 @@ class RegistryService:
         if callable(run_with_warnings):
             record, engine_warnings = run_with_warnings(text_for_extraction, context=context)
         else:
-            record = self.registry_engine.run(text_for_extraction, context=context)
-            if isinstance(record, tuple):
-                record = record[0]  # Unpack if evidence included
+            run_result = self.registry_engine.run(text_for_extraction, context=context)
+            if isinstance(run_result, tuple):
+                record = run_result[0]  # Unpack if evidence included
+            else:
+                record = run_result
         warnings.extend(engine_warnings)
 
         record, granular_warnings = _apply_granular_up_propagation(record)
@@ -3318,7 +3324,7 @@ class RegistryService:
         pleural = getattr(record, "pleural_procedures", None)
 
         # Helper to safely check if a nested procedure is present
-        def _proc_is_set(obj, attr: str) -> bool:
+        def _proc_is_set(obj: Any, attr: str) -> bool:
             if obj is None:
                 return False
             sub_obj = getattr(obj, attr, None)
@@ -3578,7 +3584,7 @@ class RegistryService:
         logger.info(
             "registry_validation_complete",
             extra={
-                "coder_difficulty": coder_result.difficulty.value,
+                "coder_difficulty": result.coder_difficulty,
                 "coder_source": coder_result.source,
                 "needs_manual_review": needs_manual_review,
                 "validation_error_count": len(validation_errors),

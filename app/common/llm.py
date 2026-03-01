@@ -6,20 +6,25 @@ import atexit
 import json
 import os
 import random
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Protocol, TypeVar
+from typing import Any, Protocol, TypeVar, cast
 
 import httpx
 from dotenv import load_dotenv
 from pydantic import BaseModel
+
 try:
-    from google.auth import default as google_auth_default
-    from google.auth.transport.requests import Request as GoogleAuthRequest
+    import google.auth as _google_auth_module
+    from google.auth.transport import requests as _google_auth_requests
 except ImportError:  # google-auth is optional unless OAuth is used
-    google_auth_default = None  # type: ignore[assignment]
-    GoogleAuthRequest = None  # type: ignore[assignment]
+    google_auth_default: Any | None = None
+    GoogleAuthRequest: Any | None = None
+else:
+    google_auth_default = _google_auth_module.default
+    GoogleAuthRequest = _google_auth_requests.Request
 
 from app.common.logger import get_logger
 from app.common.exceptions import LLMError
@@ -152,7 +157,7 @@ def _record_usage(
         )
         # Ensure visibility even when logs aren't shown.
         try:
-            print(msg, file=os.sys.stderr)
+            print(msg, file=sys.stderr)
         except Exception:
             pass
         logger.info(msg)
@@ -184,7 +189,7 @@ def _print_usage_summary() -> None:
 
     msg = "\n".join(lines)
     try:
-        print(msg, file=os.sys.stderr)
+        print(msg, file=sys.stderr)
     except Exception:
         pass
     logger.info(msg)
@@ -223,7 +228,8 @@ def _resolve_openai_model(task: str | None) -> str:
 
 def _resolve_openai_timeout_seconds(task: str | None) -> float:
     # Back-compat shim for older callers/tests. Prefer `_resolve_openai_timeout()`.
-    return float(_resolve_openai_timeout(task).read)
+    read_timeout = _resolve_openai_timeout(task).read
+    return float(read_timeout if read_timeout is not None else 60.0)
 
 
 def _get_float_env(name: str) -> float | None:
@@ -288,7 +294,7 @@ def _openai_request_id(response: httpx.Response) -> str | None:
     for header_name in ("x-request-id", "request-id", "x-openai-request-id", "openai-request-id"):
         value = response.headers.get(header_name)
         if value:
-            return value
+            return str(value)
     return None
 
 
@@ -441,7 +447,7 @@ class OpenAILLM:
         timeout_seconds: float | None = None,
     ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
-        self.model = model or os.getenv("OPENAI_MODEL", "gpt-5.1")
+        self.model = (model or os.getenv("OPENAI_MODEL") or "gpt-5.1").strip() or "gpt-5.1"
         self.base_url = _normalize_openai_base_url(os.getenv("OPENAI_BASE_URL"))
         self.task = task
         self.timeout_seconds = float(timeout_seconds) if timeout_seconds is not None else None
@@ -480,7 +486,7 @@ class OpenAILLM:
         response_schema: StructuredOutputSpec | dict[str, Any] | None = None,
         *,
         task: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> str:
         """Generate a response from OpenAI.
 
@@ -590,7 +596,7 @@ class OpenAILLM:
         *,
         response_schema: StructuredOutputSpec | None = None,
         task: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> tuple[str, dict[str, Any]]:
         """Generate using Responses API (POST /v1/responses)."""
         url = f"{self.base_url}/v1/responses"
@@ -649,7 +655,7 @@ class OpenAILLM:
         *,
         response_schema: StructuredOutputSpec | None = None,
         task: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> tuple[str, dict[str, Any]]:
         """Generate using Chat Completions API (POST /v1/chat/completions)."""
         url = f"{self.base_url}/v1/chat/completions"
@@ -808,8 +814,9 @@ class GeminiLLM:
         use_oauth: bool | None = None,
     ) -> None:
         self.api_key = api_key
-        self.model = model or os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+        self.model = (model or os.getenv("GEMINI_MODEL") or "gemini-2.5-flash-lite").strip() or "gemini-2.5-flash-lite"
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
+        self._credentials: Any | None = None
         
         # Determine authentication method
         if use_oauth is None:
@@ -821,7 +828,6 @@ class GeminiLLM:
             if api_key:
                 logger.warning("Both API key and OAuth enabled. Using OAuth authentication.")
             logger.info("Using OAuth2/service account authentication for Gemini API")
-            self._credentials = None
             self._refresh_credentials()
         elif not api_key:
             # Attempt to find key in env if not passed explicitly and not using oauth
@@ -836,15 +842,15 @@ class GeminiLLM:
 
     def _refresh_credentials(self) -> None:
         """Refresh OAuth2 credentials using Application Default Credentials."""
-        if not google_auth_default or not GoogleAuthRequest:
+        if google_auth_default is None or GoogleAuthRequest is None:
             raise RuntimeError(
                 "google-auth is required for OAuth2 Gemini access. Install google-auth and retry."
             )
         try:
             credentials, _ = google_auth_default()
             # Ensure we have a valid token
-            if not credentials.valid:
-                credentials.refresh(GoogleAuthRequest())
+            if not getattr(credentials, "valid", False):
+                cast(Any, credentials).refresh(GoogleAuthRequest())
             self._credentials = credentials
             logger.debug("OAuth2 credentials refreshed successfully")
         except Exception as e:
@@ -858,19 +864,23 @@ class GeminiLLM:
 
     def _get_access_token(self) -> str:
         """Get a valid OAuth2 access token."""
-        if not self._credentials or not self._credentials.valid:
+        if self._credentials is None or not bool(getattr(self._credentials, "valid", False)):
             self._refresh_credentials()
-        return self._credentials.token  # type: ignore[return-value]
+        token = getattr(self._credentials, "token", None)
+        if isinstance(token, str) and token:
+            return token
+        raise RuntimeError("OAuth2 credentials did not provide an access token")
 
     def generate(
         self,
         prompt: str,
-        response_schema: dict | None = None,
+        response_schema: dict[str, Any] | None = None,
         max_retries: int = 3,
         *,
         temperature: float | None = None,
         task: str | None = None,
         prompt_version: str | None = None,
+        **_kwargs: Any,
     ) -> str:
         settings = get_infra_settings()
         deadline = time.monotonic() + float(settings.llm_timeout_s)
@@ -915,7 +925,7 @@ class GeminiLLM:
         }
 
         # Retry logic with exponential backoff
-        last_error = None
+        last_error: Exception | None = None
         for attempt in range(max_retries):
             try:
                 timeout = httpx.Timeout(
@@ -947,7 +957,8 @@ class GeminiLLM:
                         logger.error("No candidates returned from Gemini API")
                         return "{}"
 
-                    text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    text_raw = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    text = str(text_raw or "")
                     if cache_key is not None and text:
                         get_llm_memory_cache().set(cache_key, text, ttl_s=3600)
                     return text
@@ -982,7 +993,7 @@ class GeminiLLM:
 class DeterministicStubLLM:
     """Simple deterministic LLM stub used for tests and local runs."""
 
-    def __init__(self, payload: dict | None = None, *, reason: str | None = None) -> None:
+    def __init__(self, payload: dict[str, Any] | None = None, *, reason: str | None = None) -> None:
         self.payload = payload or {
             "indication": "Peripheral nodule",
             "anesthesia": "Moderate Sedation",

@@ -534,7 +534,7 @@ def _extract_procedure_sections(note_text: str) -> str:
     extracted_parts = []
     lines = note_text.split("\n")
     in_relevant_section = False
-    current_section_text = []
+    current_section_text: list[str] = []
 
     # Match header with optional content after colon (e.g., "PROCEDURE: Thoracentesis")
     header_pattern = re.compile(
@@ -1519,9 +1519,13 @@ class RegistryEngine:
                 for sentence in re.split(r"[\n\.]", text):
                     if "elastograph" not in sentence.lower():
                         continue
-                    match = re.search(r"elastograph\w*(?:\s*(?:pattern|patterns|score|shows|was|were|with|used)?[^:;\\-]*)[:,-]\s*([^.;\\n]+)", sentence, re.IGNORECASE)
-                    if match:
-                        candidate = match.group(1).strip()
+                    pattern_match = re.search(
+                        r"elastograph\w*(?:\s*(?:pattern|patterns|score|shows|was|were|with|used)?[^:;\\-]*)[:,-]\s*([^.;\\n]+)",
+                        sentence,
+                        re.IGNORECASE,
+                    )
+                    if pattern_match:
+                        candidate = pattern_match.group(1).strip()
                         if candidate:
                             data["ebus_elastography_pattern"] = candidate
                             break
@@ -1943,7 +1947,8 @@ class RegistryEngine:
                         "bi": "Bronchus Intermedius",
                         "distal_trachea": "Trachea",
                     }
-                    data["cao_tumor_location"] = location_mapping.get(location, location)
+                    location_key = str(location) if location is not None else ""
+                    data["cao_tumor_location"] = location_mapping.get(location_key, location_key or None)
                 if not data.get("cao_obstruction_pre_pct") and primary_site.get("pre_obstruction_pct") is not None:
                     data["cao_obstruction_pre_pct"] = primary_site["pre_obstruction_pct"]
                 if not data.get("cao_obstruction_post_pct") and primary_site.get("post_obstruction_pct") is not None:
@@ -2035,7 +2040,7 @@ class RegistryEngine:
                         data["bronch_location_lobe"] = site["lobe"]
                         break
 
-    def _extract_cao_interventions(self, text: str) -> list[dict]:
+    def _extract_cao_interventions(self, text: str) -> list[dict[str, Any]]:
         """Extract multi-site CAO intervention data from procedure text.
 
         Identifies distinct anatomic sites and extracts per-site:
@@ -2044,7 +2049,7 @@ class RegistryEngine:
         - modalities used
         - contextual notes
         """
-        interventions: list[dict] = []
+        interventions: list[dict[str, Any]] = []
         lowered = text.lower()
 
         # Define location patterns with their canonical names
@@ -2076,7 +2081,7 @@ class RegistryEngine:
         sentences = re.split(r"[.;]\s*", text)
 
         # Track which locations we've found
-        found_locations: dict[str, dict] = {}
+        found_locations: dict[str, dict[str, Any]] = {}
 
         # Track current context location for sentences without explicit location
         # (e.g., "LMS: 80% obstruction. Mechanical debulking performed. APC applied.")
@@ -2176,7 +2181,7 @@ class RegistryEngine:
         interventions = list(found_locations.values())
         return interventions
 
-    def _get_primary_cao_site(self, interventions: list[dict]) -> dict | None:
+    def _get_primary_cao_site(self, interventions: list[dict[str, Any]]) -> dict[str, Any] | None:
         """Select the primary (most clinically significant) CAO site.
 
         Priority is based on:
@@ -2193,7 +2198,7 @@ class RegistryEngine:
             "RUL", "RML", "RLL", "LUL", "LLL"
         ]
 
-        def sort_key(site: dict) -> tuple:
+        def sort_key(site: dict[str, Any]) -> tuple[int, int]:
             loc = site.get("location", "")
             try:
                 loc_priority = priority_order.index(loc)
@@ -2206,12 +2211,12 @@ class RegistryEngine:
         sorted_sites = sorted(interventions, key=sort_key)
         return sorted_sites[0] if sorted_sites else None
 
-    def _extract_biopsy_sites(self, text: str) -> list[dict]:
+    def _extract_biopsy_sites(self, text: str) -> list[dict[str, Any]]:
         """Extract multiple biopsy site locations from procedure text.
 
         Supports non-lobar locations like "distal trachea", "carina", etc.
         """
-        biopsy_sites: list[dict] = []
+        biopsy_sites: list[dict[str, Any]] = []
         lowered = text.lower()
 
         # Only extract if biopsy-related keywords present

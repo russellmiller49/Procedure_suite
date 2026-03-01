@@ -1,3 +1,4 @@
+# mypy: disable-error-code="import-untyped,type-arg,no-untyped-def,no-untyped-call"
 """
 Data preparation module for registry ML training.
 

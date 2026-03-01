@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any, cast
+
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
 
@@ -32,8 +34,8 @@ async def registry_run(
     request: Request,
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
-) -> RegistryResponse:
+    phi_scrubber: Any = _phi_scrubber_dep,
+) -> JSONResponse:
     enforce_legacy_endpoints_allowed()
 
     redaction = apply_phi_redaction(req.note, phi_scrubber)
@@ -62,7 +64,7 @@ async def registry_run(
         return JSONResponse(content=payload)
 
     eng = RegistryEngine()
-    result = await run_cpu(request.app, eng.run, note_text, explain=req.explain)
+    result = await run_cpu(request.app, cast(Any, eng.run), note_text, explain=req.explain)
     if isinstance(result, tuple):
         record, evidence = result
     else:

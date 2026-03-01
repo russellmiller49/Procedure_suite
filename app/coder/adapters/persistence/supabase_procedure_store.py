@@ -102,14 +102,14 @@ class SupabaseClient:
                 operation="init",
             )
 
-        self._client = None
+        self._client: Any | None = None
 
     @property
-    def client(self):
+    def client(self) -> Any:
         """Lazy-initialize and return the Supabase client."""
         if self._client is None:
             try:
-                from supabase import create_client
+                from supabase import create_client  # type: ignore[import-not-found]
                 self._client = create_client(self._url, self._key)
                 logger.info("Supabase client initialized")
             except ImportError:
@@ -124,7 +124,7 @@ class SupabaseClient:
                 )
         return self._client
 
-    def table(self, name: str):
+    def table(self, name: str) -> Any:
         """Get a table reference."""
         return self.client.table(name)
 
@@ -398,7 +398,9 @@ class SupabaseProcedureStore(ProcedureStore):
                 .execute()
             )
             if response.data:
-                return response.data[0]["export_json"]
+                value = response.data[0].get("export_json")
+                if isinstance(value, dict):
+                    return value
             return None
         except PersistenceError:
             raise
@@ -500,7 +502,7 @@ class SupabaseProcedureStore(ProcedureStore):
         Useful for debugging and testing.
         """
         try:
-            ids = set()
+            ids: set[str] = set()
 
             for table in [
                 TABLE_SUGGESTIONS,

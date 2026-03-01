@@ -254,7 +254,10 @@ def parse_responses_json_object(resp_json: dict[str, Any]) -> dict[str, Any] | N
                 cleaned = cleaned[4:].strip()
         if cleaned.endswith("```"):
             cleaned = cleaned[:-3].strip()
-        return json.loads(cleaned)
+        parsed = json.loads(cleaned)
+        if isinstance(parsed, dict):
+            return parsed
+        return None
     except (ValueError, json.JSONDecodeError):
         return None
 
@@ -264,7 +267,7 @@ def _openai_request_id(response: httpx.Response) -> str | None:
     for header_name in ("x-request-id", "request-id", "x-openai-request-id", "openai-request-id"):
         value = response.headers.get(header_name)
         if value:
-            return value
+            return str(value)
     return None
 
 
@@ -449,7 +452,11 @@ def post_responses(
                     response.status_code,
                     list(resp_json.keys()) if isinstance(resp_json, dict) else type(resp_json).__name__,
                 )
-                return resp_json
+                if isinstance(resp_json, dict):
+                    return resp_json
+                raise LLMError(
+                    f"Responses API returned non-object payload (model={model}): {type(resp_json).__name__}"
+                )
 
             message, error_type, error_param = _openai_error_details(response)
             request_id = _openai_request_id(response)

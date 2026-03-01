@@ -19,7 +19,7 @@ class RegistrySchemaRegistry:
     Supports dual-schema mode for migration between versions.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._schemas: dict[tuple[str, str], Type[BaseModel]] = {
             ("ip_registry", "v2"): IPRegistryV2,
             ("ip_registry", "v3"): IPRegistryV3,

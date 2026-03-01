@@ -24,6 +24,7 @@ from app.api.schemas import (
     UnifiedProcessRequest,
     UnifiedProcessResponse,
 )
+from app.api.schemas.base import ReviewStatus
 from app.coder.application.coding_service import CodingService
 from app.coder.phi_gating import is_phi_review_required
 from app.common.exceptions import LLMError
@@ -56,9 +57,7 @@ def apply_camera_ocr_fuzzy_normalization(note_text: str) -> tuple[str, list[str]
         for item in result.replacements[:3]
     )
     warnings = [
-        "CAMERA_OCR_FUZZY_NORMALIZE: "
-        f"replacements={result.replacement_count}; "
-        f"examples={top}"
+        f"CAMERA_OCR_FUZZY_NORMALIZE: replacements={result.replacement_count}; examples={top}"
     ]
     meta = {
         "replacement_count": result.replacement_count,
@@ -80,7 +79,7 @@ async def run_unified_pipeline_logic(
     request: Request,
     registry_service: RegistryService,
     coding_service: CodingService,
-    phi_scrubber,
+    phi_scrubber: Any,
 ) -> tuple[UnifiedProcessResponse, str, dict[str, Any]]:
     """Run the unified extraction-first pipeline.
 
@@ -117,7 +116,9 @@ async def run_unified_pipeline_logic(
         and note_text.strip()
     ):
         try:
-            normalized_text, fuzzy_warnings, fuzzy_meta = apply_camera_ocr_fuzzy_normalization(note_text)
+            normalized_text, fuzzy_warnings, fuzzy_meta = apply_camera_ocr_fuzzy_normalization(
+                note_text
+            )
             note_text = normalized_text
             camera_ocr_fuzzy_warnings.extend(fuzzy_warnings or [])
             camera_ocr_fuzzy_meta = fuzzy_meta or None
@@ -194,7 +195,7 @@ async def run_unified_pipeline_logic(
     # Surface header-explicit codes that deterministic derivation missed as low-confidence
     # "review candidates" (avoid silently dropping documented header codes).
     header_missing: set[str] = set()
-    for w in (getattr(result, "audit_warnings", None) or []):
+    for w in getattr(result, "audit_warnings", None) or []:
         text = str(w or "")
         if not text.startswith("HEADER_EXPLICIT:"):
             continue
@@ -234,7 +235,7 @@ async def run_unified_pipeline_logic(
         units_by_code: dict[str, int] = {}
 
         billing = getattr(record, "billing", None)
-        cpt_items = []
+        cpt_items: list[Any] = []
         if isinstance(billing, dict):
             cpt_items = billing.get("cpt_codes") or []
         else:
@@ -346,25 +347,34 @@ async def run_unified_pipeline_logic(
                         if isinstance(segment, str) and segment.strip():
                             match = store.match(segment, category="anatomy")
                             if match:
-                                out[f"/registry/granular_data/navigation_targets/{idx}/target_segment"] = match
+                                out[
+                                    f"/registry/granular_data/navigation_targets/{idx}/target_segment"
+                                ] = match
                         location_text = target.get("target_location_text")
-                        if isinstance(location_text, str) and location_text.strip() and len(location_text) <= 80:
+                        if (
+                            isinstance(location_text, str)
+                            and location_text.strip()
+                            and len(location_text) <= 80
+                        ):
                             match = store.match(location_text, category="anatomy")
                             if match:
-                                out[f"/registry/granular_data/navigation_targets/{idx}/target_location_text"] = match
+                                out[
+                                    f"/registry/granular_data/navigation_targets/{idx}/target_location_text"
+                                ] = match
 
             umls_normalization = out or None
     except Exception:
         umls_normalization = None
 
     needs_manual_review = result.needs_manual_review
+    review_status: ReviewStatus
     if is_phi_review_required():
-        review_status = "pending_phi_review"
+        review_status = ReviewStatus.PENDING_PHI_REVIEW
         needs_manual_review = True
     elif needs_manual_review:
-        review_status = "unverified"
+        review_status = ReviewStatus.UNVERIFIED
     else:
-        review_status = "finalized"
+        review_status = ReviewStatus.FINALIZED
 
     processing_time_ms = (time.time() - start_time) * 1000
 

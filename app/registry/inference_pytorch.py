@@ -67,9 +67,9 @@ class TorchRegistryPredictor:
 
         self._labels: list[str] = []
         self._thresholds: dict[str, float] = {}
-        self._tokenizer = None
-        self._model = None
-        self._classifier = None
+        self._tokenizer: Any | None = None
+        self._model: Any | None = None
+        self._classifier: Any | None = None
 
         try:
             self._load_bundle()
@@ -130,7 +130,7 @@ class TorchRegistryPredictor:
         if not tokenizer_dir.exists():
             raise FileNotFoundError(f"Missing tokenizer/ directory at {tokenizer_dir}")
 
-        self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_dir), local_files_only=True)
+        self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_dir), local_files_only=True)  # type: ignore[no-untyped-call]
 
         # Load base encoder (expects state_dict shaped like *Model, not *ForSequenceClassification).
         self._model = AutoModel.from_pretrained(str(self._bundle_dir), local_files_only=True)

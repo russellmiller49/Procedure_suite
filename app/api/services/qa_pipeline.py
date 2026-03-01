@@ -36,7 +36,7 @@ def _serialize_jsonable(value: Any) -> Any:
     """
     if value is None:
         return None
-    if is_dataclass(value):
+    if is_dataclass(value) and not isinstance(value, type):
         # asdict() recursively converts nested dataclasses.
         return asdict(value)
     if hasattr(value, "model_dump"):

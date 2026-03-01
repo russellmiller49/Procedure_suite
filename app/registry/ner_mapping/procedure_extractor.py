@@ -375,7 +375,7 @@ class ProcedureExtractor:
                 return None
             if stent_device_entities:
                 # Prefer device mentions closest to a stent entity.
-                def _distance(ent):
+                def _distance(ent: NEREntity) -> int:
                     return min(abs(ent.start_char - s.start_char) for s in stent_device_entities)
                 best = min(candidates, key=_distance)
             else:

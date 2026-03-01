@@ -29,8 +29,8 @@ def resolve_registry_store_database_url() -> str:
     )
 
 
-def _engine_kwargs(url: str) -> dict:
-    kwargs: dict = {}
+def _engine_kwargs(url: str) -> dict[str, object]:
+    kwargs: dict[str, object] = {}
     if url.startswith("sqlite"):
         kwargs["connect_args"] = {"check_same_thread": False}
         if ":memory:" in url:
@@ -48,7 +48,7 @@ def get_registry_store_engine() -> Engine:
 
 
 @lru_cache(maxsize=4)
-def _sessionmaker_for_url(url: str):
+def _sessionmaker_for_url(url: str) -> sessionmaker[Session]:
     engine = _engine_for_url(url)
     return sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -70,4 +70,3 @@ __all__ = [
     "get_registry_store_engine",
     "resolve_registry_store_database_url",
 ]
-

@@ -282,7 +282,7 @@ def aggregate_registry_fields(
 
     # Linear EBUS-TBNA: 31652 (1-2 stations), 31653 (3+ stations)
     if code_set & {"31652", "31653"}:
-        linear = {"performed": True}
+        linear: dict[str, Any] = {"performed": True}
         # Station count bucket derivable from CPT code
         if "31653" in code_set:
             linear["station_count_bucket"] = "3+"
@@ -312,7 +312,7 @@ def aggregate_registry_fields(
 
     # Airway stent: 31636 (initial placement), 31637 (each additional), 31638 (removal)
     if code_set & {"31636", "31637", "31638"}:
-        stent = {"performed": True}
+        stent: dict[str, Any] = {"performed": True}
         if "31638" in code_set:
             stent["action"] = "Removal"
             stent["airway_stent_removal"] = True
@@ -320,7 +320,7 @@ def aggregate_registry_fields(
 
     # Airway dilation: 31630 (balloon), 31631 (each additional)
     if code_set & {"31630", "31631"}:
-        dilation = {"performed": True}
+        dilation: dict[str, Any] = {"performed": True}
         dilation["technique"] = "Balloon"  # 31630/31631 are balloon dilation codes
         procedures["airway_dilation"] = dilation
 
@@ -331,7 +331,7 @@ def aggregate_registry_fields(
     # - 31634: Chartis / balloon occlusion assessment
     blvr_codes = {"31634", "31647", "31648", "31649", "31651"}
     if code_set & blvr_codes:
-        blvr = {"performed": True}
+        blvr: dict[str, Any] = {"performed": True}
         has_insertion = bool(code_set & {"31647", "31651"})
         has_removal = bool(code_set & {"31648", "31649"}) and not has_insertion
         if has_insertion:
@@ -410,14 +410,14 @@ def aggregate_registry_fields(
 
     # Medical thoracoscopy / pleuroscopy: 32601 (diagnostic) vs 32609 (pleural biopsy)
     if code_set & {"32601", "32609"}:
-        thor = {"performed": True}
+        thor: dict[str, Any] = {"performed": True}
         if "32609" in code_set:
             thor["biopsies_taken"] = True
         pleural["medical_thoracoscopy"] = thor
 
     # Pleurodesis: 32560 (instillation), 32650 (chemical via thoracoscopy)
     if code_set & {"32560", "32650"}:
-        pleurodesis = {"performed": True}
+        pleurodesis: dict[str, Any] = {"performed": True}
         if "32650" in code_set:
             pleurodesis["technique"] = "Thoracoscopic"
         elif "32560" in code_set:

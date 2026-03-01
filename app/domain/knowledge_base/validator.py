@@ -115,10 +115,10 @@ class SemanticValidator:
                     out |= _codes_from(item)
                 return out
             if isinstance(value, dict):
-                out: set[str] = set()
+                dict_codes: set[str] = set()
                 for item in value.values():
-                    out |= _codes_from(item)
-                return out
+                    dict_codes |= _codes_from(item)
+                return dict_codes
             return set()
 
         def _add_edges(keepers: set[str], drops: set[str]) -> None:

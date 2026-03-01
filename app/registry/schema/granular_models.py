@@ -36,7 +36,7 @@ class IPCProcedure(BaseModel):
 
     @field_validator("action", mode="before")
     @classmethod
-    def normalize_ipc_action(cls, v):
+    def normalize_ipc_action(cls, v: Any) -> Any:
         """Map common IPC action synonyms into the constrained enum."""
         if v is None:
             return v
@@ -166,7 +166,7 @@ class ClinicalContext(BaseModel):
 
     @field_validator("bronchus_sign", mode="before")
     @classmethod
-    def normalize_bronchus_sign(cls, v):
+    def normalize_bronchus_sign(cls, v: Any) -> Any:
         if v is None:
             return "Not assessed"
         if isinstance(v, bool):
@@ -183,7 +183,7 @@ class ClinicalContext(BaseModel):
 
     @field_validator("ecog_score", mode="before")
     @classmethod
-    def normalize_ecog_score(cls, v):
+    def normalize_ecog_score(cls, v: Any) -> Any:
         """Normalize ECOG/Zubrod performance status into a single 0-4 integer when explicit."""
         if v is None:
             return None
@@ -260,7 +260,7 @@ class PatientDemographics(BaseModel):
 
     @field_validator("gender", mode="before")
     @classmethod
-    def normalize_gender(cls, v):
+    def normalize_gender(cls, v: Any) -> Any:
         if v is None:
             return None
         s = str(v).strip().lower()
@@ -345,6 +345,7 @@ class AirwayStentProcedure(BaseModel):
         # (and occasionally the LLM) can update one without clearing the other.
         if self.action is None:
             return self
+        expected: Literal["placement", "removal", "revision", "assessment_only"] | None
         if self.action == "Placement":
             expected = "placement"
         elif self.action == "Removal":
@@ -361,7 +362,7 @@ class AirwayStentProcedure(BaseModel):
 
     @field_validator("action", mode="before")
     @classmethod
-    def normalize_stent_action(cls, v):
+    def normalize_stent_action(cls, v: Any) -> Any:
         """Map common free-text stent actions into the constrained enum.
 
         Self-correction (and occasionally extraction) can emit compound strings like
@@ -403,7 +404,7 @@ class AirwayStentProcedure(BaseModel):
 
     @field_validator("stent_brand", mode="before")
     @classmethod
-    def normalize_stent_brand(cls, v):
+    def normalize_stent_brand(cls, v: Any) -> Any:
         if v is None:
             return None
         s = str(v).strip()
@@ -434,7 +435,7 @@ class AirwayStentProcedure(BaseModel):
 
     @field_validator("location", mode="before")
     @classmethod
-    def normalize_stent_location(cls, v):
+    def normalize_stent_location(cls, v: Any) -> Any:
         if v is None:
             return v
         s = str(v).strip().lower()
@@ -501,7 +502,7 @@ class EBUSStationDetail(BaseModel):
 
     @field_validator("needle_gauge", mode="before")
     @classmethod
-    def normalize_needle_gauge(cls, v):
+    def normalize_needle_gauge(cls, v: Any) -> Any:
         """Parse needle gauge from strings like '22G' or '22-gauge' to integer."""
         if v is None:
             return None
@@ -520,7 +521,7 @@ class EBUSStationDetail(BaseModel):
 
     @field_validator("needle_type", mode="before")
     @classmethod
-    def normalize_needle_type(cls, v):
+    def normalize_needle_type(cls, v: Any) -> Any:
         """Map brand names like 'Olympus NA-201SX-4022' to standard categories."""
         if v is None:
             return None
@@ -556,7 +557,7 @@ class EBUSStationDetail(BaseModel):
 
     @field_validator("rose_result", mode="before")
     @classmethod
-    def normalize_rose_result(cls, v):
+    def normalize_rose_result(cls, v: Any) -> Any:
         """Map descriptive results like 'POSITIVE - Squamous cell carcinoma' to enum values."""
         if v is None:
             return None
@@ -682,7 +683,7 @@ class NavigationTarget(BaseModel):
 
     @field_validator('bronchus_sign', mode='before')
     @classmethod
-    def normalize_bronchus_sign(cls, v):
+    def normalize_bronchus_sign(cls, v: Any) -> Any:
         """Normalize bronchus sign values from LLM output."""
         if v is True:
             return "Positive"
@@ -830,7 +831,11 @@ class CryobiopsySite(BaseModel):
     rebus_view: str | None = None
     
     # Biopsy details
-    probe_size_mm: Literal[1.1, 1.7, 1.9, 2.4] | None = None
+    probe_size_mm: float | None = Field(
+        None,
+        ge=0,
+        description="Cryoprobe size in mm when documented (commonly 1.1, 1.7, 1.9, 2.4).",
+    )
     freeze_time_seconds: int | None = Field(None, ge=0, le=10)
     number_of_biopsies: int | None = Field(None, ge=0)
     specimen_size_mm: float | None = Field(None, ge=0)
@@ -878,7 +883,7 @@ class ThoracoscopyFinding(BaseModel):
 
     @field_validator("biopsy_tool", mode="before")
     @classmethod
-    def normalize_thoracoscopy_biopsy_tool(cls, v):
+    def normalize_thoracoscopy_biopsy_tool(cls, v: Any) -> Any:
         if v is None:
             return v
         s = str(v).lower()
@@ -894,7 +899,7 @@ class ThoracoscopyFinding(BaseModel):
 
     @field_validator("location", mode="before")
     @classmethod
-    def normalize_thoracoscopy_location(cls, v):
+    def normalize_thoracoscopy_location(cls, v: Any) -> Any:
         if v is None:
             return v
         s = str(v).lower()
@@ -941,7 +946,7 @@ class SpecimenCollected(BaseModel):
 
     @field_validator("source_procedure", mode="before")
     @classmethod
-    def normalize_source_procedure(cls, v):
+    def normalize_source_procedure(cls, v: Any) -> Any:
         """Map descriptive procedure names to standard categories."""
         if v is None:
             return None

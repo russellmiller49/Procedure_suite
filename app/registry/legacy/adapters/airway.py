@@ -343,7 +343,14 @@ class EBUSTBNAAdapter(ExtractionAdapter):
         station_entries = []
         passes_global = source.get("ebus_passes")
         try:
-            passes_global = int(passes_global) if passes_global not in (None, "", []) else None
+            if passes_global in (None, "", []):
+                passes_global = None
+            elif isinstance(passes_global, (int, float)):
+                passes_global = int(passes_global)
+            elif isinstance(passes_global, str):
+                passes_global = int(passes_global.strip())
+            else:
+                passes_global = None
         except Exception:
             passes_global = None
 

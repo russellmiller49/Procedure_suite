@@ -46,7 +46,7 @@ class ExtractionAdapter:
         return f"{cls.proc_type}_v1"
 
     @classmethod
-    def extract(cls, source: dict[str, Any]) -> BaseModel | None:
+    def extract(cls, source: dict[str, Any]) -> BaseModel | dict[str, Any] | None:
         if not cls.matches(source):
             return None
         payload = cls.build_payload(source)

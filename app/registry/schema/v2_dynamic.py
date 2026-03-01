@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import re
 from uuid import UUID
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from pydantic import (
     BaseModel,
@@ -99,7 +99,7 @@ class ThermalAblationProcedure(BaseModel):
 
     @field_validator("modality", mode="before")
     @classmethod
-    def normalize_thermal_ablation_modality(cls, v):
+    def normalize_thermal_ablation_modality(cls, v: Any) -> Any:
         if v is None:
             return None
 
@@ -141,12 +141,12 @@ class ThermalAblationProcedure(BaseModel):
             return out or None
 
         if isinstance(v, list):
-            out: list[ThermalAblationModality] = []
+            out_list: list[ThermalAblationModality] = []
             for item in v:
                 norm = _normalize_one(str(item))
-                if norm and norm not in out:
-                    out.append(norm)
-            return out or None
+                if norm and norm not in out_list:
+                    out_list.append(norm)
+            return out_list or None
 
         # Unsupported type; leave as-is for downstream validation to handle.
         return v
@@ -275,7 +275,7 @@ _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 def _load_schema() -> dict[str, Any]:
     if not _SCHEMA_PATH.exists():
         raise FileNotFoundError(f"Registry schema not found at {_SCHEMA_PATH}")
-    return json.loads(_SCHEMA_PATH.read_text())
+    return cast(dict[str, Any], json.loads(_SCHEMA_PATH.read_text()))
 
 
 def _pascal_case(parts: list[str]) -> str:
@@ -294,7 +294,7 @@ def _schema_type(prop: dict[str, Any], path: tuple[str, ...]) -> Any:
     if enum:
         values = tuple(v for v in enum if v is not None)
         if values:
-            return Literal[values]  # type: ignore[arg-type]
+            return Literal[values]
 
     typ = prop.get("type")
     if isinstance(typ, list):
@@ -310,8 +310,8 @@ def _schema_type(prop: dict[str, Any], path: tuple[str, ...]) -> Any:
         return bool
     if typ == "array":
         items = prop.get("items") or {}
-        item_type = _schema_type(items, path + ("item",))
-        return list[item_type]  # type: ignore[index]
+        _schema_type(items, path + ("item",))
+        return list[Any]
     if typ == "object" or prop.get("properties"):
         properties = prop.get("properties") or {}
         additional = prop.get("additionalProperties")
@@ -319,8 +319,8 @@ def _schema_type(prop: dict[str, Any], path: tuple[str, ...]) -> Any:
             if additional is True:
                 return dict[str, Any]
             if isinstance(additional, dict):
-                value_type = _schema_type(additional, path + ("value",))
-                return dict[str, value_type]  # type: ignore[index]
+                _schema_type(additional, path + ("value",))
+                return dict[str, Any]
         return _build_submodel(path, prop)
     return Any
 
@@ -333,13 +333,16 @@ def _build_submodel(path: tuple[str, ...], schema: dict[str, Any]) -> type[BaseM
     field_defs: dict[str, tuple[Any, Any]] = {}
     for name, prop in properties.items():
         field_type = _schema_type(prop, path + (name,))
-        field_defs[name] = (field_type | None, Field(default=None))  # type: ignore[operator]
+        field_defs[name] = (field_type | None, Field(default=None))
 
     model_name = _pascal_case(list(path)) or "RegistrySubModel"
-    model = create_model(
+    model = cast(
+        type[BaseModel],
+        create_model(
         model_name,
         __config__=ConfigDict(extra="ignore"),
-        **field_defs,  # type: ignore[arg-type]
+        **cast(dict[str, Any], field_defs),
+        ),
     )
     _MODEL_CACHE[path] = model
     return model
@@ -399,7 +402,7 @@ def _build_registry_model() -> type[BaseModel]:
 
         @field_serializer("procedure_setting")
         @classmethod
-        def serialize_procedure_setting(cls, value):
+        def serialize_procedure_setting(cls, value: Any) -> Any:
             """Serialize nested procedure_setting (required by the UI)."""
             if value is None:
                 return None
@@ -409,7 +412,7 @@ def _build_registry_model() -> type[BaseModel]:
 
         @model_validator(mode="before")
         @classmethod
-        def hoist_granular_arrays(cls, values: Any):
+        def hoist_granular_arrays(cls, values: Any) -> Any:
             """Ensure legacy flat granular arrays get nested under granular_data."""
             if not isinstance(values, dict):
                 return values
@@ -439,7 +442,7 @@ def _build_registry_model() -> type[BaseModel]:
 
         @model_validator(mode="before")
         @classmethod
-        def map_pleural_legacy_fields(cls, values: Any):
+        def map_pleural_legacy_fields(cls, values: Any) -> Any:
             """Map legacy pleural flat fields <-> pleural_procedures for compatibility."""
             if not isinstance(values, dict):
                 return values
@@ -543,20 +546,20 @@ def _build_registry_model() -> type[BaseModel]:
                     return {"chest_tube": tube}
 
                 if isinstance(pleural_type, str) and pleural_type.startswith("Tunneled"):
-                    ipc = {"performed": True}
+                    ipc: dict[str, Any] = {"performed": True}
                     if values.get("pleural_side") is not None:
                         ipc["side"] = values.get("pleural_side")
                     ipc["action"] = "Insertion"
                     return {"ipc": ipc}
 
                 if pleural_type == "Medical Thoracoscopy":
-                    thor = {"performed": True}
+                    thor: dict[str, Any] = {"performed": True}
                     if values.get("pleural_side") is not None:
                         thor["side"] = values.get("pleural_side")
                     return {"medical_thoracoscopy": thor}
 
                 if pleural_type == "Chemical Pleurodesis":
-                    pleuro = {"performed": True}
+                    pleuro: dict[str, Any] = {"performed": True}
                     if values.get("pleural_side") is not None:
                         pleuro["side"] = values.get("pleural_side")
                     if values.get("pleural_pleurodesis_agent") is not None:
@@ -582,7 +585,7 @@ def _build_registry_model() -> type[BaseModel]:
 
         @model_validator(mode="before")
         @classmethod
-        def canonicalize_literal_values(cls, values: Any):
+        def canonicalize_literal_values(cls, values: Any) -> Any:
             """Normalize common literal mismatches before field validation.
 
             This is a choke point to prevent Pydantic Literal crashes when upstream
@@ -689,7 +692,7 @@ def _build_registry_model() -> type[BaseModel]:
 
         @model_validator(mode="before")
         @classmethod
-        def migrate_providers_team(cls, values: Any):
+        def migrate_providers_team(cls, values: Any) -> Any:
             """Populate providers_team from legacy providers (backward compatible)."""
             if not isinstance(values, dict):
                 return values

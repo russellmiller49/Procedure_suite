@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass
 import os
 from pathlib import Path
-from typing import List
+from typing import Any, List
 
 from config.settings import KnowledgeSettings
 from app.common.llm import GeminiLLM, OpenAILLM
@@ -23,8 +23,9 @@ class RegistryErrorExample:
     note_text: str
 
 
-def _load_schema() -> dict:
-    return json.loads(_SCHEMA_PATH.read_text())
+def _load_schema() -> dict[str, Any]:
+    raw = json.loads(_SCHEMA_PATH.read_text())
+    return raw if isinstance(raw, dict) else {}
 
 
 def get_allowed_values(field_name: str) -> list[str]:
@@ -94,7 +95,7 @@ def build_self_correction_prompt(
 
 def suggest_improvements_for_field(
     field_name: str, allowed_values: list[str], max_examples: int = 20
-) -> dict:
+) -> dict[str, Any]:
     errors = load_errors("data/registry_errors.jsonl", field_name, max_examples=max_examples)
     if not errors:
         return {"error": f"No errors found for field '{field_name}'. Run validation first."}
@@ -114,6 +115,8 @@ def suggest_improvements_for_field(
     except Exception as exc:  # noqa: BLE001
         return {"error": f"LLM suggestion failed: {exc}"}
 
+    if not isinstance(suggestion, dict):
+        return {"error": "LLM suggestion was not a JSON object"}
     return suggestion
 
 

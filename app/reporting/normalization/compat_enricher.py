@@ -47,14 +47,21 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     # NOTE: `_COMPAT_ATTRIBUTE_PATHS` is not guaranteed to exist after schema refactors.
     # Keep this function resilient by falling back to a small set of derived aliases
     # from the nested V3/V2-dynamic shapes (used by `parallel_ner`).
+    compat_attribute_paths: dict[str, tuple[str, ...]]
     try:
-        from app.registry.schema import _COMPAT_ATTRIBUTE_PATHS  # type: ignore[attr-defined]
-    except ImportError:
-        _COMPAT_ATTRIBUTE_PATHS = {}  # type: ignore[assignment]
+        import app.registry.schema as registry_schema
 
-    def _get_nested(d: dict, path: tuple[str, ...]) -> Any:
+        imported_compat_attribute_paths = getattr(registry_schema, "_COMPAT_ATTRIBUTE_PATHS", None)
+        if isinstance(imported_compat_attribute_paths, dict):
+            compat_attribute_paths = cast(dict[str, tuple[str, ...]], imported_compat_attribute_paths)
+        else:
+            compat_attribute_paths = {}
+    except ImportError:
+        compat_attribute_paths = {}
+
+    def _get_nested(d: dict[str, Any], path: tuple[str, ...]) -> Any:
         """Traverse nested dict by path tuple."""
-        current = d
+        current: Any = d
         for key in path:
             if not isinstance(current, dict):
                 return None
@@ -64,7 +71,7 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         return current
 
     # Add all compatibility flat fields
-    for flat_name, nested_path in _COMPAT_ATTRIBUTE_PATHS.items():
+    for flat_name, nested_path in compat_attribute_paths.items():
         if flat_name not in raw:
             value = _get_nested(raw, nested_path)
             if value is not None:
@@ -465,9 +472,9 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             ]
             label_pattern = r"(?i)\b(" + "|".join("\\s+".join(map(re.escape, label.split())) for label in field_labels) + r")\s*:\s*"
             matches = list(re.finditer(label_pattern, cleaned))
-            for idx, match in enumerate(matches):
-                key_raw = re.sub(r"\s+", " ", (match.group(1) or "").strip().lower())
-                value_start = match.end()
+            for idx, label_match in enumerate(matches):
+                key_raw = re.sub(r"\s+", " ", (label_match.group(1) or "").strip().lower())
+                value_start = label_match.end()
                 value_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(cleaned)
                 value = cleaned[value_start:value_end].strip().strip(",;").strip()
                 value = value.strip().strip('"').strip().rstrip(".").strip()
@@ -501,15 +508,15 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     value_line = value.splitlines()[0].strip().rstrip(".").strip()
                     parts = [p.strip() for p in re.split(r"\.\s+", value_line) if p.strip()]
                     if parts:
-                        kept = [parts[0]]
+                        kept_indication_parts = [parts[0]]
                         if len(parts) > 1:
                             second = parts[1]
                             if second and len(second) <= 80 and not re.search(
                                 r"(?i)\b(us|ultrasound|pigtail|pleurx|catheter|drain(?:ed|age)?|cxr|system|platform|verif|action|tbna|bx|biopsy|brush|bal)\b",
                                 second,
                             ):
-                                kept.append(second)
-                        value = ". ".join(kept)
+                                kept_indication_parts.append(second)
+                        value = ". ".join(kept_indication_parts)
                     else:
                         value = value_line
                 if key_raw in ("rebus", "rose", "ebl", "dispo", "disposition", "issues"):
@@ -556,11 +563,11 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         if not matches:
             return {}
         sections: dict[str, str] = {}
-        for idx, match in enumerate(matches):
-            key = str(match.group(1) or "").strip().lower()
+        for idx, section_match in enumerate(matches):
+            key = str(section_match.group(1) or "").strip().lower()
             if key.startswith("complication"):
                 key = "complications"
-            start = match.end()
+            start = section_match.end()
             end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
             body = text[start:end].strip()
             body = re.sub(r"\n{3,}", "\n\n", body).strip()
@@ -704,16 +711,16 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 notes_parts: list[str] = []
                 if description_section:
                     sentences = [s.strip() for s in re.split(r"[\n\.]+", description_section) if s.strip()]
-                    kept: list[str] = []
+                    kept_sentences: list[str] = []
                     for sent in sentences:
                         lower = sent.lower()
                         if "lavage" in lower:
                             continue
                         if re.search(r"(?i)\b\d+(?:\.\d+)?\s*L\b", sent):
                             continue
-                        kept.append(sent.rstrip("."))
-                    if kept:
-                        notes_parts.append(". ".join(kept).strip().rstrip("."))
+                        kept_sentences.append(sent.rstrip("."))
+                    if kept_sentences:
+                        notes_parts.append(". ".join(kept_sentences).strip().rstrip("."))
                 if notes_parts:
                     raw["wll_notes"] = "; ".join([p for p in notes_parts if p]).strip()
 
@@ -879,10 +886,10 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         for item in stations_detail:
             if not isinstance(item, dict):
                 continue
-            station = item.get("station") or item.get("station_name")
-            if station in (None, "", [], {}):
+            station_value = item.get("station") or item.get("station_name")
+            if station_value in (None, "", [], {}):
                 continue
-            station_str = str(station).strip().upper()
+            station_str = str(station_value).strip().upper()
             if station_str and station_str not in detail_stations:
                 detail_stations.append(station_str)
         if detail_stations:
@@ -910,8 +917,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     for item in raw.get("ebus_stations_detail") or []:
                         if not isinstance(item, dict):
                             continue
-                        station = item.get("station") or item.get("station_name")
-                        if station and str(station).strip().upper() in stations_sampled:
+                        detail_station_value = item.get("station") or item.get("station_name")
+                        if detail_station_value and str(detail_station_value).strip().upper() in stations_sampled:
                             filtered_detail.append(item)
                     if filtered_detail:
                         raw["ebus_stations_detail"] = filtered_detail
@@ -956,7 +963,7 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             if plan_chunk:
                 items = [part.strip().strip(",;").strip() for part in re.split(r"(?i)\b\d+\.\s*", plan_chunk) if part.strip().strip(",;").strip()]
                 if items:
-                    cleaned: list[str] = []
+                    cleaned_plan_items: list[str] = []
                     for item in items:
                         item = re.sub(r"(?i)\bchest\s*x[-\s]?ray\s*-\s*completed\b", "Chest X-ray completed", item).strip()
                         item = re.sub(r"(?i),\s*no\s+pneumothorax\b", "; no pneumothorax identified", item).strip()
@@ -966,8 +973,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                             "Molecular testing will be requested given malignancy confirmation",
                             item,
                         ).strip()
-                        cleaned.append(item.rstrip(".") + ".")
-                    raw["follow_up_plan"] = "\n\n".join(cleaned)
+                        cleaned_plan_items.append(item.rstrip(".") + ".")
+                    raw["follow_up_plan"] = "\n\n".join(cleaned_plan_items)
                 else:
                     raw["follow_up_plan"] = plan_chunk
     if raw.get("disposition") in (None, "", [], {}) and (text_fields.get("dispo") or text_fields.get("disposition")):
@@ -1077,8 +1084,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             target = re.sub(r"(?i)\bseg\b", "segment", target).strip()
             target = re.sub(r"(?i)\b(?:nodule|lesion)\b", "", target).strip()
             target = re.sub(r"\s{2,}", " ", target).strip().rstrip(",;-").strip()
-            existing = str(raw.get("nav_target_segment") or "").strip()
-            if not existing or existing.upper() in {"RUL", "RML", "RLL", "LUL", "LLL"}:
+            existing_target_segment = str(raw.get("nav_target_segment") or "").strip()
+            if not existing_target_segment or existing_target_segment.upper() in {"RUL", "RML", "RLL", "LUL", "LLL"}:
                 raw["nav_target_segment"] = target
 
             existing_loc = str(raw.get("lesion_location") or "").strip()
@@ -1256,8 +1263,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 )
 
         if derived_size_mm in (None, "", [], {}) and source_text and peripheral_target_context:
-            for match in re.finditer(r"(?i)\b(\d+(?:\.\d+)?)\s*(mm|cm)\b", search_text):
-                ctx = search_text[max(0, match.start() - 18) : min(len(search_text), match.end() + 18)].lower()
+            for size_token_match in re.finditer(r"(?i)\b(\d+(?:\.\d+)?)\s*(mm|cm)\b", search_text):
+                ctx = search_text[max(0, size_token_match.start() - 18) : min(len(search_text), size_token_match.end() + 18)].lower()
                 if any(
                     token in ctx
                     for token in (
@@ -1277,10 +1284,10 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 ):
                     continue
                 try:
-                    num = float(match.group(1))
+                    num = float(size_token_match.group(1))
                 except Exception:
                     continue
-                unit = match.group(2).lower()
+                unit = size_token_match.group(2).lower()
                 mm_val = num * 10.0 if unit == "cm" else num
                 derived_size_mm = round(mm_val, 2)
                 break
@@ -1409,7 +1416,12 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             if pleural_type in ("thoracentesis", "pigtail catheter") and raw.get("pleural_volume_drained_ml") not in (None, "", [], {}):
                 vol = raw.get("pleural_volume_drained_ml")
                 try:
-                    vol_str = str(int(float(vol)))
+                    if isinstance(vol, (int, float)):
+                        vol_str = str(int(float(vol)))
+                    elif isinstance(vol, str):
+                        vol_str = str(int(float(vol.strip())))
+                    else:
+                        raise ValueError("unsupported volume type")
                 except Exception:
                     vol_str = str(vol)
                 appearance = str(raw.get("pleural_fluid_appearance") or "").strip().rstrip(".")
@@ -1710,8 +1722,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     ):
         sites = []
         if source_text:
-            for match in re.finditer(r"(?im)^\s*-\s*site\s*\d+\s*:\s*([^\n(]+)", source_text):
-                site = match.group(1).strip().rstrip(".")
+            for site_line_match in re.finditer(r"(?im)^\s*-\s*site\s*\d+\s*:\s*([^\n(]+)", source_text):
+                site = site_line_match.group(1).strip().rstrip(".")
                 if site:
                     sites.append(site)
         samples_val = None
@@ -1807,9 +1819,9 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             technique = "Bougie dilation"
         sizes: list[int] = []
         if note_text:
-            for match in re.finditer(r"(?i)\b(\d{1,2})\s*mm\b", note_text):
+            for dilation_size_match in re.finditer(r"(?i)\b(\d{1,2})\s*mm\b", note_text):
                 try:
-                    sizes.append(int(match.group(1)))
+                    sizes.append(int(dilation_size_match.group(1)))
                 except Exception:
                     continue
         if sizes:
@@ -1911,19 +1923,19 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 }
         elif action_norm == "removal":
             if raw.get("foreign_body_removal") in (None, "", [], {}):
-                tools: list[str] = []
+                removal_tools: list[str] = []
                 lowered = (note_text or "").lower()
                 if "forceps" in lowered:
-                    tools.append("Forceps")
+                    removal_tools.append("Forceps")
                 if "snare" in lowered:
-                    tools.append("Snare")
+                    removal_tools.append("Snare")
                 if "basket" in lowered:
-                    tools.append("Basket")
+                    removal_tools.append("Basket")
                 if "cryo" in lowered:
-                    tools.append("Cryoprobe")
+                    removal_tools.append("Cryoprobe")
                 raw["foreign_body_removal"] = {
                     "airway_segment": stent_location,
-                    "tools_used": tools or ["Forceps"],
+                    "tools_used": removal_tools or ["Forceps"],
                     "passes": None,
                     "removed_intact": None,
                     "mucosal_trauma": None,
@@ -2094,16 +2106,16 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     raw["pleural_volume_drained_ml"] = volume
 
             if raw.get("pleural_fluid_appearance") in (None, "", [], {}):
-                appearance = _first_nonempty_str(thor.get("fluid_appearance"))
-                if not appearance and source_text:
+                appearance_hint = _first_nonempty_str(thor.get("fluid_appearance"))
+                if not appearance_hint and source_text:
                     match = re.search(
                         r"(?i)\b(?:drained|removed)\s+\d{2,5}\s*(?:mL|ml|cc)\s+([a-z][a-z\s-]{0,40})",
                         source_text,
                     )
                     if match:
-                        appearance = match.group(1).strip().rstrip(".")
-                if appearance:
-                    raw["pleural_fluid_appearance"] = appearance
+                        appearance_hint = match.group(1).strip().rstrip(".")
+                if appearance_hint:
+                    raw["pleural_fluid_appearance"] = appearance_hint
 
             raw.setdefault("pleural_intercostal_space", "unspecified")
             raw.setdefault("entry_location", "mid-axillary")
@@ -2160,12 +2172,12 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
 
             if raw.get("drainage_device") in (None, "", [], {}) and source_text:
                 brand = _first_nonempty_str(ipc.get("catheter_brand"))
-                size = None
+                catheter_size: str | None = None
                 match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*fr\b", source_text)
                 if match:
-                    size = match.group(1)
-                if brand and size:
-                    raw["drainage_device"] = f"{size}Fr {brand} catheter"
+                    catheter_size = match.group(1)
+                if brand and catheter_size:
+                    raw["drainage_device"] = f"{catheter_size}Fr {brand} catheter"
                 elif brand:
                     raw["drainage_device"] = f"{brand} catheter"
 
@@ -2228,15 +2240,15 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     raw["size_fr"] = f"{match.group(1)}Fr"
 
             if raw.get("drainage_device") in (None, "", [], {}) and source_text:
-                size = None
+                device_size: str | None = None
                 match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*fr\b", source_text)
                 if match:
-                    size = match.group(1)
+                    device_size = match.group(1)
                 brand = "PleurX" if re.search(r"(?i)\bpleurx\b", source_text) else None
                 if pleural_type == "pigtail catheter" and re.search(r"(?i)\bpigtail\b", source_text):
-                    raw["drainage_device"] = f"{size}Fr pigtail catheter" if size else "pigtail catheter"
-                elif brand and size:
-                    raw["drainage_device"] = f"{size}Fr {brand} catheter"
+                    raw["drainage_device"] = f"{device_size}Fr pigtail catheter" if device_size else "pigtail catheter"
+                elif brand and device_size:
+                    raw["drainage_device"] = f"{device_size}Fr {brand} catheter"
                 elif brand:
                     raw["drainage_device"] = f"{brand} catheter"
 
@@ -2245,11 +2257,11 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     raw["cxr_ordered"] = True
 
         # Postop diagnosis enrichment after pleural fields are backfilled.
-        preop_text = raw.get("preop_diagnosis_text")
+        preop_diag_text = raw.get("preop_diagnosis_text")
         postop_text = raw.get("postop_diagnosis_text")
-        if preop_text not in (None, "", [], {}) and str(postop_text or "").strip() == str(preop_text).strip():
+        if preop_diag_text not in (None, "", [], {}) and str(postop_text or "").strip() == str(preop_diag_text).strip():
             pleural_type = str(raw.get("pleural_procedure_type") or "").strip().lower()
-            lines = [str(preop_text).strip()]
+            lines = [str(preop_diag_text).strip()]
             if pleural_type == "tunneled catheter" and raw.get("pleural_side"):
                 side = str(raw.get("pleural_side") or "").strip()
                 if side:
@@ -2262,7 +2274,12 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             ):
                 vol = raw.get("pleural_volume_drained_ml")
                 try:
-                    vol_str = str(int(float(vol)))
+                    if isinstance(vol, (int, float)):
+                        vol_str = str(int(float(vol)))
+                    elif isinstance(vol, str):
+                        vol_str = str(int(float(vol.strip())))
+                    else:
+                        raise ValueError("unsupported volume type")
                 except Exception:
                     vol_str = str(vol)
                 appearance = str(raw.get("pleural_fluid_appearance") or "").strip().rstrip(".")

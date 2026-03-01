@@ -207,7 +207,7 @@ async def extract_registry_fields(
     request: Request,
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> RegistryExtractResponse:
     """
     Extract registry fields from a procedure note using hybrid-first pipeline.
@@ -284,7 +284,7 @@ async def registry_run_v3(
     req: RegistryRequest,
     request: Request,
     _ready: None = _ready_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> RegistryResponse:
     enforce_legacy_endpoints_allowed()
 

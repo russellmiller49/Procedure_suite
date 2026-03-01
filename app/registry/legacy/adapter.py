@@ -10,8 +10,8 @@ from proc_schemas.procedure_report import ProcedureReport
 try:  # optional validation if Test_reg repo is installed
     from bronch_schema.models import NodeSampling, StentPlacement  # type: ignore
 except ImportError:  # pragma: no cover
-    NodeSampling = None  # type: ignore
-    StentPlacement = None  # type: ignore
+    NodeSampling = None
+    StentPlacement = None
 
 
 def report_to_registry(report: ProcedureReport, billing: BillingResult) -> Dict[str, Any]:

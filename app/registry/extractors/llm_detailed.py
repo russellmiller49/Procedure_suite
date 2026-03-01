@@ -40,7 +40,7 @@ class ExtractionAttempt:
 
     attempt_number: int
     response_text: str
-    parsed_data: Optional[dict] = None
+    parsed_data: Optional[dict[str, Any]] = None
     validation_error: Optional[str] = None
     elapsed_ms: float = 0.0
     success: bool = False
@@ -50,7 +50,7 @@ class ExtractionAttempt:
 class ExtractionResult:
     """Full result of the extraction process with all attempts."""
 
-    value: Optional[dict] = None
+    value: Optional[dict[str, Any]] = None
     confidence: float = 0.0
     attempts: list[ExtractionAttempt] = field(default_factory=list)
     cache_hit: bool = False
@@ -106,7 +106,7 @@ class LLMDetailedExtractor:
 
     def __init__(
         self,
-        llm: GeminiLLM | OpenAILLM | None = None,
+        llm: GeminiLLM | OpenAILLM | DeterministicStubLLM | None = None,
         config: LLMExtractionConfig | None = None,
     ) -> None:
         if llm is not None:
@@ -375,7 +375,7 @@ class LLMDetailedExtractor:
         response = re.sub(r"```$", "", response)
         return response.strip()
 
-    def _build_gemini_schema(self, schema: Type[BaseModel]) -> dict | None:
+    def _build_gemini_schema(self, schema: Type[BaseModel]) -> dict[str, Any] | None:
         """Build Gemini-compatible response_schema from Pydantic model.
 
         Gemini's structured output feature enforces schema constraints at the API level,
@@ -395,7 +395,7 @@ class LLMDetailedExtractor:
             logger.warning(f"Failed to build Gemini schema, falling back to prompt-only: {e}")
             return None
 
-    def _convert_json_schema_to_gemini(self, json_schema: dict) -> dict:
+    def _convert_json_schema_to_gemini(self, json_schema: dict[str, Any]) -> dict[str, Any]:
         """Convert JSON Schema to Gemini's response_schema format.
 
         Gemini uses a subset of JSON Schema. This method handles:
@@ -406,7 +406,7 @@ class LLMDetailedExtractor:
         """
         defs = json_schema.get("$defs", json_schema.get("definitions", {}))
 
-        def resolve_ref(schema_part: dict) -> dict:
+        def resolve_ref(schema_part: dict[str, Any]) -> dict[str, Any]:
             """Resolve $ref references."""
             if "$ref" in schema_part:
                 ref_path = schema_part["$ref"]
@@ -419,7 +419,7 @@ class LLMDetailedExtractor:
                     return resolve_ref(defs.get(ref_name, {}))
             return schema_part
 
-        def convert_property(prop: dict) -> dict:
+        def convert_property(prop: dict[str, Any]) -> dict[str, Any]:
             """Convert a single property to Gemini format."""
             prop = resolve_ref(prop)
 
@@ -432,7 +432,7 @@ class LLMDetailedExtractor:
                 return {"type": "STRING", "nullable": True}
 
             prop_type = prop.get("type", "string")
-            result: dict = {}
+            result: dict[str, Any] = {}
 
             if prop_type == "string":
                 result["type"] = "STRING"
@@ -464,13 +464,15 @@ class LLMDetailedExtractor:
             return result
 
         # Convert the root schema
-        gemini_schema = {
+        gemini_schema: dict[str, Any] = {
             "type": "OBJECT",
             "properties": {}
         }
 
         for prop_name, prop_def in json_schema.get("properties", {}).items():
-            gemini_schema["properties"][prop_name] = convert_property(prop_def)
+            properties = gemini_schema.get("properties")
+            if isinstance(properties, dict):
+                properties[prop_name] = convert_property(prop_def)
 
         if "required" in json_schema:
             gemini_schema["required"] = json_schema["required"]

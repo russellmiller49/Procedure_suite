@@ -340,15 +340,15 @@ class PHIRedactor:
     def __init__(self, config: Optional[RedactionConfig] = None, use_ner_model: bool = True):
         self.config = config or RedactionConfig()
         self.use_ner_model = use_ner_model
-        self.ner_pipeline = None
+        self.ner_pipeline: Any | None = None
 
         if use_ner_model:
             self._load_ner_model()
 
-    def _load_ner_model(self):
+    def _load_ner_model(self) -> None:
         """Load the PHI NER model with a local-first policy."""
         try:
-            from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
+            from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline  # type: ignore[attr-defined]
             from pathlib import Path
         except ImportError:
             logger.warning("Transformers not installed - using regex-only mode")
@@ -362,7 +362,7 @@ class PHIRedactor:
             try:
                 logger.info("Loading PHI NER model from HuggingFace: %s", model_id)
                 model = AutoModelForTokenClassification.from_pretrained(model_id)
-                tokenizer = AutoTokenizer.from_pretrained(model_id)
+                tokenizer = AutoTokenizer.from_pretrained(model_id)  # type: ignore[no-untyped-call]
                 self.ner_pipeline = pipeline(
                     "token-classification",
                     model=model,
@@ -384,7 +384,7 @@ class PHIRedactor:
                 tokenizer = AutoTokenizer.from_pretrained(
                     str(model_path),
                     local_files_only=True,
-                )
+                )  # type: ignore[no-untyped-call]
                 self.ner_pipeline = pipeline(
                     "token-classification",
                     model=model,
@@ -855,7 +855,7 @@ def process_json_structure(data: Any, redactor: PHIRedactor, target_fields: Opti
 # 6. COMMAND LINE INTERFACE
 # =============================================================================
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Hybrid Regex + DistilBERT NER PHI Redaction for Procedural Notes"
     )

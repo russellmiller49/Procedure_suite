@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 import uuid
 from datetime import UTC, datetime
-from typing import Annotated
+from typing import Annotated, Any, Literal, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy import Select, select
@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 
 from app.api.auth import AuthenticatedUser, get_current_user
 from app.api.schemas.vault import (
+    CRYPTO_VERSION_V1,
     VaultDeleteResponse,
     VaultRecordOut,
     VaultRecordUpsert,
@@ -21,7 +22,6 @@ from app.api.schemas.vault import (
 )
 from app.registry_store.dependencies import get_registry_store_db
 from app.vault.models import UserPatientVault, UserVaultSettings
-
 
 router = APIRouter(prefix="/v1/vault", tags=["vault"])
 
@@ -38,6 +38,9 @@ def _utcnow() -> datetime:
 
 
 def _settings_to_out(row: UserVaultSettings) -> VaultSettingsOut:
+    crypto_version: Literal[1] = (
+        CRYPTO_VERSION_V1 if int(row.crypto_version) == CRYPTO_VERSION_V1 else CRYPTO_VERSION_V1
+    )
     return VaultSettingsOut(
         user_id=str(row.user_id),
         wrapped_vmk_b64=str(row.wrapped_vmk_b64),
@@ -45,21 +48,24 @@ def _settings_to_out(row: UserVaultSettings) -> VaultSettingsOut:
         kdf_salt_b64=str(row.kdf_salt_b64),
         kdf_iterations=int(row.kdf_iterations),
         kdf_hash=str(row.kdf_hash),
-        crypto_version=int(row.crypto_version),
-        created_at=row.created_at,
-        updated_at=row.updated_at,
+        crypto_version=crypto_version,
+        created_at=cast(datetime, row.created_at),
+        updated_at=cast(datetime, row.updated_at),
     )
 
 
 def _record_to_out(row: UserPatientVault) -> VaultRecordOut:
+    crypto_version: Literal[1] = (
+        CRYPTO_VERSION_V1 if int(row.crypto_version) == CRYPTO_VERSION_V1 else CRYPTO_VERSION_V1
+    )
     return VaultRecordOut(
         user_id=str(row.user_id),
-        registry_uuid=row.registry_uuid,
+        registry_uuid=cast(uuid.UUID, row.registry_uuid),
         ciphertext_b64=str(row.ciphertext_b64),
         iv_b64=str(row.iv_b64),
-        crypto_version=int(row.crypto_version),
-        created_at=row.created_at,
-        updated_at=row.updated_at,
+        crypto_version=crypto_version,
+        created_at=cast(datetime, row.created_at),
+        updated_at=cast(datetime, row.updated_at),
     )
 
 
@@ -73,7 +79,9 @@ def get_vault_settings(
     )
     row = db.execute(stmt).scalar_one_or_none()
     if row is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vault settings not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Vault settings not found"
+        )
     return _settings_to_out(row)
 
 
@@ -102,13 +110,14 @@ def put_vault_settings(
             updated_at=now,
         )
     else:
-        row.wrapped_vmk_b64 = payload.wrapped_vmk_b64
-        row.wrap_iv_b64 = payload.wrap_iv_b64
-        row.kdf_salt_b64 = payload.kdf_salt_b64
-        row.kdf_iterations = payload.kdf_iterations
-        row.kdf_hash = payload.kdf_hash
-        row.crypto_version = payload.crypto_version
-        row.updated_at = now
+        row_any = cast(Any, row)
+        row_any.wrapped_vmk_b64 = payload.wrapped_vmk_b64
+        row_any.wrap_iv_b64 = payload.wrap_iv_b64
+        row_any.kdf_salt_b64 = payload.kdf_salt_b64
+        row_any.kdf_iterations = payload.kdf_iterations
+        row_any.kdf_hash = payload.kdf_hash
+        row_any.crypto_version = payload.crypto_version
+        row_any.updated_at = now
 
     db.add(row)
     db.commit()
@@ -162,10 +171,11 @@ def put_vault_record(
         )
         response.status_code = status.HTTP_201_CREATED
     else:
-        row.ciphertext_b64 = payload.ciphertext_b64
-        row.iv_b64 = payload.iv_b64
-        row.crypto_version = payload.crypto_version
-        row.updated_at = now
+        row_any = cast(Any, row)
+        row_any.ciphertext_b64 = payload.ciphertext_b64
+        row_any.iv_b64 = payload.iv_b64
+        row_any.crypto_version = payload.crypto_version
+        row_any.updated_at = now
 
     db.add(row)
     db.commit()

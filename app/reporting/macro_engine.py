@@ -9,9 +9,12 @@ The macro system is the canonical structured layer for core procedures.
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any, Callable, cast
 
 from app.reporting.macro_registry import MacroRegistry, get_macro_registry
+
+MacroCallable = Callable[..., Any]
+AddonGetter = Callable[[str], str | None]
 
 
 def _resolve_registry(registry: MacroRegistry | None) -> MacroRegistry:
@@ -92,7 +95,7 @@ def render_macro(
     name: str,
     *,
     registry: MacroRegistry | None = None,
-    **kwargs,
+    **kwargs: Any,
 ) -> str | None:
     """Render a macro with the given parameters.
 
@@ -143,7 +146,7 @@ def find_macros_by_cpt(cpt_code: str, *, registry: MacroRegistry | None = None) 
     return results
 
 
-def get_base_utilities(*, registry: MacroRegistry | None = None) -> dict[str, Callable]:
+def get_base_utilities(*, registry: MacroRegistry | None = None) -> dict[str, MacroCallable]:
     """Get the base utility macros (specimen_list, ventilation_parameters, etc.).
 
     Returns:
@@ -153,7 +156,7 @@ def get_base_utilities(*, registry: MacroRegistry | None = None) -> dict[str, Ca
     try:
         base_template = env.get_template("base.j2")
         module = base_template.module
-        return {
+        utilities: dict[str, Any] = {
             "specimen_list": getattr(module, "specimen_list", None),
             "chest_ultrasound_findings": getattr(module, "chest_ultrasound_findings", None),
             "ventilation_parameters": getattr(module, "ventilation_parameters", None),
@@ -164,6 +167,11 @@ def get_base_utilities(*, registry: MacroRegistry | None = None) -> dict[str, Ca
             "consent_block": getattr(module, "consent_block", None),
             "timeout_block": getattr(module, "timeout_block", None),
             "rose_result": getattr(module, "rose_result", None),
+        }
+        return {
+            name: cast(MacroCallable, utility)
+            for name, utility in utilities.items()
+            if callable(utility)
         }
     except Exception:
         return {}
@@ -241,7 +249,7 @@ def get_essential_fields(
 
 def render_procedure_bundle(
     bundle: dict[str, Any],
-    addon_getter: callable = None,
+    addon_getter: AddonGetter | None = None,
     *,
     registry: MacroRegistry | None = None,
 ) -> str:
@@ -579,7 +587,7 @@ def get_missing_fields_summary(bundle: dict[str, Any], *, registry: MacroRegistr
 
 def render_bundle_with_summary(
     bundle: dict[str, Any],
-    addon_getter: callable = None,
+    addon_getter: AddonGetter | None = None,
     *,
     registry: MacroRegistry | None = None,
 ) -> tuple[str, str]:

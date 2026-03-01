@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import uuid
+from datetime import UTC, datetime
 
 import pytest
 from fastapi.testclient import TestClient
@@ -39,7 +39,7 @@ def _auth(user_id: str) -> dict[str, str]:
 
 
 def _seed_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     db.add(
         UserPatientVault(
             user_id=user_id,
@@ -73,7 +73,10 @@ def test_patch_sets_manual_leaf_locks(client: TestClient, patch_locks_db) -> Non
     res = client.patch(
         f"/api/v1/registry/{case_id}",
         headers=_auth("user_a"),
-        json={"expected_version": 1, "registry_patch": {"clinical_context": {"lesion_location": "RML"}}},
+        json={
+            "expected_version": 1,
+            "registry_patch": {"clinical_context": {"lesion_location": "RML"}},
+        },
     )
     assert res.status_code == 200
     body = res.json()

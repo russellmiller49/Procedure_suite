@@ -7,10 +7,27 @@ import re
 from app.common.sectionizer import Section
 from app.common.spans import Span
 
-from ..schema import COMPLICATIONS
 from .base import SlotResult, section_for_offset
 
-PATTERNS = {label: re.compile(label, re.IGNORECASE) for label in COMPLICATIONS if label != "None"}
+try:
+    from .. import schema as registry_schema
+
+    exported_complications = getattr(registry_schema, "COMPLICATIONS", None)
+    if isinstance(exported_complications, (list, tuple)):
+        _COMPLICATIONS = tuple(str(item) for item in exported_complications)
+    else:
+        raise AttributeError("COMPLICATIONS not exported")
+except Exception:  # pragma: no cover - compat fallback when schema doesn't export constant
+    _COMPLICATIONS = (
+        "None",
+        "Bleeding",
+        "Pneumothorax",
+        "Hypoxia",
+        "Bronchospasm",
+        "Hemoptysis",
+    )
+
+PATTERNS = {label: re.compile(label, re.IGNORECASE) for label in _COMPLICATIONS if label != "None"}
 
 
 class ComplicationsExtractor:

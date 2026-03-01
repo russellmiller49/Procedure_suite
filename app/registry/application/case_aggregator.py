@@ -6,7 +6,7 @@ import logging
 import os
 import uuid
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, cast
 
 from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
@@ -226,7 +226,7 @@ def _safe_row_text(row: RegistryAppendedDocument) -> str:
     note = str(row.note_text or "")
     if note.strip():
         return note
-    metadata = row.metadata_json or {}
+    metadata: dict[str, Any] = row.metadata_json if isinstance(row.metadata_json, dict) else {}
     structured = metadata.get("structured_data") if isinstance(metadata, dict) else None
     if isinstance(structured, dict) and structured:
         parts = [f"{k}={v}" for k, v in sorted(structured.items())]
@@ -281,16 +281,16 @@ class CaseAggregator:
                     registry_json = merged_registry
                     bootstrap_changed = True
                 if case_record.source_run_id != run_id:
-                    case_record.source_run_id = run_id
+                    cast(Any, case_record).source_run_id = run_id
                     bootstrap_changed = True
                 if bootstrap_changed:
-                    case_record.registry_json = registry_json
+                    cast(Any, case_record).registry_json = registry_json
 
         events = self._load_events(db=db, registry_uuid=registry_uuid, user_id=user_id)
         if not events:
             if bootstrap_changed:
-                case_record.version = int(case_record.version or 1) + 1
-                case_record.updated_at = _utcnow()
+                cast(Any, case_record).version = int(case_record.version or 1) + 1
+                cast(Any, case_record).updated_at = _utcnow()
                 db.add(case_record)
             return case_record
 
@@ -299,7 +299,7 @@ class CaseAggregator:
 
         for event_row in events:
             extracted = self._extract_event(event_row)
-            event_row.extracted_json = extracted
+            cast(Any, event_row).extracted_json = extracted
 
             event_changed, qa_flags = self._apply_patch(
                 registry_json,
@@ -317,7 +317,7 @@ class CaseAggregator:
                 ) from exc
 
             changed = changed or event_changed
-            event_row.aggregated_at = _utcnow()
+            cast(Any, event_row).aggregated_at = _utcnow()
             processed_ids.append(str(event_row.id))
             if qa_flags:
                 logger.info(
@@ -328,13 +328,13 @@ class CaseAggregator:
                 )
 
         if changed:
-            case_record.registry_json = registry_json
-            case_record.version = int(case_record.version or 1) + 1
-            case_record.updated_at = _utcnow()
+            cast(Any, case_record).registry_json = registry_json
+            cast(Any, case_record).version = int(case_record.version or 1) + 1
+            cast(Any, case_record).updated_at = _utcnow()
 
         final_version = int(case_record.version or 1)
         for event_row in events:
-            event_row.aggregation_version = final_version
+            cast(Any, event_row).aggregation_version = final_version
             db.add(event_row)
 
         db.add(case_record)
@@ -364,7 +364,7 @@ class CaseAggregator:
         )
         runs = list(db.execute(stmt).scalars().all())
         for run in runs:
-            raw = run.raw_response_json if isinstance(run.raw_response_json, dict) else {}
+            raw: dict[str, Any] = run.raw_response_json if isinstance(run.raw_response_json, dict) else {}
             candidates = [raw]
             maybe_result = raw.get("result") if isinstance(raw, dict) else None
             if isinstance(maybe_result, dict):
@@ -389,7 +389,8 @@ class CaseAggregator:
                 except Exception:  # noqa: BLE001
                     continue
 
-                return run.id, validated
+                run_id = cast(uuid.UUID, cast(Any, run).id)
+                return run_id, validated
 
         return None
 
@@ -415,12 +416,14 @@ class CaseAggregator:
     def _extract_event(self, row: RegistryAppendedDocument) -> dict[str, Any]:
         event_type = str(row.event_type or "other").strip().lower()
         note_text = _safe_row_text(row)
-        metadata = row.metadata_json if isinstance(row.metadata_json, dict) else {}
+        metadata: dict[str, Any] = row.metadata_json if isinstance(row.metadata_json, dict) else {}
         structured = metadata.get("structured_data") if isinstance(metadata, dict) else None
         use_llm = _should_attempt_llm_fallback()
+        relative_day_offset = cast(int | None, cast(Any, row).relative_day_offset)
+        event_subtype = cast(str | None, cast(Any, row).event_subtype)
 
         if event_type == "pathology":
-            payload = extract_pathology_event(note_text)
+            payload: dict[str, Any] = extract_pathology_event(note_text)
             results = extract_pathology_results(note_text)
 
             results_update: dict[str, Any] = {}
@@ -462,14 +465,14 @@ class CaseAggregator:
             if "pet" in source_modality:
                 payload = extract_pet_ct_event(
                     note_text,
-                    relative_day_offset=row.relative_day_offset,
-                    event_subtype=row.event_subtype,
+                    relative_day_offset=relative_day_offset,
+                    event_subtype=event_subtype,
                 )
             else:
                 payload = extract_ct_event(
                     note_text,
-                    relative_day_offset=row.relative_day_offset,
-                    event_subtype=row.event_subtype,
+                    relative_day_offset=relative_day_offset,
+                    event_subtype=event_subtype,
                 )
 
             if use_llm:
@@ -508,9 +511,9 @@ class CaseAggregator:
                 disease_status = structured.get("disease_status")
                 if not isinstance(disease_status, str) or not disease_status.strip():
                     disease_status = None
-                mapped = {
+                mapped: dict[str, Any] = {
                     "clinical_update": {
-                        "relative_day_offset": int(row.relative_day_offset or 0),
+                        "relative_day_offset": int(relative_day_offset or 0),
                         "update_type": clinical_type,
                         "hospital_admission": structured.get("hospital_admission"),
                         "icu_admission": structured.get("icu_admission"),
@@ -527,7 +530,7 @@ class CaseAggregator:
             payload = extract_clinical_update_event(
                 note_text,
                 update_type=clinical_type,
-                relative_day_offset=row.relative_day_offset,
+                relative_day_offset=relative_day_offset,
             )
 
             if use_llm:
@@ -570,7 +573,7 @@ class CaseAggregator:
                 registry_json,
                 extracted=extracted,
                 event_id=event_id,
-                relative_day_offset=event_row.relative_day_offset,
+                relative_day_offset=cast(int | None, cast(Any, event_row).relative_day_offset),
                 manual_overrides=manual_overrides,
             )
             changed2, flags2 = patch_pathology_results(
@@ -585,10 +588,10 @@ class CaseAggregator:
                 registry_json,
                 extracted=extracted,
                 event_id=event_id,
-                relative_day_offset=event_row.relative_day_offset,
-                event_subtype=event_row.event_subtype,
-                event_title=event_row.event_title,
-                source_modality=event_row.source_modality,
+                relative_day_offset=cast(int | None, cast(Any, event_row).relative_day_offset),
+                event_subtype=cast(str | None, cast(Any, event_row).event_subtype),
+                event_title=cast(str | None, cast(Any, event_row).event_title),
+                source_modality=cast(str | None, cast(Any, event_row).source_modality),
                 manual_overrides=manual_overrides,
             )
 
@@ -604,7 +607,7 @@ class CaseAggregator:
                 registry_json,
                 extracted=extracted,
                 event_id=event_id,
-                event_title=event_row.event_title,
+                event_title=cast(str | None, cast(Any, event_row).event_title),
                 manual_overrides=manual_overrides,
             )
 

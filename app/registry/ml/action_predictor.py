@@ -30,7 +30,7 @@ Usage:
 from __future__ import annotations
 
 import re
-from typing import Sequence
+from typing import Any, Protocol, Sequence
 
 from app.common.logger import get_logger
 from app.common.sectionizer import Section, SectionizerService
@@ -67,6 +67,11 @@ from .models import (
 
 
 logger = get_logger("registry.ml.action_predictor")
+
+
+class _SlotExtractor(Protocol):
+    def extract(self, text: str, sections: list[Section]) -> SlotResult:
+        ...
 
 
 # =============================================================================
@@ -300,6 +305,7 @@ class ActionPredictor:
         # Initialize slot extractors
         # Note: ComplicationsExtractor removed due to broken import
         # Complications are extracted via regex patterns instead
+        self._slot_extractors: dict[str, _SlotExtractor]
         self._slot_extractors = {
             "ebus": EbusExtractor(),
             "tblb": TBLBExtractor(),
@@ -493,7 +499,7 @@ class ActionPredictor:
         self,
         text: str,
         sections: Sequence[Section],
-        patterns: list[re.Pattern],
+        patterns: list[re.Pattern[str]],
         label: str,
         check_negation: bool = True,
     ) -> SlotResult:
@@ -600,14 +606,14 @@ class ActionPredictor:
         complications: list[str] = []
 
         # Check for explicit "no complications"
-        if NO_COMPLICATION_PATTERN.search(text):
-            match = NO_COMPLICATION_PATTERN.search(text)
+        no_complication_match = NO_COMPLICATION_PATTERN.search(text)
+        if no_complication_match:
             evidence.append(
                 Span(
-                    text=match.group(0),
-                    start=match.start(),
-                    end=match.end(),
-                    section=section_for_offset(sections, match.start()),
+                    text=no_complication_match.group(0),
+                    start=no_complication_match.start(),
+                    end=no_complication_match.end(),
+                    section=section_for_offset(sections, no_complication_match.start()),
                 )
             )
             return SlotResult(["None"], evidence, 0.8)
@@ -699,20 +705,25 @@ class ActionPredictor:
         # Biopsy (TBLB from slot extractor + regex patterns)
         tblb_result = slot_results.get("tblb")
         tblb_lobes = tblb_result.value if tblb_result and tblb_result.value else []
+        tblb_sites: list[str]
+        if isinstance(tblb_lobes, list):
+            tblb_sites = [str(site).strip() for site in tblb_lobes if str(site).strip()]
+        else:
+            tblb_sites = []
         tbb_regex_result = regex_results.get("tbb")
         cryobiopsy_result = regex_results.get("cryobiopsy")
         conventional_tbna_result = regex_results.get("conventional_tbna")
         endobronchial_biopsy_result = regex_results.get("endobronchial_biopsy")
 
         # TBB detected if slot extractor found lobes OR regex patterns matched
-        tbb_detected = len(tblb_lobes) > 0 or bool(tbb_regex_result and tbb_regex_result.value)
+        tbb_detected = len(tblb_sites) > 0 or bool(tbb_regex_result and tbb_regex_result.value)
 
         # Endobronchial biopsy is distinct from transbronchial
         ebb_detected = bool(endobronchial_biopsy_result and endobronchial_biopsy_result.value)
 
         biopsy_actions = BiopsyActions(
             transbronchial_performed=tbb_detected,
-            transbronchial_sites=tblb_lobes if isinstance(tblb_lobes, list) else [],
+            transbronchial_sites=tblb_sites,
             cryobiopsy_performed=bool(cryobiopsy_result and cryobiopsy_result.value),
             tbna_conventional_performed=bool(conventional_tbna_result and conventional_tbna_result.value),
             endobronchial_performed=ebb_detected,
@@ -759,7 +770,11 @@ class ActionPredictor:
 
         # Pleural
         pleura_result = slot_results.get("pleura")
-        pleura_values = pleura_result.value if pleura_result and pleura_result.value else []
+        pleura_values_raw = pleura_result.value if pleura_result and pleura_result.value else []
+        if isinstance(pleura_values_raw, list):
+            pleura_values = [str(value).strip() for value in pleura_values_raw if str(value).strip()]
+        else:
+            pleura_values = []
         ipc_result = regex_results.get("ipc")
         thoracoscopy_result = regex_results.get("thoracoscopy")
 
@@ -834,11 +849,19 @@ class ActionPredictor:
 
         # Complications (from regex results, not slot results)
         complications_result = regex_results.get("complications")
-        complications_values = (
+        complications_values_raw = (
             complications_result.value
             if complications_result and complications_result.value
             else []
         )
+        if isinstance(complications_values_raw, list):
+            complications_values = [
+                str(value).strip()
+                for value in complications_values_raw
+                if str(value).strip()
+            ]
+        else:
+            complications_values = []
         has_complications = (
             bool(complications_values) and complications_values != ["None"]
         )
@@ -914,7 +937,7 @@ class ActionPredictor:
 
         Returns warnings for discrepancies between extraction and ML.
         """
-        warnings = []
+        warnings: list[str] = []
 
         if not self._ml_predictor or not hasattr(self._ml_predictor, "predict"):
             return warnings

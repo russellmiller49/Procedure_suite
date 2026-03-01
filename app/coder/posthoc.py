@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Sequence
+from typing import TypedDict, Sequence
 
 from .schema import CodeDecision
 
@@ -13,7 +13,13 @@ ADDON_CONVERSION_RULE = "addon_family_conversion"
 # Define add-on code family relationships.
 # When a "family_primary" is present, any "initial_code" should convert to "addon_code".
 # This handles the case where multiple related procedures are performed together.
-ADDON_FAMILY_CONVERSIONS = {
+class AddonFamilyConversion(TypedDict):
+    family_primaries: set[str]
+    initial_code: str
+    addon_code: str
+
+
+ADDON_FAMILY_CONVERSIONS: dict[str, AddonFamilyConversion] = {
     # Stent family: When tracheal stent (31631) is present, bronchial stent initial (31636)
     # should become add-on (+31637) since 31631 serves as the primary stent procedure.
     "stent": {
@@ -89,6 +95,10 @@ def assign_distinct_site_modifiers(codes: Sequence[CodeDecision]) -> None:
         for modifier in DISTINCT_SITE_MODIFIERS:
             if modifier not in code.modifiers:
                 code.modifiers.append(modifier)
-        code.rationale += " Modifier appended for distinct airway."
+        rationale_suffix = "Modifier appended for distinct airway."
+        if isinstance(code.rationale, list):
+            code.rationale.append(rationale_suffix)
+        else:
+            code.rationale = f"{code.rationale} {rationale_suffix}".strip()
         if DISTINCT_RULE_TAG not in code.rule_trace:
             code.rule_trace.append(DISTINCT_RULE_TAG)

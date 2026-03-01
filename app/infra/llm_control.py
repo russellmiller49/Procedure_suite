@@ -8,7 +8,7 @@ import threading
 import time
 from contextlib import contextmanager
 from functools import lru_cache
-from typing import Mapping
+from typing import Iterator, Mapping
 
 from app.infra.settings import get_infra_settings
 
@@ -19,7 +19,7 @@ def get_llm_semaphore() -> threading.BoundedSemaphore:
 
 
 @contextmanager
-def llm_slot() -> None:
+def llm_slot() -> Iterator[None]:
     """Global concurrency gate for LLM requests (thread-safe)."""
     sem = get_llm_semaphore()
     sem.acquire()
@@ -49,7 +49,7 @@ def backoff_seconds(attempt: int, *, base: float = 0.75, cap: float = 10.0) -> f
     """Exponential backoff with jitter."""
     exp = base * (2**max(0, int(attempt)))
     jitter = random.uniform(0.0, base)
-    return min(cap, exp + jitter)
+    return float(min(cap, exp + jitter))
 
 
 def within_deadline(deadline: float) -> bool:

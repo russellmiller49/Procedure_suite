@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# mypy: disable-error-code="import-untyped,no-untyped-def,no-untyped-call,attr-defined,type-arg,arg-type,assignment,no-any-return"
 """Train RoBERTa-PM-M3-Voc-distill for multi-label registry procedure classification.
 
 This script trains the local RoBERTa-PM-M3-Voc-distill model for predicting registry

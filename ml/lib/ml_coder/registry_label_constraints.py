@@ -66,7 +66,7 @@ def apply_label_constraints(
     Returns:
         The normalized row dict (input mapping if inplace=True).
     """
-    out: dict[str, Any] = row if inplace else dict(row)
+    out: MutableMapping[str, Any] = row if inplace else dict(row)
     text = note_text if note_text is not None else str(out.get("note_text") or "")
 
     # --- BAL vs bronchial_wash ---
@@ -98,7 +98,7 @@ def apply_label_constraints(
         out[DEBULKING_FIELD] = 1
         out[RIGID_FIELD] = 1
 
-    return out
+    return dict(out)
 
 
 def registry_consistency_flags(row: MutableMapping[str, Any]) -> dict[str, bool]:

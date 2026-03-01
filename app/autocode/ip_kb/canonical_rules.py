@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Any, Dict, List, Set, Tuple, cast
 
 # ============================================================================
 # BUNDLING RULES derived from synthetic_CPT_corrected.json excluded_or_bundled_codes
@@ -181,7 +181,7 @@ TBLB_BUNDLES_EBB: Dict[str, Set[str]] = {
 }
 
 # Rule: EBUS 1-2 stations (31652) replaced by 3+ stations (31653) when >= 3 stations
-EBUS_STATION_UPGRADE: Dict[str, str] = {
+EBUS_STATION_UPGRADE: Dict[str, str | int] = {
     "base_code": "31652",
     "upgrade_code": "31653",
     "threshold": 3,
@@ -467,29 +467,35 @@ PDT_SYNONYMS: List[str] = [
 ]
 
 
-def load_canonical_patterns() -> List[Dict]:
+def load_canonical_patterns() -> List[Dict[str, Any]]:
     """Load the canonical synthetic_CPT_corrected.json patterns."""
     # Path is: app/autocode/ip_kb -> autocode -> app -> repo_root
     repo_root = Path(__file__).parent.parent.parent.parent
     patterns_path = repo_root / "data" / "synthetic_CPT_corrected.json"
     if patterns_path.exists():
-        with open(patterns_path, "r") as f:
-            return json.load(f)
+        with open(patterns_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        if isinstance(payload, list):
+            return cast(List[Dict[str, Any]], payload)
     return []
 
 
-def load_golden_rules() -> Dict:
+def load_golden_rules() -> Dict[str, Any]:
     """Load the golden ip_golden_knowledge_v2_2.json rules."""
     # Path is: app/autocode/ip_kb -> autocode -> app -> repo_root
     repo_root = Path(__file__).parent.parent.parent.parent
     rules_path = repo_root / "ip_golden_knowledge_v2_2.json"
     if rules_path.exists():
-        with open(rules_path, "r") as f:
-            return json.load(f)
+        with open(rules_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        if isinstance(payload, dict):
+            return cast(Dict[str, Any], payload)
     return {}
 
 
-def extract_bundling_rules_from_patterns(patterns: List[Dict]) -> Dict[str, List[Tuple[str, str, str]]]:
+def extract_bundling_rules_from_patterns(
+    patterns: List[Dict[str, Any]],
+) -> Dict[str, List[Tuple[str, str, str]]]:
     """
     Extract bundling rules from the excluded_or_bundled_codes in synthetic_CPT_corrected.json.
 

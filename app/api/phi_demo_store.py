@@ -10,7 +10,7 @@ import os
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
-from typing import List
+from typing import Any, List
 
 
 @dataclass
@@ -23,7 +23,7 @@ class PhiDemoCase:
     scenario_label: str | None = None
     created_at: datetime = field(default_factory=datetime.utcnow)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
         data["id"] = str(self.id)
         data["procedure_id"] = str(self.procedure_id) if self.procedure_id else None
@@ -32,7 +32,7 @@ class PhiDemoCase:
 
 
 class InMemoryPhiDemoStore:
-    def __init__(self):
+    def __init__(self) -> None:
         self._cases: dict[uuid.UUID, PhiDemoCase] = {}
 
     def list_cases(self) -> List[PhiDemoCase]:
@@ -67,7 +67,7 @@ class InMemoryPhiDemoStore:
         return case
 
 
-def _build_supabase_store():
+def _build_supabase_store() -> InMemoryPhiDemoStore | None:
     """Attempt to build a supabase-backed store if available."""
 
     url = os.getenv("SUPABASE_URL")
@@ -147,10 +147,10 @@ def _build_supabase_store():
     return SupabasePhiDemoStore()
 
 
-_store = _build_supabase_store() or InMemoryPhiDemoStore()
+_store: InMemoryPhiDemoStore = _build_supabase_store() or InMemoryPhiDemoStore()
 
 
-def get_phi_demo_store():
+def get_phi_demo_store() -> InMemoryPhiDemoStore:
     return _store
 
 

@@ -14,13 +14,14 @@ from __future__ import annotations
 
 import logging
 import os
+from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -57,8 +58,8 @@ from app.api.routes.registry_append import router as registry_append_router
 from app.api.routes.registry_case import router as registry_case_router
 from app.api.routes.registry_runs import router as registry_runs_router
 from app.api.routes.reporting import router as reporting_router
-from app.api.routes.unified_process import router as unified_process_router
 from app.api.routes.umls import router as umls_router
+from app.api.routes.unified_process import router as unified_process_router
 from app.api.routes.vault import router as vault_router
 from app.api.routes_registry import router as registry_extract_router
 from app.api.schemas import KnowledgeMeta
@@ -93,7 +94,10 @@ app.add_middleware(
 )
 
 @app.middleware("http")
-async def _phi_redactor_headers(request: Request, call_next):
+async def _phi_redactor_headers(
+    request: Request,
+    call_next: Callable[[Request], Awaitable[Response]],
+) -> Response:
     """
     Ensure the PHI redactor UI (including /vendor/* model assets) works in
     cross-origin isolated contexts and when embedded/loaded from other origins

@@ -11,7 +11,7 @@ LLM/config dependencies, which breaks running leaf scripts directly (e.g.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .schema import RegistryRecord
 
@@ -19,7 +19,7 @@ if TYPE_CHECKING:  # pragma: no cover
     from .engine import RegistryEngine as RegistryEngine
 
 
-def __getattr__(name: str):
+def __getattr__(name: str) -> Any:
     # Lazy import to avoid side effects during package import.
     if name == "RegistryEngine":
         from .engine import RegistryEngine as _RegistryEngine

@@ -215,7 +215,11 @@ def _mask_cpt_definition_lines(text: str) -> str:
         return re.sub(r"[^\n]", " ", raw)
 
     def _stop_continuation(raw: str) -> bool:
-        return not raw.strip() or _HEADING_INLINE_RE.match(raw) or _CPT_LINE_RE.match(raw)
+        return (
+            not raw.strip()
+            or bool(_HEADING_INLINE_RE.match(raw))
+            or bool(_CPT_LINE_RE.match(raw))
+        )
 
     for line in lines:
         if after_cpt_definition_line or continuation_paren_balance or continuation_force_next or continuation_example_mode:
