@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 from dataclasses import asdict, is_dataclass
 from datetime import datetime
+from typing import Any
 
 from sqlalchemy.orm import Session
 
@@ -50,7 +51,7 @@ class PHIService:
 
         return self._scrubber.scrub(text, document_type=document_type, specialty=specialty)
 
-    def scrub_with_manual_entities(self, *, text: str, entities: list[dict]) -> ScrubResult:
+    def scrub_with_manual_entities(self, *, text: str, entities: list[dict[str, Any]]) -> ScrubResult:
         """Generate scrubbed text based strictly on provided entities (ignoring auto-scrubber).
 
         Requirements:
@@ -149,7 +150,7 @@ class PHIService:
     def reidentify(
         self,
         *,
-        procedure_data_id,
+        procedure_data_id: Any,
         user_id: str,
         user_email: str | None = None,
         user_role: str | None = None,
@@ -180,7 +181,7 @@ class PHIService:
         self._session.commit()
         return plaintext
 
-    def get_procedure_for_review(self, *, procedure_data_id) -> ProcedureData:
+    def get_procedure_for_review(self, *, procedure_data_id: Any) -> ProcedureData:
         """Return scrubbed content for review (no raw PHI)."""
 
         proc = self._session.get(ProcedureData, procedure_data_id)
@@ -191,7 +192,7 @@ class PHIService:
     def apply_scrubbing_feedback(
         self,
         *,
-        procedure_data_id,
+        procedure_data_id: Any,
         scrubbed_text: str,
         entities: list[ScrubbedEntity],
         reviewer_id: str,
@@ -221,11 +222,11 @@ class PHIService:
             updated_entity_map=serialized_entities,
         )
 
-        proc.scrubbed_text = scrubbed_text
-        proc.entity_map = serialized_entities
-        proc.status = ProcessingStatus.PHI_REVIEWED
-        proc.reviewed_by = reviewer_id
-        proc.reviewed_at = datetime.utcnow()
+        setattr(proc, "scrubbed_text", scrubbed_text)
+        setattr(proc, "entity_map", serialized_entities)
+        setattr(proc, "status", ProcessingStatus.PHI_REVIEWED)
+        setattr(proc, "reviewed_by", reviewer_id)
+        setattr(proc, "reviewed_at", datetime.utcnow())
 
         self._session.add(feedback)
         self._session.flush()
@@ -251,10 +252,10 @@ class PHIService:
         return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
     @staticmethod
-    def _serialize_entities(entities: list[ScrubbedEntity]) -> list[dict]:
+    def _serialize_entities(entities: list[ScrubbedEntity]) -> list[dict[str, Any]]:
         """Normalize ScrubbedEntity payloads to JSON-safe dicts."""
 
-        serialized: list[dict] = []
+        serialized: list[dict[str, Any]] = []
         for entity in entities:
             if is_dataclass(entity):
                 serialized.append(asdict(entity))

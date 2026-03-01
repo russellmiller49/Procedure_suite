@@ -86,6 +86,7 @@ class StartupBootstrap:
         loop = asyncio.get_running_loop()
 
         def _warmup_worker() -> None:
+            error: str | None
             try:
                 _warm_heavy_resources_sync()
             except Exception as exc:  # noqa: BLE001
@@ -129,6 +130,7 @@ class StartupBootstrap:
             loop.run_in_executor(self.app.state.cpu_executor, _warmup_worker)
         else:
             self.logger.info("Running warmup before serving traffic")
+            error: str | None
             try:
                 await loop.run_in_executor(self.app.state.cpu_executor, _warm_heavy_resources_sync)
             except Exception as exc:  # noqa: BLE001
