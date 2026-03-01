@@ -57,8 +57,8 @@ from app.api.routes.registry_append import router as registry_append_router
 from app.api.routes.registry_case import router as registry_case_router
 from app.api.routes.registry_runs import router as registry_runs_router
 from app.api.routes.reporting import router as reporting_router
-from app.api.routes.unified_process import router as unified_process_router
 from app.api.routes.umls import router as umls_router
+from app.api.routes.unified_process import router as unified_process_router
 from app.api.routes.vault import router as vault_router
 from app.api.routes_registry import router as registry_extract_router
 from app.api.schemas import KnowledgeMeta
