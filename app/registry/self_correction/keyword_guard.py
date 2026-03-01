@@ -11,6 +11,7 @@ import json
 import os
 import re
 from pathlib import Path
+from typing import Any, Sequence
 
 from app.common.logger import get_logger
 from app.common.spans import Span
@@ -280,7 +281,7 @@ def _normalize_keyword_value(value: object) -> str:
     return text
 
 
-def _dedupe_keywords(values: list[object], *, min_length: int = 1) -> list[str]:
+def _dedupe_keywords(values: Sequence[object], *, min_length: int = 1) -> list[str]:
     seen: set[str] = set()
     out: list[str] = []
     for value in values:
@@ -911,8 +912,14 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
                 if re.search(r"(?i)\b(?:dnase|dornase)", note_text or ""):
                     agents.append("DNase")
                 if agents:
-                    seen: set[str] = set()
-                    fibrinolytic["agents"] = [a for a in agents if not (a in seen or seen.add(a))]
+                    seen_agents: set[str] = set()
+                    deduped_agents: list[str] = []
+                    for agent in agents:
+                        if agent in seen_agents:
+                            continue
+                        seen_agents.add(agent)
+                        deduped_agents.append(agent)
+                    fibrinolytic["agents"] = deduped_agents
 
                 dose_match = re.search(
                     r"(?is)\b(\d+(?:\.\d+)?)\s*mg\s*/\s*(\d+(?:\.\d+)?)\s*mg\b[^.\n]{0,60}"
@@ -1033,7 +1040,7 @@ def _is_field_populated(record: RegistryRecord, path: str) -> bool:
         return False
 
 
-def _set_nested_field(data: dict, path: str, value: object) -> None:
+def _set_nested_field(data: dict[str, Any], path: str, value: object) -> None:
     parts = path.split(".")
     current = data
     for part in parts[:-1]:

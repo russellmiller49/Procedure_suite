@@ -60,6 +60,8 @@ def apply_navigation_target_heuristics(
         targets = [dict(target) for target in targets_raw if isinstance(target, dict)]
     else:
         targets = []
+    warnings: list[str] = []
+    updated = False
 
     def _add_nav_evidence(idx: int, field: str, ev: object) -> None:
         nonlocal updated
@@ -157,9 +159,6 @@ def apply_navigation_target_heuristics(
             clipped = raw[:100].rsplit(" ", 1)[0].strip()
             raw = clipped or raw[:100].strip()
         return raw
-
-    warnings: list[str] = []
-    updated = False
 
     if parsed_targets:
         max_len = max(len(targets), len(parsed_targets))

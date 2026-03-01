@@ -22,7 +22,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 
@@ -91,17 +91,17 @@ class HeadTailTokenizer:
 
     def __init__(
         self,
-        tokenizer,
+        tokenizer: Any,
         max_length: int = 512,
         head_tokens: int = 382,
         tail_tokens: int = 128,
-    ):
+    ) -> None:
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.head_tokens = head_tokens
         self.tail_tokens = tail_tokens
 
-    def __call__(self, text: str) -> dict[str, np.ndarray]:
+    def __call__(self, text: str) -> dict[str, np.ndarray[Any, Any]]:
         """Tokenize with Head + Tail truncation.
 
         Args:
@@ -185,9 +185,9 @@ class ONNXRegistryPredictor:
         """
         self.available = False
         self._max_length = max_length
-        self._session = None
-        self._tokenizer = None
-        self._head_tail_tokenizer = None
+        self._session: Any | None = None
+        self._tokenizer: Any | None = None
+        self._head_tail_tokenizer: HeadTailTokenizer | None = None
         self._label_names: list[str] = []
         self._thresholds: dict[str, float] = {}
 
@@ -219,7 +219,7 @@ class ONNXRegistryPredictor:
         label_fields_path: Path,
     ) -> None:
         """Load ONNX model, tokenizer, thresholds, and label names."""
-        import onnxruntime as ort
+        import onnxruntime as ort  # type: ignore[import-untyped]
         from transformers import AutoTokenizer
 
         # Check paths exist
@@ -242,7 +242,7 @@ class ONNXRegistryPredictor:
         )
 
         # Load tokenizer
-        self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
+        self._tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))  # type: ignore[no-untyped-call]
 
         # Create Head + Tail tokenizer wrapper
         self._head_tail_tokenizer = HeadTailTokenizer(
@@ -271,7 +271,10 @@ class ONNXRegistryPredictor:
         # Validate label count vs model output dimension.
         # If they disagree, prefer a safe fallback that matches the model.
         try:
-            outputs = self._session.get_outputs()
+            session = self._session
+            if session is None:
+                return
+            outputs = session.get_outputs()
             out_shape = outputs[0].shape if outputs else None
             # Common: [batch, n_labels]
             output_dim = out_shape[-1] if isinstance(out_shape, list) and out_shape else None
@@ -320,9 +323,9 @@ class ONNXRegistryPredictor:
             # Never fail predictor init due to introspection; predict_proba() will handle errors.
             pass
 
-    def _sigmoid(self, x: np.ndarray) -> np.ndarray:
+    def _sigmoid(self, x: np.ndarray[Any, Any]) -> np.ndarray[Any, Any]:
         """Apply sigmoid activation to logits."""
-        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))
+        return cast(np.ndarray[Any, Any], 1 / (1 + np.exp(-np.clip(x, -500, 500))))
 
     @property
     def labels(self) -> list[str]:
@@ -347,7 +350,7 @@ class ONNXRegistryPredictor:
         Returns:
             List of RegistryFieldPrediction sorted by probability (descending)
         """
-        if not self.available or self._session is None:
+        if not self.available or self._session is None or self._head_tail_tokenizer is None:
             return [
                 RegistryFieldPrediction(
                     field=name,

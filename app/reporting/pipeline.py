@@ -42,7 +42,7 @@ class _PipelineState:
     bronchoscopy_shells: list[tuple[Any, ProcedureInput, ProcedureMetadata]] = field(default_factory=list)
     discharge_templates: dict[str, list[ProcedureMetadata]] = field(default_factory=dict)
     procedures_metadata: list[ProcedureMetadata] = field(default_factory=list)
-    autocode_payload: dict[str, Any] | ProcedureAutocodeResult | None = None
+    autocode_payload: dict[str, Any] | None = None
     autocode_modifiers: list[str] = field(default_factory=list)
     unmatched_autocode: set[str] = field(default_factory=set)
 
@@ -137,7 +137,8 @@ class ReportPipeline:
             },
         )
 
-        autocode_payload = self.config.autocode_result or _try_proc_autocode(bundle)
+        autocode_payload_raw = self.config.autocode_result or _try_proc_autocode(bundle)
+        autocode_payload = dict(autocode_payload_raw) if autocode_payload_raw else None
         autocode_codes = [str(code) for code in autocode_payload.get("cpt", [])] if autocode_payload else []
         autocode_modifiers = [str(mod) for mod in autocode_payload.get("modifiers", [])] if autocode_payload else []
         state.autocode_payload = autocode_payload
@@ -180,30 +181,30 @@ class ReportPipeline:
         reserved_surveys: set[str] = set()
         surveys_by_target: dict[str, list[ProcedureInput]] = defaultdict(list)
         unkeyed_surveys: list[ProcedureInput] = []
-        for survey in survey_procs:
-            target_key = _target_key_from_proc(survey)
+        for survey_proc in survey_procs:
+            target_key = _target_key_from_proc(survey_proc)
             if target_key:
-                surveys_by_target[target_key].append(survey)
+                surveys_by_target[target_key].append(survey_proc)
             else:
-                unkeyed_surveys.append(survey)
+                unkeyed_surveys.append(survey_proc)
 
         for sampling in sampling_procs:
-            survey: ProcedureInput | None = None
+            paired_survey: ProcedureInput | None = None
             sampling_key = _target_key_from_proc(sampling)
             if sampling_key and surveys_by_target.get(sampling_key):
-                survey = surveys_by_target[sampling_key].pop(0)
+                paired_survey = surveys_by_target[sampling_key].pop(0)
             elif unkeyed_surveys:
-                survey = unkeyed_surveys.pop(0)
+                paired_survey = unkeyed_surveys.pop(0)
             else:
                 for key in list(surveys_by_target.keys()):
                     if surveys_by_target[key]:
-                        survey = surveys_by_target[key].pop(0)
+                        paired_survey = surveys_by_target[key].pop(0)
                         break
-            if not survey:
+            if not paired_survey:
                 break
             key = sampling.proc_id or sampling.schema_id
-            paired_surveys[key] = survey
-            reserved_surveys.add(survey.proc_id or survey.schema_id)
+            paired_surveys[key] = paired_survey
+            reserved_surveys.add(paired_survey.proc_id or paired_survey.schema_id)
 
         first_by_type: dict[str, ProcedureInput] = {}
         for proc in sorted_procs:
@@ -574,7 +575,7 @@ class ReportPipeline:
                     total_str = ""
                     if total_l not in (None, "", [], {}):
                         try:
-                            total_f = float(total_l)
+                            total_f = float(str(total_l))
                             total_str = str(int(total_f)) if total_f.is_integer() else str(round(total_f, 1))
                         except Exception:
                             total_str = str(total_l)

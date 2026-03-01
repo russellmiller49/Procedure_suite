@@ -94,6 +94,7 @@ class RuleEngine:
 
         # Initialize the IP KB for group/evidence extraction
         # This is the clinical knowledge base that detects procedures from text
+        self._ip_kb: IPCodingKnowledgeBase | None = None
         try:
             from app.autocode.ip_kb.ip_kb import IPCodingKnowledgeBase
 
@@ -150,11 +151,15 @@ class RuleEngine:
             return self._fallback_keyword_matching(report_text)
 
         warnings: list[str] = []
+        ip_kb = self._ip_kb
+        if ip_kb is None:
+            logger.warning("IP KB unavailable at runtime; falling back to keyword matching")
+            return self._fallback_keyword_matching(report_text)
 
         try:
             # Step 1: Extract groups and evidence from text using IP KB
-            groups = self._ip_kb.groups_from_text(report_text)
-            evidence = dict(self._ip_kb.last_group_evidence)
+            groups = ip_kb.groups_from_text(report_text)
+            evidence = dict(ip_kb.last_group_evidence)
 
             # Step 2: Get initial candidate codes from groups
             candidates = self._get_candidates_from_groups(groups)
@@ -163,14 +168,17 @@ class RuleEngine:
             term_hits = self._extract_term_hits(report_text)
             navigation_context = self._extract_navigation_context(registry or {})
             radial_context = self._extract_radial_context(registry or {})
+            term_hits_typed: Dict[str, tuple[str, ...]] = {
+                key: tuple(values) for key, values in term_hits.items()
+            }
 
             # Step 4: Build EvidenceContext
             context = EvidenceContext(
-                groups=groups,
+                groups=frozenset(groups),
                 evidence=evidence,
                 registry=registry or {},
-                candidates=candidates,
-                term_hits=term_hits,
+                candidates=frozenset(candidates),
+                term_hits=term_hits_typed,
                 navigation_context=navigation_context,
                 radial_context=radial_context,
                 text_lower=report_text.lower(),
@@ -282,13 +290,13 @@ class RuleEngine:
 
         return candidates
 
-    def _extract_term_hits(self, report_text: str) -> Dict[str, list]:
+    def _extract_term_hits(self, report_text: str) -> Dict[str, list[str]]:
         """Extract term hits for rule evaluation."""
         text_lower = report_text.lower()
-        term_hits: Dict[str, list] = {}
+        term_hits: Dict[str, list[str]] = {}
 
         # Procedure categories
-        categories = []
+        categories: list[str] = []
         if any(kw in text_lower for kw in ["bronchoscopy", "bronch"]):
             categories.append("bronchoscopy")
         if any(kw in text_lower for kw in ["thoracoscopy", "pleuroscopy", "vats"]):

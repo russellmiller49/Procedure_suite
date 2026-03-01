@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
+from typing import Any
 
 from app.registry.schema import RegistryRecord
 from app.registry.schema.ip_v3_extraction import IPRegistryV3, ProcedureEvent
@@ -12,10 +13,10 @@ _GAUGE_RE = re.compile(r"\b(19|21|22|23)\s*g\b", re.IGNORECASE)
 
 def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
     """Project a V3 event-log registry into the legacy V2 RegistryRecord shape."""
-    record_data: dict = {}
+    record_data: dict[str, Any] = {}
 
-    procedures_performed: dict[str, dict] = {}
-    pleural_procedures: dict[str, dict] = {}
+    procedures_performed: dict[str, dict[str, Any]] = {}
+    pleural_procedures: dict[str, dict[str, Any]] = {}
 
     linear_ebus_stations: set[str] = set()
     ebus_stations_sampled: set[str] = set()
@@ -35,7 +36,7 @@ def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
     pre_diameter_mm_candidates: list[float] = []
     post_diameter_mm_candidates: list[float] = []
 
-    def _ensure_proc(name: str) -> dict:
+    def _ensure_proc(name: str) -> dict[str, Any]:
         proc = procedures_performed.get(name)
         if proc is None:
             proc = {"performed": True}
@@ -44,7 +45,7 @@ def project_v3_to_v2(v3_registry: IPRegistryV3) -> RegistryRecord:
             proc["performed"] = True
         return proc
 
-    def _ensure_pleural(name: str) -> dict:
+    def _ensure_pleural(name: str) -> dict[str, Any]:
         proc = pleural_procedures.get(name)
         if proc is None:
             proc = {"performed": True}

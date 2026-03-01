@@ -276,11 +276,11 @@ def aggregate_entity_ledger(docs: Sequence[BundleDocInput]) -> EntityLedger:
 
     # 1) Create canonical lesions by clustering nav targets using conservative keys.
     clusters: dict[str, list[_NavTarget]] = {}
-    for t in nav_targets:
-        key = _location_key(t.lobe, t.segment, t.location_text)
-        size_bucket = _size_bucket(t.size_mm)
+    for nav_target in nav_targets:
+        key = _location_key(nav_target.lobe, nav_target.segment, nav_target.location_text)
+        size_bucket = _size_bucket(nav_target.size_mm)
         cluster_key = f"{key}|{size_bucket}"
-        clusters.setdefault(cluster_key, []).append(t)
+        clusters.setdefault(cluster_key, []).append(nav_target)
 
     canonical_by_cluster: dict[str, LedgerEntity] = {}
     for cluster_key in sorted(clusters.keys()):
@@ -318,11 +318,11 @@ def aggregate_entity_ledger(docs: Sequence[BundleDocInput]) -> EntityLedger:
 
     # 2) Link specimens to canonical lesions using same-doc string heuristics.
     nav_by_doc: dict[tuple[str, int], list[_NavTarget]] = {}
-    for t in nav_targets:
-        doc_ref = t.entity.doc_ref
-        if doc_ref is None:
+    for nav_target in nav_targets:
+        nav_doc_ref = nav_target.entity.doc_ref
+        if nav_doc_ref is None:
             continue
-        nav_by_doc.setdefault((doc_ref.timepoint_role, doc_ref.seq), []).append(t)
+        nav_by_doc.setdefault((nav_doc_ref.timepoint_role, nav_doc_ref.seq), []).append(nav_target)
 
     for specimen in specimen_entities:
         if specimen.doc_ref is None:

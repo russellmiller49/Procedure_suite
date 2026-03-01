@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+from typing import Any
 
 from app.registry.schema import RegistryRecord
 
@@ -11,7 +12,7 @@ class SelfCorrectionApplyError(RuntimeError):
     pass
 
 
-def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict]) -> RegistryRecord:
+def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict[str, Any]]) -> RegistryRecord:
     record_dict = record.model_dump()
     patched = copy.deepcopy(record_dict)
 
@@ -28,7 +29,7 @@ def apply_patch_to_record(*, record: RegistryRecord, patch: list[dict]) -> Regis
         raise SelfCorrectionApplyError(f"Patched record failed validation: {exc}") from exc
 
 
-def _apply_op(doc: object, op: dict, *, idx: int) -> None:
+def _apply_op(doc: object, op: dict[str, Any], *, idx: int) -> None:
     verb = op.get("op")
     if verb not in {"add", "replace"}:
         raise SelfCorrectionApplyError(f"patch[{idx}].op='{verb}' is not supported")
@@ -159,7 +160,7 @@ def _normalize_foreign_body_retrieval_tool(value: object) -> str | None:
     return "Other"
 
 
-def _apply_semantic_shims(doc: dict, patch: list[dict]) -> None:
+def _apply_semantic_shims(doc: dict[str, Any], patch: list[dict[str, Any]]) -> None:
     """Small, safe post-patch shims to keep downstream derivation consistent.
 
     Self-correction patches are intentionally conservative and often set only

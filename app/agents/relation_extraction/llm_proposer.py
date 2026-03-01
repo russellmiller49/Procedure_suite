@@ -127,8 +127,8 @@ def propose_relations_ml(
 
     if not enabled:
         # Treat "disabled" as informational (metrics will still explain why).
-        warnings = [] if reason == "RELATIONS_ML_DISABLED" else [reason]
-        return RelationsMLProposerResult(relations_ml=[], warnings=warnings, metrics=metrics)
+        initial_warnings = [] if reason == "RELATIONS_ML_DISABLED" else [reason]
+        return RelationsMLProposerResult(relations_ml=[], warnings=initial_warnings, metrics=metrics)
 
     if not canonical_ids:
         return RelationsMLProposerResult(

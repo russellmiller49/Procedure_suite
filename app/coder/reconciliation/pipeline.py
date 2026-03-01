@@ -28,7 +28,7 @@ Usage:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Protocol
+from typing import Any, Protocol
 
 from app.common.logger import get_logger
 from app.registry.ml import ActionPredictor, ClinicalActions, PredictionResult
@@ -92,7 +92,7 @@ class PipelineResult:
         return self.recommendation != "auto_approve"
 
     @property
-    def audit_trail(self) -> dict:
+    def audit_trail(self) -> dict[str, object]:
         """Generate audit trail for compliance."""
         return {
             "extraction_method": "extraction_first_v1",
@@ -304,6 +304,8 @@ class RegistryMLAdapter:
 
     def __init__(self) -> None:
         """Initialize the adapter with RegistryMLPredictor and coder."""
+        self._registry_predictor: Any | None
+        self._coder: RegistryBasedCoder | None
         try:
             from ml.lib.ml_coder.registry_predictor import RegistryMLPredictor
             self._registry_predictor = RegistryMLPredictor()
@@ -325,6 +327,8 @@ class RegistryMLAdapter:
             List of predicted CPT codes
         """
         if not self.available:
+            return []
+        if self._registry_predictor is None or self._coder is None:
             return []
 
         # Get registry field predictions

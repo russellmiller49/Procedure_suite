@@ -11,9 +11,9 @@ from __future__ import annotations
 
 import argparse
 import csv
-from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Callable
 
 from app.common.logger import get_logger
 from app.registry.ml import ActionPredictor, ClinicalActions
@@ -21,7 +21,7 @@ from app.registry.ml import ActionPredictor, ClinicalActions
 logger = get_logger("registry.ml.evaluate")
 
 # Map between training data columns and ClinicalActions fields
-FIELD_MAPPING = {
+FIELD_MAPPING: dict[str, Callable[[ClinicalActions], bool]] = {
     "diagnostic_bronchoscopy": lambda a: a.diagnostic_bronchoscopy,
     "brushings": lambda a: a.brushings.performed,
     "tbna_conventional": lambda a: a.biopsy.tbna_conventional_performed,
@@ -35,8 +35,8 @@ FIELD_MAPPING = {
     "thermal_ablation": lambda a: a.cao.thermal_ablation_performed,
     "blvr": lambda a: a.blvr.performed,
     "peripheral_ablation": lambda a: False,  # Not yet extracted
-    "bronchial_thermoplasty": lambda a: getattr(a.therapeutic, 'bronchial_thermoplasty_performed', False),
-    "whole_lung_lavage": lambda a: getattr(a.therapeutic, 'whole_lung_lavage_performed', False),
+    "bronchial_thermoplasty": lambda a: bool(getattr(a.therapeutic, "bronchial_thermoplasty_performed", False)),
+    "whole_lung_lavage": lambda a: bool(getattr(a.therapeutic, "whole_lung_lavage_performed", False)),
     "rigid_bronchoscopy": lambda a: a.rigid_bronchoscopy,
     "thoracentesis": lambda a: a.pleural.thoracentesis_performed,
     "chest_tube": lambda a: a.pleural.chest_tube_performed,
@@ -163,7 +163,7 @@ def evaluate_action_predictor(
 
                 # Prediction
                 try:
-                    predicted = extractor(actions)
+                    predicted = bool(extractor(actions))
                 except Exception:
                     predicted = False
 
@@ -231,7 +231,7 @@ def print_evaluation_report(result: EvaluationResult) -> None:
                   f"Precision={metrics.precision:.3f}, Recall={metrics.recall:.3f}")
 
 
-def main():
+def main() -> EvaluationResult:
     parser = argparse.ArgumentParser(description="Evaluate ActionPredictor")
     parser.add_argument(
         "--test-data",

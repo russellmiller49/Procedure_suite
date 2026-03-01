@@ -120,7 +120,7 @@ def _format_value(value: object) -> str:
     return str(value)
 
 
-def _format_station_detail(detail: dict) -> str:
+def _format_station_detail(detail: dict[str, object]) -> str:
     """Format a single ebus_stations_detail entry as a structured line.
 
     Per specification format:
@@ -149,7 +149,7 @@ def _format_station_detail(detail: dict) -> str:
     # Add morphology fields if present (not null)
     shape = detail.get("shape")
     if shape:
-        parts.append(shape)
+        parts.append(str(shape))
 
     margin = detail.get("margin")
     if margin:
@@ -157,7 +157,7 @@ def _format_station_detail(detail: dict) -> str:
 
     echogenicity = detail.get("echogenicity")
     if echogenicity:
-        parts.append(echogenicity)
+        parts.append(str(echogenicity))
 
     chs_present = detail.get("chs_present")
     if chs_present is True:

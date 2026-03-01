@@ -391,12 +391,12 @@ def reconcile_complications_from_narrative(record: RegistryRecord, full_text: st
         _add_comp_list("Arrhythmia")
         snippet = _line_snippet(text, arrhythmia_match.start(), arrhythmia_match.end())
         window = text[max(0, arrhythmia_match.start() - 200) : min(len(text), arrhythmia_match.end() + 200)]
-        interventions: list[str] = []
+        arrhythmia_interventions: list[str] = []
         if _CARDIOVERSION_RE.search(window):
-            interventions.append("Cardioversion")
-        _add_event("Arrhythmia", snippet, interventions or None)
+            arrhythmia_interventions.append("Cardioversion")
+        _add_event("Arrhythmia", snippet, arrhythmia_interventions or None)
         _add_evidence("complications.complication_list", arrhythmia_match)
-        if interventions:
+        if arrhythmia_interventions:
             _append_evidence("complications.events", arrhythmia_match)
         warnings.append("COMPLICATION_OVERRIDE: arrhythmia mentioned in narrative; overriding summary 'None'.")
 

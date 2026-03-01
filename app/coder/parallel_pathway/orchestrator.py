@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 import time
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional, TYPE_CHECKING
 
 from app.common.logger import get_logger
 from app.ner import GranularNERPredictor, NERExtractionResult
@@ -21,6 +21,9 @@ from app.coder.parallel_pathway.confidence_combiner import (
 )
 from app.coder.parallel_pathway.reconciler import CodeReconciler, ReconciledCode
 from app.common.spans import Span
+
+if TYPE_CHECKING:
+    from app.registry.application.registry_service import RegistryExtractionResult
 
 logger = get_logger("coder.parallel_pathway")
 
@@ -223,7 +226,7 @@ class ParallelPathwayOrchestrator:
         self,
         note_text: str,
         ml_predictor: Optional[Any] = None,
-    ):
+    ) -> "RegistryExtractionResult":
         """Run parallel NER + ML reconciliation and return a RegistryExtractionResult."""
         parallel_result = self.process(note_text, ml_predictor=ml_predictor)
         path_a_result = parallel_result.path_a_result
@@ -465,14 +468,16 @@ class ParallelPathwayOrchestrator:
                             confidences[cpt_code] = prob_val
                             rationales[cpt_code] = f"ML predicted {field_name}={prob_val:.2f}"
 
-                positive_fields = getattr(result, "positive_fields", None)
-                difficulty = getattr(result, "difficulty", None)
+                positive_fields_raw: Any = getattr(result, "positive_fields", None)
+                difficulty_raw: Any = getattr(result, "difficulty", None)
                 if isinstance(result, dict):
-                    positive_fields = result.get("positive_fields", positive_fields)
-                    difficulty = result.get("difficulty", difficulty)
+                    positive_fields_raw = result.get("positive_fields", positive_fields_raw)
+                    difficulty_raw = result.get("difficulty", difficulty_raw)
 
-                details["ml_positive_fields"] = list(positive_fields or [])
-                details["ml_difficulty"] = str(difficulty or "")
+                details["ml_positive_fields"] = (
+                    list(positive_fields_raw) if isinstance(positive_fields_raw, list) else []
+                )
+                details["ml_difficulty"] = str(difficulty_raw or "")
             else:
                 details["ml_available"] = False
 

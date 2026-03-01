@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 import uuid
 from datetime import datetime
-from typing import Optional, TYPE_CHECKING
+from typing import Literal, Optional, TYPE_CHECKING
 
 from config.settings import CoderSettings
 from app.domain.knowledge_base.repository import KnowledgeBaseRepository
@@ -247,7 +247,7 @@ class CodingService:
                     CodeSuggestion(
                         code=code,
                         description=description,
-                        source="rules",
+                        source="rule",
                         hybrid_decision="kept_rule_priority",
                         rule_confidence=confidence,
                         llm_confidence=None,
@@ -282,7 +282,7 @@ class CodingService:
         )
 
         # Step 3: Build CodeSuggestion objects
-        suggestions: list[CodeSuggestion] = []
+        code_suggestions: list[CodeSuggestion] = []
         for code in codes:
             rationale = rationales.get(code, "derived")
 
@@ -304,7 +304,7 @@ class CodingService:
 
             # Determine review flag
             if extraction_result.needs_manual_review:
-                review_flag = "required"
+                review_flag: Literal["required", "recommended", "optional"] = "required"
             elif audit_warnings:
                 review_flag = "recommended"
             else:
@@ -329,7 +329,7 @@ class CodingService:
                 suggestion_id=str(uuid.uuid4()),
                 procedure_id=procedure_id,
             )
-            suggestions.append(suggestion)
+            code_suggestions.append(suggestion)
 
         latency_ms = (time.time() - start_time) * 1000
 
@@ -337,10 +337,10 @@ class CodingService:
             "Coding complete (extraction-first mode)",
             extra={
                 "procedure_id": procedure_id,
-                "num_suggestions": len(suggestions),
+                "num_suggestions": len(code_suggestions),
                 "processing_time_ms": latency_ms,
                 "codes": codes,
             },
         )
 
-        return suggestions, latency_ms
+        return code_suggestions, latency_ms
