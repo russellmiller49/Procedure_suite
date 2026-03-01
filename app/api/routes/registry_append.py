@@ -258,7 +258,7 @@ def append_registry_document(
     _ready: None = _ready_dep,
     current_user: AuthenticatedUser = _current_user_dep,
     db: Session = _db_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> RegistryAppendResponse:
     # Ensure the target case belongs to the current user.
     case_stmt: Select[tuple[UserPatientVault]] = select(UserPatientVault).where(

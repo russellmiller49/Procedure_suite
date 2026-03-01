@@ -12,6 +12,7 @@ This module provides the `/api/v1/process` endpoint which combines:
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
@@ -56,7 +57,7 @@ async def unified_process(
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
     coding_service: CodingService = _coding_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> UnifiedProcessResponse:
     """Run the unified extraction pipeline."""
     response.headers["X-Process-Route"] = "router"

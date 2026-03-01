@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
-from typing import List
+from typing import Any, List, cast
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 
 from app.api.phi_dependencies import get_phi_service, get_phi_session
 from app.phi import models
-from app.phi.ports import ScrubResult
+from app.phi.ports import ScrubResult, ScrubbedEntity
 from app.phi.service import PHIService
 
 router = APIRouter(prefix="/v1/phi", tags=["phi"])
@@ -106,10 +106,12 @@ def _to_entities(scrub_result: ScrubResult) -> list[ScrubbedEntityModel]:
     return [ScrubbedEntityModel(**entity) for entity in scrub_result.entities]
 
 
-def _from_entity_map(entity_map) -> list[ScrubbedEntityModel]:
+def _from_entity_map(
+    entity_map: list[ScrubbedEntity] | list[dict[str, Any]] | None,
+) -> list[ScrubbedEntityModel]:
     if entity_map is None:
         return []
-    return [ScrubbedEntityModel(**entity) for entity in entity_map]
+    return [ScrubbedEntityModel(**dict(entity)) for entity in entity_map]
 
 
 @router.post(
@@ -224,9 +226,9 @@ def get_status(
     return StatusResponse(
         procedure_id=str(proc.id),
         status=proc.status.value if hasattr(proc.status, "value") else str(proc.status),
-        document_type=proc.document_type,
-        specialty=proc.specialty,
-        submitted_by=proc.submitted_by,
+        document_type=cast(str | None, getattr(proc, "document_type", None)),
+        specialty=cast(str | None, getattr(proc, "specialty", None)),
+        submitted_by=cast(str | None, getattr(proc, "submitted_by", None)),
         created_at=proc.created_at.isoformat() if proc.created_at else None,
     )
 
@@ -259,11 +261,13 @@ def get_procedure_for_review(
     return ProcedureReviewResponse(
         procedure_id=str(proc.id),
         status=proc.status.value if hasattr(proc.status, "value") else str(proc.status),
-        scrubbed_text=proc.scrubbed_text,
-        entities=_from_entity_map(proc.entity_map),
-        document_type=proc.document_type,
-        specialty=proc.specialty,
-        submitted_by=proc.submitted_by,
+        scrubbed_text=cast(str, getattr(proc, "scrubbed_text", "")),
+        entities=_from_entity_map(
+            cast(list[ScrubbedEntity] | list[dict[str, Any]] | None, proc.entity_map)
+        ),
+        document_type=cast(str | None, getattr(proc, "document_type", None)),
+        specialty=cast(str | None, getattr(proc, "specialty", None)),
+        submitted_by=cast(str | None, getattr(proc, "submitted_by", None)),
         created_at=proc.created_at.isoformat() if proc.created_at else None,
     )
 
@@ -287,11 +291,14 @@ def submit_scrubbing_feedback(
         ) from exc
 
     start = time.perf_counter()
+    entities_payload: list[ScrubbedEntity] = [
+        cast(ScrubbedEntity, entity.model_dump()) for entity in payload.entities
+    ]
     try:
         proc = phi_service.apply_scrubbing_feedback(
             procedure_data_id=proc_uuid,
             scrubbed_text=payload.scrubbed_text,
-            entities=[entity.model_dump() for entity in payload.entities],
+            entities=entities_payload,
             reviewer_id=payload.reviewer_id,
             reviewer_email=payload.reviewer_email,
             reviewer_role=payload.reviewer_role,
@@ -316,11 +323,13 @@ def submit_scrubbing_feedback(
     return ProcedureReviewResponse(
         procedure_id=str(proc.id),
         status=proc.status.value if hasattr(proc.status, "value") else str(proc.status),
-        scrubbed_text=proc.scrubbed_text,
-        entities=_from_entity_map(proc.entity_map),
-        document_type=proc.document_type,
-        specialty=proc.specialty,
-        submitted_by=proc.submitted_by,
+        scrubbed_text=cast(str, getattr(proc, "scrubbed_text", "")),
+        entities=_from_entity_map(
+            cast(list[ScrubbedEntity] | list[dict[str, Any]] | None, proc.entity_map)
+        ),
+        document_type=cast(str | None, getattr(proc, "document_type", None)),
+        specialty=cast(str | None, getattr(proc, "specialty", None)),
+        submitted_by=cast(str | None, getattr(proc, "submitted_by", None)),
         created_at=proc.created_at.isoformat() if proc.created_at else None,
     )
 

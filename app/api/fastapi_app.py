@@ -14,13 +14,14 @@ from __future__ import annotations
 
 import logging
 import os
+from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, AsyncIterator, List
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -93,7 +94,10 @@ app.add_middleware(
 )
 
 @app.middleware("http")
-async def _phi_redactor_headers(request: Request, call_next):
+async def _phi_redactor_headers(
+    request: Request,
+    call_next: Callable[[Request], Awaitable[Response]],
+) -> Response:
     """
     Ensure the PHI redactor UI (including /vendor/* model assets) works in
     cross-origin isolated contexts and when embedded/loaded from other origins

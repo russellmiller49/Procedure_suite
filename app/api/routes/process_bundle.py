@@ -97,7 +97,7 @@ async def process_bundle(
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
     coding_service: CodingService = _coding_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
 ) -> ProcessBundleResponse:
     start_time = time.time()
     response.headers["X-Process-Route"] = "bundle_router"
@@ -120,11 +120,14 @@ async def process_bundle(
         clean_text = strip_system_header(doc.text)
         unified_req = UnifiedProcessRequest(
             note=clean_text,
+            registry_uuid=None,
             already_scrubbed=payload.already_scrubbed,
             locality=payload.locality,
             include_financials=payload.include_financials,
             explain=payload.explain,
             include_v3_event_log=payload.include_v3_event_log,
+            source_type=None,
+            ocr_correction_applied=False,
         )
         result, _, _ = await run_unified_pipeline_logic(
             payload=unified_req,

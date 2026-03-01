@@ -17,7 +17,7 @@ import json
 import os
 import uuid
 from datetime import UTC, datetime
-from typing import Any, Iterator
+from typing import Any, Iterator, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import StreamingResponse
@@ -213,7 +213,7 @@ async def create_registry_run(
     _ready: None = _ready_dep,
     registry_service: RegistryService = _registry_service_dep,
     coding_service: CodingService = _coding_service_dep,
-    phi_scrubber=_phi_scrubber_dep,
+    phi_scrubber: Any = _phi_scrubber_dep,
     db: Session = _registry_store_db_dep,
 ) -> RegistryRunCreateResponse:
     _enforce_registry_runs_enabled()
@@ -297,11 +297,12 @@ async def create_registry_run(
                 updated_at=_utcnow(),
             )
         else:
-            case_record.registry_json = registry_json
-            case_record.schema_version = _schema_version()
-            case_record.source_run_id = run.id
-            case_record.version = int(case_record.version or 1) + 1
-            case_record.updated_at = _utcnow()
+            case_record_any = cast(Any, case_record)
+            case_record_any.registry_json = registry_json
+            case_record_any.schema_version = _schema_version()
+            case_record_any.source_run_id = run.id
+            case_record_any.version = int(case_record.version or 1) + 1
+            case_record_any.updated_at = _utcnow()
         db.add(case_record)
 
     db.commit()
@@ -358,11 +359,12 @@ def upsert_registry_run_correction(
     if run is None:
         raise HTTPException(status_code=404, detail="Run not found")
 
-    run.corrected_response_json = payload.corrected_response_json
-    run.edited_tables_json = payload.edited_tables_json
-    run.correction_editor_name = payload.editor_name
-    run.corrected_at = _utcnow()
-    run.review_status = "corrected"
+    run_any = cast(Any, run)
+    run_any.corrected_response_json = payload.corrected_response_json
+    run_any.edited_tables_json = payload.edited_tables_json
+    run_any.correction_editor_name = payload.editor_name
+    run_any.corrected_at = _utcnow()
+    run_any.review_status = "corrected"
 
     db.add(run)
     db.commit()
@@ -395,7 +397,7 @@ def list_registry_runs(
     offset = max(0, int(offset))
 
     query: Select[Any] = select(RegistryRun)
-    filters = []
+    filters: list[Any] = []
 
     if submitter_name:
         filters.append(RegistryRun.submitter_name == submitter_name)
@@ -481,7 +483,7 @@ def export_registry_runs(
     _enforce_registry_runs_enabled()
 
     query: Select[Any] = select(RegistryRun).order_by(desc(RegistryRun.created_at))
-    filters = []
+    filters: list[Any] = []
     if has_feedback is not None:
         filters.append(
             RegistryRun.feedback_submitted_at.is_not(None)
