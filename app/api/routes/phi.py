@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 
 from app.api.phi_dependencies import get_phi_service, get_phi_session
 from app.phi import models
-from app.phi.ports import ScrubResult, ScrubbedEntity
+from app.phi.ports import ScrubbedEntity, ScrubResult
 from app.phi.service import PHIService
 
 router = APIRouter(prefix="/v1/phi", tags=["phi"])
