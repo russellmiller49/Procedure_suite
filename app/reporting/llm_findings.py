@@ -278,6 +278,59 @@ def validate_findings_against_text(
     accepted: list[FindingV1] = []
     warnings: list[str] = []
 
+    def _therapeutic_aspiration_has_strong_intent(evidence_quote: str) -> bool:
+        evidence_lower = (evidence_quote or "").lower()
+        if not evidence_lower:
+            return False
+
+        if re.search(r"\b(?:no|without)\s+therapeutic\s+(?:aspiration|suction(?:ing)?)\b", evidence_lower):
+            return False
+
+        if re.search(
+            r"\b(?:no|without)\s+(?:significant\s+)?(?:mucus|mucous|secretions?|mucus\s+plug(?:s|ging)?)\b",
+            evidence_lower,
+        ):
+            return False
+
+        if "therapeutic aspiration" in evidence_lower:
+            return True
+        if "therapeutic suction" in evidence_lower:
+            return True
+
+        has_target = any(token in evidence_lower for token in ("mucus", "mucous", "secretions", "plug"))
+        if not has_target:
+            return False
+
+        has_direct_action = any(
+            token in evidence_lower
+            for token in (
+                "aspirat",
+                "suction",
+                "suctioned",
+                "suctioning",
+                "remove",
+                "removed",
+                "extract",
+                "extracted",
+                "evacuate",
+                "evacuated",
+            )
+        )
+
+        # Allow "cleared" only when tied directly to secretions/mucus/plugs.
+        if not has_direct_action and re.search(
+            r"\b(?:mucus|mucous|secretions?|plug(?:s|ging)?)\b.*\bclear(?:ed|ing)?\b",
+            evidence_lower,
+        ):
+            has_direct_action = True
+        if not has_direct_action and re.search(
+            r"\bclear(?:ed|ing)?\b.*\b(?:mucus|mucous|secretions?|plug(?:s|ging)?)\b",
+            evidence_lower,
+        ):
+            has_direct_action = True
+
+        return bool(has_direct_action)
+
     def _normalize_for_anatomy_match(value: str) -> str:
         """Normalize tokens for permissive substring matching.
 
@@ -332,9 +385,7 @@ def validate_findings_against_text(
         ):
             warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
             continue
-        if proc_key == "therapeutic_aspiration" and not any(
-            token in evidence_lower for token in ("plug", "thick", "obstruct", "clear")
-        ):
+        if proc_key == "therapeutic_aspiration" and not _therapeutic_aspiration_has_strong_intent(evidence):
             warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
             continue
 

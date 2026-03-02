@@ -159,6 +159,26 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
     assert any("missing_action_intent" in warning for warning in warnings)
 
 
+def test_validate_findings_against_text_suppresses_therapeutic_aspiration_when_mucus_plug_is_negated() -> None:
+    text = "No mucus plugging; airways clear."
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="therapeutic_aspiration",
+                action="aspiration",
+                finding_text="Therapeutic aspiration performed",
+                evidence_quote="No mucus plugging; airways clear.",
+                confidence=0.9,
+            )
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert accepted == []
+    assert any("missing_action_intent" in warning for warning in warnings)
+
+
 def test_findings_to_synthetic_ner_to_registry_flags() -> None:
     text = "\n".join(
         [
