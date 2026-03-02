@@ -9,6 +9,7 @@ from app.reporting import (
     compose_structured_report,
     compose_structured_report_from_extraction,
 )
+from app.registry.processing.linear_ebus_stations_detail import extract_linear_ebus_stations_detail
 
 
 def _minimal_bronch_core() -> ProcedureInput:
@@ -186,6 +187,56 @@ def test_rose_not_propagated_to_ebus_stations_without_station_scoped_evidence() 
     note = compose_structured_report(bundle)
     assert "Station 4R" in note or "Station: 4R" in note
     assert "ROSE Results:" not in note
+
+
+def test_shortform_note_populates_ebus_station_detail_and_sample_counts() -> None:
+    note = (
+        "Ion robotic bronchoscopy and staging EBUS for RUL nodule. "
+        "5 peripheral needle biopsies with ROSE positive for malignancy followed by 3 cryobiopsies with 1.1 mm probe. "
+        "Biopsy of 4L (7.6mm) 5 passes 22G needle ROSE adequate, "
+        "7 (6.2 mm) 5 passes 22G needle ROSE adequate, "
+        "4R (8.2mm) 5 passes 22G needle ROSE malignant."
+    )
+
+    extraction = {
+        "source_text": note,
+        "procedures_performed": {
+            "peripheral_tbna": {"performed": True},
+            "transbronchial_cryobiopsy": {"performed": True},
+            "linear_ebus": {"performed": True},
+        },
+        "linear_ebus_stations": ["4L", "7", "4R"],
+        "granular_data": {
+            "linear_ebus_stations_detail": extract_linear_ebus_stations_detail(note),
+        },
+        "nav_platform": "Ion",
+        "lesion_location": "RUL",
+    }
+
+    bundle = build_procedure_bundle_from_extraction(extraction)
+
+    ebus_proc = next(proc for proc in bundle.procedures if proc.proc_type == "ebus_tbna")
+    ebus_data = ebus_proc.data.model_dump(exclude_none=False) if hasattr(ebus_proc.data, "model_dump") else ebus_proc.data
+    stations = {st.get("station_name"): st for st in (ebus_data.get("stations") or [])}
+    assert ebus_data.get("needle_gauge")
+    assert stations["4L"]["size_mm"] == 7.6
+    assert stations["4L"]["passes"] == 5
+    assert stations["4L"]["rose_result"] == "Adequate lymphocytes"
+    assert stations["7"]["size_mm"] == 6.2
+    assert stations["7"]["passes"] == 5
+    assert stations["7"]["rose_result"] == "Adequate lymphocytes"
+    assert stations["4R"]["size_mm"] == 8.2
+    assert stations["4R"]["passes"] == 5
+    assert stations["4R"]["rose_result"] == "Malignant"
+
+    tbna_proc = next(proc for proc in bundle.procedures if proc.proc_type == "transbronchial_needle_aspiration")
+    tbna_data = tbna_proc.data.model_dump(exclude_none=False) if hasattr(tbna_proc.data, "model_dump") else tbna_proc.data
+    assert tbna_data["samples_collected"] == 5
+
+    cryo_proc = next(proc for proc in bundle.procedures if proc.proc_type == "transbronchial_cryobiopsy")
+    cryo_data = cryo_proc.data.model_dump(exclude_none=False) if hasattr(cryo_proc.data, "model_dump") else cryo_proc.data
+    assert cryo_data["num_samples"] == 3
+    assert cryo_data["cryoprobe_size_mm"] == 1.1
 
 
 def test_biopsy_evidence_gating_prevents_phantom_transbronchial_biopsy(monkeypatch: pytest.MonkeyPatch) -> None:
