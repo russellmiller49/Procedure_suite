@@ -223,6 +223,7 @@ def _build_findings_prompt(masked_prompt_text: str) -> str:
         "- finding_text MUST include a canonical procedure keyword/abbreviation for the procedure_key.\n"
         "  (Examples: BAL, EBUS, TBNA, TBBx, Cryotherapy, APC, Airway dilation, Stent, Chest ultrasound, Balloon occlusion.)\n"
         "- evidence_quote MUST be a verbatim substring copied from the prompt text below.\n"
+        "- evidence_quote MUST match the prompt text EXACTLY (same characters/whitespace). Copy/paste; do not paraphrase.\n"
         "- evidence_quote MUST be >= 10 characters and include enough local context to uniquely support the finding.\n"
         "- evidence_quote SHOULD include the anatomy tokens (RB4, station 7, Trachea, etc.) that you list in anatomy.\n"
         "- evidence_quote does NOT need to contain the canonical keyword if the prompt uses shorthand.\n"
@@ -233,6 +234,14 @@ def _build_findings_prompt(masked_prompt_text: str) -> str:
         "- Only include procedures that are explicitly documented as performed.\n"
         "- If something is planned/considered/denied/inspection-only, OMIT it.\n"
         "- If uncertain, OMIT it.\n\n"
+        "- IMPORTANT: Output ALL performed procedures you can support with exact evidence quotes.\n"
+        "  It is common to have many findings (e.g., 5-20). Do not stop after the first obvious item.\n"
+        "- If multiple procedures are performed (BAL + biopsy + TBNA + ablation + dilation, etc.), include them all.\n\n"
+        "Procedure-specific anti-hallucination reminders:\n"
+        "- airway_stent: ONLY include if the stent was placed/deployed/removed/exchanged/revised.\n"
+        "  If the note says an existing stent is in good position/patent/intact, OMIT airway_stent.\n"
+        "- therapeutic_aspiration: ONLY include if there is explicit mucus plug / obstructing or thick secretions\n"
+        "  that were suctioned/aspirated/removed (or the phrase 'therapeutic aspiration'). Routine suctioning is NOT enough.\n\n"
         "*** CRITICAL CLINICAL GUARDRAILS (ANTI-HALLUCINATION) ***\n"
         "1. TOOLS DO NOT EQUAL INTENT: The mere mention of a tool (cryoprobe, snare, forceps) does NOT mean a therapeutic intervention was performed.\n"
         "2. ACTION-ON-TISSUE REQUIRED: DO NOT output tags for ablation, debulking, or therapeutic aspiration unless there is explicit 'action-on-tissue' language (e.g., 'tissue was destroyed', 'secretions were aspirated' to clear obstruction).\n"
@@ -292,13 +301,16 @@ def validate_findings_against_text(
         ):
             return False
 
-        if "therapeutic aspiration" in evidence_lower:
-            return True
-        if "therapeutic suction" in evidence_lower:
+        if "therapeutic aspiration" in evidence_lower or "therapeutic suction" in evidence_lower:
             return True
 
-        has_target = any(token in evidence_lower for token in ("mucus", "mucous", "secretions", "plug"))
-        if not has_target:
+        # High-precision heuristic: routine bronchoscopy suctioning is common and should not automatically
+        # count as therapeutic aspiration unless there is explicit obstructive/thick/plug language.
+        has_high_signal_target = any(token in evidence_lower for token in ("mucus", "mucous", "plug", "obstruct"))
+        has_thick_secretions = bool(
+            re.search(r"\b(?:thick|tenacious|copious)\s+(?:mucus|mucous|secretions?)\b", evidence_lower)
+        )
+        if not (has_high_signal_target or has_thick_secretions):
             return False
 
         has_direct_action = any(
@@ -316,20 +328,50 @@ def validate_findings_against_text(
                 "evacuated",
             )
         )
+        if has_direct_action:
+            return True
 
-        # Allow "cleared" only when tied directly to secretions/mucus/plugs.
-        if not has_direct_action and re.search(
-            r"\b(?:mucus|mucous|secretions?|plug(?:s|ging)?)\b.*\bclear(?:ed|ing)?\b",
-            evidence_lower,
-        ):
-            has_direct_action = True
-        if not has_direct_action and re.search(
-            r"\bclear(?:ed|ing)?\b.*\b(?:mucus|mucous|secretions?|plug(?:s|ging)?)\b",
-            evidence_lower,
-        ):
-            has_direct_action = True
+        # "Mucus plug(s) cleared" is acceptable shorthand when the target is explicit.
+        if "plug" in evidence_lower and re.search(r"\bclear(?:ed|ing)?\b", evidence_lower):
+            return True
 
-        return bool(has_direct_action)
+        return False
+
+    def _airway_stent_has_strong_intent(evidence_quote: str) -> bool:
+        evidence_lower = (evidence_quote or "").lower()
+        if not evidence_lower:
+            return False
+
+        # Explicit intervention cues.
+        if any(
+            token in evidence_lower
+            for token in (
+                "placed",
+                "deploy",
+                "deployed",
+                "insert",
+                "inserted",
+                "remove",
+                "removed",
+                "extract",
+                "extracted",
+                "exchange",
+                "exchanged",
+                "replace",
+                "replaced",
+                "revision",
+                "revised",
+            )
+        ):
+            return True
+
+        # Presence/assessment-only phrases should not count as stent intervention.
+        if re.search(r"\bstent\b.*\b(?:in\s+good\s+position|patent|intact)\b", evidence_lower):
+            return False
+        if re.search(r"\b(?:known|existing|prior|previous)\s+.*\bstent\b", evidence_lower):
+            return False
+
+        return False
 
     def _normalize_for_anatomy_match(value: str) -> str:
         """Normalize tokens for permissive substring matching.
@@ -386,6 +428,9 @@ def validate_findings_against_text(
             warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
             continue
         if proc_key == "therapeutic_aspiration" and not _therapeutic_aspiration_has_strong_intent(evidence):
+            warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
+            continue
+        if proc_key == "airway_stent" and not _airway_stent_has_strong_intent(evidence):
             warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
             continue
 
