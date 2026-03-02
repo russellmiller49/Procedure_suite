@@ -237,6 +237,10 @@ def _build_findings_prompt(masked_prompt_text: str) -> str:
         "- IMPORTANT: Output ALL performed procedures you can support with exact evidence quotes.\n"
         "  It is common to have many findings (e.g., 5-20). Do not stop after the first obvious item.\n"
         "- If multiple procedures are performed (BAL + biopsy + TBNA + ablation + dilation, etc.), include them all.\n\n"
+        "Coverage checklist (if explicitly performed, include findings):\n"
+        "- BAL/lavage, brushings, TBNA/EBUS, biopsies (TBBx/EBBx/cryobiopsy), cryotherapy, APC/ablation,\n"
+        "  mechanical debulking/foreign body removal, airway dilation/balloon, airway stent placement/removal,\n"
+        "  BLVR/valves, balloon occlusion, pleural procedures (thoracentesis/chest tube/IPC/pleurodesis), chest ultrasound.\n\n"
         "Procedure-specific anti-hallucination reminders:\n"
         "- airway_stent: ONLY include if the stent was placed/deployed/removed/exchanged/revised.\n"
         "  If the note says an existing stent is in good position/patent/intact, OMIT airway_stent.\n"
@@ -329,10 +333,6 @@ def validate_findings_against_text(
             )
         )
         if has_direct_action:
-            return True
-
-        # "Mucus plug(s) cleared" is acceptable shorthand when the target is explicit.
-        if "plug" in evidence_lower and re.search(r"\bclear(?:ed|ing)?\b", evidence_lower):
             return True
 
         return False

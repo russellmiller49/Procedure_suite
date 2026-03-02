@@ -129,7 +129,7 @@ def test_validate_findings_against_text_keyword_mismatch_warns_for_low_risk_but_
 def test_validate_findings_against_text_requires_aspiration_action_intent() -> None:
     text = "\n".join(
         [
-            "Mucus plugs cleared RB4, RB5, LB4, LB5.",
+            "Mucus plugs suctioned RB4, RB5, LB4, LB5.",
             "Airways inspected and stent in good position.",
         ]
     )
@@ -139,7 +139,7 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
                 procedure_key="therapeutic_aspiration",
                 action="aspiration",
                 finding_text="Therapeutic aspiration performed to clear mucus plugs",
-                evidence_quote="Mucus plugs cleared RB4, RB5, LB4, LB5.",
+                evidence_quote="Mucus plugs suctioned RB4, RB5, LB4, LB5.",
                 confidence=0.9,
             ),
             FindingV1(
@@ -155,7 +155,7 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
     accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
 
     assert len(accepted) == 1
-    assert accepted[0].evidence_quote == "Mucus plugs cleared RB4, RB5, LB4, LB5."
+    assert accepted[0].evidence_quote == "Mucus plugs suctioned RB4, RB5, LB4, LB5."
     assert any("missing_action_intent" in warning for warning in warnings)
 
 
