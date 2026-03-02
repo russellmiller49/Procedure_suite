@@ -285,6 +285,9 @@ def validate_findings_against_text(
         """
         return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
 
+    high_risk_keyword_required = {"peripheral_ablation", "therapeutic_aspiration"}
+    flexible_keys = {"pharmacological_instillation", "complication", "other_intervention"}
+
     for idx, item in enumerate(findings.findings or []):
         proc_key = str(item.procedure_key or "").strip()
         if proc_key not in ALLOWED_PROCEDURE_KEYS:
@@ -306,22 +309,24 @@ def validate_findings_against_text(
             continue
 
         evidence_lower = evidence.lower()
+
+        keyword_text = f"{finding_text}\n{evidence}".strip()
+        keyword_present = proc_key in flexible_keys or _contains_any_keyword(keyword_text, proc_key)
+
         anatomy_tokens = [str(tok).strip() for tok in (item.anatomy or []) if str(tok).strip()]
         if anatomy_tokens:
             evidence_norm = _normalize_for_anatomy_match(evidence)
-            missing_anatomy: list[str] = []
+            any_anatomy_in_evidence = False
             for tok in anatomy_tokens:
                 tok_norm = _normalize_for_anatomy_match(tok)
                 if not tok_norm:
                     continue
-                if tok_norm not in evidence_norm:
-                    missing_anatomy.append(tok)
-            if missing_anatomy:
-                warnings.append(
-                    "LLM_FINDINGS_DROPPED: anatomy_not_in_evidence "
-                    f"index={idx} key={proc_key!r} tokens={missing_anatomy!r}"
-                )
-                continue
+                if tok_norm in evidence_norm:
+                    any_anatomy_in_evidence = True
+                    break
+            if not any_anatomy_in_evidence:
+                warnings.append(f"LLM_FINDINGS_WEAK_ANATOMY_EVIDENCE: index={idx} key={proc_key!r}")
+
         if proc_key == "peripheral_ablation" and not any(
             token in evidence_lower for token in ("ablat", "destroy", "freez")
         ):
@@ -333,11 +338,11 @@ def validate_findings_against_text(
             warnings.append(f"LLM_FINDINGS_DROPPED: missing_action_intent index={idx} key={proc_key!r}")
             continue
 
-        keyword_text = f"{finding_text}\n{evidence}".strip()
-        flexible_keys = {"pharmacological_instillation", "complication", "other_intervention"}
-        if proc_key not in flexible_keys and not _contains_any_keyword(keyword_text, proc_key):
-            warnings.append(f"LLM_FINDINGS_DROPPED: keyword_missing index={idx} key={proc_key!r}")
-            continue
+        if not keyword_present:
+            if proc_key in high_risk_keyword_required:
+                warnings.append(f"LLM_FINDINGS_DROPPED: keyword_missing index={idx} key={proc_key!r}")
+                continue
+            warnings.append(f"LLM_FINDINGS_WEAK_KEYWORD_EVIDENCE: index={idx} key={proc_key!r}")
 
         accepted.append(item)
 
@@ -353,15 +358,7 @@ def _find_evidence_span(text: str, evidence_quote: str) -> tuple[int, int] | Non
     direct = raw.find(needle)
     if direct >= 0:
         return direct, direct + len(needle)
-
-    parts = [p for p in re.split(r"\s+", needle) if p]
-    if not parts:
-        return None
-    pattern = r"\s+".join(re.escape(p) for p in parts)
-    match = re.search(pattern, raw, flags=re.MULTILINE)
-    if not match:
-        return None
-    return match.start(), match.end()
+    return None
 
 
 _STATION_WITH_PREFIX_RE = re.compile(r"(?i)\b(?:station|level)\s*(?P<num>5|6|7|8|9)\b")
@@ -995,9 +992,12 @@ def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM |
     masked_prompt_text = mask_prompt_cpt_noise(prompt_text or "")
 
     findings = extract_reporter_findings_v1(masked_prompt_text, llm=llm)
-    accepted, dropped_warnings = validate_findings_against_text(
+    accepted, validation_warnings = validate_findings_against_text(
         findings,
         masked_prompt_text=masked_prompt_text,
+    )
+    dropped_count = sum(
+        1 for warning in (validation_warnings or []) if str(warning).startswith("LLM_FINDINGS_DROPPED:")
     )
 
     ner_result = build_synthetic_ner_result(
@@ -1006,7 +1006,7 @@ def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM |
     )
 
     warnings: list[str] = []
-    warnings.extend(dropped_warnings)
+    warnings.extend(validation_warnings)
 
     mapping = NERToRegistryMapper().map_entities(ner_result)
     warnings.extend(mapping.warnings or [])
@@ -1042,7 +1042,7 @@ def seed_registry_record_from_llm_findings(prompt_text: str, *, llm: OpenAILLM |
         context=findings.context,
         accepted_items=list(accepted),
         accepted_findings=len(accepted),
-        dropped_findings=len(dropped_warnings),
+        dropped_findings=int(dropped_count),
     )
 
 

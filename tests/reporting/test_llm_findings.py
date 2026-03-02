@@ -22,7 +22,13 @@ from app.reporting.llm_findings import (
 
 
 def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None:
-    text = "A procedure was performed today.\nBAL performed in RUL."
+    text = "\n".join(
+        [
+            "A procedure was performed today.",
+            "BAL performed in RUL.",
+            "Instilled 120cc NS and returned cloudy fluid from RUL.",
+        ]
+    )
     findings = ReporterFindingsV1(
         findings=[
             FindingV1(
@@ -64,7 +70,49 @@ def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None
                 procedure_key="bal",
                 action="diagnostic",
                 finding_text="Procedure performed",
-                evidence_quote="performed today",
+                evidence_quote="Instilled 120cc NS and returned cloudy fluid from RUL.",
+                confidence=0.9,
+            ),
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert len(accepted) == 2
+    assert {item.evidence_quote for item in accepted} == {
+        "BAL performed in RUL",
+        "Instilled 120cc NS and returned cloudy fluid from RUL.",
+    }
+
+    warn_text = "\n".join(warnings)
+    assert "contains_cpt_code" in warn_text
+    assert "evidence_too_short" in warn_text
+    assert "invalid_procedure_key" in warn_text
+    assert "missing_evidence_quote" in warn_text
+    assert "LLM_FINDINGS_WEAK_KEYWORD_EVIDENCE" in warn_text
+
+
+def test_validate_findings_against_text_keyword_mismatch_warns_for_low_risk_but_drops_for_high_risk() -> None:
+    text = "\n".join(
+        [
+            "Instilled 120cc NS and returned cloudy fluid from RUL.",
+            "Secretions removed and airway cleared.",
+        ]
+    )
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="bal",
+                action="diagnostic",
+                finding_text="Procedure performed",
+                evidence_quote="Instilled 120cc NS and returned cloudy fluid from RUL.",
+                confidence=0.9,
+            ),
+            FindingV1(
+                procedure_key="therapeutic_aspiration",
+                action="aspiration",
+                finding_text="Procedure performed",
+                evidence_quote="Secretions removed and airway cleared.",
                 confidence=0.9,
             ),
         ]
@@ -73,14 +121,9 @@ def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None
     accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
 
     assert len(accepted) == 1
-    assert accepted[0].evidence_quote == "BAL performed in RUL"
-
-    warn_text = "\n".join(warnings)
-    assert "contains_cpt_code" in warn_text
-    assert "evidence_too_short" in warn_text
-    assert "invalid_procedure_key" in warn_text
-    assert "missing_evidence_quote" in warn_text
-    assert "keyword_missing" in warn_text
+    assert accepted[0].procedure_key == "bal"
+    assert any("LLM_FINDINGS_WEAK_KEYWORD_EVIDENCE" in warning for warning in warnings)
+    assert any("LLM_FINDINGS_DROPPED: keyword_missing" in warning for warning in warnings)
 
 
 def test_validate_findings_against_text_requires_aspiration_action_intent() -> None:
