@@ -88,6 +88,7 @@ def configure_eval_env() -> dict[str, str]:
 _APPLIED_ENV_DEFAULTS = configure_eval_env()
 
 from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+from app.common.exceptions import LLMError
 from app.registry.application.registry_service import RegistryService
 from app.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
 from app.reporting.inference import InferenceEngine
@@ -279,6 +280,40 @@ def drop_reason_counts(warnings: list[str] | None) -> dict[str, int]:
     return counts
 
 
+LLM_ERROR_CODE_KEYS = (
+    "auth",
+    "model_access",
+    "rate_limit",
+    "timeout",
+    "network",
+    "bad_request",
+    "other",
+)
+
+
+def categorize_llm_error(exc: Exception) -> str | None:
+    """PHI-safe bucketing for LLMError failures (no raw prompt text)."""
+    if not isinstance(exc, LLMError):
+        return None
+    msg = str(exc).strip().lower()
+    if not msg:
+        return "other"
+
+    if any(token in msg for token in ("unauthorized", "invalid api key", "api_key", "authentication", "status=401")):
+        return "auth"
+    if any(token in msg for token in ("model", "not found", "does not exist", "you do not have access")):
+        return "model_access"
+    if any(token in msg for token in ("rate limit", "status=429", "too many requests")):
+        return "rate_limit"
+    if "timeout" in msg:
+        return "timeout"
+    if any(token in msg for token in ("network error", "connection", "dns", "ssl")):
+        return "network"
+    if any(token in msg for token in ("status=400", "bad request", "unsupported", "invalid", "parameter")):
+        return "bad_request"
+    return "other"
+
+
 def evaluate_gates(summary: dict[str, Any]) -> dict[str, Any]:
     checks: dict[str, Any] = {}
     primary_pass = True
@@ -347,6 +382,7 @@ def main(argv: list[str] | None = None) -> int:
     accepted_findings: list[int] = []
     dropped_findings: list[int] = []
     aggregate_drop_reasons = {key: 0 for key in DROP_REASON_KEYS}
+    llm_error_code_counts = {key: 0 for key in LLM_ERROR_CODE_KEYS}
     full_shell_count = 0
     failures = 0
     critical_extra_cases = 0
@@ -404,10 +440,14 @@ def main(argv: list[str] | None = None) -> int:
                     "dropped_findings": int(seed.dropped_findings),
                     "drop_reason_counts": per_case_drop_reasons,
                     "error": None,
+                    "error_code": None,
                 }
             )
         except Exception as exc:  # noqa: BLE001
             failures += 1
+            err_code = categorize_llm_error(exc)
+            if err_code:
+                llm_error_code_counts[err_code] = int(llm_error_code_counts.get(err_code, 0)) + 1
             per_case.append(
                 {
                     "id": row.id,
@@ -423,6 +463,7 @@ def main(argv: list[str] | None = None) -> int:
                     "dropped_findings": 0,
                     "drop_reason_counts": {key: 0 for key in DROP_REASON_KEYS},
                     "error": f"{type(exc).__name__}",
+                    "error_code": err_code,
                 }
             )
 
@@ -441,6 +482,7 @@ def main(argv: list[str] | None = None) -> int:
         "avg_accepted_findings": round(_avg([float(v) for v in accepted_findings]), 4),
         "avg_dropped_findings": round(_avg([float(v) for v in dropped_findings]), 4),
         "drop_reason_counts": aggregate_drop_reasons,
+        "llm_error_code_counts": llm_error_code_counts,
     }
 
     payload = {
