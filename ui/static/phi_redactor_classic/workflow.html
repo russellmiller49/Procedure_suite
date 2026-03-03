@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedure Suite - Workflow</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title">
+        <div class="h1">Procedure Suite - Clinical Dashboard</div>
+        <div class="subtle">Workflow overview and demo status</div>
+      </div>
+      <div class="topbar-links">
+        <a class="topbar-link" href="./reporter_builder.html">Reporter Builder</a>
+        <a class="topbar-link" href="./">Back to Dashboard</a>
+      </div>
+      <div class="status">
+        <span class="subtle">Workflow</span>
+      </div>
+    </header>
+
+    <main class="page-container">
+      <section class="page-hero">
+        <h2>How the workflow is intended to run</h2>
+        <p>
+          Procedure Suite scrubs PHI in the browser, then runs extraction on scrubbed text only.
+          You can process a single note and manage longitudinal events from the Local Vault
+          (Zero-Knowledge Clinical Registry). This page documents the flow and guardrails that keep
+          absolute dates and identifiers out of server requests.
+        </p>
+      </section>
+
+      <section class="content-card">
+        <h3>Single-note workflow (default)</h3>
+        <ol class="workflow-list">
+          <li>Paste the procedural note into the editor.</li>
+          <li>Run PHI detection and review each proposed redaction.</li>
+          <li>Apply redactions (or manually add/remove them as needed).</li>
+          <li>Submit the scrubbed note for CPT and registry extraction.</li>
+          <li>Review codes, evidence, and extracted registry fields.</li>
+          <li>Edit table values in the flattened tables panel (optional).</li>
+          <li>Export JSON or tables for downstream review/training.</li>
+        </ol>
+      </section>
+
+      <section class="content-card">
+        <h3>What’s new in the workflow</h3>
+        <ul class="workflow-list">
+          <li><strong>New Note:</strong> clears the editor, tables, and JSON output so you can start fresh.</li>
+          <li><strong>Flattened Tables (Editable):</strong> expand the section at the bottom to edit values, add rows, and correct entries.</li>
+          <li><strong>Edited JSON (Training):</strong> when you edit tables, a second JSON payload is generated and labeled for training.</li>
+          <li><strong>Export JSON:</strong> download the raw response payload.</li>
+          <li><strong>Export Tables:</strong> download the flattened tables as an Excel-readable file.</li>
+          <li><strong>Add Event (Vault):</strong> append pathology, imaging, procedure, or clinical-status events with signed day offsets only.</li>
+        </ul>
+      </section>
+
+      <section class="content-card">
+        <h3>Event chronology in Local Vault</h3>
+        <p>
+          The Local Vault stores encrypted local metadata per case (`patient_label`, `index_date`,
+          optional local fields). When you add an event, the browser computes
+          <code>relative_day_offset</code> from the local index date and event date.
+          The server receives only the signed integer offset and event payload.
+        </p>
+        <div class="callout">
+          The index date never leaves your browser in plaintext. Absolute dates are not sent to
+          append APIs.
+        </div>
+      </section>
+
+      <section class="content-card">
+        <h3>Add Event step-by-step</h3>
+        <ol class="workflow-list">
+          <li>Unlock Local Vault and select a case row.</li>
+          <li>Click <strong>Add Event</strong>.</li>
+          <li>Choose Event Date and Event Type.</li>
+          <li>Choose input mode: note extraction or structured status.</li>
+          <li>In note mode, paste event text (or extract local PDF text) in the Add Event modal note box.</li>
+          <li>Run Detection and Apply Redactions, then submit. The request includes only <code>relative_day_offset</code> (never absolute dates).</li>
+          <li>For structured-only events, append persists directly without extraction pipeline calls.</li>
+          <li>Pathology/imaging/clinical-status note events use contextual append aggregation (procedure extraction is skipped).</li>
+        </ol>
+      </section>
+
+      <section class="content-card">
+        <h3>Event guardrails and troubleshooting</h3>
+        <ul class="workflow-list">
+          <li>If index date is missing locally, offset defaults to 0 and the UI warns.</li>
+          <li>Event Date is client-side only and must be valid before submit.</li>
+          <li>Structured-only mode requires at least one status toggle or comment.</li>
+          <li>Remote registry edits and local vault edits are saved via separate paths.</li>
+        </ul>
+      </section>
+
+      <section class="content-card">
+        <h3>What happens to PHI?</h3>
+        <p class="subtle">
+          PHI detection runs entirely in your browser. The server only receives the scrubbed text
+          that you explicitly submit. For append events, the server receives only signed
+          <code>relative_day_offset</code> integers, not absolute dates.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

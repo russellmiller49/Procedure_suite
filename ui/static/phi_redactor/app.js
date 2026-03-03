@@ -31,6 +31,11 @@ import {
   normalizeCompletenessStationToken,
 } from "./completenessHelpers.js";
 
+const UI_VARIANT = String(window.__PROCSUITE_UI_VARIANT__ || "atlas").trim().toLowerCase() === "classic"
+  ? "classic"
+  : "atlas";
+const IS_CLASSIC = UI_VARIANT === "classic";
+
 const statusTextEl = document.getElementById("statusText");
 const contextualAppendBadgeEl = document.getElementById("contextualAppendBadge");
 const progressTextEl = document.getElementById("progressText");
@@ -182,6 +187,25 @@ const cameraCropApplyAllBtn = document.getElementById("cameraCropApplyAllBtn");
 const cameraCropResetBtn = document.getElementById("cameraCropResetBtn");
 const cameraCropResetAllBtn = document.getElementById("cameraCropResetAllBtn");
 const privacyShieldEl = document.getElementById("privacyShield");
+const workflowStepperEl = document.getElementById("workflowStepper");
+const workflowStepInputEl = document.getElementById("workflowStepInput");
+const workflowStepProcessingEl = document.getElementById("workflowStepProcessing");
+const workflowStepReviewEl = document.getElementById("workflowStepReview");
+const classicModeNoticeEl = document.getElementById("classicModeNotice");
+const reviewModeClinicianBtn = document.getElementById("reviewModeClinicianBtn");
+const reviewModeCoderBtn = document.getElementById("reviewModeCoderBtn");
+const reviewModeQaBtn = document.getElementById("reviewModeQaBtn");
+const atlasClinicianShellEl = document.getElementById("atlasClinicianShell");
+const needsAttentionHostEl = document.getElementById("needsAttentionHost");
+const caseSummaryStripEl = document.getElementById("caseSummaryStrip");
+const reviewSectionsHostEl = document.getElementById("reviewSectionsHost");
+const advancedAllFieldsEl = document.getElementById("advancedAllFields");
+const reviewDrawerEl = document.getElementById("reviewDrawer");
+const reviewDrawerBackdropEl = document.getElementById("reviewDrawerBackdrop");
+const reviewDrawerTitleEl = document.getElementById("reviewDrawerTitle");
+const reviewDrawerSubtitleEl = document.getElementById("reviewDrawerSubtitle");
+const reviewDrawerFieldsEl = document.getElementById("reviewDrawerFields");
+const reviewDrawerCloseBtn = document.getElementById("reviewDrawerCloseBtn");
 
 function detectCameraWarningProfile(env = globalThis) {
   try {
@@ -239,6 +263,12 @@ let completenessEdits = null; // {edited_patch, edited_fields} generated from co
 let completenessRawValueByPath = new Map(); // key: effective dotted path (with indices), value: raw string
 let completenessSelectedIndexByPromptPath = new Map(); // key: prompt.path (with [*]), value: selected index (number)
 let completenessPendingChanges = false;
+let currentWorkflowStep = "input";
+let reviewMode = "clinician";
+let reviewSectionsCache = [];
+let reviewDrawerContext = null;
+let reviewDrawerLastFocus = null;
+let flatTablesActiveTabId = "patient";
 
 const TESTER_MODE = new URLSearchParams(location.search).get("tester") === "1";
 if (TESTER_MODE && feedbackPanelEl) feedbackPanelEl.open = true;
@@ -324,6 +354,7 @@ const UI_REVIEW_FOCUS_LS_KEY = "ui.reviewFocus";
 const UI_REVIEW_SPLIT_LS_KEY = "ui.reviewSplit";
 const UI_DETECTIONS_COLLAPSED_LS_KEY = "ui.detectionsCollapsed";
 const UI_COMPLETENESS_COLLAPSED_LS_KEY = "ui.completenessCollapsed";
+const UI_REVIEW_MODE_LS_KEY = "ui.reviewMode";
 const REPORTER_DASHBOARD_TRANSFER_KEY = "ps.reporter_to_dashboard_note_v1";
 const DASHBOARD_REPORTER_TRANSFER_KEY = "ps.dashboard_to_reporter_note_v1";
 const VAULT_USER_ID_LS_KEY = "ps.vault.user_id";
@@ -373,6 +404,138 @@ function safeRemoveStorageItem(storage, key) {
   }
 }
 
+function normalizeReviewMode(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  if (raw === "coder") return "coder";
+  if (raw === "qa") return "qa";
+  return "clinician";
+}
+
+function setWorkflowStep(step, options = {}) {
+  const normalized = step === "processing" || step === "review" ? step : "input";
+  currentWorkflowStep = normalized;
+  const processing = Boolean(options.processing || normalized === "processing");
+
+  const steps = [
+    { key: "input", el: workflowStepInputEl },
+    { key: "processing", el: workflowStepProcessingEl },
+    { key: "review", el: workflowStepReviewEl },
+  ];
+  const order = { input: 0, processing: 1, review: 2 };
+
+  steps.forEach(({ key, el }) => {
+    if (!el) return;
+    const idx = order[key];
+    const activeIdx = order[normalized];
+    el.classList.toggle("is-active", key === normalized);
+    el.classList.toggle("is-complete", idx < activeIdx);
+    if (key === "processing") {
+      el.classList.toggle("is-processing", processing);
+    } else {
+      el.classList.remove("is-processing");
+    }
+  });
+
+  syncStickyChromeMetrics();
+}
+
+function applyReviewMode(nextMode, options = {}) {
+  const { persist = true } = options;
+  const mode = normalizeReviewMode(nextMode);
+  reviewMode = mode;
+
+  const body = document.body;
+  if (body) {
+    body.classList.remove("review-mode-clinician", "review-mode-coder", "review-mode-qa");
+    body.classList.add(`review-mode-${mode}`);
+  }
+
+  const buttons = [
+    [reviewModeClinicianBtn, "clinician"],
+    [reviewModeCoderBtn, "coder"],
+    [reviewModeQaBtn, "qa"],
+  ];
+  buttons.forEach(([btn, key]) => {
+    if (!btn) return;
+    const active = key === mode;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+    btn.tabIndex = active ? 0 : -1;
+  });
+
+  if (persist) safeSetLocalStorageItem(UI_REVIEW_MODE_LS_KEY, mode);
+
+  if (advancedAllFieldsEl && !advancedAllFieldsEl.dataset.userToggled) {
+    advancedAllFieldsEl.open = mode === "qa";
+  }
+}
+
+function initReviewModeControls() {
+  const params = new URLSearchParams(location.search);
+  const fromQuery = params.get("reviewMode");
+  const fromStorage = safeGetLocalStorageItem(UI_REVIEW_MODE_LS_KEY);
+  applyReviewMode(fromQuery || fromStorage || "clinician", { persist: false });
+
+  const wire = (btn, mode) => {
+    if (!btn) return;
+    btn.addEventListener("click", () => applyReviewMode(mode));
+  };
+  wire(reviewModeClinicianBtn, "clinician");
+  wire(reviewModeCoderBtn, "coder");
+  wire(reviewModeQaBtn, "qa");
+
+  const modeButtons = [reviewModeClinicianBtn, reviewModeCoderBtn, reviewModeQaBtn].filter(Boolean);
+  modeButtons.forEach((btn, index) => {
+    btn.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === "ArrowLeft") nextIndex = (index - 1 + modeButtons.length) % modeButtons.length;
+      if (event.key === "ArrowRight") nextIndex = (index + 1) % modeButtons.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = modeButtons.length - 1;
+      const nextBtn = modeButtons[nextIndex];
+      const nextMode = String(nextBtn?.dataset?.mode || "clinician");
+      applyReviewMode(nextMode);
+      if (nextBtn && typeof nextBtn.focus === "function") nextBtn.focus();
+    });
+  });
+
+  if (advancedAllFieldsEl) {
+    advancedAllFieldsEl.addEventListener("toggle", () => {
+      advancedAllFieldsEl.dataset.userToggled = "1";
+    });
+  }
+}
+
+function moveNeedsAttentionCard() {
+  if (!needsAttentionHostEl || !completenessPromptsCardEl) return;
+  if (completenessPromptsCardEl.parentElement !== needsAttentionHostEl) {
+    needsAttentionHostEl.appendChild(completenessPromptsCardEl);
+  }
+}
+
+function applyClassicModeUi() {
+  if (document.body) {
+    document.body.dataset.uiVariant = UI_VARIANT;
+    document.body.classList.toggle("ui-variant-classic", IS_CLASSIC);
+  }
+  if (!IS_CLASSIC) return;
+  if (classicModeNoticeEl) classicModeNoticeEl.classList.remove("hidden");
+  if (vaultPanelEl) {
+    vaultPanelEl.open = false;
+    vaultPanelEl.classList.add("hidden");
+  }
+  if (vaultIdentityBannerEl) {
+    vaultIdentityBannerEl.classList.remove(
+      "vault-identity-banner--unlocked-nocase",
+      "vault-identity-banner--unlocked-active",
+    );
+    vaultIdentityBannerEl.classList.add("vault-identity-banner--locked");
+    vaultIdentityBannerEl.textContent = "Classic mode: Vault disabled (reduced local protections).";
+  }
+}
+
 function parseReporterTransferPayload(raw) {
   if (!raw) return null;
   try {
@@ -415,6 +578,7 @@ function readEnumSetting(queryKey, storageKey, allowed, defaultValue) {
 }
 
 function isVaultRequiredForSubmission() {
+  if (IS_CLASSIC) return false;
   const params = new URLSearchParams(location.search);
   const qp = params.get("vaultRequired");
   if (qp === "1" || qp === "0") {
@@ -597,6 +761,11 @@ function initLayoutControls() {
 
 applyInitialLayoutPrefs();
 initCompletenessControls();
+initReviewModeControls();
+applyClassicModeUi();
+moveNeedsAttentionCard();
+initReviewDrawer();
+setWorkflowStep("input");
 
 function showRegistryGridUi() {
   if (registryLegacyRightRootEl) registryLegacyRightRootEl.classList.add("hidden");
@@ -1271,7 +1440,9 @@ if (vaultSyncBtn) vaultSyncBtn.disabled = true;
 updateAppendTargetUi();
 renderVaultPatients();
 setVaultStatus(
-  isVaultRequiredForSubmission()
+  IS_CLASSIC
+    ? "Classic mode: Vault disabled."
+    : isVaultRequiredForSubmission()
     ? "Locked. Vault required for submit (vaultRequired=1). Unlock to continue."
     : "Locked. Optional: unlock to save encrypted local metadata and add events (does not affect extraction)."
 );
@@ -1283,18 +1454,24 @@ window.addEventListener("resize", () => syncVaultIdentityBannerOffset(), { passi
 // Start with a vault-only refresher, then let `main()` replace it with
 // `updateZkControls()` once runtime editor state exists.
 let refreshZkControls = () => {
-  if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultBusy;
-  if (vaultLockBtn) vaultLockBtn.disabled = !isVaultReady() || vaultBusy;
-  if (vaultSyncBtn) vaultSyncBtn.disabled = !isVaultReady() || vaultBusy;
-  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
-  if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
+  const vaultActionsDisabled = IS_CLASSIC || vaultBusy;
+  if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultActionsDisabled;
+  if (vaultLockBtn) vaultLockBtn.disabled = vaultActionsDisabled || !isVaultReady();
+  if (vaultSyncBtn) vaultSyncBtn.disabled = vaultActionsDisabled || !isVaultReady();
+  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = vaultActionsDisabled || !isVaultReady();
+  if (vaultSaveCaseBtn)
+    vaultSaveCaseBtn.disabled = vaultActionsDisabled || !isVaultReady() || !activeCaseRegistryUuid;
   if (vaultClearActiveCaseBtn)
-    vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
-  if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendEventConfig || vaultBusy;
+    vaultClearActiveCaseBtn.disabled = vaultActionsDisabled || !activeCaseRegistryUuid;
+  if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = vaultActionsDisabled || !appendEventConfig;
 };
 
 if (vaultUnlockBtn) {
   vaultUnlockBtn.addEventListener("click", () => {
+    if (IS_CLASSIC) {
+      setStatus("Classic mode: Vault is disabled.");
+      return;
+    }
     if (vaultBusy) return;
 
     const savedUserId = safeGetLocalStorageItem(VAULT_USER_ID_LS_KEY);
@@ -1314,6 +1491,7 @@ if (vaultUnlockBtn) {
 }
 
 async function submitVaultUnlockDialog() {
+  if (IS_CLASSIC) return;
   if (vaultBusy) return;
   const userId = String(vaultUnlockUserIdInputEl?.value || vaultUserIdInputEl?.value || "").trim();
   const password = String(vaultUnlockPasswordInputEl?.value || "");
@@ -1464,11 +1642,13 @@ if (clearAppendTargetBtn) {
 function setStatus(text) {
   if (!statusTextEl) return;
   statusTextEl.textContent = text;
+  syncVaultIdentityBannerOffset();
 }
 
 function setProgress(text) {
   if (!progressTextEl) return;
   progressTextEl.textContent = text || "";
+  syncVaultIdentityBannerOffset();
 }
 
 function setFeedbackStatus(text) {
@@ -1516,6 +1696,14 @@ function setVaultBannerState(state, primaryText, secondaryText = "") {
 
 function updateVaultBanner() {
   if (!vaultIdentityBannerEl) return;
+  if (IS_CLASSIC) {
+    setVaultBannerState(
+      "locked",
+      "Classic mode: Vault disabled.",
+      "Pipeline + review run without local vault protections.",
+    );
+    return;
+  }
   if (!isVaultReady()) {
     const requiredHint = isVaultRequiredForSubmission()
       ? "Vault required for submit (vaultRequired=1)."
@@ -1542,13 +1730,28 @@ function updateVaultBanner() {
 function syncVaultIdentityBannerOffset() {
   if (!vaultIdentityBannerEl) return;
   try {
-    const topbar = document.querySelector(".topbar");
-    const height = topbar ? topbar.getBoundingClientRect().height : 0;
-    const px = Number.isFinite(height) ? Math.max(0, Math.round(height)) : 0;
+    const metrics = syncStickyChromeMetrics();
+    const total = Number(metrics?.topbarHeight || 0) + Number(metrics?.stepperHeight || 0);
+    const px = Number.isFinite(total) ? Math.max(0, Math.round(total)) : 0;
     vaultIdentityBannerEl.style.top = `${px}px`;
   } catch {
     vaultIdentityBannerEl.style.top = "0px";
   }
+}
+
+function syncStickyChromeMetrics() {
+  const root = document.documentElement;
+  const topbarEl = document.querySelector(".topbar");
+  const topbarHeight = topbarEl ? topbarEl.getBoundingClientRect().height : 56;
+  const stepperHeight =
+    workflowStepperEl && !workflowStepperEl.classList.contains("hidden")
+      ? workflowStepperEl.getBoundingClientRect().height
+      : 0;
+  if (root?.style?.setProperty) {
+    root.style.setProperty("--ps-topbar-height", `${Math.max(0, Math.round(Number(topbarHeight) || 0))}px`);
+    root.style.setProperty("--ps-stepper-height", `${Math.max(0, Math.round(Number(stepperHeight) || 0))}px`);
+  }
+  return { topbarHeight, stepperHeight };
 }
 
 function clearVaultIdleTimer() {
@@ -2128,12 +2331,13 @@ function updateAppendTargetUi() {
   }
 
   if (clearAppendTargetBtn) {
-    clearAppendTargetBtn.disabled = !activeConfig || vaultBusy;
+    clearAppendTargetBtn.disabled = IS_CLASSIC || !activeConfig || vaultBusy;
   }
 
-  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
-  if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
-  if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
+  if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = IS_CLASSIC || !isVaultReady() || vaultBusy;
+  if (vaultSaveCaseBtn)
+    vaultSaveCaseBtn.disabled = IS_CLASSIC || !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
+  if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = IS_CLASSIC || !activeCaseRegistryUuid || vaultBusy;
 
   if (contextualAppendBadgeEl) {
     const showBadge = Boolean(activeConfig && activeConfig.mode === "note" && isPathOrImagingEventType(activeConfig.event_type));
@@ -4119,6 +4323,623 @@ function renderDashboard(data, options = {}) {
   renderDebugLogs(data);
 }
 
+function toPreviewText(value, fallback = "Not documented") {
+  if (Array.isArray(value)) {
+    const clean = value.map((v) => String(v || "").trim()).filter(Boolean);
+    return clean.length ? clean.join(", ") : fallback;
+  }
+  const text = String(value ?? "").trim();
+  return text || fallback;
+}
+
+function getPerformedProcedureLabels(registry) {
+  const out = [];
+  const procs = registry?.procedures_performed;
+  if (procs && typeof procs === "object") {
+    Object.entries(procs).forEach(([key, value]) => {
+      if (isPerformedProcedure(value)) out.push(titleCaseKey(key));
+    });
+  }
+  const pleural = registry?.pleural_procedures;
+  if (pleural && typeof pleural === "object") {
+    Object.entries(pleural).forEach(([key, value]) => {
+      if (isPerformedProcedure(value)) out.push(titleCaseKey(key));
+    });
+  }
+  return out;
+}
+
+function getFlatSummaryValue(path) {
+  const dotted = String(path || "").trim();
+  if (!dotted) return "";
+  const fullPath = dotted.startsWith("registry.") ? dotted : `registry.${dotted}`;
+  const hit = findFlatFieldValueRowByRegistryPath(flatTablesState, fullPath);
+  return String(hit?.row?.value || "").trim();
+}
+
+function collectEvidenceSpansForPaths(data, paths) {
+  const evidence = getEvidence(data);
+  const merged = [];
+  const seen = new Set();
+  (Array.isArray(paths) ? paths : []).forEach((path) => {
+    const spans = Array.isArray(evidence?.[path]) ? evidence[path] : [];
+    spans.forEach((span) => {
+      const start = Number(span?.start ?? span?.span?.[0]);
+      const end = Number(span?.end ?? span?.span?.[1]);
+      const key = `${start}:${end}:${String(span?.text || span?.quote || "")}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      merged.push(span);
+    });
+  });
+  return merged;
+}
+
+function buildCaseSummaryItems(data) {
+  const registry = getRegistry(data) || {};
+  const performed = getPerformedProcedureLabels(registry);
+  const ebus = registry?.procedures_performed?.linear_ebus || {};
+  const stations =
+    Array.isArray(ebus?.stations_sampled) && ebus.stations_sampled.length > 0
+      ? ebus.stations_sampled.join(", ")
+      : "";
+  const needle = String(ebus?.needle_gauge || "").trim();
+  const passes = Array.isArray(ebus?.node_events)
+    ? ebus.node_events
+        .map((ev) => Number(ev?.passes))
+        .filter((n) => Number.isFinite(n))
+        .reduce((acc, n) => acc + n, 0)
+    : 0;
+  const selectedCodes = getCodingLines(data)
+    .filter((ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected")
+    .map((ln) => normalizeCptCode(ln?.code))
+    .filter(Boolean);
+
+  const complications = [];
+  const comp = registry?.complications || {};
+  Object.entries(comp).forEach(([k, v]) => {
+    if (!v || typeof v !== "object") return;
+    if (v.performed === true || v.present === true || v.occurred === true) {
+      complications.push(titleCaseKey(k));
+      return;
+    }
+    const detail = String(v.detail || v.summary || "").trim();
+    if (detail) complications.push(`${titleCaseKey(k)}: ${detail}`);
+  });
+
+  return [
+    {
+      label: "Indication",
+      value: toPreviewText(
+        getFlatSummaryValue("clinical_context.primary_indication")
+          || pickRegistryPathValue(registry, ["clinical_context.primary_indication", "procedure.indication"]),
+      ),
+    },
+    {
+      label: "Sedation / Airway",
+      value: toPreviewText(
+        [
+          getFlatSummaryValue("sedation.type") || pickRegistryPathValue(registry, ["sedation.type"]),
+          getFlatSummaryValue("procedure_setting.airway_type")
+            || pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+        ].filter(Boolean).join(" / "),
+      ),
+    },
+    {
+      label: "Procedures Performed",
+      value: toPreviewText(performed.length ? performed.slice(0, 6).join(", ") : ""),
+    },
+    {
+      label: "EBUS Stations",
+      value: toPreviewText(
+        [
+          stations ? `Stations ${stations}` : "",
+          needle ? `Needle ${needle}` : "",
+          passes > 0 ? `${passes} passes` : "",
+        ]
+          .filter(Boolean)
+          .join(" | "),
+      ),
+    },
+    {
+      label: "Complications",
+      value: toPreviewText(complications.length ? complications.join(", ") : "None documented"),
+    },
+    {
+      label: "Disposition",
+      value: toPreviewText(
+        getFlatSummaryValue("disposition.status")
+          || pickRegistryPathValue(registry, ["procedure_setting.disposition", "disposition.plan", "disposition.status"]),
+      ),
+    },
+    {
+      label: "Coding Summary",
+      value: toPreviewText(
+        selectedCodes.length ? `${selectedCodes.length} selected: ${selectedCodes.slice(0, 5).join(", ")}` : "",
+      ),
+    },
+  ];
+}
+
+function buildClinicianReviewSections(data) {
+  const registry = getRegistry(data) || {};
+  const selectedCodes = getCodingLines(data)
+    .filter((ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected")
+    .map((ln) => normalizeCptCode(ln?.code))
+    .filter(Boolean);
+
+  return [
+    {
+      id: "clinical_context",
+      title: "Clinical context",
+      preview: toPreviewText(
+        pickRegistryPathValue(registry, ["clinical_context.primary_indication", "clinical_context.indication_category"]),
+      ),
+      fields: [
+        {
+          label: "Primary indication",
+          path: "clinical_context.primary_indication",
+          value: pickRegistryPathValue(registry, ["clinical_context.primary_indication"]),
+        },
+        {
+          label: "Indication category",
+          path: "clinical_context.indication_category",
+          value: pickRegistryPathValue(registry, ["clinical_context.indication_category"]),
+        },
+        {
+          label: "Bronchus sign",
+          path: "clinical_context.bronchus_sign",
+          value: pickRegistryPathValue(registry, ["clinical_context.bronchus_sign"]),
+        },
+      ],
+      evidencePaths: [
+        "clinical_context.primary_indication",
+        "clinical_context.indication_category",
+        "clinical_context.bronchus_sign",
+      ],
+    },
+    {
+      id: "procedure_setting",
+      title: "Procedure setting + sedation",
+      preview: toPreviewText(
+        [
+          pickRegistryPathValue(registry, ["sedation.type"]),
+          pickRegistryPathValue(registry, ["sedation.anesthesia_provider"]),
+          pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+        ]
+          .filter(Boolean)
+          .join(" | "),
+      ),
+      fields: [
+        {
+          label: "Sedation type",
+          path: "sedation.type",
+          value: pickRegistryPathValue(registry, ["sedation.type"]),
+        },
+        {
+          label: "Anesthesia provider",
+          path: "sedation.anesthesia_provider",
+          value: pickRegistryPathValue(registry, ["sedation.anesthesia_provider"]),
+        },
+        {
+          label: "Airway type",
+          path: "procedure_setting.airway_type",
+          value: pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+        },
+      ],
+      evidencePaths: ["sedation.type", "sedation.anesthesia_provider", "procedure_setting.airway_type"],
+    },
+    {
+      id: "diagnostic_bronchoscopy",
+      title: "Diagnostic bronchoscopy",
+      preview: toPreviewText(
+        [
+          isPerformedProcedure(registry?.procedures_performed?.diagnostic_bronchoscopy)
+            ? "Diagnostic bronchoscopy performed"
+            : "Diagnostic bronchoscopy not explicitly performed",
+          pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]),
+        ]
+          .filter(Boolean)
+          .join(" | "),
+      ),
+      fields: [
+        {
+          label: "Performed",
+          path: "procedures_performed.diagnostic_bronchoscopy.performed",
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.performed"])),
+        },
+        {
+          label: "Inspection findings",
+          path: "procedures_performed.diagnostic_bronchoscopy.inspection_findings",
+          value: pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]),
+        },
+        {
+          label: "BAL performed",
+          path: "procedures_performed.bal.performed",
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.bal.performed"])),
+        },
+      ],
+      evidencePaths: [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.diagnostic_bronchoscopy.inspection_findings",
+        "procedures_performed.bal.performed",
+      ],
+    },
+    {
+      id: "linear_ebus",
+      title: "Linear EBUS",
+      preview: toPreviewText(
+        [
+          isPerformedProcedure(registry?.procedures_performed?.linear_ebus) ? "Performed" : "Not performed",
+          toPreviewText(
+            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]),
+            "",
+          ),
+          pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]),
+        ]
+          .filter(Boolean)
+          .join(" | "),
+      ),
+      fields: [
+        {
+          label: "Performed",
+          path: "procedures_performed.linear_ebus.performed",
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.performed"])),
+        },
+        {
+          label: "Stations sampled",
+          path: "procedures_performed.linear_ebus.stations_sampled",
+          value: toPreviewText(
+            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]),
+            "",
+          ),
+        },
+        {
+          label: "Needle gauge",
+          path: "procedures_performed.linear_ebus.needle_gauge",
+          value: pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]),
+        },
+      ],
+      evidencePaths: [
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.linear_ebus.stations_sampled",
+        "procedures_performed.linear_ebus.needle_gauge",
+      ],
+    },
+    {
+      id: "complications",
+      title: "Complications & outcomes",
+      preview: toPreviewText(
+        [
+          data?.needs_manual_review ? "Manual review required" : "",
+          pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]),
+          pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]),
+        ]
+          .filter(Boolean)
+          .join(" | "),
+      ),
+      fields: [
+        {
+          label: "Complication summary",
+          path: "complications.summary",
+          value: pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]),
+        },
+        {
+          label: "Disposition",
+          path: "disposition.status",
+          value: pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]),
+        },
+        {
+          label: "Needs manual review",
+          path: "",
+          value: data?.needs_manual_review ? "Yes" : "No",
+          readOnly: true,
+        },
+      ],
+      evidencePaths: ["complications.summary", "complications.notes", "disposition.status", "disposition.plan"],
+    },
+    {
+      id: "coding",
+      title: "Coding & rationale",
+      preview: toPreviewText(
+        selectedCodes.length ? `${selectedCodes.length} selected CPT: ${selectedCodes.slice(0, 6).join(", ")}` : "",
+      ),
+      fields: [
+        {
+          label: "Selected CPT codes",
+          path: "",
+          value: selectedCodes.length ? selectedCodes.join(", ") : "None selected",
+          readOnly: true,
+        },
+        {
+          label: "Review status",
+          path: "",
+          value: String(data?.review_status || "finalized"),
+          readOnly: true,
+        },
+      ],
+      evidencePaths: selectedCodes.map((code) => `billing.${code}`),
+    },
+  ];
+}
+
+function renderCaseSummaryStrip(data) {
+  if (!caseSummaryStripEl) return;
+  clearEl(caseSummaryStripEl);
+  const items = buildCaseSummaryItems(data);
+  items.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "case-summary-item";
+    const label = document.createElement("div");
+    label.className = "case-summary-label";
+    label.textContent = item.label;
+    const value = document.createElement("div");
+    value.className = "case-summary-value";
+    value.textContent = toPreviewText(item.value);
+    card.appendChild(label);
+    card.appendChild(value);
+    caseSummaryStripEl.appendChild(card);
+  });
+}
+
+function applyReviewDrawerFieldChange(path, rawValue) {
+  const fullPath = String(path || "").trim();
+  if (!fullPath) return false;
+  let value = rawValue;
+  const stateLoc = findFlatFieldValueRowByRegistryPath(flatTablesState, fullPath);
+  const meta = stateLoc?.row?.__meta || {};
+  if (meta?.valueType === "boolean") {
+    const parsed = parseYesNo(rawValue);
+    value = parsed === null ? "" : parsed ? "Yes" : "No";
+  }
+  if (meta?.valueType === "list" && typeof rawValue === "string") {
+    value = rawValue
+      .split(",")
+      .map((v) => String(v || "").trim())
+      .filter(Boolean);
+  }
+  const updatedTable = applyCompletenessValueToFlatTables(fullPath, value);
+  if (updatedTable) {
+    editedDirty = true;
+    renderFlatTablesFromState();
+    updateEditedPayload();
+    return true;
+  }
+
+  const source = editedPayload || lastServerResponse;
+  if (!source || !source.registry) return false;
+  const cloned = deepClone(source);
+  if (!cloned.registry || typeof cloned.registry !== "object") return false;
+  setByPath(cloned.registry, fullPath, value);
+  editedPayload = cloned;
+  editedDirty = true;
+  if (editedResponseEl) editedResponseEl.textContent = JSON.stringify(editedPayload, null, 2);
+  if (exportEditedBtn) exportEditedBtn.disabled = false;
+  return true;
+}
+
+function closeReviewDrawer(options = {}) {
+  const { restoreFocus = true } = options;
+  if (reviewDrawerEl) {
+    reviewDrawerEl.classList.add("hidden");
+    reviewDrawerEl.setAttribute("aria-hidden", "true");
+  }
+  if (reviewDrawerBackdropEl) reviewDrawerBackdropEl.classList.add("hidden");
+  if (document.body) document.body.classList.remove("review-drawer-open");
+  reviewDrawerContext = null;
+  if (restoreFocus && reviewDrawerLastFocus && typeof reviewDrawerLastFocus.focus === "function") {
+    reviewDrawerLastFocus.focus();
+  }
+  reviewDrawerLastFocus = null;
+}
+
+function openReviewDrawer(section) {
+  if (!reviewDrawerEl || !reviewDrawerFieldsEl) return;
+  reviewDrawerContext = section || null;
+  reviewDrawerLastFocus = document.activeElement;
+  if (reviewDrawerTitleEl) reviewDrawerTitleEl.textContent = section?.title || "Edit Section";
+  if (reviewDrawerSubtitleEl) {
+    reviewDrawerSubtitleEl.textContent = section?.preview ? String(section.preview) : "";
+  }
+  clearEl(reviewDrawerFieldsEl);
+
+  const fields = Array.isArray(section?.fields) ? section.fields : [];
+  if (fields.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "review-field-readonly";
+    empty.textContent = "No editable fields in this section.";
+    reviewDrawerFieldsEl.appendChild(empty);
+  }
+
+  fields.forEach((field) => {
+    const row = document.createElement("div");
+    row.className = "review-field-row";
+    const label = document.createElement("div");
+    label.className = "review-field-label";
+    label.textContent = String(field?.label || "Field");
+    row.appendChild(label);
+
+    const wrap = document.createElement("div");
+    wrap.className = "review-field-input-wrap";
+    const fieldPath = String(field?.path || "").trim();
+    const readOnly = Boolean(field?.readOnly || !fieldPath);
+    if (readOnly) {
+      const text = document.createElement("div");
+      text.className = "review-field-readonly";
+      text.textContent = toPreviewText(field?.value);
+      wrap.appendChild(text);
+    } else {
+      const input = document.createElement("input");
+      input.className = "review-field-input";
+      input.type = "text";
+      input.value = Array.isArray(field?.value) ? field.value.join(", ") : String(field?.value ?? "");
+      input.addEventListener("change", () => {
+        const ok = applyReviewDrawerFieldChange(fieldPath, input.value);
+        if (ok) setStatus(`Updated ${field.label}.`);
+      });
+      wrap.appendChild(input);
+
+      const evBtn = document.createElement("button");
+      evBtn.type = "button";
+      evBtn.className = "secondary small-btn";
+      evBtn.textContent = "Evidence";
+      evBtn.addEventListener("click", () => {
+        const spans = collectEvidenceSpansForPaths(lastServerResponse || {}, [fieldPath]);
+        if (spans.length === 0) {
+          setStatus(`No evidence spans found for ${field.label}.`);
+          return;
+        }
+        highlightSpanInEditor(Number(spans[0]?.start || spans[0]?.span?.[0]), Number(spans[0]?.end || spans[0]?.span?.[1]));
+      });
+      wrap.appendChild(evBtn);
+    }
+    row.appendChild(wrap);
+    reviewDrawerFieldsEl.appendChild(row);
+  });
+
+  reviewDrawerEl.classList.remove("hidden");
+  reviewDrawerEl.setAttribute("aria-hidden", "false");
+  if (reviewDrawerBackdropEl) reviewDrawerBackdropEl.classList.remove("hidden");
+  if (document.body) document.body.classList.add("review-drawer-open");
+  const firstInput = reviewDrawerFieldsEl.querySelector("input, button, select, textarea");
+  if (firstInput && typeof firstInput.focus === "function") firstInput.focus();
+  else if (reviewDrawerCloseBtn && typeof reviewDrawerCloseBtn.focus === "function") reviewDrawerCloseBtn.focus();
+  else if (typeof reviewDrawerEl.focus === "function") reviewDrawerEl.focus();
+}
+
+function initReviewDrawer() {
+  if (reviewDrawerBackdropEl && !reviewDrawerBackdropEl.dataset.wired) {
+    reviewDrawerBackdropEl.dataset.wired = "1";
+    reviewDrawerBackdropEl.addEventListener("click", () => closeReviewDrawer());
+  }
+  if (reviewDrawerCloseBtn && !reviewDrawerCloseBtn.dataset.wired) {
+    reviewDrawerCloseBtn.dataset.wired = "1";
+    reviewDrawerCloseBtn.addEventListener("click", () => closeReviewDrawer());
+  }
+  if (!document.body.dataset.reviewDrawerKeyHandler) {
+    document.body.dataset.reviewDrawerKeyHandler = "1";
+    document.addEventListener("keydown", (event) => {
+      if (!reviewDrawerEl || reviewDrawerEl.classList.contains("hidden")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeReviewDrawer();
+        return;
+      }
+      if (event.key === "Tab") {
+        const focusable = Array.from(
+          reviewDrawerEl.querySelectorAll(
+            'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter((el) => !el.hasAttribute("hidden") && !el.classList.contains("hidden"));
+        if (focusable.length === 0) {
+          event.preventDefault();
+          if (reviewDrawerCloseBtn && typeof reviewDrawerCloseBtn.focus === "function") {
+            reviewDrawerCloseBtn.focus();
+          }
+          return;
+        }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+}
+
+function renderReviewSections(data) {
+  if (!reviewSectionsHostEl) return;
+  clearEl(reviewSectionsHostEl);
+  const sections = buildClinicianReviewSections(data);
+  reviewSectionsCache = sections;
+
+  sections.forEach((section, idx) => {
+    const card = document.createElement("details");
+    card.className = "review-section-card";
+    if (idx === 0) card.open = true;
+
+    const summary = document.createElement("summary");
+    const head = document.createElement("div");
+    head.className = "review-section-head";
+    const title = document.createElement("div");
+    title.className = "review-section-title";
+    title.textContent = section.title;
+    head.appendChild(title);
+
+    const actions = document.createElement("div");
+    actions.className = "review-section-actions";
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "secondary small-btn";
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openReviewDrawer(section);
+    });
+    actions.appendChild(editBtn);
+
+    const sectionEvidence = collectEvidenceSpansForPaths(data, section.evidencePaths);
+    let evidenceWrap = null;
+    if (sectionEvidence.length > 0) {
+      const evidenceBtn = document.createElement("button");
+      evidenceBtn.type = "button";
+      evidenceBtn.className = "secondary small-btn";
+      evidenceBtn.textContent = "Evidence";
+      evidenceBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (evidenceWrap) evidenceWrap.classList.toggle("hidden");
+      });
+      actions.appendChild(evidenceBtn);
+    }
+
+    head.appendChild(actions);
+    summary.appendChild(head);
+
+    const preview = document.createElement("div");
+    preview.className = "review-section-preview";
+    preview.textContent = toPreviewText(section.preview);
+    summary.appendChild(preview);
+    card.appendChild(summary);
+
+    const body = document.createElement("div");
+    body.className = "review-section-body";
+    const topLines = (Array.isArray(section.fields) ? section.fields : [])
+      .slice(0, 2)
+      .map((field) => `${field.label}: ${toPreviewText(field.value)}`);
+    const previewText = document.createElement("div");
+    previewText.className = "review-field-readonly";
+    previewText.textContent = topLines.join(" | ") || "No section details available.";
+    body.appendChild(previewText);
+
+    if (sectionEvidence.length > 0) {
+      evidenceWrap = document.createElement("div");
+      evidenceWrap.className = "review-evidence-panel hidden";
+      sectionEvidence.slice(0, 8).forEach((span) => {
+        evidenceWrap.appendChild(makeEvidenceChip(span));
+      });
+      body.appendChild(evidenceWrap);
+    }
+
+    card.appendChild(body);
+    reviewSectionsHostEl.appendChild(card);
+  });
+}
+
+function renderClinicianReviewShell(data) {
+  if (!atlasClinicianShellEl) return;
+  moveNeedsAttentionCard();
+  renderCaseSummaryStrip(data);
+  renderReviewSections(data);
+}
+
 function severityRank(severity) {
   const s = String(severity || "").toLowerCase();
   if (s === "required") return 0;
@@ -4811,6 +5632,7 @@ function renderCompletenessPrompts(data) {
 
   if (!prompts.length || data?.error) {
     completenessPromptsCardEl.classList.add("hidden");
+    if (needsAttentionHostEl) needsAttentionHostEl.classList.add("hidden");
     if (completenessToggleBtn) completenessToggleBtn.disabled = true;
     if (completenessCopyBtn) completenessCopyBtn.disabled = true;
     setCompletenessPendingChanges(false);
@@ -4818,6 +5640,7 @@ function renderCompletenessPrompts(data) {
   }
 
   completenessPromptsCardEl.classList.remove("hidden");
+  if (needsAttentionHostEl) needsAttentionHostEl.classList.remove("hidden");
   if (completenessToggleBtn) completenessToggleBtn.disabled = false;
   if (completenessCopyBtn) completenessCopyBtn.disabled = false;
   updateCompletenessApplyButtonState();
@@ -5056,6 +5879,7 @@ function renderCompletenessPrompts(data) {
   });
 
   updateCompletenessApplyButtonState();
+  moveNeedsAttentionCard();
 }
 
 /**
@@ -7980,265 +8804,336 @@ function renderFlatTablesFromState() {
     if (!grouped.has(groupId)) grouped.set(groupId, []);
     grouped.get(groupId).push(table);
   });
+  const groups = [];
+  FLAT_TABLE_GROUP_META.forEach((meta) => {
+    const groupTables = grouped.get(meta.id) || [];
+    if (groupTables.length > 0) {
+      groups.push({ ...meta, tables: groupTables });
+    }
+  });
 
-  FLAT_TABLE_GROUP_META.forEach((group) => {
-    const groupTables = grouped.get(group.id) || [];
-    if (!groupTables.length) return;
+  if (groups.length === 0) {
+    flattenedTablesHost.innerHTML =
+      '<div class="dash-empty" style="padding: 12px;">No grouped tables available.</div>';
+    return;
+  }
 
-    const groupEl = document.createElement("details");
-    groupEl.className = "registry-group";
-    groupEl.open = Boolean(group.defaultOpen);
+  if (!groups.some((g) => g.id === flatTablesActiveTabId)) {
+    flatTablesActiveTabId = groups[0].id;
+  }
 
-    const summary = document.createElement("summary");
-    summary.className = "registry-group-header";
-    summary.textContent = group.title;
-    groupEl.appendChild(summary);
+  const tabsWrap = document.createElement("div");
+  tabsWrap.className = "flat-tabs";
+  const tablist = document.createElement("div");
+  tablist.className = "flat-tablist";
+  tablist.setAttribute("role", "tablist");
+  tablist.setAttribute("aria-label", "All fields sections");
+  tablist.setAttribute("aria-orientation", "horizontal");
 
-    const groupBody = document.createElement("div");
-    groupBody.className = "registry-group-body";
+  const panelsWrap = document.createElement("div");
+  const tabButtons = [];
+  const tabPanels = [];
 
-    groupTables.forEach((table) => {
-      const section = document.createElement("div");
-      section.className = "flat-table-section";
+  const activateTab = (groupId, options = {}) => {
+    const { focus = false } = options;
+    flatTablesActiveTabId = groupId;
+    tabButtons.forEach(({ id, button }) => {
+      const active = id === groupId;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-selected", active ? "true" : "false");
+      button.tabIndex = active ? 0 : -1;
+      if (focus && active) button.focus();
+    });
+    tabPanels.forEach(({ id, panel }) => {
+      panel.hidden = id !== groupId;
+    });
+  };
 
-      const header = document.createElement("div");
-      header.className = "flat-table-header";
+  const renderTableSection = (table) => {
+    const section = document.createElement("div");
+    section.className = "flat-table-section";
 
-      const title = document.createElement("div");
-      title.className = "flat-table-title";
-      title.textContent = table.title || table.id;
+    const header = document.createElement("div");
+    header.className = "flat-table-header";
 
-      const actions = document.createElement("div");
-      actions.className = "flat-table-actions";
+    const title = document.createElement("div");
+    title.className = "flat-table-title";
+    title.textContent = table.title || table.id;
 
-      if (table.allowAdd) {
-        const addBtn = document.createElement("button");
-        addBtn.type = "button";
-        addBtn.className = "secondary row-action-btn";
-        addBtn.textContent = "Add row";
-        addBtn.addEventListener("click", () => {
-          const newRow = {};
-          table.columns.forEach((col) => {
-            if (col.readOnly) return;
-            if (col.type === "select" && Array.isArray(col.options) && col.options.length > 0) {
-              newRow[col.key] = col.options[0].value ?? "";
-            } else {
-              newRow[col.key] = "";
-            }
-          });
-          table.rows.push(newRow);
-          editedDirty = true;
-          renderFlatTablesFromState();
-          updateEditedPayload();
+    const actions = document.createElement("div");
+    actions.className = "flat-table-actions";
+
+    if (table.allowAdd) {
+      const addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.className = "secondary row-action-btn";
+      addBtn.textContent = "Add row";
+      addBtn.addEventListener("click", () => {
+        const newRow = {};
+        table.columns.forEach((col) => {
+          if (col.readOnly) return;
+          if (col.type === "select" && Array.isArray(col.options) && col.options.length > 0) {
+            newRow[col.key] = col.options[0].value ?? "";
+          } else {
+            newRow[col.key] = "";
+          }
         });
-        actions.appendChild(addBtn);
-      }
-
-      header.appendChild(title);
-      header.appendChild(actions);
-      section.appendChild(header);
-
-      const tableScroll = document.createElement("div");
-      tableScroll.className = "flat-table-scroll";
-
-      const tableEl = document.createElement("table");
-      tableEl.className = "flat-table";
-
-      const thead = document.createElement("thead");
-      const headRow = document.createElement("tr");
-      table.columns.forEach((col) => {
-        const th = document.createElement("th");
-        th.textContent = col.label || col.key;
-        headRow.appendChild(th);
+        table.rows.push(newRow);
+        editedDirty = true;
+        renderFlatTablesFromState();
+        updateEditedPayload();
       });
-      if (table.allowDelete) {
-        const th = document.createElement("th");
-        th.textContent = "Remove";
-        headRow.appendChild(th);
-      }
-      thead.appendChild(headRow);
-      tableEl.appendChild(thead);
+      actions.appendChild(addBtn);
+    }
 
-      const tbody = document.createElement("tbody");
-      if (!Array.isArray(table.rows) || table.rows.length === 0) {
+    header.appendChild(title);
+    header.appendChild(actions);
+    section.appendChild(header);
+
+    const tableScroll = document.createElement("div");
+    tableScroll.className = "flat-table-scroll";
+
+    const tableEl = document.createElement("table");
+    tableEl.className = "flat-table";
+
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    table.columns.forEach((col) => {
+      const th = document.createElement("th");
+      th.textContent = col.label || col.key;
+      headRow.appendChild(th);
+    });
+    if (table.allowDelete) {
+      const th = document.createElement("th");
+      th.textContent = "Remove";
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    tableEl.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    if (!Array.isArray(table.rows) || table.rows.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
+      td.className = "dash-empty";
+      td.textContent = table.emptyMessage || "No rows.";
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    } else {
+      const baseRowMap = buildBaseRowMap(table);
+
+      table.rows.forEach((row, rowIndex) => {
         const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
-        td.className = "dash-empty";
-        td.textContent = table.emptyMessage || "No rows.";
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-      } else {
-        const baseRowMap = buildBaseRowMap(table);
 
-        table.rows.forEach((row, rowIndex) => {
-          const tr = document.createElement("tr");
+        table.columns.forEach((col) => {
+          const td = document.createElement("td");
+          const rawValue = row[col.key] ?? "";
+          const meta = row.__meta || {};
+          const inputType = meta.inputType || col.type;
+          const options = meta.options || col.options;
 
-          table.columns.forEach((col) => {
-            const td = document.createElement("td");
-            const rawValue = row[col.key] ?? "";
-            const meta = row.__meta || {};
-            const inputType = meta.inputType || col.type;
-            const options = meta.options || col.options;
+          if (col.readOnly || table.readOnly) {
+            const span = document.createElement("span");
+            span.className = "flat-readonly";
+            span.textContent = String(rawValue ?? "");
+            td.appendChild(span);
+            tr.appendChild(td);
+            return;
+          }
 
-            if (col.readOnly || table.readOnly) {
-              const span = document.createElement("span");
-              span.className = "flat-readonly";
-              span.textContent = String(rawValue ?? "");
-              td.appendChild(span);
-              tr.appendChild(td);
-              return;
-            }
+          const cellWrap = document.createElement("div");
+          cellWrap.className = "cell-input-wrap";
 
-            const cellWrap = document.createElement("div");
-            cellWrap.className = "cell-input-wrap";
+          const isYesNo =
+            Array.isArray(options) &&
+            options.length === YES_NO_OPTIONS.length &&
+            options.every((o, idx) => o.value === YES_NO_OPTIONS[idx].value);
 
-            const isYesNo =
-              Array.isArray(options) &&
-              options.length === YES_NO_OPTIONS.length &&
-              options.every((o, idx) => o.value === YES_NO_OPTIONS[idx].value);
+          const needsToggle = meta.valueType === "boolean" || (inputType === "select" && isYesNo);
 
-            const needsToggle = meta.valueType === "boolean" || (inputType === "select" && isYesNo);
+          if (needsToggle) {
+            const toggle = document.createElement("div");
+            toggle.className = "bool-toggle";
 
-            if (needsToggle) {
-              const toggle = document.createElement("div");
-              toggle.className = "bool-toggle";
+            const buttons = [
+              { value: "", label: "—", title: "Unset" },
+              { value: "Yes", label: "✅", title: "Yes" },
+              { value: "No", label: "❌", title: "No" },
+            ];
 
-              const buttons = [
-                { value: "", label: "—", title: "Unset" },
-                { value: "Yes", label: "✅", title: "Yes" },
-                { value: "No", label: "❌", title: "No" },
-              ];
-
-              const setActive = (val) => {
-                Array.from(toggle.querySelectorAll("button")).forEach((btn) => {
-                  btn.classList.toggle("active", btn.dataset.value === String(val ?? ""));
-                });
-              };
-
-              buttons.forEach((b) => {
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "bool-toggle-btn";
-                btn.textContent = b.label;
-                btn.title = b.title;
-                btn.dataset.value = b.value;
-                btn.addEventListener("click", () => {
-                  row[col.key] = b.value;
-                  editedDirty = true;
-                  setActive(b.value);
-                  toggle.classList.toggle(
-                    "cell-modified",
-                    isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
-                  );
-                  updateEditedPayload();
-                });
-                toggle.appendChild(btn);
+            const setActive = (val) => {
+              Array.from(toggle.querySelectorAll("button")).forEach((btn) => {
+                btn.classList.toggle("active", btn.dataset.value === String(val ?? ""));
               });
+            };
 
-              setActive(rawValue ?? "");
-              toggle.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
-              cellWrap.appendChild(toggle);
-            } else if (inputType === "select") {
-              const select = document.createElement("select");
-              select.className = "flat-select";
-              (Array.isArray(options) ? options : []).forEach((opt) => {
-                const option = document.createElement("option");
-                option.value = opt.value;
-                option.textContent = opt.label ?? opt.value;
-                select.appendChild(option);
-              });
-              select.value = rawValue ?? "";
-              select.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
-              select.addEventListener("change", () => {
-                row[col.key] = select.value;
-                editedDirty = true;
-                select.classList.toggle(
-                  "cell-modified",
-                  isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
-                );
-                updateEditedPayload();
-              });
-              cellWrap.appendChild(select);
-            } else {
-              const input = document.createElement("input");
-              input.className = "flat-input";
-              input.type = inputType === "number" ? "number" : "text";
-              input.value = rawValue ?? "";
-              input.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
-              input.addEventListener("input", () => {
-                row[col.key] = input.value;
-                editedDirty = true;
-                input.classList.toggle(
-                  "cell-modified",
-                  isFlatCellModified(table, row, rowIndex, col.key, baseRowMap)
-                );
-                updateEditedPayload();
-              });
-              cellWrap.appendChild(input);
-            }
-
-            const feedbackPath = computeFieldFeedbackPath(table, row, rowIndex, col);
-            if (feedbackPath) {
+            buttons.forEach((b) => {
               const btn = document.createElement("button");
               btn.type = "button";
-              btn.className = "feedback-btn";
-              btn.textContent = "🚩";
-              btn.dataset.feedbackPath = feedbackPath;
-              btn.title = "Flag this field for review";
-              if (fieldFeedbackStore.has(feedbackPath)) btn.classList.add("flagged");
+              btn.className = "bool-toggle-btn";
+              btn.textContent = b.label;
+              btn.title = b.title;
+              btn.dataset.value = b.value;
               btn.addEventListener("click", () => {
-                showFieldFeedbackModal({
-                  path: feedbackPath,
-                  tableId: table.id,
-                  columnKey: col.key,
-                  label: row?.field || row?.procedure || col.label || col.key,
-                  currentValue: row?.[col.key] ?? "",
-                });
+                row[col.key] = b.value;
+                editedDirty = true;
+                setActive(b.value);
+                toggle.classList.toggle(
+                  "cell-modified",
+                  isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
+                );
+                updateEditedPayload();
               });
-              cellWrap.appendChild(btn);
-            }
+              toggle.appendChild(btn);
+            });
 
-            td.appendChild(cellWrap);
-            tr.appendChild(td);
-          });
-
-          if (table.allowDelete) {
-            const td = document.createElement("td");
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "secondary row-action-btn";
-            btn.textContent = "Remove";
-            btn.addEventListener("click", () => {
-              table.rows.splice(rowIndex, 1);
+            setActive(rawValue ?? "");
+            toggle.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+            cellWrap.appendChild(toggle);
+          } else if (inputType === "select") {
+            const select = document.createElement("select");
+            select.className = "flat-select";
+            (Array.isArray(options) ? options : []).forEach((opt) => {
+              const option = document.createElement("option");
+              option.value = opt.value;
+              option.textContent = opt.label ?? opt.value;
+              select.appendChild(option);
+            });
+            select.value = rawValue ?? "";
+            select.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+            select.addEventListener("change", () => {
+              row[col.key] = select.value;
               editedDirty = true;
-              renderFlatTablesFromState();
+              select.classList.toggle(
+                "cell-modified",
+                isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
+              );
               updateEditedPayload();
             });
-            td.appendChild(btn);
-            tr.appendChild(td);
+            cellWrap.appendChild(select);
+          } else {
+            const input = document.createElement("input");
+            input.className = "flat-input";
+            input.type = inputType === "number" ? "number" : "text";
+            input.value = rawValue ?? "";
+            input.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
+            input.addEventListener("input", () => {
+              row[col.key] = input.value;
+              editedDirty = true;
+              input.classList.toggle(
+                "cell-modified",
+                isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
+              );
+              updateEditedPayload();
+            });
+            cellWrap.appendChild(input);
           }
-          tbody.appendChild(tr);
+
+          const feedbackPath = computeFieldFeedbackPath(table, row, rowIndex, col);
+          if (feedbackPath) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "feedback-btn";
+            btn.textContent = "🚩";
+            btn.dataset.feedbackPath = feedbackPath;
+            btn.title = "Flag this field for review";
+            if (fieldFeedbackStore.has(feedbackPath)) btn.classList.add("flagged");
+            btn.addEventListener("click", () => {
+              showFieldFeedbackModal({
+                path: feedbackPath,
+                tableId: table.id,
+                columnKey: col.key,
+                label: row?.field || row?.procedure || col.label || col.key,
+                currentValue: row?.[col.key] ?? "",
+              });
+            });
+            cellWrap.appendChild(btn);
+          }
+
+          td.appendChild(cellWrap);
+          tr.appendChild(td);
         });
-      }
 
-      tableEl.appendChild(tbody);
-      tableScroll.appendChild(tableEl);
-      section.appendChild(tableScroll);
+        if (table.allowDelete) {
+          const td = document.createElement("td");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "secondary row-action-btn";
+          btn.textContent = "Remove";
+          btn.addEventListener("click", () => {
+            table.rows.splice(rowIndex, 1);
+            editedDirty = true;
+            renderFlatTablesFromState();
+            updateEditedPayload();
+          });
+          td.appendChild(btn);
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      });
+    }
 
-      if (table.note) {
-        const note = document.createElement("div");
-        note.className = "flat-table-note";
-        note.textContent = table.note;
-        section.appendChild(note);
-      }
+    tableEl.appendChild(tbody);
+    tableScroll.appendChild(tableEl);
+    section.appendChild(tableScroll);
 
-      groupBody.appendChild(section);
+    if (table.note) {
+      const note = document.createElement("div");
+      note.className = "flat-table-note";
+      note.textContent = table.note;
+      section.appendChild(note);
+    }
+
+    return section;
+  };
+
+  groups.forEach((group, index) => {
+    const tabId = `flat-tab-${group.id}`;
+    const panelId = `flat-panel-${group.id}`;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "flat-tab";
+    button.id = tabId;
+    button.setAttribute("role", "tab");
+    button.setAttribute("aria-controls", panelId);
+    button.setAttribute("aria-selected", "false");
+    button.tabIndex = -1;
+    button.textContent = group.title;
+    button.addEventListener("click", () => activateTab(group.id));
+    button.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      let nextIdx = index;
+      if (event.key === "ArrowLeft") nextIdx = (index - 1 + groups.length) % groups.length;
+      if (event.key === "ArrowRight") nextIdx = (index + 1) % groups.length;
+      if (event.key === "Home") nextIdx = 0;
+      if (event.key === "End") nextIdx = groups.length - 1;
+      activateTab(groups[nextIdx].id, { focus: true });
+    });
+    tabButtons.push({ id: group.id, button });
+    tablist.appendChild(button);
+
+    const panel = document.createElement("div");
+    panel.id = panelId;
+    panel.className = "flat-tab-panel";
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", tabId);
+    panel.hidden = true;
+
+    group.tables.forEach((table) => {
+      panel.appendChild(renderTableSection(table));
     });
 
-    groupEl.appendChild(groupBody);
-    flattenedTablesHost.appendChild(groupEl);
+    tabPanels.push({ id: group.id, panel });
+    panelsWrap.appendChild(panel);
   });
+
+  tabsWrap.appendChild(tablist);
+  tabsWrap.appendChild(panelsWrap);
+  flattenedTablesHost.appendChild(tabsWrap);
+  activateTab(flatTablesActiveTabId);
 }
 
 function exportableRows(table) {
@@ -9184,6 +10079,8 @@ async function renderResults(data, options = {}) {
   // Always render the legacy dashboard (CPT + RVU tables stay on the left).
   renderDashboard(data, { registryUuid, remoteCaseData });
   renderFlattenedTables(data);
+  renderClinicianReviewShell(data);
+  setWorkflowStep("review");
 
   if (preferGrid) {
     registryGridRenderToken += 1;
@@ -9213,6 +10110,9 @@ async function renderResults(data, options = {}) {
 function clearResultsUi() {
   const container = document.getElementById("resultsContainer");
   if (container) container.classList.add("hidden");
+  if (caseSummaryStripEl) clearEl(caseSummaryStripEl);
+  if (reviewSectionsHostEl) clearEl(reviewSectionsHostEl);
+  closeReviewDrawer({ restoreFocus: false });
   unmountRegistryGrid();
   showRegistryLegacyUi();
   if (registryGridRootEl) registryGridRootEl.innerHTML = "";
@@ -9224,6 +10124,7 @@ function clearResultsUi() {
   activeCaseEventReviewId = null;
   lastCompletenessPrompts = [];
   if (completenessPromptsCardEl) completenessPromptsCardEl.classList.add("hidden");
+  if (needsAttentionHostEl) needsAttentionHostEl.classList.add("hidden");
   if (completenessToggleBtn) completenessToggleBtn.disabled = true;
   if (completenessPromptsBodyEl) clearEl(completenessPromptsBodyEl);
   if (completenessApplyInlineBtn) completenessApplyInlineBtn.disabled = true;
@@ -9240,6 +10141,7 @@ function clearResultsUi() {
   if (exportPatchBtn) exportPatchBtn.disabled = true;
   if (newNoteBtn) newNoteBtn.disabled = true;
   resetEditedState();
+  setWorkflowStep("input");
 }
 
 function renderStatusBanner(data, container) {
@@ -11030,6 +11932,7 @@ async function main() {
     extractingCamera = true;
     setCameraStatus("Running local OCR...");
     setCameraProgress("Preparing OCR worker...");
+    setWorkflowStep("processing", { processing: true });
     updateCameraControls();
     updateZkControls();
 
@@ -11088,6 +11991,7 @@ async function main() {
       setCameraScanSummary(summary, "success");
       setStatus("Camera OCR text loaded into editor. Run Detection to use existing PHI redaction workflow.");
       setProgress("");
+      setWorkflowStep("input");
 
       extractingCamera = false;
       closeCameraModal();
@@ -11105,6 +12009,7 @@ async function main() {
       setCameraProgress("");
       updateCameraControls();
       updateZkControls();
+      if (!running) setWorkflowStep("input");
     }
   }
 
@@ -11134,6 +12039,7 @@ async function main() {
     setStatus(`Extracting text from ${file.name} with layout-aware local parser...`);
     setProgress("Starting PDF worker...");
     setPdfExtractSummary("Analyzing PDF layout and contamination risk locally...", "neutral");
+    setWorkflowStep("processing", { processing: true });
 
     try {
       const rawPages = [];
@@ -11278,6 +12184,7 @@ async function main() {
       }));
 
       setStatus("PDF text loaded into editor. Run Detection to use the existing PHI redaction workflow.");
+      setWorkflowStep("input");
       if (totalPages > 0) {
         setProgress(`PDF extraction complete: ${completedPages}/${totalPages} pages`);
       } else {
@@ -11306,6 +12213,7 @@ async function main() {
           !scrubbedConfirmed || running || bundleBusy || extractingPdf || extractingCamera || correctingCameraOcr;
       }
       updateZkControls();
+      if (!running) setWorkflowStep("input");
     }
     return succeeded;
   }
@@ -11769,13 +12677,15 @@ async function main() {
     if (pdfExtractBtn) pdfExtractBtn.disabled = busy || !hasPdfSelected;
     updateAddEventPdfControls();
     if (cameraScanBtn) cameraScanBtn.disabled = busy || !cameraSupport.ok;
-    if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultBusy;
-    if (vaultLockBtn) vaultLockBtn.disabled = !isVaultReady() || vaultBusy;
-    if (vaultSyncBtn) vaultSyncBtn.disabled = !isVaultReady() || vaultBusy;
-    if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = !isVaultReady() || vaultBusy;
-    if (vaultSaveCaseBtn) vaultSaveCaseBtn.disabled = !isVaultReady() || !activeCaseRegistryUuid || vaultBusy;
-    if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = !activeCaseRegistryUuid || vaultBusy;
-    if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = !appendEventConfig || vaultBusy;
+    const vaultActionsDisabled = IS_CLASSIC || vaultBusy;
+    if (vaultUnlockBtn) vaultUnlockBtn.disabled = vaultActionsDisabled;
+    if (vaultLockBtn) vaultLockBtn.disabled = vaultActionsDisabled || !isVaultReady();
+    if (vaultSyncBtn) vaultSyncBtn.disabled = vaultActionsDisabled || !isVaultReady();
+    if (vaultCreateCaseBtn) vaultCreateCaseBtn.disabled = vaultActionsDisabled || !isVaultReady();
+    if (vaultSaveCaseBtn)
+      vaultSaveCaseBtn.disabled = vaultActionsDisabled || !isVaultReady() || !activeCaseRegistryUuid;
+    if (vaultClearActiveCaseBtn) vaultClearActiveCaseBtn.disabled = vaultActionsDisabled || !activeCaseRegistryUuid;
+    if (clearAppendTargetBtn) clearAppendTargetBtn.disabled = vaultActionsDisabled || !appendEventConfig;
     updateCameraControls();
     updateOcrCorrectionButton();
   }
@@ -11928,6 +12838,7 @@ async function main() {
       ocrCorrectionApplied = false;
       setScrubbedConfirmed(false);
       revertBtn.disabled = running || originalText === model.getValue();
+      if (!running) setWorkflowStep("input");
     });
   } else if (fallbackTextarea) {
     fallbackTextarea.addEventListener("input", () => {
@@ -11935,6 +12846,7 @@ async function main() {
       ocrCorrectionApplied = false;
       setScrubbedConfirmed(false);
       revertBtn.disabled = running || originalText === model.getValue();
+      if (!running) setWorkflowStep("input");
     });
   }
 
@@ -12136,6 +13048,7 @@ async function main() {
         }
         setProgress("");
         renderDetections();
+        setWorkflowStep("input");
         return;
       }
 
@@ -12148,6 +13061,7 @@ async function main() {
         updateZkControls();
         setStatus(`Error: ${msg.message || "unknown"}`);
         setProgress("");
+        setWorkflowStep("input");
         return;
       }
     };
@@ -12188,6 +13102,7 @@ async function main() {
 
     setStatus("Detecting… (client-side)");
     setProgress("");
+    setWorkflowStep("processing", { processing: true });
 
         worker.postMessage({
           type: "start",
@@ -12884,6 +13799,7 @@ async function main() {
     }
     setStatus(structuredAppendReady ? "Submitting structured append event…" : "Submitting scrubbed note…");
     serverResponseEl.textContent = "(submitting...)";
+    setWorkflowStep("processing", { processing: true });
 
     try {
       noteVaultActivity();
@@ -13379,6 +14295,8 @@ async function main() {
       submitBtn.disabled = false;
       if (newNoteBtn) newNoteBtn.disabled = running;
       updateZkControls();
+      const hasVisibleResults = !document.getElementById("resultsContainer")?.classList.contains("hidden");
+      if (!hasVisibleResults) setWorkflowStep("input");
     }
   });
 
