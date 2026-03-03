@@ -1,6 +1,7 @@
 import pytest
 
 from app.registry.deterministic_extractors import (
+    extract_airway_stent,
     extract_blvr,
     extract_bpf_sealant,
     extract_chest_tube,
@@ -8,6 +9,7 @@ from app.registry.deterministic_extractors import (
     extract_ipc,
     extract_navigational_bronchoscopy,
     extract_primary_indication,
+    extract_therapeutic_aspiration,
     extract_transbronchial_cryobiopsy,
     run_deterministic_extractors,
 )
@@ -162,6 +164,29 @@ def test_extract_blvr_does_not_fire_for_previously_placed_valves_in_good_positio
         "The valves appeared well placed and in good position."
     )
     assert extract_blvr(note_text) == {}
+
+
+def test_extract_airway_stent_removal_only_not_revision_from_previously_placed_stent() -> None:
+    note_text = (
+        "Findings: the previously placed stent in place with 90% obstruction.\n"
+        "We elected to remove the stent currently in place.\n"
+        "We elected not to place a stent at this point in time.\n"
+    )
+
+    out = extract_airway_stent(note_text)
+    stent = out.get("airway_stent") or {}
+    assert stent.get("performed") is True
+    assert stent.get("action") == "Removal"
+    assert stent.get("action_type") == "removal"
+    assert stent.get("airway_stent_removal") is True
+
+
+def test_extract_therapeutic_aspiration_detects_thereapeutic_typo() -> None:
+    note_text = (
+        "Thereapeutic aspiration performed at the end of the procedure for retained blood and secretions."
+    )
+    out = extract_therapeutic_aspiration(note_text)
+    assert out.get("therapeutic_aspiration", {}).get("performed") is True
 
 
 def test_extract_bpf_sealant_fires_for_alveolar_pleural_fistula_glue_instillation() -> None:

@@ -1,0 +1,6 @@
+🩺 Extraction Quality Report: NOTE 185Score: 85 / 100Status: ⚠️ WARNING1. Accuracy (Precision)Hallucinations: The inspection_findings string is once again poorly concatenated and includes duplicated/fragmented words: "vocal cords appeared normal. endobronchial lesions, and no secretions. secretions".Mismatch: The JSON incorrectly classifies the ROSE outcome for station 7 as "nondiagnostic". The source text explicitly states ROSE showed "benign lymphocytes in the station 7 lymph node".2. Completeness (Recall)Missed Procedures: None.Missed Details: The extraction accurately captured all 3 sampled stations (4L, 4R, 7).3. Logic & CodingCPT Consistency: Valid. Because 3 distinct stations were sampled via EBUS-TBNA, CPT code 31653 is correctly assigned.Schema Compliance: Structurally sound.4. Corrected JSON SnippetJSON{
+  "station": "7",
+  "action": "needle_aspiration",
+  "outcome": "benign",
+  "evidence_quote": "ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node."
+}

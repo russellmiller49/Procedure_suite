@@ -1,10 +1,18 @@
 SHELL := /bin/bash
 .PHONY: setup lint typecheck test deps-compile deps-check validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export relations-prodigy-reset relations-prodigy-prepare relations-prodigy-annotate relations-prodigy-export relations-prodigy-eval check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval reporter-gold-pilot platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
+.PHONY: venv deps test-conda ui-deps ui-test
 
-# Use conda environment medparse-py311 (Python 3.11)
-CONDA_ACTIVATE := source ~/miniconda3/etc/profile.d/conda.sh && conda activate medparse-py311
+PYTHON ?= python3
+VENV ?= .venv
+VENV_PY := $(VENV)/bin/python
+VENV_PIP := $(VENV)/bin/pip
+# Optional conda workflow (used by test-conda and legacy targets)
+CONDA_ENV ?= medparse-py311
+CONDA_ACTIVATE ?= command -v conda >/dev/null 2>&1 && eval "$$(conda shell.bash hook)" && conda activate $(CONDA_ENV)
 SETUP_STAMP := .setup.stamp
-PYTHON := python
+REQUIREMENTS_FILE ?= requirements.txt
+REQUIREMENTS_DEV_FILE ?= requirements-dev.txt
+UI_APP_DIR ?= ui/source/registry_grid
 KB_PATH := data/knowledge/ip_coding_billing_v3_0.json
 SCHEMA_PATH := data/knowledge/IP_Registry.json
 NOTES_PATH := data/knowledge/synthetic_notes_with_registry2.json
@@ -15,12 +23,21 @@ REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
 DEVICE ?= cpu
 PRODIGY_EPOCHS ?= 1
 DEPS_PYTHON ?= python3.11
-PIP_COMPILE_ARGS := --upgrade --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
+# Omit --allow-unsafe so pip-tools does not add setuptools/pip (unsafe to pin in requirements)
+PIP_COMPILE_ARGS := --upgrade --resolver=backtracking --strip-extras --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
 	$(CONDA_ACTIVATE) && pip install -r requirements.txt
 	touch $(SETUP_STAMP)
+
+venv:
+	@if [ ! -x "$(VENV_PY)" ]; then $(PYTHON) -m venv $(VENV); fi
+	$(VENV_PY) -m pip install -U pip setuptools wheel
+
+deps: venv
+	$(VENV_PIP) install -r $(REQUIREMENTS_FILE)
+	$(VENV_PIP) install -r $(REQUIREMENTS_DEV_FILE)
 
 lint:
 	$(CONDA_ACTIVATE) && ruff check --cache-dir .ruff_cache .
@@ -28,8 +45,21 @@ lint:
 typecheck:
 	$(CONDA_ACTIVATE) && mypy --cache-dir .mypy_cache proc_schemas config observability
 
-test:
-	$(CONDA_ACTIVATE) && pytest
+test: deps
+	$(VENV_PY) -m pytest -q
+
+test-conda:
+	@if ! command -v conda >/dev/null 2>&1; then \
+		echo "conda not found. Use 'make test' for the venv-based workflow."; \
+		exit 1; \
+	fi
+	$(CONDA_ACTIVATE) && $(PYTHON) -m pytest -q
+
+ui-deps:
+	cd $(UI_APP_DIR) && npm ci
+
+ui-test: ui-deps
+	cd $(UI_APP_DIR) && npm test
 
 deps-compile:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
@@ -38,7 +68,8 @@ deps-compile:
 deps-check:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
 	@tmp_file=$$(mktemp); \
-	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_ARGS) --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
+	cp requirements.txt $$tmp_file; \
+	$(DEPS_PYTHON) -m piptools compile --resolver=backtracking --strip-extras --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311' --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
 	if ! diff -u $$tmp_file requirements.txt >/dev/null; then \
 		echo "requirements.txt is out of sync with requirements.in. Run: make deps-compile"; \
 		diff -u $$tmp_file requirements.txt || true; \
@@ -744,10 +775,15 @@ clean:
 # Help target
 help:
 	@echo "Available targets:"
-	@echo "  setup          - Install dependencies in conda env medparse-py311"
+	@echo "  venv           - Create/refresh local .venv bootstrap"
+	@echo "  deps           - Install runtime + dev/test dependencies into .venv"
+	@echo "  test           - Run pytest in .venv (Codex/default)"
+	@echo "  test-conda     - Run pytest in optional conda env ($(CONDA_ENV))"
+	@echo "  setup          - Legacy conda setup target"
 	@echo "  lint           - Run ruff linter"
 	@echo "  typecheck      - Run mypy type checker"
-	@echo "  test           - Run pytest"
+	@echo "  ui-deps        - Install UI test/build deps (not required for make test)"
+	@echo "  ui-test        - Run UI tests (not required for make test)"
 	@echo "  validate-schemas - Validate JSON schemas and Pydantic models"
 	@echo "  validate-kb    - Validate knowledge base"
 	@echo "  run-coder      - Run smart-hybrid coder over notes"

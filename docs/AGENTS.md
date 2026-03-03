@@ -49,6 +49,12 @@ Notes:
 - `agents_structurer` is **experimental**: when an LLM provider is configured, it runs the V3 event-log extractor and projects it into a `RegistryRecord` (`app/registry/extraction/structurer.py`). When unconfigured/offline, it raises `NotImplementedError` and falls back to the deterministic engine.
 - CPT coding is handled by the coder module (`app/coder/`) and is **not** produced by agents in the current architecture.
 
+### Local dev DB default (`./ops/devserver.sh`)
+
+- When `DATABASE_URL` is unset, devserver defaults both `PHI_DATABASE_URL` and `REGISTRY_STORE_DATABASE_URL` to `sqlite:////tmp/procsuite/procsuite_dev.db`.
+- This keeps normal local runs from modifying tracked `phi_demo.db`.
+- Override with `PROCSUITE_DEV_SQLITE_DB_FILE=/custom/path/dev.db` or explicit DB URL env vars.
+
 ## Registry V3 Guardrails (Post-Extraction)
 
 Even when agents are used for **focusing**, the extraction-first pipeline applies Python-side guardrails to the **full raw note text** before deterministic registry→CPT derivation:

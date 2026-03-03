@@ -52,6 +52,7 @@ ui/static/phi_redactor/vendor/**
 !ui/static/phi_redactor/vendor/pdfjs/**
 !ui/static/phi_redactor/vendor/tesseract/
 !ui/static/phi_redactor/vendor/tesseract/**
+!ui/static/phi_redactor/vendor/zod.bundle.mjs
 
 # Hugging Face model snapshots (downloaded locally; keep out of git)
 data/models/hf/**
@@ -75,3 +76,7 @@ node_modules/
 
 # Unsloth runtime cache (local)
 unsloth_compiled_cache/
+
+# local virtualenvs
+.venv/
+venv/

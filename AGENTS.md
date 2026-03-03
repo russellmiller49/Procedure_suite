@@ -6,6 +6,8 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 ## Quick Commands
 
 - Dev server: `./ops/devserver.sh` (serves UI at `/ui/` and API docs at `/docs`)
+  - Local dev default (when `DATABASE_URL` is unset): runtime PHI/registry writes go to `sqlite:////tmp/procsuite/procsuite_dev.db` to avoid modifying tracked `phi_demo.db`.
+  - Override local sqlite path with `PROCSUITE_DEV_SQLITE_DB_FILE=/custom/path/dev.db` or set explicit `PHI_DATABASE_URL` / `REGISTRY_STORE_DATABASE_URL`.
 - Tests: `make test`
 - Lint/typecheck (optional): `make lint`, `make typecheck`
 - Dependency lock refresh/check: `make deps-compile`, `make deps-check`

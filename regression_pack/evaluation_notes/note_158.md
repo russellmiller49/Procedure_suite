@@ -1,0 +1,6 @@
+🩺 Extraction Quality Report: note_158Score: 75 / 100Status: ❌ FAIL1. Accuracy (Precision)Hallucinations: Critical Target Hallucination. The JSON extracts peripheral_tbna with a target sampled as "RLL". The clinical text explicitly focuses on the "left lower lobe" for the nodule and the biopsies. The right lung is only mentioned as having an "anatomic variant" during the initial inspection.Mismatch: None outside of the hallucination.2. Completeness (Recall)Missed Procedures: The extraction notes linear_ebus was performed with a 22G needle , but it completely failed to extract the station sampled, leaving the node_events array empty.Missed Details: None.3. Logic & CodingCPT Consistency: CPT 31654 (radial EBUS) is billed correctly. However, the coding engine threw an expected audit warning: "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653". This is a direct consequence of the missed detail in extraction.Schema Compliance: A structural failure warning was correctly triggered by the audit system due to the empty EBUS stations.4. Corrected JSON Snippet (Optional)JSON      "peripheral_tbna": {
+        "performed": true,
+        "targets_sampled": [
+          "LLL"
+        ]
+      }

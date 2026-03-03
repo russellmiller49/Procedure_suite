@@ -1,0 +1,594 @@
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 12,
+      "gender": "Female"
+    },
+    "patient": {
+      "age": 12,
+      "sex": "F"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "ETT",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "equipment": {
+      "navigation_platform": "superDimension"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "endobronchial tumor. tumor",
+        "airway_abnormalities": [
+          "Endobronchial lesion"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "volume_instilled_ml": 90.0,
+        "volume_recovered_ml": 25.0
+      },
+      "linear_ebus": {
+        "performed": false,
+        "node_events": []
+      },
+      "radial_ebus": {
+        "performed": true
+      },
+      "navigational_bronchoscopy": {
+        "performed": true
+      }
+    },
+    "pleural_procedures": {
+      "chest_tube": {
+        "performed": true,
+        "action": "Insertion",
+        "tube_type": "Pigtail",
+        "guidance": "Ultrasound"
+      },
+      "ipc": {
+        "performed": false
+      }
+    },
+    "outcomes": {
+      "follow_up_plan_text": "1. Admit to IM service for CT management 2. Await pathology and microbiological assessment from biopsy specimens and lavage 3. We will follow on the inpatinet service and provide further recs regarding CT management."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "BAL",
+              "span": [
+                1832,
+                1835
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "25cc return",
+              "span": [
+                1924,
+                1935
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy",
+          "derived_from": [
+            "procedures_performed.navigational_bronchoscopy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "superDimension",
+              "span": [
+                1209,
+                1223
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31654",
+          "description": "Bronch ebus ivntj perph les",
+          "derived_from": [
+            "procedures_performed.radial_ebus"
+          ]
+        },
+        {
+          "code": "32557",
+          "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+          "derived_from": [
+            "pleural_procedures.chest_tube"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "pigtail catheter",
+              "span": [
+                2414,
+                2430
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T17:00:09.799960+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1832,
+                "end": 1835,
+                "snippet": "BAL"
+              },
+              {
+                "start": 1924,
+                "end": 1935,
+                "snippet": "25cc return"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31627",
+            "description": "Navigational bronchoscopy",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "navigational_bronchoscopy.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1209,
+                "end": 1223,
+                "snippet": "superDimension"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31654",
+            "description": "Bronch ebus ivntj perph les",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "radial_ebus.performed=true",
+            "is_add_on": true,
+            "source": "model"
+          },
+          {
+            "sequence": 4,
+            "code": "32557",
+            "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "pleural_procedures.chest_tube.performed=true and small-bore drain with imaging guidance",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2414,
+                "end": 2430,
+                "snippet": "pigtail catheter"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 988,
+                "end": 1007,
+                "snippet": "endobronchial tumor"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "BAL",
+                "span": {
+                  "start": 1832,
+                  "end": 1835
+                }
+              },
+              {
+                "snippet": "25cc return",
+                "span": {
+                  "start": 1924,
+                  "end": 1935
+                }
+              }
+            ]
+          },
+          {
+            "code": "31627",
+            "summary": "navigational_bronchoscopy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "superDimension",
+                "span": {
+                  "start": 1209,
+                  "end": 1223
+                }
+              }
+            ]
+          },
+          {
+            "code": "31654",
+            "summary": "radial_ebus.performed=true"
+          },
+          {
+            "code": "32557",
+            "summary": "pleural_procedures.chest_tube.performed=true and small-bore drain with imaging guidance",
+            "documentation_evidence": [
+              {
+                "snippet": "pigtail catheter",
+                "span": {
+                  "start": 2414,
+                  "end": 2430
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "endobronchial tumor",
+                "span": {
+                  "start": 988,
+                  "end": 1007
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "BAL",
+          "start": 1832,
+          "end": 1835
+        }
+      ],
+      "procedures_performed.navigational_bronchoscopy.performed": [
+        {
+          "text": "superDimension",
+          "start": 1209,
+          "end": 1223
+        }
+      ],
+      "pleural_procedures.chest_tube.performed": [
+        {
+          "text": "pigtail catheter",
+          "start": 2414,
+          "end": 2430
+        }
+      ],
+      "patient_demographics.age_years": [
+        {
+          "text": "12",
+          "start": 2410,
+          "end": 2412
+        }
+      ],
+      "patient.age": [
+        {
+          "text": "12",
+          "start": 2410,
+          "end": 2412
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 117,
+          "end": 135
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "intubation",
+          "start": 618,
+          "end": 628
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "endobronchial tumor",
+          "start": 988,
+          "end": 1007
+        }
+      ],
+      "equipment.navigation_platform": [
+        {
+          "text": "superDimension",
+          "start": 1209,
+          "end": 1223
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "25cc return",
+          "start": 1924,
+          "end": 1935,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "BAL",
+        "span": [
+          1832,
+          1835
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.navigational_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "superDimension",
+        "span": [
+          1209,
+          1223
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "pleural_procedures.chest_tube.performed": [
+      {
+        "source": "registry_span",
+        "text": "pigtail catheter",
+        "span": [
+          2414,
+          2430
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.age_years": [
+      {
+        "source": "registry_span",
+        "text": "12",
+        "span": [
+          2410,
+          2412
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.age": [
+      {
+        "source": "registry_span",
+        "text": "12",
+        "span": [
+          2410,
+          2412
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          117,
+          135
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "intubation",
+        "span": [
+          618,
+          628
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "endobronchial tumor",
+        "span": [
+          988,
+          1007
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "equipment.navigation_platform": [
+      {
+        "source": "registry_span",
+        "text": "superDimension",
+        "span": [
+          1209,
+          1223
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "25cc return",
+        "span": [
+          1924,
+          1935
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31624",
+    "31627",
+    "31654",
+    "32557"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31627",
+      "description": "Navigational bronchoscopy",
+      "confidence": 0.8,
+      "rationale": "navigational_bronchoscopy.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "32557",
+      "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+      "confidence": 0.8,
+      "rationale": "pleural_procedures.chest_tube.performed=true and small-bore drain with imaging guidance",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 8.92,
+  "estimated_payment": 395.13,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31627",
+      "description": "Navigational bronchoscopy",
+      "work_rvu": 1.95,
+      "total_facility_rvu": 2.55,
+      "facility_payment": 85.17
+    },
+    {
+      "cpt_code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "work_rvu": 1.37,
+      "total_facility_rvu": 1.79,
+      "facility_payment": 59.79
+    },
+    {
+      "cpt_code": "32557",
+      "description": "Pleural drainage, percutaneous, with insertion of indwelling catheter; with imaging guidance",
+      "work_rvu": 3.04,
+      "total_facility_rvu": 3.87,
+      "facility_payment": 129.26
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for bal, navigational_bronchoscopy, pleural_procedures.chest_tube",
+    "BAL_FALLBACK: populated instilled volume from BAL sentence without location.",
+    "Radial EBUS inferred from concentric/eccentric view.",
+    "Chest tube inferred from pigtail/Wayne/tube thoracostomy language.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 305.86
+}

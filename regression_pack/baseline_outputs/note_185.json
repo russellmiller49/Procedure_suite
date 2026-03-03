@@ -1,0 +1,715 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "staging of bilateral lung cancer (metastatic vs synchronous primary)"
+    },
+    "clinical_context": {
+      "primary_indication": "staging of bilateral lung cancer (metastatic vs synchronous primary)",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords appeared normal. endobronchial lesions, and no secretions. secretions",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4L",
+          "4R",
+          "7"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "outcome": "nondiagnostic",
+            "evidence_quote": "ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node."
+          },
+          {
+            "station": "4R",
+            "action": "needle_aspiration",
+            "outcome": "nondiagnostic",
+            "evidence_quote": "ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node."
+          },
+          {
+            "station": "4L",
+            "action": "needle_aspiration",
+            "outcome": "nondiagnostic",
+            "evidence_quote": "ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node."
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUSTBNA",
+              "span": [
+                1654,
+                1662
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "7",
+              "span": [
+                2043,
+                2044
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+              "span": [
+                557,
+                2279
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "4R",
+              "span": [
+                1494,
+                1496
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+              "span": [
+                557,
+                2279
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "4L",
+              "span": [
+                1589,
+                1591
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:59:05.770962+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1654,
+                "end": 1662,
+                "snippet": "EBUSTBNA"
+              },
+              {
+                "start": 2043,
+                "end": 2044,
+                "snippet": "7"
+              },
+              {
+                "start": 557,
+                "end": 2279,
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+              },
+              {
+                "start": 1494,
+                "end": 1496,
+                "snippet": "4R"
+              },
+              {
+                "start": 557,
+                "end": 2279,
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+              },
+              {
+                "start": 1589,
+                "end": 1591,
+                "snippet": "4L"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1148,
+                "end": 1158,
+                "snippet": "secretions"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31653",
+            "summary": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUSTBNA",
+                "span": {
+                  "start": 1654,
+                  "end": 1662
+                }
+              },
+              {
+                "snippet": "7",
+                "span": {
+                  "start": 2043,
+                  "end": 2044
+                }
+              },
+              {
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+                "span": {
+                  "start": 557,
+                  "end": 2279
+                }
+              },
+              {
+                "snippet": "4R",
+                "span": {
+                  "start": 1494,
+                  "end": 1496
+                }
+              },
+              {
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+                "span": {
+                  "start": 557,
+                  "end": 2279
+                }
+              },
+              {
+                "snippet": "4L",
+                "span": {
+                  "start": 1589,
+                  "end": 1591
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "secretions",
+                "span": {
+                  "start": 1148,
+                  "end": 1158
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true,
+          "needle_gauge": 22
+        },
+        {
+          "station": "4R",
+          "sampled": true,
+          "needle_gauge": 22
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUSTBNA",
+          "start": 1654,
+          "end": 1662
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "staging of bilateral lung cancer (metastatic vs synchronous primary)",
+          "start": 92,
+          "end": 160
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "staging of bilateral lung cancer (metastatic vs synchronous primary)",
+          "start": 92,
+          "end": 160
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 174,
+          "end": 192
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "laryngeal mask",
+          "start": 745,
+          "end": 759
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1148,
+          "end": 1158
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "7",
+          "start": 2043,
+          "end": 2044,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 557,
+          "end": 2279,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.station": [
+        {
+          "text": "4R",
+          "start": 1494,
+          "end": 1496,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 557,
+          "end": 2279,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.station": [
+        {
+          "text": "4L",
+          "start": 1589,
+          "end": 1591,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 557,
+          "end": 2279,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "4L",
+          "start": 1589,
+          "end": 1591,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.1": [
+        {
+          "text": "4R",
+          "start": 1494,
+          "end": 1496,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.2": [
+        {
+          "text": "7",
+          "start": 2043,
+          "end": 2044,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1663,
+          "end": 1671,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1663,
+          "end": 1671,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1663,
+          "end": 1671,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "no evidence of active bleeding",
+          "start": 2202,
+          "end": 2232,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUSTBNA",
+        "span": [
+          1654,
+          1662
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "staging of bilateral lung cancer (metastatic vs synchronous primary)",
+        "span": [
+          92,
+          160
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "staging of bilateral lung cancer (metastatic vs synchronous primary)",
+        "span": [
+          92,
+          160
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          174,
+          192
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "laryngeal mask",
+        "span": [
+          745,
+          759
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1148,
+          1158
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          2043,
+          2044
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          557,
+          2279
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.station": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1494,
+          1496
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          557,
+          2279
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.station": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1589,
+          1591
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal. The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. Bronchial mucosa and anatomy were normal; there are no endobronchial lesions, and no secretions. The video bronchoscope was then removed and the UC180F convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4LR,7, and 4R lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node followed by 7, and 4R lymph nodes using an Olympus EBUSTBNA 22 gauge needle. The 4L lymph node was extremely difficult to access due to angle of left mainstem and after one biopsy no further attempts performed. Further details regarding nodal size and number of samples are included in the EBUS procedural sheet which is available in EMR. ROSE showed non-diagnostic tissue in the 4L and 4R lymph nodes and benign lymphocytes in the station 7 lymph node. All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          557,
+          2279
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1589,
+          1591
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.1": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1494,
+          1496
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.2": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          2043,
+          2044
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1663,
+          1671
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1663,
+          1671
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1663,
+          1671
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "no evidence of active bleeding",
+        "span": [
+          2202,
+          2232
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31653"
+  ],
+  "suggestions": [
+    {
+      "code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.84,
+  "estimated_payment": 219.11,
+  "per_code_billing": [
+    {
+      "cpt_code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "work_rvu": 4.84,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+    "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+    "AUTO_EBUS_OUTCOME: 7 -> nondiagnostic",
+    "AUTO_EBUS_OUTCOME: 4R -> nondiagnostic",
+    "AUTO_EBUS_OUTCOME: 4L -> nondiagnostic",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 243.54
+}

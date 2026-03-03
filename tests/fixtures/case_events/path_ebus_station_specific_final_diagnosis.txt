@@ -1,0 +1,44 @@
+PATHOLOGY FINAL REPORT
+
+Patient Name: Demo, Demonstration
+DOB: 8/16/1964
+MRN: 23902380
+Procedure Date: 2/12/2026
+Specimens: EBUS-guided transbronchial needle aspiration (TBNA) of mediastinal and hilar lymph nodes
+
+SPECIMENS RECEIVED
+
+A. Lymph Node, Station 4R - EBUS-TBNA
+B. Lymph Node, Station 4L - EBUS-TBNA
+C. Lymph Node, Station 7 - EBUS-TBNA and microforceps biopsy
+D. Lymph Node, Station 11Rs - EBUS-TBNA
+
+FINAL DIAGNOSIS
+
+A. Lymph Node, Station 4R:
+Benign lymph node tissue with reactive lymphocytes.
+No evidence of malignancy identified.
+
+B. Lymph Node, Station 4L:
+Benign lymph node tissue with reactive lymphocytes.
+No evidence of malignancy identified.
+
+C. Lymph Node, Station 7:
+Positive for malignant cells.
+Metastatic adenocarcinoma consistent with lung primary.
+
+D. Lymph Node, Station 11Rs:
+Non-diagnostic.
+Specimen contains scant bronchial epithelial cells and blood with insufficient lymphoid tissue for evaluation.
+
+MICROSCOPIC DESCRIPTION
+
+Station 7 aspirates and biopsy fragments demonstrate clusters of atypical epithelial cells with enlarged
+hyperchromatic nuclei and moderate cytoplasm forming glandular structures.
+Stations 4R and 4L show polymorphous populations of small mature lymphocytes without cytologic atypia.
+Station 11Rs specimen shows predominantly blood and bronchial epithelial contamination.
+
+COMMENT
+
+The findings demonstrate metastatic adenocarcinoma involving the Station 7 (subcarinal) lymph node.
+Stations 4R and 4L show benign lymphoid tissue. Station 11Rs is non-diagnostic.

@@ -1,0 +1,416 @@
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 87,
+      "gender": "Male"
+    },
+    "patient": {
+      "age": 87,
+      "sex": "M"
+    },
+    "procedure": {
+      "indication": "Complicated Effusion"
+    },
+    "clinical_context": {
+      "primary_indication": "Complicated Effusion",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedures_performed": {
+      "chest_ultrasound": {
+        "performed": true,
+        "impression_text": "Lung consolidation/atelectasis:  Absent"
+      }
+    },
+    "pleural_procedures": {
+      "chest_tube": {
+        "performed": false,
+        "action": "Insertion",
+        "indication": "Effusion drainage",
+        "guidance": "Ultrasound"
+      },
+      "fibrinolytic_therapy": {
+        "performed": true,
+        "agents": [
+          "tPA",
+          "DNase"
+        ],
+        "number_of_doses": 1
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED]is a 87 year old-year-old male who presents for Chest Ultrasound and Instillation of agents for fibrinolysis. The patient <PERSON> well. There were no immediate complications. Home"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "32561",
+          "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+          "derived_from": [
+            "pleural_procedures.fibrinolytic_therapy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instillation of agents for fibrinolysis",
+              "span": [
+                232,
+                271
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "76604",
+          "description": "Ultrasound, chest (includes mediastinum), real time with image documentation",
+          "derived_from": [
+            "procedures_performed.chest_ultrasound"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Chest Ultrasound",
+              "span": [
+                211,
+                227
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T17:00:09.494024+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "32561",
+            "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "pleural_procedures.fibrinolytic_therapy.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 232,
+                "end": 271,
+                "snippet": "Instillation of agents for fibrinolysis"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "76604",
+            "description": "Ultrasound, chest (includes mediastinum), real time with image documentation",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "chest_ultrasound.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 211,
+                "end": 227,
+                "snippet": "Chest Ultrasound"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "32561",
+            "summary": "pleural_procedures.fibrinolytic_therapy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instillation of agents for fibrinolysis",
+                "span": {
+                  "start": 232,
+                  "end": 271
+                }
+              }
+            ]
+          },
+          {
+            "code": "76604",
+            "summary": "chest_ultrasound.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Chest Ultrasound",
+                "span": {
+                  "start": 211,
+                  "end": 227
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "evidence": {
+      "procedures_performed.chest_ultrasound.performed": [
+        {
+          "text": "Chest Ultrasound",
+          "start": 211,
+          "end": 227
+        }
+      ],
+      "pleural_procedures.chest_tube.performed": [
+        {
+          "text": "chest tube",
+          "start": 1756,
+          "end": 1766
+        }
+      ],
+      "patient_demographics.age_years": [
+        {
+          "text": "87",
+          "start": 87,
+          "end": 89
+        }
+      ],
+      "patient_demographics.gender": [
+        {
+          "text": "male",
+          "start": 108,
+          "end": 112
+        }
+      ],
+      "patient.age": [
+        {
+          "text": "87",
+          "start": 87,
+          "end": 89
+        }
+      ],
+      "patient.sex": [
+        {
+          "text": "male",
+          "start": 108,
+          "end": 112
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Complicated Effusion",
+          "start": 131,
+          "end": 151
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Complicated Effusion",
+          "start": 131,
+          "end": 151
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "32561",
+          "start": 791,
+          "end": 796
+        },
+        {
+          "text": "76604",
+          "start": 708,
+          "end": 713
+        }
+      ],
+      "pleural_procedures.fibrinolytic_therapy.performed": [
+        {
+          "text": "Instillation of agents for fibrinolysis",
+          "start": 232,
+          "end": 271
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.chest_ultrasound.performed": [
+      {
+        "source": "registry_span",
+        "text": "Chest Ultrasound",
+        "span": [
+          211,
+          227
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "pleural_procedures.chest_tube.performed": [
+      {
+        "source": "registry_span",
+        "text": "chest tube",
+        "span": [
+          1756,
+          1766
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.age_years": [
+      {
+        "source": "registry_span",
+        "text": "87",
+        "span": [
+          87,
+          89
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.gender": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          108,
+          112
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.age": [
+      {
+        "source": "registry_span",
+        "text": "87",
+        "span": [
+          87,
+          89
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.sex": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          108,
+          112
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Complicated Effusion",
+        "span": [
+          131,
+          151
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Complicated Effusion",
+        "span": [
+          131,
+          151
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "32561",
+        "span": [
+          791,
+          796
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "76604",
+        "span": [
+          708,
+          713
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "pleural_procedures.fibrinolytic_therapy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Instillation of agents for fibrinolysis",
+        "span": [
+          232,
+          271
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "32561",
+    "76604"
+  ],
+  "suggestions": [
+    {
+      "code": "32561",
+      "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+      "confidence": 0.8,
+      "rationale": "pleural_procedures.fibrinolytic_therapy.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "76604",
+      "description": "Ultrasound, chest (includes mediastinum), real time with image documentation",
+      "confidence": 0.8,
+      "rationale": "chest_ultrasound.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 1.36,
+  "estimated_payment": 93.52,
+  "per_code_billing": [
+    {
+      "cpt_code": "32561",
+      "description": "Instillation, via chest tube/catheter, fibrinolytic agent, first day",
+      "work_rvu": 1.36,
+      "total_facility_rvu": 1.8,
+      "facility_payment": 60.12
+    },
+    {
+      "cpt_code": "76604",
+      "description": "Ultrasound, chest (includes mediastinum), real time with image documentation",
+      "work_rvu": 0.0,
+      "total_facility_rvu": 1.0,
+      "facility_payment": 33.4
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for chest_ultrasound, pleural_procedures.chest_tube",
+    "32561: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32562: ML detected procedure, but specific device/anatomy was not found in text.",
+    "HARD_OVERRIDE: Text indicates intrapleural fibrinolytic instillation (tPA/DNase). -> pleural_procedures.fibrinolytic_therapy.performed=true",
+    "Chest tube excluded due to 'Date of chest tube insertion' history line."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 489.68
+}

@@ -535,7 +535,7 @@ class TestThermalAblationExtractor:
         text = "APC was applied to control bleeding."
         result = extract_thermal_ablation(text)
         assert result.get("thermal_ablation", {}).get("performed") is True
-        assert result.get("thermal_ablation", {}).get("modality") == "APC"
+        assert result.get("thermal_ablation", {}).get("modality") == ["APC"]
 
 
 class TestEBUSStationCounts:

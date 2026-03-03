@@ -113,3 +113,34 @@ def test_extract_linear_ebus_stations_detail_prefers_ebus_scoped_gauge_over_peri
     assert by_station["4L"]["sampled"] is True
     assert by_station["4L"]["needle_gauge"] == 22
     assert by_station["4L"]["number_of_passes"] == 5
+
+
+def test_extract_linear_ebus_stations_detail_inline_paren_format_avoids_count_false_positives() -> None:
+    note = (
+        "Ion robotic bronchoscopy and staging EBUS. "
+        "5 peripheral needle biopsies were obtained. "
+        "Biopsy of 4L (7.6mm) 5 passes 22G needle ROSE adequate, "
+        "7 (6.2 mm) 5 passes 22G needle ROSE adequate, "
+        "4R (8.2mm) 5 passes 22G needle ROSE malignant."
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["4L"]["sampled"] is True
+    assert by_station["4L"]["short_axis_mm"] == 7.6
+    assert by_station["4L"]["number_of_passes"] == 5
+    assert by_station["4L"]["rose_result"] == "Adequate lymphocytes"
+
+    assert by_station["7"]["sampled"] is True
+    assert by_station["7"]["short_axis_mm"] == 6.2
+    assert by_station["7"]["number_of_passes"] == 5
+    assert by_station["7"]["rose_result"] == "Adequate lymphocytes"
+
+    assert by_station["4R"]["sampled"] is True
+    assert by_station["4R"]["short_axis_mm"] == 8.2
+    assert by_station["4R"]["number_of_passes"] == 5
+    assert by_station["4R"]["rose_result"] == "Malignant"
+
+    # Ensure numeric counts (e.g., "5 peripheral needle biopsies") do not become station "5".
+    assert "5" not in by_station

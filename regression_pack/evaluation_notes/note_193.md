@@ -1,0 +1,8 @@
+🩺 Extraction Quality Report: note_193Score: 70 / 100Status: ❌ FAIL1. Accuracy (Precision)Hallucinations: The JSON incorrectly flagged the airway stent action as revision and Revision/Repositioning. The text explicitly states this was an initial silicone tracheobronchial Y- stent placement.Mismatch: The pipeline forcefully cleared the stent placement logic because it misinterpreted the narrative regarding manipulating the stent as "revision/repositioning without removal language".2. Completeness (Recall)Missed Procedures: The initial placement of the Y-stent was missed as a primary procedure due to the hallucinated revision override.Missed Details: The size (15x12x12) and limb lengths (80mm/30mm/30mm) of the customized Y-stent were not extracted into the JSON.3. Logic & CodingCPT Consistency: Failed. Because the extraction logic forced a "revision" classification, the model generated CPT 31638 (revision of stent) instead of the appropriate stent placement code (31631 or 31636). The audit logs even show the raw ML model suggested 31636 with high confidence, but the deterministic derivation blocked it.Schema Compliance: The coding logic failed due to the upstream data extraction error.4. Corrected JSON SnippetJSON      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action_type": "placement",
+        "action": "Placement",
+        "stent_type": "Y-Stent",
+        "location": "Carina (Y)"
+      }

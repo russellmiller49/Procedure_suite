@@ -1,0 +1,263 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "Pleural effusion"
+    },
+    "risk_assessment": {
+      "asa_class": 3
+    },
+    "clinical_context": {
+      "asa_class": 3,
+      "primary_indication": "Pleural effusion",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "MAC"
+    },
+    "procedures_performed": {},
+    "pleural_procedures": {
+      "chest_tube": {
+        "performed": false
+      },
+      "ipc": {
+        "performed": true,
+        "action": "Insertion",
+        "catheter_brand": "PleurX",
+        "tunneled": true
+      },
+      "medical_thoracoscopy": {
+        "performed": true
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "32550",
+          "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+          "derived_from": [
+            "pleural_procedures.ipc"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "PleurX",
+              "span": [
+                2005,
+                2011
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "32601",
+          "description": "Thoracoscopy diagnostic",
+          "derived_from": [
+            "pleural_procedures.medical_thoracoscopy"
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:59:24.631972+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "32550",
+            "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "pleural_procedures.ipc.performed=true and action indicates insertion",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2005,
+                "end": 2011,
+                "snippet": "PleurX"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "32601",
+            "description": "Thoracoscopy diagnostic",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "pleural_procedures.medical_thoracoscopy.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "32550",
+            "summary": "pleural_procedures.ipc.performed=true and action indicates insertion",
+            "documentation_evidence": [
+              {
+                "snippet": "PleurX",
+                "span": {
+                  "start": 2005,
+                  "end": 2011
+                }
+              }
+            ]
+          },
+          {
+            "code": "32601",
+            "summary": "pleural_procedures.medical_thoracoscopy.performed=true"
+          }
+        ]
+      }
+    },
+    "evidence": {
+      "pleural_procedures.ipc.performed": [
+        {
+          "text": "PleurX",
+          "start": 2005,
+          "end": 2011
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Pleural effusion",
+          "start": 86,
+          "end": 102
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Pleural effusion",
+          "start": 86,
+          "end": 102
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "Monitored anesthesia care",
+          "start": 116,
+          "end": 141
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "pleural_procedures.ipc.performed": [
+      {
+        "source": "registry_span",
+        "text": "PleurX",
+        "span": [
+          2005,
+          2011
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Pleural effusion",
+        "span": [
+          86,
+          102
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Pleural effusion",
+        "span": [
+          86,
+          102
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "Monitored anesthesia care",
+        "span": [
+          116,
+          141
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "32550",
+    "32601"
+  ],
+  "suggestions": [
+    {
+      "code": "32550",
+      "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+      "confidence": 0.8,
+      "rationale": "pleural_procedures.ipc.performed=true and action indicates insertion",
+      "review_flag": "optional"
+    },
+    {
+      "code": "32601",
+      "description": "Thoracoscopy diagnostic",
+      "confidence": 0.8,
+      "rationale": "pleural_procedures.medical_thoracoscopy.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 9.18,
+  "estimated_payment": 469.62,
+  "per_code_billing": [
+    {
+      "cpt_code": "32550",
+      "description": "Insertion of indwelling tunneled pleural catheter with cuff",
+      "work_rvu": 3.82,
+      "total_facility_rvu": 5.43,
+      "facility_payment": 181.37
+    },
+    {
+      "cpt_code": "32601",
+      "description": "Thoracoscopy diagnostic",
+      "work_rvu": 5.36,
+      "total_facility_rvu": 8.63,
+      "facility_payment": 288.25
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc",
+    "32601: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32604: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32606: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32607: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32608: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32609: ML detected procedure, but specific device/anatomy was not found in text.",
+    "32650: ML detected procedure, but specific device/anatomy was not found in text.",
+    "Backstop: detected thoracoscopy language; setting medical_thoracoscopy.performed=true",
+    "IPC inferred from tunneled/IPC device language."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 324.06
+}

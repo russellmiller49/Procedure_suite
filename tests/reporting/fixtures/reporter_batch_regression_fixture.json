@@ -1,0 +1,224 @@
+{
+  "fixture_name": "reporter_batch_regression_expectations",
+  "fixture_version": 1,
+  "generated_at_utc": "2026-03-03T19:33:06Z",
+  "source_batch": {
+    "created_at_utc": "2026-03-03T18:43:57.443220+00:00",
+    "input_source": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+    "output_txt_path": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/reporter_batch_results.txt",
+    "prompt_field": "prompt",
+    "sample_count": 20,
+    "seed": 42
+  },
+  "cases": [
+    {
+      "case_index": 1,
+      "id": "ip_preporter_prompts:45",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 99,
+      "prompt": "PleurX catheter placement left side followed by talc slurry pleurodesis through the catheter. 1200ml drained initially. 5g talc slurry instilled through catheter and clamped for 2 hours. Patient rotated q15 min. Moderate pleuritic pain managed with IV morphine. Catheter unclamped after 2 hours with additional 200ml drained. No other complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "Indwelling Tunneled Pleural Catheter",
+            "tunneled pleural catheter",
+            "PleurX"
+          ],
+          [
+            "talc",
+            "pleurodesis",
+            "talc slurry"
+          ]
+        ],
+        "must_not_contain": []
+      },
+      "notes": "Tunneled pleural catheter placement followed by talc slurry pleurodesis.",
+      "name": "pleurx_talc_slurry_pleurodesis"
+    },
+    {
+      "case_index": 2,
+      "id": "ip_preporter_prompts:35",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 77,
+      "prompt": "BLVR valve removal for persistent pneumothorax. Patient developed PTX day 2 post valve placement RUL. Chest tube placed. Persistent air leak despite 5 days. Decision to remove valves. All 3 valves RUL removed without difficulty. Air leak resolved within hours. Chest tube removed next day. Will reassess for future BLVR candidacy",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "valve removal",
+            "valves removed",
+            "Endobronchial Valve",
+            "Zephyr",
+            "Spiration",
+            "BLVR"
+          ]
+        ],
+        "must_not_contain": [
+          "Image-Guided Chest Tube"
+        ]
+      },
+      "notes": "BLVR valve removal/exchange should not route to chest tube template.",
+      "name": "blvr_valve_removal_persistent_ptx"
+    },
+    {
+      "case_index": 5,
+      "id": "ip_preporter_prompts:38",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 85,
+      "prompt": "Ultrasound guided thoracentesis left side. Large free-flowing effusion. 18g needle inserted posteriorly under real-time US guidance. 1800ml straw colored fluid removed. Stopped due to patient cough. Fluid sent for cell count, chemistry, cytology, culture, pH, LDH, protein, glucose. No pneumothorax on post procedure US. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "Thoracentesis"
+          ]
+        ],
+        "must_not_contain": [],
+        "expect_success": true
+      },
+      "notes": "Structured reporter previously failed; should render thoracentesis report.",
+      "name": "thoracentesis_ultrasound_guided"
+    },
+    {
+      "case_index": 9,
+      "id": "ip_preporter_prompts:15",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 33,
+      "prompt": "EBUS-TBNA combined with EUS-B for complete mediastinal staging. EBUS: 4R (7.8mm) 5 passes 22g 25g ROSE adequate, 7 (6.3mm) 4 passes 22g ROSE adequate. EUS-B: 8 (9.2mm) 4 passes 22g ROSE adequate, 9 (7.1mm) 3 passes 22g ROSE adequate. All stations negative for malignancy. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "EBUS-TBNA",
+            "Endobronchial Ultrasound"
+          ],
+          [
+            "ROSE Results",
+            "ROSE"
+          ]
+        ],
+        "must_not_contain": [
+          "ROSE Results: Malignant"
+        ]
+      },
+      "notes": "All stations negative for malignancy should not produce malignant ROSE due to substring match.",
+      "name": "ebus_eusb_all_negative_no_malignancy"
+    },
+    {
+      "case_index": 10,
+      "id": "ip_preporter_prompts:47",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 105,
+      "prompt": "Flex bronch with EBUS and pleural catheter. EBUS-TBNA 4R (9.1mm) 5 passes 22g 25g ROSE adequate, 7 (7.8mm) 4 passes 22g ROSE adequate for restaging. Followed by US-guided right TPC placement, 1400ml serosanguinous drained. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "EBUS-TBNA",
+            "Endobronchial Ultrasound"
+          ],
+          [
+            "Indwelling Tunneled Pleural Catheter",
+            "tunneled pleural catheter",
+            "PleurX"
+          ]
+        ],
+        "must_not_contain": []
+      },
+      "notes": "Combined bronchoscopy/EBUS and pleural catheter should include both procedures.",
+      "name": "ebus_plus_tunneled_pleural_catheter"
+    },
+    {
+      "case_index": 12,
+      "id": "ip_preporter_prompts:41",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 91,
+      "prompt": "Ultrasound guided chest tube placement for complicated parapneumonic effusion right side. Complex effusion with septations on US. 14Fr pigtail catheter placed under US guidance into largest pocket. 450ml purulent fluid drained. tPA/DNase protocol initiated 10mg tPA and 5mg DNase q12h x3 days. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "Pigtail",
+            "Chest Tube",
+            "pigtail catheter",
+            "tube thoracostomy"
+          ],
+          [
+            "tPA",
+            "DNase",
+            "alteplase",
+            "dornase"
+          ]
+        ],
+        "must_not_contain": []
+      },
+      "notes": "Chest tube for complex effusion with documented plan for tPA/DNase should be included.",
+      "name": "chest_tube_with_fibrinolytics_tpa_dnase"
+    },
+    {
+      "case_index": 13,
+      "id": "ip_preporter_prompts:3",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 9,
+      "prompt": "Robotic bronchoscopy RLL 3.1cm mass. Navigation successful radial probe concentric on first attempt. CBCT confirming tool in lesion. 5 needle aspirates ROSE + malignant followed by 4 cryobiopsies 1.1mm probe. Staging EBUS 7 (9.1mm) 5 passes 22g and 25g ROSE adequate, 4R (7.3mm) 5 passes 22g and 25g ROSE malignant, 11R (5.8mm) 3 passes 22g ROSE adequate. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "cryo",
+            "cryobiopsy",
+            "transbronchial cryobiopsy"
+          ]
+        ],
+        "must_not_contain": [
+          "ILD evaluation"
+        ]
+      },
+      "notes": "Cryobiopsy performed for a mass should not default to ILD evaluation language.",
+      "name": "robotic_mass_cryo_should_not_default_ild"
+    },
+    {
+      "case_index": 16,
+      "id": "ip_preporter_prompts:50",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 111,
+      "prompt": "Therapeutic bronchoscopy and BLVR assessment. First addressed mucoid impaction LLL with suctioning and lavage. Then performed Chartis assessment of both upper lobes for BLVR candidacy. RUL CV negative, LUL CV positive. Plan to proceed with RUL BLVR with Zephyr valves at next procedure. No complications today",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "Chartis"
+          ],
+          [
+            "collateral ventilation",
+            "CV",
+            "collateral"
+          ]
+        ],
+        "must_not_contain": [
+          "PROCEDURE\n\nBronchial Washing"
+        ]
+      },
+      "notes": "Chartis candidacy assessment should not route to bronchial washing template.",
+      "name": "blvr_chartis_assessment_candidate"
+    },
+    {
+      "case_index": 19,
+      "id": "ip_preporter_prompts:33",
+      "source_file": "/Users/russellmiller/Projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md",
+      "line_number": 73,
+      "prompt": "BLVR RUL with Zephyr valves. Chartis assessment CV negative confirmed. Placed RB1 5.5, RB2 4.0, RB3 4.0. Complete lobar occlusion confirmed on bronchoscopy. Patient tolerated well. Admitted for observation. Post procedure CXR shows no pneumothorax, early volume loss RUL. No complications",
+      "expected": {
+        "must_contain_groups": [
+          [
+            "Endobronchial Valve",
+            "Zephyr",
+            "Spiration",
+            "valve"
+          ],
+          [
+            "Chartis"
+          ]
+        ],
+        "must_not_contain": [
+          "See procedure details below"
+        ]
+      },
+      "notes": "Zephyr valve placement should render BLVR valve placement template (no placeholder).",
+      "name": "blvr_zephyr_placement_with_chartis"
+    }
+  ]
+}

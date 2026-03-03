@@ -22,7 +22,13 @@ from app.reporting.llm_findings import (
 
 
 def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None:
-    text = "A procedure was performed today.\nBAL performed in RUL."
+    text = "\n".join(
+        [
+            "A procedure was performed today.",
+            "BAL performed in RUL.",
+            "Instilled 120cc NS and returned cloudy fluid from RUL.",
+        ]
+    )
     findings = ReporterFindingsV1(
         findings=[
             FindingV1(
@@ -64,7 +70,49 @@ def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None
                 procedure_key="bal",
                 action="diagnostic",
                 finding_text="Procedure performed",
-                evidence_quote="performed today",
+                evidence_quote="Instilled 120cc NS and returned cloudy fluid from RUL.",
+                confidence=0.9,
+            ),
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert len(accepted) == 2
+    assert {item.evidence_quote for item in accepted} == {
+        "BAL performed in RUL",
+        "Instilled 120cc NS and returned cloudy fluid from RUL.",
+    }
+
+    warn_text = "\n".join(warnings)
+    assert "contains_cpt_code" in warn_text
+    assert "evidence_too_short" in warn_text
+    assert "invalid_procedure_key" in warn_text
+    assert "missing_evidence_quote" in warn_text
+    assert "LLM_FINDINGS_WEAK_KEYWORD_EVIDENCE" in warn_text
+
+
+def test_validate_findings_against_text_keyword_mismatch_warns_for_low_risk_but_drops_for_high_risk() -> None:
+    text = "\n".join(
+        [
+            "Instilled 120cc NS and returned cloudy fluid from RUL.",
+            "Thick secretions suctioned.",
+        ]
+    )
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="bal",
+                action="diagnostic",
+                finding_text="Procedure performed",
+                evidence_quote="Instilled 120cc NS and returned cloudy fluid from RUL.",
+                confidence=0.9,
+            ),
+            FindingV1(
+                procedure_key="therapeutic_aspiration",
+                action="aspiration",
+                finding_text="Procedure performed",
+                evidence_quote="Thick secretions suctioned.",
                 confidence=0.9,
             ),
         ]
@@ -73,20 +121,15 @@ def test_validate_findings_against_text_drops_missing_or_weak_evidence() -> None
     accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
 
     assert len(accepted) == 1
-    assert accepted[0].evidence_quote == "BAL performed in RUL"
-
-    warn_text = "\n".join(warnings)
-    assert "contains_cpt_code" in warn_text
-    assert "evidence_too_short" in warn_text
-    assert "invalid_procedure_key" in warn_text
-    assert "missing_evidence_quote" in warn_text
-    assert "keyword_missing" in warn_text
+    assert accepted[0].procedure_key == "bal"
+    assert any("LLM_FINDINGS_WEAK_KEYWORD_EVIDENCE" in warning for warning in warnings)
+    assert any("LLM_FINDINGS_DROPPED: keyword_missing" in warning for warning in warnings)
 
 
 def test_validate_findings_against_text_requires_aspiration_action_intent() -> None:
     text = "\n".join(
         [
-            "Mucus plugs cleared RB4, RB5, LB4, LB5.",
+            "Mucus plugs suctioned RB4, RB5, LB4, LB5.",
             "Airways inspected and stent in good position.",
         ]
     )
@@ -96,7 +139,7 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
                 procedure_key="therapeutic_aspiration",
                 action="aspiration",
                 finding_text="Therapeutic aspiration performed to clear mucus plugs",
-                evidence_quote="Mucus plugs cleared RB4, RB5, LB4, LB5.",
+                evidence_quote="Mucus plugs suctioned RB4, RB5, LB4, LB5.",
                 confidence=0.9,
             ),
             FindingV1(
@@ -112,8 +155,88 @@ def test_validate_findings_against_text_requires_aspiration_action_intent() -> N
     accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
 
     assert len(accepted) == 1
-    assert accepted[0].evidence_quote == "Mucus plugs cleared RB4, RB5, LB4, LB5."
+    assert accepted[0].evidence_quote == "Mucus plugs suctioned RB4, RB5, LB4, LB5."
     assert any("missing_action_intent" in warning for warning in warnings)
+
+
+def test_validate_findings_against_text_drops_routine_suctioning_as_therapeutic_aspiration() -> None:
+    text = "Secretions suctioned."
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="therapeutic_aspiration",
+                action="aspiration",
+                finding_text="Therapeutic aspiration performed",
+                evidence_quote="Secretions suctioned.",
+                confidence=0.9,
+            )
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert accepted == []
+    assert any("missing_action_intent" in warning for warning in warnings)
+
+
+def test_validate_findings_against_text_suppresses_therapeutic_aspiration_when_mucus_plug_is_negated() -> None:
+    text = "No mucus plugging; airways clear."
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="therapeutic_aspiration",
+                action="aspiration",
+                finding_text="Therapeutic aspiration performed",
+                evidence_quote="No mucus plugging; airways clear.",
+                confidence=0.9,
+            )
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert accepted == []
+    assert any("missing_action_intent" in warning for warning in warnings)
+
+
+def test_validate_findings_against_text_requires_airway_stent_intervention_language() -> None:
+    text = "Known airway stent in good position."
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="airway_stent",
+                action="inspection",
+                finding_text="Airway stent assessed",
+                evidence_quote="Known airway stent in good position.",
+                confidence=0.9,
+            )
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert accepted == []
+    assert any("missing_action_intent" in warning for warning in warnings)
+
+
+def test_validate_findings_against_text_accepts_airway_stent_placement_language() -> None:
+    text = "Silicone stent deployed in trachea."
+    findings = ReporterFindingsV1(
+        findings=[
+            FindingV1(
+                procedure_key="airway_stent",
+                action="placement",
+                finding_text="Airway stent deployed in trachea",
+                evidence_quote="Silicone stent deployed in trachea.",
+                confidence=0.9,
+            )
+        ]
+    )
+
+    accepted, warnings = validate_findings_against_text(findings, masked_prompt_text=text, min_evidence_len=10)
+
+    assert len(accepted) == 1
+    assert warnings == []
 
 
 def test_findings_to_synthetic_ner_to_registry_flags() -> None:

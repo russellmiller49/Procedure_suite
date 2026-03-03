@@ -239,7 +239,7 @@ def test_persistence_phi_gate_can_allow_persist_with_flag(
     assert row.needs_manual_review is True
 
 
-def test_registry_case_record_initialized_once_from_first_run(
+def test_registry_case_record_updates_on_subsequent_runs(
     client: TestClient,
     registry_store_db,
     mock_registry_service,
@@ -276,8 +276,10 @@ def test_registry_case_record_initialized_once_from_first_run(
         },
     )
     assert second.status_code == 200
+    second_run_id = second.json()["run_id"]
 
+    registry_store_db.expire_all()
     case_row_after = registry_store_db.get(RegistryCaseRecord, registry_uuid_obj)
     assert case_row_after is not None
-    assert case_row_after.version == 1
-    assert str(case_row_after.source_run_id) == first_run_id
+    assert case_row_after.version == 2
+    assert str(case_row_after.source_run_id) == second_run_id

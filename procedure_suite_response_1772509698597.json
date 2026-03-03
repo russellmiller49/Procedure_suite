@@ -1,0 +1,874 @@
+{
+  "registry_uuid": "1772509310932-f8e281d5a561e",
+  "registry": {
+    "procedure": {
+      "indication": "Mediastinal adenopathy"
+    },
+    "clinical_context": {
+      "primary_indication": "Mediastinal adenopathy",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords appeared normal. endobronchial lesions, and no secretions. secretions",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "11RS",
+          "4L",
+          "4R",
+          "7"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "4R",
+            "action": "needle_aspiration",
+            "passes": 5,
+            "pass_count": 5,
+            "evidence_quote": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed"
+          },
+          {
+            "station": "4L",
+            "action": "needle_aspiration",
+            "passes": 5,
+            "pass_count": 5,
+            "evidence_quote": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed"
+          },
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "passes": 5,
+            "pass_count": 5,
+            "evidence_quote": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies"
+          },
+          {
+            "station": "11RS",
+            "action": "needle_aspiration",
+            "passes": 5,
+            "pass_count": 5,
+            "evidence_quote": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {
+      "disposition": "Outpatient discharge"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUSTBNA",
+              "span": [
+                1771,
+                1779
+              ],
+              "confidence": 1
+            },
+            {
+              "source": "registry_span",
+              "text": "4R",
+              "span": [
+                1815,
+                1817
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+              "span": [
+                1780,
+                1869
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "4L",
+              "span": [
+                1846,
+                1848
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+              "span": [
+                1780,
+                1869
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "7",
+              "span": [
+                1877,
+                1878
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T03:41:53.214626+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=4 (>=3) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1771,
+                "end": 1779,
+                "snippet": "EBUSTBNA"
+              },
+              {
+                "start": 1815,
+                "end": 1817,
+                "snippet": "4R"
+              },
+              {
+                "start": 1780,
+                "end": 1869,
+                "snippet": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed"
+              },
+              {
+                "start": 1846,
+                "end": 1848,
+                "snippet": "4L"
+              },
+              {
+                "start": 1780,
+                "end": 1869,
+                "snippet": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed"
+              },
+              {
+                "start": 1877,
+                "end": 1878,
+                "snippet": "7"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1480,
+                "end": 1490,
+                "snippet": "secretions"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31653",
+            "summary": "linear_ebus.performed=true and sampled_station_count=4 (>=3) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUSTBNA",
+                "span": {
+                  "start": 1771,
+                  "end": 1779
+                }
+              },
+              {
+                "snippet": "4R",
+                "span": {
+                  "start": 1815,
+                  "end": 1817
+                }
+              },
+              {
+                "snippet": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+                "span": {
+                  "start": 1780,
+                  "end": 1869
+                }
+              },
+              {
+                "snippet": "4L",
+                "span": {
+                  "start": 1846,
+                  "end": 1848
+                }
+              },
+              {
+                "snippet": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+                "span": {
+                  "start": 1780,
+                  "end": 1869
+                }
+              },
+              {
+                "snippet": "7",
+                "span": {
+                  "start": 1877,
+                  "end": 1878
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "secretions",
+                "span": {
+                  "start": 1480,
+                  "end": 1490
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true,
+          "needle_gauge": 22
+        },
+        {
+          "station": "11Rs",
+          "morphologic_impression": "benign",
+          "sampled": true,
+          "needle_gauge": 22,
+          "rose_performed": true
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUSTBNA",
+          "start": 1771,
+          "end": 1779
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Mediastinal adenopathy",
+          "start": 415,
+          "end": 437
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Mediastinal adenopathy",
+          "start": 415,
+          "end": 437
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 451,
+          "end": 469
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "LMA",
+          "start": 513,
+          "end": 516
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1480,
+          "end": 1490
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "4R",
+          "start": 1815,
+          "end": 1817,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+          "start": 1780,
+          "end": 1869,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.station": [
+        {
+          "text": "4L",
+          "start": 1846,
+          "end": 1848,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+        {
+          "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+          "start": 1780,
+          "end": 1869,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.station": [
+        {
+          "text": "7",
+          "start": 1877,
+          "end": 1878,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+        {
+          "text": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies",
+          "start": 1870,
+          "end": 1960,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.station": [
+        {
+          "text": "11Rs",
+          "start": 1907,
+          "end": 1911,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+        {
+          "text": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies",
+          "start": 1870,
+          "end": 1960,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "11Rs",
+          "start": 1907,
+          "end": 1911,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.1": [
+        {
+          "text": "4L",
+          "start": 1846,
+          "end": 1848,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.2": [
+        {
+          "text": "4R",
+          "start": 1815,
+          "end": 1817,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.3": [
+        {
+          "text": "7",
+          "start": 1877,
+          "end": 1878,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1780,
+          "end": 1788,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1780,
+          "end": 1788,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1780,
+          "end": 1788,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "no evidence of active bleeding",
+          "start": 2349,
+          "end": 2379,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUSTBNA",
+        "span": [
+          1771,
+          1779
+        ],
+        "confidence": 1
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Mediastinal adenopathy",
+        "span": [
+          415,
+          437
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Mediastinal adenopathy",
+        "span": [
+          415,
+          437
+        ],
+        "confidence": 1
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          451,
+          469
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "LMA",
+        "span": [
+          513,
+          516
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1480,
+          1490
+        ],
+        "confidence": 1
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1815,
+          1817
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+        "span": [
+          1780,
+          1869
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.station": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1846,
+          1848
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge needle beginning with the 4R Lymph node, followed by the 4L lymph node, followed",
+        "span": [
+          1780,
+          1869
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.station": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1877,
+          1878
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies",
+        "span": [
+          1870,
+          1960
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.station": [
+      {
+        "source": "registry_span",
+        "text": "11Rs",
+        "span": [
+          1907,
+          1911
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "by the 7 lymph node, followed by the 11Rs lymph node. Additionally 3 micro forcep biopsies",
+        "span": [
+          1870,
+          1960
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "11Rs",
+        "span": [
+          1907,
+          1911
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.1": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1846,
+          1848
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.2": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1815,
+          1817
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.3": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1877,
+          1878
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1780,
+          1788
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1780,
+          1788
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1780,
+          1788
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "no evidence of active bleeding",
+        "span": [
+          2349,
+          2379
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [
+    {
+      "group": "Global",
+      "path": "patient_demographics.age_years",
+      "target_path": "patient.age",
+      "label": "Patient age (years)",
+      "severity": "required",
+      "message": "Age was not found in the note. Add age in years (e.g., “65-year-old”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.asa_class",
+      "target_path": "risk_assessment.asa_class",
+      "label": "ASA class",
+      "severity": "required",
+      "message": "ASA class was not found in the note. Add ASA 1–6 (e.g., “ASA 3”)."
+    },
+    {
+      "group": "Global",
+      "path": "clinical_context.ecog_score",
+      "target_path": "clinical_context.ecog_score",
+      "label": "ECOG/Zubrod performance status",
+      "severity": "recommended",
+      "message": "ECOG/Zubrod performance status was not found in the note. Add ECOG 0–4 (or a range like 0–1)."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "target_path": "granular_data.linear_ebus_stations_detail[2].short_axis_mm",
+      "label": "Node size short axis (station 4L)",
+      "severity": "recommended",
+      "message": "Short-axis node size for station 4L was not captured. Document node size when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "target_path": "granular_data.linear_ebus_stations_detail[2].lymphocytes_present",
+      "label": "Adequacy/ROSE (station 4L)",
+      "severity": "recommended",
+      "message": "Adequacy/ROSE for station 4L was not captured in per-station detail. Document lymphocytes present or station-level ROSE adequacy when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "target_path": "granular_data.linear_ebus_stations_detail[3].short_axis_mm",
+      "label": "Node size short axis (station 4R)",
+      "severity": "recommended",
+      "message": "Short-axis node size for station 4R was not captured. Document node size when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "target_path": "granular_data.linear_ebus_stations_detail[3].lymphocytes_present",
+      "label": "Adequacy/ROSE (station 4R)",
+      "severity": "recommended",
+      "message": "Adequacy/ROSE for station 4R was not captured in per-station detail. Document lymphocytes present or station-level ROSE adequacy when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "target_path": "granular_data.linear_ebus_stations_detail[0].short_axis_mm",
+      "label": "Node size short axis (station 7)",
+      "severity": "recommended",
+      "message": "Short-axis node size for station 7 was not captured. Document node size when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "target_path": "granular_data.linear_ebus_stations_detail[0].lymphocytes_present",
+      "label": "Adequacy/ROSE (station 7)",
+      "severity": "recommended",
+      "message": "Adequacy/ROSE for station 7 was not captured in per-station detail. Document lymphocytes present or station-level ROSE adequacy when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].short_axis_mm",
+      "target_path": "granular_data.linear_ebus_stations_detail[1].short_axis_mm",
+      "label": "Node size short axis (station 11RS)",
+      "severity": "recommended",
+      "message": "Short-axis node size for station 11RS was not captured. Document node size when stated."
+    },
+    {
+      "group": "EBUS",
+      "path": "granular_data.linear_ebus_stations_detail[*].lymphocytes_present",
+      "target_path": "granular_data.linear_ebus_stations_detail[1].lymphocytes_present",
+      "label": "Adequacy/ROSE (station 11RS)",
+      "severity": "recommended",
+      "message": "Adequacy/ROSE for station 11RS was not captured in per-station detail. Document lymphocytes present or station-level ROSE adequacy when stated."
+    }
+  ],
+  "cpt_codes": [
+    "31653"
+  ],
+  "suggestions": [
+    {
+      "code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=4 (>=3) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.84,
+  "estimated_payment": 219.11,
+  "per_code_billing": [
+    {
+      "cpt_code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "units": 1,
+      "work_rvu": 4.84,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+    "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+    "EBUS_NARRATIVE_RECONCILE: set passes=5 for stations ['11RS', '4L', '4R', '7']",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 859.19
+}

@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from app.api.fastapi_app import app
 from app.phi.db import Base
 from app.registry_store.dependencies import get_registry_store_engine
-from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord
+from app.registry_store.models import RegistryAppendedDocument, RegistryCaseRecord, RegistryRun
 from app.vault.models import UserPatientVault
 
 
@@ -75,6 +75,7 @@ def _seed_user_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
             relative_day_offset=2,
             ocr_correction_applied=False,
             metadata_json={"structured_data": {"hospital_admission": False}},
+            extracted_json={"qa_flags": ["deterministic"], "node_updates": [{"station": "7", "path_result": "Positive"}]},
             created_at=now,
         )
     )
@@ -100,6 +101,8 @@ def test_registry_case_get_is_user_scoped(client: TestClient, case_db) -> None:
     assert len(body["events"]) == 1
     assert body["events"][0]["event_type"] == "pathology"
     assert body["events"][0]["relative_day_offset"] == 2
+    assert body["events"][0]["structured_data"] == {"hospital_admission": False}
+    assert body["events"][0]["extracted_json"]["node_updates"][0]["station"] == "7"
 
     res_other = client.get(f"/api/v1/registry/{case_id}", headers=_auth("user_b"))
     assert res_other.status_code == 404
@@ -159,3 +162,54 @@ def test_registry_case_patch_rejects_invalid_schema_payload(client: TestClient, 
         },
     )
     assert res.status_code == 422
+
+
+def test_registry_case_rebuild_replays_baseline_and_events(client: TestClient, case_db) -> None:
+    case_id = uuid.uuid4()
+    _seed_user_case(case_db, user_id="user_a", registry_uuid=case_id)
+    now = datetime.now(timezone.utc)
+
+    run_id = uuid.uuid4()
+    case_db.add(
+        RegistryRun(
+            id=run_id,
+            created_at=now,
+            submitter_name=None,
+            note_text="Baseline procedure scrubbed note",
+            note_sha256="y" * 64,
+            schema_version="v3",
+            pipeline_config={},
+            raw_response_json={
+                "registry_uuid": str(case_id),
+                "registry": {"procedure": {"indication": "Mediastinal adenopathy"}},
+            },
+            needs_manual_review=False,
+            review_status="new",
+        )
+    )
+    case_row = case_db.get(RegistryCaseRecord, case_id)
+    assert case_row is not None
+    case_row.registry_json = {"pathology_results": {"final_diagnosis": "stale-only"}}
+    case_row.source_run_id = None
+    case_row.version = 3
+    case_db.add(case_row)
+
+    append_rows = case_db.query(RegistryAppendedDocument).filter_by(registry_uuid=case_id, user_id="user_a").all()
+    assert append_rows
+    for row in append_rows:
+        row.aggregated_at = now
+        row.aggregation_version = 3
+        case_db.add(row)
+    case_db.commit()
+
+    rebuild_res = client.post(
+        f"/api/v1/registry/{case_id}/rebuild",
+        headers=_auth("user_a"),
+        json={},
+    )
+    assert rebuild_res.status_code == 200
+    payload = rebuild_res.json()
+    assert payload["source_run_id"] == str(run_id)
+    assert payload["registry"]["procedure"]["indication"] == "Mediastinal adenopathy"
+    assert any(ev["event_type"] == "procedure_report" and ev["is_synthetic"] for ev in payload["events"])
+    assert any(ev["event_type"] == "pathology" and not ev["is_synthetic"] for ev in payload["events"])

@@ -17,7 +17,7 @@ def test_note_315_blank_modality_rows_do_not_trigger_cryo_or_apc() -> None:
     thermal = procs.get("thermal_ablation") or {}
     assert isinstance(thermal, dict)
     assert thermal.get("performed") is True
-    assert thermal.get("modality") == "Electrocautery"
+    assert thermal.get("modality") == ["Electrocautery"]
 
     cryo = procs.get("cryotherapy")
     assert not (isinstance(cryo, dict) and cryo.get("performed") is True)
@@ -34,9 +34,8 @@ def test_note_289_soft_coag_does_not_default_to_apc() -> None:
     thermal = procs.get("thermal_ablation") or {}
     assert isinstance(thermal, dict)
     assert thermal.get("performed") is True
-    assert thermal.get("modality") == "Electrocautery"
+    assert thermal.get("modality") == ["Electrocautery"]
 
     cryo = procs.get("cryotherapy") or {}
     assert isinstance(cryo, dict)
     assert cryo.get("performed") is True
-

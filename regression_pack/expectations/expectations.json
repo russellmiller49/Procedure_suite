@@ -1,0 +1,269 @@
+{
+  "note_193": {
+    "must_equal": {
+      "registry.procedures_performed.airway_stent.action_type": "placement",
+      "registry.procedures_performed.airway_stent.action": "Placement",
+      "registry.procedures_performed.airway_stent.stent_type": "Y-Stent"
+    },
+    "must_contain_any": {
+      "cpt_codes": [
+        "31631",
+        "31636"
+      ]
+    },
+    "must_not_contain": {
+      "cpt_codes": [
+        "31638"
+      ]
+    },
+    "notes": "Fix stent placement vs revision override; capture sizes/limbs if supported."
+  },
+  "note_104": {
+    "must_equal": {
+      "registry.procedures_performed.endobronchial_biopsy.performed": true
+    },
+    "must_contain_all": {
+      "cpt_codes": [
+        "31625",
+        "31630",
+        "31624"
+      ]
+    },
+    "custom": [
+      {
+        "type": "set_equals",
+        "path": "registry.procedures_performed.endobronchial_biopsy.locations",
+        "expected_set": [
+          "RML"
+        ]
+      }
+    ],
+    "notes": "Sentence-scoped biopsy location extraction."
+  },
+  "note_231": {
+    "must_contain_all": {
+      "cpt_codes": [
+        "31652"
+      ]
+    },
+    "must_not_contain": {
+      "registry.procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        "Secretions"
+      ]
+    },
+    "custom": [
+      {
+        "type": "regex_match",
+        "path": "registry.procedures_performed.linear_ebus.node_events[0].rose_result",
+        "pattern": "(?i)not show evidence of malignancy|negative|benign"
+      },
+      {
+        "type": "node_event_includes_station",
+        "station": "7",
+        "action_in": [
+          "needle_aspiration",
+          "inspected_only"
+        ]
+      }
+    ],
+    "notes": "ROSE should not truncate to 'did'; negation handling for 'no secretions'."
+  },
+  "note_185": {
+    "must_contain_all": {
+      "cpt_codes": [
+        "31653"
+      ]
+    },
+    "custom": [
+      {
+        "type": "station_outcome",
+        "station": "7",
+        "expected_outcome_in": [
+          "benign",
+          "benign_lymphocytes",
+          "negative"
+        ]
+      }
+    ],
+    "must_not_contain": {
+      "registry.procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        "Secretions"
+      ]
+    },
+    "notes": "ROSE multi-station mapping: station 7 should be benign, not nondiagnostic; negation handling for 'no secretions'."
+  },
+  "note_138": {
+    "must_equal": {
+      "registry.procedures_performed.linear_ebus.performed": true
+    },
+    "custom": [
+      {
+        "type": "nonstation_ebus_target_present",
+        "expected_substring": "pulmonary artery mass"
+      },
+      {
+        "type": "must_have_min_node_events",
+        "min_count": 1
+      },
+      {
+        "type": "must_include_finding_substring",
+        "path": "registry.procedures_performed.diagnostic_bronchoscopy.inspection_findings",
+        "substring": "stricture"
+      }
+    ],
+    "must_not_contain": {
+      "registry.procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        "Secretions"
+      ]
+    },
+    "must_contain_any": {
+      "cpt_codes": [
+        "31652",
+        "31653"
+      ]
+    },
+    "notes": "Capture non-station EBUS target (mass) and BI stricture; negation handling."
+  },
+  "note_238": {
+    "must_contain_all": {
+      "cpt_codes": [
+        "31624"
+      ]
+    },
+    "must_not_contain": {
+      "cpt_codes": [
+        "31640"
+      ]
+    },
+    "custom": [
+      {
+        "type": "mechanical_debulking_indication",
+        "expected_in": [
+          "mucus",
+          "stent_clearance",
+          "clot",
+          "secretions"
+        ]
+      }
+    ],
+    "notes": "Debulking was mucus/stent recanalization, not tumor."
+  },
+  "note_145": {
+    "must_contain_all": {
+      "cpt_codes": [
+        "32550",
+        "32604"
+      ]
+    },
+    "notes": "Thoracoscopy with biopsy should upcode from 32601 to 32604."
+  },
+  "note_125": {
+    "must_equal": {
+      "registry.procedure_setting.airway_type": "LMA"
+    },
+    "must_contain_all": {
+      "cpt_codes": [
+        "31622"
+      ]
+    },
+    "must_not_contain": {
+      "cpt_codes": [
+        "31645",
+        "31646"
+      ]
+    },
+    "notes": "LMA vs ETT; suppress therapeutic aspiration when only scant mucus/boilerplate."
+  },
+  "note_036": {
+    "must_equal": {
+      "registry.pleural_procedures.ipc.performed": true,
+      "registry.pleural_procedures.ipc.action": "Removal"
+    },
+    "must_contain_all": {
+      "cpt_codes": [
+        "32552"
+      ]
+    },
+    "notes": "IPC removal should not hard-fail evidence."
+  },
+  "note_257": {
+    "must_equal": {
+      "registry.procedures_performed.airway_stent.performed": true
+    },
+    "custom": [
+      {
+        "type": "stent_cycle",
+        "expected_in": [
+          "exchange",
+          "removal_then_placement",
+          "revision"
+        ]
+      }
+    ],
+    "notes": "Stent migration case: removal plus new stent placement; represent as exchange."
+  },
+  "note_158": {
+    "custom": [
+      {
+        "type": "peripheral_target_not",
+        "bad_values": [
+          "RLL"
+        ]
+      },
+      {
+        "type": "peripheral_target_in",
+        "expected_any": [
+          "LLL",
+          "left lower lobe",
+          "LLL anterior basilar"
+        ]
+      }
+    ],
+    "notes": "Avoid hallucinating RLL target; should be LLL."
+  },
+  "note_205": {
+    "must_equal": {
+      "registry.patient_demographics.gender": "Female"
+    },
+    "custom": [
+      {
+        "type": "age_must_be_null_or_reasonable",
+        "max_reasonable": 110,
+        "min_reasonable": 18
+      },
+      {
+        "type": "must_have_procedure",
+        "path": "registry.procedures_performed.endobronchial_biopsy.performed",
+        "expected": true
+      },
+      {
+        "type": "must_have_procedure",
+        "path": "registry.procedures_performed.peripheral_tbna.performed",
+        "expected": true
+      },
+      {
+        "type": "must_equal_any",
+        "path": "registry.pleural_procedures.chest_tube.guidance",
+        "expected_any": [
+          "Fluoroscopy",
+          "Imaging"
+        ]
+      }
+    ],
+    "notes": "Do not parse age from '12F'; capture forceps biopsies and peripheral needle biopsies; chest tube guidance."
+  },
+  "note_019": {
+    "custom": [
+      {
+        "type": "must_equal",
+        "path": "registry.pleural_procedures.chest_tube.action",
+        "expected": "Management"
+      },
+      {
+        "type": "must_have_ultrasound_both_sides_details",
+        "expected": true
+      }
+    ],
+    "notes": "Chest tube already in place; ultrasound findings should include right hemithorax details."
+  }
+}

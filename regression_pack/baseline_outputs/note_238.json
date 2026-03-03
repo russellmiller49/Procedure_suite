@@ -1,0 +1,545 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "Airway stent occlusion"
+    },
+    "clinical_context": {
+      "primary_indication": "Airway stent occlusion",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords and into the trachea. endobronchial disease. tumor causing approximately 40% reduction in caliber which did not warrant treatment at this time",
+        "airway_abnormalities": [
+          "Endobronchial lesion"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "location": "the anterior segment of the left upper lobe with",
+        "volume_instilled_ml": 40.0,
+        "volume_recovered_ml": 30.0
+      },
+      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": false,
+        "action_type": "assessment_only",
+        "action": "Assessment only",
+        "stent_type": "Y-Stent",
+        "location": "Right mainstem"
+      },
+      "mechanical_debulking": {
+        "performed": true,
+        "method": "Forceps debulking",
+        "location": "LUL"
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "- Transfer to PACU - Discharge once criteria met."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "BAL",
+              "span": [
+                1611,
+                1614
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "BAL was performed in the anterior segment of the left upper lobe with",
+              "span": [
+                1611,
+                1680
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "40cc instillation",
+              "span": [
+                1681,
+                1698
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "30cc return",
+              "span": [
+                1703,
+                1714
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31640",
+          "description": "Bronchoscopy; with excision of tumor",
+          "derived_from": [
+            "procedures_performed.mechanical_debulking"
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:59:24.307867+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1611,
+                "end": 1614,
+                "snippet": "BAL"
+              },
+              {
+                "start": 1611,
+                "end": 1680,
+                "snippet": "BAL was performed in the anterior segment of the left upper lobe with"
+              },
+              {
+                "start": 1681,
+                "end": 1698,
+                "snippet": "40cc instillation"
+              },
+              {
+                "start": 1703,
+                "end": 1714,
+                "snippet": "30cc return"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31640",
+            "description": "Bronchoscopy; with excision of tumor",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "mechanical_debulking.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 3,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 449,
+                "end": 499,
+                "snippet": "inserted and the therapeutic flexible bronchoscope"
+              },
+              {
+                "start": 1255,
+                "end": 1274,
+                "snippet": "endobronchial tumor"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "BAL",
+                "span": {
+                  "start": 1611,
+                  "end": 1614
+                }
+              },
+              {
+                "snippet": "BAL was performed in the anterior segment of the left upper lobe with",
+                "span": {
+                  "start": 1611,
+                  "end": 1680
+                }
+              },
+              {
+                "snippet": "40cc instillation",
+                "span": {
+                  "start": 1681,
+                  "end": 1698
+                }
+              },
+              {
+                "snippet": "30cc return",
+                "span": {
+                  "start": 1703,
+                  "end": 1714
+                }
+              }
+            ]
+          },
+          {
+            "code": "31640",
+            "summary": "mechanical_debulking.performed=true"
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "inserted and the therapeutic flexible bronchoscope",
+                "span": {
+                  "start": 449,
+                  "end": 499
+                }
+              },
+              {
+                "snippet": "endobronchial tumor",
+                "span": {
+                  "start": 1255,
+                  "end": 1274
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "LUL",
+          "obstruction_type": "Intraluminal",
+          "modalities_applied": [
+            {
+              "modality": "Mechanical debulking"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.performed": [
+        {
+          "text": "BAL",
+          "start": 1611,
+          "end": 1614
+        }
+      ],
+      "procedures_performed.airway_stent.performed": [
+        {
+          "text": "stent",
+          "start": 587,
+          "end": 592
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "inserted and the therapeutic flexible bronchoscope",
+          "start": 449,
+          "end": 499
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Airway stent occlusion",
+          "start": 268,
+          "end": 290
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Airway stent occlusion",
+          "start": 268,
+          "end": 290
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 303,
+          "end": 321
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "LMA",
+          "start": 441,
+          "end": 444
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "endobronchial tumor",
+          "start": 1255,
+          "end": 1274
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "BAL was performed in the anterior segment of the left upper lobe with",
+          "start": 1611,
+          "end": 1680,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "40cc instillation",
+          "start": 1681,
+          "end": 1698,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "30cc return",
+          "start": 1703,
+          "end": 1714,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "BAL",
+        "span": [
+          1611,
+          1614
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_stent.performed": [
+      {
+        "source": "registry_span",
+        "text": "stent",
+        "span": [
+          587,
+          592
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "inserted and the therapeutic flexible bronchoscope",
+        "span": [
+          449,
+          499
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Airway stent occlusion",
+        "span": [
+          268,
+          290
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Airway stent occlusion",
+        "span": [
+          268,
+          290
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          303,
+          321
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "LMA",
+        "span": [
+          441,
+          444
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "endobronchial tumor",
+        "span": [
+          1255,
+          1274
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "BAL was performed in the anterior segment of the left upper lobe with",
+        "span": [
+          1611,
+          1680
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "40cc instillation",
+        "span": [
+          1681,
+          1698
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "30cc return",
+        "span": [
+          1703,
+          1714
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31624",
+    "31640"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31640",
+      "description": "Bronchoscopy; with excision of tumor",
+      "confidence": 0.8,
+      "rationale": "mechanical_debulking.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 7.37,
+  "estimated_payment": 339.02,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31640",
+      "description": "Bronchoscopy; with excision of tumor",
+      "work_rvu": 4.81,
+      "total_facility_rvu": 6.53,
+      "facility_payment": 218.11
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_stent, bal, diagnostic_bronchoscopy",
+    "31603: ML detected procedure, but specific device/anatomy was not found in text.",
+    "CAO_DETAIL_HEURISTIC: parsed 1 CAO site entry from text",
+    "AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement",
+    "Stent removal/revision not supported by text; treating as assessment only.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 261.3
+}

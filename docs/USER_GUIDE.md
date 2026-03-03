@@ -117,6 +117,19 @@ The easiest way to interact with the system is the development server, which pro
 ```
 *Starts the server on port 8000.*
 
+UI variant commands:
+
+```bash
+# ATLAS UI (default)
+./ops/devserver.sh
+
+# ATLAS UI (explicit)
+./ops/devserver.sh --ui=atlas
+
+# Classic UI
+./ops/devserver.sh --ui=classic
+```
+
 - **Web UI**: [http://localhost:8000/ui/](http://localhost:8000/ui/)
 - **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
@@ -562,7 +575,9 @@ client-side PHI detection/redaction first, then the backend runs extraction on *
 
 ### Basic Usage
 
-1. **Start the server**: `./ops/devserver.sh`
+1. **Start the server**:
+   - ATLAS (default): `./ops/devserver.sh`
+   - Classic: `./ops/devserver.sh --ui=classic`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
 3. **Paste a procedure note** (or use PDF upload / Scan Photo)
 4. **Click `Run Detection`** (client-side PHI detection)
@@ -585,28 +600,50 @@ How it works:
   - `patient_label`
   - `index_date` (kept local, encrypted)
   - `local_meta` (for optional local-only fields like `mrn`, `custom_notes`)
+- **Active case** controls where baseline procedure submissions go:
+  - If an active case is selected, `Submit Scrubbed Note` targets that `registry_uuid`.
+  - If no active case is selected, `Submit Scrubbed Note` creates a new case UUID.
+  - Use `Load Case` (from the patient table) or `Create Local Case` to set the active case.
+  - Use `Save Case Metadata` to persist updates to the active case label/MRN/index date.
+- **Event mode** controls append submissions:
+  - Confirming `Add Event` arms Event mode for that case; subsequent `Submit` appends the event instead of treating the note as a procedure report.
+  - Use `Clear Event Mode` to return to baseline procedure submission behavior.
+  - Contextual pathology/imaging append requires a persisted index procedure run for that case. If persistence is disabled, append is blocked to prevent path-only timelines.
+- **Rebuild** (per-case action in the vault table) replays baseline + all appended events to repair timeline drift.
 - The vault row action is **Add Event** (not pathology-only):
-  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `procedure`, `clinical_status`)
+  - Choose `Event Date` and `Event Type` (`pathology`, `imaging`, `clinical_update`, `treatment_update`, `complication`, `procedure_addendum`, `other`)
+  - Legacy aliases (`procedure`, `clinical_status`) are still accepted and normalized server-side
   - Use either note mode or structured status mode
+  - In note mode, the Add Event modal includes its own **Event Note** box (paste text) plus local PDF extraction into that box
+  - Confirming Add Event with note text loads that note into the main editor so you can run `Run Detection` -> `Apply Redactions` before submit
 - **Absolute dates are never sent to the server.**
   - The browser computes signed `relative_day_offset` from local `index_date`
   - Only `relative_day_offset` is transmitted
 - Structured-only events (`note` empty + `structured_data` present) bypass extraction/pipeline endpoints and persist directly as append events.
+- Pathology/imaging/clinical-status note events are submitted as **contextual append-only** updates (case aggregation) to avoid treating those notes as procedure reports.
 
 Troubleshooting:
 - If the UI says “Unlock local vault first”, you likely enabled the dev override `?vaultRequired=1` (or stored
   `ps.vault.required=1` in localStorage). Clear it via `?vaultRequired=0` (or remove the localStorage key) and reload.
+- If the UI reports registry persistence disabled, set `REGISTRY_RUNS_PERSIST_ENABLED=1` and restart `./ops/devserver.sh`.
 
 ### Registry Event APIs (Zero-Date Transport)
 
 - `POST /api/v1/registry/{registry_uuid}/append`
-  - Canonical event fields: `event_type`, `relative_day_offset`, optional `structured_data`, optional `note`
+  - Canonical event fields: `event_type`, `relative_day_offset`, `already_scrubbed`, optional `structured_data`, optional `text`/`note`
+  - Optional metadata: `source_modality`, `event_subtype`, `event_title`
+  - Strict ZK guard: with `PROCSUITE_STRICT_ZK=1`, `already_scrubbed=false` is rejected
+  - Absolute-date guard: date-like strings in `text`/`event_title`/`structured_data` are rejected by default; override requires both `allow_absolute_dates=true` and `PROCSUITE_ALLOW_ABSOLUTE_DATES=1`
   - Backward-compatible alias: `document_kind`
-  - Transport guarantee: absolute dates are not accepted/sent; use signed offsets only
+  - On success, append triggers deterministic case aggregation (default `REGISTRY_AGGREGATE_ON_APPEND=1`) and returns the updated case snapshot
 - `GET /api/v1/registry/{registry_uuid}`
-  - Returns canonical case snapshot plus append event summaries
+  - Returns canonical case snapshot, `manual_overrides` lock map, and `recent_events`
 - `PATCH /api/v1/registry/{registry_uuid}`
   - Applies partial corrections to canonical `registry_json` with optional `expected_version` concurrency check
+  - Every changed leaf path is written to `manual_overrides` (field-level lock); subsequent aggregation will not overwrite locked fields
+- `POST /api/v1/registry/{registry_uuid}/rebuild`
+  - Resets canonical snapshot and replays baseline persisted run + all appended events for that case
+  - Useful for repairing timelines when index context and appended events drift out of sync
 
 ### PDF Upload and OCR (Client-Side)
 

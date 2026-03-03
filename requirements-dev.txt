@@ -1,0 +1,9 @@
+# Dev/test dependencies for local + Codex runs.
+pytest>=8,<9
+pytest-cov>=5,<6
+pytest-asyncio>=0.24,<1
+
+# Explicit test-collection/runtime imports used by this repo.
+scikit-learn>=1.5.2,<1.6
+SQLAlchemy>=2.0,<3
+rapidfuzz>=3.9,<4

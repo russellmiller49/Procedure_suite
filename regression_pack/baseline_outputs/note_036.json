@@ -1,0 +1,137 @@
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 47,
+      "gender": "Male"
+    },
+    "patient": {
+      "age": 47,
+      "sex": "M"
+    },
+    "procedures_performed": {},
+    "pleural_procedures": {
+      "ipc": {
+        "performed": false
+      }
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED]is a 47 year old-year-old male who presents for Tunnel Pleural Catheter Removal. The patient <PERSON> well. There were no immediate complications. Nursing Unit"
+    },
+    "evidence": {
+      "patient_demographics.age_years": [
+        {
+          "text": "47",
+          "start": 1200,
+          "end": 1202
+        }
+      ],
+      "patient_demographics.gender": [
+        {
+          "text": "male",
+          "start": 1221,
+          "end": 1225
+        }
+      ],
+      "patient.age": [
+        {
+          "text": "47",
+          "start": 1200,
+          "end": 1202
+        }
+      ],
+      "patient.sex": [
+        {
+          "text": "male",
+          "start": 1221,
+          "end": 1225
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "32552",
+          "start": 203,
+          "end": 208
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "patient_demographics.age_years": [
+      {
+        "source": "registry_span",
+        "text": "47",
+        "span": [
+          1200,
+          1202
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.gender": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          1221,
+          1225
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.age": [
+      {
+        "source": "registry_span",
+        "text": "47",
+        "span": [
+          1200,
+          1202
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.sex": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          1221,
+          1225
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "32552",
+        "span": [
+          203,
+          208
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc",
+    "EVIDENCE_HARD_FAIL: pleural_procedures.ipc.performed",
+    "SELF_CORRECT_SKIPPED: 32552: Quote not found verbatim in focused procedure text: 'IMPRESSION/PLAN: [REDACTED]is a 47 year old-year-o...'",
+    "HEADER_EXPLICIT: header lists ['32552'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 3124.54
+}
