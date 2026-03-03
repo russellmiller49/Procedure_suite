@@ -1,0 +1,313 @@
+{
+  "registry": {
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "ETT",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions. endobronchial lesions. secretions, the bronchoscope was removed",
+        "airway_abnormalities": [
+          "Secretions",
+          "Vocal cord abnormality"
+        ]
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus"
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "procedure_completed": true
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31645",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "therapeutic aspiration",
+              "span": [
+                1430,
+                1452
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:59:28.341361+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31645",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1430,
+                "end": 1452,
+                "snippet": "therapeutic aspiration"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1474,
+                "end": 1484,
+                "snippet": "secretions"
+              },
+              {
+                "start": 827,
+                "end": 943,
+                "snippet": "vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31645",
+            "summary": "therapeutic_aspiration.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "therapeutic aspiration",
+                "span": {
+                  "start": 1430,
+                  "end": 1452
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "secretions",
+                "span": {
+                  "start": 1474,
+                  "end": 1484
+                }
+              },
+              {
+                "snippet": "vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions",
+                "span": {
+                  "start": 827,
+                  "end": 943
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "evidence": {
+      "sedation.type": [
+        {
+          "text": "General anesthesia",
+          "start": 360,
+          "end": 378
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "intubated",
+          "start": 642,
+          "end": 651
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1474,
+          "end": 1484
+        },
+        {
+          "text": "vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions",
+          "start": 827,
+          "end": 943
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31622",
+          "start": 229,
+          "end": 234
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 1430,
+          "end": 1452
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General anesthesia",
+        "span": [
+          360,
+          378
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "intubated",
+        "span": [
+          642,
+          651
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1474,
+          1484
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "vocal cord, evidence of prior surgical intervention on the left posterior commissure without other masses or lesions",
+        "span": [
+          827,
+          943
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31622",
+        "span": [
+          229,
+          234
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          1430,
+          1452
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31645"
+  ],
+  "suggestions": [
+    {
+      "code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 2.81,
+  "estimated_payment": 133.27,
+  "per_code_billing": [
+    {
+      "cpt_code": "31645",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, initial",
+      "work_rvu": 2.81,
+      "total_facility_rvu": 3.99,
+      "facility_payment": 133.27
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for therapeutic_aspiration",
+    "31646: ML detected procedure, but specific device/anatomy was not found in text.",
+    "AUTO_CORRECTED: therapeutic_aspiration.material='Purulent secretions' without purulence language; downgraded to 'Mucus'.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "SELF_CORRECT_SKIPPED: 31622: judge returned null",
+    "HEADER_EXPLICIT: header lists ['31622'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 3710.87
+}

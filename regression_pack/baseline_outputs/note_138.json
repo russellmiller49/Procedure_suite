@@ -1,0 +1,276 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "Lung mass"
+    },
+    "clinical_context": {
+      "primary_indication": "Lung mass",
+      "lesion_size_mm": 10.1,
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords moved normally with respiration. endobronchial lesions and no secretions noted on the left. lesion was not traversed. secretions noted on the left",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "linear_ebus": {
+        "performed": true,
+        "needle_gauge": "22G",
+        "node_events": []
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "procedure_completed": true
+    },
+    "evidence": {
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 2016,
+          "end": 2025
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Lung mass",
+          "start": 87,
+          "end": 96
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Lung mass",
+          "start": 87,
+          "end": 96
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General anesthesia",
+          "start": 110,
+          "end": 128
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "laryngeal mask",
+          "start": 810,
+          "end": 824
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1372,
+          "end": 1382
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+          "start": 1974,
+          "end": 2080,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+          "start": 1974,
+          "end": 2080,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+          "start": 1974,
+          "end": 2080,
+          "confidence": 0.9
+        }
+      ],
+      "clinical_context.lesion_size_mm": [
+        {
+          "text": "mass measured 10.1 mm",
+          "start": 2151,
+          "end": 2172
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22-gauge",
+          "start": 2026,
+          "end": 2034,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          2016,
+          2025
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Lung mass",
+        "span": [
+          87,
+          96
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Lung mass",
+        "span": [
+          87,
+          96
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General anesthesia",
+        "span": [
+          110,
+          128
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "laryngeal mask",
+        "span": [
+          810,
+          824
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1372,
+          1382
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+        "span": [
+          1974,
+          2080
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+        "span": [
+          1974,
+          2080
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "aspiration was performed using an Olympus EBUS-TBNA 22-gauge needle targeting a left pulmonary artery mass",
+        "span": [
+          1974,
+          2080
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "clinical_context.lesion_size_mm": [
+      {
+        "source": "registry_span",
+        "text": "mass measured 10.1 mm",
+        "span": [
+          2151,
+          2172
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22-gauge",
+        "span": [
+          2026,
+          2034
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+    "EBUS_FALLBACK: sampling documented for lung mass; added node_event.",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+    "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: LUNG MASS",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "linear_ebus.performed=true but stations_sampled missing/empty; cannot derive 31652/31653",
+    "STRUCTURAL_FAILURE: linear_ebus performed but stations_sampled is empty (station extraction likely failed)"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 549.36
+}

@@ -1,0 +1,908 @@
+{
+  "registry": {
+    "procedure": {
+      "indication": "staging of known squamous cell lung cancer"
+    },
+    "clinical_context": {
+      "primary_indication": "staging of known squamous cell lung cancer",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "LMA",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords appeared normal. endobronchial ultrasound sampling 3 or more hilar or mediastinal stations or structures). secretions",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4L"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "4L",
+            "action": "needle_aspiration",
+            "rose_result": "did",
+            "evidence_quote": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+          },
+          {
+            "station": "2R",
+            "action": "inspected_only",
+            "rose_result": "did",
+            "evidence_quote": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway w"
+          },
+          {
+            "station": "4R",
+            "action": "inspected_only",
+            "rose_result": "did",
+            "evidence_quote": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway w"
+          },
+          {
+            "station": "11RI",
+            "action": "inspected_only",
+            "rose_result": "did",
+            "evidence_quote": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway w"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "complications": {
+      "complication_list": [],
+      "bleeding": {
+        "occurred": false,
+        "bleeding_grade_nashville": 0
+      }
+    },
+    "outcomes": {},
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUSTBNA",
+              "span": [
+                1639,
+                1647
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "4L",
+              "span": [
+                1481,
+                1483
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+              "span": [
+                587,
+                2018
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "ROSE did",
+              "span": [
+                1665,
+                1674
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "2R",
+              "span": [
+                1485,
+                1487
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+              "span": [
+                587,
+                2018
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:58:51.326484+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1639,
+                "end": 1647,
+                "snippet": "EBUSTBNA"
+              },
+              {
+                "start": 1481,
+                "end": 1483,
+                "snippet": "4L"
+              },
+              {
+                "start": 587,
+                "end": 2018,
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+              },
+              {
+                "start": 1665,
+                "end": 1674,
+                "snippet": "ROSE did"
+              },
+              {
+                "start": 1485,
+                "end": 1487,
+                "snippet": "2R"
+              },
+              {
+                "start": 587,
+                "end": 2018,
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed."
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1251,
+                "end": 1261,
+                "snippet": "secretions"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUSTBNA",
+                "span": {
+                  "start": 1639,
+                  "end": 1647
+                }
+              },
+              {
+                "snippet": "4L",
+                "span": {
+                  "start": 1481,
+                  "end": 1483
+                }
+              },
+              {
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+                "span": {
+                  "start": 587,
+                  "end": 2018
+                }
+              },
+              {
+                "snippet": "ROSE did",
+                "span": {
+                  "start": 1665,
+                  "end": 1674
+                }
+              },
+              {
+                "snippet": "2R",
+                "span": {
+                  "start": 1485,
+                  "end": 1487
+                }
+              },
+              {
+                "snippet": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+                "span": {
+                  "start": 587,
+                  "end": 2018
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "secretions",
+                "span": {
+                  "start": 1251,
+                  "end": 1261
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "4L",
+          "morphologic_impression": "malignant",
+          "sampled": true,
+          "needle_gauge": 22,
+          "rose_performed": true,
+          "rose_result": "Malignant"
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUSTBNA",
+          "start": 1639,
+          "end": 1647
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "staging of known squamous cell lung cancer",
+          "start": 215,
+          "end": 257
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "staging of known squamous cell lung cancer",
+          "start": 215,
+          "end": 257
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 271,
+          "end": 289
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "laryngeal mask",
+          "start": 775,
+          "end": 789
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "secretions",
+          "start": 1251,
+          "end": 1261
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.station": [
+        {
+          "text": "4L",
+          "start": 1481,
+          "end": 1483,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 587,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.rose_result": [
+        {
+          "text": "ROSE did",
+          "start": 1665,
+          "end": 1674,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.station": [
+        {
+          "text": "2R",
+          "start": 1485,
+          "end": 1487,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 587,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.rose_result": [
+        {
+          "text": "ROSE did",
+          "start": 1665,
+          "end": 1674,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.station": [
+        {
+          "text": "4R",
+          "start": 1489,
+          "end": 1491,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 587,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.rose_result": [
+        {
+          "text": "ROSE did",
+          "start": 1665,
+          "end": 1674,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.station": [
+        {
+          "text": "7",
+          "start": 1493,
+          "end": 1494,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 587,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.rose_result": [
+        {
+          "text": "ROSE did",
+          "start": 1665,
+          "end": 1674,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.4.station": [
+        {
+          "text": "11Ri",
+          "start": 1499,
+          "end": 1503,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.4.evidence_quote": [
+        {
+          "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+          "start": 587,
+          "end": 2018,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.4.rose_result": [
+        {
+          "text": "ROSE did",
+          "start": 1665,
+          "end": 1674,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "11Ri",
+          "start": 1499,
+          "end": 1503,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.1": [
+        {
+          "text": "2R",
+          "start": 1485,
+          "end": 1487,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.2": [
+        {
+          "text": "4L",
+          "start": 1481,
+          "end": 1483,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.3": [
+        {
+          "text": "4R",
+          "start": 1489,
+          "end": 1491,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.4": [
+        {
+          "text": "7",
+          "start": 1493,
+          "end": 1494,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1648,
+          "end": 1656,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22 gauge",
+          "start": 1648,
+          "end": 1656,
+          "confidence": 0.9
+        }
+      ],
+      "complications.bleeding.bleeding_grade_nashville": [
+        {
+          "text": "no evidence of active bleeding",
+          "start": 1941,
+          "end": 1971,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUSTBNA",
+        "span": [
+          1639,
+          1647
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "staging of known squamous cell lung cancer",
+        "span": [
+          215,
+          257
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "staging of known squamous cell lung cancer",
+        "span": [
+          215,
+          257
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          271,
+          289
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "laryngeal mask",
+        "span": [
+          775,
+          789
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "secretions",
+        "span": [
+          1251,
+          1261
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.station": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1481,
+          1483
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          587,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.rose_result": [
+      {
+        "source": "registry_span",
+        "text": "ROSE did",
+        "span": [
+          1665,
+          1674
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.station": [
+      {
+        "source": "registry_span",
+        "text": "2R",
+        "span": [
+          1485,
+          1487
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          587,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.rose_result": [
+      {
+        "source": "registry_span",
+        "text": "ROSE did",
+        "span": [
+          1665,
+          1674
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.station": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1489,
+          1491
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          587,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.rose_result": [
+      {
+        "source": "registry_span",
+        "text": "ROSE did",
+        "span": [
+          1665,
+          1674
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.station": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1493,
+          1494
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          587,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.rose_result": [
+      {
+        "source": "registry_span",
+        "text": "ROSE did",
+        "span": [
+          1665,
+          1674
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.4.station": [
+      {
+        "source": "registry_span",
+        "text": "11Ri",
+        "span": [
+          1499,
+          1503
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.4.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed.",
+        "span": [
+          587,
+          2018
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.4.rose_result": [
+      {
+        "source": "registry_span",
+        "text": "ROSE did",
+        "span": [
+          1665,
+          1674
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "11Ri",
+        "span": [
+          1499,
+          1503
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.1": [
+      {
+        "source": "registry_span",
+        "text": "2R",
+        "span": [
+          1485,
+          1487
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.2": [
+      {
+        "source": "registry_span",
+        "text": "4L",
+        "span": [
+          1481,
+          1483
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.3": [
+      {
+        "source": "registry_span",
+        "text": "4R",
+        "span": [
+          1489,
+          1491
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.4": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1493,
+          1494
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1648,
+          1656
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22 gauge",
+        "span": [
+          1648,
+          1656
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "complications.bleeding.bleeding_grade_nashville": [
+      {
+        "source": "registry_span",
+        "text": "no evidence of active bleeding",
+        "span": [
+          1941,
+          1971
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+    "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 2R",
+    "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R",
+    "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 11RI",
+    "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: 7",
+    "EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for ['11RI', '2R', '4R']",
+    "EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations ['7']",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "BLEEDING_GRADE_DERIVED: Nashville grade=0",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 546.4
+}

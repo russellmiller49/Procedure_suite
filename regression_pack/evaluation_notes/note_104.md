@@ -1,0 +1,6 @@
+🩺 Extraction Quality Report: note_104Score: 85 / 100Status: ⚠️ WARNING1. Accuracy (Precision)Hallucinations: The JSON hallucinated multiple biopsy locations. It lists Carina, RML, LUL, and LLL as endobronchial biopsy sites. The clinical text strictly states: "Endobronchial biopsy was performed at RML Carina (RC2)".Mismatch: The JSON misinterpreted the inspection of the LUL and LLL as biopsy targets.2. Completeness (Recall)Missed Procedures: None. BAL, EBBx, therapeutic aspiration, and balloon dilation were correctly identified.Missed Details: None. The BAL instilled (40cc) and recovered (25cc) volumes were perfectly extracted.3. Logic & CodingCPT Consistency: Good. The CPT codes (31615, 31624, 31625, 31630, 31646) accurately reflect the billed procedures, despite the clinical data hallucination regarding the biopsy locations.Schema Compliance: No structural issues.4. Corrected JSON SnippetJSON      "endobronchial_biopsy": {
+        "performed": true,
+        "locations": [
+          "RML"
+        ]
+      }

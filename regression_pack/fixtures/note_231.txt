@@ -1,0 +1,13 @@
+NOTE_ID:  note_231 SOURCE_FILE: note_231.txt Procedure Name: EBUS Staging Bronchoscopy. (CPT 31653 convex probe endobronchial ultrasound sampling 3 or more hilar or mediastinal stations or structures).
+Indications: staging of known squamous cell lung cancer
+Medications: General Anesthesia
+Procedure, risks, benefits, and alternatives were explained to the patient. All questions were answered and informed consent was documented as per institutional protocol. A history and physical were performed and updated in the pre-procedure assessment record. Laboratory studies and radiographs 
+Following intravenous medications as per the record and topical anesthesia to the upper airway and tracheobronchial tree, the Q190 video bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree. The laryngeal mask airway was in good position. The vocal cords appeared normal. The subglottic space was normal.  The trachea was of normal caliber. The carina was sharp. The tracheobronchial tree was examined to at least the first sub-segmental level. The left upper lobe stump from previous lobectomy was intact. Bronchial mucosa and anatomy were otherwise normal; there are no endobronchial lesions, and no secretions.   No evidence of endobronchial disease was seen to at least the first sub-segments. A systematic hilar and mediastinal lymph node survey was carried out. Sampling criteria (5mm short axis diameter) were met in station 4L  2R, 4R, 7 and 11Ri lymph nodes.  Sampling by transbronchial needle aspiration was performed beginning with the 4L Lymph node, using an Olympus Visioshot2 EBUSTBNA 22 gauge needle. ROSE did not show evidence of malignancy. See EBUS sheet in AHLTA regarding further details of lymph node size and ROSE findings.  All samples were sent for routine cytology. The Q190 video bronchoscope was then re-inserted and after suctioning blood and secretions there was no evidence of active bleeding and the bronchoscope was subsequently removed. 
+
+Complications: the patient experienced accidental contaminated needle stick from procedural technician. Appropriate labs were obtained and patient was informed of the incident.  
+Estimated Blood Loss: 5 cc.
+
+Post Procedure Diagnosis:
+- Technically successful flexible bronchoscopy with endobronchial ultrasound-guided biopsies.
+- The patient has remained stable and has been transferred in good condition to the post-procedural monitoring unit.
+- Will await final pathology results

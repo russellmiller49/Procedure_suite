@@ -1,0 +1,1085 @@
+{
+  "registry": {
+    "patient_demographics": {
+      "age_years": 56,
+      "gender": "Male"
+    },
+    "patient": {
+      "age": 56,
+      "sex": "M"
+    },
+    "procedure": {
+      "indication": "respiratory failure"
+    },
+    "clinical_context": {
+      "primary_indication": "respiratory failure",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords were normal appearing. Endobronchial biopsy was performed at RML Carina (RC2). Lesion was successfully removed. Secretions were suctioned and lidocaine was applied",
+        "airway_abnormalities": [
+          "Secretions"
+        ]
+      },
+      "bal": {
+        "performed": true,
+        "location": "Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)",
+        "volume_instilled_ml": 40.0,
+        "volume_recovered_ml": 25.0
+      },
+      "endobronchial_biopsy": {
+        "performed": true,
+        "locations": [
+          "Carina",
+          "RML",
+          "LUL",
+          "LLL"
+        ]
+      },
+      "therapeutic_aspiration": {
+        "performed": true,
+        "material": "Mucus plug",
+        "location": "Trachea (Middle 1/3), Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2)"
+      },
+      "airway_dilation": {
+        "performed": true,
+        "location": "RML",
+        "method": "Balloon",
+        "balloon_diameter_mm": 9.0,
+        "post_dilation_diameter_mm": 9.0
+      }
+    },
+    "pleural_procedures": {},
+    "specimens": {
+      "specimens_collected": [
+        {
+          "type": "BAL"
+        }
+      ]
+    },
+    "outcomes": {
+      "procedure_completed": true,
+      "follow_up_plan_text": "[REDACTED]is a 56 year old-year-old male who presents for bronchoscopy for respiratory failure and airway dilation. -Follow up bronchoscopic lab work -Follow up bronchoscopy later this week or early next week"
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31615",
+          "description": "Tracheobronchoscopy performed through an established tracheostomy",
+          "derived_from": [
+            "established_tracheostomy_route"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "via the tracheostomy",
+              "span": [
+                1557,
+                1577
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Instilled 40 cc",
+              "span": [
+                2690,
+                2705
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage",
+              "span": [
+                2584,
+                2609
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)",
+              "span": [
+                2584,
+                2687
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "suction returned with 25 cc",
+              "span": [
+                2713,
+                2740
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31625",
+          "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+          "derived_from": [
+            "procedures_performed.endobronchial_biopsy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Endobronchial biops",
+              "span": [
+                2250,
+                2269
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31630",
+          "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+          "derived_from": [
+            "procedures_performed.airway_dilation"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Balloon dilat",
+              "span": [
+                2370,
+                2383
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31646",
+          "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+          "derived_from": [
+            "procedures_performed.therapeutic_aspiration"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "31646",
+              "span": [
+                386,
+                391
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "therapeutic aspiration",
+              "span": [
+                2841,
+                2863
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-03T16:58:14.026937+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31615",
+            "description": "Tracheobronchoscopy performed through an established tracheostomy",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "established_tracheostomy_route=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1557,
+                "end": 1577,
+                "snippet": "via the tracheostomy"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2690,
+                "end": 2705,
+                "snippet": "Instilled 40 cc"
+              },
+              {
+                "start": 2584,
+                "end": 2609,
+                "snippet": "Bronchial alveolar lavage"
+              },
+              {
+                "start": 2584,
+                "end": 2687,
+                "snippet": "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)"
+              },
+              {
+                "start": 2713,
+                "end": 2740,
+                "snippet": "suction returned with 25 cc"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31625",
+            "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "endobronchial_biopsy.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2250,
+                "end": 2269,
+                "snippet": "Endobronchial biops"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31630",
+            "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "airway_dilation.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 2370,
+                "end": 2383,
+                "snippet": "Balloon dilat"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31646",
+            "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 386,
+                "end": 391,
+                "snippet": "31646"
+              },
+              {
+                "start": 2841,
+                "end": 2863,
+                "snippet": "therapeutic aspiration"
+              }
+            ]
+          },
+          {
+            "sequence": 6,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 1284,
+                "end": 1318,
+                "snippet": "Initial Airway Inspection Findings"
+              },
+              {
+                "start": 1479,
+                "end": 1504,
+                "snippet": "Secretions were suctioned"
+              },
+              {
+                "start": 1284,
+                "end": 1318,
+                "snippet": "Initial Airway Inspection Findings"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31615",
+            "summary": "established_tracheostomy_route=true",
+            "documentation_evidence": [
+              {
+                "snippet": "via the tracheostomy",
+                "span": {
+                  "start": 1557,
+                  "end": 1577
+                }
+              }
+            ]
+          },
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Instilled 40 cc",
+                "span": {
+                  "start": 2690,
+                  "end": 2705
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage",
+                "span": {
+                  "start": 2584,
+                  "end": 2609
+                }
+              },
+              {
+                "snippet": "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)",
+                "span": {
+                  "start": 2584,
+                  "end": 2687
+                }
+              },
+              {
+                "snippet": "suction returned with 25 cc",
+                "span": {
+                  "start": 2713,
+                  "end": 2740
+                }
+              }
+            ]
+          },
+          {
+            "code": "31625",
+            "summary": "endobronchial_biopsy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Endobronchial biops",
+                "span": {
+                  "start": 2250,
+                  "end": 2269
+                }
+              }
+            ]
+          },
+          {
+            "code": "31630",
+            "summary": "airway_dilation.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Balloon dilat",
+                "span": {
+                  "start": 2370,
+                  "end": 2383
+                }
+              }
+            ]
+          },
+          {
+            "code": "31646",
+            "summary": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+            "documentation_evidence": [
+              {
+                "snippet": "31646",
+                "span": {
+                  "start": 386,
+                  "end": 391
+                }
+              },
+              {
+                "snippet": "therapeutic aspiration",
+                "span": {
+                  "start": 2841,
+                  "end": 2863
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 1284,
+                  "end": 1318
+                }
+              },
+              {
+                "snippet": "Secretions were suctioned",
+                "span": {
+                  "start": 1479,
+                  "end": 1504
+                }
+              },
+              {
+                "snippet": "Initial Airway Inspection Findings",
+                "span": {
+                  "start": 1284,
+                  "end": 1318
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "cao_interventions_detail": [
+        {
+          "location": "Trachea",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "Carina",
+          "obstruction_type": "Intraluminal",
+          "modalities_applied": [
+            {
+              "modality": "Balloon dilation"
+            },
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "RMS",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "LMS",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "BI",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "LUL",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "Lingula",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "RML",
+          "obstruction_type": "Intraluminal",
+          "modalities_applied": [
+            {
+              "modality": "Balloon dilation"
+            },
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        },
+        {
+          "location": "RUL",
+          "obstruction_type": "Intraluminal",
+          "modalities_applied": [
+            {
+              "modality": "Suctioning"
+            }
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "procedures_performed.bal.volume_instilled_ml": [
+        {
+          "text": "Instilled 40 cc",
+          "start": 2690,
+          "end": 2705,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.performed": [
+        {
+          "text": "Bronchial alveolar lavage",
+          "start": 2584,
+          "end": 2609
+        }
+      ],
+      "procedures_performed.airway_dilation.performed": [
+        {
+          "text": "Balloon dilat",
+          "start": 2370,
+          "end": 2383
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 1284,
+          "end": 1318
+        }
+      ],
+      "procedures_performed.endobronchial_biopsy.performed": [
+        {
+          "text": "Endobronchial biops",
+          "start": 2250,
+          "end": 2269
+        }
+      ],
+      "established_tracheostomy_route": [
+        {
+          "text": "via the tracheostomy",
+          "start": 1557,
+          "end": 1577
+        }
+      ],
+      "patient_demographics.age_years": [
+        {
+          "text": "56",
+          "start": 87,
+          "end": 89
+        }
+      ],
+      "patient_demographics.gender": [
+        {
+          "text": "male",
+          "start": 108,
+          "end": 112
+        }
+      ],
+      "patient.age": [
+        {
+          "text": "56",
+          "start": 87,
+          "end": 89
+        }
+      ],
+      "patient.sex": [
+        {
+          "text": "male",
+          "start": 108,
+          "end": 112
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "respiratory failure",
+          "start": 131,
+          "end": 150
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "respiratory failure",
+          "start": 131,
+          "end": 150
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "ANESTHESIA",
+          "start": 813,
+          "end": 823
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+        {
+          "text": "Secretions were suctioned",
+          "start": 1479,
+          "end": 1504
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+        {
+          "text": "Initial Airway Inspection Findings",
+          "start": 1284,
+          "end": 1318
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.is_subsequent": [
+        {
+          "text": "31646",
+          "start": 386,
+          "end": 391
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31622",
+          "start": 435,
+          "end": 440
+        },
+        {
+          "text": "31624",
+          "start": 480,
+          "end": 485
+        },
+        {
+          "text": "31630",
+          "start": 519,
+          "end": 524
+        },
+        {
+          "text": "31646",
+          "start": 386,
+          "end": 391
+        }
+      ],
+      "procedures_performed.therapeutic_aspiration.performed": [
+        {
+          "text": "therapeutic aspiration",
+          "start": 2841,
+          "end": 2863
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)",
+          "start": 2584,
+          "end": 2687,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.bal.volume_recovered_ml": [
+        {
+          "text": "suction returned with 25 cc",
+          "start": 2713,
+          "end": 2740,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": true,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "procedures_performed.bal.volume_instilled_ml": [
+      {
+        "source": "registry_span",
+        "text": "Instilled 40 cc",
+        "span": [
+          2690,
+          2705
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage",
+        "span": [
+          2584,
+          2609
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.airway_dilation.performed": [
+      {
+        "source": "registry_span",
+        "text": "Balloon dilat",
+        "span": [
+          2370,
+          2383
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          1284,
+          1318
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.endobronchial_biopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "Endobronchial biops",
+        "span": [
+          2250,
+          2269
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "established_tracheostomy_route": [
+      {
+        "source": "registry_span",
+        "text": "via the tracheostomy",
+        "span": [
+          1557,
+          1577
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.age_years": [
+      {
+        "source": "registry_span",
+        "text": "56",
+        "span": [
+          87,
+          89
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient_demographics.gender": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          108,
+          112
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.age": [
+      {
+        "source": "registry_span",
+        "text": "56",
+        "span": [
+          87,
+          89
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "patient.sex": [
+      {
+        "source": "registry_span",
+        "text": "male",
+        "span": [
+          108,
+          112
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "respiratory failure",
+        "span": [
+          131,
+          150
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "respiratory failure",
+        "span": [
+          131,
+          150
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "ANESTHESIA",
+        "span": [
+          813,
+          823
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities": [
+      {
+        "source": "registry_span",
+        "text": "Secretions were suctioned",
+        "span": [
+          1479,
+          1504
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.inspection_findings": [
+      {
+        "source": "registry_span",
+        "text": "Initial Airway Inspection Findings",
+        "span": [
+          1284,
+          1318
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.is_subsequent": [
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          386,
+          391
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31622",
+        "span": [
+          435,
+          440
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31624",
+        "span": [
+          480,
+          485
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31630",
+        "span": [
+          519,
+          524
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31646",
+        "span": [
+          386,
+          391
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.therapeutic_aspiration.performed": [
+      {
+        "source": "registry_span",
+        "text": "therapeutic aspiration",
+        "span": [
+          2841,
+          2863
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4) and Medial Segment of RML (RB5)",
+        "span": [
+          2584,
+          2687
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.bal.volume_recovered_ml": [
+      {
+        "source": "registry_span",
+        "text": "suction returned with 25 cc",
+        "span": [
+          2713,
+          2740
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31615",
+    "31624",
+    "31625",
+    "31630",
+    "31646"
+  ],
+  "suggestions": [
+    {
+      "code": "31615",
+      "description": "Tracheobronchoscopy performed through an established tracheostomy",
+      "confidence": 0.8,
+      "rationale": "established_tracheostomy_route=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "endobronchial_biopsy.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31630",
+      "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+      "confidence": 0.8,
+      "rationale": "airway_dilation.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "confidence": 0.8,
+      "rationale": "therapeutic_aspiration.performed=true and subsequent episode indicated",
+      "review_flag": "recommended"
+    }
+  ],
+  "total_work_rvu": 13.8,
+  "estimated_payment": 669.02,
+  "per_code_billing": [
+    {
+      "cpt_code": "31615",
+      "description": "Tracheobronchoscopy performed through an established tracheostomy",
+      "work_rvu": 1.79,
+      "total_facility_rvu": 3.05,
+      "facility_payment": 101.87
+    },
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31625",
+      "description": "Bronchoscopy; with bronchial or endobronchial biopsy(s)",
+      "work_rvu": 3.03,
+      "total_facility_rvu": 4.21,
+      "facility_payment": 140.62
+    },
+    {
+      "cpt_code": "31630",
+      "description": "Bronchoscopy; with tracheal/bronchial dilation or closed reduction of fracture",
+      "work_rvu": 3.71,
+      "total_facility_rvu": 5.29,
+      "facility_payment": 176.69
+    },
+    {
+      "cpt_code": "31646",
+      "description": "Bronchoscopy; with therapeutic aspiration of tracheobronchial tree, subsequent",
+      "work_rvu": 2.71,
+      "total_facility_rvu": 3.86,
+      "facility_payment": 128.93
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_dilation, bal, diagnostic_bronchoscopy, endobronchial_biopsy, therapeutic_aspiration",
+    "CAO_DETAIL_HEURISTIC: parsed 9 CAO site entries from text",
+    "AUTO_SPECIMENS: populated specimens_collected=1 from SPECIMEN(S) section.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "HEADER_EXPLICIT: header lists ['31622'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 362.36
+}

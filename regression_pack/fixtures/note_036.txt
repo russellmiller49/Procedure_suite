@@ -1,0 +1,48 @@
+NOTE_ID:  note_036 SOURCE_FILE: note_036.txt INDICATION: Pleural Effusion.  
+
+PREOPERATIVE DIAGNOSIS:  Pleural Effusion
+POSTOPERATIVE DIAGNOSIS: Same as preoperative diagnosis - see above. 
+PROCEDURE:  
+32552 Removal of indwelling tunneled pleural catheter with cuff
+PROCEDURE IN DETAIL:
+PATIENT POSITION: 
+0‌ Supine  0‌ Sitting   
+1‌ Lateral Decubitus:  0‌ Right 1‌ Left 
+ 
+Date of TPC insertion: [REDACTED]
+
+Side: 1‌ Right  0‌ Left 
+ 
+Reason for TPC removal: 
+0‌  No output due to auto-pleurodesis 
+0‌  No output due to successful talc pleurodesis 
+0‌  No output due to blocked TPC 
+0‌  Patient request due to discomfort 
+1‌  Patient request and partial dislodgement
+ 
+Catheter Site:       1‌  Clean/dry     0‌ Erythema    0‌  Tenderness with palpation    0‌  Drainage 
+Anesthesia:0‌ Yes 1‌ No 
+Lidocaine 1%: ______ ml   Other: ______ 
+Sutured: 0‌ Yes 1‌ No 
+ 
+Clean dry dressing applied and should remain in place for a minimum of 72 hours. Ok to shower with occlusive dressing.  
+ 
+Complications:  
+0‌ Yes, if so what: 
+1‌  No 
+ 
+Antibiotics: 
+0‌ Yes, if so why: 
+1‌  No 
+ 
+ 
+COMPLICATIONS:
+1‌None 0‌Bleeding-EBL: ___ ml 0‌Pneumothorax 0‌Re- Expansion Pulmonary Edema 
+0‌Other: 
+ 
+IMPRESSION/PLAN: [REDACTED]is a 47 year old-year-old male who presents for Tunnel Pleural Catheter Removal.  The patient tolerated the procedure well.  There were no immediate complications.  
+ 
+-Follow up in Interventional Pulmonary Pleural clinic
+-Follow up CXR
+ 
+DISPOSITION: Nursing Unit

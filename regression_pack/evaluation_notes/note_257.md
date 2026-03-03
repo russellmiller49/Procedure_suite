@@ -1,0 +1,7 @@
+🩺 Extraction Quality Report: note_257Score: 85 / 100Status: ⚠️ WARNING1. Accuracy (Precision)Hallucinations: None.Mismatch: The JSON classifies the mechanical_debulking method as "Forceps debulking". However, the text explicitly states the debulking was performed using the "beveled tip" of the rigid bronchoscope with an "apple coring technique".2. Completeness (Recall)Missed Procedures: The JSON notes airway_stent with action: Removal. While the physician did remove a migrated stent , they also placed a new 12 X 40 bonostent. The JSON structure fails to log the placement of the new stent, only extracting the removal.Missed Details: airway_device_type is null , despite an LMA being explicitly placed at the beginning of the case.3. Logic & CodingCPT Consistency: The coding logic correctly identifies 31638 for the stent revision , which covers both removal and placement. It accurately drops 31630 (dilation) as bundled into the stent code.Schema Compliance: The cao_interventions_detail granular object correctly maps multiple modalities (balloon dilation, mechanical debulking) to the tracheal obstruction.4. Corrected JSON Snippet (Optional)JSON      "airway_stent": {
+        "performed": true,
+        "airway_stent_removal": true,
+        "action_type": "exchange",
+        "action": "Exchange",
+        "location": "Trachea"
+      },

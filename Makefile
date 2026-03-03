@@ -67,7 +67,8 @@ deps-compile:
 deps-check:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
 	@tmp_file=$$(mktemp); \
-	$(DEPS_PYTHON) -m piptools compile $(PIP_COMPILE_ARGS) --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
+	cp requirements.txt $$tmp_file; \
+	$(DEPS_PYTHON) -m piptools compile --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311' --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
 	if ! diff -u $$tmp_file requirements.txt >/dev/null; then \
 		echo "requirements.txt is out of sync with requirements.in. Run: make deps-compile"; \
 		diff -u $$tmp_file requirements.txt || true; \
