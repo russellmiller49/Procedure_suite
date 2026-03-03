@@ -76,3 +76,7 @@ node_modules/
 
 # Unsloth runtime cache (local)
 unsloth_compiled_cache/
+
+# local virtualenvs
+.venv/
+venv/

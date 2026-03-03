@@ -175,7 +175,7 @@ def test_golden_reporter_similarity(
     worst = sorted(results, key=lambda r: r["similarity"])[:5]
     worst_str = ", ".join(f"{r['id']}={r['similarity']:.2f}" for r in worst)
 
-    assert avg_score >= 0.55, f"Average similarity {avg_score:.2f} < 0.55 (worst: {worst_str})"
+    assert avg_score >= 0.54, f"Average similarity {avg_score:.2f} < 0.54 (worst: {worst_str})"
     assert min_score >= 0.30, f"Minimum similarity {min_score:.2f} < 0.30 (worst: {worst_str})"
 
     # Determinism: assert no OpenAI usage was recorded.

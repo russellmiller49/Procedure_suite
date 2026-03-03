@@ -3940,6 +3940,63 @@ function getRegistry(data) {
   return data?.registry || {};
 }
 
+function normalizeEbusStationToken(value) {
+  const normalized = normalizeCompletenessStationToken(value);
+  if (normalized) return normalized;
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+  return raw.replace(/[\s_-]+/g, "").toUpperCase();
+}
+
+function buildNormalizedEbusStationsDetail(registry) {
+  const granular = registry?.granular_data || {};
+  const existingRaw = Array.isArray(granular?.linear_ebus_stations_detail) ? granular.linear_ebus_stations_detail : [];
+  const existing = existingRaw
+    .filter((row) => row && typeof row === "object" && !Array.isArray(row))
+    .map((row) => {
+      const out = { ...row };
+      const canonical = normalizeEbusStationToken(row?.station);
+      const raw = String(row?.station ?? "").trim();
+      if (canonical) out.station = canonical;
+      else if (raw) out.station = raw.toUpperCase();
+      return out;
+    });
+
+  const seenStations = new Set();
+  existing.forEach((row) => {
+    const token = normalizeEbusStationToken(row?.station);
+    if (token) seenStations.add(token);
+  });
+
+  const linearEbus = registry?.procedures_performed?.linear_ebus || {};
+  const sampledRaw =
+    Array.isArray(linearEbus?.stations_sampled) && linearEbus.stations_sampled.length > 0
+      ? linearEbus.stations_sampled
+      : Array.isArray(linearEbus?.node_events)
+        ? linearEbus.node_events.map((ev) => ev?.station)
+        : [];
+
+  const sampledStations = [];
+  const seenSampled = new Set();
+  (Array.isArray(sampledRaw) ? sampledRaw : []).forEach((station) => {
+    const token = normalizeEbusStationToken(station);
+    if (!token || seenSampled.has(token)) return;
+    seenSampled.add(token);
+    sampledStations.push(token);
+  });
+
+  const needleGaugeSeed = parseNumber(linearEbus?.needle_gauge);
+  sampledStations.forEach((station) => {
+    if (seenStations.has(station)) return;
+    seenStations.add(station);
+    const placeholder = { station, sampled: true };
+    if (needleGaugeSeed !== null) placeholder.needle_gauge = Math.trunc(needleGaugeSeed);
+    existing.push(placeholder);
+  });
+
+  return existing;
+}
+
 function hasDisplayValue(value) {
   return value !== null && value !== undefined && (typeof value !== "string" || value.trim() !== "");
 }
@@ -4359,19 +4416,50 @@ function getFlatSummaryValue(path) {
 
 function collectEvidenceSpansForPaths(data, paths) {
   const evidence = getEvidence(data);
+  const evidenceKeys = evidence && typeof evidence === "object" ? Object.keys(evidence) : [];
   const merged = [];
   const seen = new Set();
+
+  const addSpan = (span) => {
+    const start = Number(span?.start ?? span?.span?.[0] ?? span?.span?.start);
+    const end = Number(span?.end ?? span?.span?.[1] ?? span?.span?.end);
+    const key = `${start}:${end}:${String(span?.text || span?.quote || span?.snippet || "")}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    merged.push(span);
+  };
+
+  const addEvidenceByKey = (key) => {
+    const spans = Array.isArray(evidence?.[key]) ? evidence[key] : [];
+    spans.forEach(addSpan);
+  };
+
   (Array.isArray(paths) ? paths : []).forEach((path) => {
-    const spans = Array.isArray(evidence?.[path]) ? evidence[path] : [];
-    spans.forEach((span) => {
-      const start = Number(span?.start ?? span?.span?.[0]);
-      const end = Number(span?.end ?? span?.span?.[1]);
-      const key = `${start}:${end}:${String(span?.text || span?.quote || "")}`;
-      if (seen.has(key)) return;
-      seen.add(key);
-      merged.push(span);
+    const rawPath = String(path || "").trim();
+    if (!rawPath) return;
+
+    const candidateRoots = new Set([rawPath]);
+    if (rawPath.startsWith("registry.")) candidateRoots.add(rawPath.slice("registry.".length));
+
+    candidateRoots.forEach((root) => addEvidenceByKey(root));
+
+    evidenceKeys.forEach((key) => {
+      candidateRoots.forEach((root) => {
+        if (key.startsWith(`${root}.`) || key.startsWith(`${root}[`)) addEvidenceByKey(key);
+      });
     });
   });
+
+  merged.sort((a, b) => {
+    const aStart = Number(a?.start ?? a?.span?.[0] ?? a?.span?.start);
+    const bStart = Number(b?.start ?? b?.span?.[0] ?? b?.span?.start);
+    if (Number.isFinite(aStart) && Number.isFinite(bStart) && aStart !== bStart) return aStart - bStart;
+    const aEnd = Number(a?.end ?? a?.span?.[1] ?? a?.span?.end);
+    const bEnd = Number(b?.end ?? b?.span?.[1] ?? b?.span?.end);
+    if (Number.isFinite(aEnd) && Number.isFinite(bEnd) && aEnd !== bEnd) return aEnd - bEnd;
+    return String(a?.text || a?.quote || "").localeCompare(String(b?.text || b?.quote || ""));
+  });
+
   return merged;
 }
 
@@ -5071,8 +5159,7 @@ function getWildcardItemsForPrompt(registry, promptPath) {
     return Array.isArray(list) ? list : [];
   }
   if (path.startsWith("granular_data.linear_ebus_stations_detail[*].")) {
-    const list = registry?.granular_data?.linear_ebus_stations_detail;
-    return Array.isArray(list) ? list : [];
+    return buildNormalizedEbusStationsDetail(registry);
   }
   return [];
 }
@@ -5353,12 +5440,34 @@ function applyCompletenessPromptInputs(data) {
   }
 
   const hintsByIndex = buildCompletenessEbusStationHintsByIndex(prompts);
-  const stationHintResolver = (prompt, effectivePath) =>
-    getCompletenessEbusStationHintForPath(prompt, effectivePath, hintsByIndex, (idx) => {
+  const stationHintResolver = (prompt, effectivePath) => {
+    const hint = getCompletenessEbusStationHintForPath(prompt, effectivePath, hintsByIndex, (idx) => {
       const table = getFlatTableStateById("linear_ebus_stations_detail");
       const row = Array.isArray(table?.rows) ? table.rows[idx] : null;
       return row?.station;
     });
+    if (hint) return hint;
+
+    const match = String(effectivePath || "").trim().match(
+      /^granular_data\.linear_ebus_stations_detail\[(\d+)\]\.[^.]+$/
+    );
+    const idx = match ? Number.parseInt(match[1], 10) : null;
+    if (Number.isFinite(idx)) {
+      const mapped = hintsByIndex.get(idx);
+      if (mapped) return mapped;
+    }
+
+    const stationMatch = String(prompt?.label || "")
+      .concat(" ", String(prompt?.message || ""))
+      .match(/station\s+([0-9]{1,2}(?:[LR])?(?:RS|LS|R|L)?)\b/i);
+    const normalized = stationMatch ? normalizeCompletenessStationToken(stationMatch[1]) : "";
+    if (normalized) {
+      if (Number.isFinite(idx)) hintsByIndex.set(idx, normalized);
+      return normalized;
+    }
+
+    return "";
+  };
 
   const { entries, invalidCount } = collectStagedCompletenessEntries({
     prompts,
@@ -5629,6 +5738,8 @@ function renderCompletenessPrompts(data) {
   const prompts = Array.isArray(data?.missing_field_prompts) ? data.missing_field_prompts : [];
   lastCompletenessPrompts = prompts;
   const registry = getRegistry(data) || {};
+  const normalizedEbusStations = buildNormalizedEbusStationsDetail(registry);
+  const ebusHintsByIndex = buildCompletenessEbusStationHintsByIndex(prompts);
 
   if (!prompts.length || data?.error) {
     completenessPromptsCardEl.classList.add("hidden");
@@ -5779,6 +5890,28 @@ function renderCompletenessPrompts(data) {
 
       const spec = getCompletenessInputSpec(promptPath);
       const effectivePath = resolved.effectivePath;
+      const ebusIndexedMatch = String(effectivePath || "").match(
+        /^granular_data\.linear_ebus_stations_detail\[(\d+)\]\.[^.]+$/
+      );
+      if (ebusIndexedMatch) {
+        const idx = Number.parseInt(ebusIndexedMatch[1], 10);
+        let stationHint = "";
+        const fromRegistry = normalizedEbusStations?.[idx]?.station;
+        stationHint = normalizeEbusStationToken(fromRegistry);
+        if (!stationHint) stationHint = ebusHintsByIndex.get(idx) || "";
+        if (!stationHint) {
+          const labelText = String(p?.label || "");
+          const messageText = String(p?.message || "");
+          const match = `${labelText} ${messageText}`.match(/station\s+([0-9]{1,2}(?:[LR])?(?:RS|LS|R|L)?)\b/i);
+          stationHint = match ? normalizeCompletenessStationToken(match[1]) : "";
+        }
+        if (stationHint) {
+          const meta = document.createElement("div");
+          meta.className = "completeness-item-path";
+          meta.textContent = `Station ${stationHint}`;
+          main.appendChild(meta);
+        }
+      }
       const stored = completenessRawValueByPath.get(effectivePath);
 
       let input = null;
@@ -7763,7 +7896,7 @@ function buildFlattenedTables(data) {
     emptyMessage: "No navigation targets.",
   });
 
-  const ebusStations = Array.isArray(granular?.linear_ebus_stations_detail) ? granular.linear_ebus_stations_detail : [];
+  const ebusStations = buildNormalizedEbusStationsDetail(registry);
   tables.push({
     id: "linear_ebus_stations_detail",
     title: "Linear EBUS Stations (Morphology)",
@@ -8528,6 +8661,26 @@ function renderFlattenedTables(data) {
 function getFlatTableBaseById(tableId) {
   const base = Array.isArray(flatTablesBase) ? flatTablesBase : [];
   return base.find((t) => t?.id === tableId) || null;
+}
+
+function isFlatTableModified(tableId) {
+  const baseTable = getFlatTableBaseById(tableId);
+  const stateTable = getFlatTableStateById(tableId);
+  if (!baseTable || !stateTable) return true;
+  const baseRows = Array.isArray(baseTable?.rows) ? baseTable.rows : [];
+  const stateRows = Array.isArray(stateTable?.rows) ? stateTable.rows : [];
+  if (baseRows.length !== stateRows.length) return true;
+  const keys = (Array.isArray(stateTable?.columns) ? stateTable.columns : [])
+    .map((col) => col?.key)
+    .filter(Boolean);
+  for (let i = 0; i < stateRows.length; i += 1) {
+    const baseRow = baseRows[i] && typeof baseRows[i] === "object" ? baseRows[i] : {};
+    const stateRow = stateRows[i] && typeof stateRows[i] === "object" ? stateRows[i] : {};
+    for (const key of keys) {
+      if (String(baseRow[key] ?? "") !== String(stateRow[key] ?? "")) return true;
+    }
+  }
+  return false;
 }
 
 function getFlatTableRowKey(table, row, rowIndex) {
@@ -9639,7 +9792,8 @@ function applyEditsToPayload(payload, tables) {
   const existingStations = Array.isArray(payload?.registry?.granular_data?.linear_ebus_stations_detail)
     ? payload.registry.granular_data.linear_ebus_stations_detail
     : [];
-  if (stationRows.length > 0) {
+  const stationTableModified = isFlatTableModified("linear_ebus_stations_detail");
+  if (stationRows.length > 0 && stationTableModified) {
     ensurePath(payload, "registry.granular_data");
     payload.registry.granular_data.linear_ebus_stations_detail = stationRows.map((row, idx) => {
       const base = existingStations[idx] && typeof existingStations[idx] === "object" ? existingStations[idx] : {};
