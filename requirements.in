@@ -1,7 +1,9 @@
 # Authoritative input set for runtime dependencies.
 # Generate requirements.txt with:
+#   make deps-compile
+# Or manually:
 #   python3.11 -m piptools compile --upgrade --resolver=backtracking --strip-extras \
-#     --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host \
+#     --no-header --no-emit-index-url --no-emit-trusted-host \
 #     --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311' \
 #     --output-file=requirements.txt requirements.in
 

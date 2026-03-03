@@ -23,7 +23,8 @@ REGISTRY_RUNTIME_DIR ?= data/models/registry_runtime
 DEVICE ?= cpu
 PRODIGY_EPOCHS ?= 1
 DEPS_PYTHON ?= python3.11
-PIP_COMPILE_ARGS := --upgrade --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
+# Omit --allow-unsafe so pip-tools does not add setuptools/pip (unsafe to pin in requirements)
+PIP_COMPILE_ARGS := --upgrade --resolver=backtracking --strip-extras --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311'
 
 setup:
 	@if [ -f $(SETUP_STAMP) ]; then echo "Setup already done"; exit 0; fi
@@ -68,7 +69,7 @@ deps-check:
 	$(DEPS_PYTHON) -m pip install --quiet pip-tools
 	@tmp_file=$$(mktemp); \
 	cp requirements.txt $$tmp_file; \
-	$(DEPS_PYTHON) -m piptools compile --resolver=backtracking --strip-extras --allow-unsafe --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311' --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
+	$(DEPS_PYTHON) -m piptools compile --resolver=backtracking --strip-extras --no-header --no-emit-index-url --no-emit-trusted-host --pip-args='--platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --abi cp311' --output-file=$$tmp_file requirements.in >/dev/null 2>&1; \
 	if ! diff -u $$tmp_file requirements.txt >/dev/null; then \
 		echo "requirements.txt is out of sync with requirements.in. Run: make deps-compile"; \
 		diff -u $$tmp_file requirements.txt || true; \
