@@ -35,8 +35,20 @@ This toolkit enables:
 
 3.  **Run**:
     ```bash
-    # Start the API/Dev Server
+    # Start the API/Dev Server (ATLAS UI by default)
     ./ops/devserver.sh
+    ```
+
+    UI variants:
+    ```bash
+    # ATLAS UI (default)
+    ./ops/devserver.sh
+
+    # ATLAS UI (explicit)
+    ./ops/devserver.sh --ui=atlas
+
+    # Classic UI
+    ./ops/devserver.sh --ui=classic
     ```
 
     Then open:

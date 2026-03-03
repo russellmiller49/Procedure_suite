@@ -32,6 +32,7 @@
         if (el) el.textContent = `Monaco failed to load: ${e?.message || e}`;
       });
     </script>
+    <script src="./linking.js"></script>
     <script type="module" src="./app.js"></script>
   </head>
 	  <body>
@@ -501,8 +502,8 @@
 	              <pre id="serverResponse">(none)</pre>
 	            </details>
 
-            <details class="raw-json-toggle" id="advancedAllFields">
-              <summary>Show all fields (Advanced)</summary>
+            <details class="raw-json-toggle" id="advancedAllFields" open>
+              <summary>Data Review (All Fields)</summary>
               <div id="flattenedTablesHost" class="flat-tables-host"></div>
             </details>
 

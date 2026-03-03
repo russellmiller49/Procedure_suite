@@ -1750,6 +1750,11 @@ body.ps-review-split .editorPane .result {
   min-width: 0;
 }
 
+.cell-input-wrap .flat-readonly {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .cell-modified {
   background-color: #fff3cd !important; /* Amber highlight */
   border-left: 3px solid #ffc107 !important;
@@ -1802,6 +1807,29 @@ body.ps-review-split .editorPane .result {
   transition: opacity 0.12s ease, border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
 }
 
+.evidence-btn {
+  width: 34px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  transition: border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+
+.evidence-btn:hover {
+  border-color: var(--primary);
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
 .cell-input-wrap:hover .feedback-btn,
 .feedback-btn.flagged {
   opacity: 1;
@@ -1816,6 +1844,30 @@ body.ps-review-split .editorPane .result {
   background: rgba(239, 68, 68, 0.12);
   border-color: var(--danger);
   color: var(--danger);
+}
+
+.evidence-popover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 420px;
+  max-height: min(52vh, 420px);
+  overflow: auto;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
+  z-index: 1200;
+  display: none;
+}
+
+.evidence-popover.is-open {
+  display: block;
+}
+
+.evidence-popover .inline-details summary {
+  font-size: 12px;
 }
 
 .flat-input:focus,

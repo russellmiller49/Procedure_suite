@@ -31,6 +31,9 @@ import {
   normalizeCompletenessStationToken,
 } from "./completenessHelpers.js";
 
+// Linking layer (ATLAS-only). Loaded via index.html before this module.
+const L = typeof window !== "undefined" ? window.ATLASLinking : null;
+
 const UI_VARIANT = String(window.__PROCSUITE_UI_VARIANT__ || "atlas").trim().toLowerCase() === "classic"
   ? "classic"
   : "atlas";
@@ -269,6 +272,9 @@ let reviewSectionsCache = [];
 let reviewDrawerContext = null;
 let reviewDrawerLastFocus = null;
 let flatTablesActiveTabId = "patient";
+let flatEvidencePopoverEl = null;
+let flatEvidencePopoverAnchorEl = null;
+let flatEvidencePopoverWired = false;
 
 const TESTER_MODE = new URLSearchParams(location.search).get("tester") === "1";
 if (TESTER_MODE && feedbackPanelEl) feedbackPanelEl.open = true;
@@ -466,7 +472,7 @@ function applyReviewMode(nextMode, options = {}) {
   if (persist) safeSetLocalStorageItem(UI_REVIEW_MODE_LS_KEY, mode);
 
   if (advancedAllFieldsEl && !advancedAllFieldsEl.dataset.userToggled) {
-    advancedAllFieldsEl.open = mode === "qa";
+    advancedAllFieldsEl.open = true;
   }
 }
 
@@ -1276,6 +1282,27 @@ const EBUS_ACTION_OPTIONS = [
   { value: "core_biopsy", label: "Core biopsy" },
   { value: "forceps_biopsy", label: "Forceps biopsy" },
   { value: "other", label: "Other" },
+];
+const SPECIMEN_SOURCE_PROCEDURE_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "EBUS-TBNA", label: "EBUS-TBNA" },
+  { value: "Navigation biopsy", label: "Navigation biopsy" },
+  { value: "Endobronchial biopsy", label: "Endobronchial biopsy" },
+  { value: "Transbronchial biopsy", label: "Transbronchial biopsy" },
+  { value: "Transbronchial cryobiopsy", label: "Transbronchial cryobiopsy" },
+  { value: "BAL", label: "BAL" },
+  { value: "Bronchial wash", label: "Bronchial wash" },
+  { value: "Brushing", label: "Brushing" },
+  { value: "Pleural biopsy", label: "Pleural biopsy" },
+  { value: "Pleural fluid", label: "Pleural fluid" },
+  { value: "Other", label: "Other" },
+];
+const SPECIMEN_ADEQUACY_OPTIONS = [
+  { value: "", label: "—" },
+  { value: "Adequate", label: "Adequate" },
+  { value: "Limited", label: "Limited" },
+  { value: "Inadequate", label: "Inadequate" },
+  { value: "Pending", label: "Pending" },
 ];
 const PATH_RESULT_OPTIONS = [
   { value: "", label: "—" },
@@ -3941,6 +3968,10 @@ function getRegistry(data) {
 }
 
 function normalizeEbusStationToken(value) {
+  if (L && typeof L.normalizeTokenStation === "function") {
+    const linked = L.normalizeTokenStation(value);
+    if (linked) return linked;
+  }
   const normalized = normalizeCompletenessStationToken(value);
   if (normalized) return normalized;
   const raw = String(value ?? "").trim();
@@ -3950,8 +3981,8 @@ function normalizeEbusStationToken(value) {
 
 function buildNormalizedEbusStationsDetail(registry) {
   const granular = registry?.granular_data || {};
-  const existingRaw = Array.isArray(granular?.linear_ebus_stations_detail) ? granular.linear_ebus_stations_detail : [];
-  const existing = existingRaw
+  const primaryRaw = Array.isArray(granular?.linear_ebus_stations_detail) ? granular.linear_ebus_stations_detail : [];
+  const primaryRows = primaryRaw
     .filter((row) => row && typeof row === "object" && !Array.isArray(row))
     .map((row) => {
       const out = { ...row };
@@ -3962,39 +3993,213 @@ function buildNormalizedEbusStationsDetail(registry) {
       return out;
     });
 
-  const seenStations = new Set();
-  existing.forEach((row) => {
-    const token = normalizeEbusStationToken(row?.station);
-    if (token) seenStations.add(token);
-  });
-
   const linearEbus = registry?.procedures_performed?.linear_ebus || {};
-  const sampledRaw =
-    Array.isArray(linearEbus?.stations_sampled) && linearEbus.stations_sampled.length > 0
-      ? linearEbus.stations_sampled
-      : Array.isArray(linearEbus?.node_events)
-        ? linearEbus.node_events.map((ev) => ev?.station)
-        : [];
-
-  const sampledStations = [];
-  const seenSampled = new Set();
-  (Array.isArray(sampledRaw) ? sampledRaw : []).forEach((station) => {
-    const token = normalizeEbusStationToken(station);
-    if (!token || seenSampled.has(token)) return;
-    seenSampled.add(token);
-    sampledStations.push(token);
+  const sampledStations = Array.isArray(linearEbus?.stations_sampled) ? linearEbus.stations_sampled : [];
+  const eventStations = Array.isArray(linearEbus?.node_events) ? linearEbus.node_events.map((ev) => ev?.station) : [];
+  const fallbackTokens = [];
+  const seen = new Set();
+  [sampledStations, eventStations].forEach((list) => {
+    (Array.isArray(list) ? list : []).forEach((station) => {
+      const token = normalizeEbusStationToken(station);
+      if (!token || seen.has(token)) return;
+      seen.add(token);
+      fallbackTokens.push(token);
+    });
   });
+  const fallbackRows = fallbackTokens.map((station) => ({ station, sampled: true }));
 
   const needleGaugeSeed = parseNumber(linearEbus?.needle_gauge);
-  sampledStations.forEach((station) => {
-    if (seenStations.has(station)) return;
-    seenStations.add(station);
-    const placeholder = { station, sampled: true };
-    if (needleGaugeSeed !== null) placeholder.needle_gauge = Math.trunc(needleGaugeSeed);
-    existing.push(placeholder);
+
+  if (!L || typeof L.mergeEntities !== "function") {
+    // Fallback: preserve primary ordering + append missing fallback stations.
+    const existing = primaryRows.slice();
+    const primaryKeys = new Set(existing.map((row) => normalizeEbusStationToken(row?.station)).filter(Boolean));
+    fallbackTokens.forEach((token) => {
+      if (primaryKeys.has(token)) return;
+      const placeholder = { station: token, sampled: true };
+      if (needleGaugeSeed !== null) placeholder.needle_gauge = Math.trunc(needleGaugeSeed);
+      existing.push(placeholder);
+    });
+    return existing;
+  }
+
+  const merged = L.mergeEntities({
+    primaryRows,
+    fallbackRows,
+    getKey: (row) => normalizeEbusStationToken(row?.station),
+    mergeRow: (primaryRow, fallbackRow) => {
+      const out = primaryRow && typeof primaryRow === "object" ? { ...primaryRow } : {};
+      const fb = fallbackRow && typeof fallbackRow === "object" ? fallbackRow : {};
+      Object.keys(fb).forEach((k) => {
+        if (String(k || "").startsWith("__")) return;
+        if (out[k] === null || out[k] === undefined || out[k] === "") out[k] = fb[k];
+      });
+      const canonical = normalizeEbusStationToken(out?.station || fb?.station);
+      if (canonical) out.station = canonical;
+      if ((out.needle_gauge === null || out.needle_gauge === undefined || out.needle_gauge === "") && needleGaugeSeed !== null) {
+        out.needle_gauge = Math.trunc(needleGaugeSeed);
+      }
+      return out;
+    },
   });
 
-  return existing;
+  return Array.isArray(merged) ? merged : primaryRows;
+}
+
+function buildEntityIndex(registry) {
+  const r = registry && typeof registry === "object" ? registry : {};
+
+  const sedation = r?.sedation && typeof r.sedation === "object" ? r.sedation : {};
+  const setting = r?.procedure_setting && typeof r.procedure_setting === "object" ? r.procedure_setting : {};
+
+  const index = {
+    stations: new Map(),
+    specimens: new Map(),
+    sedation: {
+      type: String(sedation?.type || "").trim(),
+      anesthesia_provider: String(sedation?.anesthesia_provider || "").trim(),
+      airway_type: String(setting?.airway_type || "").trim(),
+      location: String(setting?.location || "").trim(),
+      patient_position: String(setting?.patient_position || "").trim(),
+    },
+  };
+
+  // EBUS stations (canonical by normalized station token).
+  const ebusDetailRows = buildNormalizedEbusStationsDetail(r);
+  const ebus = r?.procedures_performed?.linear_ebus || {};
+  const gaugeSeed = parseNumber(ebus?.needle_gauge);
+  const passesSumByStation = new Map();
+  const roseByStation = new Map();
+  (Array.isArray(ebus?.node_events) ? ebus.node_events : []).forEach((ev) => {
+    const token = normalizeEbusStationToken(ev?.station);
+    if (!token) return;
+    const passes = parseNumber(ev?.passes);
+    if (passes !== null) {
+      const prev = passesSumByStation.get(token) || 0;
+      passesSumByStation.set(token, prev + passes);
+    }
+    const rose = String(ev?.rose_result || "").trim();
+    if (rose && !roseByStation.has(token)) roseByStation.set(token, rose);
+  });
+
+  (Array.isArray(ebusDetailRows) ? ebusDetailRows : []).forEach((row) => {
+    const token = normalizeEbusStationToken(row?.station);
+    if (!token || index.stations.has(token)) return;
+
+    const rawGauge = parseNumber(row?.needle_gauge);
+    const needleGauge =
+      rawGauge === null
+        ? gaugeSeed === null
+          ? null
+          : Math.trunc(gaugeSeed)
+        : Math.trunc(rawGauge);
+
+    const rawPasses = parseNumber(row?.number_of_passes);
+    const passes =
+      rawPasses === null
+        ? passesSumByStation.has(token)
+          ? Math.trunc(passesSumByStation.get(token))
+          : null
+        : Math.trunc(rawPasses);
+
+    const rose = String(row?.rose_result || "").trim() || String(roseByStation.get(token) || "").trim();
+
+    index.stations.set(token, {
+      station: token,
+      sampled: row?.sampled ?? null,
+      needle_gauge: needleGauge,
+      number_of_passes: passes,
+      rose_result: rose ? rose : null,
+      lymphocytes_present: row?.lymphocytes_present ?? null,
+      __entityKey: token,
+    });
+  });
+
+  // Specimens (merged primary + fallback).
+  const granular = r?.granular_data || {};
+  const specimensPrimaryRaw = Array.isArray(granular?.specimens_collected) ? granular.specimens_collected : [];
+  const specimensPrimary = specimensPrimaryRaw
+    .filter((row) => row && typeof row === "object" && !Array.isArray(row))
+    .map((row) => ({ ...row }));
+
+  const specimenFallback = [];
+  const specimenFallbackSeen = new Set();
+  const normalizeSpecimenLocation = (proc, locRaw) => {
+    const raw = String(locRaw || "").trim();
+    if (!raw) return "";
+    if (proc === "EBUS-TBNA") return normalizeEbusStationToken(raw);
+    return L?.normalizeWhitespaceCase ? L.normalizeWhitespaceCase(raw) : raw;
+  };
+  const getSpecimenKey = (row) => {
+    const proc = String(row?.source_procedure || row?.sourceProcedure || "").trim();
+    const loc = normalizeSpecimenLocation(proc, row?.source_location || row?.sourceLocation);
+    return L?.stableKeyFromParts ? L.stableKeyFromParts("specimen", proc, loc) : `${proc}|${loc}`.toLowerCase();
+  };
+  const addSpecimenFallback = (row) => {
+    const proc = String(row?.source_procedure || "").trim();
+    const loc = normalizeSpecimenLocation(proc, row?.source_location);
+    if (!proc || !loc) return;
+    const key = L?.stableKeyFromParts ? L.stableKeyFromParts("specimen_fallback", proc, loc) : `${proc}|${loc}`.toLowerCase();
+    if (specimenFallbackSeen.has(key)) return;
+    specimenFallbackSeen.add(key);
+    specimenFallback.push({ ...row, source_procedure: proc, source_location: loc });
+  };
+
+  const ebusForSpecimens = r?.procedures_performed?.linear_ebus || {};
+  const ebusEventsForSpecimens = Array.isArray(ebusForSpecimens?.node_events) ? ebusForSpecimens.node_events : [];
+  ebusEventsForSpecimens.forEach((ev) => {
+    const action = String(ev?.action || "").trim();
+    if (!action || action === "inspected_only") return;
+    const station = normalizeEbusStationToken(ev?.station);
+    if (!station) return;
+    const rose = String(ev?.rose_result || "").trim();
+    addSpecimenFallback({
+      source_procedure: "EBUS-TBNA",
+      source_location: station,
+      rose_performed: rose ? true : null,
+      rose_result: rose ? rose : null,
+    });
+  });
+
+  const balSpec = r?.procedures_performed?.bal || {};
+  const balLoc = cleanLocationForDisplay(balSpec?.location) || "";
+  if (balLoc && (isPerformedProcedure(balSpec) || hasProcedureDetails(balSpec))) {
+    addSpecimenFallback({ source_procedure: "BAL", source_location: balLoc });
+  }
+
+  const mergedSpecimens =
+    specimensPrimary.length || specimenFallback.length
+      ? L?.mergeEntities
+        ? L.mergeEntities({
+            primaryRows: specimensPrimary,
+            fallbackRows: specimenFallback,
+            getKey: (row) => getSpecimenKey(row),
+            mergeRow: (primaryRow, fallbackRow) => {
+              const out = primaryRow && typeof primaryRow === "object" ? { ...primaryRow } : {};
+              const fb = fallbackRow && typeof fallbackRow === "object" ? fallbackRow : {};
+              Object.keys(fb).forEach((k) => {
+                if (String(k || "").startsWith("__")) return;
+                if (out[k] === null || out[k] === undefined || out[k] === "") out[k] = fb[k];
+              });
+              const proc = String(out?.source_procedure || "").trim();
+              const locRaw = String(out?.source_location || "").trim();
+              out.source_location = normalizeSpecimenLocation(proc, locRaw);
+              return out;
+            },
+          })
+        : [...specimensPrimary, ...specimenFallback]
+      : [];
+
+  (Array.isArray(mergedSpecimens) ? mergedSpecimens : []).forEach((row) => {
+    const key = getSpecimenKey(row);
+    if (!key || index.specimens.has(key)) return;
+    index.specimens.set(key, {
+      ...(row && typeof row === "object" ? row : {}),
+      __entityKey: row?.__entityKey || key,
+    });
+  });
+
+  return index;
 }
 
 function hasDisplayValue(value) {
@@ -4347,6 +4552,93 @@ function makeEvidenceDetails(spans, summaryText = "Evidence") {
   return details;
 }
 
+function closeFlatEvidencePopover() {
+  if (!flatEvidencePopoverEl) return;
+  flatEvidencePopoverEl.classList.remove("is-open");
+  flatEvidencePopoverEl.innerHTML = "";
+  flatEvidencePopoverAnchorEl = null;
+}
+
+function positionFlatEvidencePopover(anchorEl) {
+  if (!flatEvidencePopoverEl || !anchorEl || !flatEvidencePopoverEl.classList.contains("is-open")) return;
+  const margin = 8;
+  const gap = 8;
+  const anchorRect = anchorEl.getBoundingClientRect();
+  const popRect = flatEvidencePopoverEl.getBoundingClientRect();
+  let left = anchorRect.left;
+  let top = anchorRect.bottom + gap;
+
+  if (left + popRect.width > globalThis.innerWidth - margin) {
+    left = Math.max(margin, globalThis.innerWidth - popRect.width - margin);
+  }
+  if (top + popRect.height > globalThis.innerHeight - margin) {
+    top = Math.max(margin, anchorRect.top - popRect.height - gap);
+  }
+
+  flatEvidencePopoverEl.style.left = `${Math.round(left)}px`;
+  flatEvidencePopoverEl.style.top = `${Math.round(top)}px`;
+}
+
+function ensureFlatEvidencePopover() {
+  if (!document.body) return null;
+  if (!flatEvidencePopoverEl) {
+    flatEvidencePopoverEl = document.createElement("div");
+    flatEvidencePopoverEl.id = "flatEvidencePopover";
+    flatEvidencePopoverEl.className = "evidence-popover";
+    document.body.appendChild(flatEvidencePopoverEl);
+  }
+  if (!flatEvidencePopoverWired) {
+    flatEvidencePopoverWired = true;
+    document.addEventListener(
+      "mousedown",
+      (event) => {
+        if (!flatEvidencePopoverEl || !flatEvidencePopoverEl.classList.contains("is-open")) return;
+        const target = event.target;
+        if (flatEvidencePopoverEl.contains(target)) return;
+        if (flatEvidencePopoverAnchorEl && flatEvidencePopoverAnchorEl.contains(target)) return;
+        closeFlatEvidencePopover();
+      },
+      true,
+    );
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (!flatEvidencePopoverEl || !flatEvidencePopoverEl.classList.contains("is-open")) return;
+      closeFlatEvidencePopover();
+    });
+    globalThis.addEventListener(
+      "scroll",
+      () => {
+        if (!flatEvidencePopoverEl || !flatEvidencePopoverEl.classList.contains("is-open")) return;
+        if (!flatEvidencePopoverAnchorEl || !document.documentElement.contains(flatEvidencePopoverAnchorEl)) {
+          closeFlatEvidencePopover();
+          return;
+        }
+        positionFlatEvidencePopover(flatEvidencePopoverAnchorEl);
+      },
+      true,
+    );
+    globalThis.addEventListener("resize", () => {
+      if (!flatEvidencePopoverEl || !flatEvidencePopoverEl.classList.contains("is-open")) return;
+      if (!flatEvidencePopoverAnchorEl) return;
+      positionFlatEvidencePopover(flatEvidencePopoverAnchorEl);
+    });
+  }
+  return flatEvidencePopoverEl;
+}
+
+function showFlatEvidencePopover(anchorEl, spans, summaryText = "Evidence") {
+  const pop = ensureFlatEvidencePopover();
+  if (!pop || !anchorEl) return;
+  const details = makeEvidenceDetails(spans, summaryText);
+  if (!details) return;
+  details.open = true;
+  pop.innerHTML = "";
+  pop.appendChild(details);
+  pop.classList.add("is-open");
+  flatEvidencePopoverAnchorEl = anchorEl;
+  positionFlatEvidencePopover(anchorEl);
+}
+
 /**
  * Main Orchestrator: Renders the clean clinical dashboard
  */
@@ -4414,6 +4706,60 @@ function getFlatSummaryValue(path) {
   return String(hit?.row?.value || "").trim();
 }
 
+const EVIDENCE_ALIASES = (() => {
+  const base = {
+    "granular_data.linear_ebus_stations_detail": [
+      "procedures_performed.linear_ebus.stations_sampled",
+      "procedures_performed.linear_ebus.node_events",
+    ],
+    "procedures_performed.linear_ebus.stations_sampled": ["procedures_performed.linear_ebus.node_events"],
+  };
+  const out = { ...base };
+  Object.entries(base).forEach(([key, aliasList]) => {
+    const cleanKey = String(key || "").trim();
+    if (!cleanKey || cleanKey.startsWith("registry.")) return;
+    out[`registry.${cleanKey}`] = (Array.isArray(aliasList) ? aliasList : []).map((p) =>
+      String(p || "").startsWith("registry.") ? String(p || "") : `registry.${p}`
+    );
+  });
+  return out;
+})();
+
+function buildEvidencePathVariants(path) {
+  const raw = String(path || "").trim();
+  if (!raw) return [];
+  const variants = new Set();
+  variants.add(raw);
+  variants.add(raw.replace(/\[(\d+)\]/g, ".$1"));
+  variants.add(raw.replace(/\.([0-9]+)(?=\.|$)/g, "[$1]"));
+  return Array.from(variants).filter(Boolean);
+}
+
+function buildEvidenceLookupRoots(path, options = {}) {
+  const includeAliases = options.includeAliases !== false;
+  const roots = new Set();
+  const raw = String(path || "").trim();
+  if (!raw) return [];
+
+  const addRoot = (candidate) => {
+    buildEvidencePathVariants(candidate).forEach((variant) => {
+      roots.add(variant);
+      if (variant.startsWith("registry.")) roots.add(variant.slice("registry.".length));
+    });
+  };
+
+  addRoot(raw);
+
+  if (includeAliases) {
+    buildEvidencePathVariants(raw).forEach((variant) => {
+      const aliases = Array.isArray(EVIDENCE_ALIASES?.[variant]) ? EVIDENCE_ALIASES[variant] : [];
+      aliases.forEach(addRoot);
+    });
+  }
+
+  return Array.from(roots).filter(Boolean);
+}
+
 function collectEvidenceSpansForPaths(data, paths) {
   const evidence = getEvidence(data);
   const evidenceKeys = evidence && typeof evidence === "object" ? Object.keys(evidence) : [];
@@ -4423,28 +4769,36 @@ function collectEvidenceSpansForPaths(data, paths) {
   const addSpan = (span) => {
     const start = Number(span?.start ?? span?.span?.[0] ?? span?.span?.start);
     const end = Number(span?.end ?? span?.span?.[1] ?? span?.span?.end);
-    const key = `${start}:${end}:${String(span?.text || span?.quote || span?.snippet || "")}`;
+    const key = L?.stableKeyFromParts
+      ? L.stableKeyFromParts(start, end, span?.text || span?.quote || span?.snippet, span?.source)
+      : `${start}:${end}:${String(span?.text || span?.quote || span?.snippet || "")}`;
     if (seen.has(key)) return;
     seen.add(key);
     merged.push(span);
   };
 
-  const addEvidenceByKey = (key) => {
-    const spans = Array.isArray(evidence?.[key]) ? evidence[key] : [];
-    spans.forEach(addSpan);
-  };
-
   (Array.isArray(paths) ? paths : []).forEach((path) => {
     const rawPath = String(path || "").trim();
     if (!rawPath) return;
+    const addEvidenceByKey = (key) => {
+      const spans = Array.isArray(evidence?.[key]) ? evidence[key] : [];
+      spans.forEach(addSpan);
+    };
 
-    const candidateRoots = new Set([rawPath]);
-    if (rawPath.startsWith("registry.")) candidateRoots.add(rawPath.slice("registry.".length));
+    const candidateRoots = buildEvidenceLookupRoots(rawPath, { includeAliases: true });
 
-    candidateRoots.forEach((root) => addEvidenceByKey(root));
+    candidateRoots.forEach((root) => {
+      if (!root) return;
+      if (L && typeof L.resolveEvidenceForPath === "function") {
+        const spans = L.resolveEvidenceForPath(evidence, root, { aliases: EVIDENCE_ALIASES });
+        (Array.isArray(spans) ? spans : []).forEach(addSpan);
+      }
+      addEvidenceByKey(root);
+    });
 
     evidenceKeys.forEach((key) => {
       candidateRoots.forEach((root) => {
+        if (!root) return;
         if (key.startsWith(`${root}.`) || key.startsWith(`${root}[`)) addEvidenceByKey(key);
       });
     });
@@ -4465,6 +4819,7 @@ function collectEvidenceSpansForPaths(data, paths) {
 
 function buildCaseSummaryItems(data) {
   const registry = getRegistry(data) || {};
+  const entities = buildEntityIndex(registry);
   const performed = getPerformedProcedureLabels(registry);
   const ebus = registry?.procedures_performed?.linear_ebus || {};
   const stations =
@@ -4495,21 +4850,23 @@ function buildCaseSummaryItems(data) {
     if (detail) complications.push(`${titleCaseKey(k)}: ${detail}`);
   });
 
+  const sedationType = getFlatSummaryValue("sedation.type") || entities?.sedation?.type || "";
+  const airwayType = getFlatSummaryValue("procedure_setting.airway_type") || entities?.sedation?.airway_type || "";
+
   return [
     {
       label: "Indication",
       value: toPreviewText(
         getFlatSummaryValue("clinical_context.primary_indication")
-          || pickRegistryPathValue(registry, ["clinical_context.primary_indication", "procedure.indication"]),
+          || pickRegistryPathValue(registry, ["clinical_context.primary_indication", "procedure.indication"]).value,
       ),
     },
     {
       label: "Sedation / Airway",
       value: toPreviewText(
         [
-          getFlatSummaryValue("sedation.type") || pickRegistryPathValue(registry, ["sedation.type"]),
-          getFlatSummaryValue("procedure_setting.airway_type")
-            || pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+          sedationType,
+          airwayType,
         ].filter(Boolean).join(" / "),
       ),
     },
@@ -4537,7 +4894,7 @@ function buildCaseSummaryItems(data) {
       label: "Disposition",
       value: toPreviewText(
         getFlatSummaryValue("disposition.status")
-          || pickRegistryPathValue(registry, ["procedure_setting.disposition", "disposition.plan", "disposition.status"]),
+          || pickRegistryPathValue(registry, ["procedure_setting.disposition", "disposition.plan", "disposition.status"]).value,
       ),
     },
     {
@@ -4551,6 +4908,8 @@ function buildCaseSummaryItems(data) {
 
 function buildClinicianReviewSections(data) {
   const registry = getRegistry(data) || {};
+  const entities = buildEntityIndex(registry);
+  const sed = entities?.sedation || {};
   const selectedCodes = getCodingLines(data)
     .filter((ln) => String(ln?.selection_status || "selected").toLowerCase() === "selected")
     .map((ln) => normalizeCptCode(ln?.code))
@@ -4561,23 +4920,23 @@ function buildClinicianReviewSections(data) {
       id: "clinical_context",
       title: "Clinical context",
       preview: toPreviewText(
-        pickRegistryPathValue(registry, ["clinical_context.primary_indication", "clinical_context.indication_category"]),
+        pickRegistryPathValue(registry, ["clinical_context.primary_indication", "clinical_context.indication_category"]).value,
       ),
       fields: [
         {
           label: "Primary indication",
           path: "clinical_context.primary_indication",
-          value: pickRegistryPathValue(registry, ["clinical_context.primary_indication"]),
+          value: pickRegistryPathValue(registry, ["clinical_context.primary_indication"]).value,
         },
         {
           label: "Indication category",
           path: "clinical_context.indication_category",
-          value: pickRegistryPathValue(registry, ["clinical_context.indication_category"]),
+          value: pickRegistryPathValue(registry, ["clinical_context.indication_category"]).value,
         },
         {
           label: "Bronchus sign",
           path: "clinical_context.bronchus_sign",
-          value: pickRegistryPathValue(registry, ["clinical_context.bronchus_sign"]),
+          value: pickRegistryPathValue(registry, ["clinical_context.bronchus_sign"]).value,
         },
       ],
       evidencePaths: [
@@ -4591,9 +4950,9 @@ function buildClinicianReviewSections(data) {
       title: "Procedure setting + sedation",
       preview: toPreviewText(
         [
-          pickRegistryPathValue(registry, ["sedation.type"]),
-          pickRegistryPathValue(registry, ["sedation.anesthesia_provider"]),
-          pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+          sed?.type || "",
+          sed?.anesthesia_provider || "",
+          sed?.airway_type || "",
         ]
           .filter(Boolean)
           .join(" | "),
@@ -4602,17 +4961,17 @@ function buildClinicianReviewSections(data) {
         {
           label: "Sedation type",
           path: "sedation.type",
-          value: pickRegistryPathValue(registry, ["sedation.type"]),
+          value: sed?.type || "",
         },
         {
           label: "Anesthesia provider",
           path: "sedation.anesthesia_provider",
-          value: pickRegistryPathValue(registry, ["sedation.anesthesia_provider"]),
+          value: sed?.anesthesia_provider || "",
         },
         {
           label: "Airway type",
           path: "procedure_setting.airway_type",
-          value: pickRegistryPathValue(registry, ["procedure_setting.airway_type"]),
+          value: sed?.airway_type || "",
         },
       ],
       evidencePaths: ["sedation.type", "sedation.anesthesia_provider", "procedure_setting.airway_type"],
@@ -4625,7 +4984,7 @@ function buildClinicianReviewSections(data) {
           isPerformedProcedure(registry?.procedures_performed?.diagnostic_bronchoscopy)
             ? "Diagnostic bronchoscopy performed"
             : "Diagnostic bronchoscopy not explicitly performed",
-          pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]),
+          pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]).value,
         ]
           .filter(Boolean)
           .join(" | "),
@@ -4634,17 +4993,17 @@ function buildClinicianReviewSections(data) {
         {
           label: "Performed",
           path: "procedures_performed.diagnostic_bronchoscopy.performed",
-          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.performed"])),
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.performed"]).value),
         },
         {
           label: "Inspection findings",
           path: "procedures_performed.diagnostic_bronchoscopy.inspection_findings",
-          value: pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]),
+          value: pickRegistryPathValue(registry, ["procedures_performed.diagnostic_bronchoscopy.inspection_findings"]).value,
         },
         {
           label: "BAL performed",
           path: "procedures_performed.bal.performed",
-          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.bal.performed"])),
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.bal.performed"]).value),
         },
       ],
       evidencePaths: [
@@ -4660,10 +5019,10 @@ function buildClinicianReviewSections(data) {
         [
           isPerformedProcedure(registry?.procedures_performed?.linear_ebus) ? "Performed" : "Not performed",
           toPreviewText(
-            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]),
+            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]).value,
             "",
           ),
-          pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]),
+          pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]).value,
         ]
           .filter(Boolean)
           .join(" | "),
@@ -4672,20 +5031,20 @@ function buildClinicianReviewSections(data) {
         {
           label: "Performed",
           path: "procedures_performed.linear_ebus.performed",
-          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.performed"])),
+          value: fmtBool(pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.performed"]).value),
         },
         {
           label: "Stations sampled",
           path: "procedures_performed.linear_ebus.stations_sampled",
           value: toPreviewText(
-            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]),
+            pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.stations_sampled"]).value,
             "",
           ),
         },
         {
           label: "Needle gauge",
           path: "procedures_performed.linear_ebus.needle_gauge",
-          value: pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]),
+          value: pickRegistryPathValue(registry, ["procedures_performed.linear_ebus.needle_gauge"]).value,
         },
       ],
       evidencePaths: [
@@ -4700,8 +5059,8 @@ function buildClinicianReviewSections(data) {
       preview: toPreviewText(
         [
           data?.needs_manual_review ? "Manual review required" : "",
-          pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]),
-          pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]),
+          pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]).value,
+          pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]).value,
         ]
           .filter(Boolean)
           .join(" | "),
@@ -4710,12 +5069,12 @@ function buildClinicianReviewSections(data) {
         {
           label: "Complication summary",
           path: "complications.summary",
-          value: pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]),
+          value: pickRegistryPathValue(registry, ["complications.summary", "complications.notes"]).value,
         },
         {
           label: "Disposition",
           path: "disposition.status",
-          value: pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]),
+          value: pickRegistryPathValue(registry, ["disposition.status", "disposition.plan"]).value,
         },
         {
           label: "Needs manual review",
@@ -5152,6 +5511,88 @@ function setCompletenessPendingChanges(pending) {
   updateCompletenessApplyButtonState();
 }
 
+function mapKeyedEbusStationCompletenessField(fieldToken) {
+  const raw = String(fieldToken || "").trim();
+  if (!raw) return "";
+  const cleaned = raw.replace(/^morphology\./i, "");
+  const lower = cleaned.toLowerCase();
+  const aliases = {
+    size_short_axis_mm: "short_axis_mm",
+    short_axis_mm: "short_axis_mm",
+    size_long_axis_mm: "long_axis_mm",
+    long_axis_mm: "long_axis_mm",
+    passes: "number_of_passes",
+    number_of_passes: "number_of_passes",
+    needle_gauge: "needle_gauge",
+    lymphocytes: "lymphocytes_present",
+    lymphocytes_present: "lymphocytes_present",
+    rose: "rose_result",
+    rose_result: "rose_result",
+  };
+  const allowed = new Set([
+    "station",
+    "sampled",
+    "short_axis_mm",
+    "long_axis_mm",
+    "shape",
+    "margin",
+    "echogenicity",
+    "chs_present",
+    "necrosis_present",
+    "calcification_present",
+    "needle_gauge",
+    "number_of_passes",
+    "rose_result",
+    "lymphocytes_present",
+    "morphologic_impression",
+  ]);
+  if (allowed.has(lower)) return lower;
+  const mapped = aliases[lower] || aliases[lower.replace(/^size_/, "").replace(/^node_/, "")] || "";
+  return allowed.has(mapped) ? mapped : "";
+}
+
+function parseKeyedEbusStationPromptPath(promptPath) {
+  const raw = String(promptPath || "").trim();
+  const match = raw.match(/^ebus_station\{([^}]*)\}\.(.+)$/i);
+  if (!match) return null;
+  const paramsText = String(match[1] || "");
+  const fieldRaw = String(match[2] || "");
+  const fieldKey = mapKeyedEbusStationCompletenessField(fieldRaw);
+  if (!fieldKey) return null;
+
+  let station = "";
+  paramsText.split(/[,;]+/).forEach((seg) => {
+    const parts = String(seg || "").split("=");
+    if (parts.length < 2) return;
+    const k = String(parts[0] || "").trim().toLowerCase();
+    const v = parts.slice(1).join("=");
+    if (k === "station") station = v;
+  });
+  const token = normalizeEbusStationToken(station);
+  if (!token) return null;
+  return { stationToken: token, fieldKey };
+}
+
+function resolveKeyedPromptPath(registry, promptPath) {
+  const parsed = parseKeyedEbusStationPromptPath(promptPath);
+  if (!parsed) return "";
+
+  const stationToken = parsed.stationToken;
+  let idx = findEbusStationDetailRowIndexByToken(stationToken);
+  if (idx === null) {
+    const rows = buildNormalizedEbusStationsDetail(registry);
+    for (let i = 0; i < rows.length; i += 1) {
+      const rowToken = normalizeEbusStationToken(rows[i]?.station);
+      if (rowToken && rowToken === stationToken) {
+        idx = i;
+        break;
+      }
+    }
+  }
+  if (idx === null) return "";
+  return `granular_data.linear_ebus_stations_detail[${idx}].${parsed.fieldKey}`;
+}
+
 function getWildcardItemsForPrompt(registry, promptPath) {
   const path = String(promptPath || "");
   if (path.startsWith("granular_data.navigation_targets[*].")) {
@@ -5180,6 +5621,8 @@ function describeWildcardItemForPrompt(promptPath, item, idx) {
 
 function resolvePromptPath(registry, promptPath) {
   const base = String(promptPath || "").trim();
+  const keyed = resolveKeyedPromptPath(registry, base);
+  if (keyed) return { effectivePath: keyed, hasWildcard: false, wildcardCount: 0 };
   if (!base.includes("[*]")) return { effectivePath: base, hasWildcard: false, wildcardCount: 0 };
 
   const items = getWildcardItemsForPrompt(registry, base);
@@ -5200,7 +5643,11 @@ function normalizeCompletenessPromptPath(promptPath) {
 }
 
 function getCompletenessInputSpec(promptPath) {
-  const normalizedPromptPath = normalizeCompletenessPromptPath(promptPath);
+  let normalizedPromptPath = normalizeCompletenessPromptPath(promptPath);
+  const keyed = parseKeyedEbusStationPromptPath(promptPath);
+  if (keyed) {
+    normalizedPromptPath = `granular_data.linear_ebus_stations_detail[*].${keyed.fieldKey}`;
+  }
   const map = {
     "patient_demographics.age_years": { type: "integer", placeholder: "e.g., 67" },
     "patient.age": { type: "integer", placeholder: "e.g., 67" },
@@ -5582,6 +6029,80 @@ function getFlatTableStateById(tableId) {
   return tables.find((t) => t?.id === tableId) || null;
 }
 
+function findEbusStationDetailRowIndexByToken(stationToken) {
+  const token = normalizeEbusStationToken(stationToken);
+  if (!token) return null;
+  const table = getFlatTableStateById("linear_ebus_stations_detail");
+  const rows = Array.isArray(table?.rows) ? table.rows : [];
+  for (let i = 0; i < rows.length; i += 1) {
+    const rowToken = normalizeEbusStationToken(rows[i]?.station);
+    if (rowToken && rowToken === token) return i;
+  }
+  return null;
+}
+
+function ensureEbusStationDetailRowForToken(stationToken) {
+  const token = normalizeEbusStationToken(stationToken);
+  if (!token) return null;
+  const table = getFlatTableStateById("linear_ebus_stations_detail");
+  if (!table || !Array.isArray(table.rows)) return null;
+  const existing = findEbusStationDetailRowIndexByToken(token);
+  if (existing !== null) return existing;
+
+  const newRow = {};
+  (Array.isArray(table.columns) ? table.columns : []).forEach((col) => {
+    if (!col?.key) return;
+    newRow[col.key] = "";
+  });
+  newRow.station = token;
+  table.rows.push(newRow);
+  return table.rows.length - 1;
+}
+
+function syncEbusStationDetailRowToNodeEvents(detailRowIndex, key) {
+  const stationTable = getFlatTableStateById("linear_ebus_stations_detail");
+  const nodeTable = getFlatTableStateById("ebus_node_events");
+  if (!stationTable || !nodeTable) return;
+  const detailRow = Array.isArray(stationTable.rows) ? stationTable.rows[detailRowIndex] : null;
+  if (!detailRow || typeof detailRow !== "object") return;
+  const stationToken = normalizeEbusStationToken(detailRow?.station);
+  if (!stationToken) return;
+
+  (Array.isArray(nodeTable.rows) ? nodeTable.rows : []).forEach((nodeRow) => {
+    if (!nodeRow || typeof nodeRow !== "object") return;
+    const nodeToken = normalizeEbusStationToken(nodeRow?.station);
+    if (!nodeToken || nodeToken !== stationToken) return;
+
+    if (key === "needle_gauge") nodeRow.needle_gauge = detailRow.needle_gauge ?? "";
+    if (key === "lymphocytes_present") nodeRow.lymphocytes_present = detailRow.lymphocytes_present ?? "";
+    if (key === "number_of_passes") {
+      const curr = String(nodeRow.passes ?? "").trim();
+      if (!curr) nodeRow.passes = detailRow.number_of_passes ?? "";
+    }
+    if (key === "rose_result") {
+      const curr = String(nodeRow.rose_result ?? "").trim();
+      if (!curr) nodeRow.rose_result = detailRow.rose_result ?? "";
+    }
+  });
+}
+
+function syncEbusNodeEventRowToStationDetail(nodeEventRow, key) {
+  const stationToken = normalizeEbusStationToken(nodeEventRow?.station);
+  if (!stationToken) return;
+  if (!["needle_gauge", "lymphocytes_present"].includes(String(key || ""))) return;
+  const detailIdx = ensureEbusStationDetailRowForToken(stationToken);
+  if (detailIdx === null) return;
+  const stationTable = getFlatTableStateById("linear_ebus_stations_detail");
+  const detailRow = Array.isArray(stationTable?.rows) ? stationTable.rows[detailIdx] : null;
+  if (!detailRow || typeof detailRow !== "object") return;
+
+  if (key === "needle_gauge") detailRow.needle_gauge = String(nodeEventRow?.needle_gauge ?? "");
+  if (key === "lymphocytes_present")
+    detailRow.lymphocytes_present = String(nodeEventRow?.lymphocytes_present ?? "");
+
+  syncEbusStationDetailRowToNodeEvents(detailIdx, key);
+}
+
 function findFlatFieldValueRowByRegistryPath(tables, registryPath) {
   const list = Array.isArray(tables) ? tables : [];
   const full = String(registryPath || "").trim();
@@ -5679,6 +6200,9 @@ function applyCompletenessValueToFlatTables(targetEffectivePath, coercedValue, o
 
     if (restoreBase) {
       row[key] = baseRow ? baseRow[key] ?? "" : "";
+      if (["needle_gauge", "number_of_passes", "lymphocytes_present", "rose_result"].includes(key)) {
+        syncEbusStationDetailRowToNodeEvents(rowIndex, key);
+      }
       return true;
     }
 
@@ -5687,6 +6211,9 @@ function applyCompletenessValueToFlatTables(targetEffectivePath, coercedValue, o
     else if (Array.isArray(coercedValue))
       row[key] = coercedValue.map((v) => String(v || "").trim()).filter((v) => v !== "").join(", ");
     else row[key] = String(coercedValue ?? "");
+    if (["needle_gauge", "number_of_passes", "lymphocytes_present", "rose_result"].includes(key)) {
+      syncEbusStationDetailRowToNodeEvents(rowIndex, key);
+    }
     return true;
   }
 
@@ -6730,8 +7257,8 @@ function renderClinicalContextTable(data) {
   const sex = normalizeSexDisplay(sexRaw);
 
   const ctx = registry?.clinical_context || {};
-  const sed = registry?.sedation || {};
-  const setting = registry?.procedure_setting || {};
+  const entities = buildEntityIndex(registry);
+  const sed = entities?.sedation || {};
 
   const rows = [
     { label: "Primary indication", value: cleanIndicationForDisplay(indication), fullWidth: true },
@@ -6742,9 +7269,9 @@ function renderClinicalContextTable(data) {
     { label: "Bronchus sign", value: ctx?.bronchus_sign },
     { label: "Sedation type", value: sed?.type },
     { label: "Anesthesia provider", value: sed?.anesthesia_provider },
-    { label: "Airway type", value: setting?.airway_type },
-    { label: "Procedure location", value: setting?.location },
-    { label: "Patient position", value: setting?.patient_position },
+    { label: "Airway type", value: sed?.airway_type },
+    { label: "Procedure location", value: sed?.location },
+    { label: "Patient position", value: sed?.patient_position },
   ].filter((r) => r.value !== null && r.value !== undefined && String(r.value).trim() !== "");
 
   if (rows.length === 0) {
@@ -7896,7 +8423,60 @@ function buildFlattenedTables(data) {
     emptyMessage: "No navigation targets.",
   });
 
+  const ebus = registry?.procedures_performed?.linear_ebus || {};
+  const ebusPerformed = isPerformedProcedure(ebus);
+  const nodeEvents = Array.isArray(ebus?.node_events) ? ebus.node_events : [];
+  tables.push({
+    id: "linear_ebus_summary",
+    title: "Linear EBUS Technical Summary",
+    columns: [
+      { key: "field", label: "Field", readOnly: true },
+      { key: "value", label: "Value", type: "text" },
+    ],
+    rows: [
+      {
+        field: "Stations sampled",
+        value: ebusPerformed && Array.isArray(ebus?.stations_sampled) ? ebus.stations_sampled.join(", ") : "",
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.stations_sampled",
+          valueType: "list",
+        },
+      },
+      {
+        field: "Needle gauge",
+        value: ebusPerformed ? ebus?.needle_gauge || "" : "",
+        __meta: { path: "registry.procedures_performed.linear_ebus.needle_gauge", valueType: "text" },
+      },
+      {
+        field: "Elastography used",
+        value: ebusPerformed ? toYesNo(ebus?.elastography_used) : "",
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.elastography_used",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Elastography pattern",
+        value: ebusPerformed ? deriveLinearEbusElastographyPattern(ebus) : "",
+        __meta: {
+          path: "registry.procedures_performed.linear_ebus.elastography_pattern",
+          valueType: "text",
+        },
+      },
+    ],
+    allowAdd: false,
+    allowDelete: false,
+  });
+
   const ebusStations = buildNormalizedEbusStationsDetail(registry);
+  const ebusStationDetailByToken = new Map();
+  ebusStations.forEach((row) => {
+    const token = normalizeEbusStationToken(row?.station);
+    if (token && !ebusStationDetailByToken.has(token)) ebusStationDetailByToken.set(token, row);
+  });
+  const hideEbusEventFieldsInMorphology = nodeEvents.length > 0;
   tables.push({
     id: "linear_ebus_stations_detail",
     title: "Linear EBUS Stations (Morphology)",
@@ -7911,10 +8491,16 @@ function buildFlattenedTables(data) {
       { key: "chs_present", label: "CHS Present", type: "select", options: YES_NO_OPTIONS },
       { key: "necrosis_present", label: "Necrosis", type: "select", options: YES_NO_OPTIONS },
       { key: "calcification_present", label: "Calcification", type: "select", options: YES_NO_OPTIONS },
-      { key: "needle_gauge", label: "Needle Gauge", type: "text" },
-      { key: "number_of_passes", label: "Passes", type: "number" },
-      { key: "rose_result", label: "ROSE Result", type: "text" },
-      { key: "lymphocytes_present", label: "Lymphocytes", type: "select", options: YES_NO_OPTIONS },
+      { key: "needle_gauge", label: "Needle Gauge", type: "text", hidden: hideEbusEventFieldsInMorphology },
+      { key: "number_of_passes", label: "Passes", type: "number", hidden: hideEbusEventFieldsInMorphology },
+      { key: "rose_result", label: "ROSE Result", type: "text", hidden: hideEbusEventFieldsInMorphology },
+      {
+        key: "lymphocytes_present",
+        label: "Lymphocytes",
+        type: "select",
+        options: YES_NO_OPTIONS,
+        hidden: hideEbusEventFieldsInMorphology,
+      },
       { key: "morphologic_impression", label: "Morphologic Impression", type: "text" },
     ],
     rows: ebusStations.map((s) => ({
@@ -7933,10 +8519,64 @@ function buildFlattenedTables(data) {
       rose_result: s?.rose_result || "",
       lymphocytes_present: toYesNo(s?.lymphocytes_present),
       morphologic_impression: s?.morphologic_impression || "",
+      __derived: Boolean(s?.__derived),
+      __source: s?.__source || "",
+      __entityKey: s?.__entityKey || "",
     })),
     allowAdd: false,
     allowDelete: false,
     emptyMessage: "No station detail entries.",
+  });
+
+  tables.push({
+    id: "ebus_node_events",
+    title: "Linear EBUS Node Events",
+    columns: [
+      { key: "station", label: "Station", type: "text" },
+      { key: "action", label: "Action", type: "select", options: EBUS_ACTION_OPTIONS },
+      { key: "needle_gauge", label: "Needle Gauge", type: "text" },
+      { key: "passes", label: "Passes", type: "number" },
+      { key: "rose_result", label: "ROSE Result", type: "text" },
+      { key: "lymphocytes_present", label: "Lymphocytes", type: "select", options: YES_NO_OPTIONS },
+      { key: "elastography_pattern", label: "Elastography", type: "text" },
+      { key: "path_result", label: "Path Result", type: "select", options: PATH_RESULT_OPTIONS },
+      { key: "path_diagnosis_text", label: "Path Diagnosis", type: "text" },
+      { key: "path_source_event_id", label: "Path Source Event", readOnly: true },
+      { key: "path_relative_day_offset", label: "Path T Offset", readOnly: true },
+      { key: "evidence_quote", label: "Evidence", type: "text" },
+    ],
+    rows: nodeEvents.map((ev) => {
+      const stationToken = normalizeEbusStationToken(ev?.station);
+      const detail = stationToken ? ebusStationDetailByToken.get(stationToken) : null;
+      const gaugeDisplay = detail?.needle_gauge ? String(detail.needle_gauge) : "";
+      const passesDisplay = Number.isFinite(ev?.passes)
+        ? String(ev.passes)
+        : Number.isFinite(detail?.number_of_passes)
+          ? String(detail.number_of_passes)
+          : "";
+      const roseDisplay = ev?.rose_result || detail?.rose_result || "";
+      const lymphDisplay = toYesNo(detail?.lymphocytes_present);
+      return {
+        station: stationToken || ev?.station || "",
+        action: ev?.action || "",
+        needle_gauge: gaugeDisplay,
+        passes: passesDisplay,
+        rose_result: roseDisplay,
+        lymphocytes_present: lymphDisplay,
+        elastography_pattern: ev?.elastography_pattern || "",
+        path_result: ev?.path_result || "",
+        path_diagnosis_text: ev?.path_diagnosis_text || "",
+        path_source_event_id: ev?.path_source_event_id ? String(ev.path_source_event_id) : "",
+        path_relative_day_offset:
+          Number.isFinite(ev?.path_relative_day_offset) || ev?.path_relative_day_offset === 0
+            ? String(ev.path_relative_day_offset)
+            : "",
+        evidence_quote: ev?.evidence_quote || "",
+      };
+    }),
+    allowAdd: true,
+    allowDelete: true,
+    emptyMessage: "No node events.",
   });
 
   const caoSites = Array.isArray(granular?.cao_interventions_detail) ? granular.cao_interventions_detail : [];
@@ -8290,6 +8930,143 @@ function buildFlattenedTables(data) {
     emptyMessage: outcomesHasAny ? "" : "No outcomes documented.",
   });
 
+  const specimensPrimaryRaw = Array.isArray(granular?.specimens_collected) ? granular.specimens_collected : [];
+  const specimensPrimary = specimensPrimaryRaw
+    .filter((row) => row && typeof row === "object" && !Array.isArray(row))
+    .map((row) => ({ ...row }));
+  const usedSpecimenNumbers = new Set();
+  let maxSpecimenNumber = 0;
+  specimensPrimary.forEach((row) => {
+    const n = parseNumber(row?.specimen_number);
+    if (n === null) return;
+    const v = Math.trunc(n);
+    if (v >= 1) {
+      usedSpecimenNumbers.add(v);
+      if (v > maxSpecimenNumber) maxSpecimenNumber = v;
+    }
+  });
+  let nextSpecimenNumber = Math.max(1, maxSpecimenNumber + 1);
+
+  const specimenFallback = [];
+  const specimenFallbackSeen = new Set();
+  const addSpecimenFallback = (row) => {
+    const proc = String(row?.source_procedure || "").trim();
+    const locRaw = String(row?.source_location || "").trim();
+    if (!proc || !locRaw) return;
+    const loc = proc === "EBUS-TBNA" ? normalizeEbusStationToken(locRaw) : (L?.normalizeWhitespaceCase ? L.normalizeWhitespaceCase(locRaw) : locRaw);
+    const key = L?.stableKeyFromParts ? L.stableKeyFromParts("specimen_fallback", proc, loc) : `${proc}|${loc}`.toLowerCase();
+    if (specimenFallbackSeen.has(key)) return;
+    specimenFallbackSeen.add(key);
+    const out = { ...row };
+    out.source_procedure = proc;
+    out.source_location = loc;
+    if (parseNumber(out?.specimen_number) === null) {
+      while (usedSpecimenNumbers.has(nextSpecimenNumber)) nextSpecimenNumber += 1;
+      out.specimen_number = nextSpecimenNumber;
+      usedSpecimenNumbers.add(nextSpecimenNumber);
+      nextSpecimenNumber += 1;
+    }
+    specimenFallback.push(out);
+  };
+
+  // Fallback: EBUS sampling events imply specimens were taken.
+  const ebusForSpecimens = registry?.procedures_performed?.linear_ebus || {};
+  const ebusEventsForSpecimens = Array.isArray(ebusForSpecimens?.node_events) ? ebusForSpecimens.node_events : [];
+  ebusEventsForSpecimens.forEach((ev) => {
+    const action = String(ev?.action || "").trim();
+    if (!action || action === "inspected_only") return;
+    const station = normalizeEbusStationToken(ev?.station);
+    if (!station) return;
+    const rose = String(ev?.rose_result || "").trim();
+    addSpecimenFallback({
+      source_procedure: "EBUS-TBNA",
+      source_location: station,
+      rose_performed: rose ? true : null,
+      rose_result: rose ? rose : null,
+    });
+  });
+
+  // Fallback: BAL location implies a specimen was collected.
+  const balSpec = registry?.procedures_performed?.bal || {};
+  const balLoc = cleanLocationForDisplay(balSpec?.location) || "";
+  if (balLoc && (isPerformedProcedure(balSpec) || hasProcedureDetails(balSpec))) {
+    addSpecimenFallback({ source_procedure: "BAL", source_location: balLoc });
+  }
+
+  if (specimensPrimary.length > 0 || specimenFallback.length > 0) {
+    const normalizeSpecimenKey = (row) => {
+      const proc = String(row?.source_procedure || row?.sourceProcedure || "").trim();
+      const locRaw = String(row?.source_location || row?.sourceLocation || "").trim();
+      const loc = proc === "EBUS-TBNA" ? normalizeEbusStationToken(locRaw) : (L?.normalizeWhitespaceCase ? L.normalizeWhitespaceCase(locRaw) : locRaw);
+      return L?.stableKeyFromParts ? L.stableKeyFromParts("specimen", proc, loc) : `${proc}|${loc}`.toLowerCase();
+    };
+
+    const mergedSpecimens = L?.mergeEntities
+      ? L.mergeEntities({
+          primaryRows: specimensPrimary,
+          fallbackRows: specimenFallback,
+          getKey: (row) => normalizeSpecimenKey(row),
+          mergeRow: (primaryRow, fallbackRow) => {
+            const out = primaryRow && typeof primaryRow === "object" ? { ...primaryRow } : {};
+            const fb = fallbackRow && typeof fallbackRow === "object" ? fallbackRow : {};
+            Object.keys(fb).forEach((k) => {
+              if (String(k || "").startsWith("__")) return;
+              if (out[k] === null || out[k] === undefined || out[k] === "") out[k] = fb[k];
+            });
+            const proc = String(out?.source_procedure || "").trim();
+            const locRaw = String(out?.source_location || "").trim();
+            if (proc === "EBUS-TBNA") out.source_location = normalizeEbusStationToken(locRaw);
+            else out.source_location = L?.normalizeWhitespaceCase ? L.normalizeWhitespaceCase(locRaw) : locRaw;
+            return out;
+          },
+        })
+      : [...specimensPrimary, ...specimenFallback];
+
+    tables.push({
+      id: "specimens_collected",
+      title: "Specimens (Merged)",
+      columns: [
+        { key: "specimen_number", label: "Specimen #", type: "number" },
+        { key: "source_procedure", label: "Source", type: "select", options: SPECIMEN_SOURCE_PROCEDURE_OPTIONS },
+        { key: "source_location", label: "Location", type: "text" },
+        { key: "specimen_count", label: "Count", type: "number" },
+        { key: "specimen_adequacy", label: "Adequacy", type: "select", options: SPECIMEN_ADEQUACY_OPTIONS },
+        { key: "destinations", label: "Destinations", type: "text" },
+        { key: "rose_performed", label: "ROSE", type: "select", options: YES_NO_OPTIONS },
+        { key: "rose_result", label: "ROSE Result", type: "text" },
+        {
+          key: "final_pathology_diagnosis",
+          label: "Final Pathology",
+          type: "text",
+          placeholder: "Pending/Unknown",
+        },
+        { key: "notes", label: "Notes", type: "text" },
+      ],
+      rows: (Array.isArray(mergedSpecimens) ? mergedSpecimens : []).map((s, idx) => {
+        const specimenNumber = parseNumber(s?.specimen_number);
+        const specimenCount = parseNumber(s?.specimen_count);
+        return {
+          specimen_number: specimenNumber === null ? String(idx + 1) : String(Math.trunc(specimenNumber)),
+        source_procedure: String(s?.source_procedure || "").trim(),
+        source_location: String(s?.source_location || "").trim(),
+          specimen_count: specimenCount === null ? "" : String(Math.trunc(specimenCount)),
+        specimen_adequacy: String(s?.specimen_adequacy || "").trim(),
+        destinations: Array.isArray(s?.destinations) ? s.destinations.join(", ") : String(s?.destinations || "").trim(),
+        rose_performed: toYesNo(s?.rose_performed),
+        rose_result: String(s?.rose_result || "").trim(),
+        final_pathology_diagnosis: String(s?.final_pathology_diagnosis || "").trim(),
+        notes: String(s?.notes || "").trim(),
+        __derived: Boolean(s?.__derived),
+        __source: s?.__source || "",
+        __entityKey: s?.__entityKey || normalizeSpecimenKey(s),
+        };
+      }),
+      allowAdd: true,
+      allowDelete: true,
+      emptyMessage: "No specimen rows.",
+    });
+  }
+
   const pathologyResults =
     registry?.pathology_results && typeof registry.pathology_results === "object" ? registry.pathology_results : {};
   const molecularMarkersSummary =
@@ -8517,86 +9294,6 @@ function buildFlattenedTables(data) {
     emptyMessage: "No clinical follow-up fields populated.",
   });
 
-  const ebus = registry?.procedures_performed?.linear_ebus || {};
-  const ebusPerformed = isPerformedProcedure(ebus);
-  tables.push({
-    id: "linear_ebus_summary",
-    title: "Linear EBUS Technical Summary",
-    columns: [
-      { key: "field", label: "Field", readOnly: true },
-      { key: "value", label: "Value", type: "text" },
-    ],
-    rows: [
-      {
-        field: "Stations sampled",
-        value: ebusPerformed && Array.isArray(ebus?.stations_sampled) ? ebus.stations_sampled.join(", ") : "",
-        __meta: {
-          path: "registry.procedures_performed.linear_ebus.stations_sampled",
-          valueType: "list",
-        },
-      },
-      {
-        field: "Needle gauge",
-        value: ebusPerformed ? ebus?.needle_gauge || "" : "",
-        __meta: { path: "registry.procedures_performed.linear_ebus.needle_gauge", valueType: "text" },
-      },
-      {
-        field: "Elastography used",
-        value: ebusPerformed ? toYesNo(ebus?.elastography_used) : "",
-        __meta: {
-          path: "registry.procedures_performed.linear_ebus.elastography_used",
-          valueType: "boolean",
-          inputType: "select",
-          options: YES_NO_OPTIONS,
-        },
-      },
-      {
-        field: "Elastography pattern",
-        value: ebusPerformed ? deriveLinearEbusElastographyPattern(ebus) : "",
-        __meta: {
-          path: "registry.procedures_performed.linear_ebus.elastography_pattern",
-          valueType: "text",
-        },
-      },
-    ],
-    allowAdd: false,
-    allowDelete: false,
-  });
-
-  const nodeEvents = Array.isArray(ebus?.node_events) ? ebus.node_events : [];
-  tables.push({
-    id: "ebus_node_events",
-    title: "Linear EBUS Node Events",
-    columns: [
-      { key: "station", label: "Station", type: "text" },
-      { key: "action", label: "Action", type: "select", options: EBUS_ACTION_OPTIONS },
-      { key: "passes", label: "Passes", type: "number" },
-      { key: "elastography_pattern", label: "Elastography", type: "text" },
-      { key: "path_result", label: "Path Result", type: "select", options: PATH_RESULT_OPTIONS },
-      { key: "path_diagnosis_text", label: "Path Diagnosis", type: "text" },
-      { key: "path_source_event_id", label: "Path Source Event", readOnly: true },
-      { key: "path_relative_day_offset", label: "Path T Offset", readOnly: true },
-      { key: "evidence_quote", label: "Evidence", type: "text" },
-    ],
-    rows: nodeEvents.map((ev) => ({
-      station: ev?.station || "",
-      action: ev?.action || "",
-      passes: Number.isFinite(ev?.passes) ? String(ev.passes) : "",
-      elastography_pattern: ev?.elastography_pattern || "",
-      path_result: ev?.path_result || "",
-      path_diagnosis_text: ev?.path_diagnosis_text || "",
-      path_source_event_id: ev?.path_source_event_id ? String(ev.path_source_event_id) : "",
-      path_relative_day_offset:
-        Number.isFinite(ev?.path_relative_day_offset) || ev?.path_relative_day_offset === 0
-          ? String(ev.path_relative_day_offset)
-          : "",
-      evidence_quote: ev?.evidence_quote || "",
-    })),
-    allowAdd: true,
-    allowDelete: true,
-    emptyMessage: "No node events.",
-  });
-
   const evidence = getEvidence(data);
   const evRows = [];
   if (evidence && typeof evidence === "object") {
@@ -8740,6 +9437,35 @@ function computeFieldFeedbackPath(table, row, rowIndex, col) {
 
   // Fallback (still useful for QA, even if not a registry field).
   return `ui_tables.${table.id}[${rowIndex}].${col.key}`;
+}
+
+function computeFieldEvidencePath(table, row, rowIndex, col, feedbackPath = null) {
+  if (feedbackPath) return feedbackPath;
+  if (!table || !row || !col) return null;
+
+  const meta = row.__meta || {};
+  if (meta.path && col.key === "value") return meta.path;
+
+  if (table.id === "procedures_summary" && meta.procKey) {
+    const section = meta.section === "pleural_procedures" ? "pleural_procedures" : "procedures_performed";
+    if (col.key === "performed") return `registry.${section}.${meta.procKey}.performed`;
+    if (col.key === "details" || col.key === "procedure") return `registry.${section}.${meta.procKey}`;
+  }
+
+  if (table.id === "navigation_targets") {
+    return `registry.granular_data.navigation_targets[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "linear_ebus_stations_detail") {
+    return `registry.granular_data.linear_ebus_stations_detail[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "cao_interventions_detail") {
+    return `registry.granular_data.cao_interventions_detail[${rowIndex}].${col.key}`;
+  }
+  if (table.id === "ebus_node_events") {
+    return `registry.procedures_performed.linear_ebus.node_events[${rowIndex}].${col.key}`;
+  }
+
+  return null;
 }
 
 let fieldFeedbackPathEl = null;
@@ -8924,6 +9650,7 @@ function getFlatTableGroupId(tableId) {
   if (id === "audit_flags") return "quality";
   if (id === "complications_details") return "quality";
   if (id === "clinical_context" || id === "clinical_followup_summary") return "patient";
+  if (id === "specimens_collected") return "diagnostics";
   if (id === "diagnostic_findings" || id === "pathology_results_summary" || id === "imaging_summary")
     return "diagnostics";
   if (id === "evidence_traceability") return "evidence";
@@ -8942,6 +9669,7 @@ const FLAT_TABLE_GROUP_META = [
 
 function renderFlatTablesFromState() {
   if (!flattenedTablesHost) return;
+  closeFlatEvidencePopover();
   clearEl(flattenedTablesHost);
 
   const tables = Array.isArray(flatTablesState) ? flatTablesState : [];
@@ -8950,6 +9678,53 @@ function renderFlatTablesFromState() {
       '<div class="dash-empty" style="padding: 12px;">No tables available.</div>';
     return;
   }
+
+  const data = lastServerResponse || {};
+  const evidence = getEvidence(data);
+  const evidenceKeys = evidence && typeof evidence === "object" ? Object.keys(evidence) : [];
+  const hasEvidencePathCache = new Map();
+  const hasEvidenceForPath = (path) => {
+    const rawPath = String(path || "").trim();
+    if (!rawPath || rawPath.startsWith("ui_tables.")) return false;
+    if (hasEvidencePathCache.has(rawPath)) return hasEvidencePathCache.get(rawPath);
+
+    const roots = buildEvidenceLookupRoots(rawPath, { includeAliases: true });
+    let found = false;
+    for (const root of roots) {
+      if (!root) continue;
+      const direct = evidence?.[root];
+      if (Array.isArray(direct) && direct.length > 0) {
+        found = true;
+        break;
+      }
+      const dotPrefix = `${root}.`;
+      const bracketPrefix = `${root}[`;
+      if (evidenceKeys.some((key) => key.startsWith(dotPrefix) || key.startsWith(bracketPrefix))) {
+        found = true;
+        break;
+      }
+    }
+    hasEvidencePathCache.set(rawPath, found);
+    return found;
+  };
+
+  const createEvidenceButton = (fieldPath) => {
+    if (!hasEvidenceForPath(fieldPath)) return null;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "evidence-btn";
+    btn.textContent = "🔎";
+    btn.title = "View evidence";
+    btn.setAttribute("aria-label", "View evidence");
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const spans = collectEvidenceSpansForPaths(lastServerResponse || {}, [fieldPath]);
+      if (!Array.isArray(spans) || spans.length === 0) return;
+      showFlatEvidencePopover(btn, spans, "Evidence");
+    });
+    return btn;
+  };
 
   const grouped = new Map();
   tables.forEach((table) => {
@@ -8989,6 +9764,7 @@ function renderFlatTablesFromState() {
 
   const activateTab = (groupId, options = {}) => {
     const { focus = false } = options;
+    closeFlatEvidencePopover();
     flatTablesActiveTabId = groupId;
     tabButtons.forEach(({ id, button }) => {
       const active = id === groupId;
@@ -9005,6 +9781,8 @@ function renderFlatTablesFromState() {
   const renderTableSection = (table) => {
     const section = document.createElement("div");
     section.className = "flat-table-section";
+
+    const visibleColumns = (Array.isArray(table?.columns) ? table.columns : []).filter((col) => !col?.hidden);
 
     const header = document.createElement("div");
     header.className = "flat-table-header";
@@ -9051,7 +9829,7 @@ function renderFlatTablesFromState() {
 
     const thead = document.createElement("thead");
     const headRow = document.createElement("tr");
-    table.columns.forEach((col) => {
+    visibleColumns.forEach((col) => {
       const th = document.createElement("th");
       th.textContent = col.label || col.key;
       headRow.appendChild(th);
@@ -9068,7 +9846,7 @@ function renderFlatTablesFromState() {
     if (!Array.isArray(table.rows) || table.rows.length === 0) {
       const tr = document.createElement("tr");
       const td = document.createElement("td");
-      td.colSpan = table.columns.length + (table.allowDelete ? 1 : 0);
+      td.colSpan = visibleColumns.length + (table.allowDelete ? 1 : 0);
       td.className = "dash-empty";
       td.textContent = table.emptyMessage || "No rows.";
       tr.appendChild(td);
@@ -9079,18 +9857,29 @@ function renderFlatTablesFromState() {
       table.rows.forEach((row, rowIndex) => {
         const tr = document.createElement("tr");
 
-        table.columns.forEach((col) => {
+        visibleColumns.forEach((col) => {
           const td = document.createElement("td");
           const rawValue = row[col.key] ?? "";
           const meta = row.__meta || {};
           const inputType = meta.inputType || col.type;
           const options = meta.options || col.options;
+          const feedbackPath = computeFieldFeedbackPath(table, row, rowIndex, col);
+          const evidencePath = computeFieldEvidencePath(table, row, rowIndex, col, feedbackPath);
+          const evidenceBtn = createEvidenceButton(evidencePath);
 
           if (col.readOnly || table.readOnly) {
             const span = document.createElement("span");
             span.className = "flat-readonly";
             span.textContent = String(rawValue ?? "");
-            td.appendChild(span);
+            if (evidenceBtn) {
+              const cellWrap = document.createElement("div");
+              cellWrap.className = "cell-input-wrap";
+              cellWrap.appendChild(span);
+              cellWrap.appendChild(evidenceBtn);
+              td.appendChild(cellWrap);
+            } else {
+              td.appendChild(span);
+            }
             tr.appendChild(td);
             return;
           }
@@ -9132,6 +9921,13 @@ function renderFlatTablesFromState() {
                 row[col.key] = b.value;
                 editedDirty = true;
                 setActive(b.value);
+                if (table.id === "ebus_node_events") syncEbusNodeEventRowToStationDetail(row, col.key);
+                if (
+                  table.id === "linear_ebus_stations_detail" &&
+                  ["needle_gauge", "number_of_passes", "lymphocytes_present", "rose_result"].includes(col.key)
+                ) {
+                  syncEbusStationDetailRowToNodeEvents(rowIndex, col.key);
+                }
                 toggle.classList.toggle(
                   "cell-modified",
                   isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
@@ -9158,6 +9954,13 @@ function renderFlatTablesFromState() {
             select.addEventListener("change", () => {
               row[col.key] = select.value;
               editedDirty = true;
+              if (table.id === "ebus_node_events") syncEbusNodeEventRowToStationDetail(row, col.key);
+              if (
+                table.id === "linear_ebus_stations_detail" &&
+                ["needle_gauge", "number_of_passes", "lymphocytes_present", "rose_result"].includes(col.key)
+              ) {
+                syncEbusStationDetailRowToNodeEvents(rowIndex, col.key);
+              }
               select.classList.toggle(
                 "cell-modified",
                 isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
@@ -9170,10 +9973,21 @@ function renderFlatTablesFromState() {
             input.className = "flat-input";
             input.type = inputType === "number" ? "number" : "text";
             input.value = rawValue ?? "";
+            const placeholder = String(col?.placeholder || meta?.placeholder || "").trim();
+            if (placeholder && String(rawValue ?? "").trim() === "") {
+              input.placeholder = placeholder;
+            }
             input.classList.toggle("cell-modified", isFlatCellModified(table, row, rowIndex, col.key, baseRowMap));
             input.addEventListener("input", () => {
               row[col.key] = input.value;
               editedDirty = true;
+              if (table.id === "ebus_node_events") syncEbusNodeEventRowToStationDetail(row, col.key);
+              if (
+                table.id === "linear_ebus_stations_detail" &&
+                ["needle_gauge", "number_of_passes", "lymphocytes_present", "rose_result"].includes(col.key)
+              ) {
+                syncEbusStationDetailRowToNodeEvents(rowIndex, col.key);
+              }
               input.classList.toggle(
                 "cell-modified",
                 isFlatCellModified(table, row, rowIndex, col.key, baseRowMap),
@@ -9183,7 +9997,10 @@ function renderFlatTablesFromState() {
             cellWrap.appendChild(input);
           }
 
-          const feedbackPath = computeFieldFeedbackPath(table, row, rowIndex, col);
+          if (evidenceBtn) {
+            cellWrap.appendChild(evidenceBtn);
+          }
+
           if (feedbackPath) {
             const btn = document.createElement("button");
             btn.type = "button";
@@ -9292,7 +10109,7 @@ function renderFlatTablesFromState() {
 function exportableRows(table) {
   return table.rows.map((row) => {
     const obj = {};
-    table.columns.forEach((col) => {
+    (Array.isArray(table?.columns) ? table.columns : []).filter((col) => !col?.hidden).forEach((col) => {
       obj[col.key] = row[col.key] ?? "";
     });
     return obj;
@@ -9304,7 +10121,7 @@ function getTablesForExport() {
   return tables.map((table) => ({
     id: table.id,
     title: table.title,
-    columns: table.columns,
+    columns: (Array.isArray(table?.columns) ? table.columns : []).filter((col) => !col?.hidden),
     rows: exportableRows(table),
   }));
 }
@@ -9695,6 +10512,7 @@ function applyEditsToPayload(payload, tables) {
         station: row?.station || null,
         action: row?.action || null,
         passes: parseNumber(row?.passes),
+        rose_result: String(row?.rose_result || "").trim() || null,
         elastography_pattern: row?.elastography_pattern || null,
         path_result: String(row?.path_result || "").trim() || null,
         path_diagnosis_text: String(row?.path_diagnosis_text || "").trim() || null,
@@ -9707,6 +10525,7 @@ function applyEditsToPayload(payload, tables) {
           row.station ||
           row.action ||
           row.passes ||
+          row.rose_result ||
           row.elastography_pattern ||
           row.path_result ||
           row.path_diagnosis_text ||
@@ -9846,6 +10665,70 @@ function applyEditsToPayload(payload, tables) {
 
       return out;
     });
+  }
+
+  const specimenRows = tableMap.get("specimens_collected")?.rows || [];
+  const existingSpecimens = Array.isArray(payload?.registry?.granular_data?.specimens_collected)
+    ? payload.registry.granular_data.specimens_collected
+    : [];
+  const specimenTableModified = isFlatTableModified("specimens_collected");
+  if (specimenRows.length > 0 && specimenTableModified) {
+    ensurePath(payload, "registry.granular_data");
+    payload.registry.granular_data.specimens_collected = specimenRows
+      .map((row, idx) => {
+        const base = existingSpecimens[idx] && typeof existingSpecimens[idx] === "object" ? existingSpecimens[idx] : {};
+        const out = { ...base };
+
+        const specimenNumber = parseNumber(row?.specimen_number);
+        out.specimen_number = specimenNumber === null ? null : Math.trunc(specimenNumber);
+
+        const proc = String(row?.source_procedure || "").trim();
+        out.source_procedure = proc ? proc : null;
+
+        const locRaw = String(row?.source_location || "").trim();
+        let loc = locRaw;
+        if (proc === "EBUS-TBNA") loc = normalizeEbusStationToken(loc);
+        else if (L?.normalizeWhitespaceCase) loc = L.normalizeWhitespaceCase(loc);
+        out.source_location = loc ? loc : null;
+
+        const specimenCount = parseNumber(row?.specimen_count);
+        out.specimen_count = specimenCount === null ? null : Math.trunc(specimenCount);
+
+        const adequacy = String(row?.specimen_adequacy || "").trim();
+        out.specimen_adequacy = adequacy ? adequacy : null;
+
+        const destinations = parseList(row?.destinations);
+        out.destinations = destinations.length ? destinations : null;
+
+        const rosePerformed = parseYesNo(row?.rose_performed);
+        out.rose_performed = rosePerformed;
+
+        const roseResult = String(row?.rose_result || "").trim();
+        out.rose_result = roseResult ? roseResult : null;
+
+        const finalDx = String(row?.final_pathology_diagnosis || "").trim();
+        out.final_pathology_diagnosis = finalDx ? finalDx : null;
+
+        const notes = String(row?.notes || "").trim();
+        out.notes = notes ? notes : null;
+
+        return out;
+      })
+      .filter(
+        (row) =>
+          row &&
+          typeof row === "object" &&
+          (row.specimen_number !== null ||
+            row.source_procedure ||
+            row.source_location ||
+            row.specimen_count !== null ||
+            row.specimen_adequacy ||
+            (Array.isArray(row.destinations) && row.destinations.length > 0) ||
+            row.rose_performed !== null ||
+            row.rose_result ||
+            row.final_pathology_diagnosis ||
+            row.notes),
+      );
   }
 
   const caoRows = tableMap.get("cao_interventions_detail")?.rows || [];
@@ -10114,6 +10997,8 @@ function renderRegistrySummary(data) {
   tbody.innerHTML = "";
 
   const registry = data.registry || {};
+  const entities = buildEntityIndex(registry);
+  const sed = entities?.sedation || {};
 
   // 1. Clinical Context (Top Priority)
   if (registry.clinical_context) {
@@ -10125,7 +11010,7 @@ function renderRegistrySummary(data) {
 
   // 2. Anesthesia/Sedation
   if (registry.sedation) {
-    const sedationStr = `${registry.sedation.type || "Not specified"} (${registry.sedation.anesthesia_provider || "Provider unknown"})`;
+    const sedationStr = `${sed?.type || "Not specified"} (${sed?.anesthesia_provider || "Provider unknown"})`;
     addRegistryRow(tbody, "Sedation", sedationStr);
   }
 
@@ -10541,6 +11426,7 @@ function renderRVUSummary(billingLines, totalRVU, totalPay) {
 function renderClinicalContext(registry, data) {
   const section = createSection('Clinical Context', '🩺');
   const ev = getEvidenceMap(data);
+  const sed = buildEntityIndex(registry || {}).sedation;
 
   const rows = [];
 
@@ -10554,17 +11440,17 @@ function renderClinicalContext(registry, data) {
   if (registry.clinical_context?.bronchus_sign) {
     rows.push(["Bronchus Sign", registry.clinical_context.bronchus_sign, "—"]);
   }
-  if (registry.sedation?.type) {
+  if (sed?.type) {
     rows.push([
       "Sedation Type",
-      registry.sedation.type,
+      sed.type,
       renderEvidenceChips(ev["sedation.type"] || []),
     ]);
   }
-  if (registry.procedure_setting?.airway_type) {
+  if (sed?.airway_type) {
     rows.push([
       "Airway Type",
-      registry.procedure_setting.airway_type,
+      sed.airway_type,
       renderEvidenceChips(ev["procedure_setting.airway_type"] || []),
     ]);
   }

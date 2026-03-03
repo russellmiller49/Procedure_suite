@@ -117,6 +117,19 @@ The easiest way to interact with the system is the development server, which pro
 ```
 *Starts the server on port 8000.*
 
+UI variant commands:
+
+```bash
+# ATLAS UI (default)
+./ops/devserver.sh
+
+# ATLAS UI (explicit)
+./ops/devserver.sh --ui=atlas
+
+# Classic UI
+./ops/devserver.sh --ui=classic
+```
+
 - **Web UI**: [http://localhost:8000/ui/](http://localhost:8000/ui/)
 - **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
@@ -562,7 +575,9 @@ client-side PHI detection/redaction first, then the backend runs extraction on *
 
 ### Basic Usage
 
-1. **Start the server**: `./ops/devserver.sh`
+1. **Start the server**:
+   - ATLAS (default): `./ops/devserver.sh`
+   - Classic: `./ops/devserver.sh --ui=classic`
 2. **Open the UI**: Navigate to [http://localhost:8000/ui/](http://localhost:8000/ui/)
 3. **Paste a procedure note** (or use PDF upload / Scan Photo)
 4. **Click `Run Detection`** (client-side PHI detection)
