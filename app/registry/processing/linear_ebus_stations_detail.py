@@ -121,6 +121,14 @@ _CALC_NEG_RE = re.compile(r"(?i)\bno\s+calcif(?:ied|ication)\b")
 
 _ROSE_RE = re.compile(r"(?i)\brose\b")
 
+_MALIGNANT_NEGATED_RE = re.compile(
+    r"(?i)\b(?:negative\s+for|no|without|not)\s+(?:\w+\s+){0,3}?malignan\w*\b"
+    r"|\bmalignan\w*\b[^.\n]{0,40}\b(?:not\s+identified|not\s+seen|negative|absent)\b"
+)
+_MALIGNANT_POSITIVE_RE = re.compile(
+    r"(?i)\b(?:malignan\w*|positive\s+for\s+cancer|cancer\s+cells?|diagnostic\s+for\s+cancer)\b"
+)
+
 _LYMPH_POS_RE = re.compile(
     r"(?i)\b(?:adequate|present|identified|seen)\b[^.\n]{0,60}\b(?:lymphocytes?|lymphoid\s+tissue)\b"
     r"|\b(?:lymphocytes?|lymphoid\s+tissue)\b[^.\n]{0,60}\b(?:present|identified|seen|adequate)\b"
@@ -417,10 +425,12 @@ def _apply_section_to_entry(
     if _ROSE_RE.search(section):
         entry.setdefault("rose_performed", True)
         lower = section.lower()
-        if "malignan" in lower:
-            entry.setdefault("rose_result", "Malignant")
-        elif "suspicious" in lower:
+        malignant_negated = bool(_MALIGNANT_NEGATED_RE.search(section))
+        malignant_positive = bool(_MALIGNANT_POSITIVE_RE.search(section))
+        if "suspicious" in lower:
             entry.setdefault("rose_result", "Suspicious for malignancy")
+        elif malignant_positive and not malignant_negated:
+            entry.setdefault("rose_result", "Malignant")
         elif "atypical" in lower:
             entry.setdefault("rose_result", "Atypical cells")
         elif "granuloma" in lower:
@@ -461,7 +471,7 @@ def _apply_section_to_entry(
         entry.setdefault("morphologic_impression", "benign")
     elif "suspicious" in lower:
         entry.setdefault("morphologic_impression", "suspicious")
-    elif "malignan" in lower:
+    elif _MALIGNANT_POSITIVE_RE.search(section) and not _MALIGNANT_NEGATED_RE.search(section):
         entry.setdefault("morphologic_impression", "malignant")
 
 

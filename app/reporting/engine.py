@@ -1972,6 +1972,18 @@ def build_procedure_bundle_from_extraction(
                 break
         lobe_label = lobe or seg_text or "target"
         num_samples = cryo_payload.get("num_samples")
+        has_ild_context = bool(re.search(r"(?i)\b(?:ild|uip|nsip|interstitial|fibrosis|fibrotic)\b", note_text))
+        has_nodule_context = bool(
+            re.search(
+                r"(?i)\b(?:nodule|mass|lesion|cancer|malignan\w*)\b",
+                note_text,
+            )
+            or re.search(r"(?i)\brose\b[^.\n]{0,40}\bmalignan\w*\b", note_text)
+        )
+        has_navigation_context = bool(
+            re.search(r"(?i)\b(?:ion|monarch|galaxy|robotic|navigat(?:ion|ional)|tool[-\s]?in[-\s]?lesion|cbct)\b", note_text)
+        )
+        cryo_target_text = seg_text or lobe_label
 
         if raw.get("specimens_text") in (None, "", [], {}):
             if num_samples not in (None, "", [], {}):
@@ -1980,7 +1992,14 @@ def build_procedure_bundle_from_extraction(
                 raw["specimens_text"] = f"{lobe_label} Transbronchial Cryobiopsy — Histology"
 
         if raw.get("postop_diagnosis_text") in (None, "", [], {}):
-            preop_line = raw.get("preop_diagnosis_text") or indication_text or "Interstitial Lung Disease"
+            preop_line = raw.get("preop_diagnosis_text") or indication_text
+            if preop_line in (None, "", [], {}):
+                if has_ild_context:
+                    preop_line = "Interstitial Lung Disease"
+                elif has_nodule_context or has_navigation_context:
+                    preop_line = f"Peripheral lung lesion ({lobe_label})"
+                else:
+                    preop_line = "Peripheral lung lesion"
             preop_line = str(preop_line).strip().splitlines()[0]
             if "Interstitial Lung Disease" in preop_line and "(" in preop_line:
                 preop_line = "Interstitial Lung Disease"
@@ -1993,10 +2012,14 @@ def build_procedure_bundle_from_extraction(
 
         if not impression_plan:
             lines: list[str] = []
-            if seg_text:
-                lines.append(f"Successful transbronchial cryobiopsy of {seg_text} for ILD evaluation.")
+            if has_ild_context:
+                lines.append(f"Successful transbronchial cryobiopsy of {cryo_target_text} for ILD evaluation.")
+            elif has_nodule_context or has_navigation_context:
+                lines.append(
+                    f"Successful transbronchial cryobiopsy of {cryo_target_text} for diagnostic evaluation of peripheral lung lesion."
+                )
             else:
-                lines.append(f"Successful transbronchial cryobiopsy of {lobe_label} for ILD evaluation.")
+                lines.append(f"Successful transbronchial cryobiopsy of {cryo_target_text}.")
             lines.append("No pneumothorax or significant bleeding complications.")
             lines.append(
                 "Recover per protocol; obtain post-procedure chest imaging to assess for late pneumothorax per local workflow."

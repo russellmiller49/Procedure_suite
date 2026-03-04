@@ -67,7 +67,7 @@ RUL Transbronchial Cryobiopsy — Histology
 
 IMPRESSION / PLAN
 
-Successful transbronchial cryobiopsy of RUL for ILD evaluation.
+Successful transbronchial cryobiopsy of RUL for diagnostic evaluation of peripheral lung lesion.
 
 No pneumothorax or significant bleeding complications.
 
