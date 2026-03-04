@@ -897,7 +897,7 @@ class RegistryService:
                     sanitize_ebus_events,
                 )
 
-                record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
+                record, verifier_warnings = verify_evidence_integrity(record, raw_note_text or masked_note_text)
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
@@ -1540,8 +1540,26 @@ class RegistryService:
                             full_text = raw_note_text or ""
                             full_lower = full_text.lower()
                             found: list[str] = []
+                            from app.registry.deterministic_extractors import is_negated
 
-                            if "secretions" in detail_lower and "Secretions" not in abnormalities:
+                            def _first_nonnegated_match(pattern: str, text: str) -> re.Match[str] | None:
+                                for m in re.finditer(pattern, text or "", re.IGNORECASE):
+                                    if is_negated(int(m.start()), int(m.end()), text):
+                                        continue
+                                    sentence_start = max(
+                                        text.rfind(".", 0, m.start()),
+                                        text.rfind("\n", 0, m.start()),
+                                    )
+                                    sentence_start = 0 if sentence_start < 0 else sentence_start + 1
+                                    sentence_end_match = re.search(r"[.\n]", text[m.end() :])
+                                    sentence_end = len(text) if sentence_end_match is None else m.end() + sentence_end_match.start()
+                                    sentence = (text[sentence_start:sentence_end] or "").lower()
+                                    if "after suctioning" in sentence:
+                                        continue
+                                    return m
+                                return None
+
+                            if _first_nonnegated_match(r"\bsecretions?\b", full_text) and "Secretions" not in abnormalities:
                                 abnormalities.append("Secretions")
                                 found.append("secretions")
                             if re.search(r"\b(tracheomalacia)\b", detail_lower):
@@ -1567,10 +1585,15 @@ class RegistryService:
                                 findings_text = mask_offset_preserving(full_text)
                             except Exception:
                                 findings_text = full_text
-                            if "stenosis" in findings_text.lower() and "Stenosis" not in abnormalities:
-                                if not re.search(r"(?i)\bno\s+stenosis\b", findings_text):
-                                    abnormalities.append("Stenosis")
-                                    found.append("stenosis")
+                            if "Stenosis" not in abnormalities:
+                                if not re.search(r"(?i)\bno\s+(?:stenosis|stricture)\b", findings_text):
+                                    stenosis_like = _first_nonnegated_match(
+                                        r"\b(?:stenosis|stricture)\b",
+                                        findings_text,
+                                    )
+                                    if stenosis_like:
+                                        abnormalities.append("Stenosis")
+                                        found.append("stenosis")
 
                             # Vocal cord abnormality should only be set when explicitly abnormal near the mention
                             # (avoid false positives from unrelated "abnormal" elsewhere in the note).
@@ -1588,23 +1611,27 @@ class RegistryService:
                             # Blood/clot mentions (often missed by the LLM when templated under "Findings").
                             # Be conservative: require "clot" in an airway/obstruction context.
                             if "Blood" not in abnormalities:
-                                if re.search(r"(?i)\b(?:blood|blot)\s+clot\b", full_text) or re.search(
-                                    r"(?i)\bclot\b[^.\n]{0,80}\b(?:obstruct|occlud|block|plug|remov|evacuat|extract)\w*\b",
+                                blood_match = _first_nonnegated_match(r"\b(?:blood|blot)\s+clot\b", full_text)
+                                obstructive_clot_match = _first_nonnegated_match(
+                                    r"\bclot\b[^.\n]{0,80}\b(?:obstruct|occlud|block|plug|remov|evacuat|extract)\w*\b",
                                     full_text,
-                                ):
+                                )
+                                if blood_match or obstructive_clot_match:
                                     abnormalities.append("Blood")
                                     found.append("blood_clot")
 
                             # Endobronchial lesions/tumors. Use the schema enum value
                             # "Endobronchial lesion" (covers tumor/mass language).
                             if "Endobronchial lesion" not in abnormalities:
-                                if re.search(
-                                    r"(?i)\bendobronchial\b[^.\n]{0,120}\b(?:lesion|tumou?r|tumors?|mass)\b",
+                                lesion_match = _first_nonnegated_match(
+                                    r"\bendobronchial\b[^.\n]{0,120}\b(?:lesion|tumou?r|tumors?|mass)\b",
                                     full_text,
-                                ) or re.search(
-                                    r"(?i)\b(?:tumou?r|tumors?|mass|lesion)\b[^.\n]{0,120}\b(?:endobronch|airway|trachea|carina|bronch(?:us|ial))\b",
+                                )
+                                airway_lesion_match = _first_nonnegated_match(
+                                    r"\b(?:tumou?r|tumors?|mass|lesion)\b[^.\n]{0,120}\b(?:endobronch|airway|trachea|carina|bronch(?:us|ial))\b",
                                     full_text,
-                                ):
+                                )
+                                if lesion_match or airway_lesion_match:
                                     abnormalities.append("Endobronchial lesion")
                                     found.append("endobronchial_lesion")
 
@@ -1648,6 +1675,10 @@ class RegistryService:
                                     _add_first_literal(
                                         "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
                                         "stenosis",
+                                    )
+                                    _add_first_literal(
+                                        "procedures_performed.diagnostic_bronchoscopy.airway_abnormalities",
+                                        "stricture",
                                     )
                                 if "vocal_cord_abnormality" in found:
                                     _add_first_span_skip_cpt_headers(
@@ -2008,6 +2039,19 @@ class RegistryService:
                                                 )
                                                 if has_strong_placement and not has_strong_removal:
                                                     can_override_action = True
+                                                else:
+                                                    try:
+                                                        from app.registry.deterministic_extractors import classify_stent_action
+
+                                                        stent_classification = classify_stent_action(stent_text)
+                                                    except Exception:
+                                                        stent_classification = {}
+                                                    classified_action = str(
+                                                        stent_classification.get("action_type") or ""
+                                                    ).strip().lower()
+                                                    preexisting = bool(stent_classification.get("preexisting_stent"))
+                                                    if classified_action == "placement" and not preexisting:
+                                                        can_override_action = True
                                             if can_override_action and existing_action != incoming_action:
                                                 existing[key] = incoming_action
                                                 action_type_by_action = {
@@ -2307,7 +2351,7 @@ class RegistryService:
                     sanitize_ebus_events,
                 )
 
-                record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
+                record, verifier_warnings = verify_evidence_integrity(record, raw_note_text or masked_note_text)
                 warnings.extend(verifier_warnings)
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
@@ -2356,7 +2400,7 @@ class RegistryService:
             sanitize_ebus_events,
         )
 
-        record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
+        record, verifier_warnings = verify_evidence_integrity(record, raw_note_text or masked_note_text)
         warnings.extend(verifier_warnings)
         warnings.extend(sanitize_ebus_events(record, masked_note_text))
         warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
@@ -2552,7 +2596,7 @@ class RegistryService:
         # Evidence enforcement pass on the final record state (post-heuristics + checkbox negation).
         from app.registry.evidence.verifier import verify_evidence_integrity
 
-        record, verifier_warnings = verify_evidence_integrity(record, masked_note_text)
+        record, verifier_warnings = verify_evidence_integrity(record, raw_note_text or masked_note_text)
         if verifier_warnings:
             extraction_warnings.extend(verifier_warnings)
 

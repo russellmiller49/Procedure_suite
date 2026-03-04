@@ -61,18 +61,18 @@ _STENT_NEGATION_PATTERNS = [
 ]
 
 _STENT_PLACEMENT_CONTEXT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
-    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:(?:stent|bonostent)\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\b(?:stent|bonostent)\b)\b",
     re.IGNORECASE,
 )
 _STENT_PLACEMENT_ACTION_CONTEXT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b"
-    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:(?:stent|bonostent)\b[^.\n]{0,30}\b(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b"
+    r"|(place|placed|deploy|deployed|insert|inserted|advance|advanced|expand|expanded|expanding)\b[^.\n]{0,30}\b(?:stent|bonostent)\b)\b",
     re.IGNORECASE,
 )
 _STENT_STRONG_PLACEMENT_RE = re.compile(
-    r"\b(?:stent\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
-    r"|(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\bstent\b)\b",
+    r"\b(?:(?:stent|bonostent)\b[^.\n]{0,30}\b(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b"
+    r"|(deploy|deployed|insert|inserted|advance|advanced|seat|seated|expand|expanded|expanding)\b[^.\n]{0,30}\b(?:stent|bonostent)\b)\b",
     re.IGNORECASE,
 )
 _STENT_REMOVAL_CONTEXT_RE = re.compile(
@@ -113,6 +113,7 @@ _IPC_TERMS = (
     "tunneling device",
     "indwelling pleural catheter",
     "ipc",
+    "tpc",
 )
 _CHEST_TUBE_TERMS = ("pigtail", "wayne", "pleur-evac", "pleur evac", "tube thoracostomy", "chest tube")
 _INSERT_TERMS = ("insert", "inserted", "placed", "place", "deploy", "deployed", "introduced", "positioned")
@@ -611,7 +612,13 @@ class ClinicalGuardrails:
             ),
         )
         ipc_present = self._contains_any(text_lower, _IPC_TERMS)
-        if ipc_checkbox is False:
+        ipc_header_removal = bool(
+            re.search(r"(?i)\b32552\b", note_text or "")
+            or re.search(r"(?i)\bRemoval\s+of\s+indwelling\s+tunneled\s+pleural\s+catheter\b", note_text or "")
+        )
+        if ipc_header_removal:
+            ipc_present = True
+        if ipc_checkbox is False and not ipc_header_removal:
             ipc_present = False
         tube_present = self._contains_any(text_lower, _CHEST_TUBE_TERMS)
         pleural_flagged = self._pleural_procedure_flagged(record_data)
@@ -641,8 +648,20 @@ class ClinicalGuardrails:
                     warnings.append("Chest tube discontinue/removal language; treating as not performed.")
                     removal_only = True
                 if ipc_present and ipc_remove and not ipc_insert and not tube_insert:
-                    changed |= self._set_pleural_performed(record_data, "ipc", False)
-                    warnings.append("IPC discontinue/removal language; treating as not performed.")
+                    pleural_local = record_data.get("pleural_procedures")
+                    ipc_local = pleural_local.get("ipc") if isinstance(pleural_local, dict) else None
+                    if not isinstance(ipc_local, dict):
+                        ipc_local = {}
+                    prior_performed = ipc_local.get("performed")
+                    prior_action = ipc_local.get("action")
+                    ipc_local["performed"] = True
+                    ipc_local["action"] = "Removal"
+                    if isinstance(pleural_local, dict):
+                        pleural_local["ipc"] = ipc_local
+                        record_data["pleural_procedures"] = pleural_local
+                    if prior_performed is not True or prior_action != "Removal":
+                        changed = True
+                    warnings.append("IPC removal language detected; preserving pleural_procedures.ipc as Removal.")
                     removal_only = True
                 if removal_only:
                     pass

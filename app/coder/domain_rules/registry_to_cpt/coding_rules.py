@@ -110,6 +110,37 @@ def _stations_sampled(record: RegistryRecord) -> tuple[list[str], str]:
     return ([str(s).upper().strip() for s in stations if s], "stations_sampled")
 
 
+def _targets_sampled(record: RegistryRecord) -> tuple[list[str], str]:
+    """Return non-station EBUS targets sampled (if present)."""
+    linear = _proc(record, "linear_ebus")
+    if linear is None:
+        return ([], "none")
+
+    qualifying_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+    node_events = _get(linear, "node_events")
+    if isinstance(node_events, (list, tuple)) and node_events:
+        targets: list[str] = []
+        for event in node_events:
+            if _get(event, "action") not in qualifying_actions:
+                continue
+            target_text = _get(event, "target_text")
+            if target_text is None:
+                continue
+            cleaned = str(target_text).strip()
+            if cleaned:
+                targets.append(cleaned)
+        if targets:
+            return (targets, "node_events.target_text")
+
+    linear_targets = _get(linear, "targets_sampled")
+    if isinstance(linear_targets, (list, tuple)) and linear_targets:
+        targets = [str(t).strip() for t in linear_targets if str(t).strip()]
+        if targets:
+            return (targets, "linear_ebus.targets_sampled")
+
+    return ([], "none")
+
+
 def _navigation_targets(record: RegistryRecord) -> list[Any]:
     granular = _get(record, "granular_data")
     targets = _get(granular, "navigation_targets") if granular is not None else None
@@ -609,7 +640,11 @@ def derive_all_codes_with_meta(
 
     ebus_stations, station_source = _stations_sampled(record)
     ebus_station_count = len(set(s for s in ebus_stations if s))
-    has_ebus_sampling = _performed(_proc(record, "linear_ebus")) and ebus_station_count > 0
+    ebus_targets, target_source = _targets_sampled(record)
+    ebus_target_count = len({t.strip().lower() for t in ebus_targets if isinstance(t, str) and t.strip()})
+    has_ebus_sampling = _performed(_proc(record, "linear_ebus")) and (
+        ebus_station_count > 0 or ebus_target_count > 0
+    )
 
     added_31629 = False
     if _performed(peripheral_tbna):
@@ -664,6 +699,17 @@ def derive_all_codes_with_meta(
             rationales["31652"] = (
                 f"linear_ebus.performed=true and sampled_station_count={station_count} (1-2) "
                 f"from {station_source}"
+            )
+        elif ebus_target_count >= 1:
+            codes.append("31652")
+            rationales["31652"] = (
+                "linear_ebus.performed=true and sampled_station_count=0; "
+                f"derived from non-station targets count={ebus_target_count} from {target_source}"
+            )
+            warnings.append(
+                f"Derived 31652 from non-station EBUS target sampling ({ebus_target_count} target"
+                + ("" if ebus_target_count == 1 else "s")
+                + ")."
             )
         else:
             if station_source == "node_events":
@@ -1353,8 +1399,8 @@ def derive_all_codes_with_meta(
         else:
             biopsies_taken = _get(thoracoscopy, "biopsies_taken")
             if biopsies_taken is True:
-                codes.append("32609")
-                rationales["32609"] = (
+                codes.append("32604")
+                rationales["32604"] = (
                     "pleural_procedures.medical_thoracoscopy.performed=true and biopsies_taken=true"
                 )
             else:
