@@ -552,15 +552,19 @@ class ReporterEngine:
             "ion_registration_complete",
             "ion_registration_partial",
             "ion_registration_drift",
+        }
+        localization_types = {
+            "radial_ebus_survey",
+            "radial_ebus_sampling",
             "cbct_cact_fusion",
             "cbct_augmented_bronchoscopy",
             "tool_in_lesion_confirmation",
         }
-        radial_types = {"radial_ebus_survey", "radial_ebus_sampling"}
         sampling_types = {
             "transbronchial_biopsy",
             "transbronchial_lung_biopsy",
             "transbronchial_needle_aspiration",
+            "transbronchial_cryobiopsy",
             "bronchial_brushings",
             "bronchial_washing",
             "bal",
@@ -571,6 +575,14 @@ class ReporterEngine:
         staging_types = {"ebus_tbna", "ebus_ifb", "ebus_19g_fnb", "eusb"}
 
         has_navigation = any(proc.proc_type in navigation_types for proc in procs)
+        has_localization = any(proc.proc_type in localization_types for proc in procs)
+        peripheral_context_hint = bool(
+            re.search(
+                r"(?i)\b(?:radial\s+ebus|r\s*ebus|rebus|tool[-\s]?in[-\s]?lesion|cbct|cone\s*beam|navigation)\b",
+                source_text or "",
+            )
+        )
+        has_peripheral_context = has_navigation or has_localization or peripheral_context_hint
         ebus_first = (
             bool(re.search(r"(?i)\b(?:did|performed)\s+(?:linear\s+)?ebus\s+first\b", source_text or ""))
             or bool(re.search(r"(?i)\blinear\s+ebus\s+first\b", source_text or ""))
@@ -579,27 +591,36 @@ class ReporterEngine:
         )
 
         def _group(proc_type: str) -> int:
-            if not has_navigation:
+            if not has_peripheral_context:
                 return 0
             if ebus_first:
                 if proc_type in staging_types:
                     return 0
                 if proc_type in navigation_types:
                     return 1
-                if proc_type in radial_types:
+                if proc_type in localization_types:
                     return 2
                 if proc_type in sampling_types:
                     return 3
                 return 4
-            if proc_type in navigation_types:
+            if has_navigation:
+                if proc_type in navigation_types:
+                    return 0
+                if proc_type in localization_types:
+                    return 1
+                if proc_type in sampling_types:
+                    return 2
+                if proc_type in staging_types:
+                    return 3
+                return 4
+            # Localization-only workflows (radial EBUS / CBCT without explicit navigation proc)
+            if proc_type in localization_types:
                 return 0
-            if proc_type in radial_types:
-                return 1
             if proc_type in sampling_types:
-                return 2
+                return 1
             if proc_type in staging_types:
-                return 3
-            return 4
+                return 2
+            return 3
 
         return sorted(
             procs,
@@ -2068,19 +2089,34 @@ def build_procedure_bundle_from_extraction(
         and "blvr_chartis_assessment" not in {proc.proc_type for proc in procedures}
         and "blvr_valve_placement" not in {proc.proc_type for proc in procedures}
     ):
-        assessments: list[dict[str, Any]] = []
+        cv_positive = re.compile(
+            r"(?i)\b(?:cv\s*\+|cv\s*pos(?:itive)?|cv\s*positive|collateral\s+ventilation\s*(?:positive|present))\b"
+        )
+        cv_negative = re.compile(
+            r"(?i)\b(?:cv\s*\-|cv\s*neg(?:ative)?|cv\s*negative|no\s+collateral\s+ventilation|collateral\s+ventilation\s*(?:negative|absent))\b"
+        )
         by_lobe: dict[str, dict[str, Any]] = {}
         for match in re.finditer(r"(?i)\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b", note_text):
             lobe = match.group(1).upper()
-            window = note_text[max(0, match.start() - 10) : match.start() + 80]
-            cv_result = None
-            if re.search(r"(?i)\b(?:cv\s*negative|no\s+collateral\s+ventilation|collateral\s+ventilation\s+absent)\b", window):
-                cv_result = "CV negative"
-            elif re.search(r"(?i)\b(?:cv\s*positive|collateral\s+ventilation\s+positive|collateral\s+ventilation\s+present)\b", window):
-                cv_result = "CV positive"
-            if cv_result:
-                by_lobe[lobe] = {"lobe": lobe, "cv_result": cv_result}
-        assessments = list(by_lobe.values())
+            window_start = max(0, match.start() - 120)
+            window_end = min(len(note_text), match.end() + 120)
+            window = note_text[window_start:window_end]
+            lobe_offset = match.start() - window_start
+
+            candidates: list[tuple[int, str]] = []
+            for m in cv_positive.finditer(window):
+                candidates.append((abs(m.start() - lobe_offset), "CV positive"))
+            for m in cv_negative.finditer(window):
+                candidates.append((abs(m.start() - lobe_offset), "CV negative"))
+            if not candidates:
+                continue
+            distance, cv_result = min(candidates, key=lambda item: item[0])
+            existing = by_lobe.get(lobe)
+            if existing and isinstance(existing.get("_dist"), int) and existing["_dist"] <= distance:
+                continue
+            by_lobe[lobe] = {"lobe": lobe, "cv_result": cv_result, "_dist": distance}
+
+        assessments = [{"lobe": item["lobe"], "cv_result": item["cv_result"]} for item in by_lobe.values()]
 
         planned_target = None
         match = re.search(

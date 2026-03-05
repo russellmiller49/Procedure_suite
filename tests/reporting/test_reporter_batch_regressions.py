@@ -237,6 +237,61 @@ _FOCUSED_CASES: list[dict[str, Any]] = [
             "must_not_contain": ["ILD evaluation"],
         },
     },
+    {
+        "id": "focused_nav_chronology_no_rebus_prep_header",
+        "prompt": (
+            "Robotic bronchoscopy (Ion) to LUL nodule. Navigation successful, radial probe eccentric view, "
+            "TIL confirmed with CBCT after catheter adjustment to concentric. TBNA x 5. Cryobiopsy x 4 with 1.1 mm probe."
+        ),
+        "expected": {
+            "must_contain_groups": [["Tool-in-lesion was confirmed"], ["eccentric"], ["Transbronchial Cryobiopsy"]],
+            "must_not_contain": ["Radial EBUS & Preparation", "Airway Inspection The bronchoscope was introduced"],
+        },
+    },
+    {
+        "id": "focused_thoracentesis_stopped_due_to_cough_preserved",
+        "prompt": (
+            "Ultrasound guided thoracentesis left side at the 8th intercostal space along the midaxillary line. "
+            "500 mL straw colored fluid removed. Stopped due to patient cough. CXR ordered."
+        ),
+        "expected": {
+            "must_contain_groups": [["stopped due to patient cough"]],
+            "must_not_contain": ["tolerated the procedure well", "tolerated the procedure without cough"],
+        },
+    },
+    {
+        "id": "focused_ebus_airway_finding_extrinsic_compression",
+        "prompt": (
+            "EBUS-TBNA staging. Airway inspection: extrinsic compression of RUL orifice but patent. "
+            "Station 4R and station 7 sampled. ROSE adequate lymphocytes."
+        ),
+        "expected": {
+            "must_contain_groups": [["extrinsic compression"], ["EBUS-TBNA Staging"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_chartis_rul_cv_positive_not_negative",
+        "prompt": (
+            "BLVR candidacy evaluation. Chartis assessment of RUL showed collateral ventilation positive. "
+            "RLL CV negative. Procedure aborted for today. Plan to schedule RLL BLVR."
+        ),
+        "expected": {
+            "must_contain_groups": [["RUL: CV positive"], ["RLL: CV negative"], ["No endobronchial valves were deployed"]],
+            "must_not_contain": ["RUL: CV negative"],
+        },
+    },
+    {
+        "id": "focused_blvr_admit_ptx_watch_plan_not_dropped",
+        "prompt": (
+            "BLVR RUL with Zephyr valves. Placed RB1 5.5, RB2 4.0, RB3 4.0. "
+            "Complete lobar occlusion confirmed. Admitted for 3 day pneumothorax watch."
+        ),
+        "expected": {
+            "must_contain_groups": [["pneumothorax watch"]],
+            "must_not_contain": ["Await final pathology"],
+        },
+    },
 ]
 
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
+import re
 from typing import Any, TYPE_CHECKING
 
 from pydantic import BaseModel
@@ -93,6 +94,31 @@ def _target_key_from_proc(proc: ProcedureInput) -> str | None:
     if proc_type in {"transbronchial_biopsy", "transbronchial_lung_biopsy", "transbronchial_needle_aspiration"}:
         return _normalize_target_key(data.get("segment") or data.get("lobe") or data.get("lung_segment"))
     return None
+
+
+def _extract_stopped_reason(text: str) -> str | None:
+    if not text:
+        return None
+    match = re.search(
+        r"(?i)\b(?:stopped|terminated|discontinued|aborted)\b[^.\n]{0,60}?\bdue\s+to\s+([^\n.]{1,120})",
+        text,
+    )
+    if not match:
+        return None
+    reason = re.sub(r"\s+", " ", match.group(1).strip()).strip()
+    reason = reason.strip(" .;")
+    return reason or None
+
+
+def _extract_extrinsic_compression(text: str) -> str | None:
+    if not text:
+        return None
+    match = re.search(r"(?i)\bextrinsic\s+compression\b[^.\n]{0,160}", text)
+    if not match:
+        return None
+    finding = re.sub(r"\s+", " ", match.group(0).strip()).strip()
+    finding = finding.strip(" .;")
+    return finding or None
 
 
 class ReportPipeline:
@@ -224,6 +250,9 @@ class ReportPipeline:
         autocode_modifiers = state.autocode_modifiers
         unmatched_autocode = state.unmatched_autocode
         has_til_confirmation = selected.has_til_confirmation
+        note_text = (bundle.free_text_hint or "").strip()
+        stopped_reason = _extract_stopped_reason(note_text)
+        extrinsic_compression = _extract_extrinsic_compression(note_text)
 
         def _validated(proc_input: ProcedureInput) -> Any:
             if isinstance(proc_input.data, BaseModel):
@@ -309,6 +338,12 @@ class ReportPipeline:
                     sampling_proc = selected.first_by_type.get("radial_ebus_sampling")
                     if sampling_proc:
                         extra_context["sampling"] = _validated(sampling_proc)
+                if proc.proc_type in ("thoracentesis", "thoracentesis_detailed", "thoracentesis_manometry") and stopped_reason:
+                    extra_context = extra_context or {}
+                    extra_context["procedure_stopped_reason"] = stopped_reason
+                if proc.proc_type == "ebus_tbna" and extrinsic_compression:
+                    extra_context = extra_context or {}
+                    extra_context["airway_findings"] = extrinsic_compression
 
                 rendered = self.engine._render_procedure_template(meta, proc, bundle, extra_context=extra_context)
                 proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])
