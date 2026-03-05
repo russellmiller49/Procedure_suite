@@ -1573,7 +1573,10 @@ def build_procedure_bundle_from_extraction(
             power_w = None
             duration_min = None
             max_temp_c = None
-            match = re.search(r"(?i)\bablat(?:ed|ion)\b\s*(\d{1,3})\s*w\s*(?:x|×)\s*(\d+(?:\\.\\d+)?)\s*min", note_text)
+            match = re.search(
+                r"(?i)\bablat(?:ed|ion)\b\s*(\d{1,3})\s*w\s*(?:x|×)\s*(\d+(?:\.\d+)?)\s*min",
+                note_text,
+            )
             if match:
                 try:
                     power_w = int(match.group(1))
@@ -2297,7 +2300,7 @@ def build_procedure_bundle_from_extraction(
         aborted = True if re.search(r"(?i)\baborted\b", note_text) else None
         aborted_reason = None
         if aborted:
-            match = re.search(r"(?i)\baborted\b[^.\n]{0,160}(?:\\.|$)", note_text)
+            match = re.search(r"(?i)\baborted\b[^.\n]{0,160}(?:\.|$)", note_text)
             if match:
                 aborted_reason = match.group(0).strip().rstrip(".")
 
@@ -2875,9 +2878,67 @@ def build_procedure_bundle_from_extraction(
                 return match.group(1).upper()
         return None
 
+    def _join_with_and(labels: list[str]) -> str:
+        if not labels:
+            return ""
+        if len(labels) == 1:
+            return labels[0]
+        if len(labels) == 2:
+            return f"{labels[0]} and {labels[1]}"
+        return ", ".join(labels[:-1]) + f", and {labels[-1]}"
+
+    def _extract_specimen_disposition(text: str) -> dict[str, str]:
+        if not text or not text.strip():
+            return {}
+        header = re.search(r"(?im)^\s*SPECIMEN\s+DISPOSITION\s*$", text)
+        block = text[header.end() :] if header else text
+
+        disposition: dict[str, str] = {}
+        started = False
+        for line in block.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                if started:
+                    break
+                continue
+            match = re.match(r"^[-*•]\s*(.+?)\s+dispatched\s+to\s*:\s*(.+)$", stripped, flags=re.IGNORECASE)
+            if not match:
+                if started:
+                    break
+                continue
+            started = True
+            label = re.sub(r"\s+", " ", match.group(1)).strip()
+            dest = re.sub(r"\s+", " ", match.group(2)).strip().rstrip(".")
+            if label and dest:
+                disposition[label.lower()] = dest
+        return disposition
+
+    def _extract_summary_items(text: str) -> list[str]:
+        if not text or not text.strip():
+            return []
+        header = re.search(r"(?im)^\s*SUMMARY\s*$", text)
+        if not header:
+            return []
+        block = text[header.end() :]
+
+        items: list[str] = []
+        for match in re.finditer(r"(?m)^\s*\d+[\.\)]\s*(.+?)\s*$", block):
+            item = match.group(1).strip().rstrip(".")
+            if item:
+                items.append(item)
+        if items:
+            return items
+
+        # Single-line SUMMARY formats (e.g., "SUMMARY 1. ... 2. ...")
+        for match in re.finditer(r"(?is)(?:^|\s)\d+[\.\)]\s*([^\n]+?)(?=(?:\s+\d+[\.\)])|$)", block):
+            item = match.group(1).strip().rstrip(".")
+            if item:
+                items.append(item)
+        return items
+
     is_short_note = len(note_text) <= 450
     has_robotic_nav = "robotic_navigation" in existing_proc_types
-    has_nav_sampling = has_robotic_nav and is_short_note and any(
+    has_nav_sampling = has_robotic_nav and any(
         p.proc_type
         in (
             "ebus_tbna",
@@ -2889,7 +2950,7 @@ def build_procedure_bundle_from_extraction(
         )
         for p in procedures
     )
-    has_thoracoscopy = ("medical_thoracoscopy" in existing_proc_types) and is_short_note
+    has_thoracoscopy = "medical_thoracoscopy" in existing_proc_types
 
     if raw.get("specimens_text") in (None, "", [], {}):
         specimens_lines: list[str] = []
@@ -2915,6 +2976,7 @@ def build_procedure_bundle_from_extraction(
             )
             target_label = f"{lobe_token} nodule" if lobe_token else (nav_loc or "Target")
 
+            disposition = _extract_specimen_disposition(note_text)
             ebus_proc = next((p for p in procedures if p.proc_type == "ebus_tbna"), None)
             ebus = _proc_data(ebus_proc)
             stations: list[str] = []
@@ -2922,45 +2984,90 @@ def build_procedure_bundle_from_extraction(
                 if isinstance(st, dict) and st.get("station_name"):
                     stations.append(str(st["station_name"]))
             stations = _dedupe_labels([s for s in stations if s])
-            if ebus_proc:
-                if stations:
-                    specimens_lines.append(f"Station {', '.join(stations)} EBUS aspirates — Cytology, cell block")
-                else:
-                    specimens_lines.append("EBUS aspirates — Cytology, cell block")
+            if disposition:
+                def _find_dest(*needles: str) -> str | None:
+                    for key, dest in disposition.items():
+                        if all(needle in key for needle in needles):
+                            return dest
+                    return None
 
-            tbna_proc = next((p for p in procedures if p.proc_type == "transbronchial_needle_aspiration"), None)
-            if tbna_proc:
-                tbna = _proc_data(tbna_proc)
-                passes = tbna.get("samples_collected")
-                if passes not in (None, "", [], {}):
-                    specimens_lines.append(f"{target_label} TBNA ({passes} passes) — cytology")
-                else:
-                    specimens_lines.append(f"{target_label} TBNA — cytology")
+                def _stations_from_raw() -> list[str]:
+                    from_detail: list[str] = []
+                    for item in raw.get("ebus_stations_detail") or []:
+                        if not isinstance(item, dict):
+                            continue
+                        station = item.get("station") or item.get("station_name")
+                        if station in (None, "", [], {}):
+                            continue
+                        station_str = str(station).strip().upper()
+                        if station_str and station_str not in from_detail:
+                            from_detail.append(station_str)
+                    return from_detail
 
-            bx_proc = next((p for p in procedures if p.proc_type == "transbronchial_biopsy"), None)
-            if bx_proc:
-                bx = _proc_data(bx_proc)
-                count = bx.get("number_of_biopsies")
-                loc = lobe_token or nav_loc or "Target"
-                if count not in (None, "", [], {}):
-                    specimens_lines.append(f"{loc} Transbronchial biopsy ({count} samples) — histology")
-                else:
-                    specimens_lines.append(f"{loc} Transbronchial biopsy — histology")
+                stations_for_spec = _stations_from_raw() or stations
+                prefix = lobe_token or "Target"
 
-            brush_proc = next((p for p in procedures if p.proc_type == "bronchial_brushings"), None)
-            if brush_proc:
-                brush = _proc_data(brush_proc)
-                count = brush.get("samples_collected")
-                loc = lobe_token or nav_loc or "Target"
-                if count not in (None, "", [], {}):
-                    specimens_lines.append(f"{loc} Brushings ({count} samples) — cytology")
-                else:
-                    specimens_lines.append(f"{loc} Brushings — cytology")
+                ebus_dest = _find_dest("ebus", "aspir")
+                if ebus_dest:
+                    if stations_for_spec:
+                        specimens_lines.append(
+                            f"Station {', '.join(stations_for_spec)} EBUS aspirates — {ebus_dest}"
+                        )
+                    else:
+                        specimens_lines.append(f"EBUS aspirates — {ebus_dest}")
 
-            if any(p.proc_type == "bal" for p in procedures):
-                specimens_lines.append(f"{lobe_token or nav_loc or 'Target'} BAL — microbiology/cytology")
-            if any(p.proc_type == "bronchial_washing" for p in procedures):
-                specimens_lines.append(f"{lobe_token or nav_loc or 'Target'} Washing — microbiology/cytology")
+                parenchymal_dest = _find_dest("parenchymal")
+                if parenchymal_dest:
+                    specimens_lines.append(f"{prefix} Parenchymal samples — {parenchymal_dest}")
+
+                brushings_dest = _find_dest("brush")
+                if brushings_dest:
+                    specimens_lines.append(f"{prefix} Brushings — {brushings_dest}")
+
+                lavage_dest = _find_dest("lavage")
+                if lavage_dest:
+                    specimens_lines.append(f"{prefix} Lavage — {lavage_dest}")
+
+            else:
+                if ebus_proc:
+                    if stations:
+                        specimens_lines.append(f"Station {', '.join(stations)} EBUS aspirates — Cytology, cell block")
+                    else:
+                        specimens_lines.append("EBUS aspirates — Cytology, cell block")
+
+                tbna_proc = next((p for p in procedures if p.proc_type == "transbronchial_needle_aspiration"), None)
+                if tbna_proc:
+                    tbna = _proc_data(tbna_proc)
+                    passes = tbna.get("samples_collected")
+                    if passes not in (None, "", [], {}):
+                        specimens_lines.append(f"{target_label} TBNA ({passes} passes) — cytology")
+                    else:
+                        specimens_lines.append(f"{target_label} TBNA — cytology")
+
+                bx_proc = next((p for p in procedures if p.proc_type == "transbronchial_biopsy"), None)
+                if bx_proc:
+                    bx = _proc_data(bx_proc)
+                    count = bx.get("number_of_biopsies")
+                    loc = lobe_token or nav_loc or "Target"
+                    if count not in (None, "", [], {}):
+                        specimens_lines.append(f"{loc} Transbronchial biopsy ({count} samples) — histology")
+                    else:
+                        specimens_lines.append(f"{loc} Transbronchial biopsy — histology")
+
+                brush_proc = next((p for p in procedures if p.proc_type == "bronchial_brushings"), None)
+                if brush_proc:
+                    brush = _proc_data(brush_proc)
+                    count = brush.get("samples_collected")
+                    loc = lobe_token or nav_loc or "Target"
+                    if count not in (None, "", [], {}):
+                        specimens_lines.append(f"{loc} Brushings ({count} samples) — cytology")
+                    else:
+                        specimens_lines.append(f"{loc} Brushings — cytology")
+
+                if any(p.proc_type == "bal" for p in procedures):
+                    specimens_lines.append(f"{lobe_token or nav_loc or 'Target'} BAL — microbiology/cytology")
+                if any(p.proc_type == "bronchial_washing" for p in procedures):
+                    specimens_lines.append(f"{lobe_token or nav_loc or 'Target'} Washing — microbiology/cytology")
 
         elif has_thoracoscopy:
             mt_proc = next((p for p in procedures if p.proc_type == "medical_thoracoscopy"), None)
@@ -2989,81 +3096,148 @@ def build_procedure_bundle_from_extraction(
 
             lobe_token = _first_lobe_token(nav_loc, rebus_loc, raw.get("nav_target_segment"), raw.get("lesion_location"), note_text)
 
-            lines: list[str] = []
+            summary_items = _extract_summary_items(note_text)
+            if summary_items:
+                lines: list[str] = []
 
-            ebus_proc = next((p for p in procedures if p.proc_type == "ebus_tbna"), None)
-            if ebus_proc:
+                ebus_proc = next((p for p in procedures if p.proc_type == "ebus_tbna"), None)
                 ebus = _proc_data(ebus_proc)
-                stations = []
+                malignant_stations: list[str] = []
+                malignancy_label: str | None = None
                 for st in ebus.get("stations") or []:
-                    if isinstance(st, dict) and st.get("station_name"):
-                        stations.append(str(st["station_name"]))
-                stations = _dedupe_labels([s for s in stations if s])
-                if stations:
-                    lines.append(f"EBUS staging performed at stations {', '.join(stations)}.")
+                    if not isinstance(st, dict):
+                        continue
+                    rose = str(st.get("rose_result") or "").strip()
+                    station_name = str(st.get("station_name") or "").strip().upper()
+                    if station_name and re.search(r"(?i)\bmalignan|carcinoma|small\s+cell|nsclc|sclc\b", rose):
+                        malignant_stations.append(station_name)
+                    if not malignancy_label and re.search(r"(?i)\bsmall\s+cell\b", rose):
+                        malignancy_label = "small cell"
+                malignant_stations = _dedupe_labels([s for s in malignant_stations if s])
+                if not malignancy_label and re.search(r"(?i)\bsmall\s+cell\b", note_text):
+                    malignancy_label = "small cell"
+
+                ebus_line = summary_items[0].strip().rstrip(".")
+                if malignant_stations:
+                    station_phrase = _join_with_and(malignant_stations)
+                    if malignancy_label:
+                        ebus_line += f" with ROSE malignant ({malignancy_label}) at stations {station_phrase}."
+                    else:
+                        ebus_line += f" with ROSE malignant at stations {station_phrase}."
                 else:
-                    lines.append("EBUS staging performed.")
+                    ebus_line += "."
+                lines.append(ebus_line)
 
-            if lesion_size not in (None, "", [], {}):
-                try:
-                    num = float(lesion_size)
-                    size_str = str(int(num)) if num.is_integer() else str(round(num, 1))
-                except Exception:
-                    size_str = str(lesion_size)
-                if lobe_token:
-                    lines.append(f"{lobe_token} nodule ({size_str}mm) successfully sampled via robotic bronchoscopy.")
-                elif nav_loc:
-                    lines.append(f"{nav_loc} target ({size_str}mm) successfully sampled via robotic bronchoscopy.")
-            elif lobe_token:
-                lines.append(f"{lobe_token} target successfully sampled via robotic bronchoscopy.")
+                if len(summary_items) >= 3:
+                    nav_line = summary_items[1].strip().rstrip(".")
+                    tissue_line = summary_items[2].strip().rstrip(".")
+                    if tissue_line:
+                        tissue_line = tissue_line[0].lower() + tissue_line[1:]
+                    if nav_line and tissue_line:
+                        lines.append(f"{nav_line} with {tissue_line}.")
+                    elif nav_line:
+                        lines.append(f"{nav_line}.")
+                    elif tissue_line:
+                        lines.append(f"{tissue_line[0].upper() + tissue_line[1:]}.")
+                elif len(summary_items) >= 2:
+                    nav_line = summary_items[1].strip().rstrip(".")
+                    if nav_line:
+                        lines.append(f"{nav_line}.")
 
-            if rebus_loc and rebus_pattern:
-                lines.append(f"Navigated to {rebus_loc} with {rebus_pattern.lower()} rEBUS signal.")
+                comp_item = next((item for item in summary_items if re.search(r"(?i)\bcomplication|adverse\b", item)), None)
+                if comp_item:
+                    if re.search(r"(?i)\b(?:zero|no|without)\b", comp_item):
+                        lines.append("No immediate complications occurred.")
+                    else:
+                        lines.append(comp_item.strip().rstrip(".") + ".")
 
-            if any(p.proc_type == "fiducial_marker_placement" for p in procedures):
-                lines.append("Fiducial marker placed.")
+                discharge_line = None
+                match = re.search(r"(?i)\bdischarg(?:ed|e)\b[^\\.]{0,120}(?:\.|$)", note_text)
+                if match:
+                    discharge_line = match.group(0).strip()
+                    if discharge_line and not discharge_line.endswith("."):
+                        discharge_line += "."
+                if discharge_line:
+                    lines.append(discharge_line)
 
-            # ROSE summary (best-effort from postop diagnosis or source text).
-            rose_text = None
-            postop_text = str(raw.get("postop_diagnosis_text") or "")
-            match = re.search(r"(?im)^\s*ROSE\s*:?\s*(.+?)\s*$", postop_text)
-            if match:
-                rose_text = match.group(1).strip()
-            if not rose_text:
-                match = re.search(r"(?i)\bROSE\b[^\n]{0,30}?[:\\-]\s*([^\n\\.]+)", note_text)
+                impression_plan = "\n\n".join(_dedupe_labels([line.strip() for line in lines if line.strip()]))
+
+            else:
+                lines: list[str] = []
+
+                ebus_proc = next((p for p in procedures if p.proc_type == "ebus_tbna"), None)
+                if ebus_proc:
+                    ebus = _proc_data(ebus_proc)
+                    stations = []
+                    for st in ebus.get("stations") or []:
+                        if isinstance(st, dict) and st.get("station_name"):
+                            stations.append(str(st["station_name"]))
+                    stations = _dedupe_labels([s for s in stations if s])
+                    if stations:
+                        lines.append(f"EBUS staging performed at stations {', '.join(stations)}.")
+                    else:
+                        lines.append("EBUS staging performed.")
+
+                if lesion_size not in (None, "", [], {}):
+                    try:
+                        num = float(lesion_size)
+                        size_str = str(int(num)) if num.is_integer() else str(round(num, 1))
+                    except Exception:
+                        size_str = str(lesion_size)
+                    if lobe_token:
+                        lines.append(f"{lobe_token} nodule ({size_str}mm) successfully sampled via robotic bronchoscopy.")
+                    elif nav_loc:
+                        lines.append(f"{nav_loc} target ({size_str}mm) successfully sampled via robotic bronchoscopy.")
+                elif lobe_token:
+                    lines.append(f"{lobe_token} target successfully sampled via robotic bronchoscopy.")
+
+                if rebus_loc and rebus_pattern:
+                    lines.append(f"Navigated to {rebus_loc} with {rebus_pattern.lower()} rEBUS signal.")
+
+                if any(p.proc_type == "fiducial_marker_placement" for p in procedures):
+                    lines.append("Fiducial marker placed.")
+
+                # ROSE summary (best-effort from postop diagnosis or source text).
+                rose_text = None
+                postop_text = str(raw.get("postop_diagnosis_text") or "")
+                match = re.search(r"(?im)^\s*ROSE\s*:?\s*(.+?)\s*$", postop_text)
                 if match:
                     rose_text = match.group(1).strip()
-            if rose_text:
-                cleaned = re.sub(r"(?i)\(final[^)]*pending\)", "", rose_text).strip().rstrip(".")
-                lowered = cleaned.lower()
-                if "negative" in lowered and ("malign" in lowered or "cancer" in lowered):
-                    lines.append("ROSE negative for malignancy.")
+                if not rose_text:
+                    match = re.search(r"(?i)\bROSE\b[^\n]{0,30}?[:\\-]\s*([^\n\\.]+)", note_text)
+                    if match:
+                        rose_text = match.group(1).strip()
+                if rose_text:
+                    cleaned = re.sub(r"(?i)\(final[^)]*pending\)", "", rose_text).strip().rstrip(".")
+                    lowered = cleaned.lower()
+                    if "negative" in lowered and ("malign" in lowered or "cancer" in lowered):
+                        lines.append("ROSE negative for malignancy.")
+                        lines.append("Await final pathology and cytology.")
+                    elif "lymph" in lowered or "benign" in lowered:
+                        lines.append("ROSE favored benign process (lymphocytes); await final pathology and cytology.")
+                    elif cleaned:
+                        lines.append(f"ROSE {cleaned}.")
+                        lines.append("Await final pathology and cytology.")
+                else:
                     lines.append("Await final pathology and cytology.")
-                elif "lymph" in lowered or "benign" in lowered:
-                    lines.append("ROSE favored benign process (lymphocytes); await final pathology and cytology.")
-                elif cleaned:
-                    lines.append(f"ROSE {cleaned}.")
-                    lines.append("Await final pathology and cytology.")
-            else:
-                lines.append("Await final pathology and cytology.")
 
-            discharge_line = None
-            match = re.search(r"(?i)\bdischarg(?:ed|e)\b[^\\.]{0,120}(?:\\.|$)", note_text)
-            if match:
-                discharge_line = match.group(0).strip()
-                if discharge_line and not discharge_line.endswith("."):
-                    discharge_line += "."
-            if discharge_line:
-                lines.append(discharge_line)
+                discharge_line = None
+                match = re.search(r"(?i)\bdischarg(?:ed|e)\b[^\\.]{0,120}(?:\.|$)", note_text)
+                if match:
+                    discharge_line = match.group(0).strip()
+                    if discharge_line and not discharge_line.endswith("."):
+                        discharge_line += "."
+                if discharge_line:
+                    lines.append(discharge_line)
 
-            if any(p.proc_type == "bal" for p in procedures) and not discharge_line:
-                lines.append(
-                    "Post-procedure monitoring per protocol; obtain post-procedure chest imaging to assess for PTX per local workflow."
-                )
-            else:
-                lines.append("Post-procedure monitoring per protocol.")
+                if any(p.proc_type == "bal" for p in procedures) and not discharge_line:
+                    lines.append(
+                        "Post-procedure monitoring per protocol; obtain post-procedure chest imaging to assess for PTX per local workflow."
+                    )
+                else:
+                    lines.append("Post-procedure monitoring per protocol.")
 
-            impression_plan = "\n\n".join(_dedupe_labels([line.strip() for line in lines if line.strip()]))
+                impression_plan = "\n\n".join(_dedupe_labels([line.strip() for line in lines if line.strip()]))
 
         elif has_thoracoscopy:
             mt_proc = next((p for p in procedures if p.proc_type == "medical_thoracoscopy"), None)

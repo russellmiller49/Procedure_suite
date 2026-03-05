@@ -1125,68 +1125,187 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     raw["lesion_location"] = nav_target
 
     # Best-effort parse EBUS station details from free text (passes/size/ROSE).
-    if raw.get("ebus_stations_detail") in (None, "", [], {}) and source_text:
+    #
+    # Note: upstream granular extraction often provides partial station detail; supplement
+    # with explicit free-text station lists (e.g., "stations 2R x4, 10R x3, 2L x2") while
+    # preserving station ordering from the note when available.
+    if source_text:
+        def _valid_station_token(value: str) -> str | None:
+            token = (value or "").strip().upper()
+            match = re.match(r"^(?P<num>\d{1,2})(?P<lr>[LR])?$", token)
+            if not match:
+                return None
+            try:
+                num = int(match.group("num"))
+            except Exception:
+                return None
+            if num < 1 or num > 12:
+                return None
+            return f"{num}{match.group('lr') or ''}"
+
+        def _valid_passes(value: str) -> int | None:
+            try:
+                num = int(value)
+            except Exception:
+                return None
+            # Typical EBUS pass counts are small; reject likely dimensional artifacts.
+            if num < 1 or num > 20:
+                return None
+            return num
+
+        existing_detail = raw.get("ebus_stations_detail") or []
         details_by_station: dict[str, dict[str, Any]] = {}
+        existing_order: list[str] = []
+        if isinstance(existing_detail, list):
+            for item in existing_detail:
+                if not isinstance(item, dict):
+                    continue
+                st_raw = item.get("station") or item.get("station_name")
+                if st_raw in (None, "", [], {}):
+                    continue
+                st = _valid_station_token(str(st_raw))
+                if not st:
+                    continue
+                entry = dict(item)
+                entry["station"] = st
+                if st not in details_by_station:
+                    details_by_station[st] = entry
+                    existing_order.append(st)
+
+        parsed_order: list[str] = []
+        changed = False
+
+        def _upsert_station(
+            st: str,
+            *,
+            passes: int | None = None,
+            size_mm: Any | None = None,
+            rose_result: str | None = None,
+        ) -> None:
+            nonlocal changed
+            if st not in details_by_station:
+                details_by_station[st] = {"station": st}
+                changed = True
+            entry = details_by_station[st]
+
+            if passes is not None and entry.get("passes") in (None, "", [], {}):
+                entry["passes"] = passes
+                changed = True
+            if size_mm is not None and entry.get("size_mm") in (None, "", [], {}):
+                entry["size_mm"] = size_mm
+                changed = True
+            if rose_result:
+                existing_rose = str(entry.get("rose_result") or "").strip()
+                candidate = str(rose_result).strip()
+
+                def _rose_rank(value: str) -> int:
+                    lowered = value.lower()
+                    if re.search(r"\b(?:malignan|carcinoma|adenocarcinoma|squamous|nsclc|sclc|small\s+cell|lymphoma)\b", lowered):
+                        return 3
+                    if re.search(r"\b(?:atypical|suspicious|positive)\b", lowered):
+                        return 2
+                    if re.search(r"\b(?:negative|benign|lymphocytes|nondiagnostic|adequate)\b", lowered):
+                        return 1
+                    return 0
+
+                existing_norm = re.sub(r"\s+", " ", existing_rose).strip()
+                candidate_norm = re.sub(r"\s+", " ", candidate).strip()
+                if not existing_norm:
+                    entry["rose_result"] = candidate_norm
+                    changed = True
+                else:
+                    existing_rank = _rose_rank(existing_norm)
+                    candidate_rank = _rose_rank(candidate_norm)
+                    # Allow overrides when free-text station-level detail is more specific
+                    # (e.g., "Malignant - small cell carcinoma" vs "Malignant"), or when
+                    # upstream binding incorrectly assigns a benign/lymphocytic ROSE to a
+                    # station that is explicitly malignant in the note.
+                    if (
+                        candidate_rank > existing_rank
+                        or (candidate_rank == existing_rank and len(candidate_norm) > len(existing_norm))
+                    ):
+                        entry["rose_result"] = candidate_norm
+                        changed = True
+
+            if st not in parsed_order:
+                parsed_order.append(st)
 
         # Pattern: "Stations: 11R (4x), 2L (2x), 4L (4x)"
         match = re.search(r"(?i)\bstations?\s*:\s*([^\n]+)", source_text)
         if match:
             chunk = match.group(1)
-            for st, passes in re.findall(r"(?i)\b(\d{1,2}[LR]?)\s*\(\s*(\d+)\s*x\s*\)", chunk):
-                key = st.upper()
-                details_by_station.setdefault(key, {"station": key})["passes"] = int(passes)
+            for st_raw, passes_raw in re.findall(r"(?i)\b(\d{1,2}[LR]?)\s*\(\s*(\d+)\s*x\s*\)", chunk):
+                st = _valid_station_token(st_raw)
+                passes = _valid_passes(passes_raw)
+                if st and passes:
+                    _upsert_station(st, passes=passes)
 
         # Pattern: "... sampled stations 2R x4, 10R x3, 2L x2 ..."
         for line in source_text.splitlines():
-            # Require the plural "stations" to avoid accidentally matching per-node size
-            # dimensions like "22.0x13.6mm" on lines beginning with "Station 11R: ...".
+            # Require the plural "stations" to reduce false positives from size dimensions.
             if not re.search(r"(?i)\bstations\b", line):
                 continue
             if not re.search(r"(?i)\b\d{1,2}[LR]?\s*(?:x|×)\s*\d+\b", line):
                 continue
-            for st, passes in re.findall(r"(?i)\b(\d{1,2}[LR]?)\s*(?:x|×)\s*(\d+)\b", line):
-                key = st.upper()
-                details_by_station.setdefault(key, {"station": key})["passes"] = int(passes)
+            for st_raw, passes_raw in re.findall(r"(?i)\b(\d{1,2}[LR]?)\s*(?:x|×)\s*(\d+)\b", line):
+                st = _valid_station_token(st_raw)
+                passes = _valid_passes(passes_raw)
+                if st and passes:
+                    _upsert_station(st, passes=passes)
 
         # Pattern: "- 4R (18mm): Positive for Adeno."
         for line in source_text.splitlines():
             stripped = line.strip()
-            bullet = re.match(r"[-*]\s*(\d{1,2}[LR]?)\s*\(\s*(\d+)\s*mm\s*\)\s*:\s*(.+)", stripped, flags=re.IGNORECASE)
-            if bullet:
-                st = bullet.group(1).upper()
-                details = details_by_station.setdefault(st, {"station": st})
-                try:
-                    details["size_mm"] = int(bullet.group(2))
-                except Exception:
-                    pass
-                details["rose_result"] = bullet.group(3).strip().rstrip(".")
+            bullet = re.match(
+                r"[-*]\s*(\d{1,2}[LR]?)\s*\(\s*(\d+)\s*mm\s*\)\s*:\s*(.+)",
+                stripped,
+                flags=re.IGNORECASE,
+            )
+            if not bullet:
+                continue
+            st = _valid_station_token(bullet.group(1))
+            if not st:
+                continue
+            size_val: int | None = None
+            try:
+                size_val = int(bullet.group(2))
+            except Exception:
+                size_val = None
+            _upsert_station(st, size_mm=size_val, rose_result=bullet.group(3).strip().rstrip("."))
 
         # Pattern: "Station 11R: ... Executed 2 aspiration passes. ROSE yielded: ..."
         for station_line in re.finditer(r"(?im)^\s*Station\s+(\d{1,2}[LR]?)\s*:\s*(.+?)\s*$", source_text):
-            st = station_line.group(1).upper()
+            st = _valid_station_token(station_line.group(1))
+            if not st:
+                continue
             rest = station_line.group(2)
-            details = details_by_station.setdefault(st, {"station": st})
             mp = re.search(r"(?i)\b(\d+)\s*(?:aspiration\s*)?passes\b", rest)
-            if mp:
-                try:
-                    details["passes"] = int(mp.group(1))
-                except Exception:
-                    pass
+            passes = _valid_passes(mp.group(1)) if mp else None
+
             mr = re.search(r"(?i)\bROSE\s*(?:yielded|result)\s*[:\\-]\s*([^\\.]+)", rest)
-            if mr:
-                details["rose_result"] = mr.group(1).strip().rstrip(".")
+            rose = mr.group(1).strip().rstrip(".") if mr else None
+
+            size_mm: Any | None = None
             ms = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*(?:x|×)\s*(\d+(?:\.\d+)?)\s*mm\b", rest)
             if ms:
                 try:
                     size_val = max(float(ms.group(1)), float(ms.group(2)))
-                    details["size_mm"] = round(size_val, 1) if not size_val.is_integer() else int(size_val)
+                    size_mm = round(size_val, 1) if not size_val.is_integer() else int(size_val)
                 except Exception:
-                    pass
+                    size_mm = None
 
-        if details_by_station:
-            raw["ebus_stations_detail"] = list(details_by_station.values())
-            if raw.get("ebus_stations_sampled") in (None, "", [], {}):
-                raw["ebus_stations_sampled"] = list(details_by_station.keys())
+            _upsert_station(st, passes=passes, size_mm=size_mm, rose_result=rose)
+
+        if details_by_station and (changed or parsed_order or raw.get("ebus_stations_detail") in (None, "", [], {})):
+            order = parsed_order + [st for st in existing_order if st not in parsed_order]
+            if not order:
+                order = existing_order or list(details_by_station.keys())
+            raw["ebus_stations_detail"] = [details_by_station[st] for st in order if st in details_by_station]
+            existing_sampled = raw.get("ebus_stations_sampled")
+            if existing_sampled in (None, "", [], {}) or (
+                isinstance(existing_sampled, list) and len(existing_sampled) < len(raw["ebus_stations_detail"])
+            ):
+                raw["ebus_stations_sampled"] = [st for st in order if st in details_by_station]
 
     # Ensure station list fields reflect per-station detail when present.
     stations_detail = raw.get("ebus_stations_detail") or []
@@ -1204,7 +1323,13 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         if detail_stations:
             existing_list = raw.get("linear_ebus_stations") or raw.get("ebus_stations_sampled")
             existing = existing_list if isinstance(existing_list, list) else []
-            if not existing or len(existing) < len(detail_stations) or set(map(str, existing)) != set(detail_stations):
+            existing_norm = [str(item).strip().upper() for item in existing if str(item).strip()]
+            if (
+                not existing_norm
+                or len(existing_norm) < len(detail_stations)
+                or set(existing_norm) != set(detail_stations)
+                or existing_norm != detail_stations
+            ):
                 raw["linear_ebus_stations"] = detail_stations
                 raw["ebus_stations_sampled"] = detail_stations
 
@@ -1705,11 +1830,35 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 return str(value)
             return str(int(num)) if num.is_integer() else str(num)
 
+        def _looks_generic_procedure_indication(value: Any) -> bool:
+            if not isinstance(value, str):
+                return False
+            lowered = value.strip().lower()
+            if not lowered:
+                return True
+            if any(tok in lowered for tok in ("bronch", "bronchoscopy", "ebus", "robotic", "navigat")):
+                if not any(
+                    tok in lowered
+                    for tok in (
+                        "nodule",
+                        "lesion",
+                        "mass",
+                        "lymph",
+                        "adenopathy",
+                        "stenosis",
+                        "effusion",
+                        "obstruction",
+                        "bleeding",
+                    )
+                ):
+                    return True
+            return False
+
         # Synthesize a compact primary indication for common nodule dictations when missing.
         # Guard: do not misread non-target measurements (balloon dilation sizes, APC probe size, stent revision distance)
         # as a peripheral nodule when the note lacks peripheral-target context.
         if (
-            raw.get("primary_indication") in (None, "", [], {})
+            (raw.get("primary_indication") in (None, "", [], {}) or _looks_generic_procedure_indication(raw.get("primary_indication")))
             and location_hint
             and derived_size_mm not in (None, "", [], {})
             and peripheral_target_context
@@ -1747,10 +1896,17 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 phrase += f" with a {bronchus_sign_val} bronchus sign"
             if pet_suv:
                 phrase += f" (PET SUV: {pet_suv})"
+            staging_context = bool(
+                re.search(r"(?i)\bstag(?:e|ing)\b", source_text)
+                or (raw.get("linear_ebus_stations") or raw.get("ebus_stations_sampled"))
+            )
+            chartis_context = "chartis" in source_text.lower()
+            if chartis_context:
+                phrase += " requiring bronchoscopic diagnosis and staging, as well as assessment for potential lung volume reduction"
+            elif staging_context:
+                phrase += " requiring bronchoscopic diagnosis and staging"
             if no_pet and not pet_suv:
                 phrase += ". No PET scan was performed"
-            if "chartis" in source_text.lower():
-                phrase += " requiring bronchoscopic diagnosis and staging, as well as assessment for potential lung volume reduction"
             raw["primary_indication"] = phrase.strip().rstrip(".")
 
         # If linear EBUS is present and a ROSE summary was captured, attach it to the EBUS fields.
@@ -1773,6 +1929,16 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 raw["preop_diagnosis_text"] = indication_hint or "Interstitial Lung Disease"
             elif "effusion" in lowered and "pleural" in lowered:
                 raw["preop_diagnosis_text"] = indication_hint or "Pleural effusion"
+            elif (
+                ("staging" in lowered or "lung cancer" in lowered)
+                and location_hint
+                and derived_size_mm not in (None, "", [], {})
+                and peripheral_target_context
+            ):
+                # Prefer a concise nodule Dx line (lobe + size) over a segment label
+                # for staging dictations; a suspected lymphadenopathy line is appended below.
+                size_str = _fmt_mm(derived_size_mm)
+                raw["preop_diagnosis_text"] = f"{location_hint} pulmonary nodule, {size_str} mm"
             elif ("staging" in lowered or "lung cancer" in lowered) and raw.get("nav_target_segment") not in (None, "", [], {}):
                 target = str(raw.get("nav_target_segment") or "").strip()
                 target = target.split(",", 1)[0].strip()
