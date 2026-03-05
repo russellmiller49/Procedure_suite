@@ -253,6 +253,9 @@ class ReportPipeline:
         note_text = (bundle.free_text_hint or "").strip()
         stopped_reason = _extract_stopped_reason(note_text)
         extrinsic_compression = _extract_extrinsic_compression(note_text)
+        has_radial_localization = any(
+            proc.proc_type in ("radial_ebus_survey", "radial_ebus_sampling") for proc in selected.sorted_procs
+        )
 
         def _validated(proc_input: ProcedureInput) -> Any:
             if isinstance(proc_input.data, BaseModel):
@@ -344,6 +347,9 @@ class ReportPipeline:
                 if proc.proc_type == "ebus_tbna" and extrinsic_compression:
                     extra_context = extra_context or {}
                     extra_context["airway_findings"] = extrinsic_compression
+                if proc.proc_type == "tool_in_lesion_confirmation" and has_radial_localization:
+                    extra_context = extra_context or {}
+                    extra_context["suppress_rebus_pattern"] = True
 
                 rendered = self.engine._render_procedure_template(meta, proc, bundle, extra_context=extra_context)
                 proc_meta.templates_used = _merge_str_lists(proc_meta.templates_used, [meta.id])

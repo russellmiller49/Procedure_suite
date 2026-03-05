@@ -245,7 +245,11 @@ _FOCUSED_CASES: list[dict[str, Any]] = [
         ),
         "expected": {
             "must_contain_groups": [["Tool-in-lesion was confirmed"], ["eccentric"], ["Transbronchial Cryobiopsy"]],
-            "must_not_contain": ["Radial EBUS & Preparation", "Airway Inspection The bronchoscope was introduced"],
+            "must_not_contain": [
+                "Radial EBUS & Preparation",
+                "Airway Inspection The bronchoscope was introduced",
+                "pattern. Tool-in-lesion was confirmed",
+            ],
         },
     },
     {
