@@ -422,12 +422,36 @@ class BLVRValvePlacementAdapter(ExtractionAdapter):
         if removed > 0 or exchanged > 0:
             return False
 
+        text = str(source.get("source_text") or source.get("note_text") or "")
+        has_text_placement_evidence = bool(
+            re.search(
+                r"(?i)\b(?:valves?\s+(?:placed|deployed|inserted)|placed\s+\d+\s+valves?|deployed\s+\d+\s+valves?)\b",
+                text,
+            )
+            # Segment+size shorthand (e.g., "RB1 5.5", "LB1+2 size 5.5")
+            or re.search(r"(?i)\b[RL]B\d{1,2}(?:\s*\+\s*\d{1,2})?\b[^\n]{0,20}\b(?:size\s*)?\d(?:\.\d+)?\b", text)
+        )
+        future_or_aborted_context = bool(
+            re.search(
+                r"(?i)\b(?:plan(?:s|ned)?\s+to\s+proceed|will\s+proceed|at\s+next\s+procedure|next\s+procedure|schedule(?:d)?\b|planned\s+for\b|aborted|cancel(?:led|ed)?|not\s+performed)\b",
+                text,
+            )
+        )
+        if future_or_aborted_context and not has_text_placement_evidence:
+            # Guardrail: avoid documenting planned/aborted BLVR as performed when the text lacks
+            # explicit deployment/placement evidence.
+            return False
+        if "assess" in proc_type_hint or "evaluat" in proc_type_hint:
+            # Chartis/candidacy assessment alone should not instantiate a valve placement procedure.
+            if not has_text_placement_evidence:
+                return False
+
         return bool(
             source.get("blvr_valve_details")
-            or source.get("blvr_valve_type")
-            or source.get("blvr_number_of_valves")
             or source.get("blvr_segments_treated")
             or source.get("blvr_valve_sizes")
+            or (source.get("blvr_number_of_valves") and has_text_placement_evidence)
+            or (source.get("blvr_valve_type") and has_text_placement_evidence)
         )
 
     @classmethod
@@ -524,6 +548,7 @@ class BLVRValveRemovalExchangeAdapter(ExtractionAdapter):
     def build_payload(cls, source: dict[str, Any]) -> dict[str, Any]:
         text = str(source.get("source_text") or source.get("note_text") or "")
         procedure_hint = str(source.get("blvr_procedure_type") or "").strip().lower()
+        replacement_context = bool(re.search(r"(?i)\b(?:replac(?:ed|ement)|new\s+valves?)\b", text))
 
         indication = str(source.get("blvr_removal_indication") or "").strip()
         if not indication and text:
@@ -536,6 +561,8 @@ class BLVRValveRemovalExchangeAdapter(ExtractionAdapter):
         if not indication:
             if "exchange" in procedure_hint:
                 indication = "Endobronchial valve exchange"
+            elif replacement_context:
+                indication = "Endobronchial valve removal and replacement"
             else:
                 indication = "Endobronchial valve removal"
 
@@ -569,12 +596,23 @@ class BLVRValveRemovalExchangeAdapter(ExtractionAdapter):
                         for m in [
                             re.search(r"(?i)\bexchange(?:d)?\b[^.\n]{0,25}\b(\d+)\s*valves?\b", text),
                             re.search(r"(?i)\b(\d+)\s*valves?\b[^.\n]{0,25}\bexchange(?:d)?\b", text),
+                            re.search(r"(?i)\breplaced\b[^.\n]{0,40}\bwith\b[^.\n]{0,15}\b(\d+)\s*(?:new\s+)?valves?\b", text),
+                            re.search(r"(?i)\b(\d+)\s*(?:new\s+)?valves?\b[^.\n]{0,40}\breplaced\b", text),
                         ]
                         if m
                     ),
                     None,
                 )
             )
+        if exchanged is None and replacement_context:
+            # If replacement is described but the count isn't explicit, infer from segment/size lists when available.
+            segs = [str(seg).strip() for seg in (source.get("blvr_segments_treated") or []) if str(seg).strip()]
+            sizes = [str(size).strip() for size in (source.get("blvr_valve_sizes") or []) if str(size).strip()]
+            inferred = len(segs) if segs else (len(sizes) if sizes else None)
+            if inferred:
+                exchanged = inferred
+            elif removed:
+                exchanged = removed
 
         locations: list[str] = []
         for value in (source.get("blvr_removal_locations") or []):

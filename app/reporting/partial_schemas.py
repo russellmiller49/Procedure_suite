@@ -153,3 +153,21 @@ class RigidBronchoscopyPartial(BaseModel):
     pre_obstruction_pct: int | None = None
     post_obstruction_pct: int | None = None
     findings: str | None = None
+
+
+class BLVRChartisLobeAssessmentPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    lobe: str | None = None
+    cv_result: str | None = None
+
+
+class BLVRChartisAssessmentPartial(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    assessments: List[BLVRChartisLobeAssessmentPartial] = Field(default_factory=list)
+    planned_target_lobe: str | None = None
+    planned_valve_type: str | None = None
+    procedure_aborted: bool | None = None
+    aborted_reason: str | None = None
+    notes: str | None = None

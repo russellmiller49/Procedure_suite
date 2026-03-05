@@ -63,7 +63,122 @@ _FOCUSED_CASES: list[dict[str, Any]] = [
             "RUL CV negative, LUL CV positive. Plan to proceed with RUL BLVR with Zephyr valves at next procedure."
         ),
         "expected": {
-            "must_contain_groups": [["Chartis"], ["collateral ventilation", "CV negative", "CV positive"]],
+            "must_contain_groups": [
+                ["Chartis"],
+                ["collateral ventilation", "CV negative", "CV positive"],
+                ["No endobronchial valves were deployed", "No valves were deployed"],
+            ],
+            "must_not_contain": ["Valves deployed"],
+        },
+    },
+    {
+        "id": "focused_blvr_chartis_aborted_no_valves",
+        "prompt": (
+            "BLVR candidacy evaluation. Chartis assessment performed for BLVR candidacy. "
+            "RUL CV negative. Procedure aborted due to bronchospasm. "
+            "Plan for RUL BLVR with Zephyr valves at next procedure."
+        ),
+        "expected": {
+            "must_contain_groups": [["Chartis"], ["Procedure aborted"], ["No endobronchial valves were deployed"]],
+            "must_not_contain": ["Valves deployed"],
+        },
+    },
+    {
+        "id": "focused_tunneled_pleural_catheter_removal_no_inversion",
+        "prompt": (
+            "Right indwelling pleural catheter (PleurX) removal today. Catheter removed intact. "
+            "Spontaneous pleurodesis achieved. Site sutured."
+        ),
+        "expected": {
+            "must_contain_groups": [["tunneled pleural catheter", "PleurX"], ["removed"]],
+            "must_not_contain": ["Chemical pleurodesis", "Image-Guided Chest Tube"],
+        },
+    },
+    {
+        "id": "focused_ebus_staging_no_peripheral_tbna",
+        "prompt": (
+            "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. "
+            "ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging."
+        ),
+        "expected": {
+            "must_contain_groups": [["EBUS-TBNA Staging"], ["Station 4R", "Station: 4R"], ["Station 7", "Station: 7"]],
+            # Guardrail: prevent an extra *peripheral* TBNA section from being fabricated from EBUS station sampling.
+            "must_not_contain": ["\nTransbronchial Needle Aspiration\n"],
+        },
+    },
+    {
+        "id": "focused_whole_lung_lavage_not_bal",
+        "prompt": (
+            "Whole lung lavage (WLL) performed on the right lung for pulmonary alveolar proteinosis (PAP). "
+            "Total lavage volume 15 L warmed saline; return initially turbid then clear."
+        ),
+        "expected": {
+            "must_contain_groups": [["Whole lung lavage", "Whole Lung Lavage"], ["15", "15.0"], ["right lung", "right"] ],
+            "must_not_contain": ["Bronchoalveolar Lavage"],
+        },
+    },
+    {
+        "id": "focused_medical_thoracoscopy_biopsies_and_talc",
+        "prompt": (
+            "Left medical thoracoscopy performed. 10 pleural biopsies obtained. "
+            "Talc poudrage pleurodesis with 5 g talc. 24 Fr chest tube placed."
+        ),
+        "expected": {
+            "must_contain_groups": [["Diagnostic Thoracoscopy"], ["Pleural biopsies"], ["Talc poudrage", "talc"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_foreign_body_chicken_bone",
+        "prompt": (
+            "Rigid bronchoscopy performed. Chicken bone foreign body removed from the right mainstem bronchus using forceps."
+        ),
+        "expected": {
+            "must_contain_groups": [["foreign body"], ["Chicken bone"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_blvr_valve_exchange_mentions_replacement",
+        "prompt": (
+            "BLVR valve exchange. Removed 4 Zephyr valves from the RUL and replaced with 4 new Zephyr valves. "
+            "Replacement sizes: 5.5, 4.0, 4.0, 4.0."
+        ),
+        "expected": {
+            "must_contain_groups": [["Removal performed", "valves removed"], ["Exchange performed", "replaced"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_pleural_biopsy_abrams_not_blank",
+        "prompt": (
+            "Ultrasound guided pleural biopsy performed with an Abrams needle. 6 passes obtained. "
+            "CXR ordered."
+        ),
+        "expected": {
+            "must_contain_groups": [["Core needle biopsy was performed"], ["Abrams needle"], ["6 samples", "6 passes", "6"]],
+            "must_not_contain": ["hemothorax"],
+        },
+    },
+    {
+        "id": "focused_cryobiopsy_bleeding_management_not_overwritten",
+        "prompt": (
+            "Transbronchial cryobiopsy performed for ILD evaluation in the RLL. Four cryobiopsies obtained. "
+            "Moderate bleeding managed with bronchial blocker and cold saline lavage."
+        ),
+        "expected": {
+            "must_contain_groups": [["Transbronchial Cryobiopsy"], ["Bleeding managed", "bronchial blocker", "cold saline"]],
+            "must_not_contain": ["no clinically significant bleeding"],
+        },
+    },
+    {
+        "id": "focused_bilateral_tunneled_catheter_split_volumes",
+        "prompt": (
+            "Bilateral tunneled pleural catheter (PleurX) placement. Right side drained 1100 mL. "
+            "Left side drained 900 mL."
+        ),
+        "expected": {
+            "must_contain_groups": [["Hemithorax: Right"], ["Hemithorax: Left"], ["Fluid Removed: 1100 mL"], ["Fluid Removed: 900 mL"]],
             "must_not_contain": [],
         },
     },

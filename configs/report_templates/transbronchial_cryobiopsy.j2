@@ -15,9 +15,9 @@
 
 Airway Inspection The bronchoscope was introduced and a systematic airway inspection was performed, noting normal anatomy without endobronchial lesions.
 
-Radial EBUS & Preparation Attention was turned to {{ _target_lobe }}.
+Radial EBUS & Preparation Attention was turned to {{ _target_lobe }}{% if _seg_text and (_seg_text | upper) not in (_target_lobe | upper) %} ({{ _seg_text }}){% endif %}.
 
-rEBUS Survey: A radial EBUS probe was advanced to the basilar segments. The survey confirmed the absence of significant vessels at the selected biopsy sites and allowed for navigation to the periphery.
+rEBUS Survey: A radial EBUS probe was advanced to the target to confirm an appropriate biopsy window and absence of significant vessels at the selected biopsy sites.
 
 {% if proc.blocker_type %}Balloon Block: A {{ proc.blocker_type }} was positioned prophylactically at the lobar/segmental orifice to provide immediate tamponade if necessary.{% endif %}
 
@@ -33,6 +33,18 @@ Findings & Hemostasis
 
 {% if proc.num_samples %}Yield: A total of {{ proc.num_samples }} samples were collected{% if proc.sample_size_mm is not none %}, measuring approximately {{ proc.sample_size_mm | fmt_unit("mm") }} each{% endif %}.{% endif %}
 
-Hemostasis: {% if proc.blocker_type %}The prophylactic {{ proc.blocker_type }} was utilized/monitored. {% endif %}Final airway inspection demonstrated no clinically significant bleeding.
+{% set _notes_lower = (proc.notes or "") | lower %}
+{% set _notes_mentions_bleeding = ("bleeding" in _notes_lower) or ("oozing" in _notes_lower) or ("hemoptysis" in _notes_lower) or ("blocker" in _notes_lower) or ("cold saline" in _notes_lower) or ("iced saline" in _notes_lower) %}
+Hemostasis:
+{% if _notes_mentions_bleeding and proc.notes %}
+{{ proc.notes }}
+{% elif proc.blocker_type %}
+The {{ proc.blocker_type }} was utilized/monitored as needed. Final airway inspection was performed.
+{% else %}
+Final airway inspection was performed.
+{% endif %}
+{% if proc.notes and not _notes_mentions_bleeding %}
+Notes: {{ proc.notes }}.
+{% endif %}
 
 Pneumothorax Check: Post-procedure assessment demonstrated no pneumothorax.

@@ -70,6 +70,7 @@ from app.reporting.partial_schemas import (
     AirwayDilationPartial,
     AirwayStentPlacementPartial,
     BALPartial,
+    BLVRChartisAssessmentPartial,
     BronchialBrushingPartial,
     BronchialWashingPartial,
     EndobronchialCatheterPlacementPartial,
@@ -1065,6 +1066,7 @@ def default_schema_registry() -> SchemaRegistry:
         "peripheral_ablation_v1": PeripheralAblationPartial,
         "blvr_valve_placement_v1": airway_schemas.BLVRValvePlacement,
         "blvr_valve_removal_exchange_v1": airway_schemas.BLVRValveRemovalExchange,
+        "blvr_chartis_assessment_v1": BLVRChartisAssessmentPartial,
         "blvr_post_procedure_protocol_v1": airway_schemas.BLVRPostProcedureProtocol,
         "blvr_discharge_instructions_v1": airway_schemas.BLVRDischargeInstructions,
         "transbronchial_cryobiopsy_v1": TransbronchialCryobiopsyPartial,
@@ -1630,7 +1632,11 @@ def build_procedure_bundle_from_extraction(
     ebl_ml = parse_ebl_ml(note_text)
 
     # --- Rigid bronchoscopy / CAO heuristics ---
-    if re.search(r"(?i)\brigid\s*(?:bronch(?:oscopy)?|bronchoscope|scope|dilat(?:ion|e|or)?)\b", note_text):
+    rigid_context = bool(
+        re.search(r"(?i)\brigid\s*(?:bronch(?:oscopy)?|bronchoscope|scope|dilat(?:ion|e|or)?)\b", note_text)
+        or (re.search(r"(?i)\brigid\b", note_text) and re.search(r"(?i)\bbronch", note_text))
+    )
+    if rigid_context:
         interventions: list[str] = []
         if re.search(r"(?i)\bdilat", note_text) or re.search(r"(?i)\bdilators?\b", note_text):
             interventions.append("Mechanical Dilation (Rigid)")
@@ -1640,6 +1646,10 @@ def build_procedure_bundle_from_extraction(
             interventions.append("Argon Plasma Coagulation (APC)")
         if re.search(r"(?i)\bstent\b", note_text):
             interventions.append("Airway Stent Placement")
+        if re.search(r"(?i)\bforeign\s+body\b|\baspirat", note_text):
+            interventions.append("Foreign body removal")
+        if re.search(r"(?i)\bmitomycin\b", note_text):
+            interventions.append("Topical Mitomycin C application")
         if "complex airway" in note_lower:
             interventions.append("Complex Airway Management")
         if not interventions:
@@ -1814,23 +1824,543 @@ def build_procedure_bundle_from_extraction(
             findings = match.group(1).strip().rstrip(".")
 
         interventions: list[str] = []
-        if re.search(r"(?i)\bevacuated|evacuation", note_text):
-            interventions.append("Evacuation of pleural fluid")
-        if re.search(r"(?i)\bchest\s+tube\b", note_text):
-            interventions.append("Chest tube placement")
-
-        _append_proc(
-            "medical_thoracoscopy",
-            "medical_thoracoscopy_v1",
-            {
-                "side": side,
-                "findings": findings,
-                "interventions": interventions,
-                "specimens": ["Pleural fluid (for analysis)"] if interventions else [],
-            },
+        volume_ml = None
+        match = re.search(
+            r"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{0,30}\b(?:drained|evacuated|removed)\b",
+            note_text,
         )
+        if match:
+            try:
+                value = float(match.group(1))
+                unit = str(match.group(2) or "").lower()
+                if unit == "l":
+                    value *= 1000.0
+                volume_ml = int(round(value))
+            except Exception:
+                volume_ml = None
+
+        if re.search(r"(?i)\b(?:evacuated|evacuation|drained)\b", note_text):
+            interventions.append(
+                f"Evacuation of pleural fluid ({volume_ml} mL)" if volume_ml is not None else "Evacuation of pleural fluid"
+            )
+
+        biopsy_count = None
+        match = re.search(r"(?i)\bbiops(?:y|ies)\b[^.\n]{0,30}\b(?:x|×)?\s*(\d+)\b", note_text)
+        if match:
+            try:
+                biopsy_count = int(match.group(1))
+            except Exception:
+                biopsy_count = None
+        if biopsy_count is None:
+            match = re.search(r"(?i)\b(\d+)\s*(?:pleural\s+)?biops(?:y|ies)\b", note_text)
+            if match:
+                try:
+                    biopsy_count = int(match.group(1))
+                except Exception:
+                    biopsy_count = None
+        if biopsy_count is not None:
+            interventions.append(f"Pleural biopsies ({biopsy_count} specimens)")
+
+        talc_grams = None
+        if re.search(r"(?i)\btalc\b", note_text) and re.search(r"(?i)\b(?:poudrage|insufflat(?:ed|ion)|pleurodesis)\b", note_text):
+            match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*g\b[^.\n]{0,30}\btalc\b", note_text)
+            if match:
+                try:
+                    talc_grams = float(match.group(1))
+                except Exception:
+                    talc_grams = None
+            interventions.append(
+                f"Talc poudrage pleurodesis ({talc_grams:g} g)" if talc_grams is not None else "Talc poudrage pleurodesis"
+            )
+
+        if re.search(r"(?i)\bchest\s+tube\b", note_text):
+            size_fr = None
+            match = re.search(r"(?i)\b(\d{1,2})\s*fr\b[^.\n]{0,30}\bchest\s+tube\b", note_text)
+            if match:
+                try:
+                    size_fr = int(match.group(1))
+                except Exception:
+                    size_fr = None
+            interventions.append(
+                f"Chest tube placement ({size_fr} Fr)" if size_fr is not None else "Chest tube placement"
+            )
+
+        mt_payload = {
+            "side": side,
+            "findings": findings,
+            "interventions": interventions,
+            "specimens": (
+                ["Pleural fluid (for analysis)"] + ([f"Pleural biopsies ({biopsy_count} specimens)"] if biopsy_count else [])
+                if interventions
+                else []
+            ),
+        }
+
+        existing_mt = next((p for p in procedures if p.proc_type == "medical_thoracoscopy"), None)
+        if existing_mt is not None:
+            data: dict[str, Any] = {}
+            if isinstance(existing_mt.data, BaseModel):
+                data = existing_mt.data.model_dump(exclude_none=False)
+            elif isinstance(existing_mt.data, dict):
+                data = dict(existing_mt.data)
+
+            if side and not str(data.get("side") or "").strip():
+                data["side"] = side
+            if findings and not str(data.get("findings") or "").strip():
+                data["findings"] = findings
+
+            for key in ("interventions", "specimens"):
+                existing_items = data.get(key) if isinstance(data.get(key), list) else []
+                merged: list[str] = [str(item).strip() for item in existing_items if str(item).strip()]
+                for item in mt_payload.get(key) or []:
+                    if not isinstance(item, str):
+                        continue
+                    cleaned = item.strip()
+                    if cleaned and cleaned not in merged:
+                        merged.append(cleaned)
+                if merged:
+                    data[key] = merged
+
+            existing_mt.data = data
+        else:
+            _append_proc("medical_thoracoscopy", "medical_thoracoscopy_v1", mt_payload)
+
+    # --- Whole lung lavage (WLL) ---
+    wll_context = bool(
+        re.search(r"(?i)\bwhole\s+lung\s+lavage\b|\bwll\b", note_text)
+        or (
+            "lavage" in note_lower
+            and re.search(r"(?i)\b(?:pap|pulmonary\s+alveolar\s+proteinosis)\b", note_text)
+        )
+    )
+    if wll_context:
+        # Guardrail: WLL is frequently mis-seeded as BAL/washing in short prompts; prefer WLL when explicitly stated.
+        procedures = [
+            proc
+            for proc in procedures
+            if proc.proc_type not in {"bal", "bal_variant", "bronchial_washing"}
+        ]
+        existing_proc_types = {proc.proc_type for proc in procedures}
+
+        side = None
+        if re.search(r"(?i)\bright\b", note_text) and not re.search(r"(?i)\bleft\b", note_text):
+            side = "right"
+        elif re.search(r"(?i)\bleft\b", note_text) and not re.search(r"(?i)\bright\b", note_text):
+            side = "left"
+
+        total_l = None
+        match = re.search(r"(?i)\btotal(?:\s+lavage)?\s+volume\b[^0-9]{0,20}(\d+(?:\.\d+)?)\s*l\b", note_text)
+        if not match:
+            match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*l\b[^.\n]{0,30}\b(?:whole\s+lung\s+lavage|wll)\b", note_text)
+        if match:
+            try:
+                total_l = float(match.group(1))
+            except Exception:
+                total_l = None
+
+        notes = None
+        if re.search(r"(?i)\bturbid\b", note_text) and re.search(r"(?i)\bclear", note_text):
+            notes = "Return initially turbid and clearing by end"
+        elif re.search(r"(?i)\bturbid\b", note_text):
+            notes = "Return initially turbid"
+
+        if "whole_lung_lavage" not in existing_proc_types and side:
+            proc_id = f"whole_lung_lavage_{len(procedures) + 1}"
+            procedures.append(
+                ProcedureInput(
+                    proc_type="whole_lung_lavage",
+                    schema_id="whole_lung_lavage_v1",
+                    proc_id=proc_id,
+                    data={
+                        "side": side,
+                        "total_volume_l": total_l,
+                        "notes": notes,
+                    },
+                    cpt_candidates=list(cpt_candidates),
+                )
+            )
+
+    # --- Percutaneous pleural biopsy (Abrams/core) ---
+    if "transthoracic_needle_biopsy" not in {proc.proc_type for proc in procedures} and (
+        re.search(r"(?i)\bpleural\s+biops", note_text) or re.search(r"(?i)\babrams\b", note_text)
+    ):
+        needle_gauge = None
+        if re.search(r"(?i)\babrams\b", note_text):
+            needle_gauge = "Abrams needle"
+        else:
+            match = re.search(r"(?i)\b(\d{1,2})\s*g\b", note_text)
+            if match:
+                needle_gauge = f"{match.group(1)}G"
+
+        samples_collected = None
+        match = re.search(r"(?i)\b(\d+)\s*(?:biopsy\s*)?(?:passes?|cores?)\b", note_text)
+        if match:
+            try:
+                samples_collected = int(match.group(1))
+            except Exception:
+                samples_collected = None
+
+        imaging_modality = None
+        if re.search(r"(?i)\bultrasound\b|\bU/S\b|\bUS\b", note_text):
+            imaging_modality = "Ultrasound"
+        elif re.search(r"(?i)\bct\b|\bcomputed\s+tomography\b", note_text):
+            imaging_modality = "CT"
+
+        if needle_gauge and samples_collected is not None:
+            proc_id = f"transthoracic_needle_biopsy_{len(procedures) + 1}"
+            procedures.append(
+                ProcedureInput(
+                    proc_type="transthoracic_needle_biopsy",
+                    schema_id="transthoracic_needle_biopsy_v1",
+                    proc_id=proc_id,
+                    data={
+                        "needle_gauge": needle_gauge,
+                        "samples_collected": samples_collected,
+                        "imaging_modality": imaging_modality,
+                        "cxr_ordered": True if re.search(r"(?i)\bcxr\b|chest x[-\s]?ray", note_text) else None,
+                    },
+                    cpt_candidates=list(cpt_candidates),
+                )
+            )
+
+    # --- Foreign body removal ---
+    if "foreign_body_removal" not in {proc.proc_type for proc in procedures} and re.search(
+        r"(?i)\bforeign\s+body\b|\baspirat(?:ion|ed)?\b",
+        note_text,
+    ):
+        if re.search(r"(?i)\b(?:removed|retriev(?:ed|al)|extract(?:ed|ion))\b", note_text):
+            tools: list[str] = []
+            if re.search(r"(?i)\boptical\s+forceps\b", note_text):
+                tools.append("Optical forceps")
+            elif re.search(r"(?i)\bforceps\b", note_text):
+                tools.append("Forceps")
+            if re.search(r"(?i)\bbasket\b", note_text):
+                tools.append("Basket")
+            if re.search(r"(?i)\bcryo(?:probe| extraction)\b", note_text):
+                tools.append("Cryoprobe")
+            tools = tools or ["Retrieval tools"]
+
+            fb_notes = None
+            match = re.search(r"(?i)\b(chicken\s+bone)\b", note_text)
+            if match:
+                fb_notes = match.group(1).strip().lower()
+                fb_notes = fb_notes[0].upper() + fb_notes[1:]
+
+            if airway_segment:
+                proc_id = f"foreign_body_removal_{len(procedures) + 1}"
+                procedures.append(
+                    ProcedureInput(
+                        proc_type="foreign_body_removal",
+                        schema_id="foreign_body_removal_v1",
+                        proc_id=proc_id,
+                        data={
+                            "airway_segment": airway_segment,
+                            "tools_used": tools,
+                            "notes": fb_notes,
+                        },
+                        cpt_candidates=list(cpt_candidates),
+                    )
+                )
+
+    # --- BLVR Chartis assessment (no valve deployment) ---
+    if (
+        "chartis" in note_lower
+        and "blvr_chartis_assessment" not in {proc.proc_type for proc in procedures}
+        and "blvr_valve_placement" not in {proc.proc_type for proc in procedures}
+    ):
+        assessments: list[dict[str, Any]] = []
+        by_lobe: dict[str, dict[str, Any]] = {}
+        for match in re.finditer(r"(?i)\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b", note_text):
+            lobe = match.group(1).upper()
+            window = note_text[max(0, match.start() - 10) : match.start() + 80]
+            cv_result = None
+            if re.search(r"(?i)\b(?:cv\s*negative|no\s+collateral\s+ventilation|collateral\s+ventilation\s+absent)\b", window):
+                cv_result = "CV negative"
+            elif re.search(r"(?i)\b(?:cv\s*positive|collateral\s+ventilation\s+positive|collateral\s+ventilation\s+present)\b", window):
+                cv_result = "CV positive"
+            if cv_result:
+                by_lobe[lobe] = {"lobe": lobe, "cv_result": cv_result}
+        assessments = list(by_lobe.values())
+
+        planned_target = None
+        match = re.search(
+            r"(?i)\b(?:plan(?:s|ned)?\s+to\s+proceed|will\s+proceed|schedule(?:d)?|planned)\b[^.\n]{0,80}\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b",
+            note_text,
+        )
+        if match:
+            planned_target = match.group(1).upper()
+
+        planned_valve_type = None
+        if "zephyr" in note_lower:
+            planned_valve_type = "Zephyr (Pulmonx)"
+        elif "spiration" in note_lower:
+            planned_valve_type = "Spiration (Olympus)"
+
+        aborted = True if re.search(r"(?i)\baborted\b", note_text) else None
+        aborted_reason = None
+        if aborted:
+            match = re.search(r"(?i)\baborted\b[^.\n]{0,160}(?:\\.|$)", note_text)
+            if match:
+                aborted_reason = match.group(0).strip().rstrip(".")
+
+        if assessments:
+            proc_id = f"blvr_chartis_assessment_{len(procedures) + 1}"
+            procedures.append(
+                ProcedureInput(
+                    proc_type="blvr_chartis_assessment",
+                    schema_id="blvr_chartis_assessment_v1",
+                    proc_id=proc_id,
+                    data={
+                        "assessments": assessments,
+                        "planned_target_lobe": planned_target,
+                        "planned_valve_type": planned_valve_type,
+                        "procedure_aborted": aborted,
+                        "aborted_reason": aborted_reason,
+                    },
+                    cpt_candidates=list(cpt_candidates),
+                )
+            )
 
     procedures = _apply_reporter_evidence_gating(procedures, note_text=note_text)
+
+    # --- Post-processing enrichments / guardrails (reporter only) ---
+    # Split bilateral tunneled pleural catheter placement into side-specific procedures.
+    if re.search(r"(?i)\bbilateral\b", note_text) and any(
+        p.proc_type == "tunneled_pleural_catheter_insert" for p in procedures
+    ):
+
+        def _extract_side_volume_ml(text: str, side: str) -> int | None:
+            patterns = [
+                rf"(?i)\b{side}\b[^.\n]{{0,60}}?\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{{0,30}}?\b(?:drained|removed)\b",
+                rf"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{{0,60}}?\b{side}\b[^.\n]{{0,30}}?\b(?:drained|removed)\b",
+                rf"(?i)\b{side}\b[^.\n]{{0,60}}?\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b",
+            ]
+            for pat in patterns:
+                match = re.search(pat, text)
+                if not match:
+                    continue
+                try:
+                    value = float(match.group(1))
+                except Exception:
+                    continue
+                unit = str(match.group(2) or "").lower()
+                if unit == "l":
+                    value *= 1000.0
+                try:
+                    return int(round(value))
+                except Exception:
+                    continue
+            return None
+
+        right_ml = _extract_side_volume_ml(note_text, "right")
+        left_ml = _extract_side_volume_ml(note_text, "left")
+        if right_ml is not None and left_ml is not None:
+            base = next((p for p in procedures if p.proc_type == "tunneled_pleural_catheter_insert"), None)
+            base_data: dict[str, Any] = {}
+            base_cpts: list[str | int] = list(cpt_candidates)
+            base_schema = "tunneled_pleural_catheter_insert_v1"
+            if base is not None:
+                base_schema = base.schema_id
+                base_cpts = list(base.cpt_candidates or base_cpts)
+                if isinstance(base.data, BaseModel):
+                    base_data = base.data.model_dump(exclude_none=False)
+                elif isinstance(base.data, dict):
+                    base_data = dict(base.data)
+
+            procedures = [p for p in procedures if p.proc_type != "tunneled_pleural_catheter_insert"]
+            for side, vol in (("right", right_ml), ("left", left_ml)):
+                data = dict(base_data)
+                data["side"] = side
+                data["fluid_removed_ml"] = vol
+                procedures.append(
+                    ProcedureInput(
+                        proc_type="tunneled_pleural_catheter_insert",
+                        schema_id=base_schema,
+                        proc_id=f"tunneled_pleural_catheter_insert_{side}",
+                        data=data,
+                        cpt_candidates=list(base_cpts),
+                    )
+                )
+
+    # Enrich airway dilation notes with Mitomycin C when mentioned.
+    if re.search(r"(?i)\bmitomycin\b", note_text):
+        mito_parts: list[str] = ["Topical Mitomycin C applied"]
+        conc = None
+        match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*mg\s*/\s*ml\b", note_text)
+        if match:
+            conc = match.group(1)
+        duration = None
+        match = re.search(r"(?i)\b(?:x|×|for)\s*(\d+(?:\.\d+)?)\s*min(?:ute)?s?\b", note_text)
+        if match:
+            duration = match.group(1)
+        if conc and duration:
+            mito_parts.append(f"({conc} mg/mL × {duration} minutes)")
+        elif conc:
+            mito_parts.append(f"({conc} mg/mL)")
+        elif duration:
+            mito_parts.append(f"(× {duration} minutes)")
+        mito_note = " ".join(mito_parts)
+
+        for proc in procedures:
+            if proc.proc_type != "airway_dilation":
+                continue
+            data: dict[str, Any] = {}
+            if isinstance(proc.data, BaseModel):
+                data = proc.data.model_dump(exclude_none=False)
+            elif isinstance(proc.data, dict):
+                data = dict(proc.data)
+            if not str(data.get("notes") or "").strip():
+                data["notes"] = mito_note
+                proc.data = data
+
+    # Enrich airway stent placement details for Y-stents (e.g., 18/14/14 mm).
+    y_stent_dims = None
+    match = re.search(r"(?i)\b(\d{1,2})\s*/\s*(\d{1,2})\s*/\s*(\d{1,2})\s*mm\b", note_text)
+    if match:
+        y_stent_dims = f"{match.group(1)}/{match.group(2)}/{match.group(3)} mm"
+    if y_stent_dims and re.search(r"(?i)\by[-\s]?stent\b", note_text):
+        for proc in procedures:
+            if proc.proc_type != "airway_stent_placement":
+                continue
+            data: dict[str, Any] = {}
+            if isinstance(proc.data, BaseModel):
+                data = proc.data.model_dump(exclude_none=False)
+            elif isinstance(proc.data, dict):
+                data = dict(proc.data)
+
+            if not str(data.get("notes") or "").strip():
+                brand = "Dumon" if re.search(r"(?i)\bdumon\b", note_text) else None
+                prefix = f"{brand} " if brand else ""
+                data["notes"] = f"{prefix}Y-stent ({y_stent_dims}) placed."
+                proc.data = data
+
+            stent_type = str(data.get("stent_type") or "").strip().lower()
+            if stent_type in {"y-stent", "y stent"} and re.search(r"(?i)\bdumon\b", note_text):
+                data["stent_type"] = "Dumon Y-stent"
+                proc.data = data
+
+    # Bleeding/hemostasis hardening: surface dictated management and avoid optimistic boilerplate.
+    bleeding_context = bool(
+        re.search(r"(?i)\b(?:moderate|mild|severe)\s+(?:bleeding|oozing)\b", note_text)
+        or re.search(
+            r"(?i)\b(?:bleeding|oozing)\b[^.\n]{0,80}\b(?:managed|controlled|treated|requiring|required)\b",
+            note_text,
+        )
+        or re.search(r"(?i)\bhemoptysis\b", note_text)
+    )
+
+    mentions_blocker = bool(re.search(r"(?i)\b(?:bronchial|endobronchial)\s+blocker\b", note_text))
+    mentions_cold_saline = bool(re.search(r"(?i)\b(?:cold|iced)\s+saline\b", note_text))
+
+    if bleeding_context and raw.get("complications_text") in (None, "", [], {}):
+        snippet = None
+        for pat in (
+            r"(?i)\b(?:moderate|mild|severe)?\s*(?:bleeding|oozing)[^.\n]{0,160}\b(?:bronchial|endobronchial)\s+blocker\b[^.\n]{0,80}",
+            r"(?i)\b(?:moderate|mild|severe)?\s*(?:bleeding|oozing)[^.\n]{0,160}\b(?:cold|iced)\s+saline\b[^.\n]{0,80}",
+            r"(?i)\bhemoptysis\b[^.\n]{0,120}",
+            r"(?i)\b(?:moderate|mild|severe)?\s*(?:bleeding|oozing)[^.\n]{0,160}",
+        ):
+            match = re.search(pat, note_text)
+            if match:
+                snippet = match.group(0).strip().rstrip(".")
+                break
+        raw["complications_text"] = snippet or "Bleeding managed intra-procedurally."
+
+    if bleeding_context:
+        hemo_note_parts: list[str] = []
+        if mentions_blocker:
+            hemo_note_parts.append("bronchial blocker")
+        if mentions_cold_saline:
+            hemo_note_parts.append("cold saline")
+
+        hemo_note = None
+        if hemo_note_parts:
+            hemo_note = "Bleeding managed with " + " and ".join(hemo_note_parts) + "."
+
+        if hemo_note:
+            for proc in procedures:
+                if proc.proc_type != "transbronchial_cryobiopsy":
+                    continue
+                data: dict[str, Any] = {}
+                if isinstance(proc.data, BaseModel):
+                    data = proc.data.model_dump(exclude_none=False)
+                elif isinstance(proc.data, dict):
+                    data = dict(proc.data)
+                if not str(data.get("notes") or "").strip():
+                    data["notes"] = hemo_note
+                    proc.data = data
+
+        # Create explicit blocker/hemostasis procedure records when dictated.
+        blocker_inferred = bool(
+            re.search(
+                r"(?i)\b(?:bronchial|endobronchial)\s+blocker\b[^.\n]{0,80}\b(?:placed|positioned|inflated|used)\b",
+                note_text,
+            )
+            or re.search(
+                r"(?i)\b(?:placed|positioned|inflated|used)\b[^.\n]{0,80}\b(?:bronchial|endobronchial)\s+blocker\b",
+                note_text,
+            )
+            or re.search(r"(?i)\bmanaged\s+with\b[^.\n]{0,80}\b(?:bronchial|endobronchial)\s+blocker\b", note_text)
+        )
+
+        if blocker_inferred and not any(p.proc_type == "endobronchial_blocker" for p in procedures):
+            location = None
+            match = re.search(r"(?i)\b([RL]B\d{1,2}(?:\+\d{1,2})?)\b", note_text)
+            if match:
+                location = match.group(1).upper()
+            if not location:
+                location = raw.get("nav_target_segment") or raw.get("lesion_location") or airway_segment
+
+            if location:
+                side = (
+                    "left"
+                    if str(location).upper().startswith("L")
+                    else ("right" if str(location).upper().startswith("R") else "unspecified")
+                )
+                procedures.append(
+                    ProcedureInput(
+                        proc_type="endobronchial_blocker",
+                        schema_id="endobronchial_blocker_v1",
+                        proc_id=f"endobronchial_blocker_{len(procedures) + 1}",
+                        data={
+                            "blocker_type": "Endobronchial blocker",
+                            "side": side,
+                            "location": str(location),
+                            "indication": "Hemorrhage control",
+                        },
+                        cpt_candidates=list(cpt_candidates),
+                    )
+                )
+
+        hemostasis_inferred = bool(
+            (mentions_cold_saline and re.search(r"(?i)\b(?:bleeding|oozing|hemoptysis)\b", note_text))
+            or (mentions_cold_saline and re.search(r"(?i)\b(?:managed|controlled|treated)\b", note_text))
+            or (mentions_blocker and bleeding_context)
+        )
+        if hemostasis_inferred and not any(p.proc_type == "endobronchial_hemostasis" for p in procedures):
+            bleed_loc = None
+            match = re.search(r"(?i)\b([RL]B\d{1,2}(?:\+\d{1,2})?)\b", note_text)
+            if match:
+                bleed_loc = match.group(1).upper()
+            if not bleed_loc:
+                bleed_loc = raw.get("nav_target_segment") or raw.get("lesion_location") or airway_segment
+            if bleed_loc:
+                procedures.append(
+                    ProcedureInput(
+                        proc_type="endobronchial_hemostasis",
+                        schema_id="endobronchial_hemostasis_v1",
+                        proc_id=f"endobronchial_hemostasis_{len(procedures) + 1}",
+                        data={
+                            "airway_segment": str(bleed_loc),
+                            "hemostasis_result": (
+                                "Resolved"
+                                if re.search(r"(?i)\b(?:resolution|resolved|controlled)\b", note_text)
+                                else "Documented"
+                            ),
+                        },
+                        cpt_candidates=list(cpt_candidates),
+                    )
+                )
     existing_proc_types = {proc.proc_type for proc in procedures}
 
     # Recompute indication after reporter-only enrichments

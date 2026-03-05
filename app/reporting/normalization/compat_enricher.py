@@ -256,6 +256,12 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             return "Spiration (Olympus)"
         return text
 
+    def _normalize_segment_token(value: Any) -> str:
+        text = str(value or "").strip().upper()
+        # Normalize common spacing artifacts in shorthand like "LB1 + 2" -> "LB1+2".
+        text = re.sub(r"\s*\+\s*", "+", text)
+        return text
+
     def _extract_blvr_text_fields(text: str) -> dict[str, Any]:
         parsed: dict[str, Any] = {}
         if not text:
@@ -272,9 +278,15 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         if brand:
             parsed["blvr_valve_type"] = brand
 
-        segment_tokens = _dedupe_preserve_order([match.group(1).upper() for match in re.finditer(r"(?i)\b([RL]B\d{1,2})\b", text)])
+        segment_token_pattern = r"(?i)\b([RL]B\d{1,2}(?:\s*\+\s*\d{1,2})?)\b"
+        segment_tokens = _dedupe_preserve_order(
+            [_normalize_segment_token(match.group(1)) for match in re.finditer(segment_token_pattern, text)]
+        )
         segment_size_pairs = list(
-            re.finditer(r"(?i)\b([RL]B\d{1,2})\s*(?:[:=\-]|\s)\s*(\d(?:\.\d+)?)\b", text)
+            re.finditer(
+                r"(?i)\b([RL]B\d{1,2}(?:\s*\+\s*\d{1,2})?)\b\s*(?:[:=\-]|\s)\s*(?:size\s*)?(\d(?:\.\d+)?)\b",
+                text,
+            )
         )
         if segment_tokens:
             parsed["blvr_segments_treated"] = segment_tokens
@@ -284,7 +296,9 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             if size_vals:
                 parsed["blvr_valve_sizes"] = size_vals
             if "blvr_segments_treated" not in parsed:
-                parsed["blvr_segments_treated"] = _dedupe_preserve_order([match.group(1).upper() for match in segment_size_pairs])
+                parsed["blvr_segments_treated"] = _dedupe_preserve_order(
+                    [_normalize_segment_token(match.group(1)) for match in segment_size_pairs]
+                )
 
         lobe_tokens = _dedupe_preserve_order(
             [
@@ -294,6 +308,15 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         )
         if len(lobe_tokens) == 1:
             parsed["blvr_target_lobe"] = lobe_tokens[0]
+        elif "blvr_target_lobe" not in parsed and lobe_tokens:
+            # For multi-lobe dictations, try to anchor the *planned* or *target* lobe.
+            match = re.search(
+                r"(?i)\b(?:plan(?:s|ned)?\s+to\s+proceed|will\s+proceed|to\s+proceed|schedule(?:d)?|planned)\b"
+                r"[^.\n]{0,80}\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b",
+                text,
+            )
+            if match:
+                parsed["blvr_target_lobe"] = match.group(1).upper()
 
         chartis_used = "chartis" in lowered
         if chartis_used:
@@ -1777,8 +1800,32 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     # DictPayloadAdapter compat: map nested `procedures_performed.*` into top-level payload keys.
     # This allows the reporter adapters to build partially-populated procedure models.
     peripheral_tbna = procs.get("peripheral_tbna")
+    ebus_station_syntax = bool(
+        source_text
+        and (
+            re.search(r"(?i)\b(?:station\s*)?\d{1,2}[LR]?\s*\(\s*\d+(?:\.\d+)?\s*mm\)", source_text)
+            or re.search(r"(?i)\bstation\s+\d{1,2}[LR]?\b", source_text)
+        )
+    )
+    has_ebus_context = bool(source_text and re.search(r"(?i)\b(?:ebus|eusb|eus-?b)\b", source_text))
+    has_peripheral_context = bool(
+        source_text
+        and re.search(
+            r"(?i)\b(?:nodule|lesion|mass|target|peripheral|robotic|ion|monarch|emn|navigation|r\s*ebus|radial\s+ebus|cbct|cone\s*beam|tool[-\s]?in[-\s]?lesion)\b",
+            source_text,
+        )
+    )
+    ebus_like_without_peripheral = (has_ebus_context or ebus_station_syntax) and not has_peripheral_context
+    if ebus_like_without_peripheral:
+        # Guardrail: EBUS station sampling (e.g., "station 4R/7") is often misclassified as peripheral TBNA.
+        # Do not allow a peripheral TBNA payload to leak into the reporter bundle without explicit peripheral context.
+        raw.pop("transbronchial_needle_aspiration", None)
+        if isinstance(procs.get("peripheral_tbna"), dict) and procs["peripheral_tbna"].get("performed") is True:
+            procs.pop("peripheral_tbna", None)
+            raw["procedures_performed"] = procs
     if raw.get("transbronchial_needle_aspiration") in (None, "", [], {}) and (
-        tbna_count is not None or (isinstance(peripheral_tbna, dict) and peripheral_tbna.get("performed") is True)
+        not ebus_like_without_peripheral
+        and (tbna_count is not None or (isinstance(peripheral_tbna, dict) and peripheral_tbna.get("performed") is True))
     ):
         raw["transbronchial_needle_aspiration"] = {
             "lung_segment": _first_nonempty_str(raw.get("nav_target_segment"), raw.get("lesion_location"), location_hint, segment_hint),
@@ -2449,6 +2496,51 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     # --- Pleural compat: map V3 pleural_procedures.* into legacy flat keys for adapters ---
     pleural = raw.get("pleural_procedures") or {}
     if isinstance(pleural, dict):
+        # Reporter guardrail: tunneled pleural catheter removal is often dictated as a short one-liner and can be
+        # inverted into "chest tube + pleurodesis" when "pleurodesis achieved" is mentioned as an outcome.
+        if raw.get("tunneled_pleural_catheter_remove") in (None, "", [], {}) and source_text:
+            lowered = source_text.lower()
+            has_tunneled_catheter_keyword = bool(
+                re.search(
+                    r"(?i)\b(?:tunneled\s+pleural\s+catheter|indwelling\s+pleural\s+catheter|pleurx|\b(?:tpc|ipc)\b)\b",
+                    source_text,
+                )
+            )
+            has_catheter_removal_phrase = bool(
+                re.search(
+                    r"(?i)\b(?:catheter|pleurx|\bipc\b|\btpc\b)\b[^.\n]{0,60}\b(?:remov(?:al|ed)|remove|explant(?:ed)?|taken\s+out)\b"
+                    r"|\b(?:remov(?:al|ed)|remove|explant(?:ed)?|taken\s+out)\b[^.\n]{0,60}\b(?:catheter|pleurx|\bipc\b|\btpc\b)\b",
+                    source_text,
+                )
+            )
+            if has_tunneled_catheter_keyword and has_catheter_removal_phrase:
+                side = None
+                has_right = bool(re.search(r"(?i)\bright\b", source_text))
+                has_left = bool(re.search(r"(?i)\bleft\b", source_text))
+                if has_right and not has_left:
+                    side = "right"
+                elif has_left and not has_right:
+                    side = "left"
+
+                if side:
+                    reason_parts: list[str] = []
+                    if re.search(r"(?i)\b(?:spontaneous\s+pleurodesis|autopleurodesis|pleurodesis\s+achieved)\b", source_text):
+                        reason_parts.append("Spontaneous pleurodesis achieved")
+                    match = re.search(r"(?i)\bno\s+drainage\b[^\n]{0,60}", source_text)
+                    if match:
+                        reason_parts.append(match.group(0).strip().rstrip("."))
+                    reason = "; ".join(reason_parts) if reason_parts else None
+
+                    sutured = True if ("suture" in lowered or "sutured" in lowered) else None
+                    raw["tunneled_pleural_catheter_remove"] = {
+                        "side": side,
+                        "reason": reason,
+                        "sutured": sutured,
+                        "complications": None,
+                    }
+                    # Prevent insertion/chest-tube adapters from firing on this removal note.
+                    raw["pleural_procedure_type"] = "tunneled catheter removal"
+
         # Fallback: infer common pleural procedures from free text when structured flags are missing.
         if raw.get("pleural_procedure_type") in (None, "", [], {}) and source_text:
             lowered = source_text.lower()
@@ -2456,13 +2548,23 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 raw["pleural_procedure_type"] = "pigtail catheter"
             elif "thoracentesis" in lowered:
                 raw["pleural_procedure_type"] = "thoracentesis"
-            elif "tunneled pleural catheter" in lowered or "pleurx" in lowered or re.search(r"(?i)\b(?:tpc|ipc)\b", source_text):
+            elif (
+                "tunneled pleural catheter" in lowered
+                or "indwelling pleural catheter" in lowered
+                or "pleurx" in lowered
+                or re.search(r"(?i)\b(?:tpc|ipc)\b", source_text)
+            ):
                 raw["pleural_procedure_type"] = "tunneled catheter"
             elif "pleurodesis" in lowered:
-                if re.search(r"(?i)\b(?:pleurx|tunneled|tpc|ipc)\b", source_text):
-                    raw["pleural_procedure_type"] = "tunneled catheter"
-                else:
-                    raw["pleural_procedure_type"] = "chest tube"
+                # Do not infer a pleurodesis *procedure* from outcome phrases like "spontaneous pleurodesis achieved".
+                if not re.search(
+                    r"(?i)\b(?:spontaneous\s+pleurodesis|auto\s*pleurodesis|autopleurodesis|pleurodesis\s+achieved)\b",
+                    source_text,
+                ):
+                    if re.search(r"(?i)\b(?:pleurx|tunneled|tpc|ipc)\b", source_text):
+                        raw["pleural_procedure_type"] = "tunneled catheter"
+                    else:
+                        raw["pleural_procedure_type"] = "chest tube"
             elif "chest tube" in lowered and not _is_historical_chest_tube_context(source_text):
                 raw["pleural_procedure_type"] = "chest tube"
 
@@ -2679,7 +2781,18 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                     raw["pleural_procedure_type"] = "chest tube"
 
         if source_text and raw.get("pleural_pleurodesis_performed") is not True:
-            if re.search(r"(?i)\b(?:pleurodesis|talc\s+slurry|doxycycline)\b", source_text):
+            # Guardrail: "spontaneous pleurodesis achieved" is an outcome (often the *reason* for catheter removal),
+            # not an intraprocedural pleurodesis action.
+            spontaneous_pleurodesis = bool(
+                re.search(
+                    r"(?i)\b(?:spontaneous\s+pleurodesis|auto\s*pleurodesis|autopleurodesis|pleurodesis\s+achieved)\b",
+                    source_text,
+                )
+            )
+            if not spontaneous_pleurodesis and re.search(
+                r"(?i)\b(?:pleurodesis|talc\s+slurry|doxycycline|talc\s+poudrage)\b",
+                source_text,
+            ):
                 raw["pleural_pleurodesis_performed"] = True
                 if raw.get("pleural_pleurodesis_agent") in (None, "", [], {}):
                     if re.search(r"(?i)\btalc\b", source_text):

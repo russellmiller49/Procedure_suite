@@ -51,13 +51,14 @@ Airway Inspection The bronchoscope was introduced and a systematic airway inspec
 
 Radial EBUS & Preparation Attention was turned to the Right Upper Lobe (RUL).
 
-rEBUS Survey: A radial EBUS probe was advanced to the basilar segments. The survey confirmed the absence of significant vessels at the selected biopsy sites and allowed for navigation to the periphery.
+rEBUS Survey: A radial EBUS probe was advanced to the target to confirm an appropriate biopsy window and absence of significant vessels at the selected biopsy sites.
 
 Transbronchial Cryobiopsy A cryoprobe was utilized for sampling.
 
 Findings & Hemostasis
 
-Hemostasis: Final airway inspection demonstrated no clinically significant bleeding.
+Hemostasis:
+Final airway inspection was performed.
 
 Pneumothorax Check: Post-procedure assessment demonstrated no pneumothorax.
 

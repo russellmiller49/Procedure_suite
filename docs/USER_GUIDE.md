@@ -763,6 +763,23 @@ python ops/tools/run_reporter_random_seeds.py \
   --metadata-output reporter_tests_metadata.json
 ```
 
+To run from a Markdown prompt source file:
+
+```bash
+python ops/tools/run_reporter_random_seeds.py \
+  --input-markdown "/home/rjm/projects/proc_suite_notes/reporter_training/training_prompts/ip_preporter_prompts.md" \
+  --count 50 \
+  --seed 42 \
+  --output "/home/rjm/projects/proc_suite_notes/reporter_training/training_prompts/reporter_batch_results.txt" \
+  --export-prompts-dir "/home/rjm/projects/proc_suite_notes/reporter_training/training_prompts/prompt_txt" \
+  --include-metadata-json
+```
+
+Troubleshooting (`FileNotFoundError` for input markdown):
+
+- On WSL/Linux, use `/home/...` paths, not macOS `/Users/...` paths.
+- Verify the markdown filename/path exactly (for example: `ip_preporter_prompts.md`).
+
 ### LLM Findings Evaluation Tool
 
 Evaluate reporter LLM findings strategy on reporter prompt datasets:
