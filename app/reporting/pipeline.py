@@ -327,7 +327,20 @@ class ReportPipeline:
                     survey_proc = selected.paired_surveys.get(proc.proc_id or proc.schema_id)
                     if survey_proc:
                         extra_context = {"survey": _validated(survey_proc)}
-                    nav_proc = selected.first_by_type.get("robotic_navigation")
+                    nav_proc = None
+                    if survey_proc is not None:
+                        survey_key = _target_key_from_proc(survey_proc)
+                        if survey_key:
+                            nav_proc = next(
+                                (
+                                    candidate
+                                    for candidate in selected.sorted_procs
+                                    if candidate.proc_type == "robotic_navigation" and _target_key_from_proc(candidate) == survey_key
+                                ),
+                                None,
+                            )
+                    if nav_proc is None:
+                        nav_proc = selected.first_by_type.get("robotic_navigation")
                     if nav_proc:
                         extra_context = extra_context or {}
                         extra_context["nav"] = _validated(nav_proc)
@@ -335,12 +348,35 @@ class ReportPipeline:
                     extra_context["til_present"] = has_til_confirmation
                 if proc.proc_type == "robotic_navigation":
                     extra_context = extra_context or {}
-                    survey_proc = selected.first_by_type.get("radial_ebus_survey")
-                    if survey_proc:
-                        extra_context["survey"] = _validated(survey_proc)
-                    sampling_proc = selected.first_by_type.get("radial_ebus_sampling")
-                    if sampling_proc:
-                        extra_context["sampling"] = _validated(sampling_proc)
+                    nav_key = _target_key_from_proc(proc)
+                    survey_match = None
+                    if nav_key:
+                        survey_match = next(
+                            (
+                                candidate
+                                for candidate in selected.sorted_procs
+                                if candidate.proc_type == "radial_ebus_survey" and _target_key_from_proc(candidate) == nav_key
+                            ),
+                            None,
+                        )
+                    if survey_match is None:
+                        survey_match = selected.first_by_type.get("radial_ebus_survey")
+                    if survey_match:
+                        extra_context["survey"] = _validated(survey_match)
+
+                    sampling_match = None
+                    if nav_key:
+                        for sampling in (p for p in selected.sorted_procs if p.proc_type == "radial_ebus_sampling"):
+                            paired = selected.paired_surveys.get(sampling.proc_id or sampling.schema_id)
+                            if paired is None:
+                                continue
+                            if _target_key_from_proc(paired) == nav_key:
+                                sampling_match = sampling
+                                break
+                    if sampling_match is None:
+                        sampling_match = selected.first_by_type.get("radial_ebus_sampling")
+                    if sampling_match:
+                        extra_context["sampling"] = _validated(sampling_match)
                 if proc.proc_type in ("thoracentesis", "thoracentesis_detailed", "thoracentesis_manometry") and stopped_reason:
                     extra_context = extra_context or {}
                     extra_context["procedure_stopped_reason"] = stopped_reason

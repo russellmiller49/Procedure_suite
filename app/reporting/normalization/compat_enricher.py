@@ -115,6 +115,45 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             return "LLL"
         return None
 
+    def _extract_lobe_tokens_in_order(text: str) -> list[str]:
+        if not text:
+            return []
+        tokens: list[str] = []
+        for match in re.finditer(r"(?i)\b(RUL|RML|RLL|LUL|LLL)\b", text):
+            tok = match.group(1).upper()
+            if tok not in tokens:
+                tokens.append(tok)
+        # Long-form phrases (rare in short prompts, but common in dictations).
+        long_form = (
+            ("RIGHT UPPER LOBE", "RUL"),
+            ("RIGHT MIDDLE LOBE", "RML"),
+            ("RIGHT LOWER LOBE", "RLL"),
+            ("LEFT UPPER LOBE", "LUL"),
+            ("LEFT LOWER LOBE", "LLL"),
+        )
+        upper = text.upper()
+        for phrase, tok in long_form:
+            if phrase in upper and tok not in tokens:
+                tokens.append(tok)
+        return tokens
+
+    def _join_location_tokens(tokens: list[str]) -> str | None:
+        cleaned: list[str] = []
+        seen: set[str] = set()
+        for token in tokens or []:
+            tok = str(token or "").strip().upper()
+            if not tok or tok in seen:
+                continue
+            seen.add(tok)
+            cleaned.append(tok)
+        if not cleaned:
+            return None
+        if len(cleaned) == 1:
+            return cleaned[0]
+        if len(cleaned) == 2:
+            return f"{cleaned[0]} and {cleaned[1]}"
+        return ", ".join(cleaned[:-1]) + f", and {cleaned[-1]}"
+
     def _extract_bronch_segment_hint(text: str) -> str | None:
         """Best-effort bronchopulmonary segment token (e.g., RB10, LB6, B6)."""
         if not text:
@@ -407,9 +446,32 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     def _extract_pleural_volume_ml(text: str) -> int | None:
         if not text:
             return None
+        verbs = r"(?:drained|removed|aspirated|obtained|withdrawn|evacuated|extracted|tapped|yield(?:ed)?|collected)"
+
+        # Bilateral side-tagged volumes (e.g., "Right 1200ml ... Left 800ml ...")
+        side_map: dict[str, float] = {}
+        for side in ("right", "left"):
+            match = re.search(rf"(?i)\b{side}\b[^.\n]{{0,80}}?\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b", text)
+            if not match:
+                continue
+            try:
+                value = float(match.group(1))
+            except Exception:
+                continue
+            unit = str(match.group(2) or "").lower()
+            if unit == "l":
+                value *= 1000.0
+            side_map[side] = value
+        if "right" in side_map and "left" in side_map:
+            try:
+                return int(round(side_map["right"] + side_map["left"]))
+            except Exception:
+                pass
+
         patterns = [
-            r"(?i)\b(?:drained|removed)\s+(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b",
-            r"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{0,30}\b(?:drained|removed)\b",
+            rf"(?i)\b{verbs}\b[^.\n]{{0,20}}?\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b",
+            rf"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{{0,40}}\b{verbs}\b",
+            rf"(?i)\ba\s+total\s+of\s+(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b",
         ]
         for pattern in patterns:
             match = re.search(pattern, text)
@@ -422,18 +484,41 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             unit = str(match.group(2) or "").lower()
             if unit == "l":
                 value *= 1000.0
+            # Guardrail: ignore very small volumes which are more likely anesthetic (lidocaine) amounts.
+            if value < 20.0:
+                continue
             try:
                 return int(round(value))
             except Exception:
                 continue
+
+        # Context-only fallback when explicitly in thoracentesis/effusion context.
+        if re.search(r"(?i)\bthoracentesis\b|\bpleural\s+(?:fluid|effusion)\b|\beffusion\b", text):
+            match = re.search(r"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b", text)
+            if match:
+                try:
+                    value = float(match.group(1))
+                except Exception:
+                    value = None
+                unit = str(match.group(2) or "").lower()
+                if value is not None:
+                    if unit == "l":
+                        value *= 1000.0
+                    if value >= 20.0:
+                        try:
+                            return int(round(value))
+                        except Exception:
+                            pass
         return None
 
     def _extract_pleural_fluid_appearance(text: str) -> str | None:
         if not text:
             return None
+        verbs = r"(?:drained|removed|aspirated|obtained|withdrawn|evacuated|extracted|tapped|yield(?:ed)?|collected)"
         patterns = [
-            r"(?i)\b(?:drained|removed)\s+\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{0,40}?)(?:\s+fluid\b|[.,;]|$)",
-            r"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{0,40}?)(?:\s+fluid\b)?\s+(?:drained|removed)\b",
+            rf"(?i)\b{verbs}\b[^.\n]{{0,30}}?\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b|[.,;]|$)",
+            rf"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b)?\s+\b{verbs}\b",
+            r"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+of\s+([a-z][a-z\s/-]{0,40}?)(?:\s+fluid\b|[.,;]|$)",
         ]
         for pattern in patterns:
             match = re.search(pattern, text)
@@ -441,6 +526,7 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 continue
             appearance = str(match.group(1) or "").strip().strip(",:;.-").strip()
             appearance = re.sub(r"(?i)\b(?:initially|during\s+procedure)\b", "", appearance).strip()
+            appearance = re.sub(r"(?i)\b(?:fluid|effusion)\b", "", appearance).strip()
             if appearance:
                 return appearance
         return None
@@ -1172,6 +1258,56 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         target_val = str(text_fields.get("target") or "").strip()
         if target_val:
             raw["primary_indication"] = f"a {target_val}" if re.match(r"^\d", target_val) else target_val
+
+    def _infer_primary_indication_from_for_clause(text: str) -> str | None:
+        if not text.strip():
+            return None
+        head = re.sub(r"\s+", " ", text.strip())
+        head = re.sub(r"(?i)^case\s*\d+\s*[:\-]\s*", "", head).strip()
+        head = head[:900]
+
+        def _clean(value: str) -> str | None:
+            value = value.strip().strip(",;:-").strip()
+            value = re.sub(
+                r"(?i)\b(?:bal|tbna|tbbx|tb?bx|biops(?:y|ies)|brush(?:ings)?|cryobiops(?:y|ies)|cryo)\b.*$",
+                "",
+                value,
+            ).strip()
+            value = value.replace("[", "").replace("]", "").strip().rstrip(".").strip()
+            return value or None
+
+        pattern = re.compile(
+            r"(?i)\b(?:"
+            r"bronchoscopy|rigid\s+bronchoscopy|flexible\s+bronchoscopy|robotic\s+bronchoscopy|"
+            r"thoracentesis|pleuroscopy|thoracoscopy|medical\s+thoracoscopy|"
+            r"ebus(?:-tbna)?|chartis(?:\s+assessment)?|blvr(?:\s+(?:assessment|candidacy|evaluation))?|"
+            r"endobronchial\s+valves?|valves?\s+(?:assessment|placement)|"
+            r"stent(?:\s+placement)?|airway\s+dilation|balloon\s+dilation|whole\s+lung\s+lavage|lung\s+lavage"
+            r")\b[^\n\.;]{0,140}?\bfor\b\s+([^\n\.;]{3,240})"
+        )
+        for match in pattern.finditer(head):
+            pre_tail = head[max(0, match.start(1) - 80) : match.start(1)]
+            if re.search(r"(?i)\b(?:sent|submitted|specimens?|samples?)\s+for\s*$", pre_tail.strip()):
+                continue
+            value = _clean(match.group(1))
+            if value and len(value) <= 240:
+                return value
+
+        # Fallback: capture the earliest "for <...>" clause in the opening line, which
+        # is commonly used as a compact indication in prompt-style notes.
+        match = re.search(r"(?i)\bfor\b\s+([^\n\.;]{3,240})", head[:260])
+        if match:
+            pre_tail = head[max(0, match.start(1) - 80) : match.start(1)]
+            if not re.search(r"(?i)\b(?:sent|submitted|specimens?|samples?)\s+for\s*$", pre_tail.strip()):
+                value = _clean(match.group(1))
+                if value and len(value) <= 240:
+                    return value
+        return None
+
+    if raw.get("primary_indication") in (None, "", [], {}) and source_text:
+        inferred = _infer_primary_indication_from_for_clause(source_text)
+        if inferred:
+            raw["primary_indication"] = inferred
     if raw.get("preop_diagnosis_text") in (None, "", [], {}) and text_fields.get("dx"):
         raw["preop_diagnosis_text"] = text_fields["dx"]
     if raw.get("follow_up_plan") in (None, "", [], {}) and text_fields.get("plan"):
@@ -1323,7 +1459,7 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     for pattern in (
         r"\bTBNA\b\s*(?:x|×)\s*(\d+)\b",
         r"\bTBNA\s*passes?\s*:\s*(\d+)\b",
-        r"\bTBNA\b[^\n]{0,30}\b(\d+)\s*(?:passes?|times)\b",
+        r"\bTBNA\b[^\n]{0,120}\b(\d+)\s*(?:passes?|times)\b",
         r"\bneedle\s*passes?\s*:\s*(\d+)\b",
         r"\bpasses?\s*(?:executed|performed|obtained|collected)\s*:\s*(\d+)\b",
         r"\b(\d+)\s*needle\s*passes?\b",
@@ -1333,6 +1469,21 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         tbna_count = _parse_count(counts_text, pattern)
         if tbna_count is not None:
             break
+
+    tbna_needle_gauge: str | None = None
+    tbna_rose_result: str | None = None
+    if source_text:
+        match = re.search(r"(?i)\bTBNA\b[^\n]{0,200}?\b(\d{1,2})\s*g\b", source_text)
+        if match:
+            tbna_needle_gauge = f"{match.group(1)}G"
+        match = re.search(
+            r"(?i)\bROSE\b[^\n]{0,40}?(?:result\s*[:\\-]|\+|:)\s*([^\n\.;]{2,120})",
+            source_text,
+        )
+        if match:
+            value = match.group(1).strip().rstrip(".").strip()
+            if value and not re.search(r"(?i)\b(?:available|yes|no|pending)\b", value):
+                tbna_rose_result = value
 
     bx_count = None
     for pattern in (
@@ -1362,17 +1513,45 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             break
 
     bal_location_hint = None
+    tbbx_location_hint = None
     if counts_text:
         match = re.search(r"(?i)\bBAL\b\s*\(([^)]+)\)", counts_text)
         if match:
-            bal_location_hint = match.group(1).strip()
-    if bal_location_hint is None and counts_text:
-        match = re.search(
-            r"(?i)\b(?:lavage|washing)\b[^\n]{0,80}?\b(?:from|in|at)\s+([RL]B\d{1,2}|B\d{1,2}|RUL|RML|RLL|LUL|LLL)\b",
-            counts_text,
-        )
-        if match:
-            bal_location_hint = match.group(1).strip().upper()
+            joined = _join_location_tokens(_extract_lobe_tokens_in_order(match.group(1)))
+            if joined:
+                bal_location_hint = joined
+        if bal_location_hint is None:
+            match = re.search(
+                r"(?i)\bBAL\b[^\n]{0,80}?\b(?:from|in|at)\s+([^\n\.]{1,140})",
+                counts_text,
+            )
+            if match:
+                joined = _join_location_tokens(_extract_lobe_tokens_in_order(match.group(1)))
+                if joined:
+                    bal_location_hint = joined
+
+        bx_anchor = re.search(r"(?i)\bTBBX\b|\bTBX\b", counts_text)
+        if bx_anchor is None:
+            bx_anchor = re.search(r"(?i)\btransbronchial\s+(?:lung\s+)?biops(?:y|ies)?\b", counts_text)
+        if bx_anchor:
+            window = counts_text[bx_anchor.start() : min(len(counts_text), bx_anchor.start() + 360)]
+            match = re.search(r"(?i)\b(?:from|in|at)\b\s+([^\n\.]{1,180})", window)
+            if match:
+                joined = _join_location_tokens(_extract_lobe_tokens_in_order(match.group(1)))
+                if joined:
+                    tbbx_location_hint = joined
+            elif re.search(r"(?i)\bTBBX\b|\bTBX\b", window):
+                joined = _join_location_tokens(_extract_lobe_tokens_in_order(window))
+                if joined:
+                    tbbx_location_hint = joined
+
+        if bal_location_hint is None:
+            match = re.search(
+                r"(?i)\b(?:lavage|washing)\b[^\n]{0,80}?\b(?:from|in|at)\s+([RL]B\d{1,2}|B\d{1,2}|RUL|RML|RLL|LUL|LLL)\b",
+                counts_text,
+            )
+            if match:
+                bal_location_hint = match.group(1).strip().upper()
 
     rose_hint: str | None = None
     nodule_rose_hint: str | None = None
@@ -1831,6 +2010,8 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
             "lung_segment": _first_nonempty_str(raw.get("nav_target_segment"), raw.get("lesion_location"), location_hint, segment_hint),
             "needle_tools": "TBNA",
             "samples_collected": tbna_count,
+            "needle_gauge": tbna_needle_gauge,
+            "rose_result": tbna_rose_result,
             "tests": [],
         }
 
@@ -2481,7 +2662,9 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         elif bx_count is not None:
             raw["bronch_num_tbbx"] = bx_count
 
-    if raw.get("bronch_location_lobe") in (None, "", [], {}):
+    if tbbx_location_hint:
+        raw["bronch_location_lobe"] = tbbx_location_hint
+    elif raw.get("bronch_location_lobe") in (None, "", [], {}):
         raw["bronch_location_lobe"] = _first_nonempty_str(location_hint, clinical_context.get("lesion_location"))
     if raw.get("bronch_location_segment") in (None, "", [], {}):
         if segment_hint:

@@ -1088,6 +1088,26 @@ def derive_all_codes_with_meta(
         valve_size_hints = {m.group(0).strip().lower() for m in _BLVR_VALVE_SIZE_HINT_RE.finditer(blvr_text)}
         valve_size_hint_count = len(valve_size_hints)
 
+        # Planned/scheduled valve placement language is not placement evidence.
+        # Guardrail: do not let future-intent phrases trigger 31647 when there is no deployment evidence.
+        planned_context = bool(
+            re.search(
+                r"(?i)\b(?:plan(?:s|ned)?|scheduled|next\s+(?:week|procedure|time)|at\s+next\s+procedure|future|later|defer(?:red)?|separate\s+procedure|to\s+be\s+performed|will\s+proceed)\b",
+                blvr_text,
+            )
+        )
+        if (
+            planned_context
+            and placement_keywords
+            and blvr_procedure_type in {None, "Valve assessment"}
+            and not (explicit_31647 or explicit_31651)
+            and not valve_lobes
+            and _get(blvr, "number_of_valves") in {None, 0, "0"}
+            and not bool(_get(blvr, "valve_sizes"))
+            and not valve_size_hints
+        ):
+            placement_keywords = False
+
         placement_signal = (
             blvr_procedure_type == "Valve placement"
             or explicit_31647

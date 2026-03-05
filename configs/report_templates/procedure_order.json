@@ -9,6 +9,7 @@
   "transbronchial_biopsy": 145,
   "transbronchial_needle_aspiration": 150,
   "therapeutic_aspiration": 160,
+  "therapeutic_injection": 186,
   "rigid_bronchoscopy": 180,
   "airway_dilation": 181,
   "microdebrider_debridement": 182,

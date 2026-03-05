@@ -296,6 +296,66 @@ _FOCUSED_CASES: list[dict[str, Any]] = [
             "must_not_contain": ["Await final pathology"],
         },
     },
+    {
+        "id": "focused_robotic_bronchoscopy_two_targets_not_truncated",
+        "prompt": (
+            "Ion robotic bronchoscopy for two targets: RUL 1.3cm nodule and LUL 1.8cm nodule. "
+            "Navigation, rEBUS confirmation, and sampling were performed at both targets."
+        ),
+        "expected": {
+            "must_contain_groups": [["RUL", "Right Upper Lobe"], ["LUL", "Left Upper Lobe"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_bal_tbbx_multi_lobe_not_merged",
+        "prompt": (
+            "Bronchoscopy for suspected rejection post bilateral lung transplant. "
+            "BAL from RML and LLL. TBBx x8 from RLL and LLL."
+        ),
+        "expected": {
+            "must_contain_groups": [["RML and LLL"], ["RLL and LLL"], ["8 samples", "8 passes", "x8", "8"]],
+            "must_not_contain": ["RML (8"],
+        },
+    },
+    {
+        "id": "focused_thoracentesis_bilateral_volumes_not_zero_or_merged",
+        "prompt": (
+            "Bilateral thoracentesis performed. Right side 1200 mL removed. "
+            "Left side 800 mL removed. Clear fluid."
+        ),
+        "expected": {
+            "must_contain_groups": [["Right side", "right side"], ["1200 mL"], ["Left side", "left side"], ["800 mL"]],
+            "must_not_contain": ["A total of 0 mL"],
+        },
+    },
+    {
+        "id": "focused_thoracentesis_small_volume_not_zero",
+        "prompt": "Thoracentesis right side. 50ml straw colored fluid obtained.",
+        "expected": {
+            "must_contain_groups": [["50 mL", "50ml"], ["straw"]],
+            "must_not_contain": ["A total of 0 mL"],
+        },
+    },
+    {
+        "id": "focused_therapeutic_injection_bevacizumab_rendered",
+        "prompt": (
+            "Rigid bronchoscopy for airway papillomatosis. Microdebrider debridement performed. "
+            "Bevacizumab injection x4 sites 100mg total."
+        ),
+        "expected": {
+            "must_contain_groups": [["Therapeutic injection", "injection"], ["Bevacizumab"], ["100"], ["x4", "4 sites"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_conventional_tbna_details_preserved",
+        "prompt": "Conventional TBNA 22g performed with 4 passes. ROSE result: small cell carcinoma.",
+        "expected": {
+            "must_contain_groups": [["22G"], ["4 passes", "4 pass"], ["ROSE"], ["small cell carcinoma"]],
+            "must_not_contain": [],
+        },
+    },
 ]
 
 

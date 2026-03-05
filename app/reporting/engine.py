@@ -79,6 +79,7 @@ from app.reporting.partial_schemas import (
     MicrodebriderDebridementPartial,
     PeripheralAblationPartial,
     RigidBronchoscopyPartial,
+    TherapeuticInjectionPartial,
     TransbronchialCryobiopsyPartial,
     TransbronchialNeedleAspirationPartial,
 )
@@ -1115,6 +1116,7 @@ def default_schema_registry() -> SchemaRegistry:
         "transbronchial_needle_aspiration_v1": TransbronchialNeedleAspirationPartial,
         "transbronchial_biopsy_v1": airway_schemas.TransbronchialBiopsyBasic,
         "therapeutic_aspiration_v1": airway_schemas.TherapeuticAspiration,
+        "therapeutic_injection_v1": TherapeuticInjectionPartial,
         "rigid_bronchoscopy_v1": RigidBronchoscopyPartial,
         "airway_dilation_v1": AirwayDilationPartial,
         "bronchoscopy_shell_v1": airway_schemas.BronchoscopyShell,
@@ -1614,9 +1616,169 @@ def build_procedure_bundle_from_extraction(
             )
             existing_proc_types.add("peripheral_ablation")
 
+        inj = procs_performed.get("therapeutic_injection") or {}
+        if (
+            isinstance(inj, dict)
+            and inj.get("performed") is True
+            and "therapeutic_injection" not in existing_proc_types
+        ):
+            note_text = str(raw.get("source_text") or "") or ""
+            medication = str(inj.get("medication") or "").strip() or None
+            dose = str(inj.get("dose") or "").strip() or None
+
+            number_of_sites = None
+            match = re.search(r"(?i)\bx\s*(\d+)\s*sites?\b", (medication or "") + " " + note_text)
+            if match:
+                try:
+                    number_of_sites = int(match.group(1))
+                except Exception:
+                    number_of_sites = None
+
+            proc_id = f"therapeutic_injection_{len(procedures) + 1}"
+            procedures.append(
+                ProcedureInput(
+                    proc_type="therapeutic_injection",
+                    schema_id="therapeutic_injection_v1",
+                    proc_id=proc_id,
+                    data={
+                        "medication": medication,
+                        "dose": dose,
+                        "number_of_sites": number_of_sites,
+                        "sites": [],
+                        "notes": None,
+                    },
+                    cpt_candidates=list(cpt_candidates),
+                )
+            )
+            existing_proc_types.add("therapeutic_injection")
+
     # Reporter-only extras for short-form CAO / stents / brachy / thoracoscopy notes
     note_text = str(raw.get("source_text") or "") or (str(source_text or "") if source_text else "")
     note_lower = note_text.lower()
+
+    # --- Multi-target robotic navigation guardrail ---
+    # Some prompt styles document multiple peripheral targets (e.g., "First RUL 1.3cm... Second LUL 1.8cm...")
+    # but upstream extraction frequently collapses to the first lobe. When we can recover explicit lobe+size
+    # pairs from the source text, synthesize additional target-specific procedure records (fill-missing-only).
+    def _lobe_size_targets(text: str) -> list[tuple[str, float]]:
+        if not text:
+            return []
+        targets: list[tuple[str, float]] = []
+        seen: set[str] = set()
+        for match in re.finditer(
+            r"(?i)\b(RUL|RML|RLL|LUL|LLL)\b[^\n]{0,40}?(\d+(?:\.\d+)?)\s*(cm|mm)\b",
+            text,
+        ):
+            lobe = match.group(1).upper()
+            if lobe in seen:
+                continue
+            try:
+                value = float(match.group(2))
+            except Exception:
+                continue
+            unit = (match.group(3) or "").lower()
+            size_mm = value * 10.0 if unit == "cm" else value
+            # Sanity guardrail: ignore implausible nodule sizes (prevents misbinding to unrelated mm values).
+            if not (2.0 <= size_mm <= 120.0):
+                continue
+            seen.add(lobe)
+            targets.append((lobe, float(size_mm)))
+        return targets
+
+    has_robotic_nav_context = any(p.proc_type == "robotic_navigation" for p in procedures) or bool(
+        re.search(r"(?i)\b(?:ion|monarch|robotic\s+bronch|robotic\s+navigation)\b", note_text)
+    )
+    explicit_targets = _lobe_size_targets(note_text) if has_robotic_nav_context else []
+    if has_robotic_nav_context and len(explicit_targets) > 1:
+        existing_lobes: set[str] = set()
+
+        def _collect_lobes(value: Any) -> None:
+            if value in (None, "", [], {}):
+                return
+            for tok in re.findall(r"(?i)\b(RUL|RML|RLL|LUL|LLL)\b", str(value)):
+                existing_lobes.add(tok.upper())
+
+        for proc in procedures:
+            data: dict[str, Any] = {}
+            if isinstance(proc.data, BaseModel):
+                data = proc.data.model_dump(exclude_none=True)
+            elif isinstance(proc.data, dict):
+                data = proc.data
+            if proc.proc_type == "robotic_navigation":
+                _collect_lobes(data.get("lesion_location") or data.get("target_lung_segment"))
+            elif proc.proc_type == "radial_ebus_survey":
+                _collect_lobes(data.get("location"))
+            elif proc.proc_type in {"transbronchial_needle_aspiration", "transbronchial_cryobiopsy"}:
+                _collect_lobes(data.get("lung_segment"))
+
+        missing_targets = [(lobe, size_mm) for lobe, size_mm in explicit_targets if lobe not in existing_lobes]
+        if missing_targets:
+            base_by_type: dict[str, ProcedureInput] = {proc.proc_type: proc for proc in procedures}
+
+            def _copy_data(proc: ProcedureInput) -> dict[str, Any]:
+                if isinstance(proc.data, BaseModel):
+                    return proc.data.model_dump(exclude_none=False)
+                if isinstance(proc.data, dict):
+                    return dict(proc.data)
+                return {}
+
+            def _append_like(base_proc: ProcedureInput, *, proc_id: str, updates: dict[str, Any]) -> None:
+                data = _copy_data(base_proc)
+                data.update(updates)
+                procedures.append(
+                    ProcedureInput(
+                        proc_type=base_proc.proc_type,
+                        schema_id=base_proc.schema_id,
+                        proc_id=proc_id,
+                        data=data,
+                        cpt_candidates=list(base_proc.cpt_candidates or cpt_candidates),
+                    )
+                )
+
+            for lobe, size_mm in missing_targets:
+                base_nav = base_by_type.get("robotic_navigation")
+                if base_nav:
+                    _append_like(
+                        base_nav,
+                        proc_id=f"robotic_navigation_{lobe.lower()}",
+                        updates={"lesion_location": lobe},
+                    )
+
+                base_survey = base_by_type.get("radial_ebus_survey")
+                if base_survey:
+                    _append_like(
+                        base_survey,
+                        proc_id=f"radial_ebus_survey_{lobe.lower()}",
+                        updates={"location": lobe},
+                    )
+
+                base_sampling = base_by_type.get("radial_ebus_sampling")
+                if base_sampling:
+                    sampling_updates: dict[str, Any] = {"lesion_size_mm": size_mm}
+                    # Target hint for downstream pairing (template does not render notes by default).
+                    if not str(_copy_data(base_sampling).get("notes") or "").strip():
+                        sampling_updates["notes"] = lobe
+                    _append_like(
+                        base_sampling,
+                        proc_id=f"radial_ebus_sampling_{lobe.lower()}",
+                        updates=sampling_updates,
+                    )
+
+                base_tbna = base_by_type.get("transbronchial_needle_aspiration")
+                if base_tbna:
+                    _append_like(
+                        base_tbna,
+                        proc_id=f"transbronchial_needle_aspiration_{lobe.lower()}",
+                        updates={"lung_segment": lobe},
+                    )
+
+                base_cryo = base_by_type.get("transbronchial_cryobiopsy")
+                if base_cryo:
+                    _append_like(
+                        base_cryo,
+                        proc_id=f"transbronchial_cryobiopsy_{lobe.lower()}",
+                        updates={"lung_segment": lobe},
+                    )
 
     def _append_proc(proc_type: str, schema_id: str, payload: dict[str, Any]) -> None:
         if proc_type in existing_proc_types:
@@ -2139,6 +2301,16 @@ def build_procedure_bundle_from_extraction(
             if match:
                 aborted_reason = match.group(0).strip().rstrip(".")
 
+        if not assessments:
+            fallback_lobe = planned_target or str(raw.get("blvr_target_lobe") or "").strip().upper() or None
+            if not fallback_lobe:
+                all_lobes = [m.group(1).upper() for m in re.finditer(r"(?i)\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b", note_text)]
+                all_lobes = _dedupe_labels([l for l in all_lobes if l])
+                if len(all_lobes) == 1:
+                    fallback_lobe = all_lobes[0]
+            if fallback_lobe:
+                assessments = [{"lobe": fallback_lobe, "cv_result": "CV indeterminate"}]
+
         if assessments:
             proc_id = f"blvr_chartis_assessment_{len(procedures) + 1}"
             procedures.append(
@@ -2213,6 +2385,94 @@ def build_procedure_bundle_from_extraction(
                         proc_type="tunneled_pleural_catheter_insert",
                         schema_id=base_schema,
                         proc_id=f"tunneled_pleural_catheter_insert_{side}",
+                        data=data,
+                        cpt_candidates=list(base_cpts),
+                    )
+                )
+
+    # Split bilateral thoracentesis into side-specific procedures when right+left volumes are dictated.
+    if any(p.proc_type in ("thoracentesis_detailed", "thoracentesis_manometry") for p in procedures):
+
+        def _extract_thora_side_volume_ml(text: str, side: str) -> int | None:
+            if not text:
+                return None
+            patterns = [
+                rf"(?i)\b{side}\b[^.\n]{{0,80}}?\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b",
+                rf"(?i)\b(\d+(?:\.\d+)?)\s*(L|mL|ml|cc)\b[^.\n]{{0,80}}?\b{side}\b",
+            ]
+            for pat in patterns:
+                match = re.search(pat, text)
+                if not match:
+                    continue
+                try:
+                    value = float(match.group(1))
+                except Exception:
+                    continue
+                unit = str(match.group(2) or "").lower()
+                if unit == "l":
+                    value *= 1000.0
+                if value < 20.0:
+                    continue
+                try:
+                    return int(round(value))
+                except Exception:
+                    continue
+            return None
+
+        right_ml = _extract_thora_side_volume_ml(note_text, "right")
+        left_ml = _extract_thora_side_volume_ml(note_text, "left")
+
+        has_right_proc = False
+        has_left_proc = False
+        for proc in procedures:
+            if proc.proc_type not in ("thoracentesis_detailed", "thoracentesis_manometry"):
+                continue
+            data: dict[str, Any] = {}
+            if isinstance(proc.data, BaseModel):
+                data = proc.data.model_dump(exclude_none=True)
+            elif isinstance(proc.data, dict):
+                data = proc.data
+            side = str(data.get("side") or "").strip().lower()
+            if side == "right":
+                has_right_proc = True
+            if side == "left":
+                has_left_proc = True
+
+        if right_ml is not None and left_ml is not None and not (has_right_proc and has_left_proc):
+            base = next(
+                (p for p in procedures if p.proc_type in ("thoracentesis_detailed", "thoracentesis_manometry")),
+                None,
+            )
+            base_data: dict[str, Any] = {}
+            base_cpts: list[str | int] = list(cpt_candidates)
+            base_proc_type = "thoracentesis_detailed"
+            base_schema = "thoracentesis_detailed_v1"
+            if base is not None:
+                base_proc_type = base.proc_type
+                base_schema = base.schema_id
+                base_cpts = list(base.cpt_candidates or base_cpts)
+                if isinstance(base.data, BaseModel):
+                    base_data = base.data.model_dump(exclude_none=False)
+                elif isinstance(base.data, dict):
+                    base_data = dict(base.data)
+
+            procedures = [
+                p
+                for p in procedures
+                if p.proc_type not in ("thoracentesis_detailed", "thoracentesis_manometry")
+            ]
+            for side, vol in (("right", right_ml), ("left", left_ml)):
+                data = dict(base_data)
+                data["side"] = side.title()
+                if base_proc_type == "thoracentesis_manometry":
+                    data["total_removed_ml"] = vol
+                else:
+                    data["volume_removed_ml"] = vol
+                procedures.append(
+                    ProcedureInput(
+                        proc_type=base_proc_type,
+                        schema_id=base_schema,
+                        proc_id=f"{base_proc_type}_{side}",
                         data=data,
                         cpt_candidates=list(base_cpts),
                     )

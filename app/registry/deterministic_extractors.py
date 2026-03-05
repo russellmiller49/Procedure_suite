@@ -2792,28 +2792,38 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
     # Important: "valves ... well placed"/"previously placed valves" are inspection-only and
     # must not be treated as a valve placement procedure.
     placed_token = r"(?<!well\s)(?<!previously\s)(?<!prior\s)(?<!already\s)placed\b"
-    placement_present = bool(
-        re.search(
-            r"\bvalves?\b[^.\n]{0,80}\b(?:deploy|deployed|deployment|insert|inserted|insertion|placement|placing)\w*\b",
-            text_lower,
-            re.IGNORECASE,
-        )
-        or re.search(
-            r"\b(?:deploy|deployed|deployment|insert|inserted|insertion|placement|placing)\w*\b[^.\n]{0,80}\bvalves?\b",
-            text_lower,
-            re.IGNORECASE,
-        )
-        or re.search(
-            rf"\bvalves?\b[^.\n]{{0,80}}\b{placed_token}",
-            text_lower,
-            re.IGNORECASE,
-        )
-        or re.search(
-            rf"\b{placed_token}[^.\n]{{0,80}}\bvalves?\b",
-            text_lower,
-            re.IGNORECASE,
-        )
+    planning_re = re.compile(
+        r"(?i)\b(?:plan(?:s|ned)?|scheduled|next\s+(?:week|procedure|time)|at\s+next\s+procedure|future|later|defer(?:red)?|separate\s+procedure|to\s+be\s+performed|will\s+proceed)\b"
     )
+    placement_strong_re = re.compile(
+        r"(?i)\b(?:deploy(?:ed|ment)?|insert(?:ed|ion)?|deliver(?:ed)?|implant(?:ed|ation)?)\b"
+    )
+    placement_noun_re = re.compile(r"(?i)\bplacement\b")
+    placement_completed_re = re.compile(r"(?i)\b(?:performed|completed|successful(?:ly)?)\b")
+
+    placement_performed = False
+    placement_planned_only = False
+    for sentence in re.split(r"(?:\n+|(?<=[.!?])\s+)", preferred_text or ""):
+        sent = (sentence or "").strip()
+        if not sent:
+            continue
+        sent_lower = sent.lower()
+        if "valve" not in sent_lower and "zephyr" not in sent_lower and "spiration" not in sent_lower:
+            continue
+        is_planned = bool(planning_re.search(sent))
+        has_strong = bool(
+            placement_strong_re.search(sent)
+            or re.search(rf"(?i)\bvalves?\b[^.\n]{{0,80}}\b{placed_token}", sent)
+            or re.search(rf"(?i)\b{placed_token}[^.\n]{{0,80}}\bvalves?\b", sent)
+        )
+        has_noun_completed = bool(placement_noun_re.search(sent) and placement_completed_re.search(sent))
+
+        if (has_strong or has_noun_completed) and not is_planned:
+            placement_performed = True
+            break
+        if (has_strong or placement_noun_re.search(sent)) and is_planned:
+            placement_planned_only = True
+
     removal_present = bool(
         re.search(
             r"\bvalve\b[^.\n]{0,80}\b(?:remov|retriev|extract|explant)\w*\b",
@@ -2821,12 +2831,16 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
             re.IGNORECASE,
         )
     )
-    if placement_present:
+    if placement_performed:
         proc["procedure_type"] = "Valve placement"
     elif removal_present:
         proc["procedure_type"] = "Valve removal"
     elif "chartis" in text_lower:
         proc["procedure_type"] = "Valve assessment"
+    elif placement_planned_only:
+        # A planned/scheduled valve placement mention is not evidence of a completed placement.
+        # Keep BLVR only if Chartis/removal evidence is present; otherwise, skip.
+        return {}
 
     # If we only see generic valve mentions with no procedure action (placement/removal/Chartis),
     # do not assert BLVR was performed in this session.
