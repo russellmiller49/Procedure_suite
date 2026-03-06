@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, model_serializer, model_validator
@@ -296,7 +296,7 @@ class CameraOcrCorrectionResponse(BaseModel):
     )
 
 
-class BundleTimepointRole(str, Enum):
+class BundleTimepointRole(StrEnum):
     PREOP_IMAGING = "PREOP_IMAGING"
     INDEX_PROCEDURE = "INDEX_PROCEDURE"
     PATHOLOGY = "PATHOLOGY"
@@ -378,7 +378,7 @@ class MissingFieldPrompt(BaseModel):
     message: str = Field(..., description="Actionable guidance for the user.")
 
 
-class ReviewStatus(str, Enum):
+class ReviewStatus(StrEnum):
     UNVERIFIED = "unverified"
     PENDING_PHI_REVIEW = "pending_phi_review"
     FINALIZED = "finalized"
