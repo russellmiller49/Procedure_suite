@@ -539,4 +539,7 @@ yarl==1.23.0
     # via aiohttp
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools
+setuptools==82.0.0
+    # via
+    #   spacy
+    #   thinc
