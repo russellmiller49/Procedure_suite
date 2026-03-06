@@ -1,0 +1,829 @@
+{
+  "overall_average_score": 70.2,
+  "status_counts": {
+    "PASS": 10,
+    "WARNING": 21,
+    "FAIL": 19
+  },
+  "evaluations": [
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_001",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "31634 is not separately supported; local coding rules suppress Chartis/balloon occlusion when valves are placed in the same session/lobe."
+      ],
+      "mismatches": [
+        "BLVR target lobe is not preserved even though the note clearly states LUL.",
+        "Collateral ventilation is left 'Chartis indeterminate' instead of absent/no collateral ventilation."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve the treated LUL segments (apicoposterior, anterior, lingular) and mild diffuse bronchitis."
+      ],
+      "cpt": "31647 is supported. Separate 31634 should be suppressed in this same-session BLVR/Chartis case.",
+      "schema": "Correct family, but lobe-level detail and Chartis interpretation drift."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_002",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "number_of_valves=2 is unsupported; the note documents 3 RUL valves.",
+        "Collateral ventilation is labeled indeterminate rather than the documented no/minimal-CV pattern."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve apical, posterior, and anterior segment deployment."
+      ],
+      "cpt": "31647 is consistent with single-lobe RUL valve placement. Suppressing 31634 is appropriate.",
+      "schema": "Main BLVR family is correct with residual quantitative cleanup needed."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_003",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "31634 is not separately supported once valves are placed in the same session."
+      ],
+      "mismatches": [
+        "Target lobe LLL is not preserved.",
+        "Collateral ventilation is left indeterminate instead of the documented minimal/no-CV interpretation."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve LLL segmental deployment more explicitly."
+      ],
+      "cpt": "31647 is supported. 31634 should be suppressed in this BLVR-with-Chartis case.",
+      "schema": "Recognizes BLVR, but the lobe target and Chartis result are under-resolved."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_004",
+      "score": 65,
+      "status": "FAIL",
+      "hallucinations": [
+        "31634 is not separately supported in the same LUL valve-placement session."
+      ],
+      "mismatches": [
+        "number_of_valves=6 is unsupported; the note documents total 4 valves.",
+        "Target lobe LUL is not preserved.",
+        "diagnostic_bronchoscopy.inspection_findings implies tumor despite the note stating no tumor."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve apicoposterior, anterior, and lingular deployment plus the mixed GA/LMA documentation context."
+      ],
+      "cpt": "31647 is supported. 31634 should be suppressed.",
+      "schema": "Correct family is found, but valve count and target anatomy are materially wrong."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_005",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "31634 is not separately supported with same-session RLL valve placement."
+      ],
+      "mismatches": [
+        "inspection_findings is polluted by plan text ('hemoptysis/fever/chest pain') rather than bronchoscopic findings.",
+        "Target lobe RLL is not preserved in the BLVR record."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve tracheobronchomalacia, mucous plugging, and one-valve repositioning."
+      ],
+      "cpt": "31647 is supported for RLL valve placement. Separate 31634 is not.",
+      "schema": "BLVR family is recognized, but narrative sanitation and target preservation remain weak."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_006",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "inspection_findings retains a false-positive 'mass' despite 'no mass' in the note."
+      ],
+      "mismatches": [
+        "number_of_valves=1 is unsupported; the note documents 3 RUL valves.",
+        "Collateral ventilation is labeled indeterminate instead of the documented 'no CV' pattern."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31647 is supported. Suppressing 31634 is appropriate here.",
+      "schema": "Core BLVR family is right, but count/CV precision is off."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_007",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "target_lobe='Lingula' is wrong; this is an LUL BLVR case with lingular segment treatment, not a lingula-only session.",
+        "number_of_valves=3 is unsupported; the note documents 4 valves.",
+        "inspection_findings implies a lesion even though the note says no lesion."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31647 is supported for the LUL session. Separate 31634 is appropriately suppressed.",
+      "schema": "BLVR family is recognized, but lobe-vs-segment logic is materially wrong."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_008",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "31634 is not separately supported in the same-session BLVR case."
+      ],
+      "mismatches": [
+        "The clarified RUL target is not preserved even though the note explicitly resolves the LUL flowsheet artifact."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve that the nursing reference to 'LUL valves' is a documentation artifact."
+      ],
+      "cpt": "31647 is supported for RUL valve placement. 31634 should be suppressed.",
+      "schema": "Main therapy is captured, but laterality-resolution logic is incomplete."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_009",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "number_of_valves=3 is unsupported; the tab log says 4 placed.",
+        "Collateral ventilation is labeled indeterminate instead of 'LUL no CV'.",
+        "inspection_findings implies a lesion despite airway survey 'No lesion'."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31647 is supported. Omitting 31634 is appropriate.",
+      "schema": "Good BLVR family capture with residual count/CV cleanup."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_010",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Counts and target detail could be richer (RUL posterior segment, TBBx x6, brush x2), but the performed families are correct."
+      ],
+      "cpt": "31623/31624/31627/31628/31652/+31654 are coherent with the note.",
+      "schema": "Good separation of navigation, radial EBUS, TBBx, brushings, BAL, and nodal EBUS-TBNA."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_011",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Radial ultrasound is documented, but +31654 is not derived."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve cryobiopsy x3, forceps x4, brush x2, and BAL return 20 mL."
+      ],
+      "cpt": "31623/31624/31627/31628 are supported. +31654 is also defensible from the documented radial ultrasound confirmation.",
+      "schema": "Peripheral sampling family is mostly right, but radial-EBUS detail is undercalled."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_012",
+      "score": 75,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "diagnostic_bronchoscopy.inspection_findings is polluted by plan symptoms ('hemoptysis, fever, worsening dyspnea')."
+      ],
+      "missed_procedures": [
+        "Transbronchial biopsy/TBBx x5 is not represented, so 31628-level lung biopsy work is undercalled."
+      ],
+      "missed_details": [
+        "Could preserve 3 passes for both 4L and 7 more cleanly in granular detail."
+      ],
+      "cpt": "31623/31624/31627/31652/+31654 are supported, but 31628 should also be present.",
+      "schema": "Good navigation/EBUS separation, but peripheral biopsy recall is incomplete."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_013",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Counts and richer target detail (TBNA x4, forceps x4, brush x1) could be structured more deeply."
+      ],
+      "cpt": "31623/31624/31627/31628/31629/+31654 are coherent with the note.",
+      "schema": "Strong separation of peripheral TBNA, TBBx, brushings, BAL, navigation, and radial EBUS."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_014",
+      "score": 74,
+      "status": "WARNING",
+      "hallucinations": [
+        "31634 is not supported; the balloon occlusion here is hemostatic after cryobiopsy, not a stand-alone Chartis/air-leak assessment."
+      ],
+      "mismatches": [
+        "Second-target/multi-lobe peripheral sampling detail is partially collapsed.",
+        "EBUS evidence is partly anchored to specimen text rather than the procedural sampling sentences."
+      ],
+      "missed_procedures": [
+        "Additional-lobe transbronchial biopsy logic is underdeveloped for a true multi-target, multi-lobe case."
+      ],
+      "missed_details": [
+        "Could preserve RLL cryobiopsy counts and the hemostatic balloon use more cleanly."
+      ],
+      "cpt": "31623/31624/31627/31628/31629/31653/+31654 are broadly supported. 31634 is not.",
+      "schema": "Major families are captured, but multi-target logic remains only partially preserved."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_015",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Forceps transbronchial biopsy x5 is missed, so 31628-level lung biopsy work is undercalled."
+      ],
+      "missed_details": [
+        "Could preserve BAL volumes (50 mL in / 18 mL out)."
+      ],
+      "cpt": "31624/31627/31629/+31654 are supported, but 31628 is also supported and should not be omitted.",
+      "schema": "Short-note robotic recognition improved, but peripheral forceps biopsy recall is still incomplete."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_016",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "inspection_findings implies a lesion even though the note says no lesion was seen."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve moderate-sedation meds and the improvement from continuous to intermittent bubbling."
+      ],
+      "cpt": "31647 is defensible for valve placement. Suppressing 31634 is reasonable in this same-session PAL valve workflow.",
+      "schema": "Main PAL valve-family capture is good; residual narrative cleanup remains."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_017",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "number_of_valves=2 is unsupported; the note documents 3 valves.",
+        "The pre-existing chest tube still leaks into postprocessing even though no chest-tube procedure occurred this session."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve LUL segment localization more explicitly."
+      ],
+      "cpt": "31647 is supported. 31634 is arguable in this PAL localization context.",
+      "schema": "Good PAL valve-family recognition with residual quantitative cleanup."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_018",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "number_of_valves=1 is unsupported; the note documents two valves.",
+        "The target anatomy (RLL superior segment with adjacent segment valve) is not preserved."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Moderate sedation is the more defensible interpretation and is handled reasonably; anatomy remains the larger gap."
+      ],
+      "cpt": "31647 is supported. 31634 is arguable in this PAL localization workflow.",
+      "schema": "Good main-family capture, but valve-count/anatomy detail is incomplete."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_019",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "number_of_valves=3 is unsupported; the valve list documents 2.",
+        "The target lobe/segment (RUL, especially anterior and apical segments) is not carried through cleanly."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is present in the note but not surfaced in sedation."
+      ],
+      "cpt": "31647 is supported. 31634 is arguable in this PAL localization setting.",
+      "schema": "Recognizes the PAL valve workflow, but quantitative and anatomic detail drift remains."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_020",
+      "score": 50,
+      "status": "FAIL",
+      "hallucinations": [
+        "31622 is left as the bronchoscopic code even though the note explicitly says two valves were deployed."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Endobronchial valve placement for air leak control is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve LUL localization and significant bubbling reduction."
+      ],
+      "cpt": "31634 may be supportable for localization, but 31647-level valve placement work is also documented and cannot be omitted.",
+      "schema": "This remains a major recall failure in a short PAL note."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_021",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Double-lumen tube placement and sequential lavage-cycle detail are not structured, but the core procedure is correct."
+      ],
+      "cpt": "32997 is the defensible unilateral whole-lung lavage code family here.",
+      "schema": "Correctly distinguishes whole-lung lavage from BAL."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_022",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "diagnostic_bronchoscopy.inspection_findings implies obstruction even though the note says no endobronchial obstruction."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve intubated ICU transport and the PAP-specific lavage workflow in more detail."
+      ],
+      "cpt": "32997 is the defensible primary procedure family. BAL is appropriately cleared.",
+      "schema": "Major improvement: whole-lung lavage is now correctly recognized."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_023",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve that today's staged lavage was the right lung and carry through the aliquot/effluent sequence."
+      ],
+      "cpt": "32997 fits the documented unilateral total lung lavage session.",
+      "schema": "Now correctly separates whole-lung lavage from BAL, with only detail loss remaining."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_024",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "The procedure is bucketed as pleural_biopsy even though the note describes an ultrasound-guided transthoracic core needle biopsy of a pleural-based lung/chest-wall lesion."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve local-only anesthesia and manual-pressure hemostasis more explicitly."
+      ],
+      "cpt": "32408 is the defensible code family here; standalone 76942 add-on logic is not needed when guidance is included.",
+      "schema": "Main family recognition is fixed, but the structural bucket is still not ideal."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_025",
+      "score": 18,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "US-guided transthoracic core biopsy is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve the left lateral chest-wall target, three cores, and local-only anesthesia."
+      ],
+      "cpt": "This note supports a percutaneous transthoracic biopsy family, not a null extraction.",
+      "schema": "Major recall failure."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_026",
+      "score": 28,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Dynamic bronchoscopy with forced-expiratory assessment and CPAP titration is missed entirely."
+      ],
+      "missed_details": [
+        "Severe distal tracheal and bilateral main-bronchial collapse (>80%) and improvement with CPAP are central findings that are not structured."
+      ],
+      "cpt": "31622-level diagnostic bronchoscopy is the closest family, but the dynamic/CPAP study is not really represented.",
+      "schema": "This remains a major miss of the actual procedure intent."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_027",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Intralesional Kenalog injection is not structurally represented, but the core rigid bronchoscopy plus balloon dilation workflow is correct."
+      ],
+      "cpt": "31630 is consistent with balloon dilation of subglottic stenosis.",
+      "schema": "Core stenosis-management extraction is strong."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_028",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [
+        "BAL/31624 is not supported; the note lists BAL as optional, but the performed technique documents foreign-body retrieval without lavage."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve RLL basal-segment location and basket retrieval more explicitly."
+      ],
+      "cpt": "31635 is supported for foreign-body removal. 31624 is not.",
+      "schema": "Main procedure family is right, but the extra BAL creates a material precision error."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_029",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Forceps assistance and moderate-sedation detail are not richly structured, but the therapeutic aspiration event is correctly captured."
+      ],
+      "cpt": "31645 is strongly supported by the note.",
+      "schema": "Major improvement: the prior null extraction is fixed."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_030",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "sedation.type='Moderate' is wrong; the procedure was performed under GA despite the stale header."
+      ],
+      "mismatches": [
+        "inspection_findings implies lesion visualization even though the note says no discrete lesion was visualized because of clot burden."
+      ],
+      "missed_procedures": [
+        "Endobronchial blocker placement for hemorrhage isolation is not represented as a distinct therapeutic event."
+      ],
+      "missed_details": [
+        "Could preserve left lower lobe source localization."
+      ],
+      "cpt": "31645 is supported for airway clearance/clot aspiration. The blocker placement has no clean standard code here but is still a real missed intervention.",
+      "schema": "Partial capture of a more complex hemoptysis-control workflow."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_031",
+      "score": 45,
+      "status": "FAIL",
+      "hallucinations": [
+        "Only diagnostic bronchoscopy + balloon occlusion are represented, but the note clearly documents endobronchial Watanabe spigot placement."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Endobronchial Watanabe spigot placement for PAL is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve RUL anterior-segment localization and secure device fit."
+      ],
+      "cpt": "31634 may reflect localization work, but the definitive spigot-placement intervention is not represented. Coding remains incomplete/gray-zone.",
+      "schema": "The therapeutic action is missed, leaving only the localization setup."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_032",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Balloon dilation is bundled into the same-site 31641 treatment logic; minimal oozing is appropriately not turned into a complication."
+      ],
+      "cpt": "31641 is consistent with laser treatment/relief of stenosis in this same-site workflow.",
+      "schema": "Strong core capture of therapeutic airway ablation."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_033",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [
+        "31636 is the wrong stent family; this is a silicone Y-stent spanning distal trachea/carina, so tracheal/Y-stent logic is more appropriate than initial bronchial-stent logic."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve explicit Y-stent sizing (tracheal 16 mm; right 12 mm; left 12 mm)."
+      ],
+      "cpt": "Stent placement plus mechanical debulking are supported. The problem is the stent-code family/location logic, not the presence of the interventions.",
+      "schema": "Recognizes the CAO workflow, but the stent family is materially wrong."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_034",
+      "score": 22,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Cryospray airway ablation is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve the supraglottic/tracheal lesion sites and short-burst application pattern."
+      ],
+      "cpt": "A therapeutic airway-ablation family is supported by the note. A null extraction is not.",
+      "schema": "Major recall failure on a rare airway intervention."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_035",
+      "score": 93,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Mild bronchospasm treated with bronchodilator is not deeply structured, but the thermoplasty session itself is correctly captured."
+      ],
+      "cpt": "31660 is consistent with single-lobe bronchial thermoplasty to the RLL.",
+      "schema": "Major improvement: the prior null extraction is fixed."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_036",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [
+        "Simultaneous billing of 31660 and 31661 is internally inconsistent; only one thermoplasty family code should survive for a single session."
+      ],
+      "mismatches": [
+        "The LUL/Lingula treatment geography is not resolved cleanly enough to justify both one-lobe and two-or-more-lobe codes at once."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "Bronchial thermoplasty is definitely supported, but dual family billing is not.",
+      "schema": "Procedure recognition improved, but the coding logic remains materially wrong."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_037",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Selective intubation/endobronchial tamponade with blocker placement is missed entirely as a therapeutic event."
+      ],
+      "missed_details": [
+        "Could preserve the RUL bleeding source and topical vasoconstrictor use."
+      ],
+      "cpt": "31645 is supported for clot extraction/airway clearance, but the key tamponade maneuver is omitted.",
+      "schema": "Partial capture of a much more complex massive-hemoptysis intervention."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_038",
+      "score": 30,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchoscopic methylene-blue evaluation for tracheoesophageal fistula is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve mid-tracheal posterior-wall fistula localization and GI-coordinated esophageal dye instillation."
+      ],
+      "cpt": "At minimum this is a diagnostic bronchoscopy/fistula-evaluation workflow; a null extraction is inadequate.",
+      "schema": "Rare diagnostic procedure still missed."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_039",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass count for station 7 is not explicitly preserved.",
+        "General anesthesia is documented but not surfaced in sedation."
+      ],
+      "cpt": "31652 and 76982 are supportable from the documented two-station EBUS-TBNA with elastography mapping.",
+      "schema": "Good linear-EBUS plus elastography separation."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_040",
+      "score": 72,
+      "status": "WARNING",
+      "hallucinations": [
+        "Simultaneous 31652 and 43238 coding for the same EUS-B sampling episode may be duplicative/gray-zone rather than cleanly cumulative."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve that both sampled stations had 3 passes each inside node_events, not only in the separate eus_b block."
+      ],
+      "cpt": "The note supports a two-station EUS-B/convex-ultrasound sampling workflow, but the dual-code output still needs manual review.",
+      "schema": "Much better than the prior run, but not yet fully clean on coding logic."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_041",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Large cast extraction with cryoprobe/forceps is collapsed into generic therapeutic aspiration, which understates the extraction technique."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve R main bronchus cast removal and RLL fragment clearance more explicitly."
+      ],
+      "cpt": "31645 is defensible for major cast/airway clearance, though the structural detail is light.",
+      "schema": "Reasonable family capture with technique under-resolution."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_042",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "Complications/bleeding grade 1 are unsupported; the note says complications none and only minimal mucosal bleeding was controlled routinely."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Debulking/removal of obstructing fungal material is not represented as the main therapeutic action."
+      ],
+      "missed_details": [
+        "Could preserve RUL bronchus target and endobronchial debris specimen handling."
+      ],
+      "cpt": "31624 is supported for BAL, but this note also documents 31641-type therapeutic airway work that is omitted.",
+      "schema": "This case worsened: the therapeutic intervention is still missed and routine bleeding is overcalled as a complication."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_043",
+      "score": 28,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchoscopic brachytherapy-catheter placement is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve left main bronchus target lesion and radiation-oncology handoff."
+      ],
+      "cpt": "No obvious standard CPT conclusion is required to score this case; a null procedural extraction still misses the documented intervention.",
+      "schema": "Rare adjunctive airway procedure remains unrecognized."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_044",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "31622 is not cleanly supported in addition to 31615 for bronchoscopy through an established tracheostomy.",
+        "airway_abnormalities='Secretions' is unsupported; the note says the trachea was clear with mild granulation at the stoma."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Tracheostomy tube exchange is missed as a distinct performed procedure."
+      ],
+      "missed_details": [],
+      "cpt": "31615 is supported. The trach change itself is real procedural work even if a separate CPT conclusion is gray-zone here.",
+      "schema": "Partial capture of the bronchoscopic route, but the exchange component is omitted."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_045",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Limited laryngeal/airway inspection with vocal-cord motion assessment is missed entirely."
+      ],
+      "missed_details": [
+        "Could preserve paradoxical inspiratory adduction and the absence of significant subglottic stenosis."
+      ],
+      "cpt": "The exact CPT is not the main issue here; the note still documents a real endoscopic airway-evaluation procedure that should not be blank.",
+      "schema": "This remains a null extraction for a performed diagnostic airway evaluation."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_046",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "Pressure at the stoma is carried as an outcomes complication intervention even though the note states 'complications none' and describes routine mild bleeding control."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchoscopy-assisted transtracheal oxygen catheter exchange is missed entirely as the main intervention."
+      ],
+      "missed_details": [],
+      "cpt": "A standalone diagnostic bronchoscopy code does not capture the documented catheter-exchange procedure.",
+      "schema": "Rare airway-device management workflow remains undercalled."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_047",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "stent_brand='ENT' is unsupported and appears to be a substring artifact from the word 'stent'."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve mucus-plugging context more explicitly."
+      ],
+      "cpt": "31638 and 31640 are supportable for stent revision/removal plus granulation debulking.",
+      "schema": "Core rigid bronchoscopy/stent-removal workflow is captured with a minor string hallucination."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_048",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Topical mitomycin C adjunct is not structurally represented, but the core dilation case is correct."
+      ],
+      "cpt": "31630 is consistent with tracheal stenosis balloon dilation.",
+      "schema": "Strong core extraction in an ultra-short note."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_049",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "32604 is the wrong thoracoscopy code family; local coding rules point medical thoracoscopy/pleuroscopy with pleural biopsies toward the 32650 family."
+      ],
+      "mismatches": [
+        "Pleural drain placement from the procedure list is not carried as a performed action."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve biopsy count (x6) and diffuse pleural nodularity/thickening."
+      ],
+      "cpt": "Thoracoscopy with pleural biopsies is supported, as is chest ultrasound localization. The drain placement is adjunctive/bundled; the main error is the thoracoscopy code selection.",
+      "schema": "Pleural procedural family is recognized, but the code-family choice and drain recall are off."
+    },
+    {
+      "file": "my_results_batch_4.txt",
+      "note_id": "note_050",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Exact tPA/DNase doses are variably documented and are appropriately not hallucinated."
+      ],
+      "cpt": "32561 is consistent with first-session intrapleural fibrinolytic instillation via existing chest tube.",
+      "schema": "Clean pleural-procedure extraction."
+    }
+  ]
+}
