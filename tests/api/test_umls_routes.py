@@ -12,7 +12,9 @@ async def test_umls_suggest_uses_local_fixture(api_client, monkeypatch: pytest.M
     monkeypatch.setenv("UMLS_IP_UMLS_MAP_LOCAL_PATH", "tests/fixtures/ip_umls_map.small.json")
     monkeypatch.setenv("UMLS_IP_UMLS_MAP_S3_URI", "")
 
-    resp = await api_client.get("/api/v1/umls/suggest", params={"q": "rb", "category": "anatomy", "limit": 5})
+    resp = await api_client.get(
+        "/api/v1/umls/suggest", params={"q": "rb", "category": "anatomy", "limit": 5}
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert isinstance(data, list)
@@ -36,4 +38,3 @@ async def test_umls_concept_looks_up_cui(api_client, monkeypatch: pytest.MonkeyP
     payload = resp.json()
     assert payload["cui"] == "C0001"
     assert payload["preferred_name"] == "Right upper lobe"
-

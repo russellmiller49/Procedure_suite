@@ -16,6 +16,7 @@ from app.text_cleaning.camera_ocr_cleaner import (
 
 client = TestClient(app)
 
+
 @pytest.fixture
 def mock_registry_service():
     service_mock = MagicMock()
@@ -23,12 +24,14 @@ def mock_registry_service():
     yield service_mock
     app.dependency_overrides.pop(get_registry_service, None)
 
+
 @pytest.fixture
 def mock_phi_scrubber():
     scrubber_mock = MagicMock()
     app.dependency_overrides[get_phi_scrubber] = lambda: scrubber_mock
     yield scrubber_mock
     app.dependency_overrides.pop(get_phi_scrubber, None)
+
 
 def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubber):
     # Setup mock return
@@ -68,9 +71,23 @@ def test_unified_process_already_scrubbed(mock_registry_service, mock_phi_scrubb
     assert "clinical_context.ecog_score" in prompt_paths
 
     assert all(isinstance(p, dict) and "target_path" in p for p in prompts)
-    age_prompt = next((p for p in prompts if isinstance(p, dict) and p.get("path") == "patient_demographics.age_years"), None)
+    age_prompt = next(
+        (
+            p
+            for p in prompts
+            if isinstance(p, dict) and p.get("path") == "patient_demographics.age_years"
+        ),
+        None,
+    )
     assert age_prompt and age_prompt.get("target_path") == "patient.age"
-    asa_prompt = next((p for p in prompts if isinstance(p, dict) and p.get("path") == "clinical_context.asa_class"), None)
+    asa_prompt = next(
+        (
+            p
+            for p in prompts
+            if isinstance(p, dict) and p.get("path") == "clinical_context.asa_class"
+        ),
+        None,
+    )
     assert asa_prompt and asa_prompt.get("target_path") == "risk_assessment.asa_class"
 
     # Verify proper call to service
@@ -85,7 +102,7 @@ def test_unified_process_needs_scrubbing(mock_registry_service):
         cpt_codes=[],
         coder_difficulty="LOW_CONF",
         coder_source="test",
-        mapped_fields={}
+        mapped_fields={},
     )
     mock_registry_service.extract_fields.return_value = extraction_result
 

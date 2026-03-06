@@ -1,0 +1,511 @@
+{
+  "overall_average_score": 73.83333333333333,
+  "status_counts": {
+    "FAIL": 13,
+    "WARNING": 11,
+    "PASS": 6
+  },
+  "evaluations": [
+    {
+      "file": "my_results.txt",
+      "note_id": "note_035",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "BAL/performed=true and CPT 31624 are not supported; note describes therapeutic aspiration with saline lavage plus washings, not bronchoalveolar lavage."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchial washings / bronchial wash specimen not represented."
+      ],
+      "missed_details": [
+        "Moderate sedation present in note but not surfaced in the concise registry section used for key procedure interpretation."
+      ],
+      "cpt": "31645 is supported. 31624 is not supported by the note.",
+      "schema": "Core therapeutic aspiration event is present, but registry confuses lavage language with BAL."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_038",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings implies an endobronchial lesion even though the note explicitly says no endobronchial lesion."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Granular station detail omits station 7 pass count (6 passes) despite 3 sampled stations being present."
+      ],
+      "cpt": "31653 is consistent with 3 sampled stations (4R, 7, 10R).",
+      "schema": "Node actions are separated correctly, but inspection narrative polarity is wrong."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_047",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "Complications block says bleeding occurred (Nashville grade 2 / moderate) even though the note says Complications: None and only mentions minor oozing controlled with cold saline."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31645 is supported for clot extraction / airway clearance.",
+      "schema": "Complication severity is materially overstated."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_018",
+      "score": 72,
+      "status": "FAIL",
+      "hallucinations": [
+        "endobronchial_biopsy.performed=true and CPT 31625 are not supported; the note documents forceps biopsies of a peripheral RML target, i.e., transbronchial biopsy, not endobronchial biopsy."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Brush count, TBNA count, and forceps biopsy count are not preserved in structured fields."
+      ],
+      "cpt": "31623/31627/31628/31629/+31654 are supported. 31625 is not. 77012 is a gray-zone billing inference from CBCT mention rather than a clearly documented procedural code.",
+      "schema": "Major procedure family mostly correct, but biopsy type classification is wrong."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_036",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent.action_type='placement' and CPT 31636 are not supported; this was surveillance/toileting of an existing tracheal stent, not new placement."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Mechanical debridement of granulation tissue is described in the note but not extracted as its own therapeutic event."
+      ],
+      "missed_details": [
+        "Existing stent type/location are only partially represented; suction/toileting is flattened into secretions without a clear toileting event."
+      ],
+      "cpt": "31641 is defensible for APC treatment of granulation/stenosis. 31636 is not supported.",
+      "schema": "Existing-stent management is collapsed into a false placement event."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_037",
+      "score": 96,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could additionally capture laterality and immediate cloudy drainage, but this is minor."
+      ],
+      "cpt": "32557 and 32561 are consistent with US-guided 14 Fr pigtail placement plus first-day intrapleural fibrinolytic instillation.",
+      "schema": "Good separation of chest tube placement and fibrinolytic therapy."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_012",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "CPT 31640 (tumor excision) is not supported; the note describes granulation tissue debridement, not tumor excision."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Cryotherapy application count (2 applications) is not preserved."
+      ],
+      "cpt": "31638 is supported for stent repositioning/revision. 31645 is arguable from stent lumen toileting/suctioning. 31640 is not supported as documented.",
+      "schema": "Procedure families are mostly correct, but coding logic treats granulation tissue as tumor."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_039",
+      "score": 74,
+      "status": "FAIL",
+      "hallucinations": [
+        "Complications block overcalls moderate bleeding/Nashville grade 2, while the note says no complications and specifically says cryobiopsy was retrieved without significant bleeding."
+      ],
+      "mismatches": [
+        "BAL location is malformed ('RLL (')."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Cryobiopsy probe size (1.1 mm) and BAL volumes (150 mL in / 62 mL out) are incompletely captured in the top-level structured fields."
+      ],
+      "cpt": "31624/31627/31628/+31654 are consistent with BAL + navigation + transbronchial cryobiopsy + radial EBUS.",
+      "schema": "Complication extraction is the main failure."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_019",
+      "score": 77,
+      "status": "WARNING",
+      "hallucinations": [
+        "Inspection findings imply an endobronchial lesion despite the note stating no endobronchial lesion.",
+        "Extra elastography add-on coding (76983) is not clearly supported; only a single target/station is described as having elastography findings."
+      ],
+      "mismatches": [
+        "Pass counts are misassigned/incomplete in granular EBUS detail (station 7 should have 6 passes; station 11R should have 4)."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31624/31625/31652 are supported. 76982 may be supportable for one elastography target; +76983 is not clearly supported.",
+      "schema": "Good overall recall, but imaging adjunct coding and pass quantitation are shaky."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_022",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings says 'endobronchial tumor' even though the note says airway inspection normal and no endobronchial tumor."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Granular station detail omits station 7 pass metadata."
+      ],
+      "cpt": "31653 is correct for 3 sampled stations.",
+      "schema": "Major extraction is correct; narrative polarity error remains."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_009",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings implies endobronchial tumor despite the note stating no endobronchial tumor."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Granular EBUS detail misses the 5 passes at station 7."
+      ],
+      "cpt": "31653 is correct for sampling 4R, 7, and 10R.",
+      "schema": "Core staging logic is good; false-positive lesion text is the main precision issue."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_002",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [
+        "Complications block overcalls moderate bleeding despite Complications: None in the note."
+      ],
+      "mismatches": [
+        "EBUS node_events mark station 7 and 4L as inspected_only even though both were sampled via TBNA.",
+        "Because only one node event is treated as sampled, billing is downcoded to 31652 instead of 31653."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Station 7 pass count is missing from granular detail."
+      ],
+      "cpt": "31623/31624/31625 are supported. EBUS should derive 31653, not 31652, because 11L, 7, and 4L were all sampled.",
+      "schema": "This is a classic sampled-vs-inspected logic failure."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_011",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "Inspection findings falsely imply an endobronchial lesion; note explicitly says no endobronchial lesion."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchial washings from RLL are not represented as a separate specimen/procedure concept."
+      ],
+      "missed_details": [],
+      "cpt": "31645 is supported.",
+      "schema": "Therapeutic aspiration is correct, but washings are omitted."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_028",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "endobronchial_biopsy/31625 are not supported; the note documents peripheral forceps biopsies.",
+        "Complications block overcalls moderate bleeding, though the note describes mild bleeding controlled with wedge positioning and cold saline and says Complications: None."
+      ],
+      "mismatches": [
+        "clinical_context.bronchus_sign='Not assessed' conflicts with the note, which explicitly says the nodule had a bronchus sign."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Target segment is posterior basal LLL, but target granularity is only partially preserved."
+      ],
+      "cpt": "31627/31628/31629/+31654 are consistent. 31625 is not supported.",
+      "schema": "Biopsy family and complication severity are both wrong."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_021",
+      "score": 72,
+      "status": "FAIL",
+      "hallucinations": [
+        "foreign_body_removal.performed=true is not supported; this is airway stent removal, not foreign body removal.",
+        "Complications block creates a mild bleeding complication even though the note says Complications: None and only mentions minor oozing resolved with suction."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Residual stenosis caliber (~11\u201312 mm) and post-removal patency are not preserved in structured airway outcome fields."
+      ],
+      "cpt": "31638 is consistent with stent removal/revision-style work on an existing stent.",
+      "schema": "Stent removal is recognized, but an unrelated foreign-body family is spuriously turned on."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_040",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "therapeutic_aspiration.performed=true is an overcall from incidental suctioning of thick secretions in a combined BAL + EBUS case."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could capture that both station 7 and 4R had 4 passes."
+      ],
+      "cpt": "31624 and 31652 are consistent with BAL plus 2-station EBUS sampling.",
+      "schema": "Overall extraction is usable; therapeutic aspiration flag is too aggressive."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_010",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Counts (TBNA x3, forceps x6, brushing x1) are not deeply structured, but the performed procedures and target are correct."
+      ],
+      "cpt": "31623/31624/31627/31628/31629/+31654 are coherent with the note.",
+      "schema": "Good separation of navigation, radial EBUS, TBNA, TBBx, brushings, and BAL."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_025",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "Inspection findings falsely imply an endobronchial lesion although the note says no endobronchial lesion."
+      ],
+      "mismatches": [
+        "linear_ebus.stations_sampled omits station 7 even though 4R, 7, and 11R were all sampled.",
+        "node_events mark station 7 and 11R as inspected_only despite documented TBNA sampling."
+      ],
+      "missed_procedures": [
+        "Transbronchial biopsy/forceps biopsies of the RUL target are missed."
+      ],
+      "missed_details": [
+        "Granular EBUS detail captures only 4R and 11R, omitting station 7."
+      ],
+      "cpt": "31627/31629/+31654 are supported. EBUS should derive 31653, not 31652, because 3 nodal stations were sampled.",
+      "schema": "Combined peripheral+mediastinal case is not cleanly separated; major recall and logic issues."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_027",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchial washings are documented but not represented."
+      ],
+      "missed_details": [
+        "RLL lateral basal BAL location and washings could be more explicit in structured fields."
+      ],
+      "cpt": "31624 and 31645 are supported; washings are absent from extraction but do not invalidate the main coding stack.",
+      "schema": "Good core extraction with partial recall loss for washings."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_026",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [
+        "Inspection findings falsely imply an endobronchial lesion/mass despite the note stating no endobronchial lesion."
+      ],
+      "mismatches": [
+        "Granular pass counts are swapped/incomplete: station 7 should have 6 passes and 11L should have 3, but the detail table assigns 6 to 11L and omits 7 pass count."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31653 is correct for 3 sampled stations (7, 4L, 11L).",
+      "schema": "High-level EBUS extraction is right, but quantitative details are unreliable."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_005",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "linear_ebus.node_events labels station 4L as inspected_only even though the note clearly documents EBUS-TBNA/FNA with 3 passes and a 22g needle."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Moderate sedation is not captured.",
+        "Derived CPT 31652 is missing despite one sampled nodal station."
+      ],
+      "cpt": "Should derive 31652 from a single sampled station (4L).",
+      "schema": "Granular station detail says sampled=true while node_events say inspected_only; internal contradiction."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_006",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass count (x4) is not preserved in granular detail.",
+        "Sedation documentation is conflicting in the note; choosing General is a reasonable interpretation because an explicit anesthesia line is present."
+      ],
+      "cpt": "31652 is correct for one sampled station.",
+      "schema": "Good extraction despite conflicting sedation text."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_002",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 11R is falsely treated as sampled; the note corrects itself to 11L sampled, with station 7 also sampled."
+      ],
+      "mismatches": [
+        "CPT is upcoded to 31653 even though only 2 stations (11L and 7) were sampled, so the correct nodal EBUS code would be 31652.",
+        "Evidence quotes for node events are taken from the specimen list rather than the actual procedural sampling sentences."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Follow-up/outcome text is mangled ('Patient <PERSON> well')."
+      ],
+      "cpt": "Should be 31652, not 31653.",
+      "schema": "This is a high-severity laterality/target hallucination."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_001",
+      "score": 56,
+      "status": "FAIL",
+      "hallucinations": [
+        "clinical_context.asa_class=3 is not supported by 'MONITORING: Standard ASA'.",
+        "Node events mark every station as inspected_only, including 7 and 4R, even though those two were actually sampled."
+      ],
+      "mismatches": [
+        "Because sampled actions are not represented, the case fails to derive CPT 31652 even though 7 and 4R were sampled."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "ROSE is only partially represented and pass counts (7 x4, 4R x3) are not fully carried through."
+      ],
+      "cpt": "Should derive 31652 for two sampled stations (7 and 4R).",
+      "schema": "Internal inconsistency between stations_sampled/granular detail and node_events."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_010",
+      "score": 91,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [
+        "BAL location is overly vague ('the segment') instead of RLL superior segment / RB6.",
+        "Radial EBUS is simplified to concentric, whereas the note says eccentric then adjusted to concentric."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Counts for TBNA x3 and TBBx x4 are not deeply structured."
+      ],
+      "cpt": "31624/31627/31628/31629/+31654 are coherent with the documented robotic peripheral bronchoscopy.",
+      "schema": "Strong overall extraction."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_008",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy may be inferred more strongly than documented; the text explicitly says Linear EBUS inserted and does not separately describe a flexible airway survey."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass count (4) is not propagated into granular detail."
+      ],
+      "cpt": "31652 is correct for a single sampled station 7.",
+      "schema": "Otherwise coherent single-station EBUS extraction."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_004",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings implies a mass even though the airway exam only reported mildly edematous mucosa and no mass."
+      ],
+      "mismatches": [
+        "Sedation/anesthesia is missing despite explicit General anesthesia in the note.",
+        "Granular pass counts are partly wrong/incomplete: station 7 should have 4 passes and 11R should have 3, but the detail table omits 7 passes and assigns 4 to 11R."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "TBLB location RB3 is not preserved."
+      ],
+      "cpt": "31628/31653/+31654 are supported.",
+      "schema": "High-level procedure families are right; quantitative granularity is off."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_009",
+      "score": 30,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus with CPT 31652 is not supported as a nodal staging event; the note describes TBNA of a mass, not a nodal station sample."
+      ],
+      "mismatches": [
+        "The note is internally laterality-conflicted ('left upper lobe mass' vs 'RUL mass'), but the JSON resolves this into an invalid EBUS nodal construct rather than preserving ambiguity on a peripheral target."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Should preserve the target as an ambiguous peripheral lung mass TBNA rather than a station-based EBUS node event."
+      ],
+      "cpt": "31652 is not supported by the documented text.",
+      "schema": "Peripheral target and nodal EBUS schemas are conflated."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_003",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Sedation is undocumented in the note and appropriately left blank."
+      ],
+      "cpt": "31652 is correct for single-station EBUS-TBNA of 4R.",
+      "schema": "Accurate extraction for an ultra-short note."
+    },
+    {
+      "file": "my_results_2.txt",
+      "note_id": "note_007",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Sedation/agent details are not structured despite propofol being mentioned; however, the noisy dose correction was not hallucinated into the registry, which is appropriate."
+      ],
+      "cpt": "31652 is correct for two sampled stations (4R and 10R).",
+      "schema": "Good handling of noisy text."
+    }
+  ]
+}

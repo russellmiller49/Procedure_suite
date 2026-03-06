@@ -5,7 +5,7 @@ from app.registry.postprocess import enrich_medical_thoracoscopy_biopsies_taken
 from app.registry.schema import RegistryRecord
 
 
-def test_registry_to_cpt_thoracoscopy_with_pleural_biopsy_derives_32609() -> None:
+def test_registry_to_cpt_thoracoscopy_with_pleural_biopsy_derives_32604() -> None:
     record = RegistryRecord.model_validate(
         {
             "pleural_procedures": {
@@ -15,7 +15,7 @@ def test_registry_to_cpt_thoracoscopy_with_pleural_biopsy_derives_32609() -> Non
     )
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "32609" in codes
+    assert "32604" in codes
     assert "32601" not in codes
 
 
@@ -30,7 +30,7 @@ def test_registry_to_cpt_thoracoscopy_without_biopsy_derives_32601() -> None:
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     assert "32601" in codes
-    assert "32609" not in codes
+    assert "32604" not in codes
 
 
 def test_registry_to_cpt_thoracoscopy_with_pleurodesis_derives_32650_and_suppresses_32601_and_32560() -> None:
@@ -67,7 +67,7 @@ def test_postprocess_sets_medical_thoracoscopy_biopsies_taken_from_text() -> Non
     assert any("AUTO_THORACOSCOPY_BIOPSY" in w for w in warnings)
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "32609" in codes
+    assert "32604" in codes
 
 
 def test_thoracoscopy_bundles_same_side_chest_tube_insertion() -> None:

@@ -47,19 +47,16 @@ Tool-in-lesion was confirmed with Cone Beam CT.
 
 TBNA: Transbronchial needle aspiration was performed. Sampling was obtained from the RUL target.
 
-Airway Inspection The bronchoscope was introduced and a systematic airway inspection was performed, noting normal anatomy without endobronchial lesions.
+Transbronchial Cryobiopsy Attention was turned to the Right Upper Lobe (RUL) for transbronchial cryobiopsy.
 
-Radial EBUS & Preparation Attention was turned to the Right Upper Lobe (RUL).
-
-rEBUS Survey: A radial EBUS probe was advanced to the basilar segments. The survey confirmed the absence of significant vessels at the selected biopsy sites and allowed for navigation to the periphery.
-
-Transbronchial Cryobiopsy A cryoprobe was utilized for sampling.
+A cryoprobe was utilized for sampling.
 
 Findings & Hemostasis
 
-Hemostasis: Final airway inspection demonstrated no clinically significant bleeding.
+Hemostasis:
+Final airway inspection was performed.
 
-Pneumothorax Check: Post-procedure assessment demonstrated no pneumothorax.
+Pneumothorax Check: Post-procedure assessment for pneumothorax was performed.
 
 SPECIMENS
 
@@ -67,7 +64,7 @@ RUL Transbronchial Cryobiopsy — Histology
 
 IMPRESSION / PLAN
 
-Successful transbronchial cryobiopsy of RUL for ILD evaluation.
+Successful transbronchial cryobiopsy of RUL for diagnostic evaluation of peripheral lung lesion.
 
 No pneumothorax or significant bleeding complications.
 

@@ -42,18 +42,20 @@ def test_populate_ebus_node_events_fallback_adds_placeholder_when_sampling_docum
     )
 
     warnings = populate_ebus_node_events_fallback(record, note_text)
-    assert any("EBUS_FALLBACK" in w for w in warnings)
+    assert any("EBUS_NONSTATION_TARGET_CAPTURED" in w for w in warnings)
 
     linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
-    assert linear.stations_sampled == ["UNSPECIFIED"]
+    assert linear.stations_sampled in (None, [])
+    assert isinstance(linear.targets_sampled, list) and linear.targets_sampled
     assert linear.node_events is not None
     assert len(linear.node_events) == 1
-    assert linear.node_events[0].station == "UNSPECIFIED"
+    assert linear.node_events[0].station is None
+    assert isinstance(linear.node_events[0].target_text, str) and linear.node_events[0].target_text
     assert linear.node_events[0].action == "needle_aspiration"
 
     evidence = record.evidence
-    assert evidence.get("procedures_performed.linear_ebus.stations_sampled.0"), "Missing evidence for stations_sampled[0]"
-    assert evidence.get("procedures_performed.linear_ebus.node_events.0.station"), "Missing evidence for node_events[0].station"
+    assert evidence.get("procedures_performed.linear_ebus.targets_sampled.0"), "Missing evidence for targets_sampled[0]"
+    assert evidence.get("procedures_performed.linear_ebus.node_events.0.target_text"), "Missing evidence for node_events[0].target_text"
     assert evidence.get("procedures_performed.linear_ebus.node_events.0.evidence_quote"), "Missing evidence for node_events[0].evidence_quote"
 
     span = evidence["procedures_performed.linear_ebus.node_events.0.evidence_quote"][0]

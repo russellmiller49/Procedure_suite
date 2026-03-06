@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from pathlib import Path
 import uuid
+from datetime import UTC, datetime
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,7 +13,6 @@ from app.phi.db import Base
 from app.registry_store.dependencies import get_registry_store_engine
 from app.registry_store.models import RegistryCaseRecord
 from app.vault.models import UserPatientVault
-
 
 _FIXTURE_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "case_events"
 
@@ -44,7 +43,7 @@ def _auth(user_id: str) -> dict[str, str]:
 
 
 def _seed_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     db.add(
         UserPatientVault(
             user_id=user_id,

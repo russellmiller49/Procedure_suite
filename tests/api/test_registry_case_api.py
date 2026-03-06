@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import uuid
+from datetime import UTC, datetime
 
 import pytest
 from fastapi.testclient import TestClient
@@ -39,7 +39,7 @@ def _auth(user_id: str) -> dict[str, str]:
 
 
 def _seed_user_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     db.add(
         UserPatientVault(
             user_id=user_id,
@@ -75,7 +75,10 @@ def _seed_user_case(db, *, user_id: str, registry_uuid: uuid.UUID) -> None:
             relative_day_offset=2,
             ocr_correction_applied=False,
             metadata_json={"structured_data": {"hospital_admission": False}},
-            extracted_json={"qa_flags": ["deterministic"], "node_updates": [{"station": "7", "path_result": "Positive"}]},
+            extracted_json={
+                "qa_flags": ["deterministic"],
+                "node_updates": [{"station": "7", "path_result": "Positive"}],
+            },
             created_at=now,
         )
     )
@@ -167,7 +170,7 @@ def test_registry_case_patch_rejects_invalid_schema_payload(client: TestClient, 
 def test_registry_case_rebuild_replays_baseline_and_events(client: TestClient, case_db) -> None:
     case_id = uuid.uuid4()
     _seed_user_case(case_db, user_id="user_a", registry_uuid=case_id)
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     run_id = uuid.uuid4()
     case_db.add(
@@ -194,7 +197,11 @@ def test_registry_case_rebuild_replays_baseline_and_events(client: TestClient, c
     case_row.version = 3
     case_db.add(case_row)
 
-    append_rows = case_db.query(RegistryAppendedDocument).filter_by(registry_uuid=case_id, user_id="user_a").all()
+    append_rows = (
+        case_db.query(RegistryAppendedDocument)
+        .filter_by(registry_uuid=case_id, user_id="user_a")
+        .all()
+    )
     assert append_rows
     for row in append_rows:
         row.aggregated_at = now
@@ -211,5 +218,9 @@ def test_registry_case_rebuild_replays_baseline_and_events(client: TestClient, c
     payload = rebuild_res.json()
     assert payload["source_run_id"] == str(run_id)
     assert payload["registry"]["procedure"]["indication"] == "Mediastinal adenopathy"
-    assert any(ev["event_type"] == "procedure_report" and ev["is_synthetic"] for ev in payload["events"])
-    assert any(ev["event_type"] == "pathology" and not ev["is_synthetic"] for ev in payload["events"])
+    assert any(
+        ev["event_type"] == "procedure_report" and ev["is_synthetic"] for ev in payload["events"]
+    )
+    assert any(
+        ev["event_type"] == "pathology" and not ev["is_synthetic"] for ev in payload["events"]
+    )

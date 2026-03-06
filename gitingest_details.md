@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-02-23T20:07:41-08:00`
-Git: `main` @ `bfcd6e3`
+Generated: `2026-03-04T07:49:40-08:00`
+Git: `codex/reporter-batch-quality` @ `bad4e67f`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -91,10 +91,10 @@ Git: `main` @ `bfcd6e3`
      9581  ml/scripts/registry_label_overlap_report.py
      9603  ml/scripts/align_synthetic_names.py
      9715  ops/tools/registry_pipeline_smoke.py
-    10264  ops/tools/run_reporter_random_seeds.py
     10375  ml/scripts/diamond_loop_cloud_sync.py
     10664  ml/scripts/merge_granular_attribute_spans.py
     11135  ops/tools/generate_cpt_keywords.py
+    11225  ops/tools/compare_reporter_prompt_llm_findings_models.py
     11237  ml/scripts/evaluate_coder.py
     11270  ml/scripts/scrub_golden_jsons.py
     11525  ml/scripts/prodigy_export_corrections.py
@@ -104,11 +104,11 @@ Git: `main` @ `bfcd6e3`
     13341  ml/scripts/bootstrap_relations_silver.py
     13386  ops/tools/eval_reporter_prompt_baseline.py
     13510  ml/scripts/extract_ner_from_excel.py
-    14196  ops/tools/eval_reporter_prompt_llm_findings.py
     14201  ops/tools/index_repo.py
     14551  ml/scripts/review_llm_fallback_errors.py
     14712  ops/tools/unified_pipeline_batch.py
     14748  ml/scripts/quantize_to_onnx.py
+    15504  ops/tools/run_reporter_random_seeds.py
     15516  ml/scripts/verify_registry_human_data.py
     15802  ml/scripts/sanitize_dataset.py
     16091  ml/scripts/shadow_diff_structured_extraction.py
@@ -121,6 +121,7 @@ Git: `main` @ `bfcd6e3`
     17037  ml/scripts/prodigy_prepare_phi_batch.py
     18192  ml/scripts/build_model_agnostic_phi_spans.py
     18203  ml/scripts/generate_synthetic_phi_data.py
+    18417  ops/tools/eval_reporter_prompt_llm_findings.py
     18478  ops/tools/eval_reporter_prompt_model.py
     20516  ml/scripts/audit_model_fp.py
     20937  ml/scripts/train_roberta_pm3.py
@@ -159,6 +160,7 @@ Git: `main` @ `bfcd6e3`
        32  ui/__init__.py
        35  tests/ml_advisor/__init__.py
        37  app/domain/__init__.py
+       38  app/registry/aggregation/__init__.py
        39  app/registry/processing/__init__.py
        46  tests/integration/test_placeholder.py
        50  app/registry/audit/__init__.py
@@ -210,12 +212,14 @@ Git: `main` @ `bfcd6e3`
       318  app/coder/adapters/nlp/__init__.py
       332  app/api/services/__init__.py
       332  tests/ml_coder/test_registry_label_schema.py
+      333  app/registry/aggregation/clinical/__init__.py
       340  tests/helpers/phi_asserts.py
       345  app/reporting/normalization/types.py
       352  app/sectioning/__init__.py
       358  tests/unit/test_cpt_cleaning.py
       369  app/coder/domain_rules/registry_to_cpt/types.py
       369  tests/unit/test_templates.py
+      379  app/registry/aggregation/imaging/__init__.py
       393  app/reporting/second_pass/station_consistency.py
       398  app/coder/adapters/llm/noop_advisor.py
       405  app/ner/__init__.py
@@ -225,7 +229,6 @@ Git: `main` @ `bfcd6e3`
       478  app/phi/safety/__init__.py
       480  app/reporting/normalization/compat_types.py
       486  app/agents/structurer/structurer_agent.py
-      494  tests/unit/test_reporting_compat_enricher.py
       500  app/registry/extractors/noop.py
       521  app/registry/ner_mapping/__init__.py
       525  tests/e2e/test_registry_e2e.py
@@ -237,6 +240,7 @@ Git: `main` @ `bfcd6e3`
       557  tests/registry/test_keyword_guard_high_conf_bypass.py
       564  tests/registry/test_note_047_regression.py
       572  app/api/__init__.py
+      576  app/registry/aggregation/pathology/__init__.py
       582  tests/scripts/test_audit_model_fp_logic.py
       602  app/infra/executors.py
       607  app/coder/code_families.py
@@ -272,11 +276,11 @@ Git: `main` @ `bfcd6e3`
       829  tests/coder/test_parallel_confidence_combiner.py
       835  app/agents/summarizer/summarizer_agent.py
       840  app/common/logger.py
+      849  tests/registry/test_missing_field_prompts_global.py
       851  tests/ml_coder/test_registry_label_constraints.py
       859  app/reporting/coder_view.py
       874  app/domain/knowledge_base/models.py
       874  tests/registry/test_note_240_cao_regression.py
-      886  app/registry/application/__init__.py
       887  tests/api/test_ui.py
       896  tests/unit/test_inference_engine.py
       901  app/registry/__init__.py
@@ -295,10 +299,13 @@ Git: `main` @ `bfcd6e3`
       995  tests/phi/test_fernet_encryption_adapter.py
       996  app/api/guards.py
      1004  app/registry/constants/warnings.py
+     1020  tests/registry/test_extract_imaging_pet_ct.py
      1021  app/api/registry_payload.py
+     1024  app/registry/application/__init__.py
      1036  tests/registry/test_coding_support_builder_prefixes.py
      1064  app/coder/__init__.py
      1068  tests/registry/test_clinical_guardrails_radial_linear.py
+     1074  tests/registry/test_extract_imaging_ct.py
      1090  app/registry/heuristics/__init__.py
      1095  app/text_cleaning/__init__.py
      1099  tests/registry/test_clinical_guardrails_tbna_peripheral_context.py
@@ -322,9 +329,11 @@ Git: `main` @ `bfcd6e3`
      1235  tests/registry/test_aborted_targets_cleanup.py
      1255  app/api/routes/umls.py
      1262  tests/coding/test_peripheral_rules.py
+     1273  app/registry/aggregation/llm_models.py
      1275  app/phi/adapters/scrubber_stub.py
      1280  tests/registry/test_template_checkbox_negation.py
      1292  app/phi/adapters/audit_logger_db.py
+     1293  app/registry/aggregation/sanitize.py
      1295  app/reporting/umls_filters.py
      1298  tests/ml_coder/test_distillation_io.py
      1301  app/registry/slots/indication.py
@@ -356,7 +365,7 @@ Git: `main` @ `bfcd6e3`
      1481  tests/coding/test_hierarchy_normalization.py
      1486  tests/unit/test_ip_umls_store.py
      1493  app/registry/pipelines/v3_pipeline.py
-     1503  tests/registry/test_table_row_masking_regressions.py
+     1506  tests/registry/test_table_row_masking_regressions.py
      1506  tests/reporting/test_validation_path_access.py
      1525  tests/scripts/test_build_reporter_prompt_dataset.py
      1539  app/registry/slots/complications.py
@@ -394,6 +403,7 @@ Git: `main` @ `bfcd6e3`
      1816  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
      1823  app/registry/slots/tblb.py
      1833  proc_schemas/reasoning.py
+     1836  tests/registry/test_registry_record_clinical_course_fields.py
      1838  tests/registry/test_pleural_extraction.py
      1847  app/coder/parallel_pathway/reconciler.py
      1869  ml/lib/reporter_prompt_masking.py
@@ -401,13 +411,14 @@ Git: `main` @ `bfcd6e3`
      1872  tests/registry/test_new_extractors.py
      1873  app/registry_store/dependencies.py
      1873  tests/integration/api/test_health_endpoint.py
-     1878  proc_schemas/shared/ebus_events.py
+     1912  app/registry/aggregation/pathology/normalize.py
      1915  tests/coder/test_ncci_ptp_indicator.py
      1924  tests/unit/test_reporter_json_parse.py
      1929  app/coder/constants.py
      1953  tests/api/test_phi_demo_cases.py
      1971  tests/scripts/test_split_reporter_gold_dataset.py
      1981  app/coder/phi_gating.py
+     1990  app/registry/aggregation/locks.py
      1995  app/phi/ports.py
      1999  tests/registry/test_ip_v3_schema_refactor.py
      2003  app/registry/legacy/supabase_sink.py
@@ -417,6 +428,7 @@ Git: `main` @ `bfcd6e3`
      2076  tests/scripts/test_eval_relations_labels.py
      2077  app/registry/slots/dilation.py
      2086  tests/api/test_startup_settings.py
+     2104  app/registry/aggregation/imaging/normalize.py
      2107  ml/lib/ml_coder/training_losses.py
      2123  tests/scripts/test_merge_granular_attribute_spans.py
      2132  app/coder/peripheral_rules.py
@@ -426,6 +438,7 @@ Git: `main` @ `bfcd6e3`
      2164  app/registry/self_correction/__init__.py
      2167  app/registry/legacy/adapters/base.py
      2174  tests/test_ip_registry_schema_guardrails.py
+     2196  tests/registry/test_extract_pathology.py
      2209  tests/registry/test_sedation_blvr.py
      2213  app/reporting/__init__.py
      2246  ml/lib/ml_coder/self_correction.py
@@ -435,6 +448,7 @@ Git: `main` @ `bfcd6e3`
      2267  tests/registry/test_pathology_extraction.py
      2288  tests/registry/test_schema_refactor_smoke.py
      2296  tests/reporter/test_questions_builder.py
+     2296  tests/unit/test_reporting_compat_enricher.py
      2311  tests/scripts/test_eval_reporter_gold_dataset.py
      2312  app/registry/slots/sedation.py
      2352  tests/api/test_render_request_normalization.py
@@ -444,13 +458,14 @@ Git: `main` @ `bfcd6e3`
      2409  tests/registry/test_registry_to_cpt_fibrinolytic_therapy.py
      2413  app/registry/schema/ip_v3_extraction.py
      2416  app/common/text_cleaning.py
+     2441  proc_schemas/shared/ebus_events.py
      2444  app/common/rules_engine/mer.py
      2472  app/reporter/prompts.py
      2475  app/proc_ml_advisor/__init__.py
      2480  app/llm/client.py
-     2522  app/api/services/bundle_processing.py
      2529  tests/test_camera_ocr_fuzzy.py
      2533  tests/unit/test_relations_shadow_mode.py
+     2549  tests/api/test_patch_sets_manual_locks.py
      2579  tests/conftest.py
      2582  app/api/routes/legacy_registry.py
      2582  app/reporting/inference.py
@@ -459,13 +474,17 @@ Git: `main` @ `bfcd6e3`
      2608  app/phi/safety/protected_terms.py
      2612  tests/registry/test_navigation_fiducials.py
      2652  app/registry/slots/ebus.py
+     2664  app/api/services/bundle_processing.py
      2713  app/common/text_io.py
+     2737  tests/registry/test_case_aggregator_bootstrap_run.py
      2745  tests/registry/test_header_scan.py
      2764  app/domain/coding_rules/mer.py
      2764  app/registry/heuristics/granular_warning_reconcile.py
+     2775  tests/registry/test_case_aggregator_pathology_results.py
      2784  app/domain/coding_rules/ncci.py
      2791  tests/registry/test_ebus_postprocess_enrichment.py
      2797  tests/coding/test_phi_gating.py
+     2803  app/registry/aggregation/clinical/patch_clinical_update.py
      2804  app/domain/rvu/calculator.py
      2812  app/api/schemas/vault.py
      2832  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
@@ -477,8 +496,11 @@ Git: `main` @ `bfcd6e3`
      2906  app/reporter/cli.py
      2914  tests/reporting/test_macro_engine_template_adapter_parity.py
      2923  app/common/rvu_calc.py
+     2955  app/registry/aggregation/pathology/patch_pathology_results.py
      2974  tests/coding/test_sectionizer_integration.py
      2977  tests/unit/test_openai_timeouts.py
+     3014  tests/api/test_append_triggers_aggregation.py
+     3028  tests/registry/test_case_aggregator_respects_locks.py
      3037  tests/unit/test_timeline_aggregator.py
      3060  app/common/umls_linking.py
      3062  tests/registry/test_ebus_deterministic.py
@@ -494,13 +516,16 @@ Git: `main` @ `bfcd6e3`
      3186  app/registry/summarize.py
      3188  app/common/rules_engine/dsl.py
      3190  tests/reporting/test_macro_registry_isolation.py
+     3193  tests/registry/test_case_aggregator_clinical_followup.py
      3197  config/startup_settings.py
      3198  tests/registry/test_navigation_targets_inline_target.py
-     3212  tests/registry/test_missing_field_prompts_ebus.py
+     3220  tests/registry/test_missing_field_prompts_ebus.py
+     3248  tests/registry/test_patcher_dedupe_titles.py
      3252  app/infra/cache.py
      3259  tests/registry/test_focusing_audit_guardrail.py
      3260  tests/coder/test_ncci_bundling_excludes_financials.py
      3307  app/registry/legacy/adapter.py
+     3325  tests/registry/test_case_aggregator_imaging_summary.py
      3328  tests/registry/test_model_provider.py
      3335  tests/test_endosoft_cleaner.py
      3379  app/coder/peripheral_extractor.py
@@ -519,10 +544,12 @@ Git: `main` @ `bfcd6e3`
      3686  ml/lib/ml_coder/registry_label_schema.py
      3692  app/registry/slots/blvr.py
      3694  app/api/phi_redaction.py
-     3726  app/registry_store/models.py
+     3745  tests/api/test_append_guardrails_strict_zk.py
+     3764  app/registry/aggregation/imaging/extract_pet_ct.py
      3774  app/common/knowledge_schema.py
      3795  app/common/model_capabilities.py
      3819  app/api/phi_dependencies.py
+     3829  app/registry/aggregation/imaging/extract_ct.py
      3835  tests/reporting/test_category_macros_externalized.py
      3838  tests/integration/test_pipeline_integrity.py
      3882  app/registry/heuristics/coverage_checks.py
@@ -549,6 +576,7 @@ Git: `main` @ `bfcd6e3`
      4399  tests/phi/test_presidio_scrubber_adapter.py
      4413  app/document_fingerprint/registry.py
      4413  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
+     4457  app/registry_store/models.py
      4461  proc_schemas/clinical/common.py
      4486  tests/api/test_vault_api.py
      4487  app/document_fingerprint/provation.py
@@ -564,16 +592,17 @@ Git: `main` @ `bfcd6e3`
      4578  tests/api/test_coding_phi_gating.py
      4584  tests/registry/test_note_300_multilobe_navigation_regression.py
      4619  tests/reporting/test_debug_notes_gating.py
-     4667  app/api/routes/unified_process.py
+     4666  app/api/routes/unified_process.py
      4705  app/reporting/partial_schemas.py
+     4738  tests/scripts/test_compare_reporter_prompt_llm_findings_models.py
      4748  tests/registry/test_outcomes_success_status.py
      4758  tests/registry/test_note_002_regression.py
      4782  app/common/sectionizer.py
      4800  tests/registry/test_evidence_required_policy.py
      4829  tests/reporting/test_render_parity_normalization.py
+     4847  app/registry/aggregation/imaging/parse_common.py
      4866  tests/api/test_vault_bearer_e2e.py
      4946  tests/registry/test_auditor_raw_ml_only.py
-     5004  tests/api/test_registry_case_api.py
      5041  app/coder/adapters/nlp/simple_negation_detector.py
      5048  docs/phi_review_system/backend/main.py
      5085  app/api/auth.py
@@ -583,19 +612,19 @@ Git: `main` @ `bfcd6e3`
      5160  config/settings.py
      5162  tests/coding/test_rules_engine_phase1.py
      5164  tests/unit/test_openai_payload_compat.py
+     5192  app/registry/aggregation/pathology/extract_pathology_results.py
      5219  ml/lib/reporter_bundle_codec.py
      5285  app/document_fingerprint/endosoft.py
      5334  app/api/phi_demo_store.py
      5347  app/api/schemas/qa.py
-     5349  tests/registry/test_linear_ebus_stations_detail.py
      5353  tests/registry/test_masking.py
      5386  app/api/gemini_client.py
      5426  tests/registry/test_external_notes_2_18_26_regressions.py
+     5594  app/registry/aggregation/clinical/extract_clinical_update.py
      5614  app/text_cleaning/camera_ocr_cleaner.py
      5633  app/coder/ebus_rules.py
      5649  app/phi/models.py
      5652  tests/registry/test_keyword_guard_overrides.py
-     5658  tests/registry/test_cao_interventions_detail.py
      5702  app/registry/deterministic/anatomy.py
      5802  app/reporting/json_patch.py
      5805  tests/api/test_registry_append_api.py
@@ -604,22 +633,24 @@ Git: `main` @ `bfcd6e3`
      5967  tests/registry/test_ner_procedure_extractor.py
      6000  app/ner/entity_types.py
      6014  app/registry/extraction/structurer.py
-     6017  tests/registry/test_ebus_postprocess_fallback.py
      6074  app/api/bootstrap.py
      6127  tests/api/test_phi_redaction.py
      6150  app/coder/parallel_pathway/confidence_combiner.py
      6160  tests/integration/test_phi_workflow_end_to_end.py
      6165  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
      6200  app/coder/ncci.py
+     6206  tests/registry/test_ebus_postprocess_fallback.py
      6252  app/registry_cleaning/consistency_utils.py
      6254  tests/unit/test_phi_distillation_refinery.py
      6296  tests/registry/test_audit_compare_report.py
      6351  tests/registry/test_post_fix_regressions.py
      6377  app/sectioning/endosoft_section_parser.py
-     6380  app/api/routes/vault.py
+     6387  app/api/routes/vault.py
      6423  tests/phi/test_service.py
      6438  app/domain/procedure_store/repository.py
-     6485  proc_schemas/clinical/pleural.py
+     6486  app/registry/aggregation/pathology/patch_pathology.py
+     6490  app/registry/aggregation/pathology/extract_pathology.py
+     6529  tests/registry/test_cao_interventions_detail.py
      6566  app/reporting/macro_registry.py
      6573  app/registry/heuristics/linear_ebus_station_detail.py
      6588  tests/registry/test_registry_qa_regressions.py
@@ -628,7 +659,6 @@ Git: `main` @ `bfcd6e3`
      6870  app/api/routes/process_bundle.py
      6912  app/registry/slots/therapeutics.py
      6919  tests/integration/api/test_startup_warmup.py
-     6926  app/api/routes/registry_append.py
      7025  app/reporting/ip_addons.py
      7029  app/api/routes/qa.py
      7036  app/registry/self_correction/apply.py
@@ -636,16 +666,17 @@ Git: `main` @ `bfcd6e3`
      7106  app/coder/application/candidate_expansion.py
      7160  app/agents/run_pipeline.py
      7160  app/registry/infra/model_provider.py
+     7207  tests/api/test_registry_case_api.py
      7289  app/registry/processing/navigation_fiducials.py
      7295  tests/integration/coder/test_coding_service.py
      7367  tests/api/test_phi_endpoints.py
+     7407  proc_schemas/clinical/pleural.py
      7409  tests/registry/test_fixpack_device_action_regressions.py
      7450  tests/registry/test_self_correction_validation.py
-     7459  app/api/routes/registry_case.py
      7526  app/domain/coding_rules/evidence_context.py
-     7593  tests/registry/test_deterministic_extractors_phase6.py
      7599  app/registry/model_runtime.py
      7619  tests/registry/test_extraction_quality_fixpack_feb2026.py
+     7629  tests/registry/test_linear_ebus_stations_detail.py
      7671  app/coder/adapters/ml_ranker.py
      7673  tests/unit/test_no_legacy_imports.py
      7823  tests/registry/test_registry_extraction_ebus.py
@@ -654,19 +685,21 @@ Git: `main` @ `bfcd6e3`
      8145  app/coder/adapters/persistence/inmemory_procedure_store.py
      8181  tests/ml_coder/test_registry_predictor.py
      8223  tests/coder/test_rules_engine.py
+     8241  app/registry/aggregation/imaging/patch_imaging.py
      8411  app/registry/inference_pytorch.py
      8427  app/registry_cleaning/clinical_qc.py
-     8480  tests/api/test_registry_runs.py
      8492  tests/registry/test_fixpack_batch2.py
      8540  app/registry/ml/evaluate.py
+     8555  tests/api/test_registry_runs.py
      8572  app/text_cleaning/endosoft_cleaner.py
+     8597  tests/registry/test_deterministic_extractors_phase6.py
      8598  tests/coder/test_hierarchy_bundling_fixes.py
      8648  app/coder/application/procedure_type_detector.py
      8691  tests/coding/test_json_rules_parity.py
      8694  app/api/coder_adapter.py
+     8838  tests/reporting/test_reporter_batch_regressions.py
      8867  app/umls/ip_umls_store.py
      9005  app/api/routes/metrics.py
-     9047  tests/reporting/test_reporter_regressions.py
      9276  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9381  app/registry/processing/focus.py
      9451  tests/ml_coder/test_training_pipeline.py
@@ -676,10 +709,10 @@ Git: `main` @ `bfcd6e3`
      9631  app/text_cleaning/provation_cleaner.py
      9730  app/phi/service.py
      9818  app/text_cleaning/camera_ocr_fuzzy.py
-     9842  tests/unit/test_extraction_adapters.py
      9940  tests/reporter/test_golden_examples.py
     10056  ml/lib/ml_coder/predictor.py
     10063  tests/unit/test_procedure_type_detector.py
+    10334  tests/unit/test_extraction_adapters.py
     10389  tests/api/test_phi_redactor_ui.py
     10402  app/agents/relation_extraction/llm_proposer.py
     10402  app/api/routes_registry.py
@@ -687,20 +720,20 @@ Git: `main` @ `bfcd6e3`
     10787  tests/unit/test_inmemory_procedure_store.py
     10930  tests/registry/test_ebus_config_station_count.py
     11177  tests/test_phi_redaction_contract.py
+    11259  tests/registry/test_regression_pack_updates_march_2026.py
     11289  app/coder/adapters/nlp/keyword_mapping_loader.py
     11290  tests/registry/test_registry_guardrails.py
     11392  app/common/knowledge.py
     11451  app/api/routes/phi.py
+    11577  tests/reporting/test_reporter_regressions.py
     11787  app/registry/application/pathology_extraction.py
-    11946  app/registry/legacy/adapters/pleural.py
-    11975  app/reporting/normalization/text_enricher.py
+    12117  app/reporting/normalization/text_enricher.py
     12339  app/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
     12533  app/domain/knowledge_base/validator.py
     12625  tests/ml_coder/test_data_prep.py
     12641  app/registry/heuristics/navigation_targets.py
     12657  docs/phi_review_system/backend/schemas.py
-    12783  tests/api/test_unified_process.py
     12988  tests/coder/test_smart_hybrid_policy.py
     13172  tests/unit/test_openai_responses_primary.py
     13405  app/coder/application/coding_service.py
@@ -708,7 +741,10 @@ Git: `main` @ `bfcd6e3`
     13688  app/coder/rules.py
     13689  app/registry/application/registry_builder.py
     13766  tests/registry/test_self_correction_loop.py
+    13775  app/api/routes/registry_append.py
     13936  tests/ml_advisor/test_router.py
+    13954  app/registry/legacy/adapters/pleural.py
+    13993  tests/api/test_unified_process.py
     14076  app/registry/self_correction/validation.py
     14127  tests/integration/persistence/test_supabase_procedure_store.py
     14244  ml/lib/ml_coder/registry_predictor.py
@@ -716,7 +752,6 @@ Git: `main` @ `bfcd6e3`
     14462  tests/integration/coder/test_hybrid_policy.py
     14585  docs/phi_review_system/backend/models.py
     14872  tests/phi/test_veto_regression.py
-    14895  proc_schemas/registry/ip_v3.py
     14928  app/registry/schema/adapters/v3_to_v2.py
     15130  app/registry/v2_booleans.py
     15235  tests/unit/test_dsl.py
@@ -737,7 +772,8 @@ Git: `main` @ `bfcd6e3`
     15974  app/agents/aggregator/timeline_aggregator.py
     16020  app/coder/rules_engine.py
     16178  tests/api/test_fastapi.py
-    16387  app/registry/application/cpt_registry_mapping.py
+    16346  app/api/routes/registry_case.py
+    16541  app/registry/application/cpt_registry_mapping.py
     16564  app/api/dependencies.py
     16604  tests/integration/api/test_metrics_endpoint.py
     16910  tests/ml_coder/test_registry_first_data_prep.py
@@ -745,28 +781,28 @@ Git: `main` @ `bfcd6e3`
     17190  proc_schemas/clinical/airway.py
     17248  app/common/openai_responses.py
     17309  app/coder/reconciliation/reconciler.py
-    17334  app/api/routes/registry_runs.py
-    17496  app/api/schemas/base.py
-    17523  tests/reporting/test_llm_findings.py
+    17493  app/api/schemas/base.py
+    17660  app/api/routes/registry_runs.py
     17762  app/registry/postprocess/complications_reconcile.py
     17842  app/coder/adapters/llm/gemini_advisor.py
-    17881  app/registry/application/coding_support_builder.py
     17939  tests/unit/test_template_coverage.py
+    17943  app/registry/application/coding_support_builder.py
     17947  app/registry/normalization.py
     18086  app/api/services/qa_pipeline.py
+    18540  proc_schemas/registry/ip_v3.py
     18760  app/registry/inference_onnx.py
-    18843  app/api/fastapi_app.py
     18912  tests/ml_coder/test_label_hydrator.py
     18921  tests/api/test_registry_extract_endpoint.py
     18989  tests/coder/test_registry_coder.py
     19268  app/coder/adapters/persistence/csv_kb_adapter.py
-    19382  app/registry/evidence/verifier.py
     19751  tests/integration/api/test_registry_endpoints.py
     20079  app/registry_cleaning/cpt_utils.py
     20190  tests/registry/test_cao_extraction.py
     20268  app/coder/parallel_pathway/orchestrator.py
+    20318  app/registry/evidence/verifier.py
     20422  app/registry/model_bootstrap.py
     20519  app/registry/extractors/llm_detailed.py
+    20743  app/api/fastapi_app.py
     20815  app/reporting/macro_engine.py
     21200  app/coder/adapters/llm/openai_compat_advisor.py
     21434  app/domain/coding_rules/rule_engine.py
@@ -774,6 +810,7 @@ Git: `main` @ `bfcd6e3`
     21459  tests/coder/test_reconciliation.py
     21514  tests/test_registry_normalization.py
     21591  app/registry/ner_mapping/procedure_extractor.py
+    21920  tests/reporting/test_llm_findings.py
     21983  app/reporting/questions.py
     22217  tests/reporter/test_macro_engine_features.py
     22565  app/phi/adapters/presidio_scrubber.py
@@ -783,25 +820,26 @@ Git: `main` @ `bfcd6e3`
     23485  docs/phi_review_system/backend/endpoints.py
     23556  app/api/routes/reporting.py
     24057  tests/ml_advisor/conftest.py
+    24750  app/registry/application/case_aggregator.py
     24902  tests/integration/api/test_coder_run_endpoint.py
     25630  app/coder/application/smart_hybrid_policy.py
-    25872  app/registry/legacy/adapters/airway.py
-    26041  app/registry/schema/v2_dynamic.py
-    26437  tests/coder/test_coding_rules_phase7.py
+    26439  tests/coder/test_coding_rules_phase7.py
     27570  app/api/normalization.py
     27682  app/coder/adapters/registry_coder.py
-    27718  app/registry/processing/disease_burden.py
     28720  ml/lib/ml_coder/registry_data_prep.py
     29088  app/registry/transform.py
     29714  ml/lib/ml_coder/label_hydrator.py
+    29788  app/registry/completeness/missing_field_prompts.py
     29893  app/domain/coding_rules/coding_rules_engine.py
     30039  app/api/ml_advisor_router.py
-    30571  app/registry/completeness/missing_field_prompts.py
-    30587  app/registry/processing/cao_interventions_detail.py
-    30766  app/registry/processing/linear_ebus_stations_detail.py
     31073  tests/integration/api/test_procedure_codes_endpoints.py
-    31232  app/reporting/pipeline.py
+    31114  app/registry/processing/cao_interventions_detail.py
+    32363  app/registry/processing/disease_burden.py
     33110  tests/registry/test_registry_service_hybrid_flow.py
+    33210  app/reporting/pipeline.py
+    33544  app/registry/schema/v2_dynamic.py
+    33739  app/registry/legacy/adapters/airway.py
+    34127  app/registry/processing/linear_ebus_stations_detail.py
     35264  tests/coding/test_rules_validation.py
     35381  app/phi/adapters/phi_redactor_hybrid.py
     35945  app/registry/ml/action_predictor.py
@@ -809,32 +847,38 @@ Git: `main` @ `bfcd6e3`
     36975  tests/unit/test_structured_reporter.py
     36991  app/registry/schema/granular_models.py
     39275  tests/ml_advisor/test_schemas.py
-    40651  app/common/llm.py
     41897  app/proc_ml_advisor/schemas.py
     42830  app/api/routes/procedure_codes.py
+    43205  app/common/llm.py
     44075  tests/registry/test_granular_registry_models.py
     46085  app/registry/schema/granular_logic.py
     47307  app/registry/self_correction/keyword_guard.py
     49303  app/registry/processing/navigation_targets.py
     56668  app/autocode/ip_kb/ip_kb.py
-    59115  app/reporting/llm_findings.py
-    59931  app/extraction/postprocessing/clinical_guardrails.py
+    63530  app/reporting/llm_findings.py
     63947  app/registry/prompts.py
-    73320  app/coder/domain_rules/registry_to_cpt/coding_rules.py
-    90281  app/reporting/engine.py
-   109985  app/reporting/normalization/compat_enricher.py
+    64938  app/extraction/postprocessing/clinical_guardrails.py
+    75226  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+   104173  app/reporting/engine.py
    112649  app/registry/engine.py
-   177807  app/registry/application/registry_service.py
-   189371  app/registry/deterministic_extractors.py
+   134906  app/reporting/normalization/compat_enricher.py
+   191061  app/registry/application/registry_service.py
        39  ui/source/registry_grid/src/vite-env.d.ts
-       94  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
+       68  tests/fixtures/case_events/path_ebus_negative_simple.txt
+       94  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
+       97  tests/fixtures/case_events/path_ebus_granulomatous_negative.txt
+      104  tests/fixtures/case_events/path_peripheral_malignant_adeno.txt
       118  tests/fixtures/regression_suite/README.md
-      181  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/manifest.json
+      125  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
+      181  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/manifest.json
+      205  tests/fixtures/case_events/ct_preop_nodule_growth.txt
+      217  tests/fixtures/case_events/pet_ct_dual_timepoint_suv.txt
       240  app/reporting/templates/addons/pigtail_catheter_placement.jinja
       246  app/reporting/templates/addons/eus_b.jinja
       247  app/reporting/templates/addons/peg_removal_exchange.jinja
       248  tests/fixtures/reporting/template_adapter_ebus_tbna.md
       254  ui/static/phi_redactor/vendor/pdfjs/README.md
+      254  ui/static/phi_redactor_classic/vendor/pdfjs/README.md
       259  app/reporting/templates/addons/thoravent_placement.jinja
       264  app/reporting/templates/addons/paracentesis.jinja
       281  app/reporting/templates/addons/peg_placement.jinja
@@ -846,6 +890,7 @@ Git: `main` @ `bfcd6e3`
       324  ui/source/registry_grid/src/flatten/jsonPointer.ts
       331  app/reporting/templates/addons/indwelling_tunneled_pleural_catheter_placement.jinja
       333  ui/static/phi_redactor/vendor/tesseract/README.md
+      333  ui/static/phi_redactor_classic/vendor/tesseract/README.md
       338  app/reporting/templates/addons/chest_tube_pleurx_catheter_discharge.jinja
       346  app/reporting/templates/addons/therapeutic_aspiration.jinja
       349  app/reporting/templates/addons/endobronchial_tumor_excision.jinja
@@ -863,6 +908,7 @@ Git: `main` @ `bfcd6e3`
       444  app/reporting/templates/addons/bronchial_washing.jinja
       446  app/reporting/templates/addons/transthoracic_needle_biopsy.jinja
       447  ui/static/phi_redactor/pdf_local/redaction/types.js
+      447  ui/static/phi_redactor_classic/pdf_local/redaction/types.js
       450  app/reporter/templates/pleural_synoptic.md.jinja
       450  app/reporting/templates/addons/fiducial_marker_placement.jinja
       452  app/reporting/templates/addons/chemical_cauterization_of_granulation_tissue.jinja
@@ -878,7 +924,6 @@ Git: `main` @ `bfcd6e3`
       543  app/reporting/templates/addons/chest_tube_removal.jinja
       548  tests/fixtures/reporting/template_adapter_thoracentesis.md
       565  app/reporting/templates/addons/photodynamic_therapy_debridement_48_96_hours_post_light.jinja
-      580  app/reporting/templates/addons/cryo_extraction_of_mucus_casts_secretions.jinja
       582  app/reporting/templates/addons/control_of_minor_tracheostomy_bleeding_electrocautery.jinja
       584  app/reporting/templates/addons/ion_registration_complete.jinja
       586  app/reporting/templates/addons/tool_in_lesion_confirmation.jinja
@@ -887,7 +932,9 @@ Git: `main` @ `bfcd6e3`
       608  app/reporting/templates/addons/focused_thoracic_ultrasound_pleura_lung.jinja
       612  app/reporting/templates/addons/ebus_guided_19_gauge_core_fine_needle_biopsy_fnb.jinja
       612  ui/static/phi_redactor/sw.js
+      612  ui/static/phi_redactor_classic/sw.js
       619  ui/static/phi_redactor/vendor/phi_distilbert_ner/label_map.json
+      619  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/label_map.json
       620  app/reporter/templates/bronchoscopy_synoptic.md.jinja
       622  app/reporting/templates/addons/endobronchial_valve_placement.jinja
       629  ops/infra/prometheus/prometheus.yml
@@ -902,8 +949,8 @@ Git: `main` @ `bfcd6e3`
       689  app/reporting/templates/addons/chest_tube_exchange_upsizing_over_guidewire.jinja
       690  app/reporting/templates/addons/ebus_guided_intranodal_forceps_biopsy_ifb.jinja
       692  app/reporting/templates/addons/tracheostomy_tube_change.jinja
-      695  ui/static/phi_redactor/vendor/phi_distilbert_ner/special_tokens_map.json
-      695  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/special_tokens_map.json
+      695  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/special_tokens_map.json
+      695  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/special_tokens_map.json
       707  app/reporting/templates/addons/indwelling_pleural_catheter_ipc_exchange.jinja
       708  app/reporting/templates/addons/tracheostomy_downsizing_fenestrated_tube_placement.jinja
       714  app/reporting/templates/addons/endobronchial_sealant_application_for_bronchopleural_fistula_bpf.jinja
@@ -918,7 +965,7 @@ Git: `main` @ `bfcd6e3`
       746  app/reporting/templates/addons/thoracentesis_with_pleural_manometry.jinja
       750  app/reporting/templates/addons/endobronchial_valve_placement_for_persistent_air_leak_bpf.jinja
       762  tests/fixtures/thora_bilateral.txt
-      764  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/ort_config.json
+      764  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/ort_config.json
       765  app/reporting/templates/addons/electromagnetic_navigation_bronchoscopy.jinja
       768  app/reporting/templates/addons/intra_procedural_cbct_cact_fusion_registration_correction_e_g_navilink_3d.jinja
       778  app/reporting/templates/addons/ion_registration_registration_drift_mismatch.jinja
@@ -939,10 +986,13 @@ Git: `main` @ `bfcd6e3`
       920  app/reporting/templates/addons/radial_ebus_guided_sampling_with_guide_sheath.jinja
       942  tests/fixtures/stent_rmb_and_dilation_lul.txt
       951  ui/static/phi_redactor/vendor/phi_distilbert_ner/config.json
-      951  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/config.json
+      951  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/config.json
+      951  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/config.json
       965  ui/source/registry_grid/vite.config.ts
       982  app/reporting/templates/addons/rigid_bronchoscopy_diagnostic_therapeutic.jinja
       984  ui/source/registry_grid/src/__tests__/dateMath.test.ts
+      984  ui/static/phi_redactor/vaultSchemas.js
+      984  ui/static/phi_redactor_classic/vaultSchemas.js
      1087  tests/fixtures/vendor/provation_va_sd_sample.txt
      1095  app/reporting/templates/addons/percutaneous_tracheostomy_revision.jinja
      1111  ui/source/registry_grid/src/__tests__/buildEvidenceIndex.test.ts
@@ -953,19 +1003,26 @@ Git: `main` @ `bfcd6e3`
      1216  tests/fixtures/reporting/seed_from_text_ebus_station7.md
      1224  ui/source/registry_grid/src/__tests__/patchStoreCore.test.ts
      1227  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer_config.json
-     1227  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer_config.json
+     1227  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/tokenizer_config.json
+     1227  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/tokenizer_config.json
      1308  docs/KNOWLEDGE_RELEASE_CHECKLIST.md
      1316  ui/source/registry_grid/src/api/umls.ts
      1359  app/reporting/templates/addons/tunneled_pleural_catheter_instructions.jinja
      1371  ui/static/phi_redactor/camera_local/types.js
+     1371  ui/static/phi_redactor_classic/camera_local/types.js
+     1418  ui/source/registry_grid/src/edits/hostPatch.ts
      1432  app/reporting/templates/addons/ion_registration_partial_efficiency_strategy_ssrab.jinja
      1454  tests/fixtures/reporting/render_thoracentesis_cxr_ordered.md
+     1521  tests/fixtures/case_events/path_ebus_station_specific_final_diagnosis.txt
      1632  docs/REPORTER_STYLE_GUIDE.md
      1764  docs/PHI_IDENTIFIERS.md
      1776  ui/source/registry_grid/src/__tests__/flattenRegistryToRows.test.ts
      1789  ui/static/phi_redactor/pdf_local/redaction/spanMerge.js
+     1789  ui/static/phi_redactor_classic/pdf_local/redaction/spanMerge.js
      1797  ui/static/phi_redactor/allowlist_trie.json
+     1797  ui/static/phi_redactor_classic/allowlist_trie.json
      1817  app/reporting/templates/addons/post_blvr_management_protocol.jinja
+     1819  ui/source/registry_grid/src/__tests__/hostPatch.test.ts
      1833  ui/source/registry_grid/src/__tests__/cameraCapability.test.js
      1857  ui/source/registry_grid/src/edits/usePatchStore.ts
      1925  app/reporting/templates/addons/general_bronchoscopy_note.jinja
@@ -977,15 +1034,18 @@ Git: `main` @ `bfcd6e3`
      2342  app/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
      2460  ui/source/registry_grid/src/__tests__/monacoBridge.test.ts
      2553  ui/source/registry_grid/src/__tests__/regexDetectors.test.js
+     2612  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2615  ui/source/registry_grid/src/__tests__/endosoftOcrHardening.test.js
      2670  docs/DEPLOY_MIRROR.md
      2800  docs/REGISTRY_RUNS.md
-     2804  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
-     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
-     2922  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/protected_terms.json
+     2838  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
+     2922  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/protected_terms.json
+     2922  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
      2964  ui/static/phi_redactor/pdf_local/redaction/applyRedactions.js
+     2964  ui/static/phi_redactor_classic/pdf_local/redaction/applyRedactions.js
      2988  ui/static/phi_redactor/camera_local/privacyShield.js
+     2988  ui/static/phi_redactor_classic/camera_local/privacyShield.js
      3045  docs/REPORTER_GOLD_WORKFLOW.md
      3054  tests/fixtures/notes/note_289.txt
      3074  docs/RELATIONS_PRODIGY_WORKFLOW.md
@@ -998,6 +1058,7 @@ Git: `main` @ `bfcd6e3`
      3103  app/reporting/templates/ipc.jinja
      3176  ui/source/registry_grid/src/__tests__/cryptoVault.test.js
      3215  ui/source/registry_grid/src/__tests__/privacyShield.test.js
+     3423  ui/source/registry_grid/src/__tests__/caseSnapshotStore.test.js
      3445  docs/Multi_agent_collaboration/Session Startup Template.md
      3579  docs/REFERENCES.md
      3591  docs/DEPLOY_RAILWAY.md
@@ -1006,6 +1067,7 @@ Git: `main` @ `bfcd6e3`
      3825  docs/Multi_agent_collaboration/Codex Priming Script.md
      3830  docs/Multi_agent_collaboration/Codex “Repo Surgeon” Persona.md
      3871  ui/static/phi_redactor/camera_local/cameraUi.js
+     3871  ui/static/phi_redactor_classic/camera_local/cameraUi.js
      3883  app/reporting/templates/macros/base.j2
      3883  docs/TIER1_RESEARCH_FIELDS_SPEC.md
      4056  app/registry/registry_system_prompt.txt
@@ -1014,28 +1076,35 @@ Git: `main` @ `bfcd6e3`
      4105  ui/source/registry_grid/src/edits/patchStoreCore.ts
      4200  docs/REGISTRY_PRODIGY_WORKFLOW.md
      4201  ui/static/phi_redactor/pdf_local/redaction/regexDetectors.js
+     4201  ui/static/phi_redactor_classic/pdf_local/redaction/regexDetectors.js
      4233  tests/fixtures/notes/kitchen_sink_ion_nav_ebus_fiducial_dilation.txt
      4437  tests/fixtures/notes/note_274.txt
      4540  docs/Production_Readiness_Review.md
      4594  docs/CODEX_PRODUCTION_PLAN.md
      4595  tests/fixtures/notes/note_275.txt
      4601  ui/static/phi_redactor/pdf_local/pdf/ocrMetrics.js
+     4601  ui/static/phi_redactor_classic/pdf_local/pdf/ocrMetrics.js
      4729  docs/Multi_agent_collaboration/Architect Priming Script.md
      4742  docs/README.md
      4944  docs/MIGRATION_GUIDE.md
      4955  ui/source/registry_grid/src/__tests__/provationOcrHardening.test.js
      5091  ui/source/registry_grid/src/evidence/buildEvidenceIndex.ts
+     5218  ui/source/registry_grid/src/__tests__/completenessHelpers.test.js
      5289  ui/static/phi_redactor/pdf_local/pdf/types.js
+     5289  ui/static/phi_redactor_classic/pdf_local/pdf/types.js
      5296  ui/source/registry_grid/src/__tests__/imagePreprocess.test.js
      5350  ui/source/registry_grid/src/monaco/monacoBridge.ts
      5429  docs/ml_first_hybrid_policy.md
      5532  ui/source/registry_grid/src/__tests__/ocrRegions.test.js
      5706  docs/REPO_INDEX.md
+     5810  ui/static/phi_redactor/completenessHelpers.js
+     5810  ui/static/phi_redactor_classic/completenessHelpers.js
      5934  docs/STRUCTURED_REPORTER.md
      6029  ui/source/registry_grid/src/flatten/flattenRegistryToRows.ts
      6235  docs/TIER2_RESEARCH_FIELDS_SPEC.md
      6329  ui/source/registry_grid/src/__tests__/pageClassifier.test.js
-     6655  ui/static/phi_redactor/camera_local/imagePipeline.js
+     6611  ui/static/phi_redactor/camera_local/imagePipeline.js
+     6611  ui/static/phi_redactor_classic/camera_local/imagePipeline.js
      6862  app/reporting/templates/macros/04_blvr_cryo.j2
      7016  docs/Registry_ML_summary.md
      7101  ui/source/registry_grid/src/__tests__/pdfPipelineOcr.test.js
@@ -1046,68 +1115,95 @@ Git: `main` @ `bfcd6e3`
      7344  docs/Multi_agent_collaboration/Multi‑Agent Architecture.md
      7469  app/reporting/templates/macros/06_other_interventions.j2
      7496  ui/source/registry_grid/src/__tests__/ocrPostprocess.test.js
+     8643  docs/CMIO_UCSD_PHI_SECURITY_BRIEF_2026-03-04.md
      8655  app/reporting/EXTRACTION_RULES.md
+     8695  ui/static/phi_redactor/linking.js
      9296  ui/source/registry_grid/src/utils/cryptoVault.ts
      9369  docs/"Diamond" Improvement Plan 1_18_26.txt
+     9493  ui/static/phi_redactor/caseSnapshotStore.js
+     9493  ui/static/phi_redactor_classic/caseSnapshotStore.js
      9688  app/reporting/templates/macros/01_minor_trach_laryngoscopy.j2
-     9850  ui/static/phi_redactor/pdf_local/app.js
+     9724  tests/reporting/fixtures/reporter_batch_regression_fixture.json
      9852  ui/static/phi_redactor/pdf_local/workers/pdf.worker.js
+     9852  ui/static/phi_redactor_classic/pdf_local/workers/pdf.worker.js
+     9868  ui/static/phi_redactor/pdf_local/app.js
+     9868  ui/static/phi_redactor_classic/pdf_local/app.js
      9927  docs/optimization_12_16_25.md
     10226  ui/static/phi_redactor/camera_local/cameraCapture.js
+    10226  ui/static/phi_redactor_classic/camera_local/cameraCapture.js
     10230  docs/DEPLOYMENT.md
     10846  docs/GRANULAR_NER_UPDATE_WORKFLOW.md
     11757  docs/DEVELOPMENT.md
     11785  app/reporting/templates/macros/07_clinical_assessment.j2
     13054  app/reporting/templates/macros/03_navigation_robotic_ebus.j2
     13436  docs/CODEX_REGISTRY_DIAMOND_LOOP.md
+    13561  ui/static/phi_redactor/procedureSummaryRenderer.js
+    13561  ui/static/phi_redactor_classic/procedureSummaryRenderer.js
     13972  docs/Multi_agent_collaboration/External_Review_Action_Plan.md
     14126  app/reporting/templates/macros/02_core_bronchoscopy.j2
     14653  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE.md
     15081  docs/GRAFANA_DASHBOARDS.md
     15210  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
-    15380  ui/static/phi_redactor/vaultClient.js
     16028  app/reporting/templates/macros/05_pleural.j2
-    16367  docs/AGENTS.md
+    16739  docs/AGENTS.md
+    16948  ui/static/phi_redactor/vaultClient.js
+    16948  ui/static/phi_redactor_classic/vaultClient.js
     17724  docs/phi_review_system/README.md
     17850  ui/static/phi_demo.js
     18104  app/phi/adapters/redaction-service.js
     18313  ui/static/phi_redactor/pdf_local/pdf/pageClassifier.js
+    18313  ui/static/phi_redactor_classic/pdf_local/pdf/pageClassifier.js
     19198  docs/REPO_GUIDE.md
     19273  ui/source/registry_grid/src/__tests__/pdfFusion.test.js
     19612  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE_UPDATED.md
     19817  docs/MAKEFILE_COMMANDS.md
     19835  app/registry/ip_registry_schema_additions.json
     20538  ui/static/phi_redactor/pdf_local/pdf/ocrPostprocess.js
+    20538  ui/static/phi_redactor_classic/pdf_local/pdf/ocrPostprocess.js
     24586  app/reporting/templates/macros/template_schema.json
     25748  ui/static/phi_redactor/camera_local/imagePreprocess.js
+    25748  ui/static/phi_redactor_classic/camera_local/imagePreprocess.js
     26294  ui/static/phi_redactor/pdf_local/pdf/ocrRegions.js
+    26294  ui/static/phi_redactor_classic/pdf_local/pdf/ocrRegions.js
     27821  app/registry/ip_registry_improvements.md
     30325  ui/static/phi_redactor/pdf_local/pdf/layoutAnalysis.js
-    32783  ui/static/phi_redactor/pdf_local/pdf/pipeline.js
-    33006  ui/static/phi_redactor/camera_local/workers/image_ocr.worker.js
+    30325  ui/static/phi_redactor_classic/pdf_local/pdf/layoutAnalysis.js
+    32744  ui/static/phi_redactor/pdf_local/pdf/pipeline.js
+    32744  ui/static/phi_redactor_classic/pdf_local/pdf/pipeline.js
+    32972  ui/static/phi_redactor/camera_local/workers/image_ocr.worker.js
+    32972  ui/static/phi_redactor_classic/camera_local/workers/image_ocr.worker.js
     34508  docs/unified_extraction_plan_2_5_26.md
     47952  ui/static/phi_redactor/pdf_local/pdf/fusion.js
+    47952  ui/static/phi_redactor_classic/pdf_local/pdf/fusion.js
     50262  docs/Multi_agent_collaboration/V8_MIGRATION_PLAN_UPDATED.md
     53848  ui/static/phi_redactor/reporter_builder.js
-    54854  ui/static/phi_redactor/pdf_local/workers/ocr.worker.js
-    57075  docs/USER_GUIDE.md
-    60216  ui/source/registry_grid/package-lock.json
+    53848  ui/static/phi_redactor_classic/reporter_builder.js
+    54813  ui/static/phi_redactor/pdf_local/workers/ocr.worker.js
+    54813  ui/static/phi_redactor_classic/pdf_local/workers/ocr.worker.js
+    59867  docs/USER_GUIDE.md
     62540  ui/static/phi_redactor/protectedVeto.legacy.js
+    62540  ui/static/phi_redactor_classic/protectedVeto.legacy.js
     64308  ui/static/phi_redactor/protectedVeto.js
+    64308  ui/static/phi_redactor_classic/protectedVeto.js
     67175  ui/static/phi_redactor/vendor/tesseract/tesseract.esm.min.js
+    67175  ui/static/phi_redactor_classic/vendor/tesseract/tesseract.esm.min.js
     75852  tests/fixtures/reporter_golden_dataset.json
+    85203  ui/source/registry_grid/package-lock.json
    102522  ui/static/app.js
    108829  ui/static/phi_redactor/redactor.worker.js
+   108829  ui/static/phi_redactor_classic/redactor.worker.js
    109047  ui/static/phi_redactor/redactor.worker.legacy.js
+   109047  ui/static/phi_redactor_classic/redactor.worker.legacy.js
    123724  ui/static/phi_redactor/vendor/tesseract/worker.min.js
+   123724  ui/static/phi_redactor_classic/vendor/tesseract/worker.min.js
 ```
 
 ## Skipped (reason)
 
 ```
- inline_cap_reached>75  ml/scripts/diamond_loop_cloud_sync.py
  inline_cap_reached>75  ml/scripts/merge_granular_attribute_spans.py
  inline_cap_reached>75  ops/tools/generate_cpt_keywords.py
+ inline_cap_reached>75  ops/tools/compare_reporter_prompt_llm_findings_models.py
  inline_cap_reached>75  ml/scripts/evaluate_coder.py
  inline_cap_reached>75  ml/scripts/scrub_golden_jsons.py
  inline_cap_reached>75  ml/scripts/prodigy_export_corrections.py
@@ -1117,11 +1213,11 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  ml/scripts/bootstrap_relations_silver.py
  inline_cap_reached>75  ops/tools/eval_reporter_prompt_baseline.py
  inline_cap_reached>75  ml/scripts/extract_ner_from_excel.py
- inline_cap_reached>75  ops/tools/eval_reporter_prompt_llm_findings.py
  inline_cap_reached>75  ops/tools/index_repo.py
  inline_cap_reached>75  ml/scripts/review_llm_fallback_errors.py
  inline_cap_reached>75  ops/tools/unified_pipeline_batch.py
  inline_cap_reached>75  ml/scripts/quantize_to_onnx.py
+ inline_cap_reached>75  ops/tools/run_reporter_random_seeds.py
  inline_cap_reached>75  ml/scripts/verify_registry_human_data.py
  inline_cap_reached>75  ml/scripts/sanitize_dataset.py
  inline_cap_reached>75  ml/scripts/shadow_diff_structured_extraction.py
@@ -1134,6 +1230,7 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  ml/scripts/prodigy_prepare_phi_batch.py
  inline_cap_reached>75  ml/scripts/build_model_agnostic_phi_spans.py
  inline_cap_reached>75  ml/scripts/generate_synthetic_phi_data.py
+ inline_cap_reached>75  ops/tools/eval_reporter_prompt_llm_findings.py
  inline_cap_reached>75  ops/tools/eval_reporter_prompt_model.py
  inline_cap_reached>75  ml/scripts/audit_model_fp.py
  inline_cap_reached>75  ml/scripts/train_roberta_pm3.py
@@ -1156,6 +1253,7 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/agents/structurer/__init__.py
  inline_cap_reached>75  app/agents/summarizer/__init__.py
  inline_cap_reached>75  app/domain/__init__.py
+ inline_cap_reached>75  app/registry/aggregation/__init__.py
  inline_cap_reached>75  app/registry/processing/__init__.py
  inline_cap_reached>75  app/registry/audit/__init__.py
  inline_cap_reached>75  app/reporting/util/__init__.py
@@ -1204,9 +1302,11 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/reporter/engine.py
  inline_cap_reached>75  app/coder/adapters/nlp/__init__.py
  inline_cap_reached>75  app/api/services/__init__.py
+ inline_cap_reached>75  app/registry/aggregation/clinical/__init__.py
  inline_cap_reached>75  app/reporting/normalization/types.py
  inline_cap_reached>75  app/sectioning/__init__.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/types.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/__init__.py
  inline_cap_reached>75  app/reporting/second_pass/station_consistency.py
  inline_cap_reached>75  app/coder/adapters/llm/noop_advisor.py
  inline_cap_reached>75  app/ner/__init__.py
@@ -1222,6 +1322,7 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/registry/schema/ip_v3.py
  inline_cap_reached>75  app/phi/adapters/__init__.py
  inline_cap_reached>75  app/api/__init__.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/__init__.py
  inline_cap_reached>75  app/infra/executors.py
  inline_cap_reached>75  app/coder/code_families.py
  inline_cap_reached>75  app/infra/safe_logging.py
@@ -1242,7 +1343,6 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/common/logger.py
  inline_cap_reached>75  app/reporting/coder_view.py
  inline_cap_reached>75  app/domain/knowledge_base/models.py
- inline_cap_reached>75  app/registry/application/__init__.py
  inline_cap_reached>75  app/registry/__init__.py
  inline_cap_reached>75  app/reporting/normalization/normalize.py
  inline_cap_reached>75  app/infra/perf.py
@@ -1253,6 +1353,7 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/api/guards.py
  inline_cap_reached>75  app/registry/constants/warnings.py
  inline_cap_reached>75  app/api/registry_payload.py
+ inline_cap_reached>75  app/registry/application/__init__.py
  inline_cap_reached>75  app/coder/__init__.py
  inline_cap_reached>75  app/registry/heuristics/__init__.py
  inline_cap_reached>75  app/text_cleaning/__init__.py
@@ -1263,8 +1364,10 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/common/exceptions.py
  inline_cap_reached>75  app/registry/heuristics/pipeline.py
  inline_cap_reached>75  app/api/routes/umls.py
+ inline_cap_reached>75  app/registry/aggregation/llm_models.py
  inline_cap_reached>75  app/phi/adapters/scrubber_stub.py
  inline_cap_reached>75  app/phi/adapters/audit_logger_db.py
+ inline_cap_reached>75  app/registry/aggregation/sanitize.py
  inline_cap_reached>75  app/reporting/umls_filters.py
  inline_cap_reached>75  app/registry/slots/indication.py
  inline_cap_reached>75  app/common/spans.py
@@ -1291,14 +1394,16 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  proc_schemas/reasoning.py
  inline_cap_reached>75  app/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  app/registry_store/dependencies.py
- inline_cap_reached>75  proc_schemas/shared/ebus_events.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/normalize.py
  inline_cap_reached>75  app/coder/constants.py
  inline_cap_reached>75  app/coder/phi_gating.py
+ inline_cap_reached>75  app/registry/aggregation/locks.py
  inline_cap_reached>75  app/phi/ports.py
  inline_cap_reached>75  app/registry/legacy/supabase_sink.py
  inline_cap_reached>75  app/registry/audit/audit_types.py
  inline_cap_reached>75  app/agents/parser/parser_agent.py
  inline_cap_reached>75  app/registry/slots/dilation.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/normalize.py
  inline_cap_reached>75  app/coder/peripheral_rules.py
  inline_cap_reached>75  app/registry/label_fields.py
  inline_cap_reached>75  app/reporting/metadata.py
@@ -1310,24 +1415,27 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/registry/slots/sedation.py
  inline_cap_reached>75  app/registry/schema/ip_v3_extraction.py
  inline_cap_reached>75  app/common/text_cleaning.py
+ inline_cap_reached>75  proc_schemas/shared/ebus_events.py
  inline_cap_reached>75  app/common/rules_engine/mer.py
  inline_cap_reached>75  app/reporter/prompts.py
  inline_cap_reached>75  app/proc_ml_advisor/__init__.py
  inline_cap_reached>75  app/llm/client.py
- inline_cap_reached>75  app/api/services/bundle_processing.py
  inline_cap_reached>75  app/api/routes/legacy_registry.py
  inline_cap_reached>75  app/reporting/inference.py
  inline_cap_reached>75  app/phi/safety/protected_terms.py
  inline_cap_reached>75  app/registry/slots/ebus.py
+ inline_cap_reached>75  app/api/services/bundle_processing.py
  inline_cap_reached>75  app/common/text_io.py
  inline_cap_reached>75  app/domain/coding_rules/mer.py
  inline_cap_reached>75  app/registry/heuristics/granular_warning_reconcile.py
  inline_cap_reached>75  app/domain/coding_rules/ncci.py
+ inline_cap_reached>75  app/registry/aggregation/clinical/patch_clinical_update.py
  inline_cap_reached>75  app/domain/rvu/calculator.py
  inline_cap_reached>75  app/api/schemas/vault.py
  inline_cap_reached>75  app/api/routes/phi_demo_cases.py
  inline_cap_reached>75  app/reporter/cli.py
  inline_cap_reached>75  app/common/rvu_calc.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/patch_pathology_results.py
  inline_cap_reached>75  app/common/umls_linking.py
  inline_cap_reached>75  app/api/adapters/response_adapter.py
  inline_cap_reached>75  app/coder/ebus_extractor.py
@@ -1346,10 +1454,11 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/coder/sectionizer.py
  inline_cap_reached>75  app/registry/slots/blvr.py
  inline_cap_reached>75  app/api/phi_redaction.py
- inline_cap_reached>75  app/registry_store/models.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/extract_pet_ct.py
  inline_cap_reached>75  app/common/knowledge_schema.py
  inline_cap_reached>75  app/common/model_capabilities.py
  inline_cap_reached>75  app/api/phi_dependencies.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/extract_ct.py
  inline_cap_reached>75  app/registry/heuristics/coverage_checks.py
  inline_cap_reached>75  app/registry/extraction/focus.py
  inline_cap_reached>75  app/registry/heuristics/cao_detail.py
@@ -1361,6 +1470,7 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/registry_cleaning/logging_utils.py
  inline_cap_reached>75  app/registry/audit/compare.py
  inline_cap_reached>75  app/document_fingerprint/registry.py
+ inline_cap_reached>75  app/registry_store/models.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  app/document_fingerprint/provation.py
  inline_cap_reached>75  app/registry/ebus_config.py
@@ -1370,13 +1480,16 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/api/routes/unified_process.py
  inline_cap_reached>75  app/reporting/partial_schemas.py
  inline_cap_reached>75  app/common/sectionizer.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/parse_common.py
  inline_cap_reached>75  app/coder/adapters/nlp/simple_negation_detector.py
  inline_cap_reached>75  app/api/auth.py
  inline_cap_reached>75  app/registry/cli.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/extract_pathology_results.py
  inline_cap_reached>75  app/document_fingerprint/endosoft.py
  inline_cap_reached>75  app/api/phi_demo_store.py
  inline_cap_reached>75  app/api/schemas/qa.py
  inline_cap_reached>75  app/api/gemini_client.py
+ inline_cap_reached>75  app/registry/aggregation/clinical/extract_clinical_update.py
  inline_cap_reached>75  app/text_cleaning/camera_ocr_cleaner.py
  inline_cap_reached>75  app/coder/ebus_rules.py
  inline_cap_reached>75  app/phi/models.py
@@ -1393,13 +1506,13 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/sectioning/endosoft_section_parser.py
  inline_cap_reached>75  app/api/routes/vault.py
  inline_cap_reached>75  app/domain/procedure_store/repository.py
- inline_cap_reached>75  proc_schemas/clinical/pleural.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/patch_pathology.py
+ inline_cap_reached>75  app/registry/aggregation/pathology/extract_pathology.py
  inline_cap_reached>75  app/reporting/macro_registry.py
  inline_cap_reached>75  app/registry/heuristics/linear_ebus_station_detail.py
  inline_cap_reached>75  app/coder/cli.py
  inline_cap_reached>75  app/api/routes/process_bundle.py
  inline_cap_reached>75  app/registry/slots/therapeutics.py
- inline_cap_reached>75  app/api/routes/registry_append.py
  inline_cap_reached>75  app/reporting/ip_addons.py
  inline_cap_reached>75  app/api/routes/qa.py
  inline_cap_reached>75  app/registry/self_correction/apply.py
@@ -1408,13 +1521,14 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/agents/run_pipeline.py
  inline_cap_reached>75  app/registry/infra/model_provider.py
  inline_cap_reached>75  app/registry/processing/navigation_fiducials.py
- inline_cap_reached>75  app/api/routes/registry_case.py
+ inline_cap_reached>75  proc_schemas/clinical/pleural.py
  inline_cap_reached>75  app/domain/coding_rules/evidence_context.py
  inline_cap_reached>75  app/registry/model_runtime.py
  inline_cap_reached>75  app/coder/adapters/ml_ranker.py
  inline_cap_reached>75  app/registry/ner_mapping/entity_to_registry.py
  inline_cap_reached>75  app/sectioning/provation_section_parser.py
  inline_cap_reached>75  app/coder/adapters/persistence/inmemory_procedure_store.py
+ inline_cap_reached>75  app/registry/aggregation/imaging/patch_imaging.py
  inline_cap_reached>75  app/registry/inference_pytorch.py
  inline_cap_reached>75  app/registry_cleaning/clinical_qc.py
  inline_cap_reached>75  app/registry/ml/evaluate.py
@@ -1435,7 +1549,6 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/common/knowledge.py
  inline_cap_reached>75  app/api/routes/phi.py
  inline_cap_reached>75  app/registry/application/pathology_extraction.py
- inline_cap_reached>75  app/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  app/reporting/normalization/text_enricher.py
  inline_cap_reached>75  app/registry_cleaning/schema_utils.py
  inline_cap_reached>75  app/domain/knowledge_base/validator.py
@@ -1444,9 +1557,10 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/coder/domain_rules/__init__.py
  inline_cap_reached>75  app/coder/rules.py
  inline_cap_reached>75  app/registry/application/registry_builder.py
+ inline_cap_reached>75  app/api/routes/registry_append.py
+ inline_cap_reached>75  app/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  app/registry/self_correction/validation.py
  inline_cap_reached>75  app/registry/ml/models.py
- inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  app/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  app/registry/v2_booleans.py
  inline_cap_reached>75  app/domain/coding_rules/json_rules_evaluator.py
@@ -1460,27 +1574,29 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/api/services/unified_pipeline.py
  inline_cap_reached>75  app/agents/aggregator/timeline_aggregator.py
  inline_cap_reached>75  app/coder/rules_engine.py
+ inline_cap_reached>75  app/api/routes/registry_case.py
  inline_cap_reached>75  app/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  app/api/dependencies.py
  inline_cap_reached>75  app/phi/safety/veto.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  app/common/openai_responses.py
  inline_cap_reached>75  app/coder/reconciliation/reconciler.py
- inline_cap_reached>75  app/api/routes/registry_runs.py
  inline_cap_reached>75  app/api/schemas/base.py
+ inline_cap_reached>75  app/api/routes/registry_runs.py
  inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  app/coder/adapters/llm/gemini_advisor.py
  inline_cap_reached>75  app/registry/application/coding_support_builder.py
  inline_cap_reached>75  app/registry/normalization.py
  inline_cap_reached>75  app/api/services/qa_pipeline.py
+ inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  app/registry/inference_onnx.py
- inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/coder/adapters/persistence/csv_kb_adapter.py
- inline_cap_reached>75  app/registry/evidence/verifier.py
  inline_cap_reached>75  app/registry_cleaning/cpt_utils.py
  inline_cap_reached>75  app/coder/parallel_pathway/orchestrator.py
+ inline_cap_reached>75  app/registry/evidence/verifier.py
  inline_cap_reached>75  app/registry/model_bootstrap.py
  inline_cap_reached>75  app/registry/extractors/llm_detailed.py
+ inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/reporting/macro_engine.py
  inline_cap_reached>75  app/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  app/domain/coding_rules/rule_engine.py
@@ -1489,50 +1605,58 @@ Git: `main` @ `bfcd6e3`
  inline_cap_reached>75  app/reporting/questions.py
  inline_cap_reached>75  app/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  app/api/routes/reporting.py
+ inline_cap_reached>75  app/registry/application/case_aggregator.py
  inline_cap_reached>75  app/coder/application/smart_hybrid_policy.py
- inline_cap_reached>75  app/registry/legacy/adapters/airway.py
- inline_cap_reached>75  app/registry/schema/v2_dynamic.py
  inline_cap_reached>75  app/api/normalization.py
  inline_cap_reached>75  app/coder/adapters/registry_coder.py
- inline_cap_reached>75  app/registry/processing/disease_burden.py
  inline_cap_reached>75  app/registry/transform.py
+ inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
  inline_cap_reached>75  app/domain/coding_rules/coding_rules_engine.py
  inline_cap_reached>75  app/api/ml_advisor_router.py
- inline_cap_reached>75  app/registry/completeness/missing_field_prompts.py
  inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
- inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
+ inline_cap_reached>75  app/registry/processing/disease_burden.py
  inline_cap_reached>75  app/reporting/pipeline.py
+ inline_cap_reached>75  app/registry/schema/v2_dynamic.py
+ inline_cap_reached>75  app/registry/legacy/adapters/airway.py
+ inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  app/registry/ml/action_predictor.py
  inline_cap_reached>75  app/coder/dictionary.py
  inline_cap_reached>75  app/registry/schema/granular_models.py
- inline_cap_reached>75  app/common/llm.py
  inline_cap_reached>75  app/proc_ml_advisor/schemas.py
  inline_cap_reached>75  app/api/routes/procedure_codes.py
+ inline_cap_reached>75  app/common/llm.py
  inline_cap_reached>75  app/registry/schema/granular_logic.py
  inline_cap_reached>75  app/registry/self_correction/keyword_guard.py
  inline_cap_reached>75  app/registry/processing/navigation_targets.py
  inline_cap_reached>75  app/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  app/reporting/llm_findings.py
- inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/registry/prompts.py
+ inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/coding_rules.py
  inline_cap_reached>75  app/reporting/engine.py
- inline_cap_reached>75  app/reporting/normalization/compat_enricher.py
  inline_cap_reached>75  app/registry/engine.py
+ inline_cap_reached>75  app/reporting/normalization/compat_enricher.py
  inline_cap_reached>75  app/registry/application/registry_service.py
- inline_cap_reached>75  app/registry/deterministic_extractors.py
+     too_large>200000B  app/registry/deterministic_extractors.py
      too_large>200000B  app/registry/postprocess/__init__.py
     binary_or_non_utf8  docs/ARCHITECTURE.md
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
-     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/vocab.txt
+     too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/vocab.txt
+     too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/vocab.txt
+     too_large>200000B  ui/static/phi_redactor_classic/app.js
      too_large>200000B  ui/static/phi_redactor/app.js
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
-     too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner_quant/tokenizer.json
+     too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/tokenizer.json
+     too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/tokenizer.json
      too_large>200000B  ui/static/phi_redactor/transformers.legacy.js
+     too_large>200000B  ui/static/phi_redactor_classic/transformers.legacy.js
      too_large>200000B  ui/static/phi_redactor/transformers.min.js
+     too_large>200000B  ui/static/phi_redactor_classic/transformers.min.js
+     too_large>200000B  ui/static/phi_redactor_classic/registry_grid/registry_grid.iife.js
      too_large>200000B  ui/static/phi_redactor/registry_grid/registry_grid.iife.js
      too_large>200000B  ui/static/phi_redactor/vendor/tesseract/tesseract-core-simd.wasm.js
+     too_large>200000B  ui/static/phi_redactor_classic/vendor/tesseract/tesseract-core-simd.wasm.js
 ```
 
 ## Inlined file contents
@@ -13983,305 +14107,272 @@ if __name__ == "__main__":
 ```
 
 ---
-### `ops/tools/run_reporter_random_seeds.py`
-- Size: `10264` bytes
+### `ml/scripts/diamond_loop_cloud_sync.py`
+- Size: `10375` bytes
 ```
 #!/usr/bin/env python3
-"""Sample prompts from reporter-training JSONL files and run reporter pipeline."""
+"""
+Diamond Loop cloud sync helper.
+
+Goal:
+- Keep Diamond Loop state consistent across machines (WSL + macOS) using a cloud
+  drive folder (Google Drive).
+- Avoid syncing Prodigy's SQLite DB directly (unsafe). Instead sync via export/import.
+
+What this syncs:
+- Prodigy dataset snapshot (JSONL) for REGISTRY textcat workflow
+- Registry Prodigy manifest (prevents re-sampling)
+- Unlabeled notes pool (ensures consistent sampling universe)
+- Optional: current batch + human export CSV
+
+Two modes:
+- push: export Prodigy dataset → copy to cloud; copy local files → cloud
+- pull: copy cloud files → local; import Prodigy dataset (with --reset)
+
+WSL + Google Drive on Windows G: example:
+  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
+
+macOS example (Drive path varies by install):
+  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
+  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
+"""
 
 from __future__ import annotations
 
 import argparse
-import json
-import random
+import os
+import shutil
+import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
-
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
-from app.registry.application.registry_service import RegistryService
-from app.reporting.engine import ReporterEngine, _load_procedure_order, default_schema_registry, default_template_registry
-from app.reporting.inference import InferenceEngine
-from app.reporting.validation import ValidationEngine
-
-
-DEFAULT_INPUT_DIR = Path("/home/rjm/projects/proc_suite_notes/reporter_training/reporter_training")
-DEFAULT_OUTPUT = Path("reporter_tests.txt")
 
 
 @dataclass(frozen=True)
-class SeedPrompt:
-    source_file: Path
-    line_number: int
-    record_id: str
-    prompt: str
+class SyncPaths:
+    # Repo-local paths (relative to repo root)
+    manifest_rel: Path = Path("data/ml_training/registry_prodigy_manifest.json")
+    unlabeled_rel: Path = Path("data/ml_training/registry_unlabeled_notes.jsonl")
+    batch_rel: Path = Path("data/ml_training/registry_prodigy_batch.jsonl")
+    human_csv_rel: Path = Path("data/ml_training/registry_human.csv")
+
+    # Cloud layout (relative to sync root)
+    diamond_dir: Path = Path("diamond_loop")
+    prodigy_dir: Path = Path("prodigy")
+
+
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
+def _run(cmd: list[str], *, check: bool = True, capture: bool = False) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        cmd,
+        check=check,
+        text=True,
+        capture_output=capture,
+    )
+
+
+def _is_wsl() -> bool:
+    # Common signal in WSL envs.
+    return "WSL_INTEROP" in os.environ or "WSL_DISTRO_NAME" in os.environ
+
+
+def _wslpath_to_windows(path: Path) -> str:
+    """
+    Convert a Linux/WSL path to a Windows path usable by PowerShell.
+    Requires wslpath.
+    """
+    cp = _run(["wslpath", "-w", str(path)], capture=True)
+    out = (cp.stdout or "").strip()
+    if not out:
+        raise RuntimeError(f"wslpath returned empty output for {path}")
+    return out
+
+
+def _ps_copy_item(win_src: str, win_dst: str) -> None:
+    # Use Copy-Item with -Force; ensure destination directory exists.
+    # Use single quotes (PowerShell) for proper handling of spaces.
+    dst_dir = win_dst.rsplit("\\", 1)[0]
+    cmd = (
+        f"New-Item -ItemType Directory -Force -Path '{dst_dir}' | Out-Null; "
+        f"Copy-Item -Force '{win_src}' '{win_dst}'"
+    )
+    _run(["powershell.exe", "-NoProfile", "-Command", cmd], check=True)
+
+
+def _copy_local_to_cloud(local_src: Path, cloud_dst: Path, *, sync_root: Path | None, gdrive_win_root: str | None) -> None:
+    local_src = local_src.resolve()
+    if not local_src.exists():
+        return
+
+    if gdrive_win_root:
+        if not _is_wsl():
+            raise RuntimeError("--gdrive-win-root is intended for WSL environments.")
+        win_src = _wslpath_to_windows(local_src)
+        win_dst = str(Path(gdrive_win_root) / cloud_dst).replace("/", "\\")
+        _ps_copy_item(win_src, win_dst)
+        return
+
+    if sync_root is None:
+        raise RuntimeError("Must provide either --sync-root (mac/linux) or --gdrive-win-root (WSL).")
+    dst = (sync_root / cloud_dst).resolve()
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(local_src, dst)
+
+
+def _copy_cloud_to_local(cloud_src: Path, local_dst: Path, *, sync_root: Path | None, gdrive_win_root: str | None) -> bool:
+    local_dst = local_dst.resolve()
+
+    if gdrive_win_root:
+        if not _is_wsl():
+            raise RuntimeError("--gdrive-win-root is intended for WSL environments.")
+        win_dst = _wslpath_to_windows(local_dst)
+        win_src = str(Path(gdrive_win_root) / cloud_src).replace("/", "\\")
+        try:
+            _ps_copy_item(win_src, win_dst)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    if sync_root is None:
+        raise RuntimeError("Must provide either --sync-root (mac/linux) or --gdrive-win-root (WSL).")
+    src = (sync_root / cloud_src).resolve()
+    if not src.exists():
+        return False
+    local_dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, local_dst)
+    return True
+
+
+def _prodigy_export(dataset: str, out_file: Path) -> None:
+    from ml.scripts.prodigy_cloud_sync import export_dataset  # local helper
+
+    export_dataset(dataset=dataset, out_file=out_file, answer=None)
+
+
+def _prodigy_import(dataset: str, in_file: Path, *, reset: bool) -> None:
+    from ml.scripts.prodigy_cloud_sync import import_dataset  # local helper
+
+    import_dataset(dataset=dataset, in_file=in_file, reset_first=reset, overwrite=False, rehash=False)
+
+
+def push(
+    *,
+    dataset: str,
+    sync_root: Path | None,
+    gdrive_win_root: str | None,
+    include_batch: bool,
+    include_human: bool,
+) -> None:
+    repo = _repo_root()
+    p = SyncPaths()
+
+    # 1) Export Prodigy dataset snapshot to a temp file, then copy it to cloud.
+    tmp = Path("/tmp") / f"{dataset}.prodigy.jsonl"
+    _prodigy_export(dataset, tmp)
+    _copy_local_to_cloud(tmp, p.prodigy_dir / f"{dataset}.prodigy.jsonl", sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+
+    # 2) Copy local Diamond Loop files to cloud if present.
+    _copy_local_to_cloud(repo / p.manifest_rel, p.diamond_dir / p.manifest_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    _copy_local_to_cloud(repo / p.unlabeled_rel, p.diamond_dir / p.unlabeled_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    if include_batch:
+        _copy_local_to_cloud(repo / p.batch_rel, p.diamond_dir / p.batch_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    if include_human:
+        _copy_local_to_cloud(repo / p.human_csv_rel, p.diamond_dir / p.human_csv_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+
+    print(f"OK: pushed dataset '{dataset}' and Diamond Loop files to sync root")
+
+
+def pull(
+    *,
+    dataset: str,
+    sync_root: Path | None,
+    gdrive_win_root: str | None,
+    reset_dataset: bool,
+    include_batch: bool,
+    include_human: bool,
+) -> None:
+    repo = _repo_root()
+    p = SyncPaths()
+
+    # 1) Pull dataset snapshot from cloud into temp, then import into local Prodigy DB.
+    tmp = Path("/tmp") / f"{dataset}.prodigy.jsonl"
+    ok = _copy_cloud_to_local(p.prodigy_dir / f"{dataset}.prodigy.jsonl", tmp, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    if not ok:
+        raise FileNotFoundError(f"Missing cloud dataset snapshot: {p.prodigy_dir / f'{dataset}.prodigy.jsonl'}")
+    _prodigy_import(dataset, tmp, reset=reset_dataset)
+
+    # 2) Pull Diamond Loop files from cloud into repo (best-effort).
+    _copy_cloud_to_local(p.diamond_dir / p.manifest_rel.name, repo / p.manifest_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    _copy_cloud_to_local(p.diamond_dir / p.unlabeled_rel.name, repo / p.unlabeled_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    if include_batch:
+        _copy_cloud_to_local(p.diamond_dir / p.batch_rel.name, repo / p.batch_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+    if include_human:
+        _copy_cloud_to_local(p.diamond_dir / p.human_csv_rel.name, repo / p.human_csv_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
+
+    print(f"OK: pulled dataset '{dataset}' and Diamond Loop files from sync root")
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
-    parser.add_argument("--count", type=int, default=20, help="How many prompts to sample.")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed for deterministic sampling.")
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Output text file path.")
-    parser.add_argument(
-        "--prompt-field",
-        default="prompt",
-        help="Primary field name for prompt text (default: prompt).",
-    )
-    parser.add_argument(
-        "--include-metadata-json",
+    sub = parser.add_subparsers(dest="cmd", required=True)
+
+    def add_common(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--dataset", default="registry_v1", help="Prodigy dataset name (default: registry_v1)")
+        g = p.add_mutually_exclusive_group(required=True)
+        g.add_argument("--sync-root", type=Path, help="Local filesystem path to sync root (mac/linux)")
+        g.add_argument("--gdrive-win-root", type=str, help="Windows path to sync root (WSL), e.g. G:\\My Drive\\proc_suite_sync")
+        p.add_argument("--include-batch", action="store_true", help="Also sync the current batch JSONL")
+        p.add_argument("--include-human", action="store_true", help="Also sync registry_human.csv")
+
+    p_push = sub.add_parser("push", help="Export Prodigy dataset and push Diamond Loop files to cloud")
+    add_common(p_push)
+
+    p_pull = sub.add_parser("pull", help="Pull from cloud and import into local Prodigy DB")
+    add_common(p_pull)
+    p_pull.add_argument(
+        "--reset",
         action="store_true",
-        help="Also emit machine-readable JSON results.",
+        help="Drop local dataset before import (recommended when switching machines)",
     )
-    parser.add_argument(
-        "--metadata-output",
-        type=Path,
-        default=None,
-        help="Optional metadata JSON output path (default: --output with .json suffix).",
-    )
+
     return parser.parse_args(argv)
-
-
-def _extract_prompt(row: dict[str, Any], prompt_field: str) -> str:
-    for field in (prompt_field, "prompt", "prompt_text", "text"):
-        value = row.get(field)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    return ""
-
-
-def sample_prompts(input_dir: Path, *, count: int, seed: int, prompt_field: str) -> tuple[list[SeedPrompt], int]:
-    if not input_dir.exists() or not input_dir.is_dir():
-        raise FileNotFoundError(f"Input directory not found: {input_dir}")
-
-    files = sorted(input_dir.glob("*.jsonl"))
-    if not files:
-        raise FileNotFoundError(f"No JSONL files found in: {input_dir}")
-
-    rng = random.Random(seed)
-    reservoir: list[SeedPrompt] = []
-    seen = 0
-
-    for file_path in files:
-        with file_path.open("r", encoding="utf-8") as handle:
-            for line_num, line in enumerate(handle, start=1):
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    row = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if not isinstance(row, dict):
-                    continue
-                prompt = _extract_prompt(row, prompt_field)
-                if not prompt:
-                    continue
-
-                record_id = str(row.get("id") or f"{file_path.stem}:{line_num}")
-                item = SeedPrompt(
-                    source_file=file_path,
-                    line_number=line_num,
-                    record_id=record_id,
-                    prompt=prompt,
-                )
-
-                seen += 1
-                if len(reservoir) < count:
-                    reservoir.append(item)
-                else:
-                    replacement_idx = rng.randrange(seen)
-                    if replacement_idx < count:
-                        reservoir[replacement_idx] = item
-
-    if not reservoir:
-        raise RuntimeError("No usable prompt rows found.")
-
-    rng.shuffle(reservoir)
-    return reservoir, seen
-
-
-def build_reporter_strategy() -> tuple[ReportingStrategy, RegistryService]:
-    templates = default_template_registry()
-    schemas = default_schema_registry()
-    reporter_engine = ReporterEngine(
-        templates,
-        schemas,
-        procedure_order=_load_procedure_order(),
-    )
-    registry_engine = RegistryService()
-    strategy = ReportingStrategy(
-        reporter_engine=reporter_engine,
-        inference_engine=InferenceEngine(),
-        validation_engine=ValidationEngine(templates, schemas),
-        registry_engine=registry_engine,
-        simple_strategy=SimpleReporterStrategy(),
-    )
-    return strategy, registry_engine
-
-
-def run_reporter_markdown(
-    prompt_text: str,
-    *,
-    strategy: ReportingStrategy,
-    registry_engine: RegistryService,
-) -> tuple[str, list[str]]:
-    extraction = registry_engine.extract_fields_extraction_first(prompt_text)
-    record_data = extraction.record.model_dump(exclude_none=True)
-    rendered = strategy.render(text=prompt_text, registry_data={"record": record_data})
-    markdown = str(rendered.get("markdown") or "").strip()
-    warnings = [str(w) for w in (rendered.get("warnings") or [])]
-    return markdown, warnings
-
-
-def write_results(
-    output_path: Path,
-    rows: list[SeedPrompt],
-    *,
-    strategy: ReportingStrategy,
-    registry_engine: RegistryService,
-) -> tuple[int, int, list[dict[str, Any]]]:
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    success_count = 0
-    failure_count = 0
-    case_results: list[dict[str, Any]] = []
-
-    with output_path.open("w", encoding="utf-8") as handle:
-        handle.write(f"Reporter random seed run\n")
-        handle.write(f"Cases: {len(rows)}\n\n")
-
-        for idx, row in enumerate(rows, start=1):
-            handle.write("=" * 100 + "\n")
-            handle.write(f"CASE {idx}\n")
-            handle.write(f"source: {row.source_file}:{row.line_number}\n")
-            handle.write(f"id: {row.record_id}\n\n")
-            handle.write("PROMPT\n")
-            handle.write("-" * 100 + "\n")
-            handle.write(row.prompt.rstrip() + "\n\n")
-            handle.write("OUTPUT\n")
-            handle.write("-" * 100 + "\n")
-
-            case_payload: dict[str, Any] = {
-                "case_index": idx,
-                "source_file": str(row.source_file),
-                "line_number": row.line_number,
-                "id": row.record_id,
-                "prompt": row.prompt,
-                "markdown": None,
-                "warnings": [],
-                "error": None,
-            }
-
-            try:
-                markdown, warnings = run_reporter_markdown(
-                    row.prompt,
-                    strategy=strategy,
-                    registry_engine=registry_engine,
-                )
-                handle.write((markdown or "<empty markdown>").rstrip() + "\n")
-                if warnings:
-                    handle.write("\nWARNINGS\n")
-                    handle.write("-" * 100 + "\n")
-                    for warning in warnings:
-                        handle.write(f"- {warning}\n")
-                case_payload["markdown"] = markdown
-                case_payload["warnings"] = warnings
-                success_count += 1
-            except Exception as exc:  # noqa: BLE001
-                handle.write(f"<ERROR: {type(exc).__name__}: {exc}>\n")
-                case_payload["error"] = {
-                    "type": type(exc).__name__,
-                    "message": str(exc),
-                }
-                failure_count += 1
-            handle.write("\n")
-            case_results.append(case_payload)
-
-    return success_count, failure_count, case_results
-
-
-def write_metadata_json(
-    metadata_path: Path,
-    *,
-    input_dir: Path,
-    output_txt_path: Path,
-    prompt_field: str,
-    sample_count: int,
-    seed: int,
-    total_candidates: int,
-    success_count: int,
-    failure_count: int,
-    cases: list[dict[str, Any]],
-) -> None:
-    metadata_path.parent.mkdir(parents=True, exist_ok=True)
-    payload = {
-        "created_at_utc": datetime.now(timezone.utc).isoformat(),
-        "input_dir": str(input_dir),
-        "output_txt_path": str(output_txt_path),
-        "prompt_field": prompt_field,
-        "sample_count": sample_count,
-        "seed": seed,
-        "total_candidates": total_candidates,
-        "success_count": success_count,
-        "failure_count": failure_count,
-        "cases": cases,
-    }
-    metadata_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    sync_root = args.sync_root.resolve() if getattr(args, "sync_root", None) is not None else None
+    gdrive_win_root = getattr(args, "gdrive_win_root", None)
 
-    if args.count <= 0:
-        raise ValueError("--count must be > 0")
-
-    sampled_rows, total_candidates = sample_prompts(
-        args.input_dir,
-        count=int(args.count),
-        seed=int(args.seed),
-        prompt_field=str(args.prompt_field),
-    )
-
-    strategy, registry_engine = build_reporter_strategy()
-    success_count, failure_count, case_results = write_results(
-        args.output,
-        sampled_rows,
-        strategy=strategy,
-        registry_engine=registry_engine,
-    )
-
-    metadata_written = None
-    if bool(args.include_metadata_json):
-        metadata_path = args.metadata_output or args.output.with_suffix(".json")
-        write_metadata_json(
-            metadata_path,
-            input_dir=args.input_dir,
-            output_txt_path=args.output,
-            prompt_field=str(args.prompt_field),
-            sample_count=len(sampled_rows),
-            seed=int(args.seed),
-            total_candidates=total_candidates,
-            success_count=success_count,
-            failure_count=failure_count,
-            cases=case_results,
+    if args.cmd == "push":
+        push(
+            dataset=args.dataset,
+            sync_root=sync_root,
+            gdrive_win_root=gdrive_win_root,
+            include_batch=bool(args.include_batch),
+            include_human=bool(args.include_human),
         )
-        metadata_written = metadata_path
+        return 0
 
-    print(f"Sampled {len(sampled_rows)} prompts from {total_candidates} candidates.")
-    print(f"Wrote: {args.output}")
-    if metadata_written is not None:
-        print(f"Wrote metadata: {metadata_written}")
-    print(f"Succeeded: {success_count} | Failed: {failure_count}")
-    return 0 if failure_count == 0 else 1
+    if args.cmd == "pull":
+        pull(
+            dataset=args.dataset,
+            sync_root=sync_root,
+            gdrive_win_root=gdrive_win_root,
+            reset_dataset=bool(args.reset),
+            include_batch=bool(args.include_batch),
+            include_human=bool(args.include_human),
+        )
+        return 0
+
+    raise SystemExit(f"Unknown cmd: {args.cmd}")
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
 ```

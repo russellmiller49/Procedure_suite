@@ -209,6 +209,41 @@ The default UMLS integration is a **distilled deterministic linker** backed by a
 - Run full suite: `make test`
 - Run targeted: `pytest -q <path>::<test_name>`
 
+## Golden Extraction Data Generator
+
+Generates high-quality NER training data and golden registry records from procedure notes using a 2-pass LLM pipeline (annotator + judge).
+
+- **Script:** `ops/tools/generate_golden_extraction_data.py`
+- **Prompts:** `configs/prompts/golden_extraction_annotator_v1.txt`, `golden_extraction_judge_v1.txt`, `golden_extraction_notegen_v1.txt`
+- **Output:** `data/ml_training/golden_extraction/v1/` (accepted NER spans, golden registry records, metrics)
+
+### Input modes
+- `--input-dir PATH` or `--input-jsonl PATH`: annotate existing notes
+- `--generate-notes COUNT`: generate synthetic notes first via LLM, then annotate
+
+### Pipeline per note
+1. Mask CPT/menu noise (`mask_extraction_noise()`)
+2. Annotator LLM (temp=0.0) → entities with preceding/following context + registry dict
+3. Deterministic offset resolution (context-anchored, longest-first, overlap-aware)
+4. Deterministic checks (label taxonomy, `RegistryRecord.model_validate()`, cross-consistency, negation scan, tools-to-intent)
+5. If registry validation fails → skip Judge, go to repair loop
+6. Judge LLM (temp=0.0) → scores + per-entity verdicts + verdict
+7. Repair loop (max 2 attempts) if verdict = "revise"
+8. Accept/reject split with quality gates
+
+### Quality gates
+- Entity resolution rate >= 80%, judge entity/registry accuracy >= 0.85, anti-hallucination >= 0.90, no critical hallucinations
+- Run-level abort if accept rate < 40% after first 20 notes
+
+### Key design decisions
+- **No LLM char offsets**: annotator returns entity text + `preceding_context` + `following_context`; offsets resolved deterministically via substring search
+- **Longest-first resolution**: entities sorted by text length descending to prevent shorter strings from stealing overlapping ranges
+- **RegistryRecord as hard gate**: production Pydantic model validates registry before Judge LLM runs
+- **Anti-mode-collapse** (note generation): randomized formatting quirks, demographics, temperature 0.7–1.0
+
+### Reused code
+- `app/common/llm.py:LLMService`, `app/registry/processing/masking.py`, `app/registry/schema/v2_dynamic.py:RegistryRecord`, `app/ner/entity_types.py:ENTITY_CATEGORIES`, `ml/scripts/add_training_case.py:add_case()`
+
 ## Reporter Tooling
 
 - Random reporter prompt sampling:

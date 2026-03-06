@@ -3,6 +3,7 @@ import pytest
 from app.registry.legacy.adapters.airway import (
     BALAdapter,
     BLVRValvePlacementAdapter,
+    BLVRValveRemovalExchangeAdapter,
     BPFLocalizationAdapter,
     BPFSealantApplicationAdapter,
     BPFValvePlacementAdapter,
@@ -142,6 +143,18 @@ def test_whole_lung_lavage_and_blvr_adapters():
     assert isinstance(blvr, airway_schemas.BLVRValvePlacement)
     assert len(blvr.valves) == 2
     assert blvr.lobes_treated == ["LUL"]
+
+    blvr_removal = BLVRValveRemovalExchangeAdapter.extract(
+        {
+            "blvr_procedure_type": "Valve removal",
+            "blvr_valves_removed": 3,
+            "blvr_valve_type": "Zephyr (Pulmonx)",
+            "blvr_removal_locations": ["RUL"],
+        }
+    )
+    assert isinstance(blvr_removal, airway_schemas.BLVRValveRemovalExchange)
+    assert blvr_removal.valves_removed == 3
+    assert blvr_removal.device_brand == "Zephyr (Pulmonx)"
 
 
 @pytest.mark.parametrize(

@@ -144,3 +144,30 @@ def test_extract_linear_ebus_stations_detail_inline_paren_format_avoids_count_fa
 
     # Ensure numeric counts (e.g., "5 peripheral needle biopsies") do not become station "5".
     assert "5" not in by_station
+
+
+def test_extract_linear_ebus_stations_detail_rose_negative_for_malignancy_not_marked_malignant() -> None:
+    note = (
+        "EBUS staging performed.\n"
+        "Station 7: biopsied with 22G, 4 passes. ROSE adequate lymphocytes, negative for malignancy.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["7"]["sampled"] is True
+    assert by_station["7"]["rose_result"] == "Adequate lymphocytes"
+    assert by_station["7"].get("morphologic_impression") != "malignant"
+
+
+def test_extract_linear_ebus_stations_detail_rose_malignant_cells_marked_malignant() -> None:
+    note = (
+        "EBUS staging performed.\n"
+        "Station 4R: biopsied with 22G, 3 passes. ROSE adequate with malignant cells.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert by_station["4R"]["sampled"] is True
+    assert by_station["4R"]["rose_result"] == "Malignant"

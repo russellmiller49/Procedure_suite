@@ -26,6 +26,7 @@ def test_phi_redactor_index_has_coop_coep_headers(client: TestClient) -> None:
     assert resp.headers.get("Cross-Origin-Opener-Policy") == "same-origin"
     assert resp.headers.get("Cross-Origin-Embedder-Policy") == "require-corp"
 
+
 def test_phi_redactor_redirects_trailing_slash(client: TestClient) -> None:
     resp = client.get("/ui/phi_redactor", follow_redirects=False)
     assert resp.status_code in (301, 302, 303, 307, 308)
@@ -107,6 +108,7 @@ def test_registry_grid_bundle_exports_global_api(client: TestClient) -> None:
     assert "update" in body
     assert "unmount" in body
 
+
 def test_phi_redactor_worker_stoplist_includes_lymph_nodes(client: TestClient) -> None:
     """Regression: don't treat "Lymph Nodes" headings as patient names."""
     resp = client.get("/ui/phi_redactor/redactor.worker.js")
@@ -158,7 +160,7 @@ def test_phi_redactor_worker_provider_roles_cover_ebus_headers(client: TestClien
     assert "Technician" in body
     assert "Additional\\s+Fellow" in body
     assert "Additional\\s+Technician" in body
-    assert "source: \"regex_provider_role\"" in body
+    assert 'source: "regex_provider_role"' in body
 
 
 def test_phi_redactor_worker_has_address_and_zip_regex_detectors(client: TestClient) -> None:
@@ -172,12 +174,14 @@ def test_phi_redactor_worker_has_address_and_zip_regex_detectors(client: TestCli
     assert "text.matchAll(STREET_ADDRESS_RE)" in body
     assert "text.matchAll(CITY_STATE_ZIP_RE)" in body
     assert "text.matchAll(ZIP_LABEL_RE)" in body
-    assert "source: \"regex_address\"" in body
-    assert "source: \"regex_city_state_zip\"" in body
-    assert "source: \"regex_zip_label\"" in body
+    assert 'source: "regex_address"' in body
+    assert 'source: "regex_city_state_zip"' in body
+    assert 'source: "regex_zip_label"' in body
 
 
-def test_phi_redactor_legacy_worker_has_address_and_provider_role_detectors(client: TestClient) -> None:
+def test_phi_redactor_legacy_worker_has_address_and_provider_role_detectors(
+    client: TestClient,
+) -> None:
     """Legacy worker fallback should keep parity for address + provider role coverage."""
     resp = client.get("/ui/redactor.worker.legacy.js")
     assert resp.status_code == 200
@@ -189,8 +193,8 @@ def test_phi_redactor_legacy_worker_has_address_and_provider_role_detectors(clie
     assert "const STREET_ADDRESS_RE" in body
     assert "const CITY_STATE_ZIP_RE" in body
     assert "const ZIP_LABEL_RE" in body
-    assert "source: \"regex_provider_role\"" in body
-    assert "source: \"regex_address\"" in body
+    assert 'source: "regex_provider_role"' in body
+    assert 'source: "regex_address"' in body
 
 
 def test_unified_process_already_scrubbed_bypasses_server_scrubber(

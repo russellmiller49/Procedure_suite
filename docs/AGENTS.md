@@ -480,4 +480,81 @@ class CustomParserAgent(ParserAgent):
 
 ---
 
-*Last updated: January 2026*
+## Golden Extraction Data Generator (2-Pass LLM Pipeline)
+
+A standalone pipeline for generating high-quality NER training data and golden registry records using a 2-pass LLM pattern. Unlike the runtime agents above, this is an offline batch tool for ML training data generation.
+
+**Script:** `ops/tools/generate_golden_extraction_data.py`
+
+### Architecture
+
+```
+Note text (existing or LLM-generated synthetic)
+  → mask_extraction_noise()
+  → [Annotator LLM] (temp=0.0, OpenAI Structured Outputs)
+  → [Deterministic offset resolution] (context-anchored, no LLM char counting)
+  → [Deterministic checks] (label taxonomy, RegistryRecord validation, cross-consistency)
+  → [Judge LLM] (temp=0.0) — skipped if registry validation fails
+  → [Repair loop] (max 2 attempts, feedback from judge + checks)
+  → Accept / Reject / Review queue
+```
+
+### Annotator Agent
+
+- **Prompt:** `configs/prompts/golden_extraction_annotator_v1.txt`
+- **Input:** masked procedure note text (+ optional repair feedback on retry)
+- **Output:** `AnnotatorResponseV1` — entities with `{label, text, preceding_context, following_context}` + registry dict + reasoning
+
+Key design: the annotator returns **verbatim text + surrounding context words** instead of character offsets (LLMs can't reliably count characters due to sub-word tokenization). Offsets are resolved deterministically post-hoc.
+
+### Judge Agent
+
+- **Prompt:** `configs/prompts/golden_extraction_judge_v1.txt`
+- **Input:** note text + annotator entities + annotator registry + deterministic check results
+- **Output:** `JudgeResponseV1` — per-dimension scores, per-entity verdicts, verdict (accept/revise/reject)
+
+Judge evaluates:
+- Entity accuracy (exact substring, correct label, clinically valid)
+- Entity completeness (missed procedures, stations, devices)
+- Registry accuracy (hallucinated procedures, unsupported `performed=true`)
+- Anti-hallucination (tools-to-intent confusion, negation awareness)
+
+### Note Generator (optional synthetic path)
+
+- **Prompt:** `configs/prompts/golden_extraction_notegen_v1.txt`
+- **Anti-mode-collapse:** randomized formatting quirks (10 variants), demographics, temperature 0.7–1.0
+- **Coverage matrix:** 12 procedure family/complexity combinations (ebus, navigation, airway, pleural, diagnostic_bronch, blvr)
+
+### Entity Offset Resolution
+
+1. Sort entities by text length descending (longest claims spans first)
+2. Context-anchored match: `preceding_context + text + following_context` (exact, then case-insensitive)
+3. Exact match fallback: `note_text.find(entity_text)`
+4. Case-insensitive fallback
+5. Whitespace-normalized fallback
+6. Overlap prevention: track assigned ranges as intervals; prefer first non-overlapping occurrence
+
+### Cross-Consistency Checks
+
+- **NER → Registry:** `ANAT_LN_STATION` present → `linear_ebus.performed` should be true; etc.
+- **Registry → NER:** `performed=true` → at least one entity with matching keyword must exist
+- **Negation scan:** keywords ("aborted", "cancelled", "not performed") near `PROC_ACTION`/`PROC_METHOD` entities
+- **Tools-to-intent:** `DEV_INSTRUMENT` without `PROC_ACTION` → flag if registry marks therapeutic procedure as performed
+
+### Quality Gates (per note)
+
+| Gate | Threshold |
+|------|-----------|
+| Entity resolution rate | >= 80% |
+| Judge entity accuracy | >= 0.85 |
+| Judge registry accuracy | >= 0.85 |
+| Judge anti-hallucination | >= 0.90 |
+| Judge entity completeness | >= 0.70 |
+| Critical hallucination | false |
+| RegistryRecord validation | must pass |
+
+Run-level abort: if accept rate < 40% after first 20 notes.
+
+---
+
+*Last updated: March 2026*

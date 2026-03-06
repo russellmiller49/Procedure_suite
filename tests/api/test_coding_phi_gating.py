@@ -23,12 +23,16 @@ from proc_schemas.coding import CodingResult  # noqa: E402
 class FakeCodingService:
     def __init__(self):
         self.last_report_text = None
+
         class _KB:
             version = "fake"
+
             def get_procedure_info(self_inner, code):  # noqa: ANN001
                 return None
+
             def get_all_codes(self_inner):  # noqa: ANN001
                 return []
+
         self.kb_repo = _KB()
 
     def generate_result(

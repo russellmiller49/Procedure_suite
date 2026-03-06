@@ -1,0 +1,5264 @@
+================================================================================
+UNIFIED PIPELINE BATCH TEST RESULTS
+================================================================================
+Date: 2026-03-05T15:10:23.724276
+Notes tested: 10
+Notes directory: /home/rjm/projects/proc_suite_notes/new_synthetic_notes_3_5_26/test_model
+Include financials: True
+Include explain: True
+Real LLM enabled: True
+================================================================================
+
+================================================================================
+NOTE: note_005
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: reordered_sections, inconsistent_formatting
+IMPRESSION:
+Uncomplicated EBUS-TBNA of station 4L. Await path.
+
+PRE DIAGNOSIS: Lung mass.
+PROCEDURE: EBUS-TBNA of mediastinal lymph node.
+
+* Findings: Airway normal. 4L measured 1.1 cm.
+
+* 3 passes with 22g needle.
+
+* Anesthesia: Mod sedation.
+SPECIMENS: Station 4L FNA.
+
+[PATIENT] is a [REDACTED] female. Informed consent was obtained. Procedure was performed without issue.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "peripheral_tbna": {
+        "performed": false
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4L"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "4L",
+            "action": "inspected_only",
+            "evidence_quote": "* Findings: Airway normal. 4L measured 1.1 cm."
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "4L",
+          "sampled": true,
+          "needle_gauge": 22,
+          "number_of_passes": 3
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "EBUS-",
+          "start": 86,
+          "end": 91,
+          "confidence": 0.8509812156359354
+        },
+        {
+          "text": "TBNA",
+          "start": 91,
+          "end": 95,
+          "confidence": 0.9553287029266357
+        },
+        {
+          "text": "station 4L",
+          "start": 99,
+          "end": 109,
+          "confidence": 0.9708662629127502
+        },
+        {
+          "text": "EBUS",
+          "start": 161,
+          "end": 165,
+          "confidence": 0.9871907830238342
+        },
+        {
+          "text": "TBNA",
+          "start": 166,
+          "end": 170,
+          "confidence": 0.9746381342411041
+        },
+        {
+          "text": "mediastinal lymph node",
+          "start": 174,
+          "end": 196,
+          "confidence": 0.7645843625068665
+        },
+        {
+          "text": "4L",
+          "start": 226,
+          "end": 228,
+          "confidence": 0.9664831757545471
+        },
+        {
+          "text": "Station 4L",
+          "start": 315,
+          "end": 325,
+          "confidence": 0.9497438073158264
+        },
+        {
+          "text": "FNA",
+          "start": 326,
+          "end": 329,
+          "confidence": 0.9486724734306335
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 86,
+          "end": 95
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "22g",
+          "start": 263,
+          "end": 266,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+        {
+          "text": "3 passes",
+          "start": 249,
+          "end": 257,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22g",
+          "start": 263,
+          "end": 266,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "EBUS-",
+        "span": [
+          86,
+          91
+        ],
+        "confidence": 0.8509812156359354
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          91,
+          95
+        ],
+        "confidence": 0.9553287029266357
+      },
+      {
+        "source": "ner_span",
+        "text": "station 4L",
+        "span": [
+          99,
+          109
+        ],
+        "confidence": 0.9708662629127502
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          161,
+          165
+        ],
+        "confidence": 0.9871907830238342
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          166,
+          170
+        ],
+        "confidence": 0.9746381342411041
+      },
+      {
+        "source": "ner_span",
+        "text": "mediastinal lymph node",
+        "span": [
+          174,
+          196
+        ],
+        "confidence": 0.7645843625068665
+      },
+      {
+        "source": "ner_span",
+        "text": "4L",
+        "span": [
+          226,
+          228
+        ],
+        "confidence": 0.9664831757545471
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 4L",
+        "span": [
+          315,
+          325
+        ],
+        "confidence": 0.9497438073158264
+      },
+      {
+        "source": "ner_span",
+        "text": "FNA",
+        "span": [
+          326,
+          329
+        ],
+        "confidence": 0.9486724734306335
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          86,
+          95
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22g",
+        "span": [
+          263,
+          266
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "3 passes",
+        "span": [
+          249,
+          257
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22g",
+        "span": [
+          263,
+          266
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "AUTO_CORRECTED_EBUS_NEGATION: 4L",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for ['4L']",
+    "AUTO_CORRECTED: Culled peripheral_tbna (nodal-only TBNA evidence; no distinct peripheral target).",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "linear_ebus.performed=true but node_events contains no qualifying sampling actions; cannot derive 31652/31653",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31653 (prob=0.55), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 783.53
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_006
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: unicode_checkboxes, conflicting_details
+Indication: Left lower lobe lung mass and enlarged 7 node.
+Anesthesia: General Anesthesia
+Technique: The patient received moderate sedation (fentanyl/versed). EBUS scope inserted.
+Findings:
+☑‌ Vocal cords normal.
+☐‌ Trachea normal (mild erythema noted).
+☑‌ Station 7 sampled x4 passes.
+Specimens: Station 7.
+Plan: Recover in PACU.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedure": {
+      "indication": "Left lower lobe lung mass and enlarged 7 node"
+    },
+    "clinical_context": {
+      "primary_indication": "Left lower lobe lung mass and enlarged 7 node",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "7"
+        ],
+        "node_events": [
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "      \n☑  Station 7 sampled x4 passes.\nSpecimens: Station 7.\nPlan:                 \n"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "follow_up_plan_text": "Recover in PACU."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus",
+            "procedures_performed.linear_ebus.node_events"
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:09:58.893904+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events"
+          }
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "EBUS",
+          "start": 197,
+          "end": 201,
+          "confidence": 0.6898960173130035
+        },
+        {
+          "text": "Station 7",
+          "start": 295,
+          "end": 304,
+          "confidence": 0.9608577489852905
+        },
+        {
+          "text": "sampled",
+          "start": 305,
+          "end": 312,
+          "confidence": 0.8176395297050476
+        },
+        {
+          "text": "Station 7",
+          "start": 335,
+          "end": 344,
+          "confidence": 0.9538218379020691
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Left lower lobe lung mass and enlarged 7 node",
+          "start": 68,
+          "end": 113
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Left lower lobe lung mass and enlarged 7 node",
+          "start": 68,
+          "end": 113
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 127,
+          "end": 145
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          197,
+          201
+        ],
+        "confidence": 0.6898960173130035
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          295,
+          304
+        ],
+        "confidence": 0.9608577489852905
+      },
+      {
+        "source": "ner_span",
+        "text": "sampled",
+        "span": [
+          305,
+          312
+        ],
+        "confidence": 0.8176395297050476
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          335,
+          344
+        ],
+        "confidence": 0.9538218379020691
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Left lower lobe lung mass and enlarged 7 node",
+        "span": [
+          68,
+          113
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Left lower lobe lung mass and enlarged 7 node",
+        "span": [
+          68,
+          113
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          127,
+          145
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 253.99
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_002
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: ambiguous_laterality, noisy_units
+Indication: Evaluation of subcarinal and right hilar nodes.
+Consent: Obtained and documented.
+Technique: EBUS-TBNA
+Findings: Patient [NAME:REDACTED] was sedated with Midazolam 4m mg and Fentanyl 100mcg. A linear EBUS bronchoscope was introduced through the mouth. The right hilar node (11R) was enlarged. Wait, left hilar node (11L) was identified and sampled. TBNA of 11L was performed. TBNA of station 7 was also performed. Airway was otherwise patent.
+Specimens: 11R lymph node (wait, 11L lymph node), Station 7 lymph node.
+Plan: Patient tolerated the procedure well. Discharged to recovery.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedure": {
+      "indication": "Evaluation of subcarinal and right hilar nodes"
+    },
+    "clinical_context": {
+      "primary_indication": "Evaluation of subcarinal and right hilar nodes",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "Moderate"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "11L",
+          "11R",
+          "7"
+        ],
+        "node_events": [
+          {
+            "station": "11R",
+            "action": "needle_aspiration",
+            "evidence_quote": "erformed. Airway was otherwise patent.\nSpecimens: 11R lymph node (wait, 11L lymph node), Station 7 lymph node.\nPla"
+          },
+          {
+            "station": "11L",
+            "action": "needle_aspiration",
+            "evidence_quote": "therwise patent.\nSpecimens: 11R lymph node (wait, 11L lymph node), Station 7 lymph node.\nPlan:         "
+          },
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "Specimens: 11R lymph node (wait, 11L lymph node), Station 7 lymph node.\nPlan:                                "
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "follow_up_plan_text": "Patient <PERSON> well. Discharged to recovery."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31653",
+          "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUS-TBNA",
+              "span": [
+                155,
+                164
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:09:59.172739+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 155,
+                "end": 164,
+                "snippet": "EBUS-TBNA"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 3,
+            "code": "99152",
+            "description": "Mod sed same phys/qhp 5/>yrs",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 4,
+            "code": "99153",
+            "description": "Mod sed same phys/qhp ea",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "dropped",
+            "selection_reason": "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153",
+            "is_add_on": true,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31653",
+            "summary": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUS-TBNA",
+                "span": {
+                  "start": 155,
+                  "end": 164
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          },
+          {
+            "code": "99152",
+            "summary": "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153",
+            "rule_refs": [
+              "moderate_sedation"
+            ]
+          },
+          {
+            "code": "99153",
+            "summary": "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153",
+            "rule_refs": [
+              "moderate_sedation"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          },
+          {
+            "rule_id": "moderate_sedation",
+            "rule_type": "documentation",
+            "codes_affected": [
+              "99152",
+              "99153"
+            ],
+            "outcome": "dropped",
+            "details": "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+          "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "EBUS",
+          "start": 155,
+          "end": 159,
+          "confidence": 0.9846459627151489
+        },
+        {
+          "text": "TBNA",
+          "start": 160,
+          "end": 164,
+          "confidence": 0.9810295104980469
+        },
+        {
+          "text": "US",
+          "start": 264,
+          "end": 266,
+          "confidence": 0.716025710105896
+        },
+        {
+          "text": "right hilar node",
+          "start": 318,
+          "end": 334,
+          "confidence": 0.88958340883255
+        },
+        {
+          "text": "11R",
+          "start": 336,
+          "end": 339,
+          "confidence": 0.9775292575359344
+        },
+        {
+          "text": "left hilar node",
+          "start": 361,
+          "end": 376,
+          "confidence": 0.7917991280555725
+        },
+        {
+          "text": "11L",
+          "start": 378,
+          "end": 381,
+          "confidence": 0.966426283121109
+        },
+        {
+          "text": "sampled",
+          "start": 402,
+          "end": 409,
+          "confidence": 0.6612027883529663
+        },
+        {
+          "text": "TBNA",
+          "start": 411,
+          "end": 415,
+          "confidence": 0.9925607740879059
+        },
+        {
+          "text": "11L",
+          "start": 419,
+          "end": 422,
+          "confidence": 0.9580453932285309
+        },
+        {
+          "text": "TBNA",
+          "start": 438,
+          "end": 442,
+          "confidence": 0.9905937314033508
+        },
+        {
+          "text": "station 7",
+          "start": 446,
+          "end": 455,
+          "confidence": 0.9584587812423706
+        },
+        {
+          "text": "11R lymph node",
+          "start": 516,
+          "end": 530,
+          "confidence": 0.7801347896456718
+        },
+        {
+          "text": "11L",
+          "start": 538,
+          "end": 541,
+          "confidence": 0.8842496871948242
+        },
+        {
+          "text": "Station 7",
+          "start": 555,
+          "end": 564,
+          "confidence": 0.9318510890007019
+        },
+        {
+          "text": "node",
+          "start": 571,
+          "end": 575,
+          "confidence": 0.7054088711738586
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 155,
+          "end": 164
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "Evaluation of subcarinal and right hilar nodes",
+          "start": 62,
+          "end": 108
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "Evaluation of subcarinal and right hilar nodes",
+          "start": 62,
+          "end": 108
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          155,
+          159
+        ],
+        "confidence": 0.9846459627151489
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          160,
+          164
+        ],
+        "confidence": 0.9810295104980469
+      },
+      {
+        "source": "ner_span",
+        "text": "US",
+        "span": [
+          264,
+          266
+        ],
+        "confidence": 0.716025710105896
+      },
+      {
+        "source": "ner_span",
+        "text": "right hilar node",
+        "span": [
+          318,
+          334
+        ],
+        "confidence": 0.88958340883255
+      },
+      {
+        "source": "ner_span",
+        "text": "11R",
+        "span": [
+          336,
+          339
+        ],
+        "confidence": 0.9775292575359344
+      },
+      {
+        "source": "ner_span",
+        "text": "left hilar node",
+        "span": [
+          361,
+          376
+        ],
+        "confidence": 0.7917991280555725
+      },
+      {
+        "source": "ner_span",
+        "text": "11L",
+        "span": [
+          378,
+          381
+        ],
+        "confidence": 0.966426283121109
+      },
+      {
+        "source": "ner_span",
+        "text": "sampled",
+        "span": [
+          402,
+          409
+        ],
+        "confidence": 0.6612027883529663
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          411,
+          415
+        ],
+        "confidence": 0.9925607740879059
+      },
+      {
+        "source": "ner_span",
+        "text": "11L",
+        "span": [
+          419,
+          422
+        ],
+        "confidence": 0.9580453932285309
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          438,
+          442
+        ],
+        "confidence": 0.9905937314033508
+      },
+      {
+        "source": "ner_span",
+        "text": "station 7",
+        "span": [
+          446,
+          455
+        ],
+        "confidence": 0.9584587812423706
+      },
+      {
+        "source": "ner_span",
+        "text": "11R lymph node",
+        "span": [
+          516,
+          530
+        ],
+        "confidence": 0.7801347896456718
+      },
+      {
+        "source": "ner_span",
+        "text": "11L",
+        "span": [
+          538,
+          541
+        ],
+        "confidence": 0.8842496871948242
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          555,
+          564
+        ],
+        "confidence": 0.9318510890007019
+      },
+      {
+        "source": "ner_span",
+        "text": "node",
+        "span": [
+          571,
+          575
+        ],
+        "confidence": 0.7054088711738586
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          155,
+          164
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "Evaluation of subcarinal and right hilar nodes",
+        "span": [
+          62,
+          108
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "Evaluation of subcarinal and right hilar nodes",
+        "span": [
+          62,
+          108
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31653"
+  ],
+  "suggestions": [
+    {
+      "code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.84,
+  "estimated_payment": 219.11,
+  "per_code_billing": [
+    {
+      "cpt_code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "work_rvu": 4.84,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 278.7
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_001
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: missing_section, malformed_codes
+PRE/POST DIAGNOSIS
+
+1. Mediastinal adenopathy (R91.8)
+2. Lung Nodule
+
+PROCEDURE
+
+* Bronchoscopy with EBUS-TBNA (31620-59, 31652, 31653-modifier)
+
+ANESTHESIA: General Anesthesia
+MONITORING: Standard ASA
+
+PROCEDURE IN DETAIL
+[PATIENT] is a [REDACTED] year old who presents for evaluation of mediastinal lymphadenopathy. After informed consent, patient was brought to the bronchoscopy suite. A time out was performed. Under general anesthesia, a flexible bronchoscope was introduced via the ETT. Airway inspection revealed normal vocal cords, trachea, and bilateral bronchial trees. No endobronchial lesions.
+
+The linear EBUS scope (BF-UC180F) was then introduced. We surveyed stations 4R, 4L, 7, 10R, 11L.
+Station 7 measured 1.5 cm. Station 4R measured 1.2 cm.
+TBNA was performed at Station 7 x4 passes, and Station 4R x3 passes using a 22G needle. Rapid on-site evaluation (ROSE) was present.
+
+COMPLICATIONS: None
+IMPRESSION/PLAN
+
+1. Successful EBUS-TBNA of 4R and 7.
+2. Await final pathology.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "risk_assessment": {
+      "asa_class": 3
+    },
+    "clinical_context": {
+      "asa_class": 3,
+      "bronchus_sign": "Not assessed"
+    },
+    "procedure_setting": {
+      "location": null,
+      "patient_position": null,
+      "airway_type": "ETT",
+      "ett_size": null,
+      "airway_device_type": null,
+      "ett_size_mm": null,
+      "dlt_size_fr": null,
+      "rigid_barrel_size_mm": null
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "vocal cords, trachea, and bilateral bronchial trees. endobronchial lesions"
+      },
+      "peripheral_tbna": {
+        "performed": false
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4R",
+          "7"
+        ],
+        "needle_gauge": "22G",
+        "node_events": [
+          {
+            "station": "4L",
+            "action": "inspected_only",
+            "evidence_quote": "We surveyed stations 4R, 4L, 7, 10R, 11L."
+          },
+          {
+            "station": "10R",
+            "action": "inspected_only",
+            "evidence_quote": "We surveyed stations 4R, 4L, 7, 10R, 11L."
+          },
+          {
+            "station": "11L",
+            "action": "inspected_only",
+            "evidence_quote": "We surveyed stations 4R, 4L, 7, 10R, 11L."
+          },
+          {
+            "station": "7",
+            "action": "inspected_only",
+            "evidence_quote": "Station 7 measured 1.5 cm. Station 4R measured 1.2 cm."
+          },
+          {
+            "station": "4R",
+            "action": "inspected_only",
+            "evidence_quote": "Station 7 measured 1.5 cm. Station 4R measured 1.2 cm."
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true,
+          "needle_gauge": 22
+        },
+        {
+          "station": "4R",
+          "sampled": true,
+          "needle_gauge": 22,
+          "rose_performed": true
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Bronchoscopy",
+          "start": 132,
+          "end": 144,
+          "confidence": 0.8990261356035868
+        },
+        {
+          "text": "EBUS",
+          "start": 150,
+          "end": 154,
+          "confidence": 0.9257061779499054
+        },
+        {
+          "text": "TBNA",
+          "start": 155,
+          "end": 159,
+          "confidence": 0.9566546082496643
+        },
+        {
+          "text": "stations 4R",
+          "start": 717,
+          "end": 728,
+          "confidence": 0.809349258740743
+        },
+        {
+          "text": "4L",
+          "start": 730,
+          "end": 732,
+          "confidence": 0.9543193876743317
+        },
+        {
+          "text": "7",
+          "start": 734,
+          "end": 735,
+          "confidence": 0.9316003322601318
+        },
+        {
+          "text": "10R",
+          "start": 737,
+          "end": 740,
+          "confidence": 0.9786343574523926
+        },
+        {
+          "text": "11L",
+          "start": 742,
+          "end": 745,
+          "confidence": 0.9552541971206665
+        },
+        {
+          "text": "Station 7",
+          "start": 747,
+          "end": 756,
+          "confidence": 0.9245039224624634
+        },
+        {
+          "text": "Station 4R",
+          "start": 774,
+          "end": 784,
+          "confidence": 0.9489137132962545
+        },
+        {
+          "text": "TBNA",
+          "start": 802,
+          "end": 806,
+          "confidence": 0.9756605625152588
+        },
+        {
+          "text": "Station 7",
+          "start": 824,
+          "end": 833,
+          "confidence": 0.8828692138195038
+        },
+        {
+          "text": "Station 4R",
+          "start": 849,
+          "end": 859,
+          "confidence": 0.9548762043317159
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "bronchoscope was introduced",
+          "start": 495,
+          "end": 522
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 150,
+          "end": 159
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "General Anesthesia",
+          "start": 207,
+          "end": 225
+        }
+      ],
+      "procedure_setting.airway_type": [
+        {
+          "text": "ETT",
+          "start": 531,
+          "end": 534
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31620",
+          "start": 161,
+          "end": 166
+        },
+        {
+          "text": "31652",
+          "start": 171,
+          "end": 176
+        },
+        {
+          "text": "31653",
+          "start": 178,
+          "end": 183
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "22G",
+          "start": 878,
+          "end": 881,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+        {
+          "text": "22G",
+          "start": 878,
+          "end": 881,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "22G",
+          "start": 878,
+          "end": 881,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Bronchoscopy",
+        "span": [
+          132,
+          144
+        ],
+        "confidence": 0.8990261356035868
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          150,
+          154
+        ],
+        "confidence": 0.9257061779499054
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          155,
+          159
+        ],
+        "confidence": 0.9566546082496643
+      },
+      {
+        "source": "ner_span",
+        "text": "stations 4R",
+        "span": [
+          717,
+          728
+        ],
+        "confidence": 0.809349258740743
+      },
+      {
+        "source": "ner_span",
+        "text": "4L",
+        "span": [
+          730,
+          732
+        ],
+        "confidence": 0.9543193876743317
+      },
+      {
+        "source": "ner_span",
+        "text": "7",
+        "span": [
+          734,
+          735
+        ],
+        "confidence": 0.9316003322601318
+      },
+      {
+        "source": "ner_span",
+        "text": "10R",
+        "span": [
+          737,
+          740
+        ],
+        "confidence": 0.9786343574523926
+      },
+      {
+        "source": "ner_span",
+        "text": "11L",
+        "span": [
+          742,
+          745
+        ],
+        "confidence": 0.9552541971206665
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          747,
+          756
+        ],
+        "confidence": 0.9245039224624634
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 4R",
+        "span": [
+          774,
+          784
+        ],
+        "confidence": 0.9489137132962545
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          802,
+          806
+        ],
+        "confidence": 0.9756605625152588
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          824,
+          833
+        ],
+        "confidence": 0.8828692138195038
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 4R",
+        "span": [
+          849,
+          859
+        ],
+        "confidence": 0.9548762043317159
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscope was introduced",
+        "span": [
+          495,
+          522
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          150,
+          159
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "General Anesthesia",
+        "span": [
+          207,
+          225
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure_setting.airway_type": [
+      {
+        "source": "registry_span",
+        "text": "ETT",
+        "span": [
+          531,
+          534
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31620",
+        "span": [
+          161,
+          166
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31652",
+        "span": [
+          171,
+          176
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31653",
+        "span": [
+          178,
+          183
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22G",
+        "span": [
+          878,
+          881
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22G",
+        "span": [
+          878,
+          881
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "22G",
+        "span": [
+          878,
+          881
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [],
+  "suggestions": [],
+  "per_code_billing": [],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy",
+    "AUTO_CORRECTED_EBUS_NEGATION: 7",
+    "AUTO_CORRECTED_EBUS_NEGATION: 4R",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+    "EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for ['4R', '7']",
+    "EBUS_INSPECTION_ONLY: downgraded inspected-only stations to avoid false sampling.",
+    "AUTO_CORRECTED: Culled peripheral_tbna (nodal-only TBNA evidence; no distinct peripheral target).",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "linear_ebus.performed=true but node_events contains no qualifying sampling actions; cannot derive 31652/31653",
+    "SELF_CORRECT_SKIPPED: 31620: Path not allowed: /procedures_performed/diagnostic_bronchoscopy/inspection_findings",
+    "SELF_CORRECT_SKIPPED: 31652: Quote not found verbatim in focused procedure text: '* Bronchoscopy with EBUS-TBNA (31620-59, 31652, 31...'",
+    "SELF_CORRECT_SKIPPED: 31653: Quote not found verbatim in focused procedure text: '* Bronchoscopy with EBUS-TBNA (31620-59, 31652, 31...'",
+    "HEADER_EXPLICIT: header lists ['31620', '31652', '31653'] but deterministic derivation missed them",
+    "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31653 (prob=0.77), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 19441.96
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_010
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: extreme_length, reordered_sections
+PLAN: Extubate and transfer to PACU. Monitor for pneumothorax with post-op CXR.
+SPECIMENS: 1. RLL nodule BAL. 2. RLL nodule FNA. 3. RLL nodule core biopsy.
+COMPLICATIONS: None.
+
+PRE-OP DIAGNOSIS: Right lower lobe pulmonary nodule (ICD-10 R91.1)
+POST-OP DIAGNOSIS: Same.
+
+PROCEDURE:
+
+1. Robotic-assisted navigational bronchoscopy (31627)
+2. Transbronchial biopsy (31628)
+3. Fluoroscopy
+
+INDICATION: [PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule.
+
+PROCEDURE IN DETAIL:
+Under general anesthesia, the robotic bronchoscope was calibrated and inserted. Navigation to the RLL superior segment (RB6) was successful using pre-planned pathways. Fluoroscopy confirmed target. Radial EBUS showed an eccentric view, adjusted to concentric. TBNA x3 passes performed. Then, TBBx x4 using flexible forceps. Finally, a small BAL was performed in the segment. The robotic scope was removed. Patient remained hemodynamically stable.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedure": {
+      "indication": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule"
+    },
+    "clinical_context": {
+      "primary_indication": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule",
+      "indication_category": "Lung Nodule Evaluation",
+      "bronchus_sign": "Not assessed"
+    },
+    "sedation": {
+      "type": "General"
+    },
+    "equipment": {
+      "fluoroscopy_used": true
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true
+      },
+      "bal": {
+        "performed": true,
+        "location": "the segment"
+      },
+      "peripheral_tbna": {
+        "performed": true,
+        "targets_sampled": [
+          "RLL superior segment"
+        ]
+      },
+      "linear_ebus": {
+        "performed": false,
+        "node_events": []
+      },
+      "radial_ebus": {
+        "performed": true,
+        "probe_position": "Concentric"
+      },
+      "navigational_bronchoscopy": {
+        "performed": true
+      },
+      "transbronchial_biopsy": {
+        "performed": true,
+        "locations": [
+          "RLL"
+        ],
+        "forceps_type": "Standard"
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "follow_up_plan_text": "Extubate and transfer to PACU. Monitor for pneumothorax with post-op CXR."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31624",
+          "description": "Bronchoscopy; with bronchoalveolar lavage",
+          "derived_from": [
+            "procedures_performed.bal"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "BAL",
+              "span": [
+                156,
+                159
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "BAL was performed in the segment",
+              "span": [
+                868,
+                900
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31627",
+          "description": "Navigational bronchoscopy",
+          "derived_from": [
+            "procedures_performed.navigational_bronchoscopy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "robotic bronchoscop",
+              "span": [
+                557,
+                576
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31628",
+          "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+          "derived_from": [
+            "procedures_performed.transbronchial_biopsy"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "TBBx",
+              "span": [
+                819,
+                823
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31629",
+          "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+          "derived_from": [
+            "procedures_performed.peripheral_tbna"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "TBNA",
+              "span": [
+                787,
+                791
+              ],
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "code": "31654",
+          "description": "Bronch ebus ivntj perph les",
+          "derived_from": [
+            "procedures_performed.radial_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Radial EBUS showed an eccentric view, adjusted to concentric",
+              "span": [
+                725,
+                785
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "Radial EBUS",
+              "span": [
+                725,
+                736
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:18.911590+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31624",
+            "description": "Bronchoscopy; with bronchoalveolar lavage",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "bal.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 156,
+                "end": 159,
+                "snippet": "BAL"
+              },
+              {
+                "start": 868,
+                "end": 900,
+                "snippet": "BAL was performed in the segment"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31627",
+            "description": "Navigational bronchoscopy",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "navigational_bronchoscopy.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 557,
+                "end": 576,
+                "snippet": "robotic bronchoscop"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "transbronchial_biopsy.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 819,
+                "end": 823,
+                "snippet": "TBBx"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "peripheral_tbna.performed=true",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 787,
+                "end": 791,
+                "snippet": "TBNA"
+              }
+            ]
+          },
+          {
+            "sequence": 5,
+            "code": "31654",
+            "description": "Bronch ebus ivntj perph les",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "radial_ebus.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 725,
+                "end": 785,
+                "snippet": "Radial EBUS showed an eccentric view, adjusted to concentric"
+              },
+              {
+                "start": 725,
+                "end": 736,
+                "snippet": "Radial EBUS"
+              }
+            ]
+          },
+          {
+            "sequence": 6,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 565,
+                "end": 605,
+                "snippet": "bronchoscope was calibrated and inserted"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31624",
+            "summary": "bal.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "BAL",
+                "span": {
+                  "start": 156,
+                  "end": 159
+                }
+              },
+              {
+                "snippet": "BAL was performed in the segment",
+                "span": {
+                  "start": 868,
+                  "end": 900
+                }
+              }
+            ]
+          },
+          {
+            "code": "31627",
+            "summary": "navigational_bronchoscopy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "robotic bronchoscop",
+                "span": {
+                  "start": 557,
+                  "end": 576
+                }
+              }
+            ]
+          },
+          {
+            "code": "31628",
+            "summary": "transbronchial_biopsy.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "TBBx",
+                "span": {
+                  "start": 819,
+                  "end": 823
+                }
+              }
+            ]
+          },
+          {
+            "code": "31629",
+            "summary": "peripheral_tbna.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "TBNA",
+                "span": {
+                  "start": 787,
+                  "end": 791
+                }
+              }
+            ]
+          },
+          {
+            "code": "31654",
+            "summary": "radial_ebus.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Radial EBUS showed an eccentric view, adjusted to concentric",
+                "span": {
+                  "start": 725,
+                  "end": 785
+                }
+              },
+              {
+                "snippet": "Radial EBUS",
+                "span": {
+                  "start": 725,
+                  "end": 736
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "documentation_evidence": [
+              {
+                "snippet": "bronchoscope was calibrated and inserted",
+                "span": {
+                  "start": 565,
+                  "end": 605
+                }
+              }
+            ],
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "BAL",
+          "start": 156,
+          "end": 159,
+          "confidence": 0.9878354668617249
+        },
+        {
+          "text": "FNA",
+          "start": 175,
+          "end": 178,
+          "confidence": 0.9887571930885315
+        },
+        {
+          "text": "core biopsy",
+          "start": 194,
+          "end": 205,
+          "confidence": 0.8124323189258575
+        },
+        {
+          "text": "Fluoroscopy",
+          "start": 424,
+          "end": 435,
+          "confidence": 0.9717801213264465
+        },
+        {
+          "text": "robotic",
+          "start": 557,
+          "end": 564,
+          "confidence": 0.9137463569641113
+        },
+        {
+          "text": "Fluoroscopy",
+          "start": 695,
+          "end": 706,
+          "confidence": 0.9890330731868744
+        },
+        {
+          "text": "Radial EBUS",
+          "start": 725,
+          "end": 736,
+          "confidence": 0.9902684092521667
+        },
+        {
+          "text": "TBNA",
+          "start": 787,
+          "end": 791,
+          "confidence": 0.9719958305358887
+        },
+        {
+          "text": "TBBx",
+          "start": 819,
+          "end": 823,
+          "confidence": 0.9700595736503601
+        },
+        {
+          "text": "BAL",
+          "start": 868,
+          "end": 871,
+          "confidence": 0.9847664833068848
+        },
+        {
+          "text": "robotic",
+          "start": 906,
+          "end": 913,
+          "confidence": 0.832079291343689
+        }
+      ],
+      "procedures_performed.bal.performed": [
+        {
+          "text": "BAL",
+          "start": 156,
+          "end": 159
+        }
+      ],
+      "procedures_performed.diagnostic_bronchoscopy.performed": [
+        {
+          "text": "bronchoscope was calibrated and inserted",
+          "start": 565,
+          "end": 605
+        }
+      ],
+      "procedures_performed.transbronchial_biopsy.performed": [
+        {
+          "text": "TBBx",
+          "start": 819,
+          "end": 823
+        }
+      ],
+      "procedures_performed.radial_ebus.probe_position": [
+        {
+          "text": "Radial EBUS showed an eccentric view, adjusted to concentric",
+          "start": 725,
+          "end": 785
+        }
+      ],
+      "procedures_performed.radial_ebus.performed": [
+        {
+          "text": "Radial EBUS",
+          "start": 725,
+          "end": 736
+        }
+      ],
+      "procedures_performed.navigational_bronchoscopy.performed": [
+        {
+          "text": "robotic bronchoscop",
+          "start": 557,
+          "end": 576
+        }
+      ],
+      "procedures_performed.peripheral_tbna.performed": [
+        {
+          "text": "TBNA",
+          "start": 787,
+          "end": 791
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule",
+          "start": 449,
+          "end": 503
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule",
+          "start": 449,
+          "end": 503
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "general anesthesia",
+          "start": 533,
+          "end": 551
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31627",
+          "start": 381,
+          "end": 386
+        },
+        {
+          "text": "31628",
+          "start": 414,
+          "end": 419
+        }
+      ],
+      "procedures_performed.bal.location": [
+        {
+          "text": "BAL was performed in the segment",
+          "start": 868,
+          "end": 900,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "BAL",
+        "span": [
+          156,
+          159
+        ],
+        "confidence": 0.9878354668617249
+      },
+      {
+        "source": "ner_span",
+        "text": "FNA",
+        "span": [
+          175,
+          178
+        ],
+        "confidence": 0.9887571930885315
+      },
+      {
+        "source": "ner_span",
+        "text": "core biopsy",
+        "span": [
+          194,
+          205
+        ],
+        "confidence": 0.8124323189258575
+      },
+      {
+        "source": "ner_span",
+        "text": "Fluoroscopy",
+        "span": [
+          424,
+          435
+        ],
+        "confidence": 0.9717801213264465
+      },
+      {
+        "source": "ner_span",
+        "text": "robotic",
+        "span": [
+          557,
+          564
+        ],
+        "confidence": 0.9137463569641113
+      },
+      {
+        "source": "ner_span",
+        "text": "Fluoroscopy",
+        "span": [
+          695,
+          706
+        ],
+        "confidence": 0.9890330731868744
+      },
+      {
+        "source": "ner_span",
+        "text": "Radial EBUS",
+        "span": [
+          725,
+          736
+        ],
+        "confidence": 0.9902684092521667
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          787,
+          791
+        ],
+        "confidence": 0.9719958305358887
+      },
+      {
+        "source": "ner_span",
+        "text": "TBBx",
+        "span": [
+          819,
+          823
+        ],
+        "confidence": 0.9700595736503601
+      },
+      {
+        "source": "ner_span",
+        "text": "BAL",
+        "span": [
+          868,
+          871
+        ],
+        "confidence": 0.9847664833068848
+      },
+      {
+        "source": "ner_span",
+        "text": "robotic",
+        "span": [
+          906,
+          913
+        ],
+        "confidence": 0.832079291343689
+      }
+    ],
+    "procedures_performed.bal.performed": [
+      {
+        "source": "registry_span",
+        "text": "BAL",
+        "span": [
+          156,
+          159
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.diagnostic_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "bronchoscope was calibrated and inserted",
+        "span": [
+          565,
+          605
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.transbronchial_biopsy.performed": [
+      {
+        "source": "registry_span",
+        "text": "TBBx",
+        "span": [
+          819,
+          823
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.radial_ebus.probe_position": [
+      {
+        "source": "registry_span",
+        "text": "Radial EBUS showed an eccentric view, adjusted to concentric",
+        "span": [
+          725,
+          785
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.radial_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "Radial EBUS",
+        "span": [
+          725,
+          736
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.navigational_bronchoscopy.performed": [
+      {
+        "source": "registry_span",
+        "text": "robotic bronchoscop",
+        "span": [
+          557,
+          576
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.peripheral_tbna.performed": [
+      {
+        "source": "registry_span",
+        "text": "TBNA",
+        "span": [
+          787,
+          791
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule",
+        "span": [
+          449,
+          503
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "[PATIENT], [REDACTED] yr old, with a 1.8 cm RLL nodule",
+        "span": [
+          449,
+          503
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "general anesthesia",
+        "span": [
+          533,
+          551
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31627",
+        "span": [
+          381,
+          386
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31628",
+        "span": [
+          414,
+          419
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.bal.location": [
+      {
+        "source": "registry_span",
+        "text": "BAL was performed in the segment",
+        "span": [
+          868,
+          900
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31624",
+    "31627",
+    "31628",
+    "31629",
+    "31654"
+  ],
+  "suggestions": [
+    {
+      "code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "confidence": 0.8,
+      "rationale": "bal.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31627",
+      "description": "Navigational bronchoscopy",
+      "confidence": 0.8,
+      "rationale": "navigational_bronchoscopy.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "confidence": 0.8,
+      "rationale": "transbronchial_biopsy.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "confidence": 0.8,
+      "rationale": "peripheral_tbna.performed=true",
+      "review_flag": "optional"
+    },
+    {
+      "code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 13.0,
+  "estimated_payment": 592.87,
+  "per_code_billing": [
+    {
+      "cpt_code": "31624",
+      "description": "Bronchoscopy; with bronchoalveolar lavage",
+      "work_rvu": 2.56,
+      "total_facility_rvu": 3.62,
+      "facility_payment": 120.91
+    },
+    {
+      "cpt_code": "31627",
+      "description": "Navigational bronchoscopy",
+      "work_rvu": 1.95,
+      "total_facility_rvu": 2.55,
+      "facility_payment": 85.17
+    },
+    {
+      "cpt_code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "work_rvu": 3.46,
+      "total_facility_rvu": 4.75,
+      "facility_payment": 158.65
+    },
+    {
+      "cpt_code": "31629",
+      "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+      "work_rvu": 3.66,
+      "total_facility_rvu": 5.04,
+      "facility_payment": 168.34
+    },
+    {
+      "cpt_code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "work_rvu": 1.37,
+      "total_facility_rvu": 1.79,
+      "facility_payment": 59.79
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for diagnostic_bronchoscopy, navigational_bronchoscopy",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31625: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31632: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31633: ML detected procedure, but specific device/anatomy was not found in text.",
+    "Radial EBUS inferred from concentric/eccentric view.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 296.71
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_008
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: malformed_codes, copy_paste_artifacts
+PRE/POST DIAGNOSIS
+Lung nodule R91.1-
+Mediastinal node R59:90
+
+PROCEDURE
+Bronchoscopy 31620,, 31652-
+
+ANESTHESIA: MAC
+PROCEDURE IN DETAIL
+Patientpatient [REDACTED] was brought to the room. Linear EBUS inserted. Survey showed an enlarged station 7. TBNA of station 7 performed. 4 passes. No comps.
+IMPRESSION
+Uncomplicated procedure procedure. Await path.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "sedation": {
+      "type": "MAC"
+    },
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "7"
+        ],
+        "node_events": [
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "ted. Survey showed an enlarged station 7. TBNA of station 7 performed. 4 passes. No comps.\nIMPRESSION\nUncompl"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Linear EBUS",
+              "span": [
+                243,
+                254
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:22.657322+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 243,
+                "end": 254,
+                "snippet": "Linear EBUS"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "Linear EBUS",
+                "span": {
+                  "start": 243,
+                  "end": 254
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Mediastinal",
+          "start": 92,
+          "end": 103,
+          "confidence": 0.7212664633989334
+        },
+        {
+          "text": "Bronchoscopy",
+          "start": 127,
+          "end": 139,
+          "confidence": 0.9269045193990072
+        },
+        {
+          "text": "Linear EBUS",
+          "start": 243,
+          "end": 254,
+          "confidence": 0.9312435984611511
+        },
+        {
+          "text": "station 7",
+          "start": 291,
+          "end": 300,
+          "confidence": 0.8911503553390503
+        },
+        {
+          "text": "TBNA",
+          "start": 302,
+          "end": 306,
+          "confidence": 0.9952982664108276
+        },
+        {
+          "text": "station 7",
+          "start": 310,
+          "end": 319,
+          "confidence": 0.9445884823799133
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "Linear EBUS",
+          "start": 243,
+          "end": 254
+        }
+      ],
+      "sedation.type": [
+        {
+          "text": "MAC",
+          "start": 168,
+          "end": 171
+        }
+      ],
+      "code_evidence": [
+        {
+          "text": "31620",
+          "start": 140,
+          "end": 145
+        },
+        {
+          "text": "31652",
+          "start": 148,
+          "end": 153
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Mediastinal",
+        "span": [
+          92,
+          103
+        ],
+        "confidence": 0.7212664633989334
+      },
+      {
+        "source": "ner_span",
+        "text": "Bronchoscopy",
+        "span": [
+          127,
+          139
+        ],
+        "confidence": 0.9269045193990072
+      },
+      {
+        "source": "ner_span",
+        "text": "Linear EBUS",
+        "span": [
+          243,
+          254
+        ],
+        "confidence": 0.9312435984611511
+      },
+      {
+        "source": "ner_span",
+        "text": "station 7",
+        "span": [
+          291,
+          300
+        ],
+        "confidence": 0.8911503553390503
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          302,
+          306
+        ],
+        "confidence": 0.9952982664108276
+      },
+      {
+        "source": "ner_span",
+        "text": "station 7",
+        "span": [
+          310,
+          319
+        ],
+        "confidence": 0.9445884823799133
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "Linear EBUS",
+        "span": [
+          243,
+          254
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "sedation.type": [
+      {
+        "source": "registry_span",
+        "text": "MAC",
+        "span": [
+          168,
+          171
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "code_evidence": [
+      {
+        "source": "registry_span",
+        "text": "31620",
+        "span": [
+          140,
+          145
+        ],
+        "confidence": 1.0
+      },
+      {
+        "source": "registry_span",
+        "text": "31652",
+        "span": [
+          148,
+          153
+        ],
+        "confidence": 1.0
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "SELF_CORRECT_SKIPPED: 31620: Path not allowed: /procedures_performed/diagnostic_bronchoscopy/evidence_quote",
+    "HEADER_EXPLICIT: header lists ['31620'] but deterministic derivation missed them"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 3745.55
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_004
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: extreme_length, table_with_tabs, inconsistent_formatting
+PRE-PROCEDURE DIAGNOSIS: Bilateral hilar adenopathy, suspected sarcoidosis. (ICD: D86.0)
+POST-PROCEDURE DIAGNOSIS: Same.
+
+PROCEDURE:
+
+1. Flexible bronchoscopy
+2. Endobronchial ultrasound with transbronchial needle aspiration (EBUS-TBNA)
+3. Radial EBUS (rEBUS)
+4. Transbronchial lung biopsy (TBLB)
+
+* INDICATION: [PATIENT] is a [DOB:REDACTED] male with progressive shortness of breath and bilateral hilar fullness on recent CT chest.
+
+** ANESTHESIA: General
+** INSTRUMENTS: Olympus BF-H190, Olympus BF-UC190F, UM-S20-17S radial probe.
+
+PROCEDURE IN DETAIL:
+The patient was placed supine. Time out completed. Following induction of GA, an i-gel was placed. The standard therapeutic bronchoscope was passed. Airway exam showed mildly edematous mucosa but no mass. The scope was exchanged for the linear EBUS.
+Ultrasound survey:
+Station	Size	Appearance
+4R	12mm	Homogeneous
+7	18mm	Hypoechoic
+11L	15mm	Round
+11R	14mm	Oval
+
+We sampled Station 7 (4 passes, 21G needle). Then Station 11L (3 passes). Then Station 11R (3 passes).
+We then switched back to the standard scope and advanced a radial EBUS probe into the RB3 segment where a small subsolid density was noted. Concentric signal achieved. Transbronchial forceps biopsies were obtained x5.
+
+SPECIMENS:
+
+* EBUS TBNA Station 7
+* EBUS TBNA Station 11L
+* EBUS TBNA Station 11R
+* TBLB RB3
+
+COMPLICATIONS: None. Minimal EBL. Fluoro time 0.5 mins.
+
+PLAN: Follow up in clinic in 1 week.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "diagnostic_bronchoscopy": {
+        "performed": true,
+        "inspection_findings": "Endobronchial ultrasound with transbronchial needle aspiration (EBUS-TBNA). mass"
+      },
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "11L",
+          "11R",
+          "7"
+        ],
+        "needle_gauge": "21G",
+        "node_events": [
+          {
+            "station": "4R",
+            "action": "inspected_only",
+            "evidence_quote": "Ultrasound survey: Station Size Appearance 4R 12mm Homogeneous 7 18mm Hypoechoic 11L 15mm Round 11R 14mm Oval We sampled Station 7 (4 passes, 21G needle)."
+          },
+          {
+            "station": "7",
+            "action": "needle_aspiration",
+            "evidence_quote": "opsies were obtained x5.\n\nSPECIMENS:\n\n* EBUS TBNA Station 7\n* EBUS TBNA Station 11L\n* EBUS TBNA Station 11R\n*"
+          },
+          {
+            "station": "11L",
+            "action": "needle_aspiration",
+            "evidence_quote": "5.\n\nSPECIMENS:\n\n* EBUS TBNA Station 7\n* EBUS TBNA Station 11L\n* EBUS TBNA Station 11R\n* TBLB RB3\n\nCOMPLICATIONS"
+          },
+          {
+            "station": "11R",
+            "action": "needle_aspiration",
+            "evidence_quote": "BNA Station 7\n* EBUS TBNA Station 11L\n* EBUS TBNA Station 11R\n* TBLB RB3\n\nCOMPLICATIONS: None. Minimal EBL. Flu"
+          }
+        ]
+      },
+      "radial_ebus": {
+        "performed": true
+      },
+      "transbronchial_biopsy": {
+        "performed": true
+      },
+      "airway_stent": {
+        "performed": false,
+        "airway_stent_removal": false
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "follow_up_plan_text": "Follow up in clinic in 1 week."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31628",
+          "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+          "derived_from": [
+            "procedures_performed.transbronchial_biopsy",
+            "procedures_performed.transbronchial_cryobiopsy"
+          ]
+        },
+        {
+          "code": "31653",
+          "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUS-TBNA",
+              "span": [
+                299,
+                308
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "11L",
+              "span": [
+                1357,
+                1360
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "11R",
+              "span": [
+                1381,
+                1384
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "7",
+              "span": [
+                1335,
+                1336
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "7",
+              "span": [
+                1335,
+                1336
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "* EBUS TBNA Station 7",
+              "span": [
+                1315,
+                1336
+              ],
+              "confidence": 0.9
+            }
+          ]
+        },
+        {
+          "code": "31654",
+          "description": "Bronch ebus ivntj perph les",
+          "derived_from": [
+            "procedures_performed.radial_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Radial EBUS",
+              "span": [
+                313,
+                324
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:23.085648+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31628",
+            "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "transbronchial_biopsy.performed=true",
+            "is_add_on": false,
+            "source": "model"
+          },
+          {
+            "sequence": 2,
+            "code": "31653",
+            "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 299,
+                "end": 308,
+                "snippet": "EBUS-TBNA"
+              },
+              {
+                "start": 1357,
+                "end": 1360,
+                "snippet": "11L"
+              },
+              {
+                "start": 1381,
+                "end": 1384,
+                "snippet": "11R"
+              },
+              {
+                "start": 1335,
+                "end": 1336,
+                "snippet": "7"
+              },
+              {
+                "start": 1335,
+                "end": 1336,
+                "snippet": "7"
+              },
+              {
+                "start": 1315,
+                "end": 1336,
+                "snippet": "* EBUS TBNA Station 7"
+              }
+            ]
+          },
+          {
+            "sequence": 3,
+            "code": "31654",
+            "description": "Bronch ebus ivntj perph les",
+            "units": 1,
+            "role": "add_on",
+            "selection_status": "selected",
+            "selection_reason": "radial_ebus.performed=true",
+            "is_add_on": true,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 313,
+                "end": 324,
+                "snippet": "Radial EBUS"
+              }
+            ]
+          },
+          {
+            "sequence": 4,
+            "code": "31622",
+            "description": "Bronchoscopy; diagnostic, with cell washing",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31628",
+            "summary": "transbronchial_biopsy.performed=true"
+          },
+          {
+            "code": "31653",
+            "summary": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUS-TBNA",
+                "span": {
+                  "start": 299,
+                  "end": 308
+                }
+              },
+              {
+                "snippet": "11L",
+                "span": {
+                  "start": 1357,
+                  "end": 1360
+                }
+              },
+              {
+                "snippet": "11R",
+                "span": {
+                  "start": 1381,
+                  "end": 1384
+                }
+              },
+              {
+                "snippet": "7",
+                "span": {
+                  "start": 1335,
+                  "end": 1336
+                }
+              },
+              {
+                "snippet": "7",
+                "span": {
+                  "start": 1335,
+                  "end": 1336
+                }
+              },
+              {
+                "snippet": "* EBUS TBNA Station 7",
+                "span": {
+                  "start": 1315,
+                  "end": 1336
+                }
+              }
+            ]
+          },
+          {
+            "code": "31654",
+            "summary": "radial_ebus.performed=true",
+            "documentation_evidence": [
+              {
+                "snippet": "Radial EBUS",
+                "span": {
+                  "start": 313,
+                  "end": 324
+                }
+              }
+            ]
+          },
+          {
+            "code": "31622",
+            "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+            "rule_refs": [
+              "diagnostic_with_surgical"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "diagnostic_with_surgical",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31622"
+            ],
+            "outcome": "dropped",
+            "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+          }
+        ],
+        "global_comments": [
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "7",
+          "sampled": true,
+          "needle_gauge": 21
+        },
+        {
+          "station": "11L",
+          "sampled": true,
+          "needle_gauge": 21,
+          "number_of_passes": 3
+        },
+        {
+          "station": "11R",
+          "shape": "oval",
+          "sampled": true,
+          "needle_gauge": 21,
+          "number_of_passes": 4
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Flexible bronchoscopy",
+          "start": 210,
+          "end": 231,
+          "confidence": 0.9331607619921366
+        },
+        {
+          "text": "Endobronchial ultrasound",
+          "start": 235,
+          "end": 259,
+          "confidence": 0.9885597229003906
+        },
+        {
+          "text": "transbronchial needle aspiration",
+          "start": 265,
+          "end": 297,
+          "confidence": 0.9869395613670349
+        },
+        {
+          "text": "EBUS",
+          "start": 299,
+          "end": 303,
+          "confidence": 0.9678032398223877
+        },
+        {
+          "text": "TBNA",
+          "start": 304,
+          "end": 308,
+          "confidence": 0.7233518362045288
+        },
+        {
+          "text": "Radial EBUS",
+          "start": 313,
+          "end": 324,
+          "confidence": 0.9714343845844269
+        },
+        {
+          "text": "rEBUS",
+          "start": 326,
+          "end": 331,
+          "confidence": 0.9550987482070923
+        },
+        {
+          "text": "Transbronchial lung biopsy",
+          "start": 336,
+          "end": 362,
+          "confidence": 0.987523078918457
+        },
+        {
+          "text": "TBLB",
+          "start": 364,
+          "end": 368,
+          "confidence": 0.9766341050465902
+        },
+        {
+          "text": "Ultrasound",
+          "start": 870,
+          "end": 880,
+          "confidence": 0.6528415083885193
+        },
+        {
+          "text": "4R",
+          "start": 913,
+          "end": 915,
+          "confidence": 0.9327213764190674
+        },
+        {
+          "text": "7",
+          "start": 933,
+          "end": 934,
+          "confidence": 0.49591630697250366
+        },
+        {
+          "text": "11L",
+          "start": 951,
+          "end": 954,
+          "confidence": 0.8890233635902405
+        },
+        {
+          "text": "11R",
+          "start": 966,
+          "end": 969,
+          "confidence": 0.8613709211349487
+        },
+        {
+          "text": "sampled",
+          "start": 984,
+          "end": 991,
+          "confidence": 0.5906814336776733
+        },
+        {
+          "text": "Station 7",
+          "start": 992,
+          "end": 1001,
+          "confidence": 0.9042952954769135
+        },
+        {
+          "text": "Station 11L",
+          "start": 1031,
+          "end": 1042,
+          "confidence": 0.9606699347496033
+        },
+        {
+          "text": "Station 11R",
+          "start": 1060,
+          "end": 1071,
+          "confidence": 0.9586320122083029
+        },
+        {
+          "text": "EBUS",
+          "start": 1150,
+          "end": 1154,
+          "confidence": 0.8269805610179901
+        },
+        {
+          "text": "Transbronchial",
+          "start": 1252,
+          "end": 1266,
+          "confidence": 0.7507598201433817
+        },
+        {
+          "text": "biopsies",
+          "start": 1275,
+          "end": 1283,
+          "confidence": 0.8136231899261475
+        },
+        {
+          "text": "EBUS",
+          "start": 1317,
+          "end": 1321,
+          "confidence": 0.8923921585083008
+        },
+        {
+          "text": "TBNA",
+          "start": 1322,
+          "end": 1326,
+          "confidence": 0.7744883894920349
+        },
+        {
+          "text": "Station 7",
+          "start": 1327,
+          "end": 1336,
+          "confidence": 0.8465064764022827
+        },
+        {
+          "text": "EBUS TBNA",
+          "start": 1339,
+          "end": 1348,
+          "confidence": 0.7752197831869125
+        },
+        {
+          "text": "Station 11L",
+          "start": 1349,
+          "end": 1360,
+          "confidence": 0.9193187157313029
+        },
+        {
+          "text": "EBUS TBNA",
+          "start": 1363,
+          "end": 1372,
+          "confidence": 0.7186983376741409
+        },
+        {
+          "text": "Station 11R",
+          "start": 1373,
+          "end": 1384,
+          "confidence": 0.8989705244700114
+        },
+        {
+          "text": "TBLB",
+          "start": 1387,
+          "end": 1391,
+          "confidence": 0.9375062882900238
+        }
+      ],
+      "procedures_performed.radial_ebus.performed": [
+        {
+          "text": "Radial EBUS",
+          "start": 313,
+          "end": 324
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 299,
+          "end": 308
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+        {
+          "text": "21G",
+          "start": 1013,
+          "end": 1016,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+        {
+          "text": "21G",
+          "start": 1013,
+          "end": 1016,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.number_of_passes": [
+        {
+          "text": "3 passes",
+          "start": 1044,
+          "end": 1052,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.2.needle_gauge": [
+        {
+          "text": "21G",
+          "start": 1013,
+          "end": 1016,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.2.number_of_passes": [
+        {
+          "text": "4 passes",
+          "start": 1003,
+          "end": 1011,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.0": [
+        {
+          "text": "11L",
+          "start": 1357,
+          "end": 1360,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.1": [
+        {
+          "text": "11R",
+          "start": 1381,
+          "end": 1384,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.stations_sampled.2": [
+        {
+          "text": "7",
+          "start": 1335,
+          "end": 1336,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.station": [
+        {
+          "text": "7",
+          "start": 1335,
+          "end": 1336,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+        {
+          "text": "* EBUS TBNA Station 7",
+          "start": 1315,
+          "end": 1336,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.station": [
+        {
+          "text": "11L",
+          "start": 1357,
+          "end": 1360,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+        {
+          "text": "* EBUS TBNA Station 11L",
+          "start": 1337,
+          "end": 1360,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.station": [
+        {
+          "text": "11R",
+          "start": 1381,
+          "end": 1384,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+        {
+          "text": "* EBUS TBNA Station 11R",
+          "start": 1361,
+          "end": 1384,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.needle_gauge": [
+        {
+          "text": "21G",
+          "start": 1013,
+          "end": 1016,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": [
+      "procedures_performed.transbronchial_biopsy.performed=true but locations is empty/missing"
+    ]
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Flexible bronchoscopy",
+        "span": [
+          210,
+          231
+        ],
+        "confidence": 0.9331607619921366
+      },
+      {
+        "source": "ner_span",
+        "text": "Endobronchial ultrasound",
+        "span": [
+          235,
+          259
+        ],
+        "confidence": 0.9885597229003906
+      },
+      {
+        "source": "ner_span",
+        "text": "transbronchial needle aspiration",
+        "span": [
+          265,
+          297
+        ],
+        "confidence": 0.9869395613670349
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          299,
+          303
+        ],
+        "confidence": 0.9678032398223877
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          304,
+          308
+        ],
+        "confidence": 0.7233518362045288
+      },
+      {
+        "source": "ner_span",
+        "text": "Radial EBUS",
+        "span": [
+          313,
+          324
+        ],
+        "confidence": 0.9714343845844269
+      },
+      {
+        "source": "ner_span",
+        "text": "rEBUS",
+        "span": [
+          326,
+          331
+        ],
+        "confidence": 0.9550987482070923
+      },
+      {
+        "source": "ner_span",
+        "text": "Transbronchial lung biopsy",
+        "span": [
+          336,
+          362
+        ],
+        "confidence": 0.987523078918457
+      },
+      {
+        "source": "ner_span",
+        "text": "TBLB",
+        "span": [
+          364,
+          368
+        ],
+        "confidence": 0.9766341050465902
+      },
+      {
+        "source": "ner_span",
+        "text": "Ultrasound",
+        "span": [
+          870,
+          880
+        ],
+        "confidence": 0.6528415083885193
+      },
+      {
+        "source": "ner_span",
+        "text": "4R",
+        "span": [
+          913,
+          915
+        ],
+        "confidence": 0.9327213764190674
+      },
+      {
+        "source": "ner_span",
+        "text": "7",
+        "span": [
+          933,
+          934
+        ],
+        "confidence": 0.49591630697250366
+      },
+      {
+        "source": "ner_span",
+        "text": "11L",
+        "span": [
+          951,
+          954
+        ],
+        "confidence": 0.8890233635902405
+      },
+      {
+        "source": "ner_span",
+        "text": "11R",
+        "span": [
+          966,
+          969
+        ],
+        "confidence": 0.8613709211349487
+      },
+      {
+        "source": "ner_span",
+        "text": "sampled",
+        "span": [
+          984,
+          991
+        ],
+        "confidence": 0.5906814336776733
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          992,
+          1001
+        ],
+        "confidence": 0.9042952954769135
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 11L",
+        "span": [
+          1031,
+          1042
+        ],
+        "confidence": 0.9606699347496033
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 11R",
+        "span": [
+          1060,
+          1071
+        ],
+        "confidence": 0.9586320122083029
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          1150,
+          1154
+        ],
+        "confidence": 0.8269805610179901
+      },
+      {
+        "source": "ner_span",
+        "text": "Transbronchial",
+        "span": [
+          1252,
+          1266
+        ],
+        "confidence": 0.7507598201433817
+      },
+      {
+        "source": "ner_span",
+        "text": "biopsies",
+        "span": [
+          1275,
+          1283
+        ],
+        "confidence": 0.8136231899261475
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          1317,
+          1321
+        ],
+        "confidence": 0.8923921585083008
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          1322,
+          1326
+        ],
+        "confidence": 0.7744883894920349
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 7",
+        "span": [
+          1327,
+          1336
+        ],
+        "confidence": 0.8465064764022827
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS TBNA",
+        "span": [
+          1339,
+          1348
+        ],
+        "confidence": 0.7752197831869125
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 11L",
+        "span": [
+          1349,
+          1360
+        ],
+        "confidence": 0.9193187157313029
+      },
+      {
+        "source": "ner_span",
+        "text": "EBUS TBNA",
+        "span": [
+          1363,
+          1372
+        ],
+        "confidence": 0.7186983376741409
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 11R",
+        "span": [
+          1373,
+          1384
+        ],
+        "confidence": 0.8989705244700114
+      },
+      {
+        "source": "ner_span",
+        "text": "TBLB",
+        "span": [
+          1387,
+          1391
+        ],
+        "confidence": 0.9375062882900238
+      }
+    ],
+    "procedures_performed.radial_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "Radial EBUS",
+        "span": [
+          313,
+          324
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          299,
+          308
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "21G",
+        "span": [
+          1013,
+          1016
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "21G",
+        "span": [
+          1013,
+          1016
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "3 passes",
+        "span": [
+          1044,
+          1052
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.2.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "21G",
+        "span": [
+          1013,
+          1016
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.2.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "4 passes",
+        "span": [
+          1003,
+          1011
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "11L",
+        "span": [
+          1357,
+          1360
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.1": [
+      {
+        "source": "registry_span",
+        "text": "11R",
+        "span": [
+          1381,
+          1384
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.stations_sampled.2": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1335,
+          1336
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.station": [
+      {
+        "source": "registry_span",
+        "text": "7",
+        "span": [
+          1335,
+          1336
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "* EBUS TBNA Station 7",
+        "span": [
+          1315,
+          1336
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.station": [
+      {
+        "source": "registry_span",
+        "text": "11L",
+        "span": [
+          1357,
+          1360
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.2.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "* EBUS TBNA Station 11L",
+        "span": [
+          1337,
+          1360
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.station": [
+      {
+        "source": "registry_span",
+        "text": "11R",
+        "span": [
+          1381,
+          1384
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.3.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "* EBUS TBNA Station 11R",
+        "span": [
+          1361,
+          1384
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.needle_gauge": [
+      {
+        "source": "registry_span",
+        "text": "21G",
+        "span": [
+          1013,
+          1016
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31628",
+    "31653",
+    "31654"
+  ],
+  "suggestions": [
+    {
+      "code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "confidence": 0.8,
+      "rationale": "transbronchial_biopsy.performed=true",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=3 (>=3) from node_events",
+      "review_flag": "recommended"
+    },
+    {
+      "code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "confidence": 0.8,
+      "rationale": "radial_ebus.performed=true",
+      "review_flag": "recommended"
+    }
+  ],
+  "total_work_rvu": 9.67,
+  "estimated_payment": 437.55,
+  "per_code_billing": [
+    {
+      "cpt_code": "31628",
+      "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+      "work_rvu": 3.46,
+      "total_facility_rvu": 4.75,
+      "facility_payment": 158.65
+    },
+    {
+      "cpt_code": "31653",
+      "description": "Bronchoscopy; with EBUS sampling, 3 or more nodal stations",
+      "work_rvu": 4.84,
+      "total_facility_rvu": 6.56,
+      "facility_payment": 219.11
+    },
+    {
+      "cpt_code": "31654",
+      "description": "Bronch ebus ivntj perph les",
+      "work_rvu": 1.37,
+      "total_facility_rvu": 1.79,
+      "facility_payment": 59.79
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "DETERMINISTIC_UPLIFT: added performed=true for airway_stent",
+    "EVIDENCE_HARD_FAIL: procedures_performed.airway_stent.performed",
+    "AUTO_CORRECTED_EBUS_CRITERIA_ONLY: 4R",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "31652: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 3 station detail entries from text",
+    "procedures_performed.transbronchial_biopsy.performed=true but locations is empty/missing",
+    "EBUS_NARRATIVE_RECONCILE: upgraded inspected_only→needle_aspiration for ['4R']",
+    "EBUS_SPECIMEN_OVERRIDE: stations_sampled=['11L', '11R', '7'] from specimen log TBNA entries.",
+    "AUTO_EBUS_NEEDLE_GAUGE: parsed from note text",
+    "Radial EBUS inferred from radial probe keywords.",
+    "Linear EBUS inferred from convex/mediastinal/station sampling.",
+    "AUTO_CORRECTED: airway_stent.performed=false; cleared sub-fields.",
+    "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+    "RAW_ML_AUDIT[GRAY_ZONE]: model suggests 31627 (prob=0.52), but deterministic derivation missed it"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 428.36
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_009
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: ambiguous_laterality
+Indication: RUL mass.
+Technique: EBUS-TBNA
+Findings: Scope passed via ETT. Airway exam unremarkable. EBUS scope used to examine the left upper lobe mass. TBNA performed on the RUL mass.
+Specimens: RUL mass TBNA.
+Plan: Discharge home.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedure": {
+      "indication": "RUL mass"
+    },
+    "clinical_context": {
+      "primary_indication": "RUL mass",
+      "bronchus_sign": "Not assessed"
+    },
+    "procedures_performed": {
+      "peripheral_tbna": {
+        "performed": true
+      },
+      "linear_ebus": {
+        "performed": true,
+        "targets_sampled": [
+          "TBNA performed on the RUL mass"
+        ],
+        "node_events": [
+          {
+            "target_text": "TBNA performed on the RUL mass",
+            "action": "needle_aspiration",
+            "evidence_quote": "TBNA performed on the RUL mass"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {
+      "disposition": "Outpatient discharge",
+      "follow_up_plan_text": "Discharge home."
+    },
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUS-TBNA",
+              "span": [
+                70,
+                79
+              ],
+              "confidence": 1.0
+            },
+            {
+              "source": "registry_span",
+              "text": "TBNA performed on the RUL mass",
+              "span": [
+                191,
+                221
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "TBNA performed on the RUL mass",
+              "span": [
+                191,
+                221
+              ],
+              "confidence": 0.9
+            },
+            {
+              "source": "registry_span",
+              "text": "TBNA performed on the RUL mass",
+              "span": [
+                191,
+                221
+              ],
+              "confidence": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:23.295640+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=0; derived from non-station targets count=1 from node_events.target_text",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 70,
+                "end": 79,
+                "snippet": "EBUS-TBNA"
+              },
+              {
+                "start": 191,
+                "end": 221,
+                "snippet": "TBNA performed on the RUL mass"
+              },
+              {
+                "start": 191,
+                "end": 221,
+                "snippet": "TBNA performed on the RUL mass"
+              },
+              {
+                "start": 191,
+                "end": 221,
+                "snippet": "TBNA performed on the RUL mass"
+              }
+            ]
+          },
+          {
+            "sequence": 2,
+            "code": "31629",
+            "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "dropped",
+            "selection_reason": "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target",
+            "is_add_on": false,
+            "source": "model"
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=0; derived from non-station targets count=1 from node_events.target_text",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUS-TBNA",
+                "span": {
+                  "start": 70,
+                  "end": 79
+                }
+              },
+              {
+                "snippet": "TBNA performed on the RUL mass",
+                "span": {
+                  "start": 191,
+                  "end": 221
+                }
+              },
+              {
+                "snippet": "TBNA performed on the RUL mass",
+                "span": {
+                  "start": 191,
+                  "end": 221
+                }
+              },
+              {
+                "snippet": "TBNA performed on the RUL mass",
+                "span": {
+                  "start": 191,
+                  "end": 221
+                }
+              }
+            ],
+            "qa_flags": [
+              {
+                "severity": "info",
+                "message": "Derived 31652 from non-station EBUS target sampling (1 target)."
+              }
+            ]
+          },
+          {
+            "code": "31629",
+            "summary": "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target",
+            "rule_refs": [
+              "tbna_with_ebus_tbna"
+            ]
+          }
+        ],
+        "rules_applied": [
+          {
+            "rule_id": "tbna_with_ebus_tbna",
+            "rule_type": "bundling",
+            "codes_affected": [
+              "31629"
+            ],
+            "outcome": "dropped",
+            "details": "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target"
+          },
+          {
+            "rule_type": "local",
+            "codes_affected": [
+              "31652"
+            ],
+            "outcome": "informational",
+            "details": "Derived 31652 from non-station EBUS target sampling (1 target)."
+          }
+        ],
+        "global_comments": [
+          "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target",
+          "Derived 31652 from non-station EBUS target sampling (1 target)."
+        ]
+      }
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "EBUS",
+          "start": 70,
+          "end": 74,
+          "confidence": 0.974372923374176
+        },
+        {
+          "text": "TBNA",
+          "start": 75,
+          "end": 79,
+          "confidence": 0.9863021075725555
+        },
+        {
+          "text": "TBNA",
+          "start": 191,
+          "end": 195,
+          "confidence": 0.9843861758708954
+        },
+        {
+          "text": "TBNA",
+          "start": 243,
+          "end": 247,
+          "confidence": 0.9694105982780457
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 70,
+          "end": 79
+        }
+      ],
+      "clinical_context.primary_indication": [
+        {
+          "text": "RUL mass",
+          "start": 49,
+          "end": 57
+        }
+      ],
+      "procedure.indication": [
+        {
+          "text": "RUL mass",
+          "start": 49,
+          "end": 57
+        }
+      ],
+      "procedures_performed.linear_ebus.targets_sampled.0": [
+        {
+          "text": "TBNA performed on the RUL mass",
+          "start": 191,
+          "end": 221,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.target_text": [
+        {
+          "text": "TBNA performed on the RUL mass",
+          "start": 191,
+          "end": 221,
+          "confidence": 0.9
+        }
+      ],
+      "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+        {
+          "text": "TBNA performed on the RUL mass",
+          "start": 191,
+          "end": 221,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "EBUS",
+        "span": [
+          70,
+          74
+        ],
+        "confidence": 0.974372923374176
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          75,
+          79
+        ],
+        "confidence": 0.9863021075725555
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          191,
+          195
+        ],
+        "confidence": 0.9843861758708954
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          243,
+          247
+        ],
+        "confidence": 0.9694105982780457
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          70,
+          79
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "clinical_context.primary_indication": [
+      {
+        "source": "registry_span",
+        "text": "RUL mass",
+        "span": [
+          49,
+          57
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedure.indication": [
+      {
+        "source": "registry_span",
+        "text": "RUL mass",
+        "span": [
+          49,
+          57
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "procedures_performed.linear_ebus.targets_sampled.0": [
+      {
+        "source": "registry_span",
+        "text": "TBNA performed on the RUL mass",
+        "span": [
+          191,
+          221
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.target_text": [
+      {
+        "source": "registry_span",
+        "text": "TBNA performed on the RUL mass",
+        "span": [
+          191,
+          221
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+      {
+        "source": "registry_span",
+        "text": "TBNA performed on the RUL mass",
+        "span": [
+          191,
+          221
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=0; derived from non-station targets count=1 from node_events.target_text",
+      "review_flag": "required"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "low_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "EBUS_NONSTATION_TARGET_CAPTURED: tbna performed on the rul mass",
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target",
+    "Derived 31652 from non-station EBUS target sampling (1 target).",
+    "STRUCTURAL_FAILURE: linear_ebus performed but stations_sampled is empty (station extraction likely failed)"
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 209.63
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_003
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: ultra_short, copy_paste_artifacts
+Patient [REDACTED] [REDACTED] underwent EBUS-TBNA of station 4R. 4 passes made. No comps comps. Patient discharged.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "4R"
+        ],
+        "node_events": [
+          {
+            "station": "4R",
+            "action": "needle_aspiration",
+            "evidence_quote": "ient [REDACTED] [REDACTED] underwent EBUS-TBNA of station 4R. 4 passes made. No comps comps. Patient discharge"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "EBUS-TBNA",
+              "span": [
+                90,
+                99
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:23.508752+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 90,
+                "end": 99,
+                "snippet": "EBUS-TBNA"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "EBUS-TBNA",
+                "span": {
+                  "start": 90,
+                  "end": 99
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "4R",
+          "sampled": true,
+          "number_of_passes": 4
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "EBUS-",
+          "start": 90,
+          "end": 95,
+          "confidence": 0.866892139116923
+        },
+        {
+          "text": "TBNA",
+          "start": 95,
+          "end": 99,
+          "confidence": 0.9583030045032501
+        },
+        {
+          "text": "station 4R",
+          "start": 103,
+          "end": 113,
+          "confidence": 0.9894559383392334
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "EBUS-TBNA",
+          "start": 90,
+          "end": 99
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+        {
+          "text": "4 passes",
+          "start": 115,
+          "end": 123,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "EBUS-",
+        "span": [
+          90,
+          95
+        ],
+        "confidence": 0.866892139116923
+      },
+      {
+        "source": "ner_span",
+        "text": "TBNA",
+        "span": [
+          95,
+          99
+        ],
+        "confidence": 0.9583030045032501
+      },
+      {
+        "source": "ner_span",
+        "text": "station 4R",
+        "span": [
+          103,
+          113
+        ],
+        "confidence": 0.9894559383392334
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "EBUS-TBNA",
+        "span": [
+          90,
+          99
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "4 passes",
+        "span": [
+          115,
+          123
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "high_confidence",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 1 station detail entry from text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 212.96
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+NOTE: note_007
+================================================================================
+
+NOTE TEXT:
+--------------------------------------------------------------------------------
+EDGE_CASE_TAGS: missing_section, noisy_units
+Patient [MRN:REDACTED] was brought to the endoscopy suite. Propofol 1500mg (wait, 150mg) administered. Linear EBUS scope inserted. Station 4R and 10R were sampled. 3 passes each. No acute issues. Plan to follow up with oncology.
+
+--------------------------------------------------------------------------------
+
+RESULTS (JSON):
+--------------------------------------------------------------------------------
+{
+  "registry": {
+    "procedures_performed": {
+      "linear_ebus": {
+        "performed": true,
+        "stations_sampled": [
+          "10R",
+          "4R"
+        ],
+        "node_events": [
+          {
+            "station": "4R",
+            "action": "needle_aspiration",
+            "evidence_quote": " 150mg) administered. Linear EBUS scope inserted. Station 4R and 10R were sampled. 3 passes each. No acute iss"
+          },
+          {
+            "station": "10R",
+            "action": "needle_aspiration",
+            "evidence_quote": "tered. Linear EBUS scope inserted. Station 4R and 10R were sampled. 3 passes each. No acute issues. Pla"
+          }
+        ]
+      }
+    },
+    "pleural_procedures": {},
+    "outcomes": {},
+    "billing": {
+      "cpt_codes": [
+        {
+          "code": "31652",
+          "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+          "derived_from": [
+            "procedures_performed.linear_ebus"
+          ],
+          "evidence": [
+            {
+              "source": "registry_span",
+              "text": "Linear EBUS",
+              "span": [
+                148,
+                159
+              ],
+              "confidence": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    "coding_support": {
+      "version": "coding_support.v1",
+      "generated_at": "2026-03-05T23:10:23.722804+00:00",
+      "generator": "registry_to_cpt",
+      "knowledge_base_version": "ip_coding_billing.v3.0",
+      "coding_summary": {
+        "lines": [
+          {
+            "sequence": 1,
+            "code": "31652",
+            "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+            "units": 1,
+            "role": "primary",
+            "selection_status": "selected",
+            "selection_reason": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+            "is_add_on": false,
+            "source": "model",
+            "note_spans": [
+              {
+                "start": 148,
+                "end": 159,
+                "snippet": "Linear EBUS"
+              }
+            ]
+          }
+        ]
+      },
+      "coding_rationale": {
+        "per_code": [
+          {
+            "code": "31652",
+            "summary": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+            "documentation_evidence": [
+              {
+                "snippet": "Linear EBUS",
+                "span": {
+                  "start": 148,
+                  "end": 159
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "granular_data": {
+      "linear_ebus_stations_detail": [
+        {
+          "station": "4R",
+          "sampled": true,
+          "number_of_passes": 3
+        },
+        {
+          "station": "10R",
+          "sampled": true,
+          "number_of_passes": 3
+        }
+      ]
+    },
+    "evidence": {
+      "ner_spans": [
+        {
+          "text": "Linear EBUS",
+          "start": 148,
+          "end": 159,
+          "confidence": 0.7080066601435343
+        },
+        {
+          "text": "Station 4R",
+          "start": 176,
+          "end": 186,
+          "confidence": 0.9829314152399699
+        },
+        {
+          "text": "10R",
+          "start": 191,
+          "end": 194,
+          "confidence": 0.8452344238758087
+        },
+        {
+          "text": "sampled",
+          "start": 200,
+          "end": 207,
+          "confidence": 0.7263375520706177
+        }
+      ],
+      "procedures_performed.linear_ebus.performed": [
+        {
+          "text": "Linear EBUS",
+          "start": 148,
+          "end": 159
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+        {
+          "text": "3 passes",
+          "start": 209,
+          "end": 217,
+          "confidence": 0.9
+        }
+      ],
+      "granular_data.linear_ebus_stations_detail.1.number_of_passes": [
+        {
+          "text": "3 passes",
+          "start": 209,
+          "end": 217,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "procedure_families": [],
+    "established_tracheostomy_route": false,
+    "granular_validation_warnings": []
+  },
+  "evidence": {
+    "ner_spans": [
+      {
+        "source": "ner_span",
+        "text": "Linear EBUS",
+        "span": [
+          148,
+          159
+        ],
+        "confidence": 0.7080066601435343
+      },
+      {
+        "source": "ner_span",
+        "text": "Station 4R",
+        "span": [
+          176,
+          186
+        ],
+        "confidence": 0.9829314152399699
+      },
+      {
+        "source": "ner_span",
+        "text": "10R",
+        "span": [
+          191,
+          194
+        ],
+        "confidence": 0.8452344238758087
+      },
+      {
+        "source": "ner_span",
+        "text": "sampled",
+        "span": [
+          200,
+          207
+        ],
+        "confidence": 0.7263375520706177
+      }
+    ],
+    "procedures_performed.linear_ebus.performed": [
+      {
+        "source": "registry_span",
+        "text": "Linear EBUS",
+        "span": [
+          148,
+          159
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.0.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "3 passes",
+        "span": [
+          209,
+          217
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "granular_data.linear_ebus_stations_detail.1.number_of_passes": [
+      {
+        "source": "registry_span",
+        "text": "3 passes",
+        "span": [
+          209,
+          217
+        ],
+        "confidence": 0.9
+      }
+    ]
+  },
+  "missing_field_prompts": [],
+  "cpt_codes": [
+    "31652"
+  ],
+  "suggestions": [
+    {
+      "code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "confidence": 0.8,
+      "rationale": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+      "review_flag": "optional"
+    }
+  ],
+  "total_work_rvu": 4.35,
+  "estimated_payment": 198.07,
+  "per_code_billing": [
+    {
+      "cpt_code": "31652",
+      "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+      "work_rvu": 4.35,
+      "total_facility_rvu": 5.93,
+      "facility_payment": 198.07
+    }
+  ],
+  "pipeline_mode": "extraction_first",
+  "coder_difficulty": "gray_zone",
+  "needs_manual_review": true,
+  "audit_warnings": [
+    "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+    "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+    "Linear EBUS inferred from convex/mediastinal/station sampling."
+  ],
+  "validation_errors": [],
+  "review_status": "pending_phi_review",
+  "kb_version": "3.0",
+  "policy_version": "extraction_first_v1",
+  "processing_time_ms": 213.96
+}
+--------------------------------------------------------------------------------
+
+STATUS: SUCCESS
+
+================================================================================
+SUMMARY
+================================================================================
+Total notes tested: 10
+Successful: 10
+Failed: 0
+Success rate: 100.0%
+================================================================================

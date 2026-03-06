@@ -32,7 +32,6 @@ jobs:
           python -m piptools compile \
             --resolver=backtracking \
             --strip-extras \
-            --allow-unsafe \
             --no-header \
             --no-emit-index-url \
             --no-emit-trusted-host \
@@ -47,7 +46,7 @@ jobs:
       - name: Ruff
         run: ruff check .
       - name: Mypy
-        run: mypy app
+        run: make typecheck
       - name: Pytest
         run: pytest -q
       - name: Legacy golden eval (optional)
