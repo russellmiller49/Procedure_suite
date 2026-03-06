@@ -50,9 +50,7 @@ async def test_coder_run_fixture_response(api_client: AsyncClient) -> None:
         f"Expected navigation code (31627 or +31627), got {found_codes}"
     )
     # Check that we have radial EBUS (+31654)
-    assert "+31654" in found_codes, (
-        f"Expected radial EBUS code (+31654), got {found_codes}"
-    )
+    assert "+31654" in found_codes, f"Expected radial EBUS code (+31654), got {found_codes}"
     # Check other required codes
     assert "31629" in found_codes, "Expected TBNA code (31629)"
     assert "31628" in found_codes, "Expected TBLB code (31628)"

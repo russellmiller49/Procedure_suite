@@ -28,7 +28,9 @@ def _settings_payload() -> dict[str, object]:
     }
 
 
-def _record_payload(registry_uuid: str, *, text: bytes = b"encrypted-patient-json") -> dict[str, object]:
+def _record_payload(
+    registry_uuid: str, *, text: bytes = b"encrypted-patient-json"
+) -> dict[str, object]:
     return {
         "registry_uuid": registry_uuid,
         "ciphertext_b64": _b64(text),

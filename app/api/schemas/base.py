@@ -37,9 +37,7 @@ class HybridPipelineMetadata(BaseModel):
     difficulty: str = Field(
         "", description="ML case difficulty: high_confidence, gray_zone, or low_confidence"
     )
-    source: str = Field(
-        "", description="Decision source: ml_rules_fastpath or hybrid_llm_fallback"
-    )
+    source: str = Field("", description="Decision source: ml_rules_fastpath or hybrid_llm_fallback")
     llm_used: bool = Field(False, description="Whether LLM was called for this case")
     ml_candidates: list[str] = Field(
         default_factory=list, description="CPT codes suggested by ML model"
@@ -47,9 +45,7 @@ class HybridPipelineMetadata(BaseModel):
     fallback_reason: str | None = Field(
         None, description="Why LLM fallback was triggered (if applicable)"
     )
-    rules_error: str | None = Field(
-        None, description="Rules validation error message (if any)"
-    )
+    rules_error: str | None = Field(None, description="Rules validation error message (if any)")
 
 
 CoderResponse = CoderOutput
@@ -369,7 +365,8 @@ class MissingFieldPrompt(BaseModel):
     target_path: str = Field(
         ...,
         description=(
-            "Canonical dotted path relative to the registry root (supports [*] wildcards for arrays). "
+            "Canonical dotted path relative to the registry root "
+            "(supports [*] wildcards for arrays). "
             "The UI should update this path when a user fills a completeness prompt."
         ),
     )
@@ -407,7 +404,8 @@ class UnifiedProcessResponse(BaseModel):
     umls_normalization: dict[str, Any] | None = Field(
         default=None,
         description=(
-            "Optional normalization sidecar for selected registry string fields (does not mutate clinician text). "
+            "Optional normalization sidecar for selected registry string fields "
+            "(does not mutate clinician text). "
             "Keys are JSON pointers (e.g., /registry/clinical_context/lesion_location)."
         ),
     )

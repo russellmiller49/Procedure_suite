@@ -273,9 +273,7 @@ class TestRegistryExtractWithMockedService:
             ) as client:
                 response = await client.post(
                     "/api/registry/extract",
-                    json={
-                        "note_text": "PROCEDURE: EBUS-TBNA performed at station 4R and 7."
-                    },
+                    json={"note_text": "PROCEDURE: EBUS-TBNA performed at station 4R and 7."},
                 )
 
                 assert response.status_code == 200
@@ -305,8 +303,7 @@ class TestRegistryExtractWithMockedService:
             warnings=["Some warning"],
             needs_manual_review=True,
             validation_errors=[
-                "CPT 31652 present but procedures_performed.linear_ebus "
-                "is not marked."
+                "CPT 31652 present but procedures_performed.linear_ebus is not marked."
             ],
         )
 
@@ -365,8 +362,7 @@ class TestRegistryExtractWithMockedService:
                     "/api/registry/extract",
                     json={
                         "note_text": (
-                            "Thoracentesis performed under ultrasound guidance. "
-                            "1200mL removed."
+                            "Thoracentesis performed under ultrasound guidance. 1200mL removed."
                         )
                     },
                 )

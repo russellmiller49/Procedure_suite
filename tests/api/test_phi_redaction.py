@@ -14,6 +14,7 @@ from app.api.phi_redaction import RedactionResult, apply_phi_redaction
 @dataclass
 class MockEntity:
     """Mock PHI entity for testing."""
+
     entity_type: str
     start: int
     end: int
@@ -22,6 +23,7 @@ class MockEntity:
 @dataclass
 class MockScrubResult:
     """Mock scrub result for testing."""
+
     scrubbed_text: str
     entities: List[MockEntity]
 
