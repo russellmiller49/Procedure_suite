@@ -1351,10 +1351,19 @@ class RegistryService:
                             sed_type_norm = str(sedation.get("type") or "").strip().lower()
                             if sed_type_norm and not sedation.get("anesthesia_provider"):
                                 provider_patterns: list[str] = []
+                                anesthesiologist_negated = bool(
+                                    re.search(
+                                        r"(?i)\b(?:no|without)\b[^.\n]{0,40}\banesthesiolog(?:ist|y)\b"
+                                        r"|\banesthesiolog(?:ist|y)\b[^.\n]{0,40}\bnot\s+(?:present|available)\b",
+                                        masked_note_text or "",
+                                    )
+                                )
                                 if re.search(r"(?i)\bCRNA\b", masked_note_text or ""):
                                     sedation["anesthesia_provider"] = "CRNA"
                                     provider_patterns = [r"\bCRNA\b"]
-                                elif re.search(r"(?i)\banesthesiolog(?:ist|y)\b", masked_note_text or ""):
+                                elif not anesthesiologist_negated and re.search(
+                                    r"(?i)\banesthesiolog(?:ist|y)\b", masked_note_text or ""
+                                ):
                                     sedation["anesthesia_provider"] = "Anesthesiologist"
                                     provider_patterns = [r"\banesthesiolog(?:ist|y)\b"]
                                 elif sed_type_norm.startswith("moderate") and (
@@ -1366,6 +1375,10 @@ class RegistryService:
                                         r"(?i)\bmonitored\b[^\n]{0,200}\bby\b[^\n]{0,80}\b(?:the\s+)?attending(?:\s+physician)?\b[^\n]{0,200}\b(?:while|as)\b[^\n]{0,60}\b(?:anesthesia|sedation)\b",
                                         masked_note_text or "",
                                     )
+                                    or re.search(
+                                        r"(?i)\b(?:attending|proceduralist|operator|physician)\b[^.\n]{0,80}\bperformed\s+(?:own\s+)?sedation\b",
+                                        masked_note_text or "",
+                                    )
                                 ):
                                     sedation["anesthesia_provider"] = "Proceduralist"
                                     provider_patterns = [
@@ -1375,6 +1388,7 @@ class RegistryService:
                                         r"(?i)\badminister(?:ed|ing)?\b[^.\n]{0,80}\bby\b[^.\n]{0,60}\b(?:the\s+)?physician\b",
                                         r"(?i)\bprovide(?:d|r)?\b[^.\n]{0,80}\bby\b[^.\n]{0,60}\b(?:the\s+)?attending(?:\s+physician)?\b",
                                         r"(?i)\bmonitored\b[^\n]{0,200}\bby\b[^\n]{0,80}\b(?:the\s+)?attending(?:\s+physician)?\b[^\n]{0,200}\b(?:while|as)\b[^\n]{0,60}\b(?:anesthesia|sedation)\b",
+                                        r"(?i)\b(?:attending|proceduralist|operator|physician)\b[^.\n]{0,80}\bperformed\s+(?:own\s+)?sedation\b",
                                     ]
 
                                 if sedation.get("anesthesia_provider"):

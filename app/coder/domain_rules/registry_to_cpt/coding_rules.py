@@ -725,32 +725,7 @@ def derive_all_codes_with_meta(
         elastography_used = _get(_proc(record, "linear_ebus"), "elastography_used") is True
         elastography_pattern = _get(_proc(record, "linear_ebus"), "elastography_pattern")
         if elastography_used or (isinstance(elastography_pattern, str) and elastography_pattern.strip()):
-            target_stations: set[str] = set()
-            node_events = _get(_proc(record, "linear_ebus"), "node_events")
-            if isinstance(node_events, (list, tuple)):
-                for event in node_events:
-                    station = _get(event, "station")
-                    if station:
-                        target_stations.add(str(station).upper().strip())
-
-            stations_detail = _get(_proc(record, "linear_ebus"), "stations_detail")
-            if isinstance(stations_detail, (list, tuple)):
-                for detail in stations_detail:
-                    if isinstance(detail, dict):
-                        station = detail.get("station")
-                    else:
-                        station = _get(detail, "station")
-                    if station:
-                        target_stations.add(str(station).upper().strip())
-
-            if not target_stations:
-                stations = _get(_proc(record, "linear_ebus"), "stations_sampled")
-                if isinstance(stations, (list, tuple)):
-                    for station in stations:
-                        if station:
-                            target_stations.add(str(station).upper().strip())
-
-            target_count = len({s for s in target_stations if s})
+            target_count = _ebus_elastography_target_count(record)
             if target_count <= 0:
                 # Guardrail: don't bill elastography if the record has no extracted targets.
                 # Allow a conservative fallback only when evidence mentions elastography on
@@ -1240,7 +1215,20 @@ def derive_all_codes_with_meta(
             rationales["31661"] = f"bronchial_thermoplasty.areas_treated_count={len(areas)} (>=2)"
 
     # Tracheostomy: distinguish established route vs new percutaneous trach.
+    all_evidence_text = _evidence_text_for_prefixes(record, ("",))
     established_trach_route = _get(record, "established_tracheostomy_route") is True
+    immature_trach_change_supported = bool(
+        re.search(
+            r"(?i)\b(?:immature|early|fresh)\s+tract\b"
+            r"|\bnot\s+yet\s+epithelialized\b"
+            r"|\baccidental\s+decannulat\w*\b"
+            r"|\bpartially\s+closed\b[^.\n]{0,60}\btract\b"
+            r"|\b(?:tube\s+)?(?:change|exchange|reinsertion)\b[^.\n]{0,80}\btrach(?:eostomy)?\b"
+            r"|\btrach(?:eostomy)?\b[^.\n]{0,80}\b(?:tube\s+)?(?:change|exchange|reinsertion)\b",
+            all_evidence_text or "",
+        )
+    )
+
     if established_trach_route:
         codes.append("31615")
         rationales["31615"] = "established_tracheostomy_route=true"
@@ -1248,6 +1236,16 @@ def derive_all_codes_with_meta(
     # Percutaneous tracheostomy (new trach creation)
     pt_obj = _proc(record, "percutaneous_tracheostomy")
     pt_performed = _performed(pt_obj)
+    if re.search(r"(?i)\b31502\b", header_code_text or "") and immature_trach_change_supported and not pt_performed:
+        if "31502" not in codes:
+            codes.append("31502")
+            rationales["31502"] = "code_evidence lists 31502 with immature-tract tracheostomy tube change support"
+        if "31615" in codes:
+            codes = [code for code in codes if code != "31615"]
+            rationales.pop("31615", None)
+            warnings.append(
+                "31502 supported for immature-tract tracheostomy tube change; suppressing 31615 established-trach route code"
+            )
     puncture_evidence = _evidence_text_for_prefixes(
         record,
         (
@@ -1741,34 +1739,77 @@ def derive_all_codes(record: RegistryRecord) -> list[str]:
 
 
 def _ebus_elastography_target_count(record: RegistryRecord) -> int:
+    linear = _proc(record, "linear_ebus")
+    if linear is None:
+        return 0
+
     target_stations: set[str] = set()
 
-    node_events = _get(_proc(record, "linear_ebus"), "node_events")
+    node_events = _get(linear, "node_events")
     if isinstance(node_events, (list, tuple)):
         for event in node_events:
             station = _get(event, "station")
-            if station:
+            pattern = _get(event, "elastography_pattern")
+            used = _get(event, "elastography_used") is True or (
+                isinstance(pattern, str) and pattern.strip()
+            )
+            if station and used:
                 target_stations.add(str(station).upper().strip())
 
-    stations_detail = _get(_proc(record, "linear_ebus"), "stations_detail")
+    stations_detail = _get(linear, "stations_detail")
     if isinstance(stations_detail, (list, tuple)):
         for detail in stations_detail:
             if isinstance(detail, dict):
                 station = detail.get("station")
+                pattern = detail.get("elastography_pattern")
+                used = detail.get("elastography_performed") is True or bool(
+                    isinstance(pattern, str) and pattern.strip()
+                )
             else:
                 station = _get(detail, "station")
-            if station:
+                pattern = _get(detail, "elastography_pattern")
+                used = _get(detail, "elastography_performed") is True or bool(
+                    isinstance(pattern, str) and pattern.strip()
+                )
+            if station and used:
                 target_stations.add(str(station).upper().strip())
 
-    if not target_stations:
-        stations = _get(_proc(record, "linear_ebus"), "stations_sampled")
-        if isinstance(stations, (list, tuple)):
-            for station in stations:
-                if station:
-                    target_stations.add(str(station).upper().strip())
+    granular = _get(record, "granular_data")
+    granular_detail = _get(granular, "linear_ebus_stations_detail") if granular is not None else None
+    if isinstance(granular_detail, (list, tuple)):
+        for detail in granular_detail:
+            if isinstance(detail, dict):
+                station = detail.get("station")
+                pattern = detail.get("elastography_pattern")
+                used = detail.get("elastography_performed") is True or bool(
+                    isinstance(pattern, str) and pattern.strip()
+                )
+            else:
+                station = _get(detail, "station")
+                pattern = _get(detail, "elastography_pattern")
+                used = _get(detail, "elastography_performed") is True or bool(
+                    isinstance(pattern, str) and pattern.strip()
+                )
+            if station and used:
+                target_stations.add(str(station).upper().strip())
 
     count = len({s for s in target_stations if s})
-    return count if count > 0 else 1
+    if count > 0:
+        return count
+
+    record_level_used = _get(linear, "elastography_used") is True or bool(
+        isinstance(_get(linear, "elastography_pattern"), str) and str(_get(linear, "elastography_pattern")).strip()
+    )
+    if not record_level_used:
+        return 0
+
+    sampled_stations = _get(linear, "stations_sampled")
+    sampled_count = 0
+    if isinstance(sampled_stations, (list, tuple)):
+        sampled_count = len({str(st).upper().strip() for st in sampled_stations if st})
+    if sampled_count >= 3:
+        return sampled_count
+    return 1
 
 
 def _tbbx_lobe_count(record: RegistryRecord) -> int:

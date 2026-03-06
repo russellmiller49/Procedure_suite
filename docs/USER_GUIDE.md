@@ -1569,3 +1569,118 @@ See `docs/REPORTER_GOLD_WORKFLOW.md` for full details.
 *Last updated: February 2026*
 run all granular python updates:
 python ops/tools/run_python_update_scripts.py
+
+---
+
+## Golden Extraction Data Generator (NER + Registry Training Data)
+
+Generate high-quality NER character-span training data and golden registry JSON ground truth from procedure notes using a 2-pass LLM pipeline (annotator + judge with repair loop).
+
+**Script:** `ops/tools/generate_golden_extraction_data.py`
+
+### Input Modes
+
+Three mutually exclusive input modes:
+
+```bash
+# 1. Annotate existing .txt note files
+python ops/tools/generate_golden_extraction_data.py \
+  --input-dir data/knowledge/patient_note_texts \
+  --sample-size 50 --seed 42
+
+# 2. Annotate notes from a JSONL file
+python ops/tools/generate_golden_extraction_data.py \
+  --input-jsonl data/ml_training/notes.jsonl \
+  --sample-size 50
+
+# 3. Generate synthetic notes first, then annotate
+python ops/tools/generate_golden_extraction_data.py \
+  --generate-notes 100 \
+  --families ebus navigation airway pleural
+```
+
+### Dry Run (No LLM Calls)
+
+Verify script structure and output format without spending tokens:
+
+```bash
+python ops/tools/generate_golden_extraction_data.py \
+  --input-dir tests/fixtures/notes \
+  --sample-size 2 \
+  --dry-run
+```
+
+### Full Pipeline Example
+
+```bash
+# Generate 50 synthetic notes across procedure families and annotate them
+python ops/tools/generate_golden_extraction_data.py \
+  --generate-notes 50 \
+  --families ebus navigation airway pleural diagnostic_bronch blvr \
+  --output-dir data/ml_training/golden_extraction/v1 \
+  --seed 42
+
+# Ingest accepted records into NER training dataset
+python ops/tools/generate_golden_extraction_data.py \
+  --input-jsonl data/ml_training/golden_extraction/v1/golden_ner_accepted.jsonl \
+  --ingest \
+  --dedup-against data/ml_training/granular_ner/ner_dataset_all.jsonl
+```
+
+### Output Files
+
+All outputs go to `--output-dir` (default: `data/ml_training/golden_extraction/v1/`):
+
+| File | Description |
+|------|-------------|
+| `golden_ner_candidates.jsonl` | All candidates (accepted + rejected) |
+| `golden_ner_accepted.jsonl` | Accepted NER data (same format as `ner_dataset_all.jsonl`) |
+| `golden_registry_accepted.jsonl` | Golden registry records |
+| `golden_rejected.jsonl` | Rejected candidates with reasons |
+| `golden_review_queue.jsonl` / `.csv` | Borderline cases for manual review |
+| `golden_metrics.json` | Run-level metrics (accept rate, score distributions) |
+| `golden_skipped_manifest.jsonl` | Skipped notes with reasons |
+
+### CLI Arguments
+
+```
+--input-dir PATH            Directory of .txt files
+--input-jsonl PATH          JSONL with {id, text} records
+--generate-notes COUNT      Generate N synthetic notes first
+--output-dir PATH           Output directory (default: data/ml_training/golden_extraction/v1)
+--sample-size N             Random sample from input (0 = all)
+--seed N                    RNG seed (default: 42)
+--annotator-prompt PATH     Custom annotator prompt template
+--judge-prompt PATH         Custom judge prompt template
+--notegen-prompt PATH       Custom note generator prompt template
+--families F [F ...]        Procedure families for --generate-notes
+--review-pass-fraction F    Fraction of accepted for review queue (default: 0.10)
+--max-repair-attempts N     Max repair attempts (default: 2)
+--ingest                    Feed accepted records into NER training pipeline
+--dedup-against PATH        Existing ner_dataset_all.jsonl to avoid ID collisions
+--dry-run                   Skip LLM calls, use deterministic stubs
+```
+
+### After Ingestion
+
+After ingesting golden data, regenerate BIO training format:
+
+```bash
+python ml/scripts/convert_spans_to_bio.py \
+  --input data/ml_training/granular_ner/ner_dataset_all.jsonl \
+  --output data/ml_training/granular_ner/ner_bio_format.jsonl \
+  --model microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext \
+  --max-length 512
+```
+
+### Environment
+
+Uses existing OpenAI wiring:
+- `LLM_PROVIDER=openai_compat`
+- `OPENAI_MODEL_STRUCTURER` (annotator + note generator)
+- `OPENAI_MODEL_JUDGE` (judge)
+- `OPENAI_API_KEY`
+
+### Procedure Families for Synthetic Notes
+
+Available families: `ebus`, `navigation`, `airway`, `pleural`, `diagnostic_bronch`, `blvr`. Each family has simple/moderate/complex complexity specs with required + optional procedure combinations.

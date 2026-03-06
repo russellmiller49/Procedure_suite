@@ -259,6 +259,40 @@ def extract_sedation_airway(note_text: str) -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     note_lower = note_text.lower()
 
+    moderate_indicators = [
+        "moderate sedation",
+        "conscious sedation",
+        "iv sedation",
+        "midazolam",
+        "fentanyl",
+        "versed",
+    ]
+    moderate_present = any(ind in note_lower for ind in moderate_indicators)
+    proceduralist_moderate_context = bool(
+        moderate_present
+        and (
+            re.search(r"\bno\s+anesthesiologist\s+present\b|\bwithout\s+anesthesiologist\b", note_lower)
+            or re.search(
+                r"\b(?:attending|proceduralist|operator|physician)\b[^.\n]{0,80}\bperformed\s+(?:own\s+)?sedation\b",
+                note_lower,
+            )
+            or re.search(
+                r"\bmoderate\s+sedation\b[^.\n]{0,120}\bby\b[^.\n]{0,60}\b(?:the\s+)?(?:attending|proceduralist|operator|physician)\b",
+                note_lower,
+            )
+        )
+    )
+
+    if proceduralist_moderate_context:
+        result["sedation_type"] = "Moderate"
+        if re.search(r"\bett\b|endotracheal tube|intubated", note_lower):
+            result["airway_type"] = "ETT"
+        elif re.search(r"\blma\b|laryngeal mask", note_lower):
+            result["airway_type"] = "LMA"
+        else:
+            result["airway_type"] = "Native"
+        return result
+
     # Check for general anesthesia indicators
     ga_indicators = [
         "general anesthesia",
@@ -293,16 +327,6 @@ def extract_sedation_airway(note_text: str) -> Dict[str, Any]:
         if not re.search(r"\bett\b|intubated|laryngeal mask", note_lower):
             result["airway_type"] = "Native"
         return result
-
-    # Check for moderate/conscious sedation
-    moderate_indicators = [
-        "moderate sedation",
-        "conscious sedation",
-        "iv sedation",
-        "midazolam",
-        "fentanyl",
-        "versed",
-    ]
 
     if any(ind in note_lower for ind in moderate_indicators):
         # Don't set if also has GA indicators (already handled above)
@@ -3007,6 +3031,13 @@ def extract_foreign_body_removal(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
+    if re.search(
+        r"(?i)\bstent\b[^.\n]{0,140}\b(?:remov|retriev|extract|withdraw|grasp|en\s+bloc)\w*\b"
+        r"|\b(?:remov|retriev|extract|withdraw|grasp)\w*\b[^.\n]{0,140}\bstent\b",
+        preferred_text or "",
+    ):
+        return {}
+
     match: re.Match[str] | None = None
     for pat in FOREIGN_BODY_REMOVAL_PATTERNS:
         m = re.search(pat, text_lower, re.IGNORECASE)
@@ -3191,6 +3222,27 @@ def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
     text = preferred_text or full_text
     text_lower = text.lower()
     if not text_lower.strip():
+        return {}
+
+    explicit_endobronchial_biopsy = bool(
+        re.search(r"(?i)\bendobronchial\s+biops|\bebbx\b", text)
+    )
+    peripheral_workflow = bool(
+        re.search(
+            r"(?i)\b(?:peripheral|nodule|lung\s+(?:nodule|lesion|mass)|pulmonary\s+(?:nodule|lesion|mass)|"
+            r"navigation|navigational|electromagnetic\s+navigation|\benb\b|ion\b|robotic|"
+            r"radial\s+(?:ebus|probe|ultrasound)|rebus|miniprobe|"
+            r"transbronchial\s+(?:lung\s+)?biops|tbbx|tblb)\b",
+            text,
+        )
+    )
+    no_endobronchial_disease = bool(
+        re.search(
+            r"(?i)\bno\s+endobronchial\s+(?:lesions?|tumou?rs?|mass(?:es)?)\b",
+            text,
+        )
+    )
+    if no_endobronchial_disease and peripheral_workflow and not explicit_endobronchial_biopsy:
         return {}
 
     narrative_start = 0
@@ -4444,6 +4496,18 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
+    immature_or_newly_reestablished = bool(
+        re.search(
+            r"(?i)\b(?:immature|early|fresh)\s+tract\b"
+            r"|\bnot\s+yet\s+epithelialized\b"
+            r"|\baccidental\s+decannulat\w*\b"
+            r"|\b(?:day|pod)\s*(?:0?[1-9]|1[0-4])\b[^.\n]{0,80}\btrach(?:eostomy)?\b"
+            r"|\bpartially\s+closed\b[^.\n]{0,60}\btract\b"
+            r"|\burgent\s+(?:tube\s+)?reinsertion\b",
+            text_lower,
+        )
+    )
+
     change_cue = re.search(
         r"(?i)\btrach(?:eostomy)?\b[^.\n]{0,60}\b(?:change|exchange|tube\s+change|changed)\b|\bafter\s+establishment\b[^.\n]{0,60}\btract\b",
         text_lower,
@@ -4459,6 +4523,8 @@ def extract_established_tracheostomy_route(note_text: str) -> Dict[str, Any]:
         )
         if removed_tube and placed_new_tube:
             change_cue = True
+    if immature_or_newly_reestablished:
+        return {}
     if change_cue:
         return {"established_tracheostomy_route": True}
 

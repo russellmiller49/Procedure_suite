@@ -635,6 +635,21 @@ class TestTracheostomyCPTLogic:
         assert "31615" in codes
         assert "31600" not in codes
 
+    def test_immature_trach_change_header_31502_suppresses_31615(self):
+        record = make_record(diagnostic_bronchoscopy=True, established_tracheostomy_route=True)
+        record.evidence = {
+            "code_evidence": [{"text": "31502"}],
+            "tracheostomy_context": [
+                {"text": "day 6 immature tract accidental decannulation with tracheostomy tube reinsertion"}
+            ],
+        }
+
+        codes, rationales, warnings = derive_all_codes_with_meta(record)
+
+        assert "31502" in codes
+        assert "31615" not in codes
+        assert any("suppressing 31615" in str(w) for w in warnings)
+
 
 class TestNeckUltrasoundCPTLogic:
     def test_neck_ultrasound_derives_76536(self):

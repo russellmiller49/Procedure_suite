@@ -26,6 +26,9 @@ _STATION_HEADER_RE = re.compile(
 _NUMBERED_STATION_HEADER_RE = re.compile(
     r"(?im)^\s*\d{1,2}\s*[.)]\s*(?:station\s*)?(?P<station>[0-9]{1,2}[LR]?(?:Rs|Ri|Ls|Li)?)\b"
 )
+_LINE_STATION_HEADER_RE = re.compile(
+    r"(?im)^\s*(?P<station>2R|2L|3P|4R|4L|5|7|8|9|10R|10L|11R(?:s|i)?|11L(?:s|i)?|12R|12L)\s*[:\-–]\s*"
+)
 
 _GLOBAL_NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*[- ]?(?:g|gauge)\b")
 _COMPLETENESS_NEEDLE_GAUGE_RE = re.compile(
@@ -76,6 +79,7 @@ _INLINE_NUMERIC_STATION_PAREN_RE = re.compile(
     r"(?i)\b(?P<station>5|7|8|9)\b(?=\s*[\(\[]\s*\d+(?:\.\d+)?\s*mm\b)"
 )
 
+_PASS_EXPRESSION_RE = re.compile(r"(?i)\bx?(?P<a>\d{1,2})\s*\+\s*(?P<b>\d{1,2})\s+passes?\b")
 _PASSES_RE = re.compile(r"(?i)\b(\d{1,2})\s+passes?\b")
 _PASSES_WORD_RE = re.compile(r"(?i)\b(one|two|three|four|five|six|seven|eight|nine|ten)\s+passes?\b")
 _NEEDLE_GAUGE_RE = re.compile(r"(?i)\b(19|21|22|25)\s*[- ]?(?:g|gauge)\b")
@@ -189,6 +193,25 @@ def _to_int(value: str | None) -> int | None:
         return None
 
 
+def _extract_pass_count(section: str) -> tuple[int | None, re.Match[str] | None]:
+    expr_match = _PASS_EXPRESSION_RE.search(section or "")
+    if expr_match:
+        try:
+            return int(expr_match.group("a")) + int(expr_match.group("b")), expr_match
+        except Exception:
+            pass
+
+    passes_match = _PASSES_RE.search(section or "")
+    if passes_match:
+        return _to_int(passes_match.group(1)), passes_match
+
+    word_match = _PASSES_WORD_RE.search(section or "")
+    if word_match:
+        return _WORD_NUMBERS.get(word_match.group(1).lower()), word_match
+
+    return None, None
+
+
 _WORD_NUMBERS: dict[str, int] = {
     "one": 1,
     "two": 2,
@@ -263,6 +286,15 @@ def _apply_section_to_entry(
     if _SAMPLED_FALSE_RE.search(section):
         sampled = False
     elif _SAMPLED_TRUE_RE.search(section):
+        sampled = True
+    elif sampled is None and (
+        _SAMPLED_ACTION_RE.search(section)
+        or _PASS_EXPRESSION_RE.search(section)
+        or _PASSES_RE.search(section)
+        or _PASSES_WORD_RE.search(section)
+        or _NEEDLE_GAUGE_RE.search(section)
+        or _ROSE_RE.search(section)
+    ):
         sampled = True
     if sampled is not None:
         entry["sampled"] = sampled
@@ -397,29 +429,14 @@ def _apply_section_to_entry(
             elif global_gauge_evidence:
                 entry["_needle_gauge_evidence"] = global_gauge_evidence
 
-    passes_match = _PASSES_RE.search(section)
-    if passes_match:
-        passes = _to_int(passes_match.group(1))
-        if passes is not None:
-            if entry.get("number_of_passes") is None:
-                entry["number_of_passes"] = passes
-                entry["_number_of_passes_evidence"] = {
-                    "text": (passes_match.group(0) or "").strip(),
-                    "start": section_offset + int(passes_match.start()),
-                    "end": section_offset + int(passes_match.end()),
-                }
-    else:
-        word_match = _PASSES_WORD_RE.search(section)
-        if word_match:
-            passes = _WORD_NUMBERS.get(word_match.group(1).lower())
-            if passes is not None:
-                if entry.get("number_of_passes") is None:
-                    entry["number_of_passes"] = passes
-                    entry["_number_of_passes_evidence"] = {
-                        "text": (word_match.group(0) or "").strip(),
-                        "start": section_offset + int(word_match.start()),
-                        "end": section_offset + int(word_match.end()),
-                    }
+    passes, passes_match = _extract_pass_count(section)
+    if passes is not None and passes_match and entry.get("number_of_passes") is None:
+        entry["number_of_passes"] = passes
+        entry["_number_of_passes_evidence"] = {
+            "text": (passes_match.group(0) or "").strip(),
+            "start": section_offset + int(passes_match.start()),
+            "end": section_offset + int(passes_match.end()),
+        }
 
     # ROSE
     if _ROSE_RE.search(section):
@@ -537,7 +554,15 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
     global_passes_evidence: dict[str, Any] | None = None
     passes_match = _COMPLETENESS_PASSES_RE.search(text)
     if passes_match:
-        global_passes = _to_int(passes_match.group(1))
+        context_start = max(0, int(passes_match.start()) - 60)
+        context_end = min(len(text), int(passes_match.end()) + 120)
+        context = text[context_start:context_end].lower()
+        looks_like_total_across_stations = bool(
+            "total" in context
+            and re.search(r"\bacross\s+\d+\s+stations?\b|\btotal\b[^.\n]{0,80}\bstations?\b", context)
+        )
+        if not looks_like_total_across_stations:
+            global_passes = _to_int(passes_match.group(1))
         if global_passes is not None:
             global_passes_evidence = {
                 "text": (passes_match.group(0) or "").strip(),
@@ -647,6 +672,52 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
             default_sampled=True,
         )
 
+    # Bare station label lines are common in concise narratives, e.g.:
+    #   7: 6 passes (22G)
+    #   4L: 4 passes (22G)
+    #   11L: visualized
+    line_matches = list(_LINE_STATION_HEADER_RE.finditer(text))
+    for idx, match in enumerate(line_matches):
+        start = match.start()
+        end = line_matches[idx + 1].start() if idx + 1 < len(line_matches) else len(text)
+        raw_section = text[start:end]
+        leading_trim = len(raw_section) - len(raw_section.lstrip())
+        section_offset = start + leading_trim
+        section = raw_section.strip()
+        if section:
+            stop_match = _NON_STATION_STOP_RE.search(section)
+            if stop_match:
+                section = section[: stop_match.start()].strip()
+        if not section:
+            continue
+
+        station = _normalize_station_token(match.group("station") or "")
+        if not station:
+            continue
+
+        entry = by_station.get(station)
+        if entry is None:
+            entry = {"station": station}
+            by_station[station] = entry
+            order.append(station)
+
+        default_sampled = bool(
+            _SAMPLED_TRUE_RE.search(section)
+            or _SAMPLED_ACTION_RE.search(section)
+            or _PASSES_RE.search(section)
+            or _PASSES_WORD_RE.search(section)
+            or _NEEDLE_GAUGE_RE.search(section)
+            or _ROSE_RE.search(section)
+        )
+        _apply_section_to_entry(
+            entry,
+            section,
+            section_offset=section_offset,
+            global_gauge=global_gauge,
+            global_gauge_evidence=global_gauge_evidence,
+            default_sampled=True if default_sampled else None,
+        )
+
     # Site blocks ("Site 1: The 7 (subcarinal) node ...") often contain the best
     # per-station sampling counts and elastography narrative.
     site_blocks = list(_SITE_BLOCK_HEADER_RE.finditer(text))
@@ -688,17 +759,23 @@ def extract_linear_ebus_stations_detail(note_text: str) -> list[dict[str, Any]]:
             global_gauge_evidence=global_gauge_evidence,
         )
 
-        passes_match = _SITE_PASSES_RE.search(section)
-        if passes_match and entry.get("number_of_passes") is None:
-            try:
-                entry["number_of_passes"] = int(passes_match.group(1))
-                entry["_number_of_passes_evidence"] = {
-                    "text": (passes_match.group(0) or "").strip(),
-                    "start": section_offset + int(passes_match.start()),
-                    "end": section_offset + int(passes_match.end()),
-                }
-            except Exception:
-                pass
+        passes, passes_match = _extract_pass_count(section)
+        if passes is None:
+            site_passes_match = _SITE_PASSES_RE.search(section)
+            if site_passes_match:
+                try:
+                    passes = int(site_passes_match.group(1))
+                    passes_match = site_passes_match
+                except Exception:
+                    passes = None
+                    passes_match = None
+        if passes is not None and passes_match and entry.get("number_of_passes") is None:
+            entry["number_of_passes"] = passes
+            entry["_number_of_passes_evidence"] = {
+                "text": (passes_match.group(0) or "").strip(),
+                "start": section_offset + int(passes_match.start()),
+                "end": section_offset + int(passes_match.end()),
+            }
 
         if entry.get("elastography_pattern") is None:
             inferred = _infer_elastography_color_pattern(section)

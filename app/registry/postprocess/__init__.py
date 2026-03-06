@@ -3019,6 +3019,27 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if 1 <= n_val <= 20:
             each_station_passes = n_val
 
+    def _find_sampling_quote_for_station(station: str) -> str | None:
+        station_upper = (station or "").strip().upper()
+        if not station_upper:
+            return None
+        station_line_re = re.compile(
+            rf"(?i)^\s*{re.escape(station_upper)}\s*[:\-–]\s*.*$",
+            re.MULTILINE,
+        )
+        station_token_re = re.compile(rf"(?i)\b(?:station\s*)?{re.escape(station_upper)}\b")
+        specimen_re = re.compile(r"(?i)\b(?:tbna|fna|passes?|sampled|sampling|aspirat(?:e|ed|ion))\b")
+
+        for raw_line in (full_text or "").splitlines():
+            line = (raw_line or "").strip()
+            if not line:
+                continue
+            if station_line_re.search(line) and specimen_re.search(line):
+                return line
+            if station_token_re.search(line) and specimen_re.search(line):
+                return line
+        return None
+
     station_to_quote: dict[str, str] = {}
     for raw_line in (full_text or "").splitlines():
         line = (raw_line or "").strip()
@@ -3158,6 +3179,54 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if sampling_quote:
             station_to_quote.setdefault(station, sampling_quote)
 
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    granular = getattr(record, "granular_data", None)
+    stations_detail = getattr(granular, "linear_ebus_stations_detail", None) if granular is not None else None
+
+    sampled_stations_from_record: set[str] = set()
+    passes_from_detail: dict[str, int] = {}
+    if linear is not None:
+        for value in getattr(linear, "stations_sampled", None) or []:
+            token = str(value or "").strip().upper()
+            if not token:
+                continue
+            if normalize_station is not None:
+                token = normalize_station(token) or token
+            token = validate_station_format(str(token)) or str(token).strip().upper()
+            token = token.strip().upper()
+            if token:
+                sampled_stations_from_record.add(token)
+
+    if isinstance(stations_detail, list):
+        for detail in stations_detail:
+            sampled_flag = getattr(detail, "sampled", None)
+            if sampled_flag is False:
+                continue
+            station = getattr(detail, "station", None)
+            if not isinstance(station, str) or not station.strip():
+                continue
+            token = station.strip().upper()
+            if normalize_station is not None:
+                token = normalize_station(token) or token
+            token = validate_station_format(str(token)) or str(token).strip().upper()
+            token = token.strip().upper()
+            if not token:
+                continue
+            sampled_stations_from_record.add(token)
+            passes = getattr(detail, "number_of_passes", None)
+            try:
+                passes_int = int(passes) if passes not in (None, "", 0) else 0
+            except Exception:
+                passes_int = 0
+            if passes_int > 0 and token not in passes_from_detail:
+                passes_from_detail[token] = passes_int
+
+    for station in sorted(sampled_stations_from_record):
+        quote = _find_sampling_quote_for_station(station)
+        if quote:
+            station_to_quote.setdefault(station, quote)
+
     if not station_to_quote and each_station_passes is None:
         return warnings
 
@@ -3256,6 +3325,30 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
         if passes_set:
             warnings.append(
                 f"EBUS_NARRATIVE_RECONCILE: set passes={each_station_passes} for stations {sorted(set(passes_set))}"
+            )
+
+    detail_passes_set: list[str] = []
+    if passes_from_detail:
+        sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+        for event in node_events:
+            action = getattr(event, "action", None)
+            if action not in sampling_actions:
+                continue
+            station = getattr(event, "station", None)
+            if not isinstance(station, str) or not station.strip():
+                continue
+            key = station.strip().upper()
+            passes = passes_from_detail.get(key)
+            if not passes:
+                continue
+            if getattr(event, "passes", None) in (None, "", 0):
+                setattr(event, "passes", passes)
+                detail_passes_set.append(key)
+
+        if detail_passes_set:
+            setattr(linear, "node_events", node_events)
+            warnings.append(
+                f"EBUS_NARRATIVE_RECONCILE: backfilled passes from granular detail for {sorted(set(detail_passes_set))}"
             )
 
     return warnings
