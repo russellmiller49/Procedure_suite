@@ -3,7 +3,9 @@ from __future__ import annotations
 from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
 from app.extraction.postprocessing.clinical_guardrails import ClinicalGuardrails
 from app.registry.deterministic_extractors import (
+    extract_airway_stent,
     extract_endobronchial_biopsy,
+    extract_ipc,
 )
 from app.registry.schema.granular_models import EBUSStationDetail
 from app.registry.postprocess import reconcile_ebus_sampling_from_narrative
@@ -69,6 +71,38 @@ def test_extract_linear_ebus_stations_detail_sums_composite_pass_expression() ->
     assert by_station["10L"]["number_of_passes"] == 4
 
 
+def test_extract_linear_ebus_stations_detail_parses_zero_pass_station_table_without_hallucinating_sampling() -> None:
+    note_text = """
+    PROCEDURE TECHNIQUE:
+    A systematic hilar and mediastinal lymph node survey was carried out.
+    Sampling criteria (5mm short axis diameter) was met in station 11L lymph node.
+    Sampling by transbronchial needle aspiration was performed beginning with the 11L lymph node using an Olympus EBUSTBNA 21 gauge needle.
+    We then reintroduced the EBUS scope into the left lower lobe and visualized the mass abutting the airway and EBUS guided sampling was performed of the mass.
+    Station:\tEBUS Size (mm)\tNumber of passes\tROSE Findings
+    11Rs\t3.7\t0
+    11Ri\tN/A\t0
+    4R\t4.0\t0
+    2R\t3.3\t0
+    2L\t3.3\t0
+    4L\t3.7\t0
+    7\t4.9\t0
+    11L\t7.0\t6\tLymphocytes
+    Lung Mass\t31.5\t8\tMalignancy
+    """.strip()
+
+    details = extract_linear_ebus_stations_detail(note_text)
+    by_station = {row["station"]: row for row in details}
+
+    assert by_station["11Rs"]["sampled"] is False
+    assert by_station["11Rs"]["number_of_passes"] == 0
+    assert by_station["11L"]["sampled"] is True
+    assert by_station["11L"]["number_of_passes"] == 6
+    assert by_station["11L"]["rose_result"] == "Adequate lymphocytes"
+    assert by_station["Lung Mass"]["sampled"] is True
+    assert by_station["Lung Mass"]["number_of_passes"] == 8
+    assert by_station["Lung Mass"]["rose_result"] == "Malignant"
+
+
 def test_ebus_station_detail_clamps_out_of_range_pass_count() -> None:
     detail = EBUSStationDetail.model_validate({"station": "4R", "number_of_passes": 14})
     assert detail.number_of_passes == 10
@@ -110,6 +144,94 @@ def test_reconcile_ebus_sampling_uses_record_consistency_to_upgrade_node_events(
     assert linear.node_events[0].action == "needle_aspiration"
     assert linear.node_events[0].passes == 3
     assert any("EBUS_NARRATIVE_RECONCILE" in str(w) for w in warnings)
+
+
+def test_reconcile_ebus_sampling_ignores_zero_pass_station_table_rows() -> None:
+    note_text = """
+    A systematic hilar and mediastinal lymph node survey was carried out.
+    Sampling criteria (5mm short axis diameter) was met in station 11L lymph node.
+    Sampling by transbronchial needle aspiration was performed beginning with the 11L lymph node using an Olympus EBUSTBNA 21 gauge needle.
+    Station:\tEBUS Size (mm)\tNumber of passes\tROSE Findings
+    11Rs\t3.7\t0
+    11Ri\tN/A\t0
+    4R\t4.0\t0
+    2R\t3.3\t0
+    2L\t3.3\t0
+    4L\t3.7\t0
+    7\t4.9\t0
+    11L\t7.0\t6\tLymphocytes
+    Lung Mass\t31.5\t8\tMalignancy
+    """.strip()
+
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["11L"],
+                    "node_events": [
+                        {"station": "11L", "action": "needle_aspiration", "evidence_quote": "11L sampled"}
+                    ],
+                }
+            }
+        }
+    )
+
+    reconcile_ebus_sampling_from_narrative(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear is not None
+    assert linear.stations_sampled == ["11L"]
+    assert all(event.station == "11L" for event in (linear.node_events or []))
+
+
+def test_reconcile_ebus_sampling_accepts_3p_without_inventing_station_5() -> None:
+    note_text = """
+    The convex probe EBUS bronchoscope was introduced through the mouth.
+    A systematic hilar and mediastinal lymph node survey was carried out.
+    Sampling criteria (5mm short axis diameter PET avid) were met in station 11 L, 7, 3P lymph nodes.
+    Sampling by transbronchial needle aspiration was performed with the EBUS TBNA 21 gauge needle beginning with the 11 L lymph node, followed by the 7 lymph node, followed by the 3P lymph node.
+    A total of at least 5 biopsies were performed in each station.
+    ROSE evaluation yielded malignancy at station 7 and 3P.
+
+    Lymph nodes
+    3p: 4.0 mm; 4 passes
+    4R: <3mm;
+    4L: 3mm;
+    7: 7.6; 7passes
+    11Rs: 4.9 mm;
+    11Ri: 3.5 mm;
+    11L: 5.4mm; 6of passes
+    """.strip()
+
+    details = extract_linear_ebus_stations_detail(note_text)
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["11L"],
+                    "node_events": [
+                        {"station": "11L", "action": "needle_aspiration", "evidence_quote": "11L sampled"},
+                        {"station": "7", "action": "inspected_only", "evidence_quote": "7 measured"},
+                    ],
+                }
+            },
+            "granular_data": {
+                "linear_ebus_stations_detail": details,
+            },
+        }
+    )
+
+    reconcile_ebus_sampling_from_narrative(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear is not None
+    assert linear.stations_sampled == ["3P", "7", "11L"]
+    by_station = {str(event.station).upper(): event for event in (linear.node_events or []) if event.station}
+    assert by_station["3P"].action == "needle_aspiration"
+    assert by_station["7"].action == "needle_aspiration"
+    assert "5" not in by_station
 
 
 def test_clinical_guardrails_clear_negated_endobronchial_lesion_text() -> None:
@@ -383,3 +505,60 @@ def test_registry_to_cpt_counts_record_level_elastography_as_single_target_witho
 
     assert "76982" in codes
     assert "76983" not in codes
+
+
+def test_extract_airway_stent_prefers_tracheal_placement_context_over_wire_positioning() -> None:
+    note_text = """
+    A jag wire was introduced into the iGel and advanced to the LLL. The bronchoscope was removed and the jag wire left in place.
+    A bona stent 14 x 60 mm stent was deployed under direct visualization into the trachea.
+    Following deployment the stent was approximately 0.5 cm more distal than desired.
+    Stent revision was performed 0.5 cm proximally with forceps.
+    """.strip()
+
+    extracted = extract_airway_stent(note_text)
+
+    assert extracted["airway_stent"]["action"] == "Placement"
+    assert extracted["airway_stent"]["location"] == "Trachea"
+
+
+def test_registry_to_cpt_uses_tracheal_stent_family_and_suppresses_31573_for_txa() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "airway_stent": {
+                    "performed": True,
+                    "action": "Placement",
+                    "action_type": "placement",
+                    "location": "Trachea",
+                },
+                "therapeutic_injection": {
+                    "performed": True,
+                    "medication": "TXA",
+                },
+            }
+        }
+    )
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+
+    assert "31631" in codes
+    assert "31636" not in codes
+    assert "31573" not in codes
+    assert any("suppressing 31573" in str(w) for w in warnings)
+
+
+def test_extract_ipc_uses_side_checkbox_for_removal_templates() -> None:
+    note_text = """
+    PROCEDURE:
+    32552 Removal of indwelling tunneled pleural catheter with cuff
+    Side: 1 Right  0 Left
+    Reason for TPC removal:
+    1 Patient request and partial dislodgement
+    COMPLICATIONS:
+    1 None 0 Bleeding
+    """.strip()
+
+    extracted = extract_ipc(note_text)
+
+    assert extracted["ipc"]["action"] == "Removal"
+    assert extracted["ipc"]["side"] == "Right"

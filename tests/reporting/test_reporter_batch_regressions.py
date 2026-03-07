@@ -356,6 +356,110 @@ _FOCUSED_CASES: list[dict[str, Any]] = [
             "must_not_contain": [],
         },
     },
+    {
+        "id": "focused_blvr_ptx_watch_not_used_as_diagnosis",
+        "prompt": (
+            "BLVR valve placement LUL heterogeneous emphysema. Chartis CV negative. "
+            "Four Zephyr valves placed: LB1+2 size 5.5, LB3 size 5.5, LB4 size 4.0, LB5 size 4.0. "
+            "Complete lobar exclusion confirmed. No complications. Admitted for 3 day pneumothorax watch"
+        ),
+        "expected": {
+            "must_contain_groups": [["heterogeneous emphysema", "emphysema"], ["pneumothorax watch"]],
+            "must_not_contain": [
+                "PREOPERATIVE DIAGNOSIS\n\n3 day pneumothorax watch",
+                "POSTOPERATIVE DIAGNOSIS\n\n3 day pneumothorax watch",
+            ],
+        },
+    },
+    {
+        "id": "focused_airway_stent_removal_not_recast_as_placement_or_foreign_body",
+        "prompt": (
+            "Rigid and flex bronch for RMS metallic SEMS removal. Stent in place for 6 months post radiation. "
+            "Granulation tissue at proximal and distal ends. Used rat tooth forceps and cryo to extract stent in 3 pieces. "
+            "APC to granulation tissue. Airway patent post removal approximately 90% lumen. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["Airway Stent Removal / Revision", "stent removal"], ["granulation"], ["90%"]],
+            "must_not_contain": ["Airway Stent Placement", "A suspected foreign body was visualized"],
+        },
+    },
+    {
+        "id": "focused_mucus_plug_clearance_not_bal_fallback",
+        "prompt": (
+            "Therapeutic bronchoscopy for mucus plugging and lobar collapse in ICU patient. "
+            "Extensive thick mucus plugging bilateral lower lobes and RML. "
+            "Suctioning and lavage with saline and NAC. Restored patency to all lobar and segmental airways. "
+            "Chest xray post procedure showed near complete re-expansion. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["Therapeutic aspiration"], ["restored patency", "Patency was restored"], ["re-expansion", "reexpansion"]],
+            "must_not_contain": ["Bronchoalveolar lavage (BAL)", "Await final pathology"],
+        },
+    },
+    {
+        "id": "focused_whole_lung_lavage_future_contralateral_plan_preserved",
+        "prompt": (
+            "Flex bronch for whole lung lavage right side for PAP. Total lavage volume 15L warm saline. "
+            "Return initially turbid clearing to near clear by end. Patient tolerated well on double lumen ETT. "
+            "Left lung lavage planned for next week. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["Whole Lung Lavage"], ["15"], ["Contralateral lavage is planned", "next week"]],
+            "must_not_contain": ["See procedure details below", "Bronchoalveolar Lavage"],
+        },
+    },
+    {
+        "id": "focused_composite_robotic_thoracoscopy_keeps_pleural_component",
+        "prompt": (
+            "Combined robotic bronchoscopy and medical thoracoscopy. First: ion robotic bronch RLL 2.8cm mass, "
+            "navigation successful, radial probe concentric, CBCT confirmed, 5 needle biopsies ROSE + malignant, "
+            "4 cryobiopsies 1.1mm. Staging EBUS 7 (8.2mm) 5 passes 22g 25g ROSE malignant. "
+            "Then repositioned for right medical thoracoscopy for pleural effusion. 800ml drained. "
+            "Nodular parietal pleura, biopsies x6. Talc poudrage 4g. 24Fr chest tube placed. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["Pleural biopsies (6 specimens)"], ["Right diagnostic thoracoscopy", "Right Medical Thoracoscopy"], ["Talc poudrage", "4 g"]],
+            "must_not_contain": [],
+        },
+    },
+    {
+        "id": "focused_tunneled_pleural_catheter_total_drainage_preserved",
+        "prompt": (
+            "Tunneled pleural catheter placement right side for malignant pleural effusion. Ultrasound guided. "
+            "Safe triangle approach. Tunneled catheter placed with good drainage of 1500ml serous fluid. "
+            "Catheter secured and dressed. Drained additional 500ml over 2 hours. "
+            "Patient educated on home drainage. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["Fluid Removed: 2000 mL", "2.0 L of serous"], ["tunneled pleural catheter"]],
+            "must_not_contain": ["Other catheter", "0.5 L of pleural fluid drained during procedure."],
+        },
+    },
+    {
+        "id": "focused_ipc_removal_not_dwell_time_as_diagnosis",
+        "prompt": (
+            "Indwelling pleural catheter removal right side. Catheter in place for 4 months, spontaneous pleurodesis achieved. "
+            "No drainage in past 3 weeks. Cuff dissected free, catheter removed intact. "
+            "Site closed with suture. Dressing applied. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["spontaneous pleurodesis", "Spontaneous pleurodesis"], ["Tunneled Pleural Catheter Removal", "tunneled pleural catheter removal"]],
+            "must_not_contain": ["PREOPERATIVE DIAGNOSIS\n\n4 months", "Await final pathology"],
+        },
+    },
+    {
+        "id": "focused_ebus_plus_eusb_rendered_as_distinct_modalities",
+        "prompt": (
+            "EBUS-TBNA combined with EUS-B for complete mediastinal staging. "
+            "EBUS: 4R (7.8mm) 5 passes 22g 25g ROSE adequate, 7 (6.3mm) 4 passes 22g ROSE adequate. "
+            "EUS-B: 8 (9.2mm) 4 passes 22g ROSE adequate, 9 (7.1mm) 3 passes 22g ROSE adequate. "
+            "All stations negative for malignancy. No complications"
+        ),
+        "expected": {
+            "must_contain_groups": [["EBUS-TBNA"], ["EUS-B-guided", "EUS-B"], ["Station 4R", "Stations 4R"], ["Station 8", "Stations 8, 9"]],
+            "must_not_contain": [],
+        },
+    },
 ]
 
 
