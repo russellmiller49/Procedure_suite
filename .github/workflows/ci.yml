@@ -42,11 +42,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[api,dev]
+          python -m pip install -e ".[api,dev]"
       - name: Ruff
         run: ruff check .
       - name: Mypy
-        run: make typecheck
+        run: python -m mypy --cache-dir .mypy_cache proc_schemas config observability
       - name: Pytest
         run: pytest -q
       - name: Legacy golden eval (optional)
@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[api,dev]
+          python -m pip install -e ".[api,dev]"
       - name: Check Supabase secrets
         id: check_secrets
         run: |

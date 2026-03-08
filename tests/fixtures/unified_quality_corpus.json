@@ -1,0 +1,301 @@
+{
+  "fixture_name": "unified_quality_corpus",
+  "fixture_version": 1,
+  "schema_version": "unified_quality_corpus.v1",
+  "generated_at_utc": "2026-03-08T00:00:00Z",
+  "cases": [
+    {
+      "id": "checkbox_negative_blank_template_suppresses_procedures",
+      "tags": [
+        "checkbox_negation",
+        "pleural_placement_removal_inversion"
+      ],
+      "source_refs": [
+        "tests/registry/test_clinical_guardrails_checkbox_negative.py"
+      ],
+      "note_text": "0- Tunneled Pleural Catheter\n[ ] Chest tube\n0- Pneumothorax\n☐ Airway dilation\n",
+      "extraction_expectations": {
+        "must_not_have_codes": [
+          "32550",
+          "32551",
+          "31630"
+        ]
+      },
+      "reporter_expectations": {}
+    },
+    {
+      "id": "menu_header_leakage_eus_b_inspection_only",
+      "tags": [
+        "menu_header_leakage"
+      ],
+      "source_refs": [
+        "tests/registry/test_eus_b_sampling_regressions.py"
+      ],
+      "note_text": "EUS-B Findings\nA linear endobronchial ultrasound bronchoscope was advanced into the esophagus.\nLeft Hepatic Lobe was identified. Left Adrenal was identified.\nProcedure header: 43237 EGD and EUS inspection only.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "43237"
+        ],
+        "must_not_have_codes": [
+          "43238"
+        ]
+      },
+      "reporter_expectations": {
+        "must_not_contain": [
+          "FNA",
+          "sampled"
+        ]
+      }
+    },
+    {
+      "id": "inspection_only_stent_assessment_only",
+      "tags": [
+        "inspection_only_stents"
+      ],
+      "source_refs": [
+        "tests/registry/test_clinical_guardrails_stent_inspection.py"
+      ],
+      "note_text": "Initial airway inspection. Inspection shows a BMS that is patent in the RMSB with good aeration through the stent.\n",
+      "extraction_expectations": {
+        "must_not_have_codes": [
+          "31636",
+          "31638"
+        ]
+      },
+      "reporter_expectations": {
+        "must_not_contain": [
+          "Airway Stent Placement",
+          "Airway Stent Removal"
+        ]
+      }
+    },
+    {
+      "id": "ebus_staging_no_peripheral_tbna_contamination",
+      "tags": [
+        "ebus_peripheral_tbna_contamination"
+      ],
+      "source_refs": [
+        "tests/reporting/test_reporter_batch_regressions.py"
+      ],
+      "note_text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31652"
+        ],
+        "must_not_have_codes": [
+          "31629"
+        ],
+        "must_not_have_fields": {
+          "procedures_performed.peripheral_tbna.performed": true
+        }
+      },
+      "reporter_expectations": {
+        "must_contain_groups": [
+          [
+            "EBUS-TBNA Staging"
+          ],
+          [
+            "Station 4R",
+            "Station: 4R"
+          ],
+          [
+            "Station 7",
+            "Station: 7"
+          ]
+        ],
+        "must_not_contain": [
+          "\nTransbronchial Needle Aspiration\n"
+        ]
+      }
+    },
+    {
+      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
+      "tags": [
+        "tool_without_action"
+      ],
+      "source_refs": [
+        "AGENTS.md"
+      ],
+      "note_text": "Flexible bronchoscopy was performed for airway inspection. A snare and forceps were available on the field but were not used. No tumor debulking, tumor destruction, ablation, or resection was performed.\n",
+      "extraction_expectations": {
+        "must_not_have_codes": [
+          "31641",
+          "31640",
+          "31643"
+        ]
+      },
+      "reporter_expectations": {
+        "must_not_contain": [
+          "Mechanical debulking",
+          "Cryotherapy",
+          "Tumor destruction"
+        ]
+      }
+    },
+    {
+      "id": "blvr_valve_removal_not_foreign_body_removal",
+      "tags": [
+        "blvr_exchange_removal"
+      ],
+      "source_refs": [
+        "tests/reporting/test_reporter_batch_regressions.py"
+      ],
+      "note_text": "Endobronchial valve removal for persistent air leak. Previously placed Zephyr valves in the RUL were removed. No foreign body was present.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31648"
+        ],
+        "must_not_have_codes": [
+          "31635",
+          "31636"
+        ],
+        "must_have_fields": {
+          "procedures_performed.blvr.procedure_type": "Valve removal"
+        }
+      },
+      "reporter_expectations": {
+        "must_contain_groups": [
+          [
+            "Removal performed",
+            "valves removed"
+          ]
+        ],
+        "must_not_contain": [
+          "Chest Tube",
+          "foreign body"
+        ]
+      }
+    },
+    {
+      "id": "whole_lung_lavage_not_bal",
+      "tags": [
+        "wll_vs_bal"
+      ],
+      "source_refs": [
+        "tests/registry/test_extraction_quality_fixpack_batch4_march2026.py",
+        "tests/reporting/test_reporter_batch_regressions.py"
+      ],
+      "note_text": "Whole lung lavage (WLL) performed on the right lung for pulmonary alveolar proteinosis (PAP). Total lavage volume 15 L warmed saline; return initially turbid then clear.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "32997"
+        ],
+        "must_not_have_codes": [
+          "31624"
+        ],
+        "must_have_fields": {
+          "procedures_performed.whole_lung_lavage.performed": true
+        }
+      },
+      "reporter_expectations": {
+        "must_contain_groups": [
+          [
+            "Whole Lung Lavage",
+            "Whole lung lavage"
+          ],
+          [
+            "15",
+            "15.0"
+          ]
+        ],
+        "must_not_contain": [
+          "Bronchoalveolar Lavage"
+        ]
+      }
+    },
+    {
+      "id": "tunneled_pleural_catheter_removal_not_insertion",
+      "tags": [
+        "pleural_placement_removal_inversion"
+      ],
+      "source_refs": [
+        "tests/reporting/test_reporter_batch_regressions.py",
+        "tests/registry/test_regression_pack_updates_march_2026.py"
+      ],
+      "note_text": "Right indwelling pleural catheter (PleurX) removal today. Catheter removed intact. Spontaneous pleurodesis achieved. Site sutured.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "32552"
+        ],
+        "must_not_have_codes": [
+          "32550",
+          "32551"
+        ],
+        "must_have_fields": {
+          "pleural_procedures.ipc.action": "Removal"
+        }
+      },
+      "reporter_expectations": {
+        "must_contain_groups": [
+          [
+            "tunneled pleural catheter",
+            "PleurX"
+          ],
+          [
+            "removed"
+          ]
+        ],
+        "must_not_contain": [
+          "Chemical pleurodesis",
+          "Image-Guided Chest Tube",
+          "placement"
+        ]
+      }
+    },
+    {
+      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
+      "tags": [
+        "cryo_vs_forceps_confusion"
+      ],
+      "source_refs": [
+        "tests/registry/test_extraction_quality_fixpack_march2026.py"
+      ],
+      "note_text": "Robotic navigation bronchoscopy to a left lower lobe peripheral nodule was performed. Radial EBUS confirmed eccentric view. TBNA x3 and forceps biopsies x7 were obtained. Specimens: \"LLL TBNA\", \"LLL bx\".\n",
+      "extraction_expectations": {
+        "must_have_fields": {
+          "procedures_performed.peripheral_tbna.performed": true
+        },
+        "must_not_have_fields": {
+          "procedures_performed.transbronchial_cryobiopsy.performed": true,
+          "procedures_performed.endobronchial_biopsy.performed": true
+        }
+      },
+      "reporter_expectations": {
+        "must_not_contain": [
+          "Cryobiopsy",
+          "cryobiopsy",
+          "1.1 mm probe"
+        ]
+      }
+    },
+    {
+      "id": "peripheral_rose_not_misattributed_to_ebus",
+      "tags": [
+        "reporter_rose_misattribution"
+      ],
+      "source_refs": [
+        "tests/reporting/test_reporter_regressions.py"
+      ],
+      "note_text": "Peripheral lesion sampling ROSE: site 1 and 3 atypical cells. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. EBUS staging was completed with stations 4R and 7 sampled.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31652"
+        ],
+        "must_not_have_codes": [
+          "31629"
+        ]
+      },
+      "reporter_expectations": {
+        "must_contain_groups": [
+          [
+            "Station 4R",
+            "Station: 4R"
+          ]
+        ],
+        "must_not_contain": [
+          "ROSE Results:"
+        ]
+      }
+    }
+  ]
+}
