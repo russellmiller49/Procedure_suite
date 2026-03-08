@@ -1,0 +1,100 @@
+{
+  "schema_version": "reporter_seed_llm_fixture.v1",
+  "cases": [
+    {
+      "id": "seed_from_text_ebus_station7",
+      "masked_prompt_text": "EBUS biopsied station 7",
+      "record": {
+        "procedures_performed": {
+          "linear_ebus": {
+            "performed": true,
+            "stations_sampled": [
+              "7"
+            ],
+            "node_events": [
+              {
+                "station": "7",
+                "action": "needle_aspiration",
+                "evidence_quote": "EBUS biopsied station 7"
+              }
+            ]
+          }
+        }
+      },
+      "cpt_codes": [
+        "31652"
+      ],
+      "warnings": [],
+      "needs_review": false,
+      "accepted_findings": 1,
+      "dropped_findings": 0
+    },
+    {
+      "id": "seed_from_text_thoracentesis_cxr_ordered",
+      "masked_prompt_text": "Left thoracentesis performed under ultrasound guidance at the 7th intercostal space along the mid-axillary line. A total of 900 mL of serous fluid was removed. A post-procedure chest x-ray was ordered.",
+      "record": {
+        "sedation": {
+          "type": "Local Only"
+        },
+        "pleural_procedures": {
+          "thoracentesis": {
+            "performed": true,
+            "side": "Left",
+            "guidance": "Ultrasound"
+          }
+        }
+      },
+      "cpt_codes": [
+        "32555"
+      ],
+      "warnings": [],
+      "needs_review": false,
+      "accepted_findings": 1,
+      "dropped_findings": 0
+    },
+    {
+      "id": "seed_from_text_ion_nav_tbna_cryo",
+      "masked_prompt_text": "Ion bronchoscopy RUL 2.2 cm nodule. Tool in lesion confirmed with CBCT. TBNA and cryobiopsy. ROSE + for malignancy",
+      "record": {
+        "clinical_context": {
+          "lesion_size_mm": 22.0,
+          "bronchus_sign": "Not assessed"
+        },
+        "equipment": {
+          "fluoroscopy_used": true,
+          "navigation_platform": "Ion",
+          "cbct_used": true
+        },
+        "procedures_performed": {
+          "diagnostic_bronchoscopy": {
+            "performed": true,
+            "inspection_findings": "lesion confirmed with CBCT"
+          },
+          "peripheral_tbna": {
+            "performed": true,
+            "targets_sampled": [
+              "RUL"
+            ]
+          },
+          "navigational_bronchoscopy": {
+            "performed": true
+          },
+          "transbronchial_cryobiopsy": {
+            "performed": false
+          }
+        }
+      },
+      "cpt_codes": [
+        "31627",
+        "31629",
+        "77012"
+      ],
+      "warnings": [
+        "LLM_FINDINGS_DROPPED: missing_action_intent index=2 key='transbronchial_cryobiopsy'"
+      ],
+      "needs_review": false,
+      "accepted_findings": 2,
+      "dropped_findings": 1
+    }
+  ]
+}
