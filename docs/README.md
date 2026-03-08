@@ -35,6 +35,7 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 
 - [`docs/INSTALLATION.md`](INSTALLATION.md) — environment setup, model downloads, LLM provider configuration.
 - [`docs/DEVELOPMENT.md`](DEVELOPMENT.md) — source-of-truth dev rules, module ownership, test practices.
+- [`docs/QUALITY_GATES.md`](QUALITY_GATES.md) — PR vs nightly quality gates, baselines, and reporter promotion rules.
 - [`docs/MAKEFILE_COMMANDS.md`](MAKEFILE_COMMANDS.md) — canonical `make` target reference.
 - [`docs/Production_Readiness_Review.md`](Production_Readiness_Review.md) — operational readiness checklist (historical, still useful).
 

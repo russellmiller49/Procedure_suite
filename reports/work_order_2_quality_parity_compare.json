@@ -1,0 +1,166 @@
+{
+  "schema_version": "procedure_suite.quality_parity.v1",
+  "input_path": "tests/fixtures/unified_quality_corpus.json",
+  "before_path": "reports/work_order_2_quality_parity_before.json",
+  "after_path": "reports/work_order_2_quality_parity_after.json",
+  "summary": {
+    "before_cases": 10,
+    "after_cases": 10,
+    "legacy_changed_cases": 0,
+    "legacy_summary_equal": true,
+    "quality_metadata_cases": 10
+  },
+  "legacy_changed_cases": [],
+  "quality_metadata_cases": [
+    {
+      "id": "blvr_valve_removal_not_foreign_body_removal",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 5
+      }
+    },
+    {
+      "id": "checkbox_negative_blank_template_suppresses_procedures",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 1
+      }
+    },
+    {
+      "id": "ebus_staging_no_peripheral_tbna_contamination",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 9
+      }
+    },
+    {
+      "id": "inspection_only_stent_assessment_only",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 4
+      }
+    },
+    {
+      "id": "menu_header_leakage_eus_b_inspection_only",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 2
+      }
+    },
+    {
+      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 5
+      }
+    },
+    {
+      "id": "peripheral_rose_not_misattributed_to_ebus",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 6
+      }
+    },
+    {
+      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 1
+      }
+    },
+    {
+      "id": "tunneled_pleural_catheter_removal_not_insertion",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 4
+      }
+    },
+    {
+      "id": "whole_lung_lavage_not_bal",
+      "quality": {
+        "quality_phase_order": [
+          "masked_text_prep",
+          "deterministic_uplift",
+          "narrative_template_reconciliation",
+          "precision_guardrails",
+          "evidence_verification",
+          "cpt_derivation",
+          "omission_audit"
+        ],
+        "quality_signal_count": 2
+      }
+    }
+  ]
+}

@@ -11,9 +11,14 @@ on:
         required: false
         default: false
         type: boolean
+      run_full_pytest:
+        description: 'Run the full pytest suite'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
-  tests:
+  quality-pr:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,14 +52,43 @@ jobs:
         run: ruff check .
       - name: Mypy
         run: make typecheck
+      - name: PR Quality Gates
+        run: |
+          python ops/tools/run_quality_gates.py --tier pr --output-dir reports/ci/pr
+      - name: Publish PR Quality Summary
+        if: always()
+        run: |
+          if [ -f reports/ci/pr/summary.md ]; then
+            cat reports/ci/pr/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload PR Quality Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gates-pr
+          path: reports/ci/pr
+
+  full-pytest:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_full_pytest)
+    needs: quality-pr
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .[api,dev]
       - name: Pytest
         run: pytest -q
-      - name: Legacy golden eval (optional)
-        run: |
-          python ml/scripts/eval_golden.py --limit 25
-      - name: vNext golden quote eval (optional)
-        run: |
-          python ml/scripts/eval_golden_vNext_quotes.py --fail-under 95
 
   supabase-integration:
     runs-on: ubuntu-latest
@@ -64,7 +98,7 @@ jobs:
     if: |
       (github.event_name == 'workflow_dispatch' && inputs.run_supabase_tests) ||
       (github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'rjm')
-    needs: tests  # Only run after main tests pass
+    needs: quality-pr
     strategy:
       matrix:
         python-version: ["3.11"]

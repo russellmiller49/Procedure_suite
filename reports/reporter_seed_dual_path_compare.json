@@ -1,0 +1,169 @@
+{
+  "schema_version": "procedure_suite.reporter_seed_compare.v1",
+  "kind": "reporter_seed_compare",
+  "created_at": "2026-03-08T05:13:59.785813+00:00",
+  "left_seed_path": "registry_extract_fields",
+  "right_seed_path": "llm_findings",
+  "left_report_path": "reports/reporter_seed_registry_extract_fields_baseline.json",
+  "right_report_path": "reports/reporter_seed_llm_findings_baseline.json",
+  "summary_diff": {
+    "avg_text_similarity": {
+      "left": 0.8921,
+      "right": 0.8921,
+      "delta": 0.0
+    },
+    "required_section_coverage": {
+      "left": 1.0,
+      "right": 1.0,
+      "delta": 0.0
+    },
+    "avg_cpt_jaccard": {
+      "left": 1.0,
+      "right": 1.0,
+      "delta": 0.0
+    },
+    "avg_performed_flag_f1": {
+      "left": 1.0,
+      "right": 1.0,
+      "delta": 0.0
+    },
+    "critical_extra_flag_rate": {
+      "left": 0.0,
+      "right": 0.0,
+      "delta": 0.0
+    },
+    "strict_render_fallback_rate": {
+      "left": 1.0,
+      "right": 1.0,
+      "delta": 0.0
+    },
+    "forbidden_artifact_case_rate": {
+      "left": 0.0,
+      "right": 0.0,
+      "delta": 0.0
+    },
+    "avg_seed_warning_count": {
+      "left": 0.0,
+      "right": 0.3333,
+      "delta": 0.3333
+    },
+    "avg_accepted_findings": {
+      "left": 0.0,
+      "right": 1.3333,
+      "delta": 1.3333
+    },
+    "avg_dropped_findings": {
+      "left": 0.0,
+      "right": 0.3333,
+      "delta": 0.3333
+    }
+  },
+  "counts": {
+    "total_cases": 3,
+    "critical_presence_mismatch_cases": 0,
+    "right_worse_fallback_cases": 0
+  },
+  "per_case_diff": [
+    {
+      "id": "seed_from_text_ebus_station7",
+      "left": {
+        "seed_path": "registry_extract_fields",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "procedures_performed.diagnostic_bronchoscopy.performed",
+          "procedures_performed.linear_ebus.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "right": {
+        "seed_path": "llm_findings",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "procedures_performed.diagnostic_bronchoscopy.performed",
+          "procedures_performed.linear_ebus.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "delta": {
+        "cpt_jaccard": 0.0,
+        "performed_flag_f1": 0.0,
+        "seed_warning_count": 0
+      },
+      "critical_presence_equal": true
+    },
+    {
+      "id": "seed_from_text_ion_nav_tbna_cryo",
+      "left": {
+        "seed_path": "registry_extract_fields",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "procedures_performed.diagnostic_bronchoscopy.performed",
+          "procedures_performed.navigational_bronchoscopy.performed",
+          "procedures_performed.peripheral_tbna.performed",
+          "procedures_performed.transbronchial_cryobiopsy.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "right": {
+        "seed_path": "llm_findings",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "procedures_performed.diagnostic_bronchoscopy.performed",
+          "procedures_performed.navigational_bronchoscopy.performed",
+          "procedures_performed.peripheral_tbna.performed",
+          "procedures_performed.transbronchial_cryobiopsy.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "delta": {
+        "cpt_jaccard": 0.0,
+        "performed_flag_f1": 0.0,
+        "seed_warning_count": 1
+      },
+      "critical_presence_equal": true
+    },
+    {
+      "id": "seed_from_text_thoracentesis_cxr_ordered",
+      "left": {
+        "seed_path": "registry_extract_fields",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "pleural_procedures.thoracentesis.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "right": {
+        "seed_path": "llm_findings",
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [
+          "pleural_procedures.thoracentesis.performed"
+        ],
+        "render_fallback_used": true,
+        "forbidden_artifact_hits": [],
+        "error": null
+      },
+      "delta": {
+        "cpt_jaccard": 0.0,
+        "performed_flag_f1": 0.0,
+        "seed_warning_count": 0
+      },
+      "critical_presence_equal": true
+    }
+  ]
+}

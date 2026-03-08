@@ -1,0 +1,444 @@
+from __future__ import annotations
+
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+
+QUALITY_EVAL_SCHEMA_VERSION = "procedure_suite.quality_eval.v1"
+
+
+def datetime_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def normalize_code(code: str) -> str:
+    raw = (code or "").strip()
+    if not raw:
+        return ""
+    return raw.lstrip("+").strip()
+
+
+def get_path(obj: Any, path: str) -> Any:
+    current = obj
+    for part in (path or "").split("."):
+        if not part:
+            continue
+        key = part
+        index: int | None = None
+        if "[" in part and part.endswith("]"):
+            key, _, remainder = part.partition("[")
+            try:
+                index = int(remainder[:-1])
+            except ValueError:
+                return None
+        if isinstance(current, dict):
+            current = current.get(key)
+        else:
+            return None
+        if index is not None:
+            if not isinstance(current, list) or index >= len(current):
+                return None
+            current = current[index]
+    return current
+
+
+def load_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_unified_quality_corpus(path: Path) -> dict[str, Any]:
+    payload = load_json(path)
+    if not isinstance(payload, dict):
+        raise ValueError(f"Unified quality corpus must be a JSON object: {path}")
+    cases = payload.get("cases")
+    if not isinstance(cases, list):
+        raise ValueError(f"Unified quality corpus missing cases[]: {path}")
+    return payload
+
+
+def detect_input_format(path: Path) -> str:
+    if path.suffix.lower() == ".jsonl":
+        return "reporter_gold_jsonl"
+    if path.is_dir():
+        return "legacy_golden_dir"
+    payload = load_json(path)
+    if isinstance(payload, dict) and isinstance(payload.get("cases"), list):
+        return "unified_quality_corpus"
+    if isinstance(payload, list):
+        return "legacy_golden_file"
+    if isinstance(payload, dict):
+        for key in ("entries", "records", "data"):
+            if isinstance(payload.get(key), list):
+                return "legacy_golden_file"
+    raise ValueError(f"Unable to detect supported evaluation input format for {path}")
+
+
+def evaluate_extraction_expectations(
+    *,
+    case: dict[str, Any],
+    record_dict: dict[str, Any],
+    predicted_codes: list[str],
+    warnings: list[str],
+) -> dict[str, Any]:
+    expectations = case.get("extraction_expectations") or {}
+    case_id = str(case.get("id") or "unknown_case")
+    tags = [str(tag) for tag in (case.get("tags") or []) if str(tag)]
+    normalized_codes = sorted({code for code in (normalize_code(item) for item in predicted_codes) if code})
+    warning_text = [str(item) for item in warnings if str(item)]
+    failures: list[dict[str, Any]] = []
+
+    for code in expectations.get("must_have_codes") or []:
+        normalized = normalize_code(str(code))
+        if normalized and normalized not in normalized_codes:
+            failures.append(
+                {
+                    "type": "missing_code",
+                    "message": f"missing required code {normalized}",
+                    "expected": normalized,
+                    "actual": normalized_codes,
+                }
+            )
+
+    for code in expectations.get("must_not_have_codes") or []:
+        normalized = normalize_code(str(code))
+        if normalized and normalized in normalized_codes:
+            failures.append(
+                {
+                    "type": "unexpected_code",
+                    "message": f"found forbidden code {normalized}",
+                    "expected": None,
+                    "actual": normalized,
+                }
+            )
+
+    checked_fields: dict[str, Any] = {}
+    for path, expected in (expectations.get("must_have_fields") or {}).items():
+        actual = get_path(record_dict, str(path))
+        checked_fields[str(path)] = actual
+        if actual != expected:
+            failures.append(
+                {
+                    "type": "field_mismatch",
+                    "message": f"{path} expected {expected!r} but got {actual!r}",
+                    "field": str(path),
+                    "expected": expected,
+                    "actual": actual,
+                }
+            )
+
+    for path, forbidden in (expectations.get("must_not_have_fields") or {}).items():
+        actual = get_path(record_dict, str(path))
+        checked_fields[str(path)] = actual
+        if actual == forbidden:
+            failures.append(
+                {
+                    "type": "forbidden_field_value",
+                    "message": f"{path} unexpectedly matched forbidden value {forbidden!r}",
+                    "field": str(path),
+                    "expected": f"!= {forbidden!r}",
+                    "actual": actual,
+                }
+            )
+
+    for snippet in expectations.get("must_have_warnings_substrings") or []:
+        needle = str(snippet)
+        if needle and not any(needle.lower() in warning.lower() for warning in warning_text):
+            failures.append(
+                {
+                    "type": "missing_warning_substring",
+                    "message": f"missing warning substring {needle!r}",
+                    "expected": needle,
+                    "actual": warning_text,
+                }
+            )
+
+    for snippet in expectations.get("must_not_have_warnings_substrings") or []:
+        needle = str(snippet)
+        if needle and any(needle.lower() in warning.lower() for warning in warning_text):
+            failures.append(
+                {
+                    "type": "unexpected_warning_substring",
+                    "message": f"found forbidden warning substring {needle!r}",
+                    "expected": None,
+                    "actual": warning_text,
+                }
+            )
+
+    return {
+        "id": case_id,
+        "tags": tags,
+        "status": "failed" if failures else "passed",
+        "metrics": {
+            "code_count": len(normalized_codes),
+            "warning_count": len(warning_text),
+        },
+        "actual": {
+            "predicted_codes": normalized_codes,
+            "checked_fields": checked_fields,
+            "warnings": warning_text,
+        },
+        "failures": failures,
+    }
+
+
+def evaluate_reporter_expectations(
+    *,
+    case: dict[str, Any],
+    markdown: str,
+    report_payload: dict[str, Any] | None = None,
+    error: Exception | None = None,
+) -> dict[str, Any]:
+    expectations = case.get("reporter_expectations") or {}
+    case_id = str(case.get("id") or "unknown_case")
+    tags = [str(tag) for tag in (case.get("tags") or []) if str(tag)]
+    failures: list[dict[str, Any]] = []
+    matched_groups: list[list[str]] = []
+    forbidden_hits: list[str] = []
+    report_payload = report_payload or {}
+
+    if error is not None:
+        failures.append(
+            {
+                "type": "render_error",
+                "message": str(error),
+                "expected": None,
+                "actual": None,
+            }
+        )
+    else:
+        for group in expectations.get("must_contain_groups") or []:
+            options = [str(item) for item in group if str(item)]
+            if not options:
+                continue
+            matched = [option for option in options if option in markdown]
+            if matched:
+                matched_groups.append(matched)
+                continue
+            failures.append(
+                {
+                    "type": "missing_group",
+                    "message": f"missing any expected reporter substring from {options!r}",
+                    "expected": options,
+                    "actual": markdown[:400],
+                }
+            )
+
+        for token in expectations.get("must_not_contain") or []:
+            forbidden = str(token)
+            if forbidden and forbidden in markdown:
+                forbidden_hits.append(forbidden)
+                failures.append(
+                    {
+                        "type": "forbidden_substring",
+                        "message": f"found forbidden reporter substring {forbidden!r}",
+                        "expected": None,
+                        "actual": forbidden,
+                    }
+                )
+
+    return {
+        "id": case_id,
+        "tags": tags,
+        "status": "failed" if failures else "passed",
+        "metrics": {
+            "markdown_length": len(markdown),
+        },
+        "actual": {
+            "matched_groups": matched_groups,
+            "forbidden_hits": forbidden_hits,
+            "markdown_preview": markdown[:400],
+            "render_mode": report_payload.get("render_mode"),
+            "fallback_used": bool(report_payload.get("fallback_used")),
+            "reporter_errors": report_payload.get("reporter_errors") or [],
+        },
+        "failures": failures,
+    }
+
+
+def build_standard_report(
+    *,
+    kind: str,
+    input_path: str,
+    output_path: str | None,
+    source_format: str,
+    corpus_name: str,
+    per_case: list[dict[str, Any]],
+    summary_metrics: dict[str, Any] | None = None,
+    runtime: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    sorted_cases = sorted(per_case, key=lambda item: str(item.get("id") or ""))
+    failures: list[dict[str, Any]] = []
+    for case in sorted_cases:
+        for failure in case.get("failures") or []:
+            failure_entry = {
+                "id": case.get("id"),
+                "tags": case.get("tags") or [],
+            }
+            failure_entry.update(failure)
+            failures.append(failure_entry)
+
+    total_cases = len(sorted_cases)
+    passed_cases = sum(1 for case in sorted_cases if case.get("status") == "passed")
+    failed_cases = total_cases - passed_cases
+    pass_rate = round((passed_cases / total_cases), 4) if total_cases else 0.0
+
+    summary = {
+        "total_cases": total_cases,
+        "passed_cases": passed_cases,
+        "failed_cases": failed_cases,
+        "pass_rate": pass_rate,
+        "metrics": summary_metrics or {},
+    }
+
+    if kind == "reporter":
+        metrics = summary["metrics"]
+        summary["successful_cases"] = metrics.get("successful_cases", passed_cases)
+        summary["avg_similarity"] = metrics.get("avg_similarity", 0.0)
+        summary["min_similarity"] = metrics.get("min_similarity", 0.0)
+        summary["generated_full_shell_rate"] = metrics.get("generated_full_shell_rate", 0.0)
+    elif kind == "extraction":
+        metrics = summary["metrics"]
+        summary["exact_code_match_cases"] = metrics.get("exact_code_match_cases", passed_cases)
+        summary["exact_code_match_rate"] = metrics.get("exact_code_match_rate", pass_rate)
+
+    return {
+        "schema_version": QUALITY_EVAL_SCHEMA_VERSION,
+        "kind": kind,
+        "input_path": input_path,
+        "output_path": output_path,
+        "source_format": source_format,
+        "corpus_name": corpus_name,
+        "created_at": datetime_now_iso(),
+        "runtime": runtime or {},
+        "summary": summary,
+        "per_case": sorted_cases,
+        "failures": failures,
+    }
+
+
+def configure_offline_quality_eval_env() -> None:
+    env_overrides = {
+        "PROCSUITE_SKIP_DOTENV": "1",
+        "PROCSUITE_SKIP_WARMUP": "1",
+        "ENABLE_UMLS_LINKER": "false",
+        "PROCSUITE_PIPELINE_MODE": "extraction_first",
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SCHEMA_VERSION": "v3",
+        "REGISTRY_AUDITOR_SOURCE": "raw_ml",
+        "REGISTRY_USE_STUB_LLM": "1",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        "REPORTER_DISABLE_LLM": "1",
+        "OPENAI_OFFLINE": "1",
+        "GEMINI_OFFLINE": "1",
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+    }
+    for key, value in env_overrides.items():
+        os.environ[key] = value
+
+
+def build_reporting_strategy():
+    configure_offline_quality_eval_env()
+
+    from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
+    from app.reporting.engine import (
+        ReporterEngine,
+        _load_procedure_order,
+        default_schema_registry,
+        default_template_registry,
+    )
+    from app.reporting.inference import InferenceEngine
+    from app.reporting.validation import ValidationEngine
+
+    templates = default_template_registry()
+    schemas = default_schema_registry()
+    reporter_engine = ReporterEngine(
+        templates,
+        schemas,
+        procedure_order=_load_procedure_order(),
+    )
+    inference_engine = InferenceEngine()
+    validation_engine = ValidationEngine(templates, schemas)
+
+    class _NeverRegistryEngine:
+        def run(self, *_args, **_kwargs):  # noqa: ANN001
+            raise AssertionError("Quality eval should provide registry_data explicitly")
+
+    return ReportingStrategy(
+        reporter_engine=reporter_engine,
+        inference_engine=inference_engine,
+        validation_engine=validation_engine,
+        registry_engine=_NeverRegistryEngine(),
+        simple_strategy=SimpleReporterStrategy(),
+    )
+
+
+def render_report_markdown(
+    *,
+    note_text: str,
+    registry_service: Any,
+    reporting_strategy: Any,
+) -> tuple[str, dict[str, Any]]:
+    extraction_result = registry_service.extract_fields_extraction_first(note_text)
+    record_dict = extraction_result.record.model_dump(exclude_none=True)
+    report_payload = reporting_strategy.render(text=note_text, registry_data={"record": record_dict})
+    markdown = str(report_payload.get("markdown") or "")
+    return markdown, report_payload
+
+
+def load_jsonl_rows(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for raw_line in handle:
+            line = raw_line.strip()
+            if not line:
+                continue
+            rows.append(json.loads(line))
+    return rows
+
+
+def maybe_write_report(path: Path | None, report: dict[str, Any]) -> None:
+    if path is None:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8")
+
+
+def iter_legacy_golden_entries(path: Path, pattern: str) -> list[tuple[str, dict[str, Any]]]:
+    paths: list[Path] = []
+    if path.is_file():
+        paths = [path]
+    elif path.exists() and path.is_dir():
+        paths = sorted(path.glob(pattern))
+    output: list[tuple[str, dict[str, Any]]] = []
+    for item in paths:
+        payload = load_json(item)
+        entries: list[dict[str, Any]]
+        if isinstance(payload, list):
+            entries = [row for row in payload if isinstance(row, dict)]
+        elif isinstance(payload, dict):
+            entries = []
+            for key in ("entries", "records", "data"):
+                value = payload.get(key)
+                if isinstance(value, list):
+                    entries = [row for row in value if isinstance(row, dict)]
+                    break
+            else:
+                raise ValueError(f"Unrecognized fixture JSON shape in {item}")
+        else:
+            raise ValueError(f"Unrecognized fixture JSON shape in {item}")
+        for entry in entries:
+            output.append((str(item), entry))
+    return output
+
+
+def normalize_text(text: str) -> str:
+    lines = [line.strip() for line in (text or "").splitlines() if line.strip()]
+    return "\n".join(lines)
+
+
+def missing_sections(report_text: str, required_headers: list[str]) -> list[str]:
+    upper = (report_text or "").upper()
+    return [header for header in required_headers if header.upper() not in upper]

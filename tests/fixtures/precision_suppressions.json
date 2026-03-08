@@ -1,0 +1,506 @@
+{
+  "fixture_name": "precision_suppressions",
+  "schema_version": "precision_suppressions.v1",
+  "generated_at_utc": "2026-03-08T00:00:00Z",
+  "cases": [
+    {
+      "id": "menu_header_leakage_bal_suppress",
+      "family": "menu_header_leakage",
+      "kind": "suppress",
+      "note_text": "PROCEDURE:\n31624 Bronchoalveolar lavage\nPROCEDURE IN DETAIL:\nFlexible bronchoscopy was performed. Inspection only. No lavage was performed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "bal": {
+            "performed": true,
+            "location": "RML"
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31624"],
+        "must_have_fields": {
+          "procedures_performed.bal.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_MENU_HEADER_LEAKAGE: procedures_performed.bal.performed",
+          "EVIDENCE_HARD_FAIL: procedures_performed.bal.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_MENU_HEADER_LEAKAGE", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "menu_header_leakage_bal_preserve",
+      "family": "menu_header_leakage",
+      "kind": "preserve",
+      "note_text": "PROCEDURE:\n31624 Bronchoalveolar lavage\nPROCEDURE IN DETAIL:\nFlexible bronchoscopy was performed. Bronchoalveolar lavage was performed in the right middle lobe.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "bal": {
+            "performed": true,
+            "location": "RML"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31624"],
+        "must_have_fields": {
+          "procedures_performed.bal.performed": true
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_MENU_HEADER_LEAKAGE"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "unchecked_template_items_suppress",
+      "family": "unchecked_template_items",
+      "kind": "suppress",
+      "note_text": "0- Tunneled Pleural Catheter\n[ ] Chest tube\n☐ Airway dilation\n",
+      "seed_record": {
+        "pleural_procedures": {
+          "ipc": {
+            "performed": true,
+            "action": "Insertion",
+            "side": "Right"
+          },
+          "chest_tube": {
+            "performed": true,
+            "action": "Insertion",
+            "side": "Right"
+          }
+        },
+        "procedures_performed": {
+          "airway_dilation": {
+            "performed": true,
+            "method": "Balloon"
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["32550", "32551", "31630"],
+        "must_have_fields": {
+          "pleural_procedures.ipc.performed": false,
+          "pleural_procedures.chest_tube.performed": false,
+          "procedures_performed.airway_dilation.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_TEMPLATE_CHECKBOX: pleural_procedures.chest_tube.performed",
+          "SUPPRESSION_TEMPLATE_CHECKBOX: pleural_procedures.ipc.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_TEMPLATE_CHECKBOX", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "unchecked_template_items_preserve",
+      "family": "unchecked_template_items",
+      "kind": "preserve",
+      "note_text": "[ ] Chest tube\nPROCEDURE IN DETAIL:\nA 14 Fr right pigtail chest tube was inserted into the pleural space and secured.\n",
+      "seed_record": {
+        "pleural_procedures": {
+          "chest_tube": {
+            "performed": true,
+            "action": "Insertion",
+            "side": "Right",
+            "tube_type": "Pigtail"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["32556"],
+        "must_have_fields": {
+          "pleural_procedures.chest_tube.performed": true
+        },
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "inspection_only_stents_suppress",
+      "family": "inspection_only_stents",
+      "kind": "suppress",
+      "note_text": "Initial airway inspection. Inspection shows a BMS that is patent in the RMSB with good aeration through the stent.\nStent patency evaluated and position reassessed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "airway_stent": {
+            "performed": true,
+            "action": "Placement",
+            "location": "Right mainstem"
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31636", "31638"],
+        "must_have_fields": {
+          "procedures_performed.airway_stent.action": "Assessment only",
+          "procedures_performed.airway_stent.performed": true
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_DEVICE_STATUS_ONLY: procedures_performed.airway_stent.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_DEVICE_STATUS_ONLY"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "inspection_only_stents_preserve",
+      "family": "inspection_only_stents",
+      "kind": "preserve",
+      "note_text": "Rigid bronchoscopy performed. A covered metallic stent was deployed in the right mainstem bronchus and position confirmed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "airway_stent": {
+            "performed": true,
+            "action": "Placement",
+            "location": "Right mainstem"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31636"],
+        "must_have_fields": {
+          "procedures_performed.airway_stent.action": "Placement"
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_DEVICE_STATUS_ONLY"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "ebus_peripheral_tbna_contamination_suppress",
+      "family": "ebus_peripheral_tbna_contamination",
+      "kind": "suppress",
+      "note_text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x6 for mediastinal staging.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "peripheral_tbna": {
+            "performed": true,
+            "targets_sampled": ["Lung mass"]
+          },
+          "linear_ebus": {
+            "performed": true,
+            "stations_sampled": ["4R", "7"]
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31629"],
+        "must_have_fields": {
+          "procedures_performed.peripheral_tbna.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_EBUS_TBNA_CONTAMINATION: procedures_performed.peripheral_tbna.performed",
+          "EVIDENCE_HARD_FAIL: procedures_performed.peripheral_tbna.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_EBUS_TBNA_CONTAMINATION", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "ebus_peripheral_tbna_contamination_preserve",
+      "family": "ebus_peripheral_tbna_contamination",
+      "kind": "preserve",
+      "note_text": "Linear EBUS staging sampled stations 4R and 7. Robotic bronchoscopy then sampled the right upper lobe peripheral nodule with TBNA x4.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "peripheral_tbna": {
+            "performed": true,
+            "targets_sampled": ["Right upper lobe peripheral nodule"]
+          },
+          "linear_ebus": {
+            "performed": true,
+            "stations_sampled": ["4R", "7"]
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31629", "31652"],
+        "must_have_fields": {
+          "procedures_performed.peripheral_tbna.performed": true
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_EBUS_TBNA_CONTAMINATION"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "tool_without_action_suppress",
+      "family": "tool_without_action",
+      "kind": "suppress",
+      "note_text": "Flexible bronchoscopy was performed. A snare and forceps were available on the field but were not used. No tumor debulking, ablation, or resection was performed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "mechanical_debulking": {
+            "performed": true,
+            "location": "Trachea"
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31640"],
+        "must_have_fields": {
+          "procedures_performed.mechanical_debulking.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_TOOL_WITHOUT_ACTION: procedures_performed.mechanical_debulking.performed",
+          "EVIDENCE_HARD_FAIL: procedures_performed.mechanical_debulking.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_TOOL_WITHOUT_ACTION", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "tool_without_action_preserve",
+      "family": "tool_without_action",
+      "kind": "preserve",
+      "note_text": "Rigid bronchoscopy performed. Endobronchial tumor in the distal trachea was mechanically debulked with forceps until the airway was recanalized.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "mechanical_debulking": {
+            "performed": true,
+            "location": "Trachea"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31640"],
+        "must_have_fields": {
+          "procedures_performed.mechanical_debulking.performed": true
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_TOOL_WITHOUT_ACTION"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "pleural_removal_inversion_suppress",
+      "family": "pleural_placement_removal_inversion",
+      "kind": "suppress",
+      "note_text": "Right indwelling pleural catheter (PleurX) removal today. Catheter removed intact. Site sutured.\n",
+      "seed_record": {
+        "pleural_procedures": {
+          "ipc": {
+            "performed": true,
+            "action": "Insertion",
+            "side": "Right",
+            "catheter_brand": "PleurX",
+            "tunneled": true
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["32552"],
+        "must_not_have_codes": ["32550"],
+        "must_have_fields": {
+          "pleural_procedures.ipc.action": "Removal"
+        },
+        "must_have_warnings_substrings": [
+          "IPC removal language detected; preserving pleural_procedures.ipc as Removal."
+        ],
+        "must_have_signal_codes": ["IPC_REMOVAL_LANGUAGE_DETECTED_PRESERVING_PLEURAL_PROCEDURES_IPC_AS_REMOVAL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "pleural_removal_inversion_preserve",
+      "family": "pleural_placement_removal_inversion",
+      "kind": "preserve",
+      "note_text": "Right tunneled pleural catheter (PleurX) was inserted and secured. 1100 mL serous fluid drained.\n",
+      "seed_record": {
+        "pleural_procedures": {
+          "ipc": {
+            "performed": true,
+            "action": "Insertion",
+            "side": "Right",
+            "catheter_brand": "PleurX",
+            "tunneled": true
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["32550"],
+        "must_have_fields": {
+          "pleural_procedures.ipc.action": "Insertion"
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_PLEURAL_REMOVAL_INVERSION"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "bal_vs_wll_suppress",
+      "family": "bal_vs_wll",
+      "kind": "suppress",
+      "note_text": "Whole lung lavage (WLL) performed on the right lung for pulmonary alveolar proteinosis. Total lavage volume 15 L warmed saline.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "bal": {
+            "performed": true,
+            "location": "RLL"
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31624"],
+        "must_have_fields": {
+          "procedures_performed.bal.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_WLL_NOT_BAL: procedures_performed.bal.performed",
+          "EVIDENCE_HARD_FAIL: procedures_performed.bal.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_WLL_NOT_BAL", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "bal_vs_wll_preserve",
+      "family": "bal_vs_wll",
+      "kind": "preserve",
+      "note_text": "Flexible bronchoscopy performed. Bronchoalveolar lavage was performed in the right middle lobe and specimens were sent.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "bal": {
+            "performed": true,
+            "location": "RML"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31624"],
+        "must_have_fields": {
+          "procedures_performed.bal.performed": true
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_WLL_NOT_BAL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "blvr_removal_not_initial_suppress",
+      "family": "blvr_exchange_removal",
+      "kind": "suppress",
+      "note_text": "Endobronchial valve removal for persistent air leak. Previously placed Zephyr valves in the RUL were removed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "blvr": {
+            "performed": true,
+            "procedure_type": "Valve placement",
+            "number_of_valves": 3,
+            "target_lobe": "RUL",
+            "valve_type": "Zephyr (Pulmonx)"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31648"],
+        "must_not_have_codes": ["31647", "31651"],
+        "must_have_fields": {
+          "procedures_performed.blvr.procedure_type": "Valve removal"
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL: procedures_performed.blvr.procedure_type"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "blvr_initial_placement_preserve",
+      "family": "blvr_exchange_removal",
+      "kind": "preserve",
+      "note_text": "Three Zephyr valves were deployed in the right upper lobe for bronchoscopic lung volume reduction.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "blvr": {
+            "performed": true,
+            "procedure_type": "Valve placement",
+            "number_of_valves": 3,
+            "target_lobe": "RUL",
+            "valve_type": "Zephyr (Pulmonx)"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31647"],
+        "must_have_fields": {
+          "procedures_performed.blvr.procedure_type": "Valve placement"
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "blvr_exchange_needs_manual_review",
+      "family": "blvr_exchange_removal",
+      "kind": "ambiguous",
+      "note_text": "BLVR valve exchange. Removed 4 Zephyr valves from the RUL and replaced with 4 new Zephyr valves.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "blvr": {
+            "performed": true,
+            "procedure_type": "Valve placement",
+            "number_of_valves": 4,
+            "target_lobe": "RUL",
+            "valve_type": "Zephyr (Pulmonx)"
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31648"],
+        "must_not_have_codes": ["31647", "31651"],
+        "must_have_fields": {
+          "procedures_performed.blvr.procedure_type": "Valve removal"
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL: procedures_performed.blvr.procedure_type",
+          "NEEDS_REVIEW: BLVR_EXCHANGE_AMBIGUOUS: procedures_performed.blvr.procedure_type"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL", "NEEDS_REVIEW"],
+        "needs_manual_review": true
+      }
+    },
+    {
+      "id": "cryo_vs_forceps_suppress",
+      "family": "cryo_vs_forceps",
+      "kind": "suppress",
+      "note_text": "Robotic bronchoscopy sampled the left lower lobe peripheral nodule with forceps biopsies x7. No cryobiopsy was performed.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "transbronchial_cryobiopsy": {
+            "performed": true,
+            "locations_biopsied": ["LLL"]
+          }
+        }
+      },
+      "expectations": {
+        "must_not_have_codes": ["31628"],
+        "must_have_fields": {
+          "procedures_performed.transbronchial_cryobiopsy.performed": false
+        },
+        "must_have_warnings_substrings": [
+          "SUPPRESSION_CRYO_FORCEPS_DISAMBIGUATION: procedures_performed.transbronchial_cryobiopsy.performed",
+          "EVIDENCE_HARD_FAIL: procedures_performed.transbronchial_cryobiopsy.performed"
+        ],
+        "must_have_signal_codes": ["SUPPRESSION_CRYO_FORCEPS_DISAMBIGUATION", "EVIDENCE_HARD_FAIL"],
+        "needs_manual_review": false
+      }
+    },
+    {
+      "id": "cryo_vs_forceps_preserve",
+      "family": "cryo_vs_forceps",
+      "kind": "preserve",
+      "note_text": "Robotic bronchoscopy sampled the right lower lobe lesion with forceps biopsies x2 and transbronchial cryobiopsies x4. Freeze time was 6 seconds.\n",
+      "seed_record": {
+        "procedures_performed": {
+          "transbronchial_cryobiopsy": {
+            "performed": true,
+            "locations_biopsied": ["RLL"]
+          }
+        }
+      },
+      "expectations": {
+        "must_have_codes": ["31628"],
+        "must_have_fields": {
+          "procedures_performed.transbronchial_cryobiopsy.performed": true
+        },
+        "must_not_have_signal_codes": ["SUPPRESSION_CRYO_FORCEPS_DISAMBIGUATION"],
+        "needs_manual_review": false
+      }
+    }
+  ]
+}

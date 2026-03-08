@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
+from typing import Callable, Literal
 
 from rapidfuzz.fuzz import partial_ratio
 
@@ -19,6 +21,8 @@ from app.registry.schema.ip_v3_extraction import IPRegistryV3, ProcedureEvent
 
 _NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")
 _WS_RE = re.compile(r"\s+")
+_CHECKBOX_RE = re.compile(r"(?:^\s*0\s*[—\-]\s*|\[[ xX]?\]|[☐☑☒])", re.IGNORECASE)
+_CPT_RE = re.compile(r"\b(?:[37]\d{4}|32\d{3})\b")
 _STENT_TOKEN_RE = re.compile(r"\bstent(?:ing|s)?\b", re.IGNORECASE)
 _STENT_NEGATION_WINDOW_RE = re.compile(
     r"\b(?:"
@@ -35,10 +39,115 @@ _STENT_NEGATION_WINDOW_RE = re.compile(
     r")\b",
     re.IGNORECASE,
 )
+_SECTION_INLINE_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9 /()_-]{1,60})\s*:\s*(.*)$")
+_SECTION_ONLY_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9 /()_-]{1,60})\s*:\s*$")
+
+_NARRATIVE_SECTIONS = {
+    "procedure in detail",
+    "description of procedure",
+    "procedure description",
+    "technique",
+    "operative note",
+    "procedure details",
+    "detail",
+}
+_FINDINGS_SECTIONS = {"findings", "eus-b findings", "ebus findings"}
+_IMPRESSION_SECTIONS = {"impression", "conclusion"}
+_HISTORY_PLAN_SECTIONS = {
+    "hpi",
+    "history",
+    "history of present illness",
+    "assessment",
+    "plan",
+    "indication",
+    "indications",
+    "reason for procedure",
+}
+_HEADER_METADATA_SECTIONS = {
+    "procedure",
+    "procedures",
+    "procedure(s)",
+    "pre/post dx",
+    "pre op diagnosis",
+    "post op diagnosis",
+    "anesthesia",
+    "estimated blood loss",
+    "disposition",
+}
+_DISALLOWED_CPT_SOURCE_TYPES = {
+    "template_checkbox",
+    "menu_or_code_block",
+    "history_or_plan",
+    "device_status_only",
+    "header_or_metadata",
+    "impression",
+}
+_STATUS_ONLY_STENT_RE = re.compile(
+    r"(?i)\b(?:known|existing|previously\s+placed|prior)\b[^.\n]{0,80}\bstent\b|"
+    r"\bstent\b[^.\n]{0,80}\b(?:patent|well[-\s]?seated|well positioned|good position|remained in good position|in good position|stable)\b|"
+    r"\b(?:patency|position)\s+(?:evaluated|reassessed)\b"
+)
+_STENT_ACTION_RE = re.compile(
+    r"(?i)\b(?:stent\b[^.\n]{0,60}\b(?:placed|deployed|inserted|removed|exchanged|repositioned|revised)|"
+    r"(?:placed|deployed|inserted|removed|exchanged|repositioned|revised)\b[^.\n]{0,60}\bstent)\b"
+)
+_PERIPHERAL_TARGET_RE = re.compile(
+    r"(?i)\b(?:lesion|nodule|mass|target|peripheral|rul|rml|rll|lul|lll|lingula|segment|subsegment|lung)\b"
+)
+_EBUS_STATION_RE = re.compile(
+    r"(?i)\b(?:station\s+\d+[a-z]?|2r|2l|4r|4l|7|10[rl]|11[rl](?:s|i)?|12[rl]|mediastinal|hilar|lymph\s+node|nodal)\b"
+)
+_LINEAR_EBUS_RE = re.compile(r"(?i)\b(?:linear\s+ebus|ebus[-\s]?tbna|convex\s+probe\s+ebus|cp-?ebus)\b")
+_TBNA_ACTION_RE = re.compile(r"(?i)\b(?:tbna|fna|needle\s+aspirat(?:e|ion)|passes?|sampled|biops(?:y|ies|ied))\b")
+_BAL_ACTION_RE = re.compile(
+    r"(?i)\b(?:bronchoalveolar lavage|bal)\b[^.\n]{0,80}\b(?:performed|obtained|sent|done)\b|"
+    r"\b(?:performed|obtained|done)\b[^.\n]{0,80}\b(?:bronchoalveolar lavage|bal)\b"
+)
+_WLL_RE = re.compile(r"(?i)\b(?:whole lung lavage|wll)\b")
+_CRYO_ACTION_RE = re.compile(
+    r"(?i)\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|freeze\s+time|cryoprobe)\b"
+)
+_CRYO_OBTAINED_RE = re.compile(r"(?i)\b(?:obtained|performed|sample(?:s|d)?|biops(?:y|ies))\b")
+_CRYO_SAMPLE_COUNT_RE = re.compile(
+    r"(?i)\b(?:\d+|one|two|three|four|five|six)\s+cryobiops(?:y|ies)\b|\b(?:1\.1|1\.7|1\.9|2\.4)\s*mm\s+probe\b"
+)
+_CRYO_NEGATED_RE = re.compile(
+    r"(?i)\b(?:no|not|without)\b[^.\n]{0,40}\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|cryoprobe)\b"
+    r"|\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|cryoprobe)\b[^.\n]{0,40}\b(?:not\s+performed|was\s+not\s+performed|not\s+done|deferred|aborted)\b"
+)
+_FORCEPS_BIOPSY_RE = re.compile(r"(?i)\bforceps\s+biops(?:y|ies)\b")
+_CAO_ACTION_RE = re.compile(
+    r"(?i)\b(?:debulk(?:ed|ing)?|mechanical debulking|tumou?r removed|tumou?r debulking|recanalization|ablat(?:ed|ion)|destruct(?:ion|ed)|treated)\b"
+)
+_CAO_TARGET_RE = re.compile(r"(?i)\b(?:tumou?r|lesion|mass|obstruction|airway)\b")
+_TOOL_ONLY_RE = re.compile(r"(?i)\b(?:snare|forceps|cryoprobe|apc|argon plasma coagulation|laser|electrocautery)\b")
+_IPC_TARGET_RE = re.compile(
+    r"(?i)\b(?:pleurx|aspira|ipc|indwelling\s+pleural\s+catheter|tunneled\s+pleural\s+catheter|tunnelled\s+pleural\s+catheter)\b"
+)
+_CHEST_TUBE_TARGET_RE = re.compile(r"(?i)\b(?:chest\s+tube|tube\s+thoracostomy|pigtail|wayne)\b")
+_PLEURAL_REMOVAL_RE = re.compile(
+    r"(?i)\b(?:removed intact|catheter removed|removal today|cuff dissected free|d/?c chest tube|chest tube removed|removal of .*chest tube|pleurx removal|indwelling pleural catheter removal|exchange(?:d)? over a wire|catheter exchanged)\b"
+)
+_PLEURAL_INSERTION_RE = re.compile(
+    r"(?i)\b(?:placed|inserted|placement|new catheter inserted|new chest tube placed)\b"
+)
+_BLVR_REMOVAL_RE = re.compile(r"(?i)\b(?:valve removal|valves? removed|removed \d+ .* valves?|remove(?:d)? .*valves?)\b")
+_BLVR_EXCHANGE_RE = re.compile(r"(?i)\b(?:exchange|exchanged|replaced with|removed .* and replaced)\b")
+_BLVR_PLACEMENT_RE = re.compile(r"(?i)\b(?:valves? (?:placed|deployed|inserted)|placed .* valves?|deployed .* valves?)\b")
+_THERMAL_ACTION_RE = re.compile(r"(?i)\b(?:ablat(?:ed|ion)|destruct(?:ion|ed)|coagulat(?:ed|ion)|treated)\b")
+_CAO_NEGATED_RE = re.compile(
+    r"(?i)\b(?:not used|were not used|no tumou?r debulking|no tumou?r destruction|no ablation|no resection|not performed)\b"
+)
 
 EVIDENCE_REQUIRED: dict[str, str] = {
     # HARD: flip performed=false when unsupported
     "procedures_performed.airway_dilation.performed": "HARD",
+    "procedures_performed.bal.performed": "HARD",
+    "procedures_performed.peripheral_tbna.performed": "HARD",
+    "procedures_performed.transbronchial_cryobiopsy.performed": "HARD",
+    "procedures_performed.mechanical_debulking.performed": "HARD",
+    "procedures_performed.cryotherapy.performed": "HARD",
+    "procedures_performed.thermal_ablation.performed": "HARD",
     "pleural_procedures.chest_tube.performed": "HARD",
     "pleural_procedures.ipc.performed": "HARD",
     # airway_stent is HARD only when not "Assessment only"
@@ -46,6 +155,33 @@ EVIDENCE_REQUIRED: dict[str, str] = {
     # REVIEW: keep but require manual review
     "procedures_performed.rigid_bronchoscopy.performed": "REVIEW",
 }
+
+
+@dataclass(frozen=True)
+class NoteLine:
+    start: int
+    end: int
+    text: str
+    section: str
+
+
+@dataclass(frozen=True)
+class TypedEvidenceSupport:
+    text: str
+    start: int
+    end: int
+    line_text: str
+    section: str
+    source_type: Literal[
+        "narrative_procedure",
+        "findings",
+        "impression",
+        "template_checkbox",
+        "menu_or_code_block",
+        "history_or_plan",
+        "device_status_only",
+        "header_or_metadata",
+    ]
 
 
 def normalize_text(text: str) -> str:
@@ -140,6 +276,210 @@ def _verify_quote_in_text(quote: str, full_text: str, *, fuzzy_threshold: int = 
 
     score = partial_ratio(normalized_quote, normalize_text(full_text or ""))
     return score >= fuzzy_threshold
+
+
+def _normalize_section_name(raw: str) -> str:
+    value = re.sub(r"\s+", " ", str(raw or "").strip().lower())
+    return value.rstrip(":")
+
+
+def _build_note_lines(full_text: str) -> list[NoteLine]:
+    lines: list[NoteLine] = []
+    current_section = ""
+    offset = 0
+    for raw_line in (full_text or "").splitlines(keepends=True):
+        line = raw_line.rstrip("\n")
+        stripped = line.strip()
+        line_section = current_section
+        inline = _SECTION_INLINE_RE.match(line)
+        if inline:
+            candidate = _normalize_section_name(inline.group(1))
+            if candidate in (
+                _NARRATIVE_SECTIONS
+                | _FINDINGS_SECTIONS
+                | _IMPRESSION_SECTIONS
+                | _HISTORY_PLAN_SECTIONS
+                | _HEADER_METADATA_SECTIONS
+            ):
+                current_section = candidate
+                line_section = candidate
+        else:
+            header = _SECTION_ONLY_RE.match(line)
+            if header:
+                candidate = _normalize_section_name(header.group(1))
+                current_section = candidate
+                line_section = candidate
+        lines.append(NoteLine(start=offset, end=offset + len(line), text=line, section=line_section))
+        offset += len(raw_line)
+    return lines
+
+
+def _line_for_pos(lines: list[NoteLine], pos: int) -> NoteLine | None:
+    for line in lines:
+        if line.start <= pos <= line.end:
+            return line
+    return lines[-1] if lines else None
+
+
+def _locate_quote(full_text: str, quote: str) -> tuple[int, int] | None:
+    needle = str(quote or "").strip()
+    if not needle:
+        return None
+    idx = (full_text or "").find(needle)
+    if idx >= 0:
+        return idx, idx + len(needle)
+    lowered_text = (full_text or "").lower()
+    lowered_quote = needle.lower()
+    idx = lowered_text.find(lowered_quote)
+    if idx >= 0:
+        return idx, idx + len(needle)
+    return None
+
+
+def _classify_source_type(line: NoteLine | None) -> Literal[
+    "narrative_procedure",
+    "findings",
+    "impression",
+    "template_checkbox",
+    "menu_or_code_block",
+    "history_or_plan",
+    "device_status_only",
+    "header_or_metadata",
+]:
+    if line is None:
+        return "header_or_metadata"
+    line_text = line.text.strip()
+    lower = line_text.lower()
+    section = _normalize_section_name(line.section)
+    if _CHECKBOX_RE.search(line_text):
+        return "template_checkbox"
+    if _STATUS_ONLY_STENT_RE.search(line_text):
+        return "device_status_only"
+    if section in _HISTORY_PLAN_SECTIONS or re.search(r"(?i)\b(?:history of|plan to|planned|possible|prior|previously)\b", line_text):
+        return "history_or_plan"
+    if section in _IMPRESSION_SECTIONS:
+        return "impression"
+    if section in _FINDINGS_SECTIONS:
+        return "findings"
+    if (
+        section in _HEADER_METADATA_SECTIONS
+        or _CPT_RE.search(line_text)
+        or "\t" in line_text
+        or lower.startswith(("* ", "- ", "0-", "1 "))
+    ):
+        if section in {"procedure", "procedures", "procedure(s)"} and re.search(r"(?i)\boptional\b", line_text):
+            return "menu_or_code_block"
+        if section in _NARRATIVE_SECTIONS:
+            return "narrative_procedure"
+        return "menu_or_code_block" if section in {"procedure", "procedures", "procedure(s)"} else "header_or_metadata"
+    if section in _NARRATIVE_SECTIONS:
+        return "narrative_procedure"
+    if section in _HEADER_METADATA_SECTIONS:
+        return "header_or_metadata"
+    return "narrative_procedure"
+
+
+def _typed_support_from_span(full_text: str, lines: list[NoteLine], text: str, start: int, end: int) -> TypedEvidenceSupport:
+    line = _line_for_pos(lines, start)
+    return TypedEvidenceSupport(
+        text=text,
+        start=start,
+        end=end,
+        line_text=(line.text.strip() if line else text.strip()),
+        section=(line.section if line else ""),
+        source_type=_classify_source_type(line),
+    )
+
+
+def _collect_typed_supports(
+    record: RegistryRecord,
+    full_text: str,
+    field_path: str,
+    prefixes: list[str],
+    anchor_patterns: list[str],
+) -> list[TypedEvidenceSupport]:
+    lines = _build_note_lines(full_text)
+    supports: list[TypedEvidenceSupport] = []
+    seen: set[tuple[int, int, str]] = set()
+
+    for prefix in prefixes:
+        evidence = getattr(record, "evidence", None) or {}
+        spans = evidence.get(prefix) if isinstance(evidence, dict) else None
+        if not isinstance(spans, list):
+            continue
+        for span in spans:
+            if not isinstance(span, Span):
+                continue
+            text = (span.text or "").strip()
+            if not text:
+                continue
+            start = int(span.start) if span.start is not None else None
+            end = int(span.end) if span.end is not None else None
+            if start is None or end is None:
+                located = _locate_quote(full_text, text)
+                if located is None:
+                    continue
+                start, end = located
+            key = (start, end, text)
+            if key in seen:
+                continue
+            seen.add(key)
+            supports.append(_typed_support_from_span(full_text, lines, text, start, end))
+
+    for pattern in anchor_patterns:
+        for match in re.finditer(pattern, full_text or "", re.IGNORECASE):
+            text = (match.group(0) or "").strip()
+            if not text:
+                continue
+            key = (int(match.start()), int(match.end()), text)
+            if key in seen:
+                continue
+            seen.add(key)
+            supports.append(
+                _typed_support_from_span(
+                    full_text,
+                    lines,
+                    text,
+                    int(match.start()),
+                    int(match.end()),
+                )
+            )
+
+    supports.sort(key=lambda item: (item.start, item.end, item.text))
+    return supports
+
+
+def _first_allowed_support(
+    supports: list[TypedEvidenceSupport],
+    validator: Callable[[TypedEvidenceSupport], bool] | None = None,
+) -> TypedEvidenceSupport | None:
+    for support in supports:
+        if support.source_type in _DISALLOWED_CPT_SOURCE_TYPES:
+            continue
+        if validator is not None and not validator(support):
+            continue
+        return support
+    return None
+
+
+def _disallowed_source_warning(field_path: str, supports: list[TypedEvidenceSupport]) -> str | None:
+    source_types = {support.source_type for support in supports}
+    if "template_checkbox" in source_types:
+        return f"SUPPRESSION_TEMPLATE_CHECKBOX: {field_path}"
+    if "device_status_only" in source_types:
+        return f"SUPPRESSION_DEVICE_STATUS_ONLY: {field_path}"
+    if {"menu_or_code_block", "header_or_metadata"} & source_types:
+        return f"SUPPRESSION_MENU_HEADER_LEAKAGE: {field_path}"
+    if "history_or_plan" in source_types:
+        return f"SUPPRESSION_HISTORY_PLAN_LEAKAGE: {field_path}"
+    if "impression" in source_types:
+        return f"SUPPRESSION_IMPRESSION_ONLY: {field_path}"
+    return None
+
+
+def _append_unique_warning(warnings: list[str], text: str) -> None:
+    if text not in warnings:
+        warnings.append(text)
 
 
 def _evidence_texts_for_prefix(record: RegistryRecord, prefix: str) -> list[str]:
@@ -275,6 +615,49 @@ def _stent_is_negated(full_text: str) -> bool:
     return False
 
 
+def _supports_bal_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(_BAL_ACTION_RE.search(line)) and not _WLL_RE.search(line)
+
+
+def _supports_peripheral_tbna_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(_TBNA_ACTION_RE.search(line) and _PERIPHERAL_TARGET_RE.search(line))
+
+
+def _supports_cryobiopsy_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(
+        _CRYO_ACTION_RE.search(line)
+        and (_CRYO_OBTAINED_RE.search(line) or _CRYO_SAMPLE_COUNT_RE.search(line))
+        and not _CRYO_NEGATED_RE.search(line)
+    )
+
+
+def _supports_cao_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(
+        _CAO_ACTION_RE.search(line)
+        and not _CAO_NEGATED_RE.search(line)
+        and (_CAO_TARGET_RE.search(line) or _TOOL_ONLY_RE.search(line))
+    )
+
+
+def _supports_stent_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(_STENT_ACTION_RE.search(line))
+
+
+def _supports_ipc_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(_IPC_TARGET_RE.search(line) and (_PLEURAL_INSERTION_RE.search(line) or _PLEURAL_REMOVAL_RE.search(line)))
+
+
+def _supports_chest_tube_action(support: TypedEvidenceSupport) -> bool:
+    line = support.line_text or support.text
+    return bool(_CHEST_TUBE_TARGET_RE.search(line) and _PLEURAL_INSERTION_RE.search(line))
+
+
 def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tuple[RegistryRecord, list[str]]:
     """Apply Python-side guardrails against hallucinated performed events/details.
 
@@ -287,8 +670,41 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
     full_text = full_note_text or ""
 
     procedures = getattr(record, "procedures_performed", None)
+    pleural = getattr(record, "pleural_procedures", None)
     if procedures is None:
         return record, warnings
+
+    def _prefixes_for(field_path: str) -> list[str]:
+        return [field_path, field_path.rsplit(".", 1)[0]]
+
+    def _drop_prefixes(field_path: str) -> None:
+        for prefix in _prefixes_for(field_path):
+            _drop_evidence_prefix(record, prefix)
+
+    def _typed_supports(field_path: str, anchor_patterns: list[str]) -> list[TypedEvidenceSupport]:
+        return _collect_typed_supports(
+            record,
+            full_text,
+            field_path,
+            _prefixes_for(field_path),
+            anchor_patterns,
+        )
+
+    def _hard_suppress(
+        *,
+        field_path: str,
+        obj: object,
+        suppression_warning: str,
+        wipe_fields: dict[str, object] | None = None,
+    ) -> None:
+        if obj is None:
+            return
+        setattr(obj, "performed", False)
+        if wipe_fields:
+            _wipe_model_fields(obj, wipe_fields)
+        _drop_prefixes(field_path)
+        _append_unique_warning(warnings, suppression_warning)
+        _append_unique_warning(warnings, f"EVIDENCE_HARD_FAIL: {field_path}")
 
     # ------------------------------------------------------------------
     # High-risk: therapeutic aspiration (frequent false-positives)
@@ -332,10 +748,22 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
             setattr(trach, "device_name", None)
             warnings.append("WIPED_DEVICE_NAME_NOT_IN_TEXT: procedures_performed.percutaneous_tracheostomy.device_name")
 
+    bal = getattr(procedures, "bal", None)
+    peripheral_tbna = getattr(procedures, "peripheral_tbna", None)
+    cryobiopsy = getattr(procedures, "transbronchial_cryobiopsy", None)
+    mechanical_debulking = getattr(procedures, "mechanical_debulking", None)
+    cryotherapy = getattr(procedures, "cryotherapy", None)
+    thermal_ablation = getattr(procedures, "thermal_ablation", None)
+    blvr = getattr(procedures, "blvr", None)
+    stent = getattr(procedures, "airway_stent", None)
+    rigid = getattr(procedures, "rigid_bronchoscopy", None)
+    airway_dilation = getattr(procedures, "airway_dilation", None)
+    chest_tube = getattr(pleural, "chest_tube", None) if pleural is not None else None
+    ipc = getattr(pleural, "ipc", None) if pleural is not None else None
+
     # ------------------------------------------------------------------
     # High-risk: airway stent false positives (keyword present but explicitly not performed)
     # ------------------------------------------------------------------
-    stent = getattr(procedures, "airway_stent", None)
     if getattr(stent, "performed", None) is True:
         seed = extract_airway_stent(full_text) if full_text.strip() else {}
         action_supported = bool(seed.get("airway_stent", {}).get("performed") is True)
@@ -355,29 +783,187 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
             for field_name, value in wipe_fields.items():
                 if hasattr(stent, field_name):
                     setattr(stent, field_name, value)
-            prefixes = [
-                "procedures_performed.airway_stent",
-                "airway_stent",
-            ]
-            for prefix in prefixes:
-                _drop_evidence_prefix(record, prefix)
+            _drop_prefixes("procedures_performed.airway_stent.performed")
             warnings.append("NEGATION_GUARD: procedures_performed.airway_stent")
+
+    # ------------------------------------------------------------------
+    # Targeted source-typed suppressions / downgrades
+    # ------------------------------------------------------------------
+    if getattr(stent, "performed", None) is True:
+        stent_supports = _typed_supports(
+            "procedures_performed.airway_stent.performed",
+            [r"\bairway\s+stent\b", r"\bstent\b"],
+        )
+        if _first_allowed_support(stent_supports, validator=_supports_stent_action) is None and any(
+            support.source_type == "device_status_only" or _STATUS_ONLY_STENT_RE.search(support.line_text or support.text)
+            for support in stent_supports
+        ):
+            if hasattr(stent, "action"):
+                setattr(stent, "action", "Assessment only")
+            if hasattr(stent, "action_type"):
+                setattr(stent, "action_type", "assessment_only")
+            if hasattr(stent, "airway_stent_removal"):
+                setattr(stent, "airway_stent_removal", False)
+            if hasattr(stent, "deployment_successful"):
+                setattr(stent, "deployment_successful", None)
+            _append_unique_warning(warnings, "SUPPRESSION_DEVICE_STATUS_ONLY: procedures_performed.airway_stent.performed")
+            _append_unique_warning(
+                warnings,
+                "AUTO_CORRECTED: airway_stent downgraded to Assessment only due to device status-only evidence.",
+            )
+
+    if getattr(peripheral_tbna, "performed", None) is True:
+        tbna_supports = _typed_supports(
+            "procedures_performed.peripheral_tbna.performed",
+            [r"\b(?:tbna|fna|needle\s+aspirat(?:e|ion)|passes?|sampled)\b"],
+        )
+        if _first_allowed_support(tbna_supports, validator=_supports_peripheral_tbna_action) is None:
+            nodal_only = any(
+                _TBNA_ACTION_RE.search(support.line_text or support.text)
+                and (
+                    _EBUS_STATION_RE.search(support.line_text or support.text)
+                    or _LINEAR_EBUS_RE.search(support.line_text or support.text)
+                )
+                for support in tbna_supports
+            ) or bool((_EBUS_STATION_RE.search(full_text) or _LINEAR_EBUS_RE.search(full_text)) and _TBNA_ACTION_RE.search(full_text))
+            if nodal_only:
+                _hard_suppress(
+                    field_path="procedures_performed.peripheral_tbna.performed",
+                    obj=peripheral_tbna,
+                    suppression_warning="SUPPRESSION_EBUS_TBNA_CONTAMINATION: procedures_performed.peripheral_tbna.performed",
+                    wipe_fields={
+                        "targets_sampled": None,
+                        "needle_gauge": None,
+                        "passes_per_station": None,
+                        "passes_per_target": None,
+                        "location": None,
+                    },
+                )
+
+    if getattr(bal, "performed", None) is True:
+        bal_supports = _typed_supports(
+            "procedures_performed.bal.performed",
+            [r"\b(?:bronchoalveolar\s+lavage|bal)\b", r"\bwhole\s+lung\s+lavage\b", r"\bwll\b"],
+        )
+        if _first_allowed_support(bal_supports, validator=_supports_bal_action) is None and _WLL_RE.search(full_text):
+            _hard_suppress(
+                field_path="procedures_performed.bal.performed",
+                obj=bal,
+                suppression_warning="SUPPRESSION_WLL_NOT_BAL: procedures_performed.bal.performed",
+                wipe_fields={
+                    "location": None,
+                    "volume_instilled_ml": None,
+                    "return_volume_ml": None,
+                },
+            )
+
+    if getattr(cryobiopsy, "performed", None) is True:
+        cryo_supports = _typed_supports(
+            "procedures_performed.transbronchial_cryobiopsy.performed",
+            [r"\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|cryoprobe|freeze\s+time)\b"],
+        )
+        if _first_allowed_support(cryo_supports, validator=_supports_cryobiopsy_action) is None:
+            forceps_context = any(_FORCEPS_BIOPSY_RE.search(support.line_text or support.text) for support in cryo_supports) or bool(
+                _FORCEPS_BIOPSY_RE.search(full_text)
+            )
+            if forceps_context:
+                _hard_suppress(
+                    field_path="procedures_performed.transbronchial_cryobiopsy.performed",
+                    obj=cryobiopsy,
+                    suppression_warning=(
+                        "SUPPRESSION_CRYO_FORCEPS_DISAMBIGUATION: "
+                        "procedures_performed.transbronchial_cryobiopsy.performed"
+                    ),
+                    wipe_fields={
+                        "locations_biopsied": None,
+                        "probe_size_mm": None,
+                        "freeze_time_seconds": None,
+                        "number_of_biopsies": None,
+                    },
+                )
+
+    for field_path, obj, anchor_patterns, wipe_fields in (
+        (
+            "procedures_performed.mechanical_debulking.performed",
+            mechanical_debulking,
+            [r"\b(?:mechanical\s+debulking|debulk(?:ed|ing)?|rigid\s+coring)\b", r"\b(?:snare|forceps)\b"],
+            {"location": None, "indication": None},
+        ),
+        (
+            "procedures_performed.cryotherapy.performed",
+            cryotherapy,
+            [r"\b(?:cryotherap\w*|cryoextraction|cryodebridement|cryoprobe)\b"],
+            {"location": None, "indication": None},
+        ),
+        (
+            "procedures_performed.thermal_ablation.performed",
+            thermal_ablation,
+            [r"\b(?:apc|argon\s+plasma\s+coagulation|laser|electrocautery)\b", r"\b(?:ablat(?:ed|ion)|destruct(?:ion|ed))\b"],
+            {"location": None, "indication": None, "modality": None},
+        ),
+    ):
+        if getattr(obj, "performed", None) is not True:
+            continue
+        cao_supports = _typed_supports(field_path, anchor_patterns)
+        if _first_allowed_support(cao_supports, validator=_supports_cao_action) is not None:
+            continue
+        tool_only_context = any(_TOOL_ONLY_RE.search(support.line_text or support.text) for support in cao_supports) or bool(
+            _TOOL_ONLY_RE.search(full_text)
+        )
+        if tool_only_context or _CAO_NEGATED_RE.search(full_text):
+            _hard_suppress(
+                field_path=field_path,
+                obj=obj,
+                suppression_warning=f"SUPPRESSION_TOOL_WITHOUT_ACTION: {field_path}",
+                wipe_fields=wipe_fields,
+            )
+
+    if getattr(chest_tube, "performed", None) is True:
+        if _PLEURAL_REMOVAL_RE.search(full_text) and not _PLEURAL_INSERTION_RE.search(full_text):
+            _hard_suppress(
+                field_path="pleural_procedures.chest_tube.performed",
+                obj=chest_tube,
+                suppression_warning="SUPPRESSION_PLEURAL_REMOVAL_INVERSION: pleural_procedures.chest_tube.performed",
+                wipe_fields={
+                    "action": None,
+                    "side": None,
+                    "indication": None,
+                    "tube_type": None,
+                    "tube_size_fr": None,
+                    "guidance": None,
+                },
+            )
+
+    if getattr(ipc, "performed", None) is True:
+        if _PLEURAL_REMOVAL_RE.search(full_text) and not _PLEURAL_INSERTION_RE.search(full_text):
+            _append_unique_warning(warnings, "SUPPRESSION_PLEURAL_REMOVAL_INVERSION: pleural_procedures.ipc.performed")
+            prior_action = str(getattr(ipc, "action", "") or "").strip()
+            if hasattr(ipc, "action"):
+                setattr(ipc, "action", "Removal")
+
+    if getattr(blvr, "performed", None) is True:
+        has_blvr_removal = bool(_BLVR_REMOVAL_RE.search(full_text))
+        has_blvr_exchange = bool(_BLVR_EXCHANGE_RE.search(full_text))
+        has_blvr_placement = bool(_BLVR_PLACEMENT_RE.search(full_text))
+        if has_blvr_removal:
+            prior_type = str(getattr(blvr, "procedure_type", "") or "").strip()
+            if hasattr(blvr, "procedure_type"):
+                setattr(blvr, "procedure_type", "Valve removal")
+            if prior_type != "Valve removal":
+                _append_unique_warning(warnings, "SUPPRESSION_BLVR_EXCHANGE_NOT_INITIAL: procedures_performed.blvr.procedure_type")
+        if has_blvr_exchange and has_blvr_removal:
+            _append_unique_warning(warnings, "NEEDS_REVIEW: BLVR_EXCHANGE_AMBIGUOUS: procedures_performed.blvr.procedure_type")
 
     # ------------------------------------------------------------------
     # Evidence-required enforcement (HARD vs REVIEW)
     # ------------------------------------------------------------------
-    pleural = getattr(record, "pleural_procedures", None)
-    rigid = getattr(procedures, "rigid_bronchoscopy", None)
-    airway_dilation = getattr(procedures, "airway_dilation", None)
-    chest_tube = getattr(pleural, "chest_tube", None) if pleural is not None else None
-    ipc = getattr(pleural, "ipc", None) if pleural is not None else None
-
     def _enforce_boolean(
         *,
         field_path: str,
         obj: object,
         policy: str,
         anchor_patterns: list[str],
+        validator: Callable[[TypedEvidenceSupport], bool] | None = None,
         wipe_fields: dict[str, object] | None = None,
         skip_if: bool = False,
     ) -> None:
@@ -389,16 +975,8 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         if getattr(obj, "performed", None) is not True:
             return
 
-        prefixes = [field_path, field_path.rsplit(".", 1)[0]]
-        candidate_quotes: list[str] = []
-        for prefix in prefixes:
-            candidate_quotes.extend(_evidence_texts_for_prefix(record, prefix))
-
-        verified = any(_verify_quote_in_text(q, full_text) for q in candidate_quotes)
-        if not verified:
-            if _add_first_anchor_span(record, field_path, full_text, anchor_patterns):
-                candidate_quotes = _evidence_texts_for_prefix(record, field_path)
-                verified = any(_verify_quote_in_text(q, full_text) for q in candidate_quotes)
+        supports = _typed_supports(field_path, anchor_patterns)
+        verified = _first_allowed_support(supports, validator=validator) is not None
 
         if not verified and field_path == "pleural_procedures.ipc.performed":
             ipc_header_fallback = bool(
@@ -423,19 +1001,22 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         if verified:
             return
 
+        suppression_warning = _disallowed_source_warning(field_path, supports)
+        if suppression_warning:
+            _append_unique_warning(warnings, suppression_warning)
+            if suppression_warning == f"SUPPRESSION_TEMPLATE_CHECKBOX: {field_path}":
+                _append_unique_warning(warnings, f"CHECKBOX_NEGATIVE: forcing {field_path}=false")
+
         if policy == "REVIEW":
-            warnings.append(f"NEEDS_REVIEW: EVIDENCE_MISSING: {field_path}")
+            _append_unique_warning(warnings, f"NEEDS_REVIEW: EVIDENCE_MISSING: {field_path}")
             return
 
-        # HARD: flip performed=false + wipe dependent details
         setattr(obj, "performed", False)
         if wipe_fields:
             _wipe_model_fields(obj, wipe_fields)
-        for prefix in prefixes:
-            _drop_evidence_prefix(record, prefix)
-        warnings.append(f"EVIDENCE_HARD_FAIL: {field_path}")
+        _drop_prefixes(field_path)
+        _append_unique_warning(warnings, f"EVIDENCE_HARD_FAIL: {field_path}")
 
-    # HARD policies
     _enforce_boolean(
         field_path="procedures_performed.airway_dilation.performed",
         obj=airway_dilation,
@@ -451,10 +1032,77 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         },
     )
     _enforce_boolean(
+        field_path="procedures_performed.bal.performed",
+        obj=bal,
+        policy=EVIDENCE_REQUIRED["procedures_performed.bal.performed"],
+        anchor_patterns=[r"\b(?:bronchoalveolar\s+lavage|bal)\b", r"\bwhole\s+lung\s+lavage\b", r"\bwll\b"],
+        validator=_supports_bal_action,
+        wipe_fields={
+            "location": None,
+            "volume_instilled_ml": None,
+            "return_volume_ml": None,
+        },
+    )
+    _enforce_boolean(
+        field_path="procedures_performed.peripheral_tbna.performed",
+        obj=peripheral_tbna,
+        policy=EVIDENCE_REQUIRED["procedures_performed.peripheral_tbna.performed"],
+        anchor_patterns=[r"\b(?:tbna|fna|needle\s+aspirat(?:e|ion)|passes?|sampled)\b"],
+        validator=_supports_peripheral_tbna_action,
+        wipe_fields={
+            "targets_sampled": None,
+            "needle_gauge": None,
+            "passes_per_station": None,
+            "passes_per_target": None,
+            "location": None,
+        },
+    )
+    _enforce_boolean(
+        field_path="procedures_performed.transbronchial_cryobiopsy.performed",
+        obj=cryobiopsy,
+        policy=EVIDENCE_REQUIRED["procedures_performed.transbronchial_cryobiopsy.performed"],
+        anchor_patterns=[r"\b(?:transbronchial\s+cryobiops(?:y|ies)|cryobiops(?:y|ies)|cryoprobe|freeze\s+time)\b"],
+        validator=_supports_cryobiopsy_action,
+        wipe_fields={
+            "locations_biopsied": None,
+            "probe_size_mm": None,
+            "freeze_time_seconds": None,
+            "number_of_biopsies": None,
+        },
+    )
+    _enforce_boolean(
+        field_path="procedures_performed.mechanical_debulking.performed",
+        obj=mechanical_debulking,
+        policy=EVIDENCE_REQUIRED["procedures_performed.mechanical_debulking.performed"],
+        anchor_patterns=[r"\b(?:mechanical\s+debulking|debulk(?:ed|ing)?|rigid\s+coring)\b", r"\b(?:snare|forceps)\b"],
+        validator=_supports_cao_action,
+        wipe_fields={"location": None, "indication": None},
+    )
+    _enforce_boolean(
+        field_path="procedures_performed.cryotherapy.performed",
+        obj=cryotherapy,
+        policy=EVIDENCE_REQUIRED["procedures_performed.cryotherapy.performed"],
+        anchor_patterns=[r"\b(?:cryotherap\w*|cryoextraction|cryodebridement|cryoprobe)\b"],
+        validator=_supports_cao_action,
+        wipe_fields={"location": None, "indication": None},
+    )
+    _enforce_boolean(
+        field_path="procedures_performed.thermal_ablation.performed",
+        obj=thermal_ablation,
+        policy=EVIDENCE_REQUIRED["procedures_performed.thermal_ablation.performed"],
+        anchor_patterns=[r"\b(?:apc|argon\s+plasma\s+coagulation|laser|electrocautery)\b", r"\b(?:ablat(?:ed|ion)|destruct(?:ion|ed))\b"],
+        validator=lambda support: bool(
+            _THERMAL_ACTION_RE.search(support.line_text or support.text)
+            and _CAO_TARGET_RE.search(support.line_text or support.text)
+        ),
+        wipe_fields={"location": None, "indication": None, "modality": None},
+    )
+    _enforce_boolean(
         field_path="pleural_procedures.chest_tube.performed",
         obj=chest_tube,
         policy=EVIDENCE_REQUIRED["pleural_procedures.chest_tube.performed"],
         anchor_patterns=CHEST_TUBE_PATTERNS,
+        validator=_supports_chest_tube_action,
         wipe_fields={
             "action": None,
             "side": None,
@@ -469,6 +1117,7 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         obj=ipc,
         policy=EVIDENCE_REQUIRED["pleural_procedures.ipc.performed"],
         anchor_patterns=IPC_PATTERNS,
+        validator=_supports_ipc_action,
         wipe_fields={
             "action": None,
             "side": None,
@@ -485,6 +1134,7 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         obj=stent,
         policy=EVIDENCE_REQUIRED["procedures_performed.airway_stent.performed"],
         anchor_patterns=[r"\bairway\s+stent\b", r"\bstent\b"],
+        validator=_supports_stent_action,
         wipe_fields={
             "action": None,
             "stent_type": None,
@@ -498,8 +1148,6 @@ def verify_evidence_integrity(record: RegistryRecord, full_note_text: str) -> tu
         },
         skip_if=stent_assessment_only,
     )
-
-    # REVIEW policies
     _enforce_boolean(
         field_path="procedures_performed.rigid_bronchoscopy.performed",
         obj=rigid,

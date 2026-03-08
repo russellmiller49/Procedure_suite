@@ -1,0 +1,52 @@
+{
+  "schema_version": "reporter_seed_eval_samples.v1",
+  "cases": [
+    {
+      "id": "seed_from_text_ebus_station7",
+      "prompt_text": "EBUS biopsied station 7",
+      "completion_canonical_path": "reporting/seed_from_text_ebus_station7.md",
+      "critical_flags_present": [
+        "procedures_performed.linear_ebus.performed"
+      ],
+      "critical_flags_absent": [
+        "procedures_performed.peripheral_tbna.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "See procedure details below"
+      ]
+    },
+    {
+      "id": "seed_from_text_thoracentesis_cxr_ordered",
+      "prompt_text": "Left thoracentesis performed under ultrasound guidance at the 7th intercostal space along the mid-axillary line. A total of 900 mL of serous fluid was removed. A post-procedure chest x-ray was ordered.",
+      "completion_canonical_path": "reporting/render_thoracentesis_cxr_ordered.md",
+      "critical_flags_present": [
+        "pleural_procedures.thoracentesis.performed"
+      ],
+      "critical_flags_absent": [
+        "pleural_procedures.chest_tube.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "See procedure details below"
+      ]
+    },
+    {
+      "id": "seed_from_text_ion_nav_tbna_cryo",
+      "prompt_text": "Ion bronchoscopy RUL 2.2 cm nodule. Tool in lesion confirmed with CBCT. TBNA and cryobiopsy. ROSE + for malignancy",
+      "completion_canonical_path": "reporting/seed_from_text_ion_nav_tbna_cryo.md",
+      "critical_flags_present": [
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.transbronchial_cryobiopsy.performed"
+      ],
+      "critical_flags_absent": [
+        "procedures_performed.linear_ebus.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "See procedure details below"
+      ]
+    }
+  ]
+}

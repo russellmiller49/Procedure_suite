@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Evaluate reporter quality against a reporter-gold JSONL dataset."""
+"""Evaluate reporter quality against reporter gold data or the unified quality corpus."""
 
 from __future__ import annotations
 
 import argparse
-import json
-import os
 import random
 import sys
 from dataclasses import dataclass
@@ -16,6 +14,21 @@ from typing import Any, Callable
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+from app.common.quality_eval import (  # noqa: E402
+    build_reporting_strategy,
+    build_standard_report,
+    detect_input_format,
+    evaluate_reporter_expectations,
+    load_jsonl_rows,
+    load_unified_quality_corpus,
+    maybe_write_report,
+    missing_sections,
+    normalize_text,
+    render_report_markdown,
+)
+from app.registry.application.registry_service import RegistryService  # noqa: E402
+
 
 REQUIRED_SECTION_HEADERS = [
     "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT",
@@ -44,48 +57,38 @@ class EvaluationRow:
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT, help="Gold dataset JSONL.")
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT, help="Reporter gold JSONL or unified corpus JSON.")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Evaluation report JSON path.")
     parser.add_argument("--max-cases", type=int, default=0, help="Optional max case count (0 means all).")
     parser.add_argument("--seed", type=int, default=42, help="Seed for deterministic subsampling.")
+    parser.add_argument(
+        "--input-format",
+        type=str,
+        default="auto",
+        choices=["auto", "reporter_gold_jsonl", "unified_quality_corpus"],
+        help="Force the reporter eval input format instead of auto-detecting it.",
+    )
     return parser.parse_args(argv)
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            rows.append(json.loads(line))
-    return rows
-
-
-def normalize_text(text: str) -> str:
-    lines = [line.strip() for line in (text or "").splitlines() if line.strip()]
-    return "\n".join(lines)
+    return load_jsonl_rows(path)
 
 
 def similarity_ratio(reference: str, candidate: str) -> float:
     return SequenceMatcher(None, normalize_text(reference), normalize_text(candidate)).ratio()
 
 
-def missing_sections(report_text: str) -> list[str]:
-    upper = (report_text or "").upper()
-    return [header for header in REQUIRED_SECTION_HEADERS if header.upper() not in upper]
-
-
 def to_eval_rows(rows: list[dict[str, Any]]) -> list[EvaluationRow]:
-    out: list[EvaluationRow] = []
-    for idx, row in enumerate(rows, start=1):
+    output: list[EvaluationRow] = []
+    for index, row in enumerate(rows, start=1):
         input_text = str(row.get("input_text") or "").strip()
         ideal_output = str(row.get("ideal_output") or row.get("ideal_output_candidate") or "").strip()
-        row_id = str(row.get("id") or f"row_{idx}")
+        row_id = str(row.get("id") or f"row_{index}")
         if not input_text or not ideal_output:
             continue
-        out.append(EvaluationRow(id=row_id, input_text=input_text, ideal_output=ideal_output))
-    return out
+        output.append(EvaluationRow(id=row_id, input_text=input_text, ideal_output=ideal_output))
+    return output
 
 
 def maybe_subsample(rows: list[EvaluationRow], max_cases: int, seed: int) -> list[EvaluationRow]:
@@ -93,7 +96,7 @@ def maybe_subsample(rows: list[EvaluationRow], max_cases: int, seed: int) -> lis
         return rows
     rng = random.Random(seed)
     picked = rng.sample(rows, max_cases)
-    picked.sort(key=lambda r: r.id)
+    picked.sort(key=lambda row: row.id)
     return picked
 
 
@@ -110,7 +113,7 @@ def evaluate_rows(
     for row in rows:
         try:
             generated = render_report(row.input_text)
-            missing = missing_sections(generated)
+            missing = missing_sections(generated, REQUIRED_SECTION_HEADERS)
             score = similarity_ratio(row.ideal_output, generated)
             similarities.append(score)
             if not missing:
@@ -119,9 +122,22 @@ def evaluate_rows(
             per_case.append(
                 {
                     "id": row.id,
+                    "tags": [],
+                    "status": "passed",
+                    "metrics": {
+                        "similarity": round(score, 4),
+                        "generated_length": len(generated),
+                        "ideal_length": len(row.ideal_output),
+                    },
+                    "actual": {
+                        "missing_sections_generated": missing,
+                        "missing_sections_ideal": missing_sections(row.ideal_output, REQUIRED_SECTION_HEADERS),
+                        "markdown_preview": generated[:400],
+                    },
+                    "failures": [],
                     "similarity": round(score, 4),
                     "missing_sections_generated": missing,
-                    "missing_sections_ideal": missing_sections(row.ideal_output),
+                    "missing_sections_ideal": missing_sections(row.ideal_output, REQUIRED_SECTION_HEADERS),
                     "generated_length": len(generated),
                     "ideal_length": len(row.ideal_output),
                     "error": None,
@@ -132,6 +148,26 @@ def evaluate_rows(
             per_case.append(
                 {
                     "id": row.id,
+                    "tags": [],
+                    "status": "failed",
+                    "metrics": {
+                        "similarity": 0.0,
+                        "generated_length": 0,
+                        "ideal_length": len(row.ideal_output),
+                    },
+                    "actual": {
+                        "missing_sections_generated": REQUIRED_SECTION_HEADERS,
+                        "missing_sections_ideal": [],
+                        "markdown_preview": "",
+                    },
+                    "failures": [
+                        {
+                            "type": "render_error",
+                            "message": str(exc),
+                            "expected": None,
+                            "actual": None,
+                        }
+                    ],
                     "similarity": 0.0,
                     "missing_sections_generated": REQUIRED_SECTION_HEADERS,
                     "missing_sections_ideal": [],
@@ -144,75 +180,117 @@ def evaluate_rows(
     avg_similarity = float(sum(similarities) / len(similarities)) if similarities else 0.0
     min_similarity = float(min(similarities)) if similarities else 0.0
     full_shell_rate = float(generated_full_shell_count / len(rows)) if rows else 0.0
+    total_cases = len(rows)
+    successful_cases = total_cases - failures
 
     summary = {
-        "total_cases": len(rows),
-        "successful_cases": len(rows) - failures,
+        "total_cases": total_cases,
+        "passed_cases": successful_cases,
+        "successful_cases": successful_cases,
         "failed_cases": failures,
+        "pass_rate": round((successful_cases / total_cases), 4) if total_cases else 0.0,
         "avg_similarity": round(avg_similarity, 4),
         "min_similarity": round(min_similarity, 4),
         "generated_full_shell_rate": round(full_shell_rate, 4),
+        "metrics": {
+            "successful_cases": successful_cases,
+            "avg_similarity": round(avg_similarity, 4),
+            "min_similarity": round(min_similarity, 4),
+            "generated_full_shell_rate": round(full_shell_rate, 4),
+        },
     }
+    failures_flat = []
+    for case in per_case:
+        for failure in case.get("failures") or []:
+            item = {"id": case["id"], "tags": []}
+            item.update(failure)
+            failures_flat.append(item)
     return {
         "summary": summary,
         "per_case": per_case,
+        "failures": failures_flat,
     }
 
 
 def _build_renderer() -> Callable[[str], str]:
-    # Keep evaluation deterministic and offline-friendly by default.
-    os.environ.setdefault("PROCSUITE_SKIP_DOTENV", "1")
-    os.environ.setdefault("PROCSUITE_SKIP_WARMUP", "1")
-    os.environ.setdefault("REPORTER_DISABLE_LLM", "1")
-    os.environ.setdefault("QA_REPORTER_ALLOW_SIMPLE_FALLBACK", "0")
-    os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "0")
-    os.environ.setdefault("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
-
-    from app.api.services.qa_pipeline import ReportingStrategy, SimpleReporterStrategy
-    from app.registry.application.registry_service import RegistryService
-    from app.reporting.engine import (
-        ReporterEngine,
-        _load_procedure_order,
-        default_schema_registry,
-        default_template_registry,
-    )
-    from app.reporting.inference import InferenceEngine
-    from app.reporting.validation import ValidationEngine
-
-    templates = default_template_registry()
-    schemas = default_schema_registry()
-    reporter_engine = ReporterEngine(
-        templates,
-        schemas,
-        procedure_order=_load_procedure_order(),
-    )
-    inference_engine = InferenceEngine()
-    validation_engine = ValidationEngine(templates, schemas)
+    strategy = build_reporting_strategy()
     registry_service = RegistryService()
 
-    class _RegistryAdapter:
-        def __init__(self, svc: RegistryService):
-            self._svc = svc
-
-        def run(self, text: str, explain: bool = False):  # noqa: ARG002
-            result = self._svc.extract_fields_extraction_first(text)
-            return result.record
-
-    strategy = ReportingStrategy(
-        reporter_engine=reporter_engine,
-        inference_engine=inference_engine,
-        validation_engine=validation_engine,
-        registry_engine=_RegistryAdapter(registry_service),
-        simple_strategy=SimpleReporterStrategy(),
-    )
-
     def _render(note_text: str) -> str:
-        extraction = registry_service.extract_fields_extraction_first(note_text)
-        record_dict = extraction.record.model_dump(exclude_none=True)
-        payload = strategy.render(text=note_text, registry_data={"record": record_dict})
-        return str(payload.get("markdown") or "")
+        markdown, _payload = render_report_markdown(
+            note_text=note_text,
+            registry_service=registry_service,
+            reporting_strategy=strategy,
+        )
+        return markdown
 
     return _render
+
+
+def _resolve_input_format(input_path: Path, requested_format: str) -> str:
+    if requested_format != "auto":
+        return requested_format
+    detected = detect_input_format(input_path)
+    if detected == "reporter_gold_jsonl":
+        return detected
+    if detected == "unified_quality_corpus":
+        return detected
+    raise ValueError(f"Unsupported reporter evaluation input format for {input_path}: {detected}")
+
+
+def _evaluate_unified_quality_corpus(
+    *,
+    input_path: Path,
+    max_cases: int,
+) -> dict[str, Any]:
+    payload = load_unified_quality_corpus(input_path)
+    cases = list(payload.get("cases") or [])
+    if max_cases > 0:
+        cases = cases[:max_cases]
+
+    strategy = build_reporting_strategy()
+    registry_service = RegistryService()
+    per_case: list[dict[str, Any]] = []
+    for case in cases:
+        note_text = str(case.get("note_text") or "")
+        try:
+            markdown, report_payload = render_report_markdown(
+                note_text=note_text,
+                registry_service=registry_service,
+                reporting_strategy=strategy,
+            )
+            per_case.append(
+                evaluate_reporter_expectations(
+                    case=case,
+                    markdown=markdown,
+                    report_payload=report_payload,
+                )
+            )
+        except Exception as exc:
+            per_case.append(
+                evaluate_reporter_expectations(
+                    case=case,
+                    markdown="",
+                    report_payload={},
+                    error=exc,
+                )
+            )
+
+    report = build_standard_report(
+        kind="reporter",
+        input_path=str(input_path),
+        output_path=None,
+        source_format="unified_quality_corpus",
+        corpus_name=str(payload.get("fixture_name") or "unified_quality_corpus"),
+        per_case=per_case,
+        summary_metrics={
+            "successful_cases": sum(1 for case in per_case if case["status"] == "passed"),
+            "avg_similarity": 0.0,
+            "min_similarity": 0.0,
+            "generated_full_shell_rate": 0.0,
+        },
+    )
+    return report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -220,37 +298,44 @@ def main(argv: list[str] | None = None) -> int:
     if not args.input.exists():
         raise FileNotFoundError(f"Input dataset not found: {args.input}")
 
-    raw_rows = load_jsonl(args.input)
-    eval_rows = to_eval_rows(raw_rows)
-    eval_rows = maybe_subsample(eval_rows, int(args.max_cases), int(args.seed))
+    input_format = _resolve_input_format(args.input, args.input_format)
+    if input_format == "reporter_gold_jsonl":
+        raw_rows = load_jsonl(args.input)
+        eval_rows = to_eval_rows(raw_rows)
+        eval_rows = maybe_subsample(eval_rows, int(args.max_cases), int(args.seed))
+        renderer = _build_renderer()
+        result = evaluate_rows(eval_rows, render_report=renderer)
+        report = build_standard_report(
+            kind="reporter",
+            input_path=str(args.input),
+            output_path=str(args.output),
+            source_format="reporter_gold_jsonl",
+            corpus_name="reporter_gold",
+            per_case=result["per_case"],
+            summary_metrics=result["summary"]["metrics"],
+        )
+        report["summary"]["successful_cases"] = result["summary"]["successful_cases"]
+        report["summary"]["avg_similarity"] = result["summary"]["avg_similarity"]
+        report["summary"]["min_similarity"] = result["summary"]["min_similarity"]
+        report["summary"]["generated_full_shell_rate"] = result["summary"]["generated_full_shell_rate"]
+    else:
+        report = _evaluate_unified_quality_corpus(input_path=args.input, max_cases=int(args.max_cases))
+        report["output_path"] = str(args.output)
 
-    renderer = _build_renderer()
-    report = evaluate_rows(eval_rows, render_report=renderer)
-    report["input_path"] = str(args.input)
-    report["output_path"] = str(args.output)
-    report["created_at"] = datetime_now_iso()
-
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    maybe_write_report(args.output, report)
 
     summary = report["summary"]
     print(
         "Reporter gold eval: "
         f"cases={summary['total_cases']} "
-        f"avg_similarity={summary['avg_similarity']} "
-        f"min_similarity={summary['min_similarity']} "
-        f"full_shell_rate={summary['generated_full_shell_rate']}"
+        f"passed={summary['passed_cases']} "
+        f"failed={summary['failed_cases']} "
+        f"avg_similarity={summary.get('avg_similarity', 0.0)} "
+        f"full_shell_rate={summary.get('generated_full_shell_rate', 0.0)}"
     )
     print(f"Wrote report: {args.output}")
     return 0
 
 
-def datetime_now_iso() -> str:
-    from datetime import datetime, timezone
-
-    return datetime.now(timezone.utc).isoformat()
-
-
 if __name__ == "__main__":
     raise SystemExit(main())
-

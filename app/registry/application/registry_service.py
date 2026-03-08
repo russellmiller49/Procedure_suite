@@ -36,14 +36,14 @@ from app.registry.application.registry_builder import (
     RegistryBuilderProtocol,
     get_builder,
 )
+from app.registry.application.quality_passes import (
+    ExtractionQualityPassRunner,
+    QualitySignal,
+    quality_signals_to_legacy_warnings,
+)
 from app.registry.engine import RegistryEngine
 from app.registry.heuristics import (
-    CaoDetailHeuristic,
-    LinearEbusStationDetailHeuristic,
-    NavigationTargetHeuristic,
-    apply_heuristics,
     coverage_failures,
-    reconcile_granular_validation_warnings,
     run_structurer_fallback,
 )
 from app.registry.infra import RegistryModelProvider
@@ -247,6 +247,8 @@ class RegistryExtractionResult:
     audit_warnings: list[str] = field(default_factory=list)
     audit_report: AuditCompareReport | None = None
     self_correction: list["SelfCorrectionMetadata"] = field(default_factory=list)
+    quality_signals: list[QualitySignal] = field(default_factory=list)
+    quality_phase_order: list[str] = field(default_factory=list)
 
 
 class RegistryService:
@@ -287,6 +289,10 @@ class RegistryService:
         self.parallel_orchestrator = parallel_orchestrator or ParallelPathwayOrchestrator()
         self.clinical_guardrails = ClinicalGuardrails()
         self.model_provider = model_provider or RegistryModelProvider()
+        self.quality_pass_runner = ExtractionQualityPassRunner(
+            clinical_guardrails=self.clinical_guardrails,
+            granular_propagator=_apply_granular_up_propagation,
+        )
 
     @property
     def registry_engine(self) -> RegistryEngine:
@@ -2442,10 +2448,7 @@ class RegistryService:
         from app.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
         from app.registry.self_correction.judge import RegistryCorrectionJudge
         from app.registry.self_correction.keyword_guard import (
-            apply_required_overrides,
             keyword_guard_check,
-            keyword_guard_passes,
-            scan_for_omissions,
         )
         from app.registry.self_correction.types import SelfCorrectionMetadata, SelfCorrectionTrigger
         from app.registry.self_correction.validation import (
@@ -2457,8 +2460,6 @@ class RegistryService:
         # Guardrail: auditing must always use the original raw note text. Do not
         # overwrite this variable with focused/summarized text.
         raw_text_for_audit = raw_note_text
-
-        masked_note_text, _mask_meta = mask_extraction_noise(raw_note_text)
 
         def _env_flag(name: str, default: str = "0") -> bool:
             return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
@@ -2476,170 +2477,19 @@ class RegistryService:
                 return default
 
         record, extraction_warnings, meta = self.extract_record(raw_note_text)
-        extraction_text = meta.get("extraction_text") if isinstance(meta.get("extraction_text"), str) else None
-        if isinstance(meta.get("masked_note_text"), str):
-            masked_note_text = meta["masked_note_text"]
-
-        record, override_warnings = apply_required_overrides(masked_note_text, record)
-        if override_warnings:
-            extraction_warnings.extend(override_warnings)
-
-        from app.registry.processing.masking import mask_offset_preserving
-
-        nav_scan_text = mask_offset_preserving(raw_note_text or "")
-        record, nav_ebus_warnings = apply_heuristics(
-            note_text=nav_scan_text,
+        quality_context = self.quality_pass_runner.run(
+            raw_note_text=raw_note_text,
             record=record,
-            heuristics=(
-                NavigationTargetHeuristic(),
-                LinearEbusStationDetailHeuristic(),
-            ),
+            extraction_warnings=extraction_warnings,
+            meta=meta,
         )
-        if nav_ebus_warnings:
-            extraction_warnings.extend(nav_ebus_warnings)
-
-        # Use the extraction-masked text so CAO/stent heuristics don't read non-procedural
-        # plan/assessment sections (common source of "possible stent placement" false positives).
-        record, cao_detail_warnings = CaoDetailHeuristic().apply(masked_note_text, record)
-        if cao_detail_warnings:
-            extraction_warnings.extend(cao_detail_warnings)
-
-        # Re-run granular→aggregate propagation after any heuristics/overrides that
-        # update granular_data (e.g., navigation targets, cryobiopsy sites).
-        record, granular_warnings = _apply_granular_up_propagation(record)
-        if granular_warnings:
-            extraction_warnings.extend(granular_warnings)
-
-        from app.registry.postprocess import (
-            cull_tbna_conventional_against_ebus_sampling,
-            cull_hollow_ebus_claims,
-            enrich_bal_from_procedure_detail,
-            enrich_ebus_node_event_outcomes,
-            enrich_ebus_node_event_sampling_details,
-            enrich_eus_b_sampling_details,
-            enrich_linear_ebus_needle_gauge,
-            enrich_specimens_from_specimen_section,
-            enrich_medical_thoracoscopy_biopsies_taken,
-            enrich_outcomes_complication_details,
-            enrich_procedure_success_status,
-            populate_ebus_node_events_fallback,
-            reconcile_aborted_targets,
-            reconcile_ebus_inspected_only_stations,
-            reconcile_ebus_sampling_from_narrative,
-            reconcile_ebus_sampling_from_specimen_log,
-            reconcile_peripheral_tbna_against_nodal_context,
-            sanitize_ebus_events,
-        )
-
-        ebus_fallback_warnings = populate_ebus_node_events_fallback(record, masked_note_text)
-        if ebus_fallback_warnings:
-            extraction_warnings.extend(ebus_fallback_warnings)
-        ebus_sanitize_warnings = sanitize_ebus_events(record, masked_note_text)
-        if ebus_sanitize_warnings:
-            extraction_warnings.extend(ebus_sanitize_warnings)
-        ebus_narrative_warnings = reconcile_ebus_sampling_from_narrative(record, masked_note_text)
-        if ebus_narrative_warnings:
-            extraction_warnings.extend(ebus_narrative_warnings)
-        ebus_specimen_warnings = reconcile_ebus_sampling_from_specimen_log(record, masked_note_text)
-        if ebus_specimen_warnings:
-            extraction_warnings.extend(ebus_specimen_warnings)
-        # Re-sanitize after reconciliation steps that may add/merge stations_sampled.
-        ebus_resanitize_warnings = sanitize_ebus_events(record, masked_note_text)
-        if ebus_resanitize_warnings:
-            extraction_warnings.extend(ebus_resanitize_warnings)
-        ebus_inspection_warnings = reconcile_ebus_inspected_only_stations(record, masked_note_text)
-        if ebus_inspection_warnings:
-            extraction_warnings.extend(ebus_inspection_warnings)
-        peripheral_tbna_reconcile_warnings = reconcile_peripheral_tbna_against_nodal_context(
-            record, masked_note_text
-        )
-        if peripheral_tbna_reconcile_warnings:
-            extraction_warnings.extend(peripheral_tbna_reconcile_warnings)
-        tbna_conventional_warnings = cull_tbna_conventional_against_ebus_sampling(record, masked_note_text)
-        if tbna_conventional_warnings:
-            extraction_warnings.extend(tbna_conventional_warnings)
-        ebus_sampling_detail_warnings = enrich_ebus_node_event_sampling_details(record, masked_note_text)
-        if ebus_sampling_detail_warnings:
-            extraction_warnings.extend(ebus_sampling_detail_warnings)
-        ebus_outcome_warnings = enrich_ebus_node_event_outcomes(record, masked_note_text)
-        if ebus_outcome_warnings:
-            extraction_warnings.extend(ebus_outcome_warnings)
-        ebus_gauge_warnings = enrich_linear_ebus_needle_gauge(record, masked_note_text)
-        if ebus_gauge_warnings:
-            extraction_warnings.extend(ebus_gauge_warnings)
-        eus_b_detail_warnings = enrich_eus_b_sampling_details(record, masked_note_text)
-        if eus_b_detail_warnings:
-            extraction_warnings.extend(eus_b_detail_warnings)
-        ebus_hollow_warnings = cull_hollow_ebus_claims(record, masked_note_text)
-        if ebus_hollow_warnings:
-            extraction_warnings.extend(ebus_hollow_warnings)
-        pleural_biopsy_warnings = enrich_medical_thoracoscopy_biopsies_taken(record, masked_note_text)
-        if pleural_biopsy_warnings:
-            extraction_warnings.extend(pleural_biopsy_warnings)
-        bal_detail_warnings = enrich_bal_from_procedure_detail(record, masked_note_text)
-        if bal_detail_warnings:
-            extraction_warnings.extend(bal_detail_warnings)
-        specimens_warnings = enrich_specimens_from_specimen_section(record, raw_note_text or "")
-        if specimens_warnings:
-            extraction_warnings.extend(specimens_warnings)
-        aborted_target_warnings = reconcile_aborted_targets(record, masked_note_text)
-        if aborted_target_warnings:
-            extraction_warnings.extend(aborted_target_warnings)
-        outcomes_status_warnings = enrich_procedure_success_status(record, masked_note_text)
-        if outcomes_status_warnings:
-            extraction_warnings.extend(outcomes_status_warnings)
-        complication_detail_warnings = enrich_outcomes_complication_details(record, masked_note_text)
-        if complication_detail_warnings:
-            extraction_warnings.extend(complication_detail_warnings)
-
-        guardrail_outcome = self.clinical_guardrails.apply_record_guardrails(
-            masked_note_text, record
-        )
-        record = guardrail_outcome.record or record
-        if guardrail_outcome.warnings:
-            extraction_warnings.extend(guardrail_outcome.warnings)
-
-        # Production backstop: apply raw-text checkbox negation after all heuristics/guardrails
-        # so downstream omission scan + CPT derivation never build on template false-positives.
-        from app.registry.postprocess.template_checkbox_negation import apply_template_checkbox_negation
-
-        record, checkbox_warnings = apply_template_checkbox_negation(raw_note_text or "", record)
-        if checkbox_warnings:
-            extraction_warnings.extend(checkbox_warnings)
-
-        # Evidence enforcement pass on the final record state (post-heuristics + checkbox negation).
-        from app.registry.evidence.verifier import verify_evidence_integrity
-
-        record, verifier_warnings = verify_evidence_integrity(record, raw_note_text or masked_note_text)
-        if verifier_warnings:
-            extraction_warnings.extend(verifier_warnings)
-
-        # Narrative supersedes templated summary: preserve explicitly documented complications
-        # even when a final "COMPLICATIONS: None" line exists.
-        from app.registry.postprocess.complications_reconcile import (
-            reconcile_complications_from_narrative,
-        )
-
-        comp_warnings = reconcile_complications_from_narrative(record, masked_note_text)
-        if comp_warnings:
-            extraction_warnings.extend(comp_warnings)
-
-        record, removed_granular_warnings = reconcile_granular_validation_warnings(record)
-        if removed_granular_warnings:
-            extraction_warnings = [
-                w for w in extraction_warnings if not (isinstance(w, str) and w in removed_granular_warnings)
-            ]
-
-        # Omission detection: flag "silent failures" where high-value terms are present
-        # in the text but the corresponding registry fields are missing/false.
-        # Run this late so deterministic/postprocess backfills don't create false alarms.
-        omission_warnings = scan_for_omissions(masked_note_text, record)
-        if omission_warnings:
-            extraction_warnings.extend(omission_warnings)
-
-        derivation = derive_registry_to_cpt(record)
-        derived_codes = [c.code for c in derivation.codes]
-        base_warnings = list(extraction_warnings)
+        record = quality_context.record
+        masked_note_text = quality_context.masked_note_text
+        extraction_text = quality_context.extraction_text
+        omission_warnings = list(quality_context.omission_warnings)
+        derivation = quality_context.derivation
+        derived_codes = list(quality_context.derived_codes)
+        base_warnings = quality_signals_to_legacy_warnings(quality_context.quality_signals)
         self_correct_warnings: list[str] = []
         coverage_warnings: list[str] = []
         self_correction_meta: list[SelfCorrectionMetadata] = []
@@ -2648,15 +2498,7 @@ class RegistryService:
         audit_warnings: list[str] = []
         audit_report: AuditCompareReport | None = None
         coder_difficulty = "unknown"
-        needs_manual_review = bool(omission_warnings) or guardrail_outcome.needs_review
-
-        code_guardrail = self.clinical_guardrails.apply_code_guardrails(
-            masked_note_text, derived_codes
-        )
-        if code_guardrail.warnings:
-            base_warnings.extend(code_guardrail.warnings)
-        if code_guardrail.needs_review:
-            needs_manual_review = True
+        needs_manual_review = quality_context.needs_manual_review
 
         baseline_needs_manual_review = needs_manual_review
 
@@ -3174,6 +3016,8 @@ class RegistryService:
                 code_rationales=code_rationales,
                 derivation_warnings=derivation_warnings,
                 kb_repo=kb_repo,
+                quality_signals=quality_context.quality_signals,
+                quality_phase_order=quality_context.phases_run,
             )
 
             record = RegistryRecord(**record_data)
@@ -3198,6 +3042,8 @@ class RegistryService:
             audit_warnings=audit_warnings,
             audit_report=audit_report,
             self_correction=self_correction_meta,
+            quality_signals=quality_context.quality_signals,
+            quality_phase_order=quality_context.phases_run,
         )
 
     def _apply_guardrails_to_result(

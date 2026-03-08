@@ -1,0 +1,77 @@
+{
+  "fixture": "tests/fixtures/precision_suppressions.json",
+  "kind": "precision_suppression_compare",
+  "case_count": 19,
+  "family_summary": {
+    "menu_header_leakage": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "unchecked_template_items": {
+      "before_forbidden_code_hits": 3,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "inspection_only_stents": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "ebus_peripheral_tbna_contamination": {
+      "before_forbidden_code_hits": 0,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "tool_without_action": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "pleural_placement_removal_inversion": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "bal_vs_wll": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    },
+    "blvr_exchange_removal": {
+      "before_forbidden_code_hits": 2,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 1
+    },
+    "cryo_vs_forceps": {
+      "before_forbidden_code_hits": 1,
+      "after_forbidden_code_hits": 0,
+      "before_extra_flag_hits": 0,
+      "after_extra_flag_hits": 0,
+      "after_manual_review_cases": 0
+    }
+  },
+  "overall": {
+    "before_forbidden_code_hits": 11,
+    "after_forbidden_code_hits": 0,
+    "before_extra_flag_hits": 0,
+    "after_extra_flag_hits": 0,
+    "after_manual_review_cases": 1
+  }
+}

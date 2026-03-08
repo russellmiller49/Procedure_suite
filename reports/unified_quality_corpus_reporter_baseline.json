@@ -1,0 +1,255 @@
+{
+  "schema_version": "procedure_suite.quality_eval.v1",
+  "kind": "reporter",
+  "input_path": "tests/fixtures/unified_quality_corpus.json",
+  "output_path": "reports/unified_quality_corpus_reporter_baseline.json",
+  "source_format": "unified_quality_corpus",
+  "corpus_name": "unified_quality_corpus",
+  "created_at": "2026-03-08T03:46:32.254481+00:00",
+  "runtime": {},
+  "summary": {
+    "total_cases": 10,
+    "passed_cases": 10,
+    "failed_cases": 0,
+    "pass_rate": 1.0,
+    "metrics": {
+      "successful_cases": 10,
+      "avg_similarity": 0.0,
+      "min_similarity": 0.0,
+      "generated_full_shell_rate": 0.0
+    },
+    "successful_cases": 10,
+    "avg_similarity": 0.0,
+    "min_similarity": 0.0,
+    "generated_full_shell_rate": 0.0
+  },
+  "per_case": [
+    {
+      "id": "blvr_valve_removal_not_foreign_body_removal",
+      "tags": [
+        "blvr_exchange_removal"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1608
+      },
+      "actual": {
+        "matched_groups": [
+          [
+            "Removal performed",
+            "valves removed"
+          ]
+        ],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with persistent air leak. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtai",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "checkbox_negative_blank_template_suppresses_procedures",
+      "tags": [
+        "checkbox_negation",
+        "pleural_placement_removal_inversion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1959
+      },
+      "actual": {
+        "matched_groups": [],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION The patient presents with Not documented.\n\nCONSENT Obtained before the procedure. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nPREOPERATI",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "ebus_staging_no_peripheral_tbna_contamination",
+      "tags": [
+        "ebus_peripheral_tbna_contamination"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1745
+      },
+      "actual": {
+        "matched_groups": [
+          [
+            "EBUS-TBNA Staging"
+          ],
+          [
+            "Station 4R"
+          ],
+          [
+            "Station 7"
+          ]
+        ],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with staging. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtained before t",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "inspection_only_stent_assessment_only",
+      "tags": [
+        "inspection_only_stents"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1377
+      },
+      "actual": {
+        "matched_groups": [],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Not documented. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtained ",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "menu_header_leakage_eus_b_inspection_only",
+      "tags": [
+        "menu_header_leakage"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1377
+      },
+      "actual": {
+        "matched_groups": [],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Not documented. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtained ",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
+      "tags": [
+        "cryo_vs_forceps_confusion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 2212
+      },
+      "actual": {
+        "matched_groups": [],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Not documented. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtained b",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "peripheral_rose_not_misattributed_to_ebus",
+      "tags": [
+        "reporter_rose_misattribution"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1600
+      },
+      "actual": {
+        "matched_groups": [
+          [
+            "Station 4R"
+          ]
+        ],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Not documented. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtained b",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
+      "tags": [
+        "tool_without_action"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1386
+      },
+      "actual": {
+        "matched_groups": [],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with airway inspection. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.\n\nCONSENT Obtain",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "tunneled_pleural_catheter_removal_not_insertion",
+      "tags": [
+        "pleural_placement_removal_inversion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1567
+      },
+      "actual": {
+        "matched_groups": [
+          [
+            "tunneled pleural catheter"
+          ],
+          [
+            "removed"
+          ]
+        ],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION The patient presents with Spontaneous pleurodesis after indwelling pleural catheter.\n\nCONSENT Obtained before the procedure. The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    },
+    {
+      "id": "whole_lung_lavage_not_bal",
+      "tags": [
+        "wll_vs_bal"
+      ],
+      "status": "passed",
+      "metrics": {
+        "markdown_length": 1623
+      },
+      "actual": {
+        "matched_groups": [
+          [
+            "Whole Lung Lavage",
+            "Whole lung lavage"
+          ],
+          [
+            "15",
+            "15.0"
+          ]
+        ],
+        "forbidden_hits": [],
+        "markdown_preview": "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT\n\nDATE OF PROCEDURE: [Date] CC Referred Physician: [Name]\n\nINDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with pulmonary alveolar proteinosis (PAP). The nature, purpose, risks, benefits, and alternatives to the procedure were discussed with the patient in detail. The patient wished to proceed and informed consent was obtain",
+        "render_mode": "structured",
+        "fallback_used": false,
+        "reporter_errors": []
+      },
+      "failures": []
+    }
+  ],
+  "failures": []
+}

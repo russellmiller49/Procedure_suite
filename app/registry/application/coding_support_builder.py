@@ -363,6 +363,8 @@ def build_coding_support_payload(
     code_rationales: dict[str, str] | None = None,
     derivation_warnings: list[str] | None = None,
     kb_repo: KnowledgeBaseRepository | None = None,
+    quality_signals: list[Any] | None = None,
+    quality_phase_order: list[str] | None = None,
 ) -> dict[str, Any]:
     """Build the optional `coding_support` payload for the IP registry schema."""
     kb = kb_repo or get_kb_repo()
@@ -448,6 +450,15 @@ def build_coding_support_payload(
 
     generated_at = datetime.now(timezone.utc).isoformat()
 
+    quality_signal_payload: list[dict[str, Any]] | None = None
+    if quality_signals:
+        quality_signal_payload = []
+        for item in quality_signals:
+            if hasattr(item, "to_payload"):
+                quality_signal_payload.append(item.to_payload())
+            elif isinstance(item, dict):
+                quality_signal_payload.append(dict(item))
+
     return {
         "version": "coding_support.v1",
         "generated_at": generated_at,
@@ -459,6 +470,13 @@ def build_coding_support_payload(
             "rules_applied": rules_applied or None,
             "global_comments": warnings or None,
         },
+        "quality_pass": {
+            "version": "quality_pass.v1",
+            "phases_run": list(quality_phase_order or []),
+            "signals": quality_signal_payload or None,
+        }
+        if quality_signal_payload or quality_phase_order
+        else None,
     }
 
 

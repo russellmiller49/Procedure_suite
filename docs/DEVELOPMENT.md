@@ -209,7 +209,25 @@ pytest tests/api/ -v                # API tests
 make validate-registry              # Registry extraction validation
 make preflight                      # Pre-flight checks
 make lint                           # Linting
+
+# Fast CI-equivalent quality gate
+python ops/tools/run_quality_gates.py --tier pr --output-dir reports/ci/pr
+
+# Nightly / release quality evals with artifacts + deltas
+python ops/tools/run_quality_gates.py --tier nightly --output-dir reports/ci/nightly
 ```
+
+The PR gate is the default CI path for pull requests. It keeps latency down by running focused regression suites plus fixed extraction and reporter evals instead of the entire repo test suite.
+
+The full `pytest -q` suite still runs on `main` and can be requested manually via GitHub Actions workflow dispatch.
+
+Quality-gate artifacts:
+
+- `summary.md` and `summary.json`
+- raw eval JSON outputs
+- `*.delta.json` files against checked-in baselines when available
+
+See [`docs/QUALITY_GATES.md`](QUALITY_GATES.md) for the exact suite split, `quality_signals` contract, and reporter seed promotion rule.
 
 ### LLM Tests
 

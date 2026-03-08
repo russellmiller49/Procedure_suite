@@ -37,6 +37,7 @@ runs/
 
 # Local audit artifacts
 artifacts/phi_audit/
+reports/ci/
 
 # Local distilled artifacts (never commit model binaries)
 distilled/

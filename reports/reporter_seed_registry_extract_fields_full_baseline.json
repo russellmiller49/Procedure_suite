@@ -1,0 +1,1096 @@
+{
+  "schema_version": "procedure_suite.reporter_seed_eval.v1",
+  "kind": "reporter_seed_eval",
+  "seed_path": "registry_extract_fields",
+  "input_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/reporter_golden_dataset.json",
+  "output_path": "/Users/russellmiller/Projects/Procedure_suite/reports/ci/nightly_local/reporter_seed_registry_extract_fields_full.json",
+  "prompt_field": "input_text",
+  "row_count": 22,
+  "created_at": "2026-03-08T05:26:06.358269+00:00",
+  "environment_defaults_applied": {
+    "PROCSUITE_SKIP_DOTENV": "1",
+    "PROCSUITE_PIPELINE_MODE": "extraction_first",
+    "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+    "REGISTRY_SELF_CORRECT_ENABLED": "0",
+    "REGISTRY_LLM_FALLBACK_ON_COVERAGE_FAIL": "0",
+    "REGISTRY_AUDITOR_SOURCE": "disabled",
+    "REGISTRY_USE_STUB_LLM": "1",
+    "GEMINI_OFFLINE": "1",
+    "OPENAI_OFFLINE": "1",
+    "REPORTER_DISABLE_LLM": "1",
+    "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+    "PROCSUITE_FAST_MODE": "1",
+    "PROCSUITE_SKIP_WARMUP": "1"
+  },
+  "metadata": {
+    "production_default": true,
+    "challenger_only": false,
+    "strict_requested": true
+  },
+  "summary": {
+    "total_cases": 22,
+    "successful_cases": 22,
+    "failed_cases": 0,
+    "avg_text_similarity": 0.5292,
+    "required_section_coverage": 0.9545,
+    "avg_cpt_jaccard": 0.7657,
+    "avg_performed_flag_f1": 0.8859,
+    "critical_extra_flag_rate": 0.2727,
+    "strict_render_fallback_rate": 1.0,
+    "forbidden_artifact_case_rate": 0.0,
+    "avg_seed_warning_count": 0.0,
+    "avg_accepted_findings": 0.0,
+    "avg_dropped_findings": 0.0,
+    "drop_reason_counts": {
+      "evidence_substring_fail": 0,
+      "keyword_fail": 0,
+      "anatomy_fail": 0,
+      "action_intent_fail": 0,
+      "procedure_key_not_allowlisted": 0,
+      "other": 0
+    }
+  },
+  "per_case": [
+    {
+      "id": "example_1",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.6726,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_ablation.performed",
+        "procedures_performed.radial_ebus.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31627",
+        "31641",
+        "31654",
+        "77012"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "RADIAL_EBUS_INFERRED_FROM_RADIAL_PROBE_KEYWORDS",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_2",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.6581,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_cryobiopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31628",
+        "31654"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "RADIAL_EBUS_INFERRED_FROM_RADIAL_PROBE_KEYWORDS",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_3",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.5127,
+      "missing_sections": [],
+      "cpt_jaccard": 0.0,
+      "performed_flag_f1": 0.4,
+      "critical_extra_flags": [
+        "procedures_performed.chest_ultrasound.performed"
+      ],
+      "critical_predicted_flags": [
+        "pleural_procedures.pleurodesis.performed",
+        "procedures_performed.chest_ultrasound.performed"
+      ],
+      "predicted_cpt_codes": [
+        "32560",
+        "76604"
+      ],
+      "flag_false_positive_count": 1,
+      "flag_false_negative_count": 2,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "BACKSTOP",
+        "DETERMINISTIC_UPLIFT",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_4",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.5122,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.airway_stent.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.rigid_bronchoscopy.performed",
+        "procedures_performed.thermal_ablation.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31636",
+        "31641"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "AUTO_CORRECTED",
+        "CAO_DETAIL_HEURISTIC",
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "NEEDS_REVIEW",
+        "SILENT_FAILURE",
+        "SOURCE_TYPE",
+        "SUPPRESSION_DEVICE_STATUS_ONLY",
+        "SUPPRESSION_TOOL_WITHOUT_ACTION"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_5",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.436,
+      "missing_sections": [],
+      "cpt_jaccard": 0.0,
+      "performed_flag_f1": 0.0,
+      "critical_extra_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed"
+      ],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31622"
+      ],
+      "flag_false_positive_count": 1,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_6",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.5245,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31654"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "SILENT_FAILURE",
+        "SOURCE_TYPE",
+        "SUPPRESSION_HISTORY_PLAN_LEAKAGE"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_7",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4009,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31654"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "NAV_TARGET_HEURISTIC",
+        "RADIAL_EBUS_INFERRED_FROM_RADIAL_PROBE_KEYWORDS",
+        "SILENT_FAILURE",
+        "SOURCE_TYPE",
+        "SUPPRESSION_MENU_HEADER_LEAKAGE"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_8",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.9067,
+      "missing_sections": [],
+      "cpt_jaccard": 0.5,
+      "performed_flag_f1": 0.8,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "pleural_procedures.chest_tube.performed",
+        "pleural_procedures.chest_tube_removal.performed"
+      ],
+      "predicted_cpt_codes": [
+        "32556"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 1,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "CHEST_TUBE_DISCONTINUE_REMOVAL_LANGUAGE_TREATING_AS_NOT_PERFORMED",
+        "DETERMINISTIC_UPLIFT",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_9",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4573,
+      "missing_sections": [],
+      "cpt_jaccard": 0.625,
+      "performed_flag_f1": 0.8,
+      "critical_extra_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.bronchial_wash.performed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31653",
+        "31654",
+        "77012"
+      ],
+      "flag_false_positive_count": 3,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "31622",
+        "AUTO_EBUS_NEEDLE_GAUGE",
+        "AUTO_EBUS_OUTCOME",
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_REGEX_FALLBACK",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "LINEAR_EBUS_INFERRED_FROM_CONVEX_MEDIASTINAL_STATION_SAMPLING",
+        "NAV_TARGET_HEURISTIC",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_10",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.2614,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31653"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "31653",
+        "AUTO_CORRECTED_EBUS_CRITERIA_ONLY",
+        "AUTO_EBUS_NEEDLE_GAUGE",
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_NARRATIVE_RECONCILE",
+        "EBUS_NONSTATION_TARGET_CAPTURED",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_11",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.3588,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "granular_data.navigation_targets[*].fiducial_marker_placed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31626",
+        "31627",
+        "31628",
+        "31629",
+        "31654"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "SILENT_FAILURE",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_12",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.5084,
+      "missing_sections": [],
+      "cpt_jaccard": 0.6667,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31627",
+        "31628",
+        "31629",
+        "31653",
+        "31654"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_NARRATIVE_RECONCILE",
+        "EBUS_NONSTATION_TARGET_CAPTURED",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "RADIAL_VS_LINEAR_EBUS_MARKERS_BOTH_PRESENT_REVIEW_REQUIRED",
+        "SEED_NEEDS_REVIEW",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_13",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.3763,
+      "missing_sections": [],
+      "cpt_jaccard": 0.0,
+      "performed_flag_f1": 0.8571,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.rigid_bronchoscopy.performed",
+        "procedures_performed.thermal_ablation.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31641"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 1,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "HARD_OVERRIDE",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_14",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.6474,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.rigid_bronchoscopy.performed",
+        "procedures_performed.transbronchial_cryobiopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31628"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_15",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4978,
+      "missing_sections": [],
+      "cpt_jaccard": 0.8571,
+      "performed_flag_f1": 0.9333,
+      "critical_extra_flags": [
+        "procedures_performed.peripheral_tbna.performed"
+      ],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31653",
+        "31654"
+      ],
+      "flag_false_positive_count": 1,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "AUTO_EBUS_NEEDLE_GAUGE",
+        "AUTO_EBUS_OUTCOME",
+        "BLEEDING_GRADE_DERIVED",
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_NARRATIVE_RECONCILE",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "PROCEDURES_PERFORMED_BRUSHINGS_PERFORMED_TRUE_BUT_LOCATIONS_IS_EMPTY_MISSING",
+        "RADIAL_EBUS_INFERRED_FROM_RADIAL_PROBE_KEYWORDS",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_16",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.772,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.rigid_bronchoscopy.performed"
+      ],
+      "predicted_cpt_codes": [],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "BLEEDING_GRADE_DERIVED",
+        "DETERMINISTIC_UPLIFT",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_17",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.2538,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "pleural_procedures.chest_tube.performed",
+        "pleural_procedures.medical_thoracoscopy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "32601"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "SOURCE_TYPE",
+        "SUPPRESSION_HISTORY_PLAN_LEAKAGE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_18",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4388,
+      "missing_sections": [],
+      "cpt_jaccard": 0.625,
+      "performed_flag_f1": 0.9091,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.blvr.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31624",
+        "31627",
+        "31629",
+        "31634",
+        "31647",
+        "77012"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 1,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_19",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4894,
+      "missing_sections": [],
+      "cpt_jaccard": 0.7143,
+      "performed_flag_f1": 0.8571,
+      "critical_extra_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.peripheral_tbna.performed"
+      ],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31653",
+        "31654"
+      ],
+      "flag_false_positive_count": 2,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "31622",
+        "AUTO_EBUS_NEEDLE_GAUGE",
+        "AUTO_EBUS_OUTCOME",
+        "BACKFILL",
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_NARRATIVE_RECONCILE",
+        "EBUS_REGEX_FALLBACK",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "EVIDENCE_HARD_FAIL",
+        "HARD_OVERRIDE",
+        "NAV_TARGET_HEURISTIC",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "SILENT_FAILURE",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": true,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_20",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.5634,
+      "missing_sections": [],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "pleural_procedures.medical_thoracoscopy.performed",
+        "pleural_procedures.pleurodesis.performed"
+      ],
+      "predicted_cpt_codes": [
+        "32650"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "BACKSTOP",
+        "DETERMINISTIC_UPLIFT",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_21",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.4721,
+      "missing_sections": [],
+      "cpt_jaccard": 0.8571,
+      "performed_flag_f1": 0.9333,
+      "critical_extra_flags": [
+        "procedures_performed.peripheral_tbna.performed"
+      ],
+      "critical_predicted_flags": [
+        "procedures_performed.bal.performed",
+        "procedures_performed.brushings.performed",
+        "procedures_performed.diagnostic_bronchoscopy.performed",
+        "procedures_performed.linear_ebus.performed",
+        "procedures_performed.navigational_bronchoscopy.performed",
+        "procedures_performed.peripheral_tbna.performed",
+        "procedures_performed.radial_ebus.performed",
+        "procedures_performed.transbronchial_biopsy.performed"
+      ],
+      "predicted_cpt_codes": [
+        "31623",
+        "31624",
+        "31627",
+        "31628",
+        "31629",
+        "31653",
+        "31654"
+      ],
+      "flag_false_positive_count": 1,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT",
+        "AUTO_EBUS_NEEDLE_GAUGE",
+        "AUTO_EBUS_OUTCOME",
+        "BLEEDING_GRADE_DERIVED",
+        "DETERMINISTIC_UPLIFT",
+        "EBUS_NARRATIVE_RECONCILE",
+        "EBUS_STATION_DETAIL_HEURISTIC",
+        "HARD_OVERRIDE",
+        "PROCEDURES_PERFORMED_BRUSHINGS_PERFORMED_TRUE_BUT_LOCATIONS_IS_EMPTY_MISSING",
+        "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    },
+    {
+      "id": "example_22",
+      "seed_path": "registry_extract_fields",
+      "text_similarity": 0.9214,
+      "missing_sections": [
+        "MONITORING"
+      ],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [
+        "pleural_procedures.ipc.performed",
+        "procedures_performed.chest_ultrasound.performed"
+      ],
+      "predicted_cpt_codes": [
+        "32550",
+        "76604"
+      ],
+      "flag_false_positive_count": 0,
+      "flag_false_negative_count": 0,
+      "forbidden_artifact_hits": [],
+      "render_fallback_used": true,
+      "seed_warning_count": 0,
+      "quality_flag_codes": [
+        "DETERMINISTIC_UPLIFT",
+        "IPC_INFERRED_FROM_TUNNELED_IPC_DEVICE_LANGUAGE",
+        "SOURCE_TYPE"
+      ],
+      "needs_review": false,
+      "accepted_findings": 0,
+      "dropped_findings": 0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "error": null,
+      "error_code": null
+    }
+  ],
+  "failures": []
+}

@@ -721,6 +721,12 @@ Reporter seeding is environment-controlled:
 - `REPORTER_SEED_STRATEGY=llm_findings`
   - Reporter-only path: masked prompt -> GPT findings with evidence -> synthetic NER -> `NERToRegistryMapper` -> `ClinicalGuardrails` -> deterministic CPT derivation -> bundle/templates.
 
+Promotion policy:
+
+- `llm_findings` remains challenger-only.
+- It is measured in CI and nightly evals, but it is not promoted automatically.
+- Production remains on `registry_extract_fields` until an explicit human decision changes `REPORTER_SEED_STRATEGY`.
+
 Optional strict mode for eval/QA:
 
 - `REPORTER_SEED_LLM_STRICT=1`
@@ -794,6 +800,19 @@ python ops/tools/eval_reporter_prompt_llm_findings.py \
 ```
 
 This evaluator is offline-safe by default and only performs real GPT calls when `PROCSUITE_ALLOW_ONLINE=1`.
+
+### Quality Signals and Quality Gates
+
+Extraction quality outcomes now have a stable structured form for QA and CI diffs:
+
+- canonical machine signals live under `registry.coding_support.quality_signals`
+- legacy warning strings still remain for backward compatibility
+- PR CI runs a fast fixed corpus and reporter subset gate
+- nightly or release CI runs the broader eval set and stores delta artifacts
+
+Contributor details and gate definitions live in:
+
+- `docs/QUALITY_GATES.md`
 
 ---
 

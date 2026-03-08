@@ -1,0 +1,391 @@
+{
+  "schema_version": "procedure_suite.quality_eval.v1",
+  "kind": "extraction",
+  "input_path": "tests/fixtures/unified_quality_corpus.json",
+  "output_path": "reports/work_order_2_quality_parity_before.json",
+  "source_format": "unified_quality_corpus",
+  "corpus_name": "unified_quality_corpus",
+  "created_at": "2026-03-08T04:02:54.718760+00:00",
+  "runtime": {
+    "mode": "extract_fields_extraction_first",
+    "refactor_stage": "before"
+  },
+  "summary": {
+    "total_cases": 10,
+    "passed_cases": 10,
+    "failed_cases": 0,
+    "pass_rate": 1.0,
+    "metrics": {
+      "manual_review_cases": 1,
+      "top_codes": [
+        [
+          "31652",
+          2
+        ],
+        [
+          "31622",
+          1
+        ],
+        [
+          "43237",
+          1
+        ],
+        [
+          "31648",
+          1
+        ],
+        [
+          "32997",
+          1
+        ],
+        [
+          "32552",
+          1
+        ],
+        [
+          "32560",
+          1
+        ],
+        [
+          "31627",
+          1
+        ],
+        [
+          "31628",
+          1
+        ],
+        [
+          "31629",
+          1
+        ]
+      ],
+      "top_warnings": [
+        [
+          "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+          2
+        ],
+        [
+          "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+          2
+        ],
+        [
+          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+          2
+        ],
+        [
+          "DETERMINISTIC_UPLIFT: added performed=true for eus_b",
+          1
+        ],
+        [
+          "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+          1
+        ],
+        [
+          "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+          1
+        ],
+        [
+          "31638: ML detected procedure, but specific device/anatomy was not found in text.",
+          1
+        ],
+        [
+          "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+          1
+        ],
+        [
+          "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+          1
+        ],
+        [
+          "AUTO_EBUS_OUTCOME: 4R -> benign",
+          1
+        ]
+      ]
+    },
+    "exact_code_match_cases": 10,
+    "exact_code_match_rate": 1.0
+  },
+  "per_case": [
+    {
+      "id": "blvr_valve_removal_not_foreign_body_removal",
+      "tags": [
+        "blvr_exchange_removal"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 1,
+        "warning_count": 4,
+        "audit_warning_count": 1,
+        "needs_manual_review": true
+      },
+      "actual": {
+        "cpt_codes": [
+          "31648"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for blvr",
+          "31647: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31649: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31651: ML detected procedure, but specific device/anatomy was not found in text."
+        ],
+        "audit_warnings": [
+          "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31647 (prob=0.52), but deterministic derivation missed it"
+        ],
+        "needs_manual_review": true,
+        "coder_difficulty": "high_confidence",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "checkbox_negative_blank_template_suppresses_procedures",
+      "tags": [
+        "checkbox_negation",
+        "pleural_placement_removal_inversion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 0,
+        "warning_count": 0,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [],
+        "warnings": [],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "coding_support_version": null
+      },
+      "failures": []
+    },
+    {
+      "id": "ebus_staging_no_peripheral_tbna_contamination",
+      "tags": [
+        "ebus_peripheral_tbna_contamination"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 1,
+        "warning_count": 8,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "31652"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+          "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
+          "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+          "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+          "AUTO_EBUS_OUTCOME: 4R -> benign",
+          "AUTO_EBUS_OUTCOME: 7 -> benign",
+          "Linear EBUS inferred from convex/mediastinal/station sampling."
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "high_confidence",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "inspection_only_stent_assessment_only",
+      "tags": [
+        "inspection_only_stents"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 0,
+        "warning_count": 3,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [],
+        "warnings": [
+          "31636: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31637: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31638: ML detected procedure, but specific device/anatomy was not found in text."
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "coding_support_version": null
+      },
+      "failures": []
+    },
+    {
+      "id": "menu_header_leakage_eus_b_inspection_only",
+      "tags": [
+        "menu_header_leakage"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 2,
+        "warning_count": 1,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "31622",
+          "43237"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for eus_b"
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
+      "tags": [
+        "cryo_vs_forceps_confusion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 4,
+        "warning_count": 5,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "31627",
+          "31628",
+          "31629",
+          "31654"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for navigational_bronchoscopy, peripheral_tbna, radial_ebus, transbronchial_biopsy",
+          "31625: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31632: ML detected procedure, but specific device/anatomy was not found in text.",
+          "Radial EBUS inferred from concentric/eccentric view.",
+          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "high_confidence",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "peripheral_rose_not_misattributed_to_ebus",
+      "tags": [
+        "reporter_rose_misattribution"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 1,
+        "warning_count": 5,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "31652"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
+          "31622: ML detected procedure, but specific device/anatomy was not found in text.",
+          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+          "EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations ['4R', '7']",
+          "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: 7"
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "gray_zone",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
+      "tags": [
+        "tool_without_action"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 0,
+        "warning_count": 0,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [],
+        "warnings": [],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "coding_support_version": null
+      },
+      "failures": []
+    },
+    {
+      "id": "tunneled_pleural_catheter_removal_not_insertion",
+      "tags": [
+        "pleural_placement_removal_inversion"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 2,
+        "warning_count": 3,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "32552",
+          "32560"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc, pleural_procedures.pleurodesis",
+          "32550: ML detected procedure, but specific device/anatomy was not found in text.",
+          "IPC removal language detected; preserving pleural_procedures.ipc as Removal."
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    },
+    {
+      "id": "whole_lung_lavage_not_bal",
+      "tags": [
+        "wll_vs_bal"
+      ],
+      "status": "passed",
+      "metrics": {
+        "code_count": 1,
+        "warning_count": 1,
+        "audit_warning_count": 0,
+        "needs_manual_review": false
+      },
+      "actual": {
+        "cpt_codes": [
+          "32997"
+        ],
+        "warnings": [
+          "DETERMINISTIC_UPLIFT: added performed=true for whole_lung_lavage"
+        ],
+        "audit_warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "gray_zone",
+        "coding_support_version": "coding_support.v1"
+      },
+      "failures": []
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,223 @@
+{
+  "fixture": "tests/fixtures/precision_suppressions.json",
+  "kind": "precision_suppression_before",
+  "case_count": 19,
+  "per_case": [
+    {
+      "id": "menu_header_leakage_bal_suppress",
+      "family": "menu_header_leakage",
+      "kind": "suppress",
+      "codes": [
+        "31624"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "menu_header_leakage_bal_preserve",
+      "family": "menu_header_leakage",
+      "kind": "preserve",
+      "codes": [
+        "31624"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "unchecked_template_items_suppress",
+      "family": "unchecked_template_items",
+      "kind": "suppress",
+      "codes": [
+        "31630",
+        "32550",
+        "32551"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 3,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "unchecked_template_items_preserve",
+      "family": "unchecked_template_items",
+      "kind": "preserve",
+      "codes": [
+        "32556"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "inspection_only_stents_suppress",
+      "family": "inspection_only_stents",
+      "kind": "suppress",
+      "codes": [
+        "31636"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "inspection_only_stents_preserve",
+      "family": "inspection_only_stents",
+      "kind": "preserve",
+      "codes": [
+        "31636"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "ebus_peripheral_tbna_contamination_suppress",
+      "family": "ebus_peripheral_tbna_contamination",
+      "kind": "suppress",
+      "codes": [
+        "31652"
+      ],
+      "warnings": [
+        "Suppressed 31629: peripheral_tbna present with EBUS-TBNA but targets_sampled lack a clearly distinct, non-nodal anatomic target"
+      ],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "ebus_peripheral_tbna_contamination_preserve",
+      "family": "ebus_peripheral_tbna_contamination",
+      "kind": "preserve",
+      "codes": [
+        "31629",
+        "31652"
+      ],
+      "warnings": [
+        "31629 requires Modifier 59 when peripheral TBNA is distinct from EBUS-TBNA sampling"
+      ],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "tool_without_action_suppress",
+      "family": "tool_without_action",
+      "kind": "suppress",
+      "codes": [
+        "31640"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "tool_without_action_preserve",
+      "family": "tool_without_action",
+      "kind": "preserve",
+      "codes": [
+        "31640"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "pleural_removal_inversion_suppress",
+      "family": "pleural_placement_removal_inversion",
+      "kind": "suppress",
+      "codes": [
+        "32550"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "pleural_removal_inversion_preserve",
+      "family": "pleural_placement_removal_inversion",
+      "kind": "preserve",
+      "codes": [
+        "32550"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "bal_vs_wll_suppress",
+      "family": "bal_vs_wll",
+      "kind": "suppress",
+      "codes": [
+        "31624"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "bal_vs_wll_preserve",
+      "family": "bal_vs_wll",
+      "kind": "preserve",
+      "codes": [
+        "31624"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "blvr_removal_not_initial_suppress",
+      "family": "blvr_exchange_removal",
+      "kind": "suppress",
+      "codes": [
+        "31647"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "blvr_initial_placement_preserve",
+      "family": "blvr_exchange_removal",
+      "kind": "preserve",
+      "codes": [
+        "31647"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "blvr_exchange_needs_manual_review",
+      "family": "blvr_exchange_removal",
+      "kind": "ambiguous",
+      "codes": [
+        "31647"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "cryo_vs_forceps_suppress",
+      "family": "cryo_vs_forceps",
+      "kind": "suppress",
+      "codes": [
+        "31628"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 1,
+      "forbidden_field_hits": 0
+    },
+    {
+      "id": "cryo_vs_forceps_preserve",
+      "family": "cryo_vs_forceps",
+      "kind": "preserve",
+      "codes": [
+        "31628"
+      ],
+      "warnings": [],
+      "forbidden_code_hits": 0,
+      "forbidden_field_hits": 0
+    }
+  ]
+}
