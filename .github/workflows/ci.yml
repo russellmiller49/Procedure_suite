@@ -46,7 +46,7 @@ jobs:
       - name: Ruff
         run: ruff check .
       - name: Mypy
-        run: make typecheck
+        run: python -m mypy --cache-dir .mypy_cache proc_schemas config observability
       - name: Pytest
         run: pytest -q
       - name: Legacy golden eval (optional)
