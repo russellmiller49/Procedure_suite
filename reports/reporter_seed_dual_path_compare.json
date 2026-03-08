@@ -1,15 +1,15 @@
 {
   "schema_version": "procedure_suite.reporter_seed_compare.v1",
   "kind": "reporter_seed_compare",
-  "created_at": "2026-03-08T05:13:59.785813+00:00",
+  "created_at": "2026-03-08T19:16:57.387834+00:00",
   "left_seed_path": "registry_extract_fields",
   "right_seed_path": "llm_findings",
   "left_report_path": "reports/reporter_seed_registry_extract_fields_baseline.json",
   "right_report_path": "reports/reporter_seed_llm_findings_baseline.json",
   "summary_diff": {
     "avg_text_similarity": {
-      "left": 0.8921,
-      "right": 0.8921,
+      "left": 0.8918,
+      "right": 0.8918,
       "delta": 0.0
     },
     "required_section_coverage": {
@@ -33,8 +33,8 @@
       "delta": 0.0
     },
     "strict_render_fallback_rate": {
-      "left": 1.0,
-      "right": 1.0,
+      "left": 0.0,
+      "right": 0.0,
       "delta": 0.0
     },
     "forbidden_artifact_case_rate": {
@@ -74,7 +74,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -86,7 +87,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -109,7 +111,8 @@
           "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -123,7 +126,8 @@
           "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -143,7 +147,8 @@
         "critical_predicted_flags": [
           "pleural_procedures.thoracentesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -154,7 +159,8 @@
         "critical_predicted_flags": [
           "pleural_procedures.thoracentesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },

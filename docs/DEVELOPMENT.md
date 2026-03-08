@@ -228,6 +228,7 @@ Quality-gate artifacts:
 - `*.delta.json` files against checked-in baselines when available
 
 See [`docs/QUALITY_GATES.md`](QUALITY_GATES.md) for the exact suite split, `quality_signals` contract, and reporter seed promotion rule.
+End-to-end reporter parity is defined there by the dual-path eval matrix and compare artifacts; the older reporting parity tests are smoke-only.
 
 ### LLM Tests
 

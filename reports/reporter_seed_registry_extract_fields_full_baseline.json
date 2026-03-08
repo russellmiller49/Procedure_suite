@@ -2,11 +2,11 @@
   "schema_version": "procedure_suite.reporter_seed_eval.v1",
   "kind": "reporter_seed_eval",
   "seed_path": "registry_extract_fields",
-  "input_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/reporter_golden_dataset.json",
-  "output_path": "/Users/russellmiller/Projects/Procedure_suite/reports/ci/nightly_local/reporter_seed_registry_extract_fields_full.json",
+  "input_path": "tests/fixtures/reporter_golden_dataset.json",
+  "output_path": "reports/reporter_seed_registry_extract_fields_full_baseline.json",
   "prompt_field": "input_text",
   "row_count": 22,
-  "created_at": "2026-03-08T05:26:06.358269+00:00",
+  "created_at": "2026-03-08T19:17:11.757871+00:00",
   "environment_defaults_applied": {
     "PROCSUITE_SKIP_DOTENV": "1",
     "PROCSUITE_PIPELINE_MODE": "extraction_first",
@@ -31,12 +31,12 @@
     "total_cases": 22,
     "successful_cases": 22,
     "failed_cases": 0,
-    "avg_text_similarity": 0.5292,
+    "avg_text_similarity": 0.5331,
     "required_section_coverage": 0.9545,
-    "avg_cpt_jaccard": 0.7657,
-    "avg_performed_flag_f1": 0.8859,
-    "critical_extra_flag_rate": 0.2727,
-    "strict_render_fallback_rate": 1.0,
+    "avg_cpt_jaccard": 0.8542,
+    "avg_performed_flag_f1": 0.9576,
+    "critical_extra_flag_rate": 0.0,
+    "strict_render_fallback_rate": 0.0,
     "forbidden_artifact_case_rate": 0.0,
     "avg_seed_warning_count": 0.0,
     "avg_accepted_findings": 0.0,
@@ -48,7 +48,8 @@
       "action_intent_fail": 0,
       "procedure_key_not_allowlisted": 0,
       "other": 0
-    }
+    },
+    "fallback_reason_counts": {}
   },
   "per_case": [
     {
@@ -74,7 +75,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -98,7 +102,7 @@
     {
       "id": "example_2",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.6581,
+      "text_similarity": 0.632,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -115,7 +119,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -140,25 +147,24 @@
     {
       "id": "example_3",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.5127,
+      "text_similarity": 0.5113,
       "missing_sections": [],
       "cpt_jaccard": 0.0,
-      "performed_flag_f1": 0.4,
-      "critical_extra_flags": [
-        "procedures_performed.chest_ultrasound.performed"
-      ],
+      "performed_flag_f1": 0.5,
+      "critical_extra_flags": [],
       "critical_predicted_flags": [
-        "pleural_procedures.pleurodesis.performed",
-        "procedures_performed.chest_ultrasound.performed"
+        "pleural_procedures.pleurodesis.performed"
       ],
       "predicted_cpt_codes": [
-        "32560",
-        "76604"
+        "32560"
       ],
-      "flag_false_positive_count": 1,
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 2,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "BACKSTOP",
@@ -200,7 +206,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "AUTO_CORRECTED",
@@ -231,23 +240,20 @@
     {
       "id": "example_5",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.436,
+      "text_similarity": 0.5389,
       "missing_sections": [],
-      "cpt_jaccard": 0.0,
-      "performed_flag_f1": 0.0,
-      "critical_extra_flags": [
-        "procedures_performed.diagnostic_bronchoscopy.performed"
-      ],
-      "critical_predicted_flags": [
-        "procedures_performed.diagnostic_bronchoscopy.performed"
-      ],
-      "predicted_cpt_codes": [
-        "31622"
-      ],
-      "flag_false_positive_count": 1,
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
+      "critical_predicted_flags": [],
+      "predicted_cpt_codes": [],
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "SOURCE_TYPE"
@@ -269,7 +275,7 @@
     {
       "id": "example_6",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.5245,
+      "text_similarity": 0.5199,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -294,7 +300,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -322,7 +331,7 @@
     {
       "id": "example_7",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4009,
+      "text_similarity": 0.3998,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -345,7 +354,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -374,7 +386,7 @@
     {
       "id": "example_8",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.9067,
+      "text_similarity": 0.9054,
       "missing_sections": [],
       "cpt_jaccard": 0.5,
       "performed_flag_f1": 0.8,
@@ -389,7 +401,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 1,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "CHEST_TUBE_DISCONTINUE_REMOVAL_LANGUAGE_TREATING_AS_NOT_PERFORMED",
@@ -413,40 +428,33 @@
     {
       "id": "example_9",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4573,
+      "text_similarity": 0.5372,
       "missing_sections": [],
-      "cpt_jaccard": 0.625,
-      "performed_flag_f1": 0.8,
-      "critical_extra_flags": [
-        "procedures_performed.bal.performed",
-        "procedures_performed.peripheral_tbna.performed",
-        "procedures_performed.transbronchial_biopsy.performed"
-      ],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
       "critical_predicted_flags": [
-        "procedures_performed.bal.performed",
         "procedures_performed.bronchial_wash.performed",
         "procedures_performed.brushings.performed",
         "procedures_performed.diagnostic_bronchoscopy.performed",
         "procedures_performed.linear_ebus.performed",
         "procedures_performed.navigational_bronchoscopy.performed",
-        "procedures_performed.peripheral_tbna.performed",
-        "procedures_performed.radial_ebus.performed",
-        "procedures_performed.transbronchial_biopsy.performed"
+        "procedures_performed.radial_ebus.performed"
       ],
       "predicted_cpt_codes": [
         "31623",
-        "31624",
         "31627",
-        "31628",
-        "31629",
         "31653",
         "31654",
         "77012"
       ],
-      "flag_false_positive_count": 3,
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "31622",
@@ -492,7 +500,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "31653",
@@ -521,7 +532,7 @@
     {
       "id": "example_11",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.3588,
+      "text_similarity": 0.3514,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -546,7 +557,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -573,7 +587,7 @@
     {
       "id": "example_12",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.5084,
+      "text_similarity": 0.4908,
       "missing_sections": [],
       "cpt_jaccard": 0.6667,
       "performed_flag_f1": 1.0,
@@ -596,7 +610,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -641,7 +658,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 1,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -665,7 +685,7 @@
     {
       "id": "example_14",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.6474,
+      "text_similarity": 0.6436,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -681,7 +701,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "SOURCE_TYPE"
@@ -703,20 +726,17 @@
     {
       "id": "example_15",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4978,
+      "text_similarity": 0.4851,
       "missing_sections": [],
-      "cpt_jaccard": 0.8571,
-      "performed_flag_f1": 0.9333,
-      "critical_extra_flags": [
-        "procedures_performed.peripheral_tbna.performed"
-      ],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
       "critical_predicted_flags": [
         "procedures_performed.bal.performed",
         "procedures_performed.brushings.performed",
         "procedures_performed.diagnostic_bronchoscopy.performed",
         "procedures_performed.linear_ebus.performed",
         "procedures_performed.navigational_bronchoscopy.performed",
-        "procedures_performed.peripheral_tbna.performed",
         "procedures_performed.radial_ebus.performed",
         "procedures_performed.transbronchial_biopsy.performed"
       ],
@@ -725,14 +745,16 @@
         "31624",
         "31627",
         "31628",
-        "31629",
         "31653",
         "31654"
       ],
-      "flag_false_positive_count": 1,
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "AUTO_EBUS_NEEDLE_GAUGE",
@@ -775,7 +797,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "BLEEDING_GRADE_DERIVED",
@@ -814,7 +839,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -839,7 +867,7 @@
     {
       "id": "example_18",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4388,
+      "text_similarity": 0.4266,
       "missing_sections": [],
       "cpt_jaccard": 0.625,
       "performed_flag_f1": 0.9091,
@@ -862,7 +890,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 1,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",
@@ -887,37 +918,33 @@
     {
       "id": "example_19",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4894,
+      "text_similarity": 0.4939,
       "missing_sections": [],
-      "cpt_jaccard": 0.7143,
-      "performed_flag_f1": 0.8571,
-      "critical_extra_flags": [
-        "procedures_performed.bal.performed",
-        "procedures_performed.peripheral_tbna.performed"
-      ],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
       "critical_predicted_flags": [
-        "procedures_performed.bal.performed",
         "procedures_performed.brushings.performed",
         "procedures_performed.diagnostic_bronchoscopy.performed",
         "procedures_performed.linear_ebus.performed",
         "procedures_performed.navigational_bronchoscopy.performed",
-        "procedures_performed.peripheral_tbna.performed",
         "procedures_performed.radial_ebus.performed",
         "procedures_performed.transbronchial_biopsy.performed"
       ],
       "predicted_cpt_codes": [
         "31623",
-        "31624",
         "31627",
         "31628",
-        "31629",
         "31653",
         "31654"
       ],
-      "flag_false_positive_count": 2,
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "31622",
@@ -967,7 +994,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "BACKSTOP",
@@ -991,20 +1021,17 @@
     {
       "id": "example_21",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.4721,
+      "text_similarity": 0.4717,
       "missing_sections": [],
-      "cpt_jaccard": 0.8571,
-      "performed_flag_f1": 0.9333,
-      "critical_extra_flags": [
-        "procedures_performed.peripheral_tbna.performed"
-      ],
+      "cpt_jaccard": 1.0,
+      "performed_flag_f1": 1.0,
+      "critical_extra_flags": [],
       "critical_predicted_flags": [
         "procedures_performed.bal.performed",
         "procedures_performed.brushings.performed",
         "procedures_performed.diagnostic_bronchoscopy.performed",
         "procedures_performed.linear_ebus.performed",
         "procedures_performed.navigational_bronchoscopy.performed",
-        "procedures_performed.peripheral_tbna.performed",
         "procedures_performed.radial_ebus.performed",
         "procedures_performed.transbronchial_biopsy.performed"
       ],
@@ -1013,14 +1040,16 @@
         "31624",
         "31627",
         "31628",
-        "31629",
         "31653",
         "31654"
       ],
-      "flag_false_positive_count": 1,
+      "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT",
@@ -1052,7 +1081,7 @@
     {
       "id": "example_22",
       "seed_path": "registry_extract_fields",
-      "text_similarity": 0.9214,
+      "text_similarity": 0.9085,
       "missing_sections": [
         "MONITORING"
       ],
@@ -1070,7 +1099,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [
         "DETERMINISTIC_UPLIFT",

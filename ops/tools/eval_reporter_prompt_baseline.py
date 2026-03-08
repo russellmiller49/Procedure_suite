@@ -93,6 +93,9 @@ def build_case_runner(*, registry_service: RegistryService, strict: bool):
             quality_flags=[flag.to_payload() for flag in seed_outcome.quality_flags],
             needs_review=bool(seed_outcome.needs_review),
             render_fallback_used=bool(pipeline_result.render_fallback_used),
+            render_fallback_reason=pipeline_result.render_fallback_reason,
+            render_fallback_category=pipeline_result.render_fallback_category,
+            render_fallback_details=dict(pipeline_result.render_fallback_details or {}),
         )
 
     return _run

@@ -49,6 +49,7 @@ def configure_eval_env() -> dict[str, str]:
 
 _APPLIED_ENV_DEFAULTS = configure_eval_env()
 
+from app.common.path_redaction import sanitize_path_fields
 from app.common.reporter_seed_eval import load_eval_rows
 from app.registry.application.registry_service import RegistryService
 
@@ -101,7 +102,10 @@ def main(argv: list[str] | None = None) -> int:
         "cases": cases,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    args.output.write_text(
+        json.dumps(sanitize_path_fields(payload), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     print(f"Wrote reporter seed fixture: {args.output}")
     return 0
 

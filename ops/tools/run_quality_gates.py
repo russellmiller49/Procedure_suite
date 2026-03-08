@@ -8,7 +8,7 @@ import json
 import os
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +39,7 @@ PR_REPORTER_LLM_FIXTURE = ROOT / "tests" / "fixtures" / "reporter_seed_eval_llm_
 PR_REPORTER_BASELINE = ROOT / "reports" / "reporter_seed_registry_extract_fields_baseline.json"
 PR_REPORTER_LLM_BASELINE = ROOT / "reports" / "reporter_seed_llm_findings_baseline.json"
 PR_REPORTER_COMPARE_BASELINE = ROOT / "reports" / "reporter_seed_dual_path_compare.json"
+PR_REPORTER_FALLBACK_BASELINE = ROOT / "reports" / "reporter_seed_dual_path_fallback_summary.json"
 
 FULL_REPORTER_INPUT = ROOT / "tests" / "fixtures" / "reporter_golden_dataset.json"
 FULL_REPORTER_PROMPT_FIELD = "input_text"
@@ -46,6 +47,7 @@ FULL_REPORTER_LLM_FIXTURE = ROOT / "tests" / "fixtures" / "reporter_seed_eval_ll
 FULL_REPORTER_BASELINE = ROOT / "reports" / "reporter_seed_registry_extract_fields_full_baseline.json"
 FULL_REPORTER_LLM_BASELINE = ROOT / "reports" / "reporter_seed_llm_findings_full_baseline.json"
 FULL_REPORTER_COMPARE_BASELINE = ROOT / "reports" / "reporter_seed_dual_path_full_compare_baseline.json"
+FULL_REPORTER_FALLBACK_BASELINE = ROOT / "reports" / "reporter_seed_dual_path_full_fallback_summary_baseline.json"
 
 
 @dataclass(frozen=True)
@@ -100,6 +102,66 @@ def _run_command(
         returncode=proc.returncode,
         error=None if proc.returncode == 0 else f"command failed with exit code {proc.returncode}",
     )
+
+
+def _static_step_result(
+    *,
+    name: str,
+    status: str,
+    output_dir: Path,
+    command: list[str] | None = None,
+    output_path: Path | None = None,
+    error: str | None = None,
+    note: str | None = None,
+) -> StepResult:
+    stdout_path = output_dir / f"{name}.stdout.txt"
+    stderr_path = output_dir / f"{name}.stderr.txt"
+    stdout_path.write_text((note or "") + ("\n" if note else ""), encoding="utf-8")
+    stderr_path.write_text((error or "") + ("\n" if error else ""), encoding="utf-8")
+    return StepResult(
+        name=name,
+        status=status,
+        command=command or [],
+        stdout_path=str(stdout_path),
+        stderr_path=str(stderr_path),
+        output_path=str(output_path) if output_path else None,
+        returncode=0 if status == "passed" else 1,
+        error=error,
+    )
+
+
+def _mark_step_failed(step: StepResult, *, output_dir: Path, error: str) -> StepResult:
+    stderr_path = Path(step.stderr_path) if step.stderr_path else output_dir / f"{step.name}.stderr.txt"
+    existing = stderr_path.read_text(encoding="utf-8") if stderr_path.exists() else ""
+    stderr_path.write_text((existing + ("\n" if existing and not existing.endswith("\n") else "")) + error + "\n", encoding="utf-8")
+    return replace(
+        step,
+        status="failed",
+        stderr_path=str(stderr_path),
+        returncode=step.returncode if step.returncode not in (None, 0) else 1,
+        error=error,
+    )
+
+
+def _run_checked_step(
+    *,
+    name: str,
+    command: list[str],
+    output_dir: Path,
+    output_path: Path | None = None,
+    validator: Any | None = None,
+    env: dict[str, str] | None = None,
+) -> StepResult:
+    step = _run_command(name=name, command=command, output_dir=output_dir, env=env)
+    if output_path is not None:
+        step = replace(step, output_path=str(output_path))
+    if step.status != "passed" or validator is None:
+        return step
+    try:
+        validator(output_path)
+    except Exception as exc:  # noqa: BLE001
+        return _mark_step_failed(step, output_dir=output_dir, error=f"{type(exc).__name__}: {exc}")
+    return step
 
 
 def _write_skip_artifact(path: Path, *, kind: str, reason: str, metadata: dict[str, Any] | None = None) -> None:
@@ -169,18 +231,22 @@ def _generate_full_llm_fixture(*, fixture_path: Path, output_dir: Path) -> StepR
 def _render_diff_sections(diff_jobs: list[tuple[str, Path, Path]]) -> list[str]:
     lines: list[str] = []
     for title, current_path, baseline_path in diff_jobs:
-        if not current_path.exists():
+        try:
+            if not current_path.exists():
+                lines.append(f"### {title}")
+                lines.append(f"- Current report missing: `{current_path}`")
+                continue
+            if not baseline_path.exists():
+                lines.append(f"### {title}")
+                lines.append(f"- Baseline missing: `{baseline_path}`")
+                continue
+            delta = build_report_delta(current_path=current_path, baseline_path=baseline_path)
+            delta_path = current_path.with_name(f"{current_path.stem}.delta.json")
+            write_json(delta_path, delta)
+            lines.append(render_delta_markdown(delta, title=title))
+        except Exception as exc:  # noqa: BLE001
             lines.append(f"### {title}")
-            lines.append(f"- Current report missing: `{current_path}`")
-            continue
-        if not baseline_path.exists():
-            lines.append(f"### {title}")
-            lines.append(f"- Baseline missing: `{baseline_path}`")
-            continue
-        delta = build_report_delta(current_path=current_path, baseline_path=baseline_path)
-        delta_path = current_path.with_name(f"{current_path.stem}.delta.json")
-        write_json(delta_path, delta)
-        lines.append(render_delta_markdown(delta, title=title))
+            lines.append(f"- Delta generation failed: `{type(exc).__name__}: {exc}`")
     return lines
 
 
@@ -206,6 +272,24 @@ def _reporter_eval_command(
     if seed_fixture is not None:
         command.extend(["--seed-fixture", str(seed_fixture)])
     return command
+
+
+def _reporter_fallback_summary_command(
+    *,
+    left_report: Path,
+    right_report: Path,
+    output_path: Path,
+) -> list[str]:
+    return [
+        sys.executable,
+        str(ROOT / "ops" / "tools" / "summarize_reporter_seed_fallbacks.py"),
+        "--left-report",
+        str(left_report),
+        "--right-report",
+        str(right_report),
+        "--output",
+        str(output_path),
+    ]
 
 
 def _create_summary(
@@ -256,201 +340,68 @@ def _create_summary(
 
 def run_pr(output_dir: Path) -> int:
     steps: list[StepResult] = []
-    pytest_command = [sys.executable, "-m", "pytest", "-q", *PR_PYTEST_TARGETS]
-    steps.append(_run_command(name="focused_pytest", command=pytest_command, output_dir=output_dir))
+    diff_sections: list[str] = []
+    try:
+        pytest_command = [sys.executable, "-m", "pytest", "-q", *PR_PYTEST_TARGETS]
+        steps.append(_run_command(name="focused_pytest", command=pytest_command, output_dir=output_dir))
 
-    extraction_output = output_dir / "unified_quality_corpus_extraction.json"
-    steps.append(
-        _run_command(
-            name="extraction_eval",
-            command=[
-                sys.executable,
-                str(ROOT / "ml" / "scripts" / "eval_golden.py"),
-                "--input",
-                str(PR_EXTRACTION_INPUT),
-                "--output",
-                str(extraction_output),
-                "--fail-under",
-                "100",
-            ],
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_extraction_gate(extraction_output)
-
-    baseline_output = output_dir / "reporter_seed_registry_extract_fields.json"
-    steps.append(
-        _run_command(
-            name="reporter_seed_registry_eval",
-            command=_reporter_eval_command(
-                script_name="eval_reporter_prompt_baseline.py",
-                input_path=PR_REPORTER_INPUT,
-                output_path=baseline_output,
-                prompt_field="prompt_text",
-            ),
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_reporter_seed_gate(baseline_output)
-
-    llm_output = output_dir / "reporter_seed_llm_findings.json"
-    steps.append(
-        _run_command(
-            name="reporter_seed_llm_eval",
-            command=_reporter_eval_command(
-                script_name="eval_reporter_prompt_llm_findings.py",
-                input_path=PR_REPORTER_INPUT,
-                output_path=llm_output,
-                prompt_field="prompt_text",
-                seed_fixture=PR_REPORTER_LLM_FIXTURE,
-            ),
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_reporter_seed_gate(llm_output)
-
-    compare_output = output_dir / "reporter_seed_compare.json"
-    steps.append(
-        _run_command(
-            name="reporter_seed_compare",
-            command=[
-                sys.executable,
-                str(ROOT / "ops" / "tools" / "compare_reporter_seed_paths.py"),
-                "--left-report",
-                str(baseline_output),
-                "--right-report",
-                str(llm_output),
-                "--output",
-                str(compare_output),
-            ],
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_compare_gate(compare_output)
-
-    diff_sections = _render_diff_sections(
-        [
-            ("Extraction Delta", extraction_output, PR_EXTRACTION_BASELINE),
-            ("Reporter Baseline Delta", baseline_output, PR_REPORTER_BASELINE),
-            ("Reporter LLM Delta", llm_output, PR_REPORTER_LLM_BASELINE),
-            ("Reporter Compare Delta", compare_output, PR_REPORTER_COMPARE_BASELINE),
-        ]
-    )
-    _create_summary(tier="pr", steps=steps, diff_sections=diff_sections, output_dir=output_dir)
-    return 0 if all(step.status == "passed" for step in steps) else 1
-
-
-def run_nightly(output_dir: Path, *, allow_online_llm: bool) -> int:
-    steps: list[StepResult] = []
-    pytest_command = [sys.executable, "-m", "pytest", "-q", *PR_PYTEST_TARGETS]
-    steps.append(_run_command(name="focused_pytest", command=pytest_command, output_dir=output_dir))
-
-    extraction_output = output_dir / "unified_quality_corpus_extraction_full.json"
-    steps.append(
-        _run_command(
-            name="extraction_eval_full",
-            command=[
-                sys.executable,
-                str(ROOT / "ml" / "scripts" / "eval_golden.py"),
-                "--input",
-                str(PR_EXTRACTION_INPUT),
-                "--output",
-                str(extraction_output),
-                "--fail-under",
-                "100",
-            ],
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_extraction_gate(extraction_output)
-
-    baseline_output = output_dir / "reporter_seed_registry_extract_fields_full.json"
-    steps.append(
-        _run_command(
-            name="reporter_seed_registry_eval_full",
-            command=_reporter_eval_command(
-                script_name="eval_reporter_prompt_baseline.py",
-                input_path=FULL_REPORTER_INPUT,
-                output_path=baseline_output,
-                prompt_field=FULL_REPORTER_PROMPT_FIELD,
-            ),
-            output_dir=output_dir,
-        )
-    )
-    if steps[-1].status == "passed":
-        _assert_reporter_seed_gate(baseline_output)
-
-    llm_output = output_dir / "reporter_seed_llm_findings_full.json"
-    if allow_online_llm:
-        llm_command = _reporter_eval_command(
-            script_name="eval_reporter_prompt_llm_findings.py",
-            input_path=FULL_REPORTER_INPUT,
-            output_path=llm_output,
-            prompt_field=FULL_REPORTER_PROMPT_FIELD,
-        )
-    else:
-        fixture_path = FULL_REPORTER_LLM_FIXTURE
-        if fixture_path.exists():
-            steps.append(
-                StepResult(
-                    name="build_full_llm_fixture",
-                    status="passed",
-                    command=[],
-                    output_path=str(fixture_path),
-                )
-            )
-        else:
-            fixture_path = output_dir / FULL_REPORTER_LLM_FIXTURE.name
-            fixture_step = _generate_full_llm_fixture(fixture_path=fixture_path, output_dir=output_dir)
-            steps.append(fixture_step)
-        if steps[-1].status != "passed":
-            _write_skip_artifact(
-                llm_output,
-                kind="reporter_seed_eval",
-                reason="failed to build frozen llm fixture",
-                metadata={"fixture_path": str(fixture_path)},
-            )
-            llm_command = []
-        else:
-            llm_command = _reporter_eval_command(
-                script_name="eval_reporter_prompt_llm_findings.py",
-                input_path=FULL_REPORTER_INPUT,
-                output_path=llm_output,
-                prompt_field=FULL_REPORTER_PROMPT_FIELD,
-                seed_fixture=fixture_path,
-            )
-
-    if llm_command:
+        extraction_output = output_dir / "unified_quality_corpus_extraction.json"
         steps.append(
-            _run_command(
-                name="reporter_seed_llm_eval_full",
-                command=llm_command,
+            _run_checked_step(
+                name="extraction_eval",
+                command=[
+                    sys.executable,
+                    str(ROOT / "ml" / "scripts" / "eval_golden.py"),
+                    "--input",
+                    str(PR_EXTRACTION_INPUT),
+                    "--output",
+                    str(extraction_output),
+                    "--fail-under",
+                    "100",
+                ],
                 output_dir=output_dir,
-            )
-        )
-        if steps[-1].status == "passed":
-            _assert_reporter_seed_gate(llm_output)
-    else:
-        steps.append(
-            StepResult(
-                name="reporter_seed_llm_eval_full",
-                status="failed",
-                command=[],
-                output_path=str(llm_output),
-                error="llm evaluation command not constructed",
+                output_path=extraction_output,
+                validator=_assert_extraction_gate,
             )
         )
 
-    compare_output = output_dir / "reporter_seed_compare_full.json"
-    if baseline_output.exists() and llm_output.exists():
+        baseline_output = output_dir / "reporter_seed_registry_extract_fields.json"
         steps.append(
-            _run_command(
-                name="reporter_seed_compare_full",
+            _run_checked_step(
+                name="reporter_seed_registry_eval",
+                command=_reporter_eval_command(
+                    script_name="eval_reporter_prompt_baseline.py",
+                    input_path=PR_REPORTER_INPUT,
+                    output_path=baseline_output,
+                    prompt_field="prompt_text",
+                ),
+                output_dir=output_dir,
+                output_path=baseline_output,
+                validator=_assert_reporter_seed_gate,
+            )
+        )
+
+        llm_output = output_dir / "reporter_seed_llm_findings.json"
+        steps.append(
+            _run_checked_step(
+                name="reporter_seed_llm_eval",
+                command=_reporter_eval_command(
+                    script_name="eval_reporter_prompt_llm_findings.py",
+                    input_path=PR_REPORTER_INPUT,
+                    output_path=llm_output,
+                    prompt_field="prompt_text",
+                    seed_fixture=PR_REPORTER_LLM_FIXTURE,
+                ),
+                output_dir=output_dir,
+                output_path=llm_output,
+                validator=_assert_reporter_seed_gate,
+            )
+        )
+
+        compare_output = output_dir / "reporter_seed_compare.json"
+        steps.append(
+            _run_checked_step(
+                name="reporter_seed_compare",
                 command=[
                     sys.executable,
                     str(ROOT / "ops" / "tools" / "compare_reporter_seed_paths.py"),
@@ -462,36 +413,254 @@ def run_nightly(output_dir: Path, *, allow_online_llm: bool) -> int:
                     str(compare_output),
                 ],
                 output_dir=output_dir,
+                output_path=compare_output,
+                validator=_assert_compare_gate,
             )
         )
-        if steps[-1].status == "passed":
-            _assert_compare_gate(compare_output)
-    else:
-        _write_skip_artifact(
-            compare_output,
-            kind="reporter_seed_compare",
-            reason="baseline or llm reporter report missing",
-            metadata={"left": str(baseline_output), "right": str(llm_output)},
+        fallback_output = output_dir / "reporter_seed_fallback_summary.json"
+        if baseline_output.exists() and llm_output.exists():
+            steps.append(
+                _run_checked_step(
+                    name="reporter_seed_fallback_summary",
+                    command=_reporter_fallback_summary_command(
+                        left_report=baseline_output,
+                        right_report=llm_output,
+                        output_path=fallback_output,
+                    ),
+                    output_dir=output_dir,
+                    output_path=fallback_output,
+                )
+            )
+        else:
+            _write_skip_artifact(
+                fallback_output,
+                kind="reporter_seed_fallback_summary",
+                reason="baseline or llm reporter report missing",
+                metadata={"left": str(baseline_output), "right": str(llm_output)},
+            )
+            steps.append(
+                _static_step_result(
+                    name="reporter_seed_fallback_summary",
+                    status="failed",
+                    output_dir=output_dir,
+                    output_path=fallback_output,
+                    error="fallback summary inputs missing",
+                )
+            )
+        diff_sections = _render_diff_sections(
+            [
+                ("Extraction Delta", extraction_output, PR_EXTRACTION_BASELINE),
+                ("Reporter Baseline Delta", baseline_output, PR_REPORTER_BASELINE),
+                ("Reporter LLM Delta", llm_output, PR_REPORTER_LLM_BASELINE),
+                ("Reporter Compare Delta", compare_output, PR_REPORTER_COMPARE_BASELINE),
+                ("Reporter Fallback Delta", fallback_output, PR_REPORTER_FALLBACK_BASELINE),
+            ]
         )
+    except Exception as exc:  # noqa: BLE001
         steps.append(
-            StepResult(
-                name="reporter_seed_compare_full",
+            _static_step_result(
+                name="pr_gate_unhandled",
                 status="failed",
-                command=[],
-                output_path=str(compare_output),
-                error="comparison inputs missing",
+                output_dir=output_dir,
+                error=f"{type(exc).__name__}: {exc}",
+            )
+        )
+    finally:
+        _create_summary(tier="pr", steps=steps, diff_sections=diff_sections, output_dir=output_dir)
+    return 0 if all(step.status == "passed" for step in steps) else 1
+
+
+def run_nightly(output_dir: Path, *, allow_online_llm: bool) -> int:
+    steps: list[StepResult] = []
+    diff_sections: list[str] = []
+    try:
+        pytest_command = [sys.executable, "-m", "pytest", "-q", *PR_PYTEST_TARGETS]
+        steps.append(_run_command(name="focused_pytest", command=pytest_command, output_dir=output_dir))
+
+        extraction_output = output_dir / "unified_quality_corpus_extraction_full.json"
+        steps.append(
+            _run_checked_step(
+                name="extraction_eval_full",
+                command=[
+                    sys.executable,
+                    str(ROOT / "ml" / "scripts" / "eval_golden.py"),
+                    "--input",
+                    str(PR_EXTRACTION_INPUT),
+                    "--output",
+                    str(extraction_output),
+                    "--fail-under",
+                    "100",
+                ],
+                output_dir=output_dir,
+                output_path=extraction_output,
+                validator=_assert_extraction_gate,
             )
         )
 
-    diff_sections = _render_diff_sections(
-        [
-            ("Extraction Delta", extraction_output, PR_EXTRACTION_BASELINE),
-            ("Reporter Full Baseline Delta", baseline_output, FULL_REPORTER_BASELINE),
-            ("Reporter Full LLM Delta", llm_output, FULL_REPORTER_LLM_BASELINE),
-            ("Reporter Full Compare Delta", compare_output, FULL_REPORTER_COMPARE_BASELINE),
-        ]
-    )
-    _create_summary(tier="nightly", steps=steps, diff_sections=diff_sections, output_dir=output_dir)
+        baseline_output = output_dir / "reporter_seed_registry_extract_fields_full.json"
+        steps.append(
+            _run_checked_step(
+                name="reporter_seed_registry_eval_full",
+                command=_reporter_eval_command(
+                    script_name="eval_reporter_prompt_baseline.py",
+                    input_path=FULL_REPORTER_INPUT,
+                    output_path=baseline_output,
+                    prompt_field=FULL_REPORTER_PROMPT_FIELD,
+                ),
+                output_dir=output_dir,
+                output_path=baseline_output,
+                validator=_assert_reporter_seed_gate,
+            )
+        )
+
+        llm_output = output_dir / "reporter_seed_llm_findings_full.json"
+        if allow_online_llm:
+            llm_command = _reporter_eval_command(
+                script_name="eval_reporter_prompt_llm_findings.py",
+                input_path=FULL_REPORTER_INPUT,
+                output_path=llm_output,
+                prompt_field=FULL_REPORTER_PROMPT_FIELD,
+            )
+        else:
+            fixture_path = FULL_REPORTER_LLM_FIXTURE
+            if fixture_path.exists():
+                steps.append(
+                    _static_step_result(
+                        name="build_full_llm_fixture",
+                        status="passed",
+                        output_dir=output_dir,
+                        output_path=fixture_path,
+                        note="using checked-in frozen full llm fixture",
+                    )
+                )
+            else:
+                fixture_path = output_dir / FULL_REPORTER_LLM_FIXTURE.name
+                steps.append(_generate_full_llm_fixture(fixture_path=fixture_path, output_dir=output_dir))
+            if steps[-1].status != "passed":
+                _write_skip_artifact(
+                    llm_output,
+                    kind="reporter_seed_eval",
+                    reason="failed to build frozen llm fixture",
+                    metadata={"fixture_path": str(fixture_path)},
+                )
+                llm_command = []
+            else:
+                llm_command = _reporter_eval_command(
+                    script_name="eval_reporter_prompt_llm_findings.py",
+                    input_path=FULL_REPORTER_INPUT,
+                    output_path=llm_output,
+                    prompt_field=FULL_REPORTER_PROMPT_FIELD,
+                    seed_fixture=fixture_path,
+                )
+
+        if llm_command:
+            steps.append(
+                _run_checked_step(
+                    name="reporter_seed_llm_eval_full",
+                    command=llm_command,
+                    output_dir=output_dir,
+                    output_path=llm_output,
+                    validator=_assert_reporter_seed_gate,
+                )
+            )
+        else:
+            steps.append(
+                _static_step_result(
+                    name="reporter_seed_llm_eval_full",
+                    status="failed",
+                    output_dir=output_dir,
+                    output_path=llm_output,
+                    error="llm evaluation command not constructed",
+                )
+            )
+
+        compare_output = output_dir / "reporter_seed_compare_full.json"
+        if baseline_output.exists() and llm_output.exists():
+            steps.append(
+                _run_checked_step(
+                    name="reporter_seed_compare_full",
+                    command=[
+                        sys.executable,
+                        str(ROOT / "ops" / "tools" / "compare_reporter_seed_paths.py"),
+                        "--left-report",
+                        str(baseline_output),
+                        "--right-report",
+                        str(llm_output),
+                        "--output",
+                        str(compare_output),
+                    ],
+                    output_dir=output_dir,
+                    output_path=compare_output,
+                    validator=_assert_compare_gate,
+                )
+            )
+        else:
+            _write_skip_artifact(
+                compare_output,
+                kind="reporter_seed_compare",
+                reason="baseline or llm reporter report missing",
+                metadata={"left": str(baseline_output), "right": str(llm_output)},
+            )
+            steps.append(
+                _static_step_result(
+                    name="reporter_seed_compare_full",
+                    status="failed",
+                    output_dir=output_dir,
+                    output_path=compare_output,
+                    error="comparison inputs missing",
+                )
+            )
+        fallback_output = output_dir / "reporter_seed_fallback_summary_full.json"
+        if baseline_output.exists() and llm_output.exists():
+            steps.append(
+                _run_checked_step(
+                    name="reporter_seed_fallback_summary_full",
+                    command=_reporter_fallback_summary_command(
+                        left_report=baseline_output,
+                        right_report=llm_output,
+                        output_path=fallback_output,
+                    ),
+                    output_dir=output_dir,
+                    output_path=fallback_output,
+                )
+            )
+        else:
+            _write_skip_artifact(
+                fallback_output,
+                kind="reporter_seed_fallback_summary",
+                reason="baseline or llm reporter report missing",
+                metadata={"left": str(baseline_output), "right": str(llm_output)},
+            )
+            steps.append(
+                _static_step_result(
+                    name="reporter_seed_fallback_summary_full",
+                    status="failed",
+                    output_dir=output_dir,
+                    output_path=fallback_output,
+                    error="fallback summary inputs missing",
+                )
+            )
+
+        diff_sections = _render_diff_sections(
+            [
+                ("Extraction Delta", extraction_output, PR_EXTRACTION_BASELINE),
+                ("Reporter Full Baseline Delta", baseline_output, FULL_REPORTER_BASELINE),
+                ("Reporter Full LLM Delta", llm_output, FULL_REPORTER_LLM_BASELINE),
+                ("Reporter Full Compare Delta", compare_output, FULL_REPORTER_COMPARE_BASELINE),
+                ("Reporter Full Fallback Delta", fallback_output, FULL_REPORTER_FALLBACK_BASELINE),
+            ]
+        )
+    except Exception as exc:  # noqa: BLE001
+        steps.append(
+            _static_step_result(
+                name="nightly_gate_unhandled",
+                status="failed",
+                output_dir=output_dir,
+                error=f"{type(exc).__name__}: {exc}",
+            )
+        )
+    finally:
+        _create_summary(tier="nightly", steps=steps, diff_sections=diff_sections, output_dir=output_dir)
     return 0 if all(step.status == "passed" for step in steps) else 1
 
 

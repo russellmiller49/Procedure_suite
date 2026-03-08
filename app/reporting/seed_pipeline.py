@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import logging
 import re
 from dataclasses import dataclass, field
@@ -98,6 +99,25 @@ class ReporterSeedPipelineResult:
     missing_field_prompts: list[dict[str, Any]]
     debug_notes: list[dict[str, Any]] | None
     render_fallback_used: bool = False
+    render_fallback_reason: str | None = None
+    render_fallback_category: str | None = None
+    render_fallback_details: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class StrictRenderFallbackInfo:
+    code: str
+    category: Literal["missing_required_fields", "style_validation", "other"]
+    message: str
+    details: dict[str, Any] = field(default_factory=dict)
+
+    def to_payload(self) -> dict[str, Any]:
+        return {
+            "code": self.code,
+            "category": self.category,
+            "message": self.message,
+            "details": dict(self.details or {}),
+        }
 
 
 def _quality_flag_from_warning(
@@ -274,6 +294,67 @@ def verify_bundle(
     return bundle, issues, warnings, suggestions, inference_result.notes
 
 
+def _parse_missing_required_fields(message: str) -> StrictRenderFallbackInfo:
+    match = re.match(r"^Missing required fields for ([^:]+): (.+)$", message.strip())
+    template_id = match.group(1).strip() if match else "unknown"
+    raw_fields = match.group(2).strip() if match else "[]"
+    try:
+        parsed_fields = ast.literal_eval(raw_fields)
+    except Exception:
+        parsed_fields = []
+    fields = [str(item) for item in parsed_fields if str(item)]
+
+    if template_id == "bal":
+        code = "missing_bal_location" if "lung_segment" in fields else "missing_bal_details"
+    elif template_id == "transbronchial_needle_aspiration":
+        code = "missing_tbna_location" if "lung_segment" in fields else "missing_tbna_details"
+    elif template_id == "bronchial_brushings":
+        code = "missing_bronchial_brushings_location" if "lung_segment" in fields else "missing_bronchial_brushings_details"
+    else:
+        code = "missing_required_fields"
+
+    return StrictRenderFallbackInfo(
+        code=code,
+        category="missing_required_fields",
+        message=message,
+        details={"template_id": template_id, "fields": fields},
+    )
+
+
+def _parse_style_validation(message: str) -> StrictRenderFallbackInfo:
+    detail_text = message.split(":", 1)[1].strip() if ":" in message else message
+    details = [item.strip().rstrip(".") for item in detail_text.split(";") if item.strip()]
+    detail_set = set(details)
+    if detail_set == {"Bracketed placeholder text remains"}:
+        code = "style_disallowed_placeholder"
+    elif detail_set == {"Literal 'None' found in rendered text"}:
+        code = "style_disallowed_none"
+    elif detail_set == {"Bracketed placeholder text remains", "Literal 'None' found in rendered text"}:
+        code = "style_disallowed_placeholder_and_none"
+    else:
+        code = "style_validation"
+    return StrictRenderFallbackInfo(
+        code=code,
+        category="style_validation",
+        message=message,
+        details={"style_errors": details},
+    )
+
+
+def _categorize_strict_render_fallback(message: str) -> StrictRenderFallbackInfo:
+    text = str(message or "").strip()
+    if text.startswith("Missing required fields for"):
+        return _parse_missing_required_fields(text)
+    if text.startswith("Style validation failed:"):
+        return _parse_style_validation(text)
+    return StrictRenderFallbackInfo(
+        code="other",
+        category="other",
+        message=text,
+        details={},
+    )
+
+
 def render_bundle_markdown(
     bundle: ProcedureBundle,
     *,
@@ -282,7 +363,7 @@ def render_bundle_markdown(
     strict: bool,
     embed_metadata: bool,
     debug_notes: list[dict[str, Any]] | None = None,
-) -> tuple[str, bool]:
+) -> tuple[str, bool, StrictRenderFallbackInfo | None]:
     templates = default_template_registry()
     schemas = default_schema_registry()
     engine = ReporterEngine(
@@ -293,6 +374,7 @@ def render_bundle_markdown(
         macro_registry=get_macro_registry(),
     )
     fallback_used = False
+    fallback_info: StrictRenderFallbackInfo | None = None
     try:
         structured = engine.compose_report_with_metadata(
             bundle,
@@ -311,17 +393,25 @@ def render_bundle_markdown(
         ):
             raise
         fallback_used = True
+        fallback_info = _categorize_strict_render_fallback(message)
         if debug_notes is not None:
             debug_notes.append(
                 {
                     "type": "strict_fallback",
                     "error": message,
+                    "reason_code": fallback_info.code,
+                    "reason_category": fallback_info.category,
+                    "details": dict(fallback_info.details or {}),
                     "action": "fallback_to_non_strict_preview",
                 }
             )
         logger.warning(
             "Strict report render failed; falling back to non-strict preview",
-            extra={"error": message},
+            extra={
+                "error": message,
+                "reason_code": fallback_info.code,
+                "reason_category": fallback_info.category,
+            },
         )
         structured = engine.compose_report_with_metadata(
             bundle,
@@ -330,7 +420,7 @@ def render_bundle_markdown(
             validation_issues=issues,
             warnings=warnings,
         )
-    return structured.text, fallback_used
+    return structured.text, fallback_used, fallback_info
 
 
 def apply_reporter_completeness_uplift(record: Any, note_text: str) -> Any:
@@ -669,7 +759,7 @@ def run_reporter_seed_pipeline(
     if debug_notes is not None:
         debug_notes.append(debug_template_selection(bundle))
     questions = build_questions(bundle, issues)
-    markdown, render_fallback_used = render_bundle_markdown(
+    markdown, render_fallback_used, render_fallback_info = render_bundle_markdown(
         bundle,
         issues=issues,
         warnings=warnings,
@@ -688,6 +778,9 @@ def run_reporter_seed_pipeline(
         missing_field_prompts=missing_field_prompts,
         debug_notes=debug_notes if debug_enabled else None,
         render_fallback_used=render_fallback_used,
+        render_fallback_reason=render_fallback_info.code if render_fallback_info else None,
+        render_fallback_category=render_fallback_info.category if render_fallback_info else None,
+        render_fallback_details=dict(render_fallback_info.details or {}) if render_fallback_info else {},
     )
 
 

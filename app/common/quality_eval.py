@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from app.common.path_redaction import repo_relative_path, sanitize_path_fields
+
 
 QUALITY_EVAL_SCHEMA_VERSION = "procedure_suite.quality_eval.v1"
 
@@ -307,8 +309,8 @@ def build_standard_report(
     return {
         "schema_version": QUALITY_EVAL_SCHEMA_VERSION,
         "kind": kind,
-        "input_path": input_path,
-        "output_path": output_path,
+        "input_path": repo_relative_path(input_path),
+        "output_path": repo_relative_path(output_path),
         "source_format": source_format,
         "corpus_name": corpus_name,
         "created_at": datetime_now_iso(),
@@ -403,7 +405,8 @@ def maybe_write_report(path: Path | None, report: dict[str, Any]) -> None:
     if path is None:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8")
+    sanitized = sanitize_path_fields(report)
+    path.write_text(json.dumps(sanitized, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8")
 
 
 def iter_legacy_golden_entries(path: Path, pattern: str) -> list[tuple[str, dict[str, Any]]]:

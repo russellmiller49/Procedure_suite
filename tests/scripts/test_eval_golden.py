@@ -54,6 +54,8 @@ def test_eval_golden_main_writes_shared_report_shape(tmp_path) -> None:
     written = json.loads(output_path.read_text(encoding="utf-8"))
     assert written["schema_version"] == "procedure_suite.quality_eval.v1"
     assert written["kind"] == "extraction"
+    assert written["input_path"] is None
+    assert written["output_path"] is None
     assert set(written) == {
         "schema_version",
         "kind",
@@ -67,3 +69,26 @@ def test_eval_golden_main_writes_shared_report_shape(tmp_path) -> None:
         "per_case",
         "failures",
     }
+
+
+def test_eval_golden_uses_extraction_first_runtime_result() -> None:
+    mod = _load_eval_module()
+
+    class _FakeService:
+        def __init__(self) -> None:
+            self.called = []
+
+        def extract_fields_extraction_first(self, note_text: str):  # noqa: ANN001
+            self.called.append(("extract_fields_extraction_first", note_text))
+            return {"ok": True}
+
+        def extract_fields(self, note_text: str):  # noqa: ANN001
+            self.called.append(("extract_fields", note_text))
+            return {"wrong": True}
+
+    service = _FakeService()
+
+    result = mod._extract_runtime_result(service, "example note")
+
+    assert result == {"ok": True}
+    assert service.called == [("extract_fields_extraction_first", "example note")]

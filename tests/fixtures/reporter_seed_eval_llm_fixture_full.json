@@ -1,9 +1,9 @@
 {
   "schema_version": "reporter_seed_llm_fixture.v1",
   "kind": "reporter_seed_fixture",
-  "created_at": "2026-03-08T05:27:36.031482+00:00",
-  "input_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/reporter_golden_dataset.json",
-  "output_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/reporter_seed_eval_llm_fixture_full.json",
+  "created_at": "2026-03-08T18:12:46.112747+00:00",
+  "input_path": "tests/fixtures/reporter_golden_dataset.json",
+  "output_path": "tests/fixtures/reporter_seed_eval_llm_fixture_full.json",
   "prompt_field": "input_text",
   "completion_source": "completion_canonical",
   "environment_defaults_applied": {
@@ -298,7 +298,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.140756+00:00",
+          "generated_at": "2026-03-08T18:12:42.971401+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -851,7 +851,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.282535+00:00",
+          "generated_at": "2026-03-08T18:12:43.142407+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -1220,7 +1220,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.406087+00:00",
+          "generated_at": "2026-03-08T18:12:43.286351+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -1513,7 +1513,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.554735+00:00",
+          "generated_at": "2026-03-08T18:12:43.450902+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -2372,7 +2372,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.784849+00:00",
+          "generated_at": "2026-03-08T18:12:43.699023+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -3140,7 +3140,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:33.933611+00:00",
+          "generated_at": "2026-03-08T18:12:43.858248+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -3710,7 +3710,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.030538+00:00",
+          "generated_at": "2026-03-08T18:12:43.961461+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -4219,7 +4219,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.222590+00:00",
+          "generated_at": "2026-03-08T18:12:44.169997+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -5166,7 +5166,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.321831+00:00",
+          "generated_at": "2026-03-08T18:12:44.276551+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -5995,7 +5995,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.490065+00:00",
+          "generated_at": "2026-03-08T18:12:44.463650+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -6817,7 +6817,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.657135+00:00",
+          "generated_at": "2026-03-08T18:12:44.643665+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -7741,7 +7741,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.800517+00:00",
+          "generated_at": "2026-03-08T18:12:44.797326+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -8233,7 +8233,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:34.945178+00:00",
+          "generated_at": "2026-03-08T18:12:44.951418+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -8941,7 +8941,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.106055+00:00",
+          "generated_at": "2026-03-08T18:12:45.121522+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -10125,7 +10125,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.332480+00:00",
+          "generated_at": "2026-03-08T18:12:45.361891+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -10582,7 +10582,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.476781+00:00",
+          "generated_at": "2026-03-08T18:12:45.517879+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -11537,7 +11537,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.668252+00:00",
+          "generated_at": "2026-03-08T18:12:45.721153+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -12361,7 +12361,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.780933+00:00",
+          "generated_at": "2026-03-08T18:12:45.841682+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -12884,7 +12884,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:35.920532+00:00",
+          "generated_at": "2026-03-08T18:12:45.990919+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {
@@ -13947,7 +13947,7 @@
         },
         "coding_support": {
           "version": "coding_support.v1",
-          "generated_at": "2026-03-08T05:27:36.031352+00:00",
+          "generated_at": "2026-03-08T18:12:46.112550+00:00",
           "generator": "registry_to_cpt",
           "knowledge_base_version": "ip_coding_billing.v3.0",
           "coding_summary": {

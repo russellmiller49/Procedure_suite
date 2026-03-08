@@ -1,3 +1,9 @@
+"""Authoritative reporter parity gate for the fixed PR subset.
+
+If end-to-end reporter parity expectations change, update this matrix, the shared
+eval scripts, and the checked-in compare artifacts together.
+"""
+
 from __future__ import annotations
 
 import json
@@ -158,3 +164,5 @@ def test_reporter_seed_dual_path_matrix() -> None:
         llm_fallback_count += int(bool(llm_result.render_fallback_used))
 
     assert llm_fallback_count <= registry_fallback_count
+    assert registry_fallback_count < len(cases)
+    assert llm_fallback_count < len(cases)

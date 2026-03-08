@@ -6,7 +6,7 @@
   "output_path": "reports/reporter_seed_llm_findings_baseline.json",
   "prompt_field": "prompt_text",
   "row_count": 3,
-  "created_at": "2026-03-08T05:13:56.576150+00:00",
+  "created_at": "2026-03-08T19:16:48.343719+00:00",
   "environment_defaults_applied": {
     "PROCSUITE_SKIP_DOTENV": "1",
     "PROCSUITE_PIPELINE_MODE": "extraction_first",
@@ -36,12 +36,12 @@
     "total_cases": 3,
     "successful_cases": 3,
     "failed_cases": 0,
-    "avg_text_similarity": 0.8921,
+    "avg_text_similarity": 0.8918,
     "required_section_coverage": 1.0,
     "avg_cpt_jaccard": 1.0,
     "avg_performed_flag_f1": 1.0,
     "critical_extra_flag_rate": 0.0,
-    "strict_render_fallback_rate": 1.0,
+    "strict_render_fallback_rate": 0.0,
     "forbidden_artifact_case_rate": 0.0,
     "avg_seed_warning_count": 0.3333,
     "avg_accepted_findings": 1.3333,
@@ -53,7 +53,8 @@
       "action_intent_fail": 1,
       "procedure_key_not_allowlisted": 0,
       "other": 0
-    }
+    },
+    "fallback_reason_counts": {}
   },
   "per_case": [
     {
@@ -74,7 +75,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [],
       "needs_review": false,
@@ -108,7 +112,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 0,
       "quality_flag_codes": [],
       "needs_review": false,
@@ -128,7 +135,7 @@
     {
       "id": "seed_from_text_ion_nav_tbna_cryo",
       "seed_path": "llm_findings",
-      "text_similarity": 0.8193,
+      "text_similarity": 0.8184,
       "missing_sections": [],
       "cpt_jaccard": 1.0,
       "performed_flag_f1": 1.0,
@@ -148,7 +155,10 @@
       "flag_false_positive_count": 0,
       "flag_false_negative_count": 0,
       "forbidden_artifact_hits": [],
-      "render_fallback_used": true,
+      "render_fallback_used": false,
+      "render_fallback_reason": null,
+      "render_fallback_category": null,
+      "render_fallback_details": {},
       "seed_warning_count": 1,
       "quality_flag_codes": [
         "LLM_FINDINGS_DROPPED"

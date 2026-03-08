@@ -1,16 +1,16 @@
 {
   "schema_version": "procedure_suite.reporter_seed_compare.v1",
   "kind": "reporter_seed_compare",
-  "created_at": "2026-03-08T05:26:25.420037+00:00",
+  "created_at": "2026-03-08T19:17:26.105841+00:00",
   "left_seed_path": "registry_extract_fields",
   "right_seed_path": "llm_findings",
-  "left_report_path": "/Users/russellmiller/Projects/Procedure_suite/reports/ci/nightly_local/reporter_seed_registry_extract_fields_full.json",
-  "right_report_path": "/Users/russellmiller/Projects/Procedure_suite/reports/ci/nightly_local/reporter_seed_llm_findings_full.json",
+  "left_report_path": "reports/reporter_seed_registry_extract_fields_full_baseline.json",
+  "right_report_path": "reports/reporter_seed_llm_findings_full_baseline.json",
   "summary_diff": {
     "avg_text_similarity": {
-      "left": 0.5292,
-      "right": 0.5203,
-      "delta": -0.0089
+      "left": 0.5331,
+      "right": 0.5257,
+      "delta": -0.0074
     },
     "required_section_coverage": {
       "left": 0.9545,
@@ -18,23 +18,23 @@
       "delta": 0.0
     },
     "avg_cpt_jaccard": {
-      "left": 0.7657,
-      "right": 0.7657,
+      "left": 0.8542,
+      "right": 0.8542,
       "delta": 0.0
     },
     "avg_performed_flag_f1": {
-      "left": 0.8859,
-      "right": 0.8859,
+      "left": 0.9576,
+      "right": 0.9576,
       "delta": 0.0
     },
     "critical_extra_flag_rate": {
-      "left": 0.2727,
-      "right": 0.2727,
+      "left": 0.0,
+      "right": 0.0,
       "delta": 0.0
     },
     "strict_render_fallback_rate": {
-      "left": 1.0,
-      "right": 1.0,
+      "left": 0.0,
+      "right": 0.0,
       "delta": 0.0
     },
     "forbidden_artifact_case_rate": {
@@ -76,7 +76,8 @@
           "procedures_performed.peripheral_ablation.performed",
           "procedures_performed.radial_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -90,7 +91,8 @@
           "procedures_performed.peripheral_ablation.performed",
           "procedures_performed.radial_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -111,7 +113,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -123,7 +126,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -149,7 +153,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -166,7 +171,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -191,7 +197,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -207,7 +214,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -229,7 +237,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.thermal_ablation.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -242,7 +251,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.thermal_ablation.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -264,7 +274,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -277,7 +288,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -292,37 +304,37 @@
       "id": "example_15",
       "left": {
         "seed_path": "registry_extract_fields",
-        "cpt_jaccard": 0.8571,
-        "performed_flag_f1": 0.9333,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
           "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
-        "cpt_jaccard": 0.8571,
-        "performed_flag_f1": 0.9333,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
           "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -343,7 +355,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.rigid_bronchoscopy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -355,7 +368,8 @@
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.rigid_bronchoscopy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -376,7 +390,8 @@
           "pleural_procedures.chest_tube.performed",
           "pleural_procedures.medical_thoracoscopy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -388,7 +403,8 @@
           "pleural_procedures.chest_tube.performed",
           "pleural_procedures.medical_thoracoscopy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -412,7 +428,8 @@
           "procedures_performed.navigational_bronchoscopy.performed",
           "procedures_performed.peripheral_tbna.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -427,7 +444,8 @@
           "procedures_performed.navigational_bronchoscopy.performed",
           "procedures_performed.peripheral_tbna.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -442,37 +460,35 @@
       "id": "example_19",
       "left": {
         "seed_path": "registry_extract_fields",
-        "cpt_jaccard": 0.7143,
-        "performed_flag_f1": 0.8571,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
-          "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
-        "cpt_jaccard": 0.7143,
-        "performed_flag_f1": 0.8571,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
-          "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -494,7 +510,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -507,7 +524,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_cryobiopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -528,7 +546,8 @@
           "pleural_procedures.medical_thoracoscopy.performed",
           "pleural_procedures.pleurodesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -540,7 +559,8 @@
           "pleural_procedures.medical_thoracoscopy.performed",
           "pleural_procedures.pleurodesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -555,37 +575,37 @@
       "id": "example_21",
       "left": {
         "seed_path": "registry_extract_fields",
-        "cpt_jaccard": 0.8571,
-        "performed_flag_f1": 0.9333,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
           "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
-        "cpt_jaccard": 0.8571,
-        "performed_flag_f1": 0.9333,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
           "procedures_performed.bal.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -606,7 +626,8 @@
           "pleural_procedures.ipc.performed",
           "procedures_performed.chest_ultrasound.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -618,7 +639,8 @@
           "pleural_procedures.ipc.performed",
           "procedures_performed.chest_ultrasound.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -634,24 +656,24 @@
       "left": {
         "seed_path": "registry_extract_fields",
         "cpt_jaccard": 0.0,
-        "performed_flag_f1": 0.4,
+        "performed_flag_f1": 0.5,
         "critical_predicted_flags": [
-          "pleural_procedures.pleurodesis.performed",
-          "procedures_performed.chest_ultrasound.performed"
+          "pleural_procedures.pleurodesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
         "cpt_jaccard": 0.0,
-        "performed_flag_f1": 0.4,
+        "performed_flag_f1": 0.5,
         "critical_predicted_flags": [
-          "pleural_procedures.pleurodesis.performed",
-          "procedures_performed.chest_ultrasound.performed"
+          "pleural_procedures.pleurodesis.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -674,7 +696,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.thermal_ablation.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -688,7 +711,8 @@
           "procedures_performed.rigid_bronchoscopy.performed",
           "procedures_performed.thermal_ablation.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -703,23 +727,21 @@
       "id": "example_5",
       "left": {
         "seed_path": "registry_extract_fields",
-        "cpt_jaccard": 0.0,
-        "performed_flag_f1": 0.0,
-        "critical_predicted_flags": [
-          "procedures_performed.diagnostic_bronchoscopy.performed"
-        ],
-        "render_fallback_used": true,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [],
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
-        "cpt_jaccard": 0.0,
-        "performed_flag_f1": 0.0,
-        "critical_predicted_flags": [
-          "procedures_performed.diagnostic_bronchoscopy.performed"
-        ],
-        "render_fallback_used": true,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
+        "critical_predicted_flags": [],
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -745,7 +767,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -762,7 +785,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -787,7 +811,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -803,7 +828,8 @@
           "procedures_performed.radial_ebus.performed",
           "procedures_performed.transbronchial_biopsy.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -824,7 +850,8 @@
           "pleural_procedures.chest_tube.performed",
           "pleural_procedures.chest_tube_removal.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -836,7 +863,8 @@
           "pleural_procedures.chest_tube.performed",
           "pleural_procedures.chest_tube_removal.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
@@ -851,39 +879,35 @@
       "id": "example_9",
       "left": {
         "seed_path": "registry_extract_fields",
-        "cpt_jaccard": 0.625,
-        "performed_flag_f1": 0.8,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
-          "procedures_performed.bal.performed",
           "procedures_performed.bronchial_wash.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
-          "procedures_performed.radial_ebus.performed",
-          "procedures_performed.transbronchial_biopsy.performed"
+          "procedures_performed.radial_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },
       "right": {
         "seed_path": "llm_findings",
-        "cpt_jaccard": 0.625,
-        "performed_flag_f1": 0.8,
+        "cpt_jaccard": 1.0,
+        "performed_flag_f1": 1.0,
         "critical_predicted_flags": [
-          "procedures_performed.bal.performed",
           "procedures_performed.bronchial_wash.performed",
           "procedures_performed.brushings.performed",
           "procedures_performed.diagnostic_bronchoscopy.performed",
           "procedures_performed.linear_ebus.performed",
           "procedures_performed.navigational_bronchoscopy.performed",
-          "procedures_performed.peripheral_tbna.performed",
-          "procedures_performed.radial_ebus.performed",
-          "procedures_performed.transbronchial_biopsy.performed"
+          "procedures_performed.radial_ebus.performed"
         ],
-        "render_fallback_used": true,
+        "render_fallback_used": false,
+        "render_fallback_reason": null,
         "forbidden_artifact_hits": [],
         "error": null
       },

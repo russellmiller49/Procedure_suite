@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Callable
 
+from app.common.path_redaction import repo_relative_path, sanitize_path_fields
 from ml.scripts.generate_reporter_gold_dataset import (
     CRITICAL_FLAG_EXACT,
     CRITICAL_FLAG_PREFIXES,
@@ -16,6 +17,7 @@ from ml.scripts.generate_reporter_gold_dataset import (
 
 REPORTER_SEED_EVAL_SCHEMA_VERSION = "procedure_suite.reporter_seed_eval.v1"
 REPORTER_SEED_COMPARE_SCHEMA_VERSION = "procedure_suite.reporter_seed_compare.v1"
+REPORTER_SEED_FALLBACK_SCHEMA_VERSION = "procedure_suite.reporter_seed_fallback_summary.v1"
 
 REQUIRED_SECTION_HEADERS = [
     "INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT",
@@ -55,6 +57,9 @@ class ReporterEvalCaseOutput:
     quality_flags: list[dict[str, Any]]
     needs_review: bool
     render_fallback_used: bool
+    render_fallback_reason: str | None = None
+    render_fallback_category: str | None = None
+    render_fallback_details: dict[str, Any] | None = None
     accepted_findings: int = 0
     dropped_findings: int = 0
     drop_reason_counts: dict[str, int] | None = None
@@ -232,6 +237,7 @@ def evaluate_seed_path(
     accepted_counts: list[float] = []
     dropped_counts: list[float] = []
     aggregate_drop_reasons = {key: 0 for key in DROP_REASON_KEYS}
+    aggregate_fallback_reasons: dict[str, int] = {}
     full_shell_count = 0
     failures = 0
     critical_extra_cases = 0
@@ -268,6 +274,8 @@ def evaluate_seed_path(
 
             if case_out.render_fallback_used:
                 strict_fallback_cases += 1
+                fallback_reason = str(case_out.render_fallback_reason or "unknown")
+                aggregate_fallback_reasons[fallback_reason] = int(aggregate_fallback_reasons.get(fallback_reason, 0)) + 1
 
             cpt_scores.append(cpt_score)
             f1_scores.append(f1)
@@ -299,6 +307,9 @@ def evaluate_seed_path(
                     "flag_false_negative_count": fn,
                     "forbidden_artifact_hits": forbidden_hits,
                     "render_fallback_used": bool(case_out.render_fallback_used),
+                    "render_fallback_reason": case_out.render_fallback_reason,
+                    "render_fallback_category": case_out.render_fallback_category,
+                    "render_fallback_details": dict(case_out.render_fallback_details or {}),
                     "seed_warning_count": int(len(case_out.warnings or [])),
                     "quality_flag_codes": sorted(set(quality_flag_codes)),
                     "needs_review": bool(case_out.needs_review),
@@ -326,6 +337,9 @@ def evaluate_seed_path(
                     "flag_false_negative_count": 0,
                     "forbidden_artifact_hits": [],
                     "render_fallback_used": False,
+                    "render_fallback_reason": None,
+                    "render_fallback_category": None,
+                    "render_fallback_details": {},
                     "seed_warning_count": 0,
                     "quality_flag_codes": [],
                     "needs_review": False,
@@ -355,14 +369,15 @@ def evaluate_seed_path(
         "avg_accepted_findings": round(_avg(accepted_counts), 4),
         "avg_dropped_findings": round(_avg(dropped_counts), 4),
         "drop_reason_counts": aggregate_drop_reasons,
+        "fallback_reason_counts": {key: int(aggregate_fallback_reasons[key]) for key in sorted(aggregate_fallback_reasons)},
     }
 
     return {
         "schema_version": REPORTER_SEED_EVAL_SCHEMA_VERSION,
         "kind": "reporter_seed_eval",
         "seed_path": seed_path,
-        "input_path": input_path,
-        "output_path": output_path,
+        "input_path": repo_relative_path(input_path),
+        "output_path": repo_relative_path(output_path),
         "prompt_field": prompt_field,
         "row_count": total,
         "created_at": datetime_now_iso(),
@@ -387,6 +402,69 @@ def load_seed_fixture(path: Path) -> dict[str, dict[str, Any]]:
             continue
         out[case_id] = case
     return out
+
+
+def _fallback_rows_by_reason(report: dict[str, Any]) -> dict[str, list[str]]:
+    grouped: dict[str, list[str]] = {}
+    for item in report.get("per_case") or []:
+        if not isinstance(item, dict):
+            continue
+        if not item.get("render_fallback_used"):
+            continue
+        case_id = str(item.get("id") or "").strip()
+        if not case_id:
+            continue
+        reason = str(item.get("render_fallback_reason") or "unknown")
+        grouped.setdefault(reason, []).append(case_id)
+    for reason in list(grouped):
+        grouped[reason] = sorted(set(grouped[reason]))
+    return grouped
+
+
+def build_seed_path_fallback_reason_report(
+    *,
+    left_report: dict[str, Any],
+    right_report: dict[str, Any],
+    left_path: str | None,
+    right_path: str | None,
+) -> dict[str, Any]:
+    left_grouped = _fallback_rows_by_reason(left_report)
+    right_grouped = _fallback_rows_by_reason(right_report)
+    reasons: list[dict[str, Any]] = []
+
+    for reason in sorted(set(left_grouped) | set(right_grouped)):
+        left_cases = list(left_grouped.get(reason, []))
+        right_cases = list(right_grouped.get(reason, []))
+        reasons.append(
+            {
+                "reason": reason,
+                "left_count": len(left_cases),
+                "right_count": len(right_cases),
+                "delta": len(right_cases) - len(left_cases),
+                "left_cases": left_cases,
+                "right_cases": right_cases,
+            }
+        )
+
+    return {
+        "schema_version": REPORTER_SEED_FALLBACK_SCHEMA_VERSION,
+        "kind": "reporter_seed_fallback_summary",
+        "created_at": datetime_now_iso(),
+        "left_seed_path": left_report.get("seed_path"),
+        "right_seed_path": right_report.get("seed_path"),
+        "left_report_path": repo_relative_path(left_path),
+        "right_report_path": repo_relative_path(right_path),
+        "counts": {
+            "total_cases": max(
+                len(left_report.get("per_case") or []),
+                len(right_report.get("per_case") or []),
+            ),
+            "left_fallback_cases": sum(len(cases) for cases in left_grouped.values()),
+            "right_fallback_cases": sum(len(cases) for cases in right_grouped.values()),
+            "reason_bucket_count": len(reasons),
+        },
+        "reasons": reasons,
+    }
 
 
 def build_seed_path_comparison_report(
@@ -457,6 +535,7 @@ def build_seed_path_comparison_report(
                     "performed_flag_f1": left.get("performed_flag_f1"),
                     "critical_predicted_flags": left_critical,
                     "render_fallback_used": left_fallback,
+                    "render_fallback_reason": left.get("render_fallback_reason"),
                     "forbidden_artifact_hits": list(left.get("forbidden_artifact_hits") or []),
                     "error": left.get("error"),
                 },
@@ -466,6 +545,7 @@ def build_seed_path_comparison_report(
                     "performed_flag_f1": right.get("performed_flag_f1"),
                     "critical_predicted_flags": right_critical,
                     "render_fallback_used": right_fallback,
+                    "render_fallback_reason": right.get("render_fallback_reason"),
                     "forbidden_artifact_hits": list(right.get("forbidden_artifact_hits") or []),
                     "error": right.get("error"),
                 },
@@ -487,8 +567,8 @@ def build_seed_path_comparison_report(
         "created_at": datetime_now_iso(),
         "left_seed_path": left_report.get("seed_path"),
         "right_seed_path": right_report.get("seed_path"),
-        "left_report_path": left_path,
-        "right_report_path": right_path,
+        "left_report_path": repo_relative_path(left_path),
+        "right_report_path": repo_relative_path(right_path),
         "summary_diff": summary_diff,
         "counts": {
             "total_cases": len(rows),
@@ -503,4 +583,5 @@ def maybe_write_json(path: Path | None, payload: dict[str, Any]) -> None:
     if path is None:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    sanitized = sanitize_path_fields(payload)
+    path.write_text(json.dumps(sanitized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

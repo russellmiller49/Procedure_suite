@@ -75,8 +75,15 @@ def test_reporter_seed_eval_scripts_share_schema(tmp_path: Path) -> None:
 
     assert baseline_payload["seed_path"] == "registry_extract_fields"
     assert llm_payload["seed_path"] == "llm_findings"
+    assert baseline_payload["input_path"] == "tests/fixtures/reporter_seed_eval_samples.json"
+    assert baseline_payload["output_path"] is None
+    assert llm_payload["metadata"]["seed_fixture_path"] == "tests/fixtures/reporter_seed_eval_llm_fixture.json"
     assert baseline_payload["metadata"]["production_default"] is True
     assert llm_payload["metadata"]["challenger_only"] is True
+    assert baseline_payload["summary"]["strict_render_fallback_rate"] < 1.0
+    assert llm_payload["summary"]["strict_render_fallback_rate"] < 1.0
+    assert isinstance(baseline_payload["summary"]["fallback_reason_counts"], dict)
+    assert isinstance(llm_payload["summary"]["fallback_reason_counts"], dict)
 
     baseline_case_keys = set(baseline_payload["per_case"][0])
     llm_case_keys = set(llm_payload["per_case"][0])
@@ -93,6 +100,9 @@ def test_reporter_seed_eval_scripts_share_schema(tmp_path: Path) -> None:
         "critical_predicted_flags",
         "predicted_cpt_codes",
         "render_fallback_used",
+        "render_fallback_reason",
+        "render_fallback_category",
+        "render_fallback_details",
         "seed_warning_count",
         "quality_flag_codes",
         "needs_review",
@@ -203,5 +213,72 @@ def test_compare_reporter_seed_paths_script(tmp_path: Path) -> None:
     payload = json.loads(output.read_text(encoding="utf-8"))
     assert payload["left_seed_path"] == "registry_extract_fields"
     assert payload["right_seed_path"] == "llm_findings"
+    assert payload["left_report_path"] is None
+    assert payload["right_report_path"] is None
     assert payload["summary_diff"]["avg_cpt_jaccard"]["delta"] == 0.1
     assert payload["counts"]["right_worse_fallback_cases"] == 1
+    assert payload["per_case_diff"][0]["right"]["render_fallback_reason"] is None
+
+
+def test_summarize_reporter_seed_fallbacks_script(tmp_path: Path) -> None:
+    repo_root = Path(__file__).resolve().parents[2]
+    summarize_script = repo_root / "ops" / "tools" / "summarize_reporter_seed_fallbacks.py"
+
+    left_report = tmp_path / "left.json"
+    right_report = tmp_path / "right.json"
+    output = tmp_path / "fallbacks.json"
+
+    left_report.write_text(
+        json.dumps(
+            {
+                "seed_path": "registry_extract_fields",
+                "per_case": [
+                    {"id": "case_1", "render_fallback_used": True, "render_fallback_reason": "missing_tbna_details"},
+                    {"id": "case_2", "render_fallback_used": False, "render_fallback_reason": None},
+                ],
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    right_report.write_text(
+        json.dumps(
+            {
+                "seed_path": "llm_findings",
+                "per_case": [
+                    {"id": "case_1", "render_fallback_used": True, "render_fallback_reason": "missing_tbna_details"},
+                    {"id": "case_2", "render_fallback_used": True, "render_fallback_reason": "missing_bal_location"},
+                ],
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            str(repo_root / ".venv" / "bin" / "python"),
+            str(summarize_script),
+            "--left-report",
+            str(left_report),
+            "--right-report",
+            str(right_report),
+            "--output",
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        cwd=repo_root,
+    )
+    assert result.returncode == 0, (result.stdout or "") + (result.stderr or "")
+
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["left_report_path"] is None
+    assert payload["right_report_path"] is None
+    assert payload["counts"]["left_fallback_cases"] == 1
+    assert payload["counts"]["right_fallback_cases"] == 2
+    by_reason = {item["reason"]: item for item in payload["reasons"]}
+    assert by_reason["missing_tbna_details"]["left_count"] == 1
+    assert by_reason["missing_tbna_details"]["right_count"] == 1
+    assert by_reason["missing_bal_location"]["right_cases"] == ["case_2"]

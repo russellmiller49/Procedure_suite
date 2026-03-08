@@ -805,10 +805,13 @@ This evaluator is offline-safe by default and only performs real GPT calls when 
 
 Extraction quality outcomes now have a stable structured form for QA and CI diffs:
 
-- canonical machine signals live under `registry.coding_support.quality_signals`
+- canonical machine signals live under `registry.coding_support.quality_pass.signals`
+- runtime extraction results also carry `quality_signals` before serialization into `coding_support`
 - legacy warning strings still remain for backward compatibility
 - PR CI runs a fast fixed corpus and reporter subset gate
 - nightly or release CI runs the broader eval set and stores delta artifacts
+- authoritative reporter parity lives in the dual-path matrix plus shared compare artifacts, not in legacy byte-for-byte markdown tests
+- legacy `tests/reporting/test_pipeline_parity.py` and `tests/reporting/test_render_parity_normalization.py` are smoke tests only
 
 Contributor details and gate definitions live in:
 

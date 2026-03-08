@@ -25,6 +25,52 @@ from app.common.quality_eval import (  # noqa: E402
 )
 
 
+def _quality_signal_codes(result: Any) -> list[str]:
+    codes: list[str] = []
+    for signal in list(getattr(result, "quality_signals", []) or []):
+        code = getattr(signal, "code", None)
+        if code:
+            codes.append(str(code))
+    return sorted(set(codes))
+
+
+def _extract_runtime_result(service: Any, note_text: str) -> Any:
+    return service.extract_fields_extraction_first(note_text)
+
+
+def _result_actual_payload(
+    *,
+    result: Any,
+    expected_codes: list[str] | None = None,
+    source_file: str | None = None,
+) -> dict[str, Any]:
+    actual = {
+        "predicted_codes": sorted({code for code in (normalize_code(item) for item in (result.cpt_codes or [])) if code}),
+        "warnings": [str(item) for item in list(getattr(result, "warnings", []) or []) if str(item)],
+        "needs_manual_review": bool(getattr(result, "needs_manual_review", False)),
+        "coder_difficulty": str(getattr(result, "coder_difficulty", "unknown") or "unknown"),
+        "quality_signal_codes": _quality_signal_codes(result),
+        "validation_errors": [str(item) for item in list(getattr(result, "validation_errors", []) or []) if str(item)],
+        "audit_warnings": [str(item) for item in list(getattr(result, "audit_warnings", []) or []) if str(item)],
+        "record": result.record.model_dump(exclude_none=False),
+    }
+    if expected_codes is not None:
+        actual["expected_codes"] = expected_codes
+    if source_file is not None:
+        actual["source_file"] = source_file
+    return actual
+
+
+def _result_metrics_payload(result: Any) -> dict[str, Any]:
+    warning_count = len(list(getattr(result, "warnings", []) or []))
+    quality_signal_count = len(list(getattr(result, "quality_signals", []) or []))
+    return {
+        "warning_count": warning_count,
+        "quality_signal_count": quality_signal_count,
+        "needs_manual_review": bool(getattr(result, "needs_manual_review", False)),
+    }
+
+
 def _extract_note_text(entry: dict[str, Any]) -> str:
     for key in ("note_text", "note", "text", "raw_text"):
         value = entry.get(key)
@@ -125,7 +171,6 @@ def _evaluate_legacy_goldens(
     limit: int,
 ) -> dict[str, Any]:
     try:
-        from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
         from app.registry.application.registry_service import RegistryService
     except Exception as exc:  # pragma: no cover - import surface exercised in runtime
         print(f"eval_golden: import error: {exc}", file=sys.stderr)
@@ -140,6 +185,8 @@ def _evaluate_legacy_goldens(
     per_case: list[dict[str, Any]] = []
     missing_counter: Counter[str] = Counter()
     extra_counter: Counter[str] = Counter()
+    coder_difficulty_counter: Counter[str] = Counter()
+    manual_review_count = 0
 
     for source_file, entry in entries:
         note_text = _extract_note_text(entry)
@@ -148,10 +195,13 @@ def _evaluate_legacy_goldens(
 
         expected_codes = sorted({code for code in (_extract_expected_codes(entry) or []) if code})
         note_id = _extract_note_id(entry) or f"legacy_case_{len(per_case) + 1}"
-        record, extraction_warnings, _meta = service.extract_record(note_text, note_id=note_id)
-        predicted_codes, _rationales, derive_warnings = derive_all_codes_with_meta(record)
-        predicted = sorted({code for code in (normalize_code(item) for item in predicted_codes) if code})
+        result = _extract_runtime_result(service, note_text)
+        predicted = sorted({code for code in (normalize_code(item) for item in (result.cpt_codes or [])) if code})
         exact_match = expected_codes == predicted
+        coder_difficulty = str(getattr(result, "coder_difficulty", "unknown") or "unknown")
+        coder_difficulty_counter.update([coder_difficulty])
+        if bool(getattr(result, "needs_manual_review", False)):
+            manual_review_count += 1
 
         failures: list[dict[str, Any]] = []
         missing = sorted(set(expected_codes) - set(predicted))
@@ -182,16 +232,12 @@ def _evaluate_legacy_goldens(
                 "id": note_id,
                 "tags": [],
                 "status": "passed" if exact_match else "failed",
-                "metrics": {
-                    "exact_match": exact_match,
-                    "warning_count": len(extraction_warnings) + len(derive_warnings),
-                },
-                "actual": {
-                    "source_file": source_file,
-                    "expected_codes": expected_codes,
-                    "predicted_codes": predicted,
-                    "warnings": [*extraction_warnings, *derive_warnings],
-                },
+                "metrics": {"exact_match": exact_match, **_result_metrics_payload(result)},
+                "actual": _result_actual_payload(
+                    result=result,
+                    expected_codes=expected_codes,
+                    source_file=source_file,
+                ),
                 "failures": failures,
             }
         )
@@ -217,6 +263,8 @@ def _evaluate_legacy_goldens(
             "exact_code_match_rate": rate,
             "top_missing_codes": missing_counter.most_common(10),
             "top_extra_codes": extra_counter.most_common(10),
+            "needs_manual_review_cases": manual_review_count,
+            "coder_difficulty_counts": dict(coder_difficulty_counter),
         },
         runtime={"extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", "")},
     )
@@ -229,7 +277,6 @@ def _evaluate_unified_quality_corpus(
     limit: int,
 ) -> dict[str, Any]:
     try:
-        from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
         from app.registry.application.registry_service import RegistryService
     except Exception as exc:  # pragma: no cover - import surface exercised in runtime
         print(f"eval_golden: import error: {exc}", file=sys.stderr)
@@ -245,21 +292,26 @@ def _evaluate_unified_quality_corpus(
 
     service = RegistryService()
     per_case: list[dict[str, Any]] = []
+    coder_difficulty_counter: Counter[str] = Counter()
+    manual_review_count = 0
     for case in cases:
         note_text = str(case.get("note_text") or "")
         if not note_text.strip():
             continue
         case_id = str(case.get("id") or f"case_{len(per_case) + 1}")
-        record, extraction_warnings, _meta = service.extract_record(note_text, note_id=case_id)
-        predicted_codes, _rationales, derive_warnings = derive_all_codes_with_meta(record)
-        per_case.append(
-            evaluate_extraction_expectations(
-                case=case,
-                record_dict=record.model_dump(exclude_none=False),
-                predicted_codes=predicted_codes,
-                warnings=[*extraction_warnings, *derive_warnings],
-            )
+        result = _extract_runtime_result(service, note_text)
+        coder_difficulty_counter.update([str(getattr(result, "coder_difficulty", "unknown") or "unknown")])
+        if bool(getattr(result, "needs_manual_review", False)):
+            manual_review_count += 1
+        case_report = evaluate_extraction_expectations(
+            case=case,
+            record_dict=result.record.model_dump(exclude_none=False),
+            predicted_codes=list(result.cpt_codes or []),
+            warnings=list(getattr(result, "warnings", []) or []),
         )
+        case_report["metrics"].update(_result_metrics_payload(result))
+        case_report["actual"].update(_result_actual_payload(result=result))
+        per_case.append(case_report)
 
     report = build_standard_report(
         kind="extraction",
@@ -276,6 +328,8 @@ def _evaluate_unified_quality_corpus(
             )
             if per_case
             else 0.0,
+            "needs_manual_review_cases": manual_review_count,
+            "coder_difficulty_counts": dict(coder_difficulty_counter),
         },
         runtime={"extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", "")},
     )

@@ -1,3 +1,10 @@
+"""Template-level parity only.
+
+These assertions cover adapter output versus direct template rendering. They are
+not the source of truth for end-to-end reporter parity, which lives in the
+dual-path reporter evaluation matrix and compare artifacts.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -82,4 +89,3 @@ def test_template_adapter_parity_ebus_tbna() -> None:
     engine = ReporterEngine(templates, schemas, render_style="builder")
     direct = engine._render_payload(templates.get("ebus_tbna"), proc_payload, bundle)
     assert rendered == direct
-

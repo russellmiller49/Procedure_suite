@@ -269,6 +269,18 @@ def _serialize_concept(concept: Any) -> Dict[str, Any]:
 _CONFIG_TEMPLATE_ROOT = Path(__file__).resolve().parents[2] / "configs" / "report_templates"
 _DEFAULT_ORDER_PATH = _CONFIG_TEMPLATE_ROOT / "procedure_order.json"
 _LOGGER = logging.getLogger(__name__)
+_APPROVED_REDACTION_PLACEHOLDERS = frozenset(
+    {
+        "[Age]",
+        "[Date]",
+        "[Name]",
+        "[Patient Name]",
+        "[Sex]",
+    }
+)
+_ALLOWED_LITERAL_NONE_LINE_PATTERNS = (
+    re.compile(r"(?i)^\s*COMPLICATIONS\s*:?\s*None(?:[\s.;]|$)"),
+)
 
 
 def join_nonempty(values: Iterable[str], sep: str = ", ") -> str:
@@ -737,9 +749,22 @@ class ReporterEngine:
         errors: list[str] = []
         if "{{" in text or "}}" in text:
             errors.append("Unrendered Jinja variables found.")
-        if re.search(r"\[[^\]\n]{2,}\]", text):
+        bracket_tokens = {
+            token
+            for token in re.findall(r"\[[^\]\n]{2,}\]", text)
+            if token not in _APPROVED_REDACTION_PLACEHOLDERS
+        }
+        if bracket_tokens:
             errors.append("Bracketed placeholder text remains.")
-        if re.search(r"\bNone\b", text):
+        has_disallowed_none = False
+        for line in text.splitlines():
+            if "None" not in line:
+                continue
+            if any(pattern.search(line) for pattern in _ALLOWED_LITERAL_NONE_LINE_PATTERNS):
+                continue
+            has_disallowed_none = True
+            break
+        if has_disallowed_none:
             errors.append("Literal 'None' found in rendered text.")
         if ".." in text:
             errors.append("Double periods found.")
@@ -1414,6 +1439,7 @@ _BIOPSY_GATE_PROC_TYPES = {
     "transbronchial_biopsy",
     "transbronchial_lung_biopsy",
     "transbronchial_cryobiopsy",
+    "transbronchial_needle_aspiration",
 }
 
 _BIOPSY_GATE_POSITIVE_PATTERNS: dict[str, str] = {
@@ -1432,6 +1458,13 @@ _BIOPSY_GATE_POSITIVE_PATTERNS: dict[str, str] = {
         r"|\bbx\b[^.\n]{0,20}\bx\s*\d{1,2}\b"
     ),
     "transbronchial_cryobiopsy": r"\b(?:transbronchial\s+cryo(?:biops(?:y|ies)?)?|cryobiops(?:y|ies)|cryo-?tbb)\b",
+    "transbronchial_needle_aspiration": (
+        r"\btransbronchial\s+needle\s+aspiration\b"
+        r"|\bTBNA\b[^.\n]{0,20}\bx\s*\d{1,2}\b"
+        r"|\b\d+\s+(?:peripheral\s+)?TBNA\b"
+        r"|\b\d+\s+peripheral\s+needle\s+biops(?:y|ies)\b"
+        r"|\bTBNA\b[^.\n]{0,20}\band\b[^.\n]{0,20}\b(?:cryo(?:biops(?:y|ies)?)?|cryobiops(?:y|ies))\b"
+    ),
 }
 
 _BIOPSY_GATE_NEGATION_PATTERN = (
@@ -1454,6 +1487,11 @@ _CPT_LABELS = {
 
 def _has_positive_biopsy_evidence(note_text: str, proc_type: str) -> bool:
     pattern = _BIOPSY_GATE_POSITIVE_PATTERNS.get(proc_type)
+    if proc_type == "transbronchial_needle_aspiration" and re.search(
+        r"(?is)\bprocedure\s*\d+\s*:\s*transbronchial\s+biopsy\b.{0,200}?\bTBNA\s*passes?\s*:\s*\d+\b",
+        note_text,
+    ):
+        return False
     if pattern and re.search(pattern, note_text, flags=re.IGNORECASE):
         return True
 

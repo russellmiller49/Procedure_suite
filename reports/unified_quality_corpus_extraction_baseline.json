@@ -5,7 +5,7 @@
   "output_path": "reports/unified_quality_corpus_extraction_baseline.json",
   "source_format": "unified_quality_corpus",
   "corpus_name": "unified_quality_corpus",
-  "created_at": "2026-03-08T03:46:31.508376+00:00",
+  "created_at": "2026-03-08T18:13:09.917272+00:00",
   "runtime": {
     "extraction_engine": "parallel_ner"
   },
@@ -16,7 +16,13 @@
     "pass_rate": 1.0,
     "metrics": {
       "exact_code_match_cases": 10,
-      "exact_code_match_rate": 1.0
+      "exact_code_match_rate": 1.0,
+      "needs_manual_review_cases": 1,
+      "coder_difficulty_counts": {
+        "low_confidence": 5,
+        "high_confidence": 3,
+        "gray_zone": 2
+      }
     },
     "exact_code_match_cases": 10,
     "exact_code_match_rate": 1.0
@@ -30,7 +36,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 1,
-        "warning_count": 4
+        "warning_count": 5,
+        "quality_signal_count": 5,
+        "needs_manual_review": true
       },
       "actual": {
         "predicted_codes": [
@@ -43,8 +51,228 @@
           "DETERMINISTIC_UPLIFT: added performed=true for blvr",
           "31647: ML detected procedure, but specific device/anatomy was not found in text.",
           "31649: ML detected procedure, but specific device/anatomy was not found in text.",
-          "31651: ML detected procedure, but specific device/anatomy was not found in text."
-        ]
+          "31651: ML detected procedure, but specific device/anatomy was not found in text.",
+          "SELF_CORRECT_SKIPPED: 31647: judge returned null"
+        ],
+        "needs_manual_review": true,
+        "coder_difficulty": "high_confidence",
+        "quality_signal_codes": [
+          "31647",
+          "31649",
+          "31651",
+          "DETERMINISTIC_UPLIFT",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [
+          "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31647 (prob=0.52), but deterministic derivation missed it"
+        ],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": {
+              "performed": true,
+              "procedure_type": "Valve removal",
+              "target_lobe": "RUL",
+              "valve_type": "Zephyr (Pulmonx)",
+              "valve_sizes": null,
+              "number_of_valves": null,
+              "segments_treated": null,
+              "collateral_ventilation_assessment": null,
+              "target_lobe_volume_ml": null,
+              "heterogeneity_index": null
+            },
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "31648",
+                "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.blvr"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "Zephyr",
+                    "span": [
+                      71,
+                      77
+                    ],
+                    "confidence": 1.0
+                  }
+                ]
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:08.892923+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "31648",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "blvr.procedure_type='Valve removal' (lobes=['RUL'])",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 71,
+                      "end": 77,
+                      "snippet": "Zephyr"
+                    }
+                  ]
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "31648",
+                  "summary": "blvr.procedure_type='Valve removal' (lobes=['RUL'])",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "Zephyr",
+                      "span": {
+                        "start": 71,
+                        "end": 77
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {
+            "procedures_performed.blvr.performed": [
+              {
+                "text": "Zephyr",
+                "start": 71,
+                "end": 77,
+                "section": null,
+                "confidence": null
+              }
+            ]
+          },
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -57,12 +285,100 @@
       "status": "passed",
       "metrics": {
         "code_count": 0,
-        "warning_count": 0
+        "warning_count": 0,
+        "quality_signal_count": 1,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [],
         "checked_fields": {},
-        "warnings": []
+        "warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "quality_signal_codes": [
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": null,
+          "specimens": null,
+          "complications": null,
+          "outcomes": null,
+          "pathology_results": null,
+          "billing": null,
+          "coding_support": null,
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -74,7 +390,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 1,
-        "warning_count": 4
+        "warning_count": 8,
+        "quality_signal_count": 9,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -87,8 +405,536 @@
           "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
           "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
           "31622: ML detected procedure, but specific device/anatomy was not found in text.",
-          "31653: ML detected procedure, but specific device/anatomy was not found in text."
-        ]
+          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+          "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
+          "AUTO_EBUS_OUTCOME: 4R -> benign",
+          "AUTO_EBUS_OUTCOME: 7 -> benign",
+          "Linear EBUS inferred from convex/mediastinal/station sampling."
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "high_confidence",
+        "quality_signal_codes": [
+          "31622",
+          "31653",
+          "AUTO_EBUS_OUTCOME",
+          "DETERMINISTIC_UPLIFT",
+          "EBUS_REGEX_FALLBACK",
+          "EBUS_STATION_DETAIL_HEURISTIC",
+          "LINEAR_EBUS_INFERRED_FROM_CONVEX_MEDIASTINAL_STATION_SAMPLING",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": {
+              "performed": true,
+              "stations_sampled": [
+                "4R",
+                "7"
+              ],
+              "targets_sampled": null,
+              "stations_planned": null,
+              "stations_detail": null,
+              "passes_per_station": null,
+              "needle_gauge": null,
+              "needle_type": null,
+              "photodocumentation_complete": null,
+              "elastography_used": null,
+              "elastography_pattern": null,
+              "doppler_used": null,
+              "node_events": [
+                {
+                  "station": "4R",
+                  "target_text": null,
+                  "action": "needle_aspiration",
+                  "outcome": "benign",
+                  "passes": null,
+                  "pass_count": null,
+                  "elastography_pattern": null,
+                  "rose_result": "benign",
+                  "path_result": null,
+                  "path_diagnosis_text": null,
+                  "path_source_event_id": null,
+                  "path_relative_day_offset": null,
+                  "evidence_quote": "ROSE adequate lymphocytes."
+                },
+                {
+                  "station": "7",
+                  "target_text": null,
+                  "action": "needle_aspiration",
+                  "outcome": "benign",
+                  "passes": null,
+                  "pass_count": null,
+                  "elastography_pattern": null,
+                  "rose_result": "benign",
+                  "path_result": null,
+                  "path_diagnosis_text": null,
+                  "path_source_event_id": null,
+                  "path_relative_day_offset": null,
+                  "evidence_quote": "ROSE adequate lymphocytes."
+                }
+              ]
+            },
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "31652",
+                "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.linear_ebus"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "EBUS-TBNA",
+                    "span": [
+                      0,
+                      9
+                    ],
+                    "confidence": 1.0
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "4R",
+                    "span": [
+                      27,
+                      29
+                    ],
+                    "confidence": 0.9
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                    "span": [
+                      0,
+                      136
+                    ],
+                    "confidence": 0.9
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "ROSE adequate lymphocytes",
+                    "span": [
+                      63,
+                      88
+                    ],
+                    "confidence": 0.9
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "7",
+                    "span": [
+                      42,
+                      43
+                    ],
+                    "confidence": 0.9
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                    "span": [
+                      0,
+                      136
+                    ],
+                    "confidence": 0.9
+                  }
+                ]
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:06.496849+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "31652",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 0,
+                      "end": 9,
+                      "snippet": "EBUS-TBNA"
+                    },
+                    {
+                      "start": 27,
+                      "end": 29,
+                      "snippet": "4R"
+                    },
+                    {
+                      "start": 0,
+                      "end": 136,
+                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging."
+                    },
+                    {
+                      "start": 63,
+                      "end": 88,
+                      "snippet": "ROSE adequate lymphocytes"
+                    },
+                    {
+                      "start": 42,
+                      "end": 43,
+                      "snippet": "7"
+                    },
+                    {
+                      "start": 0,
+                      "end": 136,
+                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging."
+                    }
+                  ]
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "31652",
+                  "summary": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "EBUS-TBNA",
+                      "span": {
+                        "start": 0,
+                        "end": 9
+                      }
+                    },
+                    {
+                      "snippet": "4R",
+                      "span": {
+                        "start": 27,
+                        "end": 29
+                      }
+                    },
+                    {
+                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                      "span": {
+                        "start": 0,
+                        "end": 136
+                      }
+                    },
+                    {
+                      "snippet": "ROSE adequate lymphocytes",
+                      "span": {
+                        "start": 63,
+                        "end": 88
+                      }
+                    },
+                    {
+                      "snippet": "7",
+                      "span": {
+                        "start": 42,
+                        "end": 43
+                      }
+                    },
+                    {
+                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                      "span": {
+                        "start": 0,
+                        "end": 136
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": {
+            "linear_ebus_stations_detail": [
+              {
+                "station": "4R",
+                "short_axis_mm": null,
+                "long_axis_mm": null,
+                "shape": null,
+                "margin": null,
+                "echogenicity": null,
+                "chs_present": null,
+                "necrosis_present": null,
+                "calcification_present": null,
+                "elastography_performed": null,
+                "elastography_score": null,
+                "elastography_strain_ratio": null,
+                "elastography_pattern": null,
+                "doppler_performed": null,
+                "doppler_pattern": null,
+                "morphologic_impression": null,
+                "sampled": true,
+                "needle_gauge": null,
+                "needle_type": null,
+                "number_of_passes": null,
+                "intranodal_forceps_used": null,
+                "rose_performed": true,
+                "rose_result": "Adequate lymphocytes",
+                "lymphocytes_present": true,
+                "rose_adequacy": null,
+                "specimen_sent_for": null,
+                "final_pathology": null,
+                "n_stage_contribution": null,
+                "notes": null
+              },
+              {
+                "station": "7",
+                "short_axis_mm": null,
+                "long_axis_mm": null,
+                "shape": null,
+                "margin": null,
+                "echogenicity": null,
+                "chs_present": null,
+                "necrosis_present": null,
+                "calcification_present": null,
+                "elastography_performed": null,
+                "elastography_score": null,
+                "elastography_strain_ratio": null,
+                "elastography_pattern": null,
+                "doppler_performed": null,
+                "doppler_pattern": null,
+                "morphologic_impression": null,
+                "sampled": true,
+                "needle_gauge": null,
+                "needle_type": null,
+                "number_of_passes": null,
+                "intranodal_forceps_used": null,
+                "rose_performed": true,
+                "rose_result": "Adequate lymphocytes",
+                "lymphocytes_present": true,
+                "rose_adequacy": null,
+                "specimen_sent_for": null,
+                "final_pathology": null,
+                "n_stage_contribution": null,
+                "notes": null
+              }
+            ],
+            "navigation_targets": null,
+            "cao_interventions_detail": null,
+            "blvr_valve_placements": null,
+            "blvr_chartis_measurements": null,
+            "cryobiopsy_sites": null,
+            "thoracoscopy_findings_detail": null,
+            "specimens_collected": null
+          },
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {
+            "procedures_performed.linear_ebus.performed": [
+              {
+                "text": "EBUS-TBNA",
+                "start": 0,
+                "end": 9,
+                "section": null,
+                "confidence": null
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.0.station": [
+              {
+                "text": "4R",
+                "start": 27,
+                "end": 29,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
+              {
+                "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                "start": 0,
+                "end": 136,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.0.rose_result": [
+              {
+                "text": "ROSE adequate lymphocytes",
+                "start": 63,
+                "end": 88,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.1.station": [
+              {
+                "text": "7",
+                "start": 42,
+                "end": 43,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
+              {
+                "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
+                "start": 0,
+                "end": 136,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.node_events.1.rose_result": [
+              {
+                "text": "ROSE adequate lymphocytes",
+                "start": 63,
+                "end": 88,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.stations_sampled.0": [
+              {
+                "text": "4R",
+                "start": 27,
+                "end": 29,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "procedures_performed.linear_ebus.stations_sampled.1": [
+              {
+                "text": "7",
+                "start": 42,
+                "end": 43,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "granular_data.linear_ebus_stations_detail.0.lymphocytes_present": [
+              {
+                "text": "adequate lymphocytes",
+                "start": 68,
+                "end": 88,
+                "section": null,
+                "confidence": 0.9
+              }
+            ],
+            "granular_data.linear_ebus_stations_detail.1.lymphocytes_present": [
+              {
+                "text": "adequate lymphocytes",
+                "start": 68,
+                "end": 88,
+                "section": null,
+                "confidence": 0.9
+              }
+            ]
+          },
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -100,7 +946,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 0,
-        "warning_count": 3
+        "warning_count": 3,
+        "quality_signal_count": 4,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [],
@@ -109,7 +957,111 @@
           "31636: ML detected procedure, but specific device/anatomy was not found in text.",
           "31637: ML detected procedure, but specific device/anatomy was not found in text.",
           "31638: ML detected procedure, but specific device/anatomy was not found in text."
-        ]
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "quality_signal_codes": [
+          "31636",
+          "31637",
+          "31638",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": null,
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": null,
+          "coding_support": null,
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -121,7 +1073,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 2,
-        "warning_count": 1
+        "warning_count": 1,
+        "quality_signal_count": 2,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -131,7 +1085,220 @@
         "checked_fields": {},
         "warnings": [
           "DETERMINISTIC_UPLIFT: added performed=true for eus_b"
-        ]
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "quality_signal_codes": [
+          "DETERMINISTIC_UPLIFT",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": {
+              "performed": true,
+              "inspection_findings": "endobronchial ultrasound bronchoscope was advanced into the esophagus",
+              "airway_abnormalities": null
+            },
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": {
+              "performed": true,
+              "sites_sampled": null,
+              "needle_gauge": null,
+              "passes": null,
+              "rose_result": null,
+              "complications": null
+            },
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "31622",
+                "description": "Bronchoscopy; diagnostic, with cell washing",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.diagnostic_bronchoscopy"
+                ],
+                "evidence": null
+              },
+              {
+                "code": "43237",
+                "description": null,
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.eus_b"
+                ],
+                "evidence": null
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:05.831270+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "31622",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; diagnostic, with cell washing",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "diagnostic_bronchoscopy.performed=true and no interventional bronchoscopy procedures",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                },
+                {
+                  "sequence": 2,
+                  "code": "43237",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": null,
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "eus_b.performed=true without sampling/FNA evidence (inspection only)",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "31622",
+                  "summary": "diagnostic_bronchoscopy.performed=true and no interventional bronchoscopy procedures",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "43237",
+                  "summary": "eus_b.performed=true without sampling/FNA evidence (inspection only)",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -143,7 +1310,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 4,
-        "warning_count": 4
+        "warning_count": 5,
+        "quality_signal_count": 5,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -161,8 +1330,492 @@
           "DETERMINISTIC_UPLIFT: added performed=true for navigational_bronchoscopy, peripheral_tbna, radial_ebus, transbronchial_biopsy",
           "31625: ML detected procedure, but specific device/anatomy was not found in text.",
           "31632: ML detected procedure, but specific device/anatomy was not found in text.",
+          "Radial EBUS inferred from concentric/eccentric view.",
           "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
-        ]
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "high_confidence",
+        "quality_signal_codes": [
+          "31625",
+          "31632",
+          "DETERMINISTIC_UPLIFT",
+          "RADIAL_EBUS_INFERRED_FROM_CONCENTRIC_ECCENTRIC_VIEW",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": {
+              "performed": true,
+              "inspection_findings": null,
+              "airway_abnormalities": null
+            },
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": {
+              "performed": true,
+              "targets_sampled": [
+                "LLL"
+              ]
+            },
+            "linear_ebus": {
+              "performed": false,
+              "stations_sampled": null,
+              "targets_sampled": null,
+              "stations_planned": null,
+              "stations_detail": null,
+              "passes_per_station": null,
+              "needle_gauge": null,
+              "needle_type": null,
+              "photodocumentation_complete": null,
+              "elastography_used": null,
+              "elastography_pattern": null,
+              "doppler_used": null,
+              "node_events": []
+            },
+            "eus_b": null,
+            "radial_ebus": {
+              "performed": true,
+              "probe_position": "Eccentric",
+              "guide_sheath_used": null,
+              "guide_sheath_size": null
+            },
+            "navigational_bronchoscopy": {
+              "performed": true,
+              "target_reached": null,
+              "divergence_mm": null,
+              "tool_in_lesion_confirmed": null,
+              "confirmation_method": null,
+              "sampling_tools_used": null,
+              "number_of_biopsies": null
+            },
+            "transbronchial_biopsy": {
+              "performed": true,
+              "locations": [
+                "LLL"
+              ],
+              "number_of_samples": null,
+              "forceps_type": "Standard",
+              "cryoprobe_size_mm": null
+            },
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "31627",
+                "description": "Navigational bronchoscopy",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.navigational_bronchoscopy"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "navigation bronchoscopy",
+                    "span": [
+                      8,
+                      31
+                    ],
+                    "confidence": 1.0
+                  }
+                ]
+              },
+              {
+                "code": "31628",
+                "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.transbronchial_biopsy",
+                  "procedures_performed.transbronchial_cryobiopsy"
+                ],
+                "evidence": null
+              },
+              {
+                "code": "31629",
+                "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.peripheral_tbna"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "TBNA",
+                    "span": [
+                      124,
+                      128
+                    ],
+                    "confidence": 1.0
+                  }
+                ]
+              },
+              {
+                "code": "31654",
+                "description": "Bronch ebus ivntj perph les",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.radial_ebus"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "Radial EBUS confirmed eccentric",
+                    "span": [
+                      86,
+                      117
+                    ],
+                    "confidence": 1.0
+                  },
+                  {
+                    "source": "registry_span",
+                    "text": "Radial EBUS",
+                    "span": [
+                      86,
+                      97
+                    ],
+                    "confidence": 1.0
+                  }
+                ]
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:09.656335+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "31627",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Navigational bronchoscopy",
+                  "units": 1,
+                  "role": "add_on",
+                  "selection_status": "selected",
+                  "selection_reason": "navigational_bronchoscopy.performed=true",
+                  "family_key": null,
+                  "is_add_on": true,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 8,
+                      "end": 31,
+                      "snippet": "navigation bronchoscopy"
+                    }
+                  ]
+                },
+                {
+                  "sequence": 2,
+                  "code": "31628",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "transbronchial_biopsy.performed=true",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                },
+                {
+                  "sequence": 3,
+                  "code": "31629",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "peripheral_tbna.performed=true",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 124,
+                      "end": 128,
+                      "snippet": "TBNA"
+                    }
+                  ]
+                },
+                {
+                  "sequence": 4,
+                  "code": "31654",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronch ebus ivntj perph les",
+                  "units": 1,
+                  "role": "add_on",
+                  "selection_status": "selected",
+                  "selection_reason": "radial_ebus.performed=true",
+                  "family_key": null,
+                  "is_add_on": true,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 86,
+                      "end": 117,
+                      "snippet": "Radial EBUS confirmed eccentric"
+                    },
+                    {
+                      "start": 86,
+                      "end": 97,
+                      "snippet": "Radial EBUS"
+                    }
+                  ]
+                },
+                {
+                  "sequence": 5,
+                  "code": "31622",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; diagnostic, with cell washing",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "dropped",
+                  "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "31627",
+                  "summary": "navigational_bronchoscopy.performed=true",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "navigation bronchoscopy",
+                      "span": {
+                        "start": 8,
+                        "end": 31
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "31628",
+                  "summary": "transbronchial_biopsy.performed=true",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "31629",
+                  "summary": "peripheral_tbna.performed=true",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "TBNA",
+                      "span": {
+                        "start": 124,
+                        "end": 128
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "31654",
+                  "summary": "radial_ebus.performed=true",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "Radial EBUS confirmed eccentric",
+                      "span": {
+                        "start": 86,
+                        "end": 117
+                      }
+                    },
+                    {
+                      "snippet": "Radial EBUS",
+                      "span": {
+                        "start": 86,
+                        "end": 97
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "31622",
+                  "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
+                  "documentation_evidence": null,
+                  "rule_refs": [
+                    "diagnostic_with_surgical"
+                  ],
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": [
+                {
+                  "rule_id": "diagnostic_with_surgical",
+                  "rule_type": "bundling",
+                  "description": null,
+                  "codes_affected": [
+                    "31622"
+                  ],
+                  "outcome": "dropped",
+                  "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+                }
+              ],
+              "global_comments": [
+                "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
+              ]
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {
+            "procedures_performed.radial_ebus.probe_position": [
+              {
+                "text": "Radial EBUS confirmed eccentric",
+                "start": 86,
+                "end": 117,
+                "section": null,
+                "confidence": null
+              }
+            ],
+            "procedures_performed.radial_ebus.performed": [
+              {
+                "text": "Radial EBUS",
+                "start": 86,
+                "end": 97,
+                "section": null,
+                "confidence": null
+              }
+            ],
+            "procedures_performed.navigational_bronchoscopy.performed": [
+              {
+                "text": "navigation bronchoscopy",
+                "start": 8,
+                "end": 31,
+                "section": null,
+                "confidence": null
+              }
+            ],
+            "procedures_performed.peripheral_tbna.performed": [
+              {
+                "text": "TBNA",
+                "start": 124,
+                "end": 128,
+                "section": null,
+                "confidence": null
+              }
+            ]
+          },
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -174,7 +1827,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 1,
-        "warning_count": 3
+        "warning_count": 5,
+        "quality_signal_count": 6,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -184,8 +1839,216 @@
         "warnings": [
           "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
           "31622: ML detected procedure, but specific device/anatomy was not found in text.",
-          "31653: ML detected procedure, but specific device/anatomy was not found in text."
-        ]
+          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
+          "EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations ['4R', '7']",
+          "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: 7"
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "gray_zone",
+        "quality_signal_codes": [
+          "31622",
+          "31653",
+          "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT",
+          "DETERMINISTIC_UPLIFT",
+          "EBUS_NARRATIVE_RECONCILE",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": {
+              "performed": true,
+              "stations_sampled": [
+                "4R"
+              ],
+              "targets_sampled": null,
+              "stations_planned": null,
+              "stations_detail": null,
+              "passes_per_station": null,
+              "needle_gauge": null,
+              "needle_type": null,
+              "photodocumentation_complete": null,
+              "elastography_used": null,
+              "elastography_pattern": null,
+              "doppler_used": null,
+              "node_events": [
+                {
+                  "station": "4R",
+                  "target_text": null,
+                  "action": "needle_aspiration",
+                  "outcome": null,
+                  "passes": null,
+                  "pass_count": null,
+                  "elastography_pattern": null,
+                  "rose_result": null,
+                  "path_result": null,
+                  "path_diagnosis_text": null,
+                  "path_source_event_id": null,
+                  "path_relative_day_offset": null,
+                  "evidence_quote": "Peripheral lesion sampling ROSE: site 1 and 3 atypical cells. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. EBUS staging was completed with stations 4R and 7 sampled."
+                }
+              ]
+            },
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "31652",
+                "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.linear_ebus",
+                  "procedures_performed.linear_ebus.node_events"
+                ],
+                "evidence": null
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:09.916851+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "31652",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "31652",
+                  "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -197,12 +2060,115 @@
       "status": "passed",
       "metrics": {
         "code_count": 0,
-        "warning_count": 0
+        "warning_count": 0,
+        "quality_signal_count": 1,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [],
         "checked_fields": {},
-        "warnings": []
+        "warnings": [],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "quality_signal_codes": [
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": null,
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": null,
+          "coding_support": null,
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -214,7 +2180,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 2,
-        "warning_count": 2
+        "warning_count": 5,
+        "quality_signal_count": 6,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -226,8 +2194,263 @@
         },
         "warnings": [
           "DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc, pleural_procedures.pleurodesis",
-          "32550: ML detected procedure, but specific device/anatomy was not found in text."
-        ]
+          "SUPPRESSION_PLEURAL_REMOVAL_INVERSION: pleural_procedures.ipc.performed",
+          "32550: ML detected procedure, but specific device/anatomy was not found in text.",
+          "IPC removal language detected; preserving pleural_procedures.ipc as Removal.",
+          "SUPPRESSION_PLEURAL_REMOVAL_INVERSION: pleural_procedures.ipc.performed"
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "low_confidence",
+        "quality_signal_codes": [
+          "32550",
+          "DETERMINISTIC_UPLIFT",
+          "IPC_REMOVAL_LANGUAGE_DETECTED_PRESERVING_PLEURAL_PROCEDURES_IPC_AS_REMOVAL",
+          "SOURCE_TYPE",
+          "SUPPRESSION_PLEURAL_REMOVAL_INVERSION"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": null,
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": {
+              "performed": true,
+              "action": "Removal",
+              "side": "Right",
+              "catheter_brand": "PleurX",
+              "indication": null,
+              "tunneled": true
+            },
+            "medical_thoracoscopy": null,
+            "pleurodesis": {
+              "performed": true,
+              "method": null,
+              "agent": null,
+              "talc_dose_grams": null,
+              "indication": null
+            },
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "32552",
+                "description": "Removal of indwelling tunneled pleural catheter with cuff",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "pleural_procedures.ipc"
+                ],
+                "evidence": [
+                  {
+                    "source": "registry_span",
+                    "text": "PleurX",
+                    "span": [
+                      35,
+                      41
+                    ],
+                    "confidence": 1.0
+                  }
+                ]
+              },
+              {
+                "code": "32560",
+                "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "pleural_procedures.pleurodesis"
+                ],
+                "evidence": null
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:09.406349+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "32552",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Removal of indwelling tunneled pleural catheter with cuff",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "pleural_procedures.ipc.performed=true and action indicates removal",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": [
+                    {
+                      "start": 35,
+                      "end": 41,
+                      "snippet": "PleurX"
+                    }
+                  ]
+                },
+                {
+                  "sequence": 2,
+                  "code": "32560",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "pleural_procedures.pleurodesis.performed=true",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "32552",
+                  "summary": "pleural_procedures.ipc.performed=true and action indicates removal",
+                  "documentation_evidence": [
+                    {
+                      "snippet": "PleurX",
+                      "span": {
+                        "start": 35,
+                        "end": 41
+                      }
+                    }
+                  ],
+                  "rule_refs": null,
+                  "qa_flags": null
+                },
+                {
+                  "code": "32560",
+                  "summary": "pleural_procedures.pleurodesis.performed=true",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {
+            "pleural_procedures.ipc.performed": [
+              {
+                "text": "PleurX",
+                "start": 35,
+                "end": 41,
+                "section": null,
+                "confidence": null
+              }
+            ]
+          },
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     },
@@ -239,7 +2462,9 @@
       "status": "passed",
       "metrics": {
         "code_count": 1,
-        "warning_count": 1
+        "warning_count": 1,
+        "quality_signal_count": 2,
+        "needs_manual_review": false
       },
       "actual": {
         "predicted_codes": [
@@ -250,7 +2475,182 @@
         },
         "warnings": [
           "DETERMINISTIC_UPLIFT: added performed=true for whole_lung_lavage"
-        ]
+        ],
+        "needs_manual_review": false,
+        "coder_difficulty": "gray_zone",
+        "quality_signal_codes": [
+          "DETERMINISTIC_UPLIFT",
+          "SOURCE_TYPE"
+        ],
+        "validation_errors": [],
+        "audit_warnings": [],
+        "record": {
+          "patient_mrn": null,
+          "patient_linkage_id": null,
+          "procedure_date": null,
+          "procedure_start_datetime": null,
+          "procedure_end_datetime": null,
+          "procedure_start_time": null,
+          "procedure_end_time": null,
+          "procedure_duration_minutes": null,
+          "providers": null,
+          "providers_team": null,
+          "patient_demographics": null,
+          "patient": null,
+          "procedure": null,
+          "risk_assessment": null,
+          "clinical_context": null,
+          "procedure_setting": null,
+          "sedation": null,
+          "equipment": null,
+          "procedures_performed": {
+            "diagnostic_bronchoscopy": null,
+            "intubation": null,
+            "bal": null,
+            "bronchial_wash": null,
+            "brushings": null,
+            "endobronchial_biopsy": null,
+            "tbna_conventional": null,
+            "peripheral_tbna": null,
+            "linear_ebus": null,
+            "eus_b": null,
+            "radial_ebus": null,
+            "navigational_bronchoscopy": null,
+            "transbronchial_biopsy": null,
+            "transbronchial_cryobiopsy": null,
+            "therapeutic_aspiration": null,
+            "foreign_body_removal": null,
+            "airway_dilation": null,
+            "airway_stent": null,
+            "airway_stent_revision": null,
+            "thermal_ablation": null,
+            "mechanical_debulking": null,
+            "therapeutic_outcomes": null,
+            "cryotherapy": null,
+            "photodynamic_therapy": null,
+            "brachytherapy_catheter": null,
+            "blvr": null,
+            "balloon_occlusion": null,
+            "bpf_sealant": null,
+            "peripheral_ablation": null,
+            "bronchial_thermoplasty": null,
+            "whole_lung_lavage": {
+              "performed": true,
+              "side": null,
+              "total_volume_liters": 15.0,
+              "cycles": null,
+              "indication": "PAP"
+            },
+            "rigid_bronchoscopy": null,
+            "percutaneous_tracheostomy": null,
+            "neck_ultrasound": null,
+            "chest_ultrasound": null,
+            "therapeutic_injection": null
+          },
+          "pleural_procedures": {
+            "thoracentesis": null,
+            "chest_tube": null,
+            "ipc": null,
+            "medical_thoracoscopy": null,
+            "pleurodesis": null,
+            "pleural_biopsy": null,
+            "fibrinolytic_therapy": null,
+            "chest_tube_removal": null
+          },
+          "specimens": null,
+          "complications": null,
+          "outcomes": {
+            "procedure_completed": null,
+            "procedure_aborted_reason": null,
+            "procedure_success_status": null,
+            "aborted_reason": null,
+            "complication_intervention": null,
+            "complication_duration": null,
+            "preliminary_diagnosis": null,
+            "preliminary_staging": null,
+            "disposition": null,
+            "discharge_time": null,
+            "follow_up_imaging_ordered": null,
+            "follow_up_imaging_type": null,
+            "follow_up_plan_text": null,
+            "follow_up_actions": null
+          },
+          "pathology_results": null,
+          "billing": {
+            "cpt_codes": [
+              {
+                "code": "32997",
+                "description": "Total lung lavage",
+                "modifier": null,
+                "modifiers": null,
+                "units": null,
+                "derived_from": [
+                  "procedures_performed.whole_lung_lavage"
+                ],
+                "evidence": null
+              }
+            ],
+            "icd10_codes": null,
+            "total_rvu": null,
+            "work_rvu": null,
+            "practice_expense_rvu": null,
+            "malpractice_rvu": null
+          },
+          "coding_support": {
+            "version": "coding_support.v1",
+            "generated_at": "2026-03-08T18:13:09.138479+00:00",
+            "generator": "registry_to_cpt",
+            "knowledge_base_version": "ip_coding_billing.v3.0",
+            "coding_summary": {
+              "primary_family": null,
+              "lines": [
+                {
+                  "sequence": 1,
+                  "code": "32997",
+                  "modifier": null,
+                  "modifiers": null,
+                  "description": "Total lung lavage",
+                  "units": 1,
+                  "role": "primary",
+                  "selection_status": "selected",
+                  "selection_reason": "whole_lung_lavage.performed=true",
+                  "family_key": null,
+                  "is_add_on": false,
+                  "source": "model",
+                  "note_spans": null
+                }
+              ]
+            },
+            "financial_analysis": null,
+            "coding_rationale": {
+              "per_code": [
+                {
+                  "code": "32997",
+                  "summary": "whole_lung_lavage.performed=true",
+                  "documentation_evidence": null,
+                  "rule_refs": null,
+                  "qa_flags": null
+                }
+              ],
+              "rules_applied": null,
+              "global_comments": null
+            }
+          },
+          "metadata": null,
+          "granular_data": null,
+          "targets": null,
+          "imaging_summary": null,
+          "clinical_course": null,
+          "evidence": {},
+          "version": null,
+          "procedure_families": [],
+          "established_tracheostomy_route": false,
+          "linear_ebus_stations": null,
+          "ebus_stations_sampled": null,
+          "ebus_stations_detail": null,
+          "follow_up_plan": null,
+          "granular_validation_warnings": []
+        }
       },
       "failures": []
     }

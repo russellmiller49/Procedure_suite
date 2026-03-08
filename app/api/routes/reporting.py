@@ -188,7 +188,7 @@ async def report_render(req: RenderRequest) -> RenderResponse:
     bundle, issues, warnings, suggestions, notes = verify_bundle(bundle, debug_notes=debug_notes)
     if debug_notes is not None:
         debug_notes.append(debug_template_selection(bundle))
-    markdown, _render_fallback_used = render_bundle_markdown(
+    markdown, _render_fallback_used, _render_fallback_info = render_bundle_markdown(
         bundle,
         issues=issues,
         warnings=warnings,
@@ -212,7 +212,7 @@ def _verify_bundle(*args, **kwargs):
 
 
 def _render_bundle_markdown(*args, **kwargs):
-    markdown, _fallback_used = render_bundle_markdown(*args, **kwargs)
+    markdown, _fallback_used, _fallback_info = render_bundle_markdown(*args, **kwargs)
     return markdown
 
 

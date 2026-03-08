@@ -91,6 +91,9 @@ async def test_strict_fallback_reason_included_in_debug_notes(monkeypatch) -> No
     assert "debug_notes" in payload
     note_types = {note.get("type") for note in payload["debug_notes"]}
     assert "strict_fallback" in note_types
+    fallback_note = next(note for note in payload["debug_notes"] if note.get("type") == "strict_fallback")
+    assert fallback_note["reason_code"] == "style_validation"
+    assert fallback_note["reason_category"] == "style_validation"
 
 
 @pytest.mark.asyncio

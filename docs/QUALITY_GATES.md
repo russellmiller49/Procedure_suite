@@ -24,7 +24,11 @@ Each run writes:
 
 Canonical storage:
 
-- `registry.coding_support.quality_signals`
+- `registry.coding_support.quality_pass.signals`
+
+Runtime orchestration copy:
+
+- `RegistryExtractionResult.quality_signals`
 
 Legacy compatibility:
 
@@ -68,6 +72,34 @@ Offline CI note:
 - if live LLM access is unavailable, nightly falls back to the frozen full challenger fixture at `tests/fixtures/reporter_seed_eval_llm_fixture_full.json`
 
 That fallback keeps artifacts comparable, but it is not sufficient by itself to justify production promotion.
+
+## Reporter Parity Source Of Truth
+
+Authoritative reporter parity is defined by the shared dual-path evaluation
+stack:
+
+- `tests/quality/test_reporter_seed_dual_path_matrix.py`
+- `ops/tools/eval_reporter_prompt_baseline.py`
+- `ops/tools/eval_reporter_prompt_llm_findings.py`
+- `ops/tools/compare_reporter_seed_paths.py`
+- checked-in `reports/reporter_seed_*baseline.json` and `reports/reporter_seed_*compare*.json`
+
+Those artifacts define whether `registry_extract_fields` and `llm_findings`
+agree on critical procedure presence, forbidden artifacts, fallback behavior,
+and the shared summary metrics.
+
+Non-authoritative smoke coverage:
+
+- `tests/reporting/test_pipeline_parity.py`
+- `tests/reporting/test_render_parity_normalization.py`
+- `tests/reporting/test_macro_engine_template_adapter_parity.py`
+
+Those tests exist to catch local entrypoint or template regressions. They should
+assert focused invariants only, not whole-note byte-for-byte parity.
+
+The markdown files under `tests/fixtures/reporting/` remain canonical completion
+references for eval text similarity and human review. They are not exact pytest
+goldens for end-to-end reporter rendering.
 
 ## What Runs Where
 
