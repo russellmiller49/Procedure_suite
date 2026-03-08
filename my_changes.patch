@@ -1,0 +1,4576 @@
+diff --git a/app/common/path_redaction.py b/app/common/path_redaction.py
+new file mode 100644
+index 00000000..225dd9f3
+--- /dev/null
++++ b/app/common/path_redaction.py
+@@ -0,0 +1,44 @@
++from __future__ import annotations
++
++from pathlib import Path
++from typing import Any
++
++
++REPO_ROOT = Path(__file__).resolve().parents[2]
++
++
++def repo_relative_path(value: str | Path | None) -> str | None:
++    if value is None:
++        return None
++    raw = str(value).strip()
++    if not raw:
++        return None
++
++    path = Path(raw)
++    if path.is_absolute():
++        try:
++            return path.resolve(strict=False).relative_to(REPO_ROOT).as_posix()
++        except ValueError:
++            return None
++
++    return path.as_posix()
++
++
++def sanitize_path_fields(payload: Any) -> Any:
++    if isinstance(payload, dict):
++        out: dict[str, Any] = {}
++        for key, value in payload.items():
++            if isinstance(key, str) and (key == "path" or key.endswith("_path")):
++                if isinstance(value, (str, Path)) or value is None:
++                    out[key] = repo_relative_path(value)
++                else:
++                    out[key] = sanitize_path_fields(value)
++            else:
++                out[key] = sanitize_path_fields(value)
++        return out
++    if isinstance(payload, list):
++        return [sanitize_path_fields(item) for item in payload]
++    return payload
++
++
++__all__ = ["REPO_ROOT", "repo_relative_path", "sanitize_path_fields"]
+diff --git a/app/common/quality_eval.py b/app/common/quality_eval.py
+new file mode 100644
+index 00000000..6c1f3e31
+--- /dev/null
++++ b/app/common/quality_eval.py
+@@ -0,0 +1,303 @@
++from __future__ import annotations
++
++import json
++import os
++from datetime import datetime, timezone
++from pathlib import Path
++from typing import Any
++
++from app.common.path_redaction import repo_relative_path, sanitize_path_fields
++
++
++QUALITY_EVAL_SCHEMA_VERSION = "procedure_suite.quality_eval.v1"
++
++
++def datetime_now_iso() -> str:
++    return datetime.now(timezone.utc).isoformat()
++
++
++def normalize_code(code: str) -> str:
++    raw = (code or "").strip()
++    if not raw:
++        return ""
++    return raw.lstrip("+").strip()
++
++
++def get_path(obj: Any, path: str) -> Any:
++    current = obj
++    for part in (path or "").split("."):
++        if not part:
++            continue
++        key = part
++        index: int | None = None
++        if "[" in part and part.endswith("]"):
++            key, _, remainder = part.partition("[")
++            try:
++                index = int(remainder[:-1])
++            except ValueError:
++                return None
++        if isinstance(current, dict):
++            current = current.get(key)
++        else:
++            return None
++        if index is not None:
++            if not isinstance(current, list) or index >= len(current):
++                return None
++            current = current[index]
++    return current
++
++
++def load_json(path: Path) -> Any:
++    return json.loads(path.read_text(encoding="utf-8"))
++
++
++def load_unified_quality_corpus(path: Path) -> dict[str, Any]:
++    payload = load_json(path)
++    if not isinstance(payload, dict):
++        raise ValueError(f"Unified quality corpus must be a JSON object: {path}")
++    cases = payload.get("cases")
++    if not isinstance(cases, list):
++        raise ValueError(f"Unified quality corpus missing cases[]: {path}")
++    return payload
++
++
++def detect_input_format(path: Path) -> str:
++    if path.suffix.lower() == ".jsonl":
++        return "reporter_gold_jsonl"
++    if path.is_dir():
++        return "legacy_golden_dir"
++    payload = load_json(path)
++    if isinstance(payload, dict) and isinstance(payload.get("cases"), list):
++        return "unified_quality_corpus"
++    if isinstance(payload, list):
++        return "legacy_golden_file"
++    if isinstance(payload, dict):
++        for key in ("entries", "records", "data"):
++            if isinstance(payload.get(key), list):
++                return "legacy_golden_file"
++    raise ValueError(f"Unable to detect supported evaluation input format for {path}")
++
++
++def evaluate_extraction_expectations(
++    *,
++    case: dict[str, Any],
++    record_dict: dict[str, Any],
++    predicted_codes: list[str],
++    warnings: list[str],
++) -> dict[str, Any]:
++    expectations = case.get("extraction_expectations") or {}
++    case_id = str(case.get("id") or "unknown_case")
++    tags = [str(tag) for tag in (case.get("tags") or []) if str(tag)]
++    normalized_codes = sorted({code for code in (normalize_code(item) for item in predicted_codes) if code})
++    warning_text = [str(item) for item in warnings if str(item)]
++    failures: list[dict[str, Any]] = []
++
++    for code in expectations.get("must_have_codes") or []:
++        normalized = normalize_code(str(code))
++        if normalized and normalized not in normalized_codes:
++            failures.append(
++                {
++                    "type": "missing_code",
++                    "message": f"missing required code {normalized}",
++                    "expected": normalized,
++                    "actual": normalized_codes,
++                }
++            )
++
++    for code in expectations.get("must_not_have_codes") or []:
++        normalized = normalize_code(str(code))
++        if normalized and normalized in normalized_codes:
++            failures.append(
++                {
++                    "type": "unexpected_code",
++                    "message": f"found forbidden code {normalized}",
++                    "expected": None,
++                    "actual": normalized,
++                }
++            )
++
++    checked_fields: dict[str, Any] = {}
++    for path, expected in (expectations.get("must_have_fields") or {}).items():
++        actual = get_path(record_dict, str(path))
++        checked_fields[str(path)] = actual
++        if actual != expected:
++            failures.append(
++                {
++                    "type": "field_mismatch",
++                    "message": f"{path} expected {expected!r} but got {actual!r}",
++                    "field": str(path),
++                    "expected": expected,
++                    "actual": actual,
++                }
++            )
++
++    for path, forbidden in (expectations.get("must_not_have_fields") or {}).items():
++        actual = get_path(record_dict, str(path))
++        checked_fields[str(path)] = actual
++        if actual == forbidden:
++            failures.append(
++                {
++                    "type": "forbidden_field_value",
++                    "message": f"{path} unexpectedly matched forbidden value {forbidden!r}",
++                    "field": str(path),
++                    "expected": f"!= {forbidden!r}",
++                    "actual": actual,
++                }
++            )
++
++    for snippet in expectations.get("must_have_warnings_substrings") or []:
++        needle = str(snippet)
++        if needle and not any(needle.lower() in warning.lower() for warning in warning_text):
++            failures.append(
++                {
++                    "type": "missing_warning_substring",
++                    "message": f"missing warning substring {needle!r}",
++                    "expected": needle,
++                    "actual": warning_text,
++                }
++            )
++
++    for snippet in expectations.get("must_not_have_warnings_substrings") or []:
++        needle = str(snippet)
++        if needle and any(needle.lower() in warning.lower() for warning in warning_text):
++            failures.append(
++                {
++                    "type": "unexpected_warning_substring",
++                    "message": f"found forbidden warning substring {needle!r}",
++                    "expected": None,
++                    "actual": warning_text,
++                }
++            )
++
++    return {
++        "id": case_id,
++        "tags": tags,
++        "status": "failed" if failures else "passed",
++        "metrics": {
++            "code_count": len(normalized_codes),
++            "warning_count": len(warning_text),
++        },
++        "actual": {
++            "predicted_codes": normalized_codes,
++            "checked_fields": checked_fields,
++            "warnings": warning_text,
++        },
++        "failures": failures,
++    }
++
++
++def build_standard_report(
++    *,
++    kind: str,
++    input_path: str,
++    output_path: str | None,
++    source_format: str,
++    corpus_name: str,
++    per_case: list[dict[str, Any]],
++    summary_metrics: dict[str, Any] | None = None,
++    runtime: dict[str, Any] | None = None,
++) -> dict[str, Any]:
++    sorted_cases = sorted(per_case, key=lambda item: str(item.get("id") or ""))
++    failures: list[dict[str, Any]] = []
++    for case in sorted_cases:
++        for failure in case.get("failures") or []:
++            failure_entry = {
++                "id": case.get("id"),
++                "tags": case.get("tags") or [],
++            }
++            failure_entry.update(failure)
++            failures.append(failure_entry)
++
++    total_cases = len(sorted_cases)
++    passed_cases = sum(1 for case in sorted_cases if case.get("status") == "passed")
++    failed_cases = total_cases - passed_cases
++    pass_rate = round((passed_cases / total_cases), 4) if total_cases else 0.0
++
++    summary = {
++        "total_cases": total_cases,
++        "passed_cases": passed_cases,
++        "failed_cases": failed_cases,
++        "pass_rate": pass_rate,
++        "metrics": summary_metrics or {},
++    }
++
++    if kind == "reporter":
++        metrics = summary["metrics"]
++        summary["successful_cases"] = metrics.get("successful_cases", passed_cases)
++        summary["avg_similarity"] = metrics.get("avg_similarity", 0.0)
++        summary["min_similarity"] = metrics.get("min_similarity", 0.0)
++        summary["generated_full_shell_rate"] = metrics.get("generated_full_shell_rate", 0.0)
++    elif kind == "extraction":
++        metrics = summary["metrics"]
++        summary["exact_code_match_cases"] = metrics.get("exact_code_match_cases", passed_cases)
++        summary["exact_code_match_rate"] = metrics.get("exact_code_match_rate", pass_rate)
++
++    return {
++        "schema_version": QUALITY_EVAL_SCHEMA_VERSION,
++        "kind": kind,
++        "input_path": repo_relative_path(input_path),
++        "output_path": repo_relative_path(output_path),
++        "source_format": source_format,
++        "corpus_name": corpus_name,
++        "created_at": datetime_now_iso(),
++        "runtime": runtime or {},
++        "summary": summary,
++        "per_case": sorted_cases,
++        "failures": failures,
++    }
++
++
++def configure_offline_quality_eval_env() -> None:
++    env_overrides = {
++        "PROCSUITE_SKIP_DOTENV": "1",
++        "PROCSUITE_SKIP_WARMUP": "1",
++        "ENABLE_UMLS_LINKER": "false",
++        "PROCSUITE_PIPELINE_MODE": "extraction_first",
++        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
++        "REGISTRY_SCHEMA_VERSION": "v3",
++        "REGISTRY_AUDITOR_SOURCE": "raw_ml",
++        "REGISTRY_USE_STUB_LLM": "1",
++        "REGISTRY_SELF_CORRECT_ENABLED": "0",
++        "REPORTER_DISABLE_LLM": "1",
++        "OPENAI_OFFLINE": "1",
++        "GEMINI_OFFLINE": "1",
++        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
++    }
++    for key, value in env_overrides.items():
++        os.environ[key] = value
++
++
++def maybe_write_report(path: Path | None, report: dict[str, Any]) -> None:
++    if path is None:
++        return
++    path.parent.mkdir(parents=True, exist_ok=True)
++    sanitized = sanitize_path_fields(report)
++    path.write_text(json.dumps(sanitized, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8")
++
++
++def iter_legacy_golden_entries(path: Path, pattern: str) -> list[tuple[str, dict[str, Any]]]:
++    paths: list[Path] = []
++    if path.is_file():
++        paths = [path]
++    elif path.exists() and path.is_dir():
++        paths = sorted(path.glob(pattern))
++    output: list[tuple[str, dict[str, Any]]] = []
++    for item in paths:
++        payload = load_json(item)
++        entries: list[dict[str, Any]]
++        if isinstance(payload, list):
++            entries = [row for row in payload if isinstance(row, dict)]
++        elif isinstance(payload, dict):
++            entries = []
++            for key in ("entries", "records", "data"):
++                value = payload.get(key)
++                if isinstance(value, list):
++                    entries = [row for row in value if isinstance(row, dict)]
++                    break
++            else:
++                raise ValueError(f"Unrecognized fixture JSON shape in {item}")
++        else:
++            raise ValueError(f"Unrecognized fixture JSON shape in {item}")
++        for entry in entries:
++            output.append((str(item), entry))
++    return output
+diff --git a/app/common/quality_gate_reports.py b/app/common/quality_gate_reports.py
+new file mode 100644
+index 00000000..c466bcdf
+--- /dev/null
++++ b/app/common/quality_gate_reports.py
+@@ -0,0 +1,133 @@
++from __future__ import annotations
++
++import json
++from datetime import datetime, timezone
++from pathlib import Path
++from typing import Any
++
++from app.common.path_redaction import repo_relative_path
++
++
++def datetime_now_iso() -> str:
++    return datetime.now(timezone.utc).isoformat()
++
++
++def load_json(path: Path) -> Any:
++    return json.loads(path.read_text(encoding="utf-8"))
++
++
++def _flatten_numeric(value: Any, *, prefix: str) -> dict[str, float]:
++    out: dict[str, float] = {}
++    if isinstance(value, bool):
++        return out
++    if isinstance(value, int | float):
++        out[prefix] = float(value)
++        return out
++    if isinstance(value, dict):
++        for key in sorted(value):
++            child_prefix = f"{prefix}.{key}" if prefix else str(key)
++            out.update(_flatten_numeric(value[key], prefix=child_prefix))
++    return out
++
++
++def extract_numeric_metrics(payload: dict[str, Any]) -> dict[str, float]:
++    if not isinstance(payload, dict):
++        return {}
++
++    metrics: dict[str, float] = {}
++    if isinstance(payload.get("summary"), dict):
++        metrics.update(_flatten_numeric(payload["summary"], prefix="summary"))
++    if isinstance(payload.get("counts"), dict):
++        metrics.update(_flatten_numeric(payload["counts"], prefix="counts"))
++    if not metrics:
++        metrics.update(_flatten_numeric(payload, prefix="root"))
++    return metrics
++
++
++def build_report_delta(
++    *,
++    current_path: Path,
++    baseline_path: Path,
++) -> dict[str, Any]:
++    current_payload = load_json(current_path)
++    baseline_payload = load_json(baseline_path)
++    current_metrics = extract_numeric_metrics(current_payload if isinstance(current_payload, dict) else {})
++    baseline_metrics = extract_numeric_metrics(baseline_payload if isinstance(baseline_payload, dict) else {})
++
++    common_keys = sorted(set(current_metrics) & set(baseline_metrics))
++    deltas: list[dict[str, Any]] = []
++    changed_count = 0
++    for key in common_keys:
++        current_value = float(current_metrics[key])
++        baseline_value = float(baseline_metrics[key])
++        delta = round(current_value - baseline_value, 6)
++        if delta != 0:
++            changed_count += 1
++        deltas.append(
++            {
++                "metric": key,
++                "baseline": round(baseline_value, 6),
++                "current": round(current_value, 6),
++                "delta": delta,
++            }
++        )
++
++    added_keys = sorted(set(current_metrics) - set(baseline_metrics))
++    removed_keys = sorted(set(baseline_metrics) - set(current_metrics))
++    return {
++        "kind": "report_delta",
++        "created_at": datetime_now_iso(),
++        "current_path": repo_relative_path(current_path),
++        "baseline_path": repo_relative_path(baseline_path),
++        "comparable_metric_count": len(common_keys),
++        "changed_metric_count": changed_count,
++        "added_metrics": added_keys,
++        "removed_metrics": removed_keys,
++        "metrics": deltas,
++    }
++
++
++def render_delta_markdown(delta: dict[str, Any], *, title: str) -> str:
++    lines = [f"### {title}"]
++    lines.append(f"- Baseline: `{delta.get('baseline_path')}`")
++    lines.append(f"- Current: `{delta.get('current_path')}`")
++    lines.append(
++        f"- Comparable metrics: `{delta.get('comparable_metric_count', 0)}`; changed: `{delta.get('changed_metric_count', 0)}`"
++    )
++
++    interesting = [
++        item
++        for item in (delta.get("metrics") or [])
++        if isinstance(item, dict) and float(item.get("delta", 0.0)) != 0.0
++    ]
++    interesting.sort(key=lambda item: abs(float(item.get("delta", 0.0))), reverse=True)
++    if not interesting:
++        lines.append("- No metric deltas.")
++        return "\n".join(lines)
++
++    for item in interesting[:10]:
++        lines.append(
++            f"- `{item['metric']}`: baseline `{item['baseline']}` -> current `{item['current']}` (delta `{item['delta']}`)"
++        )
++    return "\n".join(lines)
++
++
++def write_json(path: Path, payload: dict[str, Any]) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
++
++
++def write_text(path: Path, text: str) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(text, encoding="utf-8")
++
++
++__all__ = [
++    "build_report_delta",
++    "datetime_now_iso",
++    "extract_numeric_metrics",
++    "load_json",
++    "render_delta_markdown",
++    "write_json",
++    "write_text",
++]
+diff --git a/ml/scripts/eval_golden.py b/ml/scripts/eval_golden.py
+index e688a43b..cda155a7 100644
+--- a/ml/scripts/eval_golden.py
++++ b/ml/scripts/eval_golden.py
+@@ -1,58 +1,77 @@
+ #!/usr/bin/env python3
+-"""Legacy golden evaluator (read-only).
+-
+-This script runs the extraction-first pipeline against golden fixtures and
+-computes a simple baseline pass rate (primarily CPT code set equality).
+-
+-It is intentionally conservative:
+-- it does not modify fixtures
+-- it can be safely skipped when fixture data is not present in the repo/CI
+-"""
++"""Canonical extraction evaluation harness."""
+ 
+ from __future__ import annotations
+ 
+ import argparse
+-import json
+ import os
+ import sys
+ from collections import Counter
+-from dataclasses import dataclass
+ from pathlib import Path
+-from typing import Any, Iterable
++from typing import Any
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+ if str(ROOT) not in sys.path:
+     sys.path.insert(0, str(ROOT))
+ 
+-def _normalize_code(code: str) -> str:
+-    raw = (code or "").strip()
+-    if not raw:
+-        return ""
+-    raw = raw.lstrip("+").strip()
+-    return raw
+-
+-
+-def _iter_fixture_files(input_path: Path, pattern: str) -> Iterable[Path]:
+-    if input_path.is_file():
+-        yield input_path
+-        return
+-    if not input_path.exists():
+-        return
+-    if not input_path.is_dir():
+-        return
+-    yield from sorted(input_path.glob(pattern))
+-
+-
+-def _load_entries(path: Path) -> list[dict[str, Any]]:
+-    data = json.loads(path.read_text(encoding="utf-8"))
+-    if isinstance(data, list):
+-        return [d for d in data if isinstance(d, dict)]
+-    if isinstance(data, dict):
+-        for key in ("entries", "records", "data"):
+-            value = data.get(key)
+-            if isinstance(value, list):
+-                return [d for d in value if isinstance(d, dict)]
+-    raise ValueError(f"Unrecognized fixture JSON shape in {path}")
++from app.common.quality_eval import (  # noqa: E402
++    build_standard_report,
++    configure_offline_quality_eval_env,
++    detect_input_format,
++    evaluate_extraction_expectations,
++    iter_legacy_golden_entries,
++    load_unified_quality_corpus,
++    maybe_write_report,
++    normalize_code,
++)
++
++configure_offline_quality_eval_env()
++
++
++def _quality_signal_codes(result: Any) -> list[str]:
++    codes: list[str] = []
++    for signal in list(getattr(result, "quality_signals", []) or []):
++        code = getattr(signal, "code", None)
++        if code:
++            codes.append(str(code))
++    return sorted(set(codes))
++
++
++def _extract_runtime_result(service: Any, note_text: str) -> Any:
++    return service.extract_fields_extraction_first(note_text)
++
++
++def _result_actual_payload(
++    *,
++    result: Any,
++    expected_codes: list[str] | None = None,
++    source_file: str | None = None,
++) -> dict[str, Any]:
++    actual = {
++        "predicted_codes": sorted({code for code in (normalize_code(item) for item in (result.cpt_codes or [])) if code}),
++        "warnings": [str(item) for item in list(getattr(result, "warnings", []) or []) if str(item)],
++        "needs_manual_review": bool(getattr(result, "needs_manual_review", False)),
++        "coder_difficulty": str(getattr(result, "coder_difficulty", "unknown") or "unknown"),
++        "quality_signal_codes": _quality_signal_codes(result),
++        "validation_errors": [str(item) for item in list(getattr(result, "validation_errors", []) or []) if str(item)],
++        "audit_warnings": [str(item) for item in list(getattr(result, "audit_warnings", []) or []) if str(item)],
++        "record": result.record.model_dump(exclude_none=False),
++    }
++    if expected_codes is not None:
++        actual["expected_codes"] = expected_codes
++    if source_file is not None:
++        actual["source_file"] = source_file
++    return actual
++
++
++def _result_metrics_payload(result: Any) -> dict[str, Any]:
++    warning_count = len(list(getattr(result, "warnings", []) or []))
++    quality_signal_count = len(list(getattr(result, "quality_signals", []) or []))
++    return {
++        "warning_count": warning_count,
++        "quality_signal_count": quality_signal_count,
++        "needs_manual_review": bool(getattr(result, "needs_manual_review", False)),
++    }
+ 
+ 
+ def _extract_note_text(entry: dict[str, Any]) -> str:
+@@ -67,13 +86,13 @@ def _extract_expected_codes(entry: dict[str, Any]) -> list[str]:
+     for key in ("cpt_codes", "codes", "expected_codes"):
+         value = entry.get(key)
+         if isinstance(value, list):
+-            out: list[str] = []
++            output: list[str] = []
+             for item in value:
+                 if isinstance(item, str):
+-                    norm = _normalize_code(item)
+-                    if norm:
+-                        out.append(norm)
+-            return out
++                    normalized = normalize_code(item)
++                    if normalized:
++                        output.append(normalized)
++            return output
+     return []
+ 
+ 
+@@ -91,167 +110,275 @@ def _extract_note_id(entry: dict[str, Any]) -> str | None:
+     return None
+ 
+ 
+-@dataclass(frozen=True)
+-class CaseResult:
+-    note_id: str | None
+-    expected_codes: list[str]
+-    predicted_codes: list[str]
+-    exact_match: bool
+-
+-
+ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+-    p = argparse.ArgumentParser(description="Evaluate extraction against golden fixtures.")
+-    p.add_argument(
++    parser = argparse.ArgumentParser(description="Evaluate extraction against golden fixtures.")
++    parser.add_argument(
+         "--input",
+         type=Path,
+         default=Path("data/knowledge/golden_extractions_final"),
+-        help="Directory containing golden_*.json (arrays) OR a single JSON file.",
++        help=(
++            "Directory containing legacy golden_*.json fixtures, a single legacy golden JSON file, "
++            "or the unified quality corpus JSON."
++        ),
+     )
+-    p.add_argument(
++    parser.add_argument(
+         "--pattern",
+         type=str,
+         default="golden_*.json",
+-        help="Glob pattern for fixture files when --input is a directory.",
++        help="Glob pattern for fixture files when --input is a legacy golden directory.",
+     )
+-    p.add_argument("--limit", type=int, default=0, help="Max cases to evaluate (0 = no limit).")
+-    p.add_argument(
++    parser.add_argument("--limit", type=int, default=0, help="Max cases to evaluate (0 = no limit).")
++    parser.add_argument(
++        "--input-format",
++        type=str,
++        default="auto",
++        choices=["auto", "legacy_golden", "unified_quality_corpus"],
++        help="Force the input fixture format instead of auto-detecting it.",
++    )
++    parser.add_argument(
+         "--extraction-engine",
+         type=str,
+         default="",
+-        help="Override REGISTRY_EXTRACTION_ENGINE for evaluation (e.g., engine, parallel_ner).",
++        help="Override REGISTRY_EXTRACTION_ENGINE for evaluation (for example: engine, parallel_ner).",
+     )
+-    p.add_argument(
++    parser.add_argument(
+         "--output",
+         type=Path,
+         default=None,
+-        help="Optional path to write a JSON report.",
++        help="Optional path to write the machine-readable JSON report.",
+     )
+-    p.add_argument(
++    parser.add_argument(
+         "--fail-under",
+         type=float,
+         default=None,
+-        help="Exit non-zero if exact-match rate is below this percent (0-100).",
++        help="Exit non-zero if the pass rate is below this percent (0-100).",
+     )
+-    return p.parse_args(argv)
+-
+-
+-def main(argv: list[str] | None = None) -> int:
+-    args = parse_args(argv)
+-
+-    if args.extraction_engine:
+-        os.environ["REGISTRY_EXTRACTION_ENGINE"] = str(args.extraction_engine).strip()
+-
+-    fixture_files = list(_iter_fixture_files(args.input, args.pattern))
+-    if not fixture_files:
+-        print(f"eval_golden: no fixture files found under {args.input}; skipping.")
+-        return 0
+-
++    return parser.parse_args(argv)
++
++
++def _resolve_format(input_path: Path, requested_format: str) -> str:
++    if requested_format == "legacy_golden":
++        return "legacy_golden"
++    if requested_format == "unified_quality_corpus":
++        return "unified_quality_corpus"
++    detected = detect_input_format(input_path)
++    if detected.startswith("legacy_golden"):
++        return "legacy_golden"
++    return detected
++
++
++def _evaluate_legacy_goldens(
++    *,
++    input_path: Path,
++    pattern: str,
++    limit: int,
++) -> dict[str, Any]:
+     try:
+-        from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+         from app.registry.application.registry_service import RegistryService
+-    except Exception as exc:
++    except Exception as exc:  # pragma: no cover - import surface exercised in runtime
+         print(f"eval_golden: import error: {exc}", file=sys.stderr)
+-        return 2
++        return {"exit_code": 2}
+ 
+-    service = RegistryService()
++    entries = iter_legacy_golden_entries(input_path, pattern)
++    if not entries:
++        print(f"eval_golden: no fixture files found under {input_path}; skipping.")
++        return {"exit_code": 0}
+ 
+-    results: list[CaseResult] = []
+-    evaluated = 0
++    service = RegistryService()
++    per_case: list[dict[str, Any]] = []
++    missing_counter: Counter[str] = Counter()
++    extra_counter: Counter[str] = Counter()
++    coder_difficulty_counter: Counter[str] = Counter()
++    manual_review_count = 0
+ 
+-    for path in fixture_files:
+-        try:
+-            entries = _load_entries(path)
+-        except Exception as exc:
+-            print(f"eval_golden: failed to load {path}: {exc}", file=sys.stderr)
++    for source_file, entry in entries:
++        note_text = _extract_note_text(entry)
++        if not note_text.strip():
+             continue
+ 
+-        for entry in entries:
+-            note_text = _extract_note_text(entry)
+-            if not note_text.strip():
+-                continue
++        expected_codes = sorted({code for code in (_extract_expected_codes(entry) or []) if code})
++        note_id = _extract_note_id(entry) or f"legacy_case_{len(per_case) + 1}"
++        result = _extract_runtime_result(service, note_text)
++        predicted = sorted({code for code in (normalize_code(item) for item in (result.cpt_codes or [])) if code})
++        exact_match = expected_codes == predicted
++        coder_difficulty = str(getattr(result, "coder_difficulty", "unknown") or "unknown")
++        coder_difficulty_counter.update([coder_difficulty])
++        if bool(getattr(result, "needs_manual_review", False)):
++            manual_review_count += 1
++
++        failures: list[dict[str, Any]] = []
++        missing = sorted(set(expected_codes) - set(predicted))
++        extra = sorted(set(predicted) - set(expected_codes))
++        if missing:
++            missing_counter.update(missing)
++            failures.append(
++                {
++                    "type": "missing_codes",
++                    "message": f"missing expected codes {missing}",
++                    "expected": expected_codes,
++                    "actual": predicted,
++                }
++            )
++        if extra:
++            extra_counter.update(extra)
++            failures.append(
++                {
++                    "type": "unexpected_codes",
++                    "message": f"found extra codes {extra}",
++                    "expected": expected_codes,
++                    "actual": predicted,
++                }
++            )
+ 
+-            expected_codes = _extract_expected_codes(entry)
+-            note_id = _extract_note_id(entry)
++        per_case.append(
++            {
++                "id": note_id,
++                "tags": [],
++                "status": "passed" if exact_match else "failed",
++                "metrics": {"exact_match": exact_match, **_result_metrics_payload(result)},
++                "actual": _result_actual_payload(
++                    result=result,
++                    expected_codes=expected_codes,
++                    source_file=source_file,
++                ),
++                "failures": failures,
++            }
++        )
+ 
+-            record, _warnings, _meta = service.extract_record(note_text, note_id=note_id)
+-            predicted_codes, _rationales, _derive_warnings = derive_all_codes_with_meta(record)
++        if limit and len(per_case) >= limit:
++            break
+ 
+-            expected_set = {c for c in (_normalize_code(c) for c in expected_codes) if c}
+-            predicted_set = {c for c in (_normalize_code(c) for c in predicted_codes) if c}
++    if not per_case:
++        print("eval_golden: no runnable cases found; skipping.")
++        return {"exit_code": 0}
++
++    exact_matches = sum(1 for case in per_case if case["status"] == "passed")
++    rate = round(exact_matches / len(per_case), 4)
++    report = build_standard_report(
++        kind="extraction",
++        input_path=str(input_path),
++        output_path=None,
++        source_format="legacy_golden",
++        corpus_name="legacy_golden",
++        per_case=per_case,
++        summary_metrics={
++            "exact_code_match_cases": exact_matches,
++            "exact_code_match_rate": rate,
++            "top_missing_codes": missing_counter.most_common(10),
++            "top_extra_codes": extra_counter.most_common(10),
++            "needs_manual_review_cases": manual_review_count,
++            "coder_difficulty_counts": dict(coder_difficulty_counter),
++        },
++        runtime={"extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", "")},
++    )
++    return {"exit_code": 0, "report": report}
+ 
+-            results.append(
+-                CaseResult(
+-                    note_id=note_id,
+-                    expected_codes=sorted(expected_set),
+-                    predicted_codes=sorted(predicted_set),
+-                    exact_match=expected_set == predicted_set,
+-                )
+-            )
+ 
+-            evaluated += 1
+-            if args.limit and evaluated >= int(args.limit):
+-                break
+-        if args.limit and evaluated >= int(args.limit):
+-            break
++def _evaluate_unified_quality_corpus(
++    *,
++    input_path: Path,
++    limit: int,
++) -> dict[str, Any]:
++    try:
++        from app.registry.application.registry_service import RegistryService
++    except Exception as exc:  # pragma: no cover - import surface exercised in runtime
++        print(f"eval_golden: import error: {exc}", file=sys.stderr)
++        return {"exit_code": 2}
+ 
+-    if evaluated <= 0:
++    payload = load_unified_quality_corpus(input_path)
++    cases = list(payload.get("cases") or [])
++    if limit:
++        cases = cases[:limit]
++    if not cases:
+         print("eval_golden: no runnable cases found; skipping.")
+-        return 0
++        return {"exit_code": 0}
+ 
+-    exact_matches = sum(1 for r in results if r.exact_match)
+-    rate = (exact_matches / evaluated) * 100.0
++    service = RegistryService()
++    per_case: list[dict[str, Any]] = []
++    coder_difficulty_counter: Counter[str] = Counter()
++    manual_review_count = 0
++    for case in cases:
++        note_text = str(case.get("note_text") or "")
++        if not note_text.strip():
++            continue
++        case_id = str(case.get("id") or f"case_{len(per_case) + 1}")
++        result = _extract_runtime_result(service, note_text)
++        coder_difficulty_counter.update([str(getattr(result, "coder_difficulty", "unknown") or "unknown")])
++        if bool(getattr(result, "needs_manual_review", False)):
++            manual_review_count += 1
++        case_report = evaluate_extraction_expectations(
++            case=case,
++            record_dict=result.record.model_dump(exclude_none=False),
++            predicted_codes=list(result.cpt_codes or []),
++            warnings=list(getattr(result, "warnings", []) or []),
++        )
++        case_report["metrics"].update(_result_metrics_payload(result))
++        case_report["actual"].update(_result_actual_payload(result=result))
++        per_case.append(case_report)
++
++    report = build_standard_report(
++        kind="extraction",
++        input_path=str(input_path),
++        output_path=None,
++        source_format="unified_quality_corpus",
++        corpus_name=str(payload.get("fixture_name") or "unified_quality_corpus"),
++        per_case=per_case,
++        summary_metrics={
++            "exact_code_match_cases": sum(1 for case in per_case if case["status"] == "passed"),
++            "exact_code_match_rate": round(
++                sum(1 for case in per_case if case["status"] == "passed") / len(per_case),
++                4,
++            )
++            if per_case
++            else 0.0,
++            "needs_manual_review_cases": manual_review_count,
++            "coder_difficulty_counts": dict(coder_difficulty_counter),
++        },
++        runtime={"extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", "")},
++    )
++    return {"exit_code": 0, "report": report}
+ 
+-    failures = [r for r in results if not r.exact_match]
+-    missing_counter: Counter[str] = Counter()
+-    extra_counter: Counter[str] = Counter()
+-    for r in failures:
+-        expected_set = set(r.expected_codes)
+-        predicted_set = set(r.predicted_codes)
+-        missing_counter.update(expected_set - predicted_set)
+-        extra_counter.update(predicted_set - expected_set)
+-
+-    print(f"eval_golden: evaluated={evaluated} exact_code_match={exact_matches} ({rate:.1f}%)")
+-
+-    if failures:
+-        top_missing = ", ".join([f"{c}({n})" for c, n in missing_counter.most_common(10)])
+-        top_extra = ", ".join([f"{c}({n})" for c, n in extra_counter.most_common(10)])
+-        if top_missing:
+-            print(f"  top_missing: {top_missing}")
+-        if top_extra:
+-            print(f"  top_extra: {top_extra}")
+ 
++def main(argv: list[str] | None = None) -> int:
++    args = parse_args(argv)
++    if args.extraction_engine:
++        os.environ["REGISTRY_EXTRACTION_ENGINE"] = str(args.extraction_engine).strip()
++
++    input_format = _resolve_format(args.input, args.input_format)
++    if input_format == "legacy_golden":
++        outcome = _evaluate_legacy_goldens(input_path=args.input, pattern=args.pattern, limit=int(args.limit))
++    else:
++        outcome = _evaluate_unified_quality_corpus(input_path=args.input, limit=int(args.limit))
++
++    exit_code = int(outcome.get("exit_code", 0))
++    report = outcome.get("report")
++    if report is None:
++        return exit_code
++
++    report["output_path"] = str(args.output) if args.output else None
++    maybe_write_report(args.output, report)
++
++    summary = report["summary"]
++    print(
++        "eval_golden: "
++        f"cases={summary['total_cases']} "
++        f"passed={summary['passed_cases']} "
++        f"failed={summary['failed_cases']} "
++        f"pass_rate={summary['pass_rate']:.4f}"
++    )
+     if args.output:
+-        report = {
+-            "evaluated": evaluated,
+-            "exact_code_match": exact_matches,
+-            "exact_code_match_rate": rate,
+-            "extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", ""),
+-            "results": [
+-                {
+-                    "note_id": r.note_id,
+-                    "exact_match": r.exact_match,
+-                    "expected_codes": r.expected_codes,
+-                    "predicted_codes": r.predicted_codes,
+-                }
+-                for r in results
+-            ],
+-        }
+-        args.output.parent.mkdir(parents=True, exist_ok=True)
+-        args.output.write_text(
+-            json.dumps(report, indent=2, sort_keys=True) + "\n",
+-            encoding="utf-8",
+-        )
+         print(f"eval_golden: wrote report to {args.output}")
+ 
+-    if args.fail_under is not None and rate < float(args.fail_under):
+-        threshold = float(args.fail_under)
+-        print(
+-            f"eval_golden: FAIL (rate {rate:.1f}% < {threshold:.1f}%)",
+-            file=sys.stderr,
+-        )
+-        return 1
++    if args.fail_under is not None:
++        threshold = float(args.fail_under) / 100.0
++        if float(summary["pass_rate"]) < threshold:
++            print(
++                f"eval_golden: FAIL (rate {summary['pass_rate'] * 100:.1f}% < {float(args.fail_under):.1f}%)",
++                file=sys.stderr,
++            )
++            return 1
+ 
+-    return 0
++    return exit_code
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/ops/tools/run_quality_gates.py b/ops/tools/run_quality_gates.py
+new file mode 100644
+index 00000000..a1c184a4
+--- /dev/null
++++ b/ops/tools/run_quality_gates.py
+@@ -0,0 +1,300 @@
++#!/usr/bin/env python3
++"""Run fast PR or nightly extraction quality gates and emit artifacts."""
++
++from __future__ import annotations
++
++import argparse
++import json
++import os
++import subprocess
++import sys
++from dataclasses import dataclass, replace
++from pathlib import Path
++from typing import Any
++
++ROOT = Path(__file__).resolve().parents[2]
++if str(ROOT) not in sys.path:
++    sys.path.insert(0, str(ROOT))
++
++from app.common.quality_gate_reports import build_report_delta, render_delta_markdown, write_json, write_text
++
++
++PR_PYTEST_TARGETS = [
++    "tests/registry/test_regression_pack.py",
++    "tests/common/test_path_redaction.py",
++    "tests/common/test_quality_gate_reports.py",
++    "tests/scripts/test_eval_golden.py",
++    "tests/scripts/test_run_quality_gates.py",
++]
++
++PR_EXTRACTION_INPUT = ROOT / "tests" / "fixtures" / "unified_quality_corpus.json"
++PR_EXTRACTION_BASELINE = ROOT / "reports" / "unified_quality_corpus_extraction_baseline.json"
++
++
++@dataclass(frozen=True)
++class StepResult:
++    name: str
++    status: str
++    command: list[str]
++    stdout_path: str | None = None
++    stderr_path: str | None = None
++    output_path: str | None = None
++    returncode: int | None = None
++    error: str | None = None
++
++
++def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--tier", choices=["pr", "nightly"], required=True)
++    parser.add_argument("--output-dir", type=Path, required=True)
++    return parser.parse_args(argv)
++
++
++def _run_command(
++    *,
++    name: str,
++    command: list[str],
++    output_dir: Path,
++    env: dict[str, str] | None = None,
++) -> StepResult:
++    proc = subprocess.run(
++        command,
++        cwd=ROOT,
++        env=env or os.environ.copy(),
++        capture_output=True,
++        text=True,
++        check=False,
++    )
++    stdout_path = output_dir / f"{name}.stdout.txt"
++    stderr_path = output_dir / f"{name}.stderr.txt"
++    stdout_path.write_text(proc.stdout or "", encoding="utf-8")
++    stderr_path.write_text(proc.stderr or "", encoding="utf-8")
++    return StepResult(
++        name=name,
++        status="passed" if proc.returncode == 0 else "failed",
++        command=command,
++        stdout_path=str(stdout_path),
++        stderr_path=str(stderr_path),
++        returncode=proc.returncode,
++        error=None if proc.returncode == 0 else f"command failed with exit code {proc.returncode}",
++    )
++
++
++def _static_step_result(
++    *,
++    name: str,
++    status: str,
++    output_dir: Path,
++    command: list[str] | None = None,
++    output_path: Path | None = None,
++    error: str | None = None,
++    note: str | None = None,
++) -> StepResult:
++    stdout_path = output_dir / f"{name}.stdout.txt"
++    stderr_path = output_dir / f"{name}.stderr.txt"
++    stdout_path.write_text((note or "") + ("\n" if note else ""), encoding="utf-8")
++    stderr_path.write_text((error or "") + ("\n" if error else ""), encoding="utf-8")
++    return StepResult(
++        name=name,
++        status=status,
++        command=command or [],
++        stdout_path=str(stdout_path),
++        stderr_path=str(stderr_path),
++        output_path=str(output_path) if output_path else None,
++        returncode=0 if status == "passed" else 1,
++        error=error,
++    )
++
++
++def _mark_step_failed(step: StepResult, *, output_dir: Path, error: str) -> StepResult:
++    stderr_path = Path(step.stderr_path) if step.stderr_path else output_dir / f"{step.name}.stderr.txt"
++    existing = stderr_path.read_text(encoding="utf-8") if stderr_path.exists() else ""
++    stderr_path.write_text(
++        (existing + ("\n" if existing and not existing.endswith("\n") else "")) + error + "\n",
++        encoding="utf-8",
++    )
++    return replace(
++        step,
++        status="failed",
++        stderr_path=str(stderr_path),
++        returncode=step.returncode if step.returncode not in (None, 0) else 1,
++        error=error,
++    )
++
++
++def _run_checked_step(
++    *,
++    name: str,
++    command: list[str],
++    output_dir: Path,
++    output_path: Path | None = None,
++    validator: Any | None = None,
++    env: dict[str, str] | None = None,
++) -> StepResult:
++    step = _run_command(name=name, command=command, output_dir=output_dir, env=env)
++    if output_path is not None:
++        step = replace(step, output_path=str(output_path))
++    if step.status != "passed" or validator is None:
++        return step
++    try:
++        validator(output_path)
++    except Exception as exc:  # noqa: BLE001
++        return _mark_step_failed(step, output_dir=output_dir, error=f"{type(exc).__name__}: {exc}")
++    return step
++
++
++def _load_json(path: Path) -> dict[str, Any]:
++    return json.loads(path.read_text(encoding="utf-8"))
++
++
++def _assert_extraction_gate(path: Path | None) -> None:
++    if path is None:
++        raise RuntimeError("Extraction fixture gate did not produce an output artifact")
++    payload = _load_json(path)
++    summary = dict(payload.get("summary") or {})
++    pass_rate = float(summary.get("pass_rate", 0.0))
++    failed_cases = int(summary.get("failed_cases", 0))
++    if failed_cases != 0 or pass_rate < 1.0:
++        raise RuntimeError(f"Extraction fixture gate failed: failed_cases={failed_cases}, pass_rate={pass_rate}")
++
++
++def _render_diff_sections(diff_jobs: list[tuple[str, Path, Path]]) -> list[str]:
++    lines: list[str] = []
++    for title, current_path, baseline_path in diff_jobs:
++        try:
++            if not current_path.exists():
++                lines.append(f"### {title}")
++                lines.append(f"- Current report missing: `{current_path}`")
++                continue
++            if not baseline_path.exists():
++                lines.append(f"### {title}")
++                lines.append(f"- Baseline missing: `{baseline_path}`")
++                continue
++            delta = build_report_delta(current_path=current_path, baseline_path=baseline_path)
++            delta_path = current_path.with_name(f"{current_path.stem}.delta.json")
++            write_json(delta_path, delta)
++            lines.append(render_delta_markdown(delta, title=title))
++        except Exception as exc:  # noqa: BLE001
++            lines.append(f"### {title}")
++            lines.append(f"- Delta generation failed: `{type(exc).__name__}: {exc}`")
++    return lines
++
++
++def _create_summary(
++    *,
++    tier: str,
++    steps: list[StepResult],
++    diff_sections: list[str],
++    output_dir: Path,
++) -> None:
++    failed_steps = [step for step in steps if step.status == "failed"]
++    lines = [
++        f"## Quality Gates ({tier})",
++        f"- Output directory: `{output_dir}`",
++        f"- Passed steps: `{sum(1 for step in steps if step.status == 'passed')}`",
++        f"- Failed steps: `{len(failed_steps)}`",
++    ]
++    for step in steps:
++        lines.append(
++            f"- `{step.name}`: `{step.status}`"
++            + (f" (exit `{step.returncode}`)" if step.returncode is not None else "")
++        )
++    if diff_sections:
++        lines.append("")
++        lines.extend(diff_sections)
++
++    write_text(output_dir / "summary.md", "\n".join(lines) + "\n")
++    write_json(
++        output_dir / "summary.json",
++        {
++            "schema_version": "procedure_suite.quality_gate.run.v1",
++            "tier": tier,
++            "output_dir": str(output_dir),
++            "steps": [
++                {
++                    "name": step.name,
++                    "status": step.status,
++                    "command": step.command,
++                    "stdout_path": step.stdout_path,
++                    "stderr_path": step.stderr_path,
++                    "output_path": step.output_path,
++                    "returncode": step.returncode,
++                    "error": step.error,
++                }
++                for step in steps
++            ],
++        },
++    )
++
++
++def _run_gate(*, tier: str, output_dir: Path, extraction_output_name: str) -> int:
++    steps: list[StepResult] = []
++    diff_sections: list[str] = []
++    try:
++        pytest_command = [sys.executable, "-m", "pytest", "-q", *PR_PYTEST_TARGETS]
++        steps.append(_run_command(name="focused_pytest", command=pytest_command, output_dir=output_dir))
++
++        extraction_output = output_dir / extraction_output_name
++        steps.append(
++            _run_checked_step(
++                name="extraction_eval",
++                command=[
++                    sys.executable,
++                    str(ROOT / "ml" / "scripts" / "eval_golden.py"),
++                    "--input",
++                    str(PR_EXTRACTION_INPUT),
++                    "--output",
++                    str(extraction_output),
++                    "--fail-under",
++                    "100",
++                ],
++                output_dir=output_dir,
++                output_path=extraction_output,
++                validator=_assert_extraction_gate,
++            )
++        )
++
++        diff_sections = _render_diff_sections(
++            [
++                ("Extraction Delta", extraction_output, PR_EXTRACTION_BASELINE),
++            ]
++        )
++    except Exception as exc:  # noqa: BLE001
++        steps.append(
++            _static_step_result(
++                name=f"{tier}_gate_unhandled",
++                status="failed",
++                output_dir=output_dir,
++                error=f"{type(exc).__name__}: {exc}",
++            )
++        )
++    finally:
++        _create_summary(tier=tier, steps=steps, diff_sections=diff_sections, output_dir=output_dir)
++
++    return 0 if all(step.status == "passed" for step in steps) else 1
++
++
++def run_pr(output_dir: Path) -> int:
++    return _run_gate(tier="pr", output_dir=output_dir, extraction_output_name="unified_quality_corpus_extraction.json")
++
++
++def run_nightly(output_dir: Path) -> int:
++    return _run_gate(
++        tier="nightly",
++        output_dir=output_dir,
++        extraction_output_name="unified_quality_corpus_extraction_nightly.json",
++    )
++
++
++def main(argv: list[str] | None = None) -> int:
++    args = parse_args(argv)
++    output_dir = args.output_dir.resolve()
++    output_dir.mkdir(parents=True, exist_ok=True)
++
++    if args.tier == "pr":
++        return run_pr(output_dir)
++    return run_nightly(output_dir)
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/reports/unified_quality_corpus_extraction_baseline.json b/reports/unified_quality_corpus_extraction_baseline.json
+new file mode 100644
+index 00000000..4f296f0e
+--- /dev/null
++++ b/reports/unified_quality_corpus_extraction_baseline.json
+@@ -0,0 +1,2595 @@
++{
++  "schema_version": "procedure_suite.quality_eval.v1",
++  "kind": "extraction",
++  "input_path": "tests/fixtures/unified_quality_corpus.json",
++  "output_path": "reports/unified_quality_corpus_extraction_baseline.json",
++  "source_format": "unified_quality_corpus",
++  "corpus_name": "unified_quality_corpus",
++  "created_at": "2026-03-08T20:42:47.855319+00:00",
++  "runtime": {
++    "extraction_engine": "parallel_ner"
++  },
++  "summary": {
++    "total_cases": 10,
++    "passed_cases": 10,
++    "failed_cases": 0,
++    "pass_rate": 1.0,
++    "metrics": {
++      "exact_code_match_cases": 10,
++      "exact_code_match_rate": 1.0,
++      "needs_manual_review_cases": 1,
++      "coder_difficulty_counts": {
++        "low_confidence": 5,
++        "high_confidence": 3,
++        "gray_zone": 2
++      }
++    },
++    "exact_code_match_cases": 10,
++    "exact_code_match_rate": 1.0
++  },
++  "per_case": [
++    {
++      "id": "blvr_valve_removal_not_foreign_body_removal",
++      "tags": [
++        "blvr_exchange_removal"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 1,
++        "warning_count": 1,
++        "quality_signal_count": 0,
++        "needs_manual_review": true
++      },
++      "actual": {
++        "predicted_codes": [
++          "31648"
++        ],
++        "checked_fields": {
++          "procedures_performed.blvr.procedure_type": "Valve removal"
++        },
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for blvr"
++        ],
++        "needs_manual_review": true,
++        "coder_difficulty": "high_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [
++          "RAW_ML_AUDIT[HIGH_CONF]: model suggests 31647 (prob=0.52), but deterministic derivation missed it"
++        ],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": {
++              "performed": true,
++              "procedure_type": "Valve removal",
++              "target_lobe": "RUL",
++              "valve_type": "Zephyr (Pulmonx)",
++              "valve_sizes": null,
++              "number_of_valves": null,
++              "segments_treated": null,
++              "collateral_ventilation_assessment": null,
++              "target_lobe_volume_ml": null,
++              "heterogeneity_index": null
++            },
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "31648",
++                "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.blvr"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "Zephyr",
++                    "span": [
++                      71,
++                      77
++                    ],
++                    "confidence": 1.0
++                  }
++                ]
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.528730+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "31648",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; with removal of endobronchial valve(s), initial bronchus",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "blvr.procedure_type='Valve removal' (lobes=['RUL'])",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 71,
++                      "end": 77,
++                      "snippet": "Zephyr"
++                    }
++                  ]
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "31648",
++                  "summary": "blvr.procedure_type='Valve removal' (lobes=['RUL'])",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "Zephyr",
++                      "span": {
++                        "start": 71,
++                        "end": 77
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {
++            "procedures_performed.blvr.performed": [
++              {
++                "text": "Zephyr",
++                "start": 71,
++                "end": 77,
++                "section": null,
++                "confidence": null
++              }
++            ]
++          },
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "checkbox_negative_blank_template_suppresses_procedures",
++      "tags": [
++        "checkbox_negation",
++        "pleural_placement_removal_inversion"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 0,
++        "warning_count": 0,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [],
++        "checked_fields": {},
++        "warnings": [],
++        "needs_manual_review": false,
++        "coder_difficulty": "low_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": null,
++          "specimens": null,
++          "complications": null,
++          "outcomes": null,
++          "pathology_results": null,
++          "billing": null,
++          "coding_support": null,
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "ebus_staging_no_peripheral_tbna_contamination",
++      "tags": [
++        "ebus_peripheral_tbna_contamination"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 1,
++        "warning_count": 8,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "31652"
++        ],
++        "checked_fields": {
++          "procedures_performed.peripheral_tbna.performed": null
++        },
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
++          "EBUS_REGEX_FALLBACK: populated node_events from station lines.",
++          "31622: ML detected procedure, but specific device/anatomy was not found in text.",
++          "31653: ML detected procedure, but specific device/anatomy was not found in text.",
++          "EBUS_STATION_DETAIL_HEURISTIC: parsed 2 station detail entries from text",
++          "AUTO_EBUS_OUTCOME: 4R -> benign",
++          "AUTO_EBUS_OUTCOME: 7 -> benign",
++          "Linear EBUS inferred from convex/mediastinal/station sampling."
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "high_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": {
++              "performed": true,
++              "stations_sampled": [
++                "4R",
++                "7"
++              ],
++              "targets_sampled": null,
++              "stations_planned": null,
++              "stations_detail": null,
++              "passes_per_station": null,
++              "needle_gauge": null,
++              "needle_type": null,
++              "photodocumentation_complete": null,
++              "elastography_used": null,
++              "elastography_pattern": null,
++              "doppler_used": null,
++              "node_events": [
++                {
++                  "station": "4R",
++                  "target_text": null,
++                  "action": "needle_aspiration",
++                  "outcome": "benign",
++                  "passes": null,
++                  "pass_count": null,
++                  "elastography_pattern": null,
++                  "rose_result": "benign",
++                  "path_result": null,
++                  "path_diagnosis_text": null,
++                  "path_source_event_id": null,
++                  "path_relative_day_offset": null,
++                  "evidence_quote": "ROSE adequate lymphocytes."
++                },
++                {
++                  "station": "7",
++                  "target_text": null,
++                  "action": "needle_aspiration",
++                  "outcome": "benign",
++                  "passes": null,
++                  "pass_count": null,
++                  "elastography_pattern": null,
++                  "rose_result": "benign",
++                  "path_result": null,
++                  "path_diagnosis_text": null,
++                  "path_source_event_id": null,
++                  "path_relative_day_offset": null,
++                  "evidence_quote": "ROSE adequate lymphocytes."
++                }
++              ]
++            },
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "31652",
++                "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.linear_ebus"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "EBUS-TBNA",
++                    "span": [
++                      0,
++                      9
++                    ],
++                    "confidence": 1.0
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "4R",
++                    "span": [
++                      27,
++                      29
++                    ],
++                    "confidence": 0.9
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                    "span": [
++                      0,
++                      136
++                    ],
++                    "confidence": 0.9
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "ROSE adequate lymphocytes",
++                    "span": [
++                      63,
++                      88
++                    ],
++                    "confidence": 0.9
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "7",
++                    "span": [
++                      42,
++                      43
++                    ],
++                    "confidence": 0.9
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                    "span": [
++                      0,
++                      136
++                    ],
++                    "confidence": 0.9
++                  }
++                ]
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.345450+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "31652",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 0,
++                      "end": 9,
++                      "snippet": "EBUS-TBNA"
++                    },
++                    {
++                      "start": 27,
++                      "end": 29,
++                      "snippet": "4R"
++                    },
++                    {
++                      "start": 0,
++                      "end": 136,
++                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging."
++                    },
++                    {
++                      "start": 63,
++                      "end": 88,
++                      "snippet": "ROSE adequate lymphocytes"
++                    },
++                    {
++                      "start": 42,
++                      "end": 43,
++                      "snippet": "7"
++                    },
++                    {
++                      "start": 0,
++                      "end": 136,
++                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging."
++                    }
++                  ]
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "31652",
++                  "summary": "linear_ebus.performed=true and sampled_station_count=2 (1-2) from node_events",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "EBUS-TBNA",
++                      "span": {
++                        "start": 0,
++                        "end": 9
++                      }
++                    },
++                    {
++                      "snippet": "4R",
++                      "span": {
++                        "start": 27,
++                        "end": 29
++                      }
++                    },
++                    {
++                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                      "span": {
++                        "start": 0,
++                        "end": 136
++                      }
++                    },
++                    {
++                      "snippet": "ROSE adequate lymphocytes",
++                      "span": {
++                        "start": 63,
++                        "end": 88
++                      }
++                    },
++                    {
++                      "snippet": "7",
++                      "span": {
++                        "start": 42,
++                        "end": 43
++                      }
++                    },
++                    {
++                      "snippet": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                      "span": {
++                        "start": 0,
++                        "end": 136
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": {
++            "linear_ebus_stations_detail": [
++              {
++                "station": "4R",
++                "short_axis_mm": null,
++                "long_axis_mm": null,
++                "shape": null,
++                "margin": null,
++                "echogenicity": null,
++                "chs_present": null,
++                "necrosis_present": null,
++                "calcification_present": null,
++                "elastography_performed": null,
++                "elastography_score": null,
++                "elastography_strain_ratio": null,
++                "elastography_pattern": null,
++                "doppler_performed": null,
++                "doppler_pattern": null,
++                "morphologic_impression": null,
++                "sampled": true,
++                "needle_gauge": null,
++                "needle_type": null,
++                "number_of_passes": null,
++                "intranodal_forceps_used": null,
++                "rose_performed": true,
++                "rose_result": "Adequate lymphocytes",
++                "lymphocytes_present": true,
++                "rose_adequacy": null,
++                "specimen_sent_for": null,
++                "final_pathology": null,
++                "n_stage_contribution": null,
++                "notes": null
++              },
++              {
++                "station": "7",
++                "short_axis_mm": null,
++                "long_axis_mm": null,
++                "shape": null,
++                "margin": null,
++                "echogenicity": null,
++                "chs_present": null,
++                "necrosis_present": null,
++                "calcification_present": null,
++                "elastography_performed": null,
++                "elastography_score": null,
++                "elastography_strain_ratio": null,
++                "elastography_pattern": null,
++                "doppler_performed": null,
++                "doppler_pattern": null,
++                "morphologic_impression": null,
++                "sampled": true,
++                "needle_gauge": null,
++                "needle_type": null,
++                "number_of_passes": null,
++                "intranodal_forceps_used": null,
++                "rose_performed": true,
++                "rose_result": "Adequate lymphocytes",
++                "lymphocytes_present": true,
++                "rose_adequacy": null,
++                "specimen_sent_for": null,
++                "final_pathology": null,
++                "n_stage_contribution": null,
++                "notes": null
++              }
++            ],
++            "navigation_targets": null,
++            "cao_interventions_detail": null,
++            "blvr_valve_placements": null,
++            "blvr_chartis_measurements": null,
++            "cryobiopsy_sites": null,
++            "thoracoscopy_findings_detail": null,
++            "specimens_collected": null
++          },
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {
++            "procedures_performed.linear_ebus.performed": [
++              {
++                "text": "EBUS-TBNA",
++                "start": 0,
++                "end": 9,
++                "section": null,
++                "confidence": null
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.0.station": [
++              {
++                "text": "4R",
++                "start": 27,
++                "end": 29,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.0.evidence_quote": [
++              {
++                "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                "start": 0,
++                "end": 136,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.0.rose_result": [
++              {
++                "text": "ROSE adequate lymphocytes",
++                "start": 63,
++                "end": 88,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.1.station": [
++              {
++                "text": "7",
++                "start": 42,
++                "end": 43,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.1.evidence_quote": [
++              {
++                "text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.",
++                "start": 0,
++                "end": 136,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.node_events.1.rose_result": [
++              {
++                "text": "ROSE adequate lymphocytes",
++                "start": 63,
++                "end": 88,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.stations_sampled.0": [
++              {
++                "text": "4R",
++                "start": 27,
++                "end": 29,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "procedures_performed.linear_ebus.stations_sampled.1": [
++              {
++                "text": "7",
++                "start": 42,
++                "end": 43,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "granular_data.linear_ebus_stations_detail.0.lymphocytes_present": [
++              {
++                "text": "adequate lymphocytes",
++                "start": 68,
++                "end": 88,
++                "section": null,
++                "confidence": 0.9
++              }
++            ],
++            "granular_data.linear_ebus_stations_detail.1.lymphocytes_present": [
++              {
++                "text": "adequate lymphocytes",
++                "start": 68,
++                "end": 88,
++                "section": null,
++                "confidence": 0.9
++              }
++            ]
++          },
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "inspection_only_stent_assessment_only",
++      "tags": [
++        "inspection_only_stents"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 0,
++        "warning_count": 0,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [],
++        "checked_fields": {},
++        "warnings": [],
++        "needs_manual_review": false,
++        "coder_difficulty": "low_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": null,
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": null,
++          "coding_support": null,
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "menu_header_leakage_eus_b_inspection_only",
++      "tags": [
++        "menu_header_leakage"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 2,
++        "warning_count": 1,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "31622",
++          "43237"
++        ],
++        "checked_fields": {},
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for eus_b"
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "low_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": {
++              "performed": true,
++              "inspection_findings": "endobronchial ultrasound bronchoscope was advanced into the esophagus",
++              "airway_abnormalities": null
++            },
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": {
++              "performed": true,
++              "sites_sampled": null,
++              "needle_gauge": null,
++              "passes": null,
++              "rose_result": null,
++              "complications": null
++            },
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "31622",
++                "description": "Bronchoscopy; diagnostic, with cell washing",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.diagnostic_bronchoscopy"
++                ],
++                "evidence": null
++              },
++              {
++                "code": "43237",
++                "description": null,
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.eus_b"
++                ],
++                "evidence": null
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.172223+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "31622",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; diagnostic, with cell washing",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "diagnostic_bronchoscopy.performed=true and no interventional bronchoscopy procedures",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                },
++                {
++                  "sequence": 2,
++                  "code": "43237",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": null,
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "eus_b.performed=true without sampling/FNA evidence (inspection only)",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "31622",
++                  "summary": "diagnostic_bronchoscopy.performed=true and no interventional bronchoscopy procedures",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "43237",
++                  "summary": "eus_b.performed=true without sampling/FNA evidence (inspection only)",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
++      "tags": [
++        "cryo_vs_forceps_confusion"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 4,
++        "warning_count": 3,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "31627",
++          "31628",
++          "31629",
++          "31654"
++        ],
++        "checked_fields": {
++          "procedures_performed.peripheral_tbna.performed": true,
++          "procedures_performed.transbronchial_cryobiopsy.performed": null,
++          "procedures_performed.endobronchial_biopsy.performed": null
++        },
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for navigational_bronchoscopy, peripheral_tbna, radial_ebus, transbronchial_biopsy",
++          "Radial EBUS inferred from concentric/eccentric view.",
++          "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "high_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": {
++              "performed": true,
++              "inspection_findings": null,
++              "airway_abnormalities": null
++            },
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": {
++              "performed": true,
++              "targets_sampled": [
++                "LLL"
++              ]
++            },
++            "linear_ebus": {
++              "performed": false,
++              "stations_sampled": null,
++              "targets_sampled": null,
++              "stations_planned": null,
++              "stations_detail": null,
++              "passes_per_station": null,
++              "needle_gauge": null,
++              "needle_type": null,
++              "photodocumentation_complete": null,
++              "elastography_used": null,
++              "elastography_pattern": null,
++              "doppler_used": null,
++              "node_events": []
++            },
++            "eus_b": null,
++            "radial_ebus": {
++              "performed": true,
++              "probe_position": "Eccentric",
++              "guide_sheath_used": null,
++              "guide_sheath_size": null
++            },
++            "navigational_bronchoscopy": {
++              "performed": true,
++              "target_reached": null,
++              "divergence_mm": null,
++              "tool_in_lesion_confirmed": null,
++              "confirmation_method": null,
++              "sampling_tools_used": null,
++              "number_of_biopsies": null
++            },
++            "transbronchial_biopsy": {
++              "performed": true,
++              "locations": [
++                "LLL"
++              ],
++              "number_of_samples": null,
++              "forceps_type": "Standard",
++              "cryoprobe_size_mm": null
++            },
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "31627",
++                "description": "Navigational bronchoscopy",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.navigational_bronchoscopy"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "navigation bronchoscopy",
++                    "span": [
++                      8,
++                      31
++                    ],
++                    "confidence": 1.0
++                  }
++                ]
++              },
++              {
++                "code": "31628",
++                "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.transbronchial_biopsy",
++                  "procedures_performed.transbronchial_cryobiopsy"
++                ],
++                "evidence": null
++              },
++              {
++                "code": "31629",
++                "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.peripheral_tbna"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "TBNA",
++                    "span": [
++                      124,
++                      128
++                    ],
++                    "confidence": 1.0
++                  }
++                ]
++              },
++              {
++                "code": "31654",
++                "description": "Bronch ebus ivntj perph les",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.radial_ebus"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "Radial EBUS confirmed eccentric",
++                    "span": [
++                      86,
++                      117
++                    ],
++                    "confidence": 1.0
++                  },
++                  {
++                    "source": "registry_span",
++                    "text": "Radial EBUS",
++                    "span": [
++                      86,
++                      97
++                    ],
++                    "confidence": 1.0
++                  }
++                ]
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.768499+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "31627",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Navigational bronchoscopy",
++                  "units": 1,
++                  "role": "add_on",
++                  "selection_status": "selected",
++                  "selection_reason": "navigational_bronchoscopy.performed=true",
++                  "family_key": null,
++                  "is_add_on": true,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 8,
++                      "end": 31,
++                      "snippet": "navigation bronchoscopy"
++                    }
++                  ]
++                },
++                {
++                  "sequence": 2,
++                  "code": "31628",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; with transbronchial lung biopsy(s), single lobe",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "transbronchial_biopsy.performed=true",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                },
++                {
++                  "sequence": 3,
++                  "code": "31629",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; with transbronchial needle aspiration biopsy(s)",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "peripheral_tbna.performed=true",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 124,
++                      "end": 128,
++                      "snippet": "TBNA"
++                    }
++                  ]
++                },
++                {
++                  "sequence": 4,
++                  "code": "31654",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronch ebus ivntj perph les",
++                  "units": 1,
++                  "role": "add_on",
++                  "selection_status": "selected",
++                  "selection_reason": "radial_ebus.performed=true",
++                  "family_key": null,
++                  "is_add_on": true,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 86,
++                      "end": 117,
++                      "snippet": "Radial EBUS confirmed eccentric"
++                    },
++                    {
++                      "start": 86,
++                      "end": 97,
++                      "snippet": "Radial EBUS"
++                    }
++                  ]
++                },
++                {
++                  "sequence": 5,
++                  "code": "31622",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; diagnostic, with cell washing",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "dropped",
++                  "selection_reason": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "31627",
++                  "summary": "navigational_bronchoscopy.performed=true",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "navigation bronchoscopy",
++                      "span": {
++                        "start": 8,
++                        "end": 31
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "31628",
++                  "summary": "transbronchial_biopsy.performed=true",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "31629",
++                  "summary": "peripheral_tbna.performed=true",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "TBNA",
++                      "span": {
++                        "start": 124,
++                        "end": 128
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "31654",
++                  "summary": "radial_ebus.performed=true",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "Radial EBUS confirmed eccentric",
++                      "span": {
++                        "start": 86,
++                        "end": 117
++                      }
++                    },
++                    {
++                      "snippet": "Radial EBUS",
++                      "span": {
++                        "start": 86,
++                        "end": 97
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "31622",
++                  "summary": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure",
++                  "documentation_evidence": null,
++                  "rule_refs": [
++                    "diagnostic_with_surgical"
++                  ],
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": [
++                {
++                  "rule_id": "diagnostic_with_surgical",
++                  "rule_type": "bundling",
++                  "description": null,
++                  "codes_affected": [
++                    "31622"
++                  ],
++                  "outcome": "dropped",
++                  "details": "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
++                }
++              ],
++              "global_comments": [
++                "Diagnostic bronchoscopy present but bundled into another bronchoscopic procedure"
++              ]
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {
++            "procedures_performed.radial_ebus.probe_position": [
++              {
++                "text": "Radial EBUS confirmed eccentric",
++                "start": 86,
++                "end": 117,
++                "section": null,
++                "confidence": null
++              }
++            ],
++            "procedures_performed.radial_ebus.performed": [
++              {
++                "text": "Radial EBUS",
++                "start": 86,
++                "end": 97,
++                "section": null,
++                "confidence": null
++              }
++            ],
++            "procedures_performed.navigational_bronchoscopy.performed": [
++              {
++                "text": "navigation bronchoscopy",
++                "start": 8,
++                "end": 31,
++                "section": null,
++                "confidence": null
++              }
++            ],
++            "procedures_performed.peripheral_tbna.performed": [
++              {
++                "text": "TBNA",
++                "start": 124,
++                "end": 128,
++                "section": null,
++                "confidence": null
++              }
++            ]
++          },
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "peripheral_rose_not_misattributed_to_ebus",
++      "tags": [
++        "reporter_rose_misattribution"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 1,
++        "warning_count": 3,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "31652"
++        ],
++        "checked_fields": {},
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for linear_ebus",
++          "EBUS_NARRATIVE_RECONCILE: added node_events for sampled stations ['4R', '7']",
++          "AUTO_DROPPED_EBUS_STATION_NOT_IN_TEXT: 7"
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "gray_zone",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": {
++              "performed": true,
++              "stations_sampled": [
++                "4R"
++              ],
++              "targets_sampled": null,
++              "stations_planned": null,
++              "stations_detail": null,
++              "passes_per_station": null,
++              "needle_gauge": null,
++              "needle_type": null,
++              "photodocumentation_complete": null,
++              "elastography_used": null,
++              "elastography_pattern": null,
++              "doppler_used": null,
++              "node_events": [
++                {
++                  "station": "4R",
++                  "target_text": null,
++                  "action": "needle_aspiration",
++                  "outcome": null,
++                  "passes": null,
++                  "pass_count": null,
++                  "elastography_pattern": null,
++                  "rose_result": null,
++                  "path_result": null,
++                  "path_diagnosis_text": null,
++                  "path_source_event_id": null,
++                  "path_relative_day_offset": null,
++                  "evidence_quote": "Peripheral lesion sampling ROSE: site 1 and 3 atypical cells. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. EBUS staging was completed with stations 4R and 7 sampled."
++                }
++              ]
++            },
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "31652",
++                "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.linear_ebus",
++                  "procedures_performed.linear_ebus.node_events"
++                ],
++                "evidence": null
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.854904+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "31652",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Bronchoscopy; with EBUS sampling, 1-2 nodal stations",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "31652",
++                  "summary": "linear_ebus.performed=true and sampled_station_count=1 (1-2) from node_events",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
++      "tags": [
++        "tool_without_action"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 0,
++        "warning_count": 0,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [],
++        "checked_fields": {},
++        "warnings": [],
++        "needs_manual_review": false,
++        "coder_difficulty": "low_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": null,
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": null,
++          "coding_support": null,
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "tunneled_pleural_catheter_removal_not_insertion",
++      "tags": [
++        "pleural_placement_removal_inversion"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 2,
++        "warning_count": 2,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "32552",
++          "32560"
++        ],
++        "checked_fields": {
++          "pleural_procedures.ipc.action": "Removal"
++        },
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for pleural_procedures.ipc, pleural_procedures.pleurodesis",
++          "IPC removal language detected; preserving pleural_procedures.ipc as Removal."
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "low_confidence",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": null,
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": {
++              "performed": true,
++              "action": "Removal",
++              "side": "Right",
++              "catheter_brand": "PleurX",
++              "indication": null,
++              "tunneled": true
++            },
++            "medical_thoracoscopy": null,
++            "pleurodesis": {
++              "performed": true,
++              "method": null,
++              "agent": null,
++              "talc_dose_grams": null,
++              "indication": null
++            },
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "32552",
++                "description": "Removal of indwelling tunneled pleural catheter with cuff",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "pleural_procedures.ipc"
++                ],
++                "evidence": [
++                  {
++                    "source": "registry_span",
++                    "text": "PleurX",
++                    "span": [
++                      35,
++                      41
++                    ],
++                    "confidence": 1.0
++                  }
++                ]
++              },
++              {
++                "code": "32560",
++                "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "pleural_procedures.pleurodesis"
++                ],
++                "evidence": null
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.683083+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "32552",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Removal of indwelling tunneled pleural catheter with cuff",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "pleural_procedures.ipc.performed=true and action indicates removal",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": [
++                    {
++                      "start": 35,
++                      "end": 41,
++                      "snippet": "PleurX"
++                    }
++                  ]
++                },
++                {
++                  "sequence": 2,
++                  "code": "32560",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Instillation, via chest tube/catheter, agent for pleurodesis",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "pleural_procedures.pleurodesis.performed=true",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "32552",
++                  "summary": "pleural_procedures.ipc.performed=true and action indicates removal",
++                  "documentation_evidence": [
++                    {
++                      "snippet": "PleurX",
++                      "span": {
++                        "start": 35,
++                        "end": 41
++                      }
++                    }
++                  ],
++                  "rule_refs": null,
++                  "qa_flags": null
++                },
++                {
++                  "code": "32560",
++                  "summary": "pleural_procedures.pleurodesis.performed=true",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {
++            "pleural_procedures.ipc.performed": [
++              {
++                "text": "PleurX",
++                "start": 35,
++                "end": 41,
++                "section": null,
++                "confidence": null
++              }
++            ]
++          },
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    },
++    {
++      "id": "whole_lung_lavage_not_bal",
++      "tags": [
++        "wll_vs_bal"
++      ],
++      "status": "passed",
++      "metrics": {
++        "code_count": 1,
++        "warning_count": 1,
++        "quality_signal_count": 0,
++        "needs_manual_review": false
++      },
++      "actual": {
++        "predicted_codes": [
++          "32997"
++        ],
++        "checked_fields": {
++          "procedures_performed.whole_lung_lavage.performed": true
++        },
++        "warnings": [
++          "DETERMINISTIC_UPLIFT: added performed=true for whole_lung_lavage"
++        ],
++        "needs_manual_review": false,
++        "coder_difficulty": "gray_zone",
++        "quality_signal_codes": [],
++        "validation_errors": [],
++        "audit_warnings": [],
++        "record": {
++          "patient_mrn": null,
++          "patient_linkage_id": null,
++          "procedure_date": null,
++          "procedure_start_datetime": null,
++          "procedure_end_datetime": null,
++          "procedure_start_time": null,
++          "procedure_end_time": null,
++          "procedure_duration_minutes": null,
++          "providers": null,
++          "providers_team": null,
++          "patient_demographics": null,
++          "patient": null,
++          "procedure": null,
++          "risk_assessment": null,
++          "clinical_context": null,
++          "procedure_setting": null,
++          "sedation": null,
++          "equipment": null,
++          "procedures_performed": {
++            "diagnostic_bronchoscopy": null,
++            "intubation": null,
++            "bal": null,
++            "bronchial_wash": null,
++            "brushings": null,
++            "endobronchial_biopsy": null,
++            "tbna_conventional": null,
++            "peripheral_tbna": null,
++            "linear_ebus": null,
++            "eus_b": null,
++            "radial_ebus": null,
++            "navigational_bronchoscopy": null,
++            "transbronchial_biopsy": null,
++            "transbronchial_cryobiopsy": null,
++            "therapeutic_aspiration": null,
++            "foreign_body_removal": null,
++            "airway_dilation": null,
++            "airway_stent": null,
++            "airway_stent_revision": null,
++            "thermal_ablation": null,
++            "mechanical_debulking": null,
++            "therapeutic_outcomes": null,
++            "cryotherapy": null,
++            "photodynamic_therapy": null,
++            "brachytherapy_catheter": null,
++            "blvr": null,
++            "balloon_occlusion": null,
++            "bpf_sealant": null,
++            "peripheral_ablation": null,
++            "bronchial_thermoplasty": null,
++            "whole_lung_lavage": {
++              "performed": true,
++              "side": null,
++              "total_volume_liters": 15.0,
++              "cycles": null,
++              "indication": "PAP"
++            },
++            "rigid_bronchoscopy": null,
++            "percutaneous_tracheostomy": null,
++            "neck_ultrasound": null,
++            "chest_ultrasound": null,
++            "therapeutic_injection": null
++          },
++          "pleural_procedures": {
++            "thoracentesis": null,
++            "chest_tube": null,
++            "ipc": null,
++            "medical_thoracoscopy": null,
++            "pleurodesis": null,
++            "pleural_biopsy": null,
++            "fibrinolytic_therapy": null,
++            "chest_tube_removal": null
++          },
++          "specimens": null,
++          "complications": null,
++          "outcomes": {
++            "procedure_completed": null,
++            "procedure_aborted_reason": null,
++            "procedure_success_status": null,
++            "aborted_reason": null,
++            "complication_intervention": null,
++            "complication_duration": null,
++            "preliminary_diagnosis": null,
++            "preliminary_staging": null,
++            "disposition": null,
++            "discharge_time": null,
++            "follow_up_imaging_ordered": null,
++            "follow_up_imaging_type": null,
++            "follow_up_plan_text": null,
++            "follow_up_actions": null
++          },
++          "pathology_results": null,
++          "billing": {
++            "cpt_codes": [
++              {
++                "code": "32997",
++                "description": "Total lung lavage",
++                "modifier": null,
++                "modifiers": null,
++                "units": null,
++                "derived_from": [
++                  "procedures_performed.whole_lung_lavage"
++                ],
++                "evidence": null
++              }
++            ],
++            "icd10_codes": null,
++            "total_rvu": null,
++            "work_rvu": null,
++            "practice_expense_rvu": null,
++            "malpractice_rvu": null
++          },
++          "coding_support": {
++            "version": "coding_support.v1",
++            "generated_at": "2026-03-08T20:42:47.603748+00:00",
++            "generator": "registry_to_cpt",
++            "knowledge_base_version": "ip_coding_billing.v3.0",
++            "coding_summary": {
++              "primary_family": null,
++              "lines": [
++                {
++                  "sequence": 1,
++                  "code": "32997",
++                  "modifier": null,
++                  "modifiers": null,
++                  "description": "Total lung lavage",
++                  "units": 1,
++                  "role": "primary",
++                  "selection_status": "selected",
++                  "selection_reason": "whole_lung_lavage.performed=true",
++                  "family_key": null,
++                  "is_add_on": false,
++                  "source": "model",
++                  "note_spans": null
++                }
++              ]
++            },
++            "financial_analysis": null,
++            "coding_rationale": {
++              "per_code": [
++                {
++                  "code": "32997",
++                  "summary": "whole_lung_lavage.performed=true",
++                  "documentation_evidence": null,
++                  "rule_refs": null,
++                  "qa_flags": null
++                }
++              ],
++              "rules_applied": null,
++              "global_comments": null
++            }
++          },
++          "metadata": null,
++          "granular_data": null,
++          "targets": null,
++          "imaging_summary": null,
++          "clinical_course": null,
++          "evidence": {},
++          "version": null,
++          "procedure_families": [],
++          "established_tracheostomy_route": false,
++          "linear_ebus_stations": null,
++          "ebus_stations_sampled": null,
++          "ebus_stations_detail": null,
++          "follow_up_plan": null,
++          "granular_validation_warnings": []
++        }
++      },
++      "failures": []
++    }
++  ],
++  "failures": []
++}
+diff --git a/tests/common/test_path_redaction.py b/tests/common/test_path_redaction.py
+new file mode 100644
+index 00000000..748a8293
+--- /dev/null
++++ b/tests/common/test_path_redaction.py
+@@ -0,0 +1,34 @@
++from __future__ import annotations
++
++from app.common.path_redaction import repo_relative_path, sanitize_path_fields
++
++
++def test_repo_relative_path_strips_machine_local_repo_prefix() -> None:
++    value = "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/example.json"
++
++    assert repo_relative_path(value) == "tests/fixtures/example.json"
++
++
++def test_repo_relative_path_drops_external_absolute_paths() -> None:
++    assert repo_relative_path("/tmp/outside.json") is None
++
++
++def test_sanitize_path_fields_recurses_nested_metadata() -> None:
++    payload = {
++        "input_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/example.json",
++        "metadata": {
++            "seed_fixture_path": "/Users/russellmiller/Projects/Procedure_suite/tests/fixtures/seed.json",
++            "other": "kept",
++        },
++        "items": [
++            {"left_report_path": "/Users/russellmiller/Projects/Procedure_suite/reports/a.json"},
++            {"right_report_path": "/tmp/report.json"},
++        ],
++    }
++
++    sanitized = sanitize_path_fields(payload)
++
++    assert sanitized["input_path"] == "tests/fixtures/example.json"
++    assert sanitized["metadata"]["seed_fixture_path"] == "tests/fixtures/seed.json"
++    assert sanitized["items"][0]["left_report_path"] == "reports/a.json"
++    assert sanitized["items"][1]["right_report_path"] is None
+diff --git a/tests/common/test_quality_gate_reports.py b/tests/common/test_quality_gate_reports.py
+new file mode 100644
+index 00000000..56ca26ce
+--- /dev/null
++++ b/tests/common/test_quality_gate_reports.py
+@@ -0,0 +1,49 @@
++from __future__ import annotations
++
++from pathlib import Path
++
++from app.common.quality_gate_reports import build_report_delta, render_delta_markdown, write_json
++
++
++def test_build_report_delta_uses_summary_and_counts(tmp_path: Path) -> None:
++    baseline = tmp_path / "baseline.json"
++    current = tmp_path / "current.json"
++    write_json(
++        baseline,
++        {
++            "summary": {"pass_rate": 1.0, "avg_cpt_jaccard": 0.8},
++            "counts": {"critical_presence_mismatch_cases": 0},
++        },
++    )
++    write_json(
++        current,
++        {
++            "summary": {"pass_rate": 0.9, "avg_cpt_jaccard": 0.85},
++            "counts": {"critical_presence_mismatch_cases": 1},
++        },
++    )
++
++    delta = build_report_delta(current_path=current, baseline_path=baseline)
++
++    assert delta["comparable_metric_count"] == 3
++    assert delta["current_path"] is None
++    assert delta["baseline_path"] is None
++    metrics = {item["metric"]: item for item in delta["metrics"]}
++    assert metrics["summary.pass_rate"]["delta"] == -0.1
++    assert metrics["summary.avg_cpt_jaccard"]["delta"] == 0.05
++    assert metrics["counts.critical_presence_mismatch_cases"]["delta"] == 1.0
++
++
++def test_render_delta_markdown_highlights_changed_metrics(tmp_path: Path) -> None:
++    baseline = tmp_path / "baseline.json"
++    current = tmp_path / "current.json"
++    write_json(baseline, {"summary": {"failed_cases": 0}})
++    write_json(current, {"summary": {"failed_cases": 2}})
++
++    delta = build_report_delta(current_path=current, baseline_path=baseline)
++    markdown = render_delta_markdown(delta, title="Nightly Delta")
++
++    assert "Nightly Delta" in markdown
++    assert "summary.failed_cases" in markdown
++    assert "delta `2.0`" in markdown
++    assert "Baseline: `None`" in markdown
+diff --git a/tests/fixtures/unified_quality_corpus.json b/tests/fixtures/unified_quality_corpus.json
+new file mode 100644
+index 00000000..37fc3647
+--- /dev/null
++++ b/tests/fixtures/unified_quality_corpus.json
+@@ -0,0 +1,301 @@
++{
++  "fixture_name": "unified_quality_corpus",
++  "fixture_version": 1,
++  "schema_version": "unified_quality_corpus.v1",
++  "generated_at_utc": "2026-03-08T00:00:00Z",
++  "cases": [
++    {
++      "id": "checkbox_negative_blank_template_suppresses_procedures",
++      "tags": [
++        "checkbox_negation",
++        "pleural_placement_removal_inversion"
++      ],
++      "source_refs": [
++        "tests/registry/test_clinical_guardrails_checkbox_negative.py"
++      ],
++      "note_text": "0- Tunneled Pleural Catheter\n[ ] Chest tube\n0- Pneumothorax\n☐ Airway dilation\n",
++      "extraction_expectations": {
++        "must_not_have_codes": [
++          "32550",
++          "32551",
++          "31630"
++        ]
++      },
++      "reporter_expectations": {}
++    },
++    {
++      "id": "menu_header_leakage_eus_b_inspection_only",
++      "tags": [
++        "menu_header_leakage"
++      ],
++      "source_refs": [
++        "tests/registry/test_eus_b_sampling_regressions.py"
++      ],
++      "note_text": "EUS-B Findings\nA linear endobronchial ultrasound bronchoscope was advanced into the esophagus.\nLeft Hepatic Lobe was identified. Left Adrenal was identified.\nProcedure header: 43237 EGD and EUS inspection only.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "43237"
++        ],
++        "must_not_have_codes": [
++          "43238"
++        ]
++      },
++      "reporter_expectations": {
++        "must_not_contain": [
++          "FNA",
++          "sampled"
++        ]
++      }
++    },
++    {
++      "id": "inspection_only_stent_assessment_only",
++      "tags": [
++        "inspection_only_stents"
++      ],
++      "source_refs": [
++        "tests/registry/test_clinical_guardrails_stent_inspection.py"
++      ],
++      "note_text": "Initial airway inspection. Inspection shows a BMS that is patent in the RMSB with good aeration through the stent.\n",
++      "extraction_expectations": {
++        "must_not_have_codes": [
++          "31636",
++          "31638"
++        ]
++      },
++      "reporter_expectations": {
++        "must_not_contain": [
++          "Airway Stent Placement",
++          "Airway Stent Removal"
++        ]
++      }
++    },
++    {
++      "id": "ebus_staging_no_peripheral_tbna_contamination",
++      "tags": [
++        "ebus_peripheral_tbna_contamination"
++      ],
++      "source_refs": [
++        "tests/reporting/test_reporter_batch_regressions.py"
++      ],
++      "note_text": "EBUS-TBNA staging. Station 4R and station 7 sampled. TBNA x 6. ROSE adequate lymphocytes. Known RUL squamous cell carcinoma for staging.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "31652"
++        ],
++        "must_not_have_codes": [
++          "31629"
++        ],
++        "must_not_have_fields": {
++          "procedures_performed.peripheral_tbna.performed": true
++        }
++      },
++      "reporter_expectations": {
++        "must_contain_groups": [
++          [
++            "EBUS-TBNA Staging"
++          ],
++          [
++            "Station 4R",
++            "Station: 4R"
++          ],
++          [
++            "Station 7",
++            "Station: 7"
++          ]
++        ],
++        "must_not_contain": [
++          "\nTransbronchial Needle Aspiration\n"
++        ]
++      }
++    },
++    {
++      "id": "tool_mentions_without_action_do_not_create_cao_intervention",
++      "tags": [
++        "tool_without_action"
++      ],
++      "source_refs": [
++        "AGENTS.md"
++      ],
++      "note_text": "Flexible bronchoscopy was performed for airway inspection. A snare and forceps were available on the field but were not used. No tumor debulking, tumor destruction, ablation, or resection was performed.\n",
++      "extraction_expectations": {
++        "must_not_have_codes": [
++          "31641",
++          "31640",
++          "31643"
++        ]
++      },
++      "reporter_expectations": {
++        "must_not_contain": [
++          "Mechanical debulking",
++          "Cryotherapy",
++          "Tumor destruction"
++        ]
++      }
++    },
++    {
++      "id": "blvr_valve_removal_not_foreign_body_removal",
++      "tags": [
++        "blvr_exchange_removal"
++      ],
++      "source_refs": [
++        "tests/reporting/test_reporter_batch_regressions.py"
++      ],
++      "note_text": "Endobronchial valve removal for persistent air leak. Previously placed Zephyr valves in the RUL were removed. No foreign body was present.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "31648"
++        ],
++        "must_not_have_codes": [
++          "31635",
++          "31636"
++        ],
++        "must_have_fields": {
++          "procedures_performed.blvr.procedure_type": "Valve removal"
++        }
++      },
++      "reporter_expectations": {
++        "must_contain_groups": [
++          [
++            "Removal performed",
++            "valves removed"
++          ]
++        ],
++        "must_not_contain": [
++          "Chest Tube",
++          "foreign body"
++        ]
++      }
++    },
++    {
++      "id": "whole_lung_lavage_not_bal",
++      "tags": [
++        "wll_vs_bal"
++      ],
++      "source_refs": [
++        "tests/registry/test_extraction_quality_fixpack_batch4_march2026.py",
++        "tests/reporting/test_reporter_batch_regressions.py"
++      ],
++      "note_text": "Whole lung lavage (WLL) performed on the right lung for pulmonary alveolar proteinosis (PAP). Total lavage volume 15 L warmed saline; return initially turbid then clear.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "32997"
++        ],
++        "must_not_have_codes": [
++          "31624"
++        ],
++        "must_have_fields": {
++          "procedures_performed.whole_lung_lavage.performed": true
++        }
++      },
++      "reporter_expectations": {
++        "must_contain_groups": [
++          [
++            "Whole Lung Lavage",
++            "Whole lung lavage"
++          ],
++          [
++            "15",
++            "15.0"
++          ]
++        ],
++        "must_not_contain": [
++          "Bronchoalveolar Lavage"
++        ]
++      }
++    },
++    {
++      "id": "tunneled_pleural_catheter_removal_not_insertion",
++      "tags": [
++        "pleural_placement_removal_inversion"
++      ],
++      "source_refs": [
++        "tests/reporting/test_reporter_batch_regressions.py",
++        "tests/registry/test_regression_pack_updates_march_2026.py"
++      ],
++      "note_text": "Right indwelling pleural catheter (PleurX) removal today. Catheter removed intact. Spontaneous pleurodesis achieved. Site sutured.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "32552"
++        ],
++        "must_not_have_codes": [
++          "32550",
++          "32551"
++        ],
++        "must_have_fields": {
++          "pleural_procedures.ipc.action": "Removal"
++        }
++      },
++      "reporter_expectations": {
++        "must_contain_groups": [
++          [
++            "tunneled pleural catheter",
++            "PleurX"
++          ],
++          [
++            "removed"
++          ]
++        ],
++        "must_not_contain": [
++          "Chemical pleurodesis",
++          "Image-Guided Chest Tube",
++          "placement"
++        ]
++      }
++    },
++    {
++      "id": "peripheral_forceps_biopsy_not_cryobiopsy",
++      "tags": [
++        "cryo_vs_forceps_confusion"
++      ],
++      "source_refs": [
++        "tests/registry/test_extraction_quality_fixpack_march2026.py"
++      ],
++      "note_text": "Robotic navigation bronchoscopy to a left lower lobe peripheral nodule was performed. Radial EBUS confirmed eccentric view. TBNA x3 and forceps biopsies x7 were obtained. Specimens: \"LLL TBNA\", \"LLL bx\".\n",
++      "extraction_expectations": {
++        "must_have_fields": {
++          "procedures_performed.peripheral_tbna.performed": true
++        },
++        "must_not_have_fields": {
++          "procedures_performed.transbronchial_cryobiopsy.performed": true,
++          "procedures_performed.endobronchial_biopsy.performed": true
++        }
++      },
++      "reporter_expectations": {
++        "must_not_contain": [
++          "Cryobiopsy",
++          "cryobiopsy",
++          "1.1 mm probe"
++        ]
++      }
++    },
++    {
++      "id": "peripheral_rose_not_misattributed_to_ebus",
++      "tags": [
++        "reporter_rose_misattribution"
++      ],
++      "source_refs": [
++        "tests/reporting/test_reporter_regressions.py"
++      ],
++      "note_text": "Peripheral lesion sampling ROSE: site 1 and 3 atypical cells. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. EBUS staging was completed with stations 4R and 7 sampled.\n",
++      "extraction_expectations": {
++        "must_have_codes": [
++          "31652"
++        ],
++        "must_not_have_codes": [
++          "31629"
++        ]
++      },
++      "reporter_expectations": {
++        "must_contain_groups": [
++          [
++            "Station 4R",
++            "Station: 4R"
++          ]
++        ],
++        "must_not_contain": [
++          "ROSE Results:"
++        ]
++      }
++    }
++  ]
++}
+diff --git a/tests/scripts/test_eval_golden.py b/tests/scripts/test_eval_golden.py
+new file mode 100644
+index 00000000..c6a02866
+--- /dev/null
++++ b/tests/scripts/test_eval_golden.py
+@@ -0,0 +1,94 @@
++from __future__ import annotations
++
++import importlib.util
++import json
++from pathlib import Path
++import sys
++
++
++def _load_eval_module():
++    repo_root = Path(__file__).resolve().parents[2]
++    module_path = repo_root / "ml" / "scripts" / "eval_golden.py"
++    spec = importlib.util.spec_from_file_location("eval_golden", module_path)
++    assert spec is not None and spec.loader is not None
++    module = importlib.util.module_from_spec(spec)
++    sys.modules[spec.name] = module
++    spec.loader.exec_module(module)
++    return module
++
++
++def test_eval_golden_main_writes_shared_report_shape(tmp_path) -> None:
++    mod = _load_eval_module()
++
++    input_path = tmp_path / "unified_quality_corpus.json"
++    input_path.write_text(json.dumps({"cases": [{"id": "case1", "note_text": "note"}]}), encoding="utf-8")
++    output_path = tmp_path / "report.json"
++
++    fake_report = {
++        "schema_version": "procedure_suite.quality_eval.v1",
++        "kind": "extraction",
++        "input_path": str(input_path),
++        "output_path": None,
++        "source_format": "unified_quality_corpus",
++        "corpus_name": "unified_quality_corpus",
++        "created_at": "2026-03-08T00:00:00+00:00",
++        "runtime": {"extraction_engine": "parallel_ner"},
++        "summary": {
++            "total_cases": 1,
++            "passed_cases": 1,
++            "failed_cases": 0,
++            "pass_rate": 1.0,
++            "metrics": {"exact_code_match_cases": 1, "exact_code_match_rate": 1.0},
++            "exact_code_match_cases": 1,
++            "exact_code_match_rate": 1.0,
++        },
++        "per_case": [{"id": "case1", "status": "passed", "tags": [], "metrics": {}, "actual": {}, "failures": []}],
++        "failures": [],
++    }
++
++    mod._evaluate_unified_quality_corpus = lambda **_: {"exit_code": 0, "report": dict(fake_report)}  # type: ignore[attr-defined]
++
++    exit_code = mod.main(["--input", str(input_path), "--output", str(output_path)])
++    assert exit_code == 0
++
++    written = json.loads(output_path.read_text(encoding="utf-8"))
++    assert written["schema_version"] == "procedure_suite.quality_eval.v1"
++    assert written["kind"] == "extraction"
++    assert written["input_path"] is None
++    assert written["output_path"] is None
++    assert set(written) == {
++        "schema_version",
++        "kind",
++        "input_path",
++        "output_path",
++        "source_format",
++        "corpus_name",
++        "created_at",
++        "runtime",
++        "summary",
++        "per_case",
++        "failures",
++    }
++
++
++def test_eval_golden_uses_extraction_first_runtime_result() -> None:
++    mod = _load_eval_module()
++
++    class _FakeService:
++        def __init__(self) -> None:
++            self.called = []
++
++        def extract_fields_extraction_first(self, note_text: str):  # noqa: ANN001
++            self.called.append(("extract_fields_extraction_first", note_text))
++            return {"ok": True}
++
++        def extract_fields(self, note_text: str):  # noqa: ANN001
++            self.called.append(("extract_fields", note_text))
++            return {"wrong": True}
++
++    service = _FakeService()
++
++    result = mod._extract_runtime_result(service, "example note")
++
++    assert result == {"ok": True}
++    assert service.called == [("extract_fields_extraction_first", "example note")]
+diff --git a/tests/scripts/test_run_quality_gates.py b/tests/scripts/test_run_quality_gates.py
+new file mode 100644
+index 00000000..079045ba
+--- /dev/null
++++ b/tests/scripts/test_run_quality_gates.py
+@@ -0,0 +1,127 @@
++from __future__ import annotations
++
++import importlib.util
++import json
++from pathlib import Path
++import sys
++
++
++def _load_module(module_name: str, path: Path):
++    spec = importlib.util.spec_from_file_location(module_name, path)
++    assert spec is not None and spec.loader is not None
++    module = importlib.util.module_from_spec(spec)
++    sys.modules[module_name] = module
++    spec.loader.exec_module(module)
++    return module
++
++
++def test_run_quality_gates_pr_targets_cover_required_suites() -> None:
++    repo_root = Path(__file__).resolve().parents[2]
++    mod = _load_module("run_quality_gates_module", repo_root / "ops" / "tools" / "run_quality_gates.py")
++
++    assert "tests/registry/test_regression_pack.py" in mod.PR_PYTEST_TARGETS
++    assert "tests/scripts/test_eval_golden.py" in mod.PR_PYTEST_TARGETS
++    assert mod.PR_EXTRACTION_INPUT.name == "unified_quality_corpus.json"
++    assert mod.PR_EXTRACTION_BASELINE.name == "unified_quality_corpus_extraction_baseline.json"
++
++
++def test_run_quality_gates_pr_writes_summary_on_gate_failure(tmp_path: Path, monkeypatch) -> None:
++    repo_root = Path(__file__).resolve().parents[2]
++    mod = _load_module("run_quality_gates_gate_failure_module", repo_root / "ops" / "tools" / "run_quality_gates.py")
++
++    baseline_path = tmp_path / "baseline.json"
++    baseline_path.write_text(json.dumps({"summary": {"failed_cases": 0, "pass_rate": 1.0}}), encoding="utf-8")
++    monkeypatch.setattr(mod, "PR_EXTRACTION_BASELINE", baseline_path)
++
++    def fake_run_command(*, name: str, command: list[str], output_dir: Path, env=None):  # noqa: ANN001
++        stdout_path = output_dir / f"{name}.stdout.txt"
++        stderr_path = output_dir / f"{name}.stderr.txt"
++        stdout_path.write_text(f"{name} ran\n", encoding="utf-8")
++        stderr_path.write_text("", encoding="utf-8")
++
++        output_path = None
++        if "--output" in command:
++            output_path = Path(command[command.index("--output") + 1])
++            payload = {"summary": {"failed_cases": 1, "pass_rate": 0.5}}
++            output_path.write_text(json.dumps(payload), encoding="utf-8")
++
++        return mod.StepResult(
++            name=name,
++            status="passed",
++            command=command,
++            stdout_path=str(stdout_path),
++            stderr_path=str(stderr_path),
++            output_path=str(output_path) if output_path else None,
++            returncode=0,
++        )
++
++    monkeypatch.setattr(mod, "_run_command", fake_run_command)
++
++    exit_code = mod.run_pr(tmp_path)
++
++    assert exit_code == 1
++    summary_json = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
++    summary_md = (tmp_path / "summary.md").read_text(encoding="utf-8")
++    extraction_step = next(step for step in summary_json["steps"] if step["name"] == "extraction_eval")
++    assert extraction_step["status"] == "failed"
++    assert "Extraction fixture gate failed" in str(extraction_step["error"])
++    assert Path(extraction_step["stdout_path"]).exists()
++    assert "Extraction fixture gate failed" in Path(extraction_step["stderr_path"]).read_text(encoding="utf-8")
++    assert "extraction_eval" in summary_md
++
++
++def test_run_quality_gates_pr_writes_summary_on_command_failure(tmp_path: Path, monkeypatch) -> None:
++    repo_root = Path(__file__).resolve().parents[2]
++    mod = _load_module("run_quality_gates_command_failure_module", repo_root / "ops" / "tools" / "run_quality_gates.py")
++
++    baseline_path = tmp_path / "baseline.json"
++    baseline_path.write_text(json.dumps({"summary": {"failed_cases": 0, "pass_rate": 1.0}}), encoding="utf-8")
++    monkeypatch.setattr(mod, "PR_EXTRACTION_BASELINE", baseline_path)
++
++    def fake_run_command(*, name: str, command: list[str], output_dir: Path, env=None):  # noqa: ANN001
++        stdout_path = output_dir / f"{name}.stdout.txt"
++        stderr_path = output_dir / f"{name}.stderr.txt"
++        stdout_path.write_text(f"{name} ran\n", encoding="utf-8")
++        stderr_path.write_text("", encoding="utf-8")
++
++        if name == "focused_pytest":
++            stderr_path.write_text("pytest boom\n", encoding="utf-8")
++            return mod.StepResult(
++                name=name,
++                status="failed",
++                command=command,
++                stdout_path=str(stdout_path),
++                stderr_path=str(stderr_path),
++                returncode=2,
++                error="command failed with exit code 2",
++            )
++
++        output_path = None
++        if "--output" in command:
++            output_path = Path(command[command.index("--output") + 1])
++            payload = {"summary": {"failed_cases": 0, "pass_rate": 1.0}}
++            output_path.write_text(json.dumps(payload), encoding="utf-8")
++
++        return mod.StepResult(
++            name=name,
++            status="passed",
++            command=command,
++            stdout_path=str(stdout_path),
++            stderr_path=str(stderr_path),
++            output_path=str(output_path) if output_path else None,
++            returncode=0,
++        )
++
++    monkeypatch.setattr(mod, "_run_command", fake_run_command)
++
++    exit_code = mod.run_pr(tmp_path)
++
++    assert exit_code == 1
++    summary_json = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
++    focused_step = next(step for step in summary_json["steps"] if step["name"] == "focused_pytest")
++    extraction_step = next(step for step in summary_json["steps"] if step["name"] == "extraction_eval")
++    assert focused_step["status"] == "failed"
++    assert focused_step["returncode"] == 2
++    assert Path(focused_step["stdout_path"]).exists()
++    assert Path(focused_step["stderr_path"]).read_text(encoding="utf-8") == "pytest boom\n"
++    assert extraction_step["status"] == "passed"
