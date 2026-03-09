@@ -18,7 +18,7 @@ def test_reporter_seed_eval_scripts_share_schema(tmp_path: Path) -> None:
 
     baseline_run = subprocess.run(
         [
-            str(repo_root / ".venv" / "bin" / "python"),
+            sys.executable,
             str(baseline_script),
             "--input",
             str(input_path),
@@ -35,7 +35,7 @@ def test_reporter_seed_eval_scripts_share_schema(tmp_path: Path) -> None:
 
     llm_run = subprocess.run(
         [
-            str(repo_root / ".venv" / "bin" / "python"),
+            sys.executable,
             str(llm_script),
             "--input",
             str(input_path),
@@ -151,7 +151,7 @@ def test_summarize_reporter_seed_fallbacks_script(tmp_path: Path) -> None:
 
     result = subprocess.run(
         [
-            str(repo_root / ".venv" / "bin" / "python"),
+            sys.executable,
             str(summarize_script),
             "--left-report",
             str(left_report),
