@@ -3,6 +3,8 @@
 This repo is transitioning to **zero‑knowledge client‑side pseudonymization**:
 the browser scrubs PHI and the server acts as a **stateless logic engine** (Text In → Codes Out).
 
+For a lighter coding-agent version of this guide, see `CLAUDE.md`.
+
 ## Quick Commands
 
 - Dev server: `./ops/devserver.sh` (serves UI at `/ui/` and API docs at `/docs`)
@@ -15,7 +17,12 @@ the browser scrubs PHI and the server acts as a **stateless logic engine** (Text
 - Smoke test (single note): `python ops/tools/registry_pipeline_smoke.py --note <note.txt> --self-correct`
 - Smoke test (batch): `python ops/tools/registry_pipeline_smoke_batch.py --count 30 --self-correct --output my_results.txt`
 - Reporter random seeds (prompt->output): `python ops/tools/run_reporter_random_seeds.py --count 20 --output reporter_tests.txt --include-metadata-json`
-- Reporter findings eval: `python ops/tools/eval_reporter_prompt_llm_findings.py --max-cases 50 --output data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json`
+- Extraction eval (shared schema): `python ml/scripts/eval_golden.py --input tests/fixtures/unified_quality_corpus.json --output /tmp/unified_quality_extraction.json`
+- Reporter baseline eval (shared schema, strict): `python ops/tools/eval_reporter_prompt_baseline.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_registry.json --strict`
+- Reporter challenger eval (shared schema, strict): `python ops/tools/eval_reporter_prompt_llm_findings.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_llm.json --strict`
+- Quality gates: `python ops/tools/run_quality_gates.py --tier pr --output-dir /tmp/procsuite_quality_pr`
+- Quality gates (nightly): `python ops/tools/run_quality_gates.py --tier nightly --output-dir /tmp/procsuite_quality_nightly`
+- Reporter fallback summary: `python ops/tools/summarize_reporter_seed_fallbacks.py --left-report <left.json> --right-report <right.json> --output <summary.json>`
 - Build distilled IP-UMLS map: `python ops/tools/build_ip_umls_map.py` (requires `~/UMLS/2025AA/META/`)
 
 ## Required Runtime Configuration
@@ -96,14 +103,76 @@ Tests to keep passing when touching this path:
 
 - Endpoint: `POST /report/seed_from_text` (`app/api/routes/reporting.py`)
 - Env switch:
-  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default)
-  - `REPORTER_SEED_STRATEGY=llm_findings` (reporter-only structured-first path)
+  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default, production path)
+  - `REPORTER_SEED_STRATEGY=llm_findings` (challenger-only structured-first path)
 - Strict mode for eval:
   - `REPORTER_SEED_LLM_STRICT=1` returns error instead of fallback
 - LLM config for findings mode:
   - `LLM_PROVIDER=openai_compat`
   - `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
   - Respect `OPENAI_OFFLINE=1` / missing key behavior (fallback by default, error in strict mode)
+- Reporter baseline and challenger evals should emit the same machine-readable schema; use `--strict` when evaluating render stability.
+- Do not promote `llm_findings` casually. Keep `registry_extract_fields` as the production default unless the challenger is at least as good on critical presence, critical extra-flag rate, strict-render fallback rate, and CPT/performed-flag agreement.
+
+## Recent Updates (2026-03-09)
+
+- **Quality gate hardening:** `ml/scripts/eval_golden.py` now evaluates the real extraction-first runtime, quality-gate reports are path-sanitized, and gate runs always emit machine-readable summaries even on failure.
+- **Shared eval schema:** extraction evals and reporter evals now share a comparable JSON report shape with summary metrics, per-case results, and failure lists for diffing.
+- **Quality-pass architecture:** extraction-first postprocessing now runs as an ordered quality-pass flow with structured internal `quality_signals`; legacy warnings remain for compatibility.
+- **Precision suppressions:** source-aware and evidence-aware suppressions now reduce false positives from header/menu leakage, unchecked template items, inspection-only stents, EBUS/peripheral TBNA contamination, tool-without-action, pleural placement/removal inversion, BAL vs WLL, BLVR exchange/removal, and cryo vs forceps confusion.
+- **Reporter evaluation:** reporter seed paths now share a seed contract and downstream eval plumbing; strict-render fallback diagnostics are available and fallback rates were reduced.
+- **Reporter precision:** recurring reporter extra flags were tightened for chest ultrasound, diagnostic bronchoscopy, BAL, peripheral TBNA, and transbronchial biopsy.
+- **Seed strategy:** `REPORTER_SEED_STRATEGY=registry_extract_fields` remains the production default; `llm_findings` remains challenger-only.
+
+## Precision-First Quality Architecture
+
+- Extraction-first quality now runs through an ordered quality-pass pipeline. Keep this phase order in mind when debugging or adding logic:
+  1. masked text prep / source-aware preprocessing
+  2. deterministic uplift
+  3. narrative-vs-template reconciliation
+  4. precision guardrails / negation cleanup
+  5. evidence verification
+  6. deterministic CPT derivation
+  7. omission scan / RAW-ML audit
+- The canonical structured quality trace lives under `registry.coding_support.quality_pass.signals`.
+- `RegistryExtractionResult.quality_signals` is an internal mirror for orchestration/debugging; legacy warning strings still exist for compatibility with focused tests and downstream consumers.
+- When adding new suppressions, prefer:
+  - evidence source typing
+  - action + target verification
+  - suppress/preserve fixture pairs
+- Do not add recall heuristics and suppression rules in the same change unless there is a clear reason.
+
+### Evidence Source Typing And Action-Target Rule
+
+- CPT-driving `performed=true` flags now require evidence from an allowed source/context plus an action-target pattern.
+- Tool mentions, status language, or header/menu content alone are not enough.
+- Representative source buckets:
+  - narrative procedure
+  - findings
+  - impression
+  - template checkbox
+  - menu/code block
+  - history/plan
+  - device-status-only
+  - header/metadata
+
+## Reporter Evaluation And Promotion Rules
+
+- `registry_extract_fields` is the production default and the source of truth for rollout decisions.
+- `llm_findings` is challenger-only. Treat it as measurable, not self-promoting.
+- Challenger promotion should require:
+  - no worse critical procedure presence/absence coverage
+  - no worse critical extra-flag rate
+  - no worse strict-render fallback rate
+  - comparable or better CPT/performed-flag agreement
+- Keep the two seed paths comparable by sharing the downstream reporter pipeline and evaluation schema.
+
+## Quality Gates
+
+- PR-tier gates are the fast path for routine regression detection.
+- Nightly/release gates run broader extraction/reporter evals and produce comparable JSON artifacts plus concise diffs.
+- When touching extraction or reporter quality logic, inspect the JSON artifacts and summaries, not just pytest output.
+- `ops/tools/run_quality_gates.py` should be the default entrypoint for reproducible gate runs.
 
 ## Recent Updates (2026-01-25)
 
@@ -205,3 +274,5 @@ See `app/api/adapters/response_adapter.py:build_v3_evidence_payload()`.
 - `RegistryService` orchestrates; extracted heuristics and model loading live in:
   - `app/registry/heuristics/`
   - `app/registry/infra/model_provider.py`
+- Do not treat full-repo pytest failures automatically as branch regressions; compare against `main` before broadening scope.
+- When splitting mixed work, rebuild each feature branch relative to current `main`, not relative to an older feature branch.

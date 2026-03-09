@@ -1,5 +1,7 @@
 # Procedure Suite (Claude Guide)
 
+For broader operational repo details and constraints, see `AGENTS.md`.
+
 ## What This Service Does
 
 - The server is a **stateless coding engine**: **scrubbed note text in → registry fields + CPT codes out**.
@@ -86,14 +88,52 @@ Hard constraints for this path:
   - `Run Detection` -> `Apply Redactions` -> `Seed Bundle`
 - Seed endpoint: `POST /report/seed_from_text`
 - Strategy env:
-  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default)
-  - `REPORTER_SEED_STRATEGY=llm_findings` (masked prompt -> evidence-cited findings -> mapper/guardrails -> templates)
+  - `REPORTER_SEED_STRATEGY=registry_extract_fields` (default, production path)
+  - `REPORTER_SEED_STRATEGY=llm_findings` (challenger-only masked prompt -> findings -> mapper/guardrails -> templates)
 - Strict mode:
   - `REPORTER_SEED_LLM_STRICT=1` (error on findings failure; no fallback)
 - LLM findings mode uses existing OpenAI wiring:
   - `LLM_PROVIDER=openai_compat`
   - `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
   - `OPENAI_API_KEY=...`
+- Reporter baseline and challenger evals should share the same machine-readable schema, and `--strict` is the intended render-stability mode.
+
+## Recent Updates (2026-03-09)
+
+- Quality gates were hardened: `eval_golden.py` now exercises the real extraction-first runtime, gate artifacts are path-sanitized, and failing gates still write summaries.
+- Extraction-first postprocessing now runs as an ordered quality-pass flow with structured internal `quality_signals`; legacy warnings remain for compatibility.
+- Precision suppressions now reduce false positives from header/menu leakage, unchecked template items, inspection-only stents, EBUS/peripheral TBNA contamination, tool-without-action, pleural placement/removal inversion, BAL vs WLL, BLVR exchange/removal, and cryo vs forceps confusion.
+- Reporter seed paths share a contract and eval schema, strict-render fallback diagnostics are available, and reporter extra-flag precision improved for chest ultrasound, diagnostic bronchoscopy, BAL, peripheral TBNA, and transbronchial biopsy.
+
+## Quality System
+
+- Effective extraction quality-pass order:
+  1. masked text prep / source-aware preprocessing
+  2. deterministic uplift
+  3. narrative-vs-template reconciliation
+  4. precision guardrails / negation cleanup
+  5. evidence verification
+  6. deterministic CPT derivation
+  7. omission scan / RAW-ML audit
+- The canonical structured quality trace is `registry.coding_support.quality_pass.signals`.
+- Prefer structured quality signals over new ad hoc warnings.
+- CPT-driving performed flags need both an allowed evidence source/context and an action + target pattern.
+- Do not infer procedures from tool mention, status language, or header/menu content alone.
+- Representative source buckets: narrative procedure, findings, impression, template checkbox, menu/code block, history/plan, device-status-only, header/metadata.
+
+## When Touching Reporter Code
+
+- Preserve seed-path comparability; do not fork downstream reporter behavior by seed path.
+- Preserve strict-render diagnostics and fallback reason bucketing.
+- Keep debug-only metadata out of normal API responses.
+- Prefer minimal reporter logic/template changes tied to suppress/preserve fixtures when fixing precision regressions.
+
+## When Touching Extraction Code
+
+- Prefer suppress/preserve fixtures for new precision rules.
+- Use evidence-aware suppressions before adding broader heuristics.
+- Narrative evidence outranks template/menu/header content.
+- Do not mix recall expansion with suppression work unless you can justify it.
 
 ## Recent Updates (2026-01-25)
 
@@ -208,6 +248,21 @@ The default UMLS integration is a **distilled deterministic linker** backed by a
 
 - Run full suite: `make test`
 - Run targeted: `pytest -q <path>::<test_name>`
+
+### Preferred Validation Commands
+
+```bash
+python ops/tools/run_quality_gates.py --tier pr --output-dir /tmp/procsuite_quality_pr
+python ops/tools/run_quality_gates.py --tier nightly --output-dir /tmp/procsuite_quality_nightly
+python ops/tools/summarize_reporter_seed_fallbacks.py --left-report <left.json> --right-report <right.json> --output <summary.json>
+python ml/scripts/eval_golden.py --input tests/fixtures/unified_quality_corpus.json --output /tmp/unified_quality_extraction.json
+python ops/tools/eval_reporter_prompt_baseline.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_registry.json --strict
+python ops/tools/eval_reporter_prompt_llm_findings.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_llm.json --strict
+pytest -q tests/quality/test_unified_quality_matrix.py
+pytest -q tests/quality/test_reporter_seed_dual_path_matrix.py
+pytest -q tests/reporting/test_strict_render_validation.py
+pytest -q tests/quality/test_reporter_precision_extra_flags.py
+```
 
 ## Golden Extraction Data Generator
 
