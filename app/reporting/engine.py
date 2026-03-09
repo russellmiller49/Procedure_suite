@@ -1460,6 +1460,7 @@ _BIOPSY_GATE_POSITIVE_PATTERNS: dict[str, str] = {
     "transbronchial_cryobiopsy": r"\b(?:transbronchial\s+cryo(?:biops(?:y|ies)?)?|cryobiops(?:y|ies)|cryo-?tbb)\b",
     "transbronchial_needle_aspiration": (
         r"\btransbronchial\s+needle\s+aspiration\b"
+        r"|\bconventional\s+TBNA\b"
         r"|\bTBNA\b[^.\n]{0,20}\bx\s*\d{1,2}\b"
         r"|\b\d+\s+(?:peripheral\s+)?TBNA\b"
         r"|\b\d+\s+peripheral\s+needle\s+biops(?:y|ies)\b"

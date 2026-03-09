@@ -1691,6 +1691,7 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
     for pattern in (
         r"\bTBNA\b\s*(?:x|×)\s*(\d+)\b",
         r"\btransbronchial\s+needle\s+aspiration\b\s*(?:x|×)\s*(\d+)\b",
+        r"\bconventional\s+TBNA\b[^\n]{0,80}\b(\d+)\s*passes?\b",
         r"\b(\d+)\s+(?:peripheral\s+)?TBNA\b",
         r"\b(\d+)\s+peripheral\s+needle\s+biops(?:y|ies)\b",
     ):
