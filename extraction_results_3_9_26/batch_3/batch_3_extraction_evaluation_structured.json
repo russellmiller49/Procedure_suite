@@ -1,0 +1,894 @@
+{
+  "overall_average_score": 64.3,
+  "status_counts": {
+    "FAIL": 31,
+    "PASS": 5,
+    "WARNING": 14
+  },
+  "evaluations": [
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_033",
+      "score": 12,
+      "status": "FAIL",
+      "hallucinations": [
+        "BLVR/valve placement is entirely unsupported. The note is a routine tracheostomy tube exchange with stomal granulation treated by silver nitrate, not bronchoscopic lung-volume reduction.",
+        "CPT 31615 and 31647 are unsupported by the note."
+      ],
+      "mismatches": [
+        "established_tracheostomy_route=true is used to derive bronchoscopy coding even though no bronchoscopy is documented."
+      ],
+      "missed_procedures": [
+        "Tracheostomy tube exchange is the primary performed procedure and is not represented.",
+        "Stomal granulation treatment with silver nitrate is not represented."
+      ],
+      "missed_details": [
+        "New tube type/size (Bivona 7.0 TTS), guide-catheter exchange technique, and absence of complication are omitted."
+      ],
+      "cpt": "31615 and 31647 are not supported; the note describes tracheostomy tube exchange with local granulation cautery, not bronchoscopy or valve placement.",
+      "schema": "High-severity wrong procedure family with near-total loss of the real procedure."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_007",
+      "score": 95,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Right side, drained volume (1,050 mL), and specimen panel could be more granular."
+      ],
+      "cpt": "32555 is consistent with ultrasound-guided thoracentesis.",
+      "schema": "Core pleural extraction is accurate and internally coherent."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_038",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note clearly documents Montgomery T-tube insertion, but no airway-stent/T-tube placement object is present."
+      ],
+      "missed_procedures": [
+        "T-tube insertion is a major performed procedure and is omitted."
+      ],
+      "missed_details": [
+        "T-tube size (13 \u00d7 60 \u00d7 30 mm), stoma creation at ring 2\u20133, and flexible confirmation are not captured as stent details."
+      ],
+      "cpt": "31641 is supported for laser treatment, but the extraction misses the separately documented T-tube placement logic raised in the note (31631-22 / 31899 discussion).",
+      "schema": "Good capture of laser+dilation, but the defining therapeutic device placement is absent."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_011",
+      "score": 52,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 3P is hallucinated from the specimen label '4L node (3p)'; only stations 4L and 7 were sampled by EBUS."
+      ],
+      "mismatches": [
+        "Sedation is set to Moderate even though the note documents General anesthesia with LMA/TIVA.",
+        "31653 is upcoded from the false third station; the note supports 31652 for 2 sampled stations."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "LLL B6 target detail and BAL location are only partially structured."
+      ],
+      "cpt": "31624, 31627, 31628, and +31654 are supported. Linear EBUS should derive 31652, not 31653.",
+      "schema": "Classic nodal-station hallucination causing downstream CPT inflation."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_013",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "Therapeutic aspiration/31645 is not clearly required by the note; secretion clearance may be incidental toileting during a navigational case."
+      ],
+      "mismatches": [
+        "Complication severity is overstated as moderate bleeding when the note describes mild post-cryobiopsy hemorrhage controlled endoscopically."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Sedation/general anesthesia details are not surfaced in the registry section."
+      ],
+      "cpt": "31623, 31624, 31627, 31628, and +31654 are supported. 31645 is gray-zone and overcalled here.",
+      "schema": "Peripheral sampling is largely correct, but aspiration and bleeding severity are too aggressive."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_029",
+      "score": 35,
+      "status": "FAIL",
+      "hallucinations": [
+        "established_tracheostomy_route=true and CPT 31615 are unsupported; this note is percutaneous tracheostomy placement, not bronchoscopy through an established trach."
+      ],
+      "mismatches": [
+        "The note documents percutaneous tracheostomy, but deterministic coding suppresses 31600 and substitutes bronchoscopic codes."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Modified Griggs/GWDF technique, ultrasound co-guidance, and extended-length Portex/Shiley selection are not surfaced cleanly."
+      ],
+      "cpt": "31600 is the supported primary procedure. 31615/31622 are not defensible from the note as selected.",
+      "schema": "Procedure presence is partly right, but coding logic is inverted by false established-trach reasoning."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_017",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "The registry treats this as BLVR, but the note is valve placement for postoperative bronchopleural fistula/persistent air leak, not lung-volume reduction.",
+        "number_of_valves=9 is unsupported; the note documents 3 valves."
+      ],
+      "mismatches": [
+        "Sedation is set to General though the note explicitly clarifies Moderate sedation."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Individual segmental valve placements (RUL B1, B3, B2) are not represented."
+      ],
+      "cpt": "31647 is compatible with documented valve placement, but the extraction misclassifies the indication/procedure family and inflates valve count.",
+      "schema": "Core device placement is recognized, but the wrong therapeutic family is applied."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_024",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Bleeding is promoted to a moderate complication although the note describes mild diffuse mucosal hemorrhage controlled with cold saline."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "RUL B2 target granularity and biopsy count (x4) are not deeply structured."
+      ],
+      "cpt": "31624 and 31628 are supported.",
+      "schema": "Good bronchoscopy/BAL/TBBX capture with only complication-severity inflation."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_009",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 7 is labeled malignant by ROSE in the JSON, but the note says station 7 ROSE showed atypical cells.",
+        "Station 10R is mislabeled as forceps_biopsy; the note documents TBNA x2."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Minor hemorrhage is coded more aggressively than documented."
+      ],
+      "cpt": "31623, 31625, and 31653 are supported by the raw note.",
+      "schema": "Procedure families are correct, but nodal event action/outcome logic is wrong."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_014",
+      "score": 74,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note's main therapeutic work is mucus plug extraction and lavage, but therapeutic aspiration is not represented."
+      ],
+      "missed_procedures": [
+        "Therapeutic aspiration / mucus plug extraction from the RLL bronchus intermedius-RLL junction is missed."
+      ],
+      "missed_details": [
+        "BAL site and mucus-cast extraction passes are not structured."
+      ],
+      "cpt": "31624 is supported, but the note also supports therapeutic airway clearance work beyond BAL.",
+      "schema": "Under-calls the therapeutic component of the bronchoscopy."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_022",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [
+        "inspection_findings lose negation and read as if there were an endobronchial abnormality, though the note says none."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Bilateral BAL sites (RLL and LLL) could be carried more explicitly."
+      ],
+      "cpt": "31624 is supported.",
+      "schema": "Usable extraction with only minor narrative polarity noise."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_031",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Separate diagnostic bronchoscopy coding is likely overcalled in a PDT note where bronchoscopy is guidance rather than a standalone diagnostic service."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Ultrasound co-guidance and corrected ring 2\u20133 entry planning are not surfaced."
+      ],
+      "cpt": "31600 is supported. Separate 31622 is not clearly defensible from this documentation.",
+      "schema": "Percutaneous tracheostomy is captured, but coding remains too bronchoscopy-centric."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_036",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Montgomery T-tube insertion is documented, but no airway-stent/T-tube placement object is present."
+      ],
+      "missed_procedures": [
+        "T-tube insertion is omitted."
+      ],
+      "missed_details": [
+        "Balloon size, T-tube device details, and stoma-sidearm configuration are not captured."
+      ],
+      "cpt": "31641 is supported for Nd:YAG treatment, but the defining T-tube placement component is not reflected.",
+      "schema": "Same pattern as other T-tube insertions: device placement is lost."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_010",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent.action_type='revision' is unsupported; the note documents new Y-stent placement."
+      ],
+      "mismatches": [
+        "Stent brand/type details are wrong (Dumon Y-stent vs generic 'ENT').",
+        "CPT 31638 is selected instead of placement logic for new tracheal stent placement."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Y-stent limb diameters/lengths and >90% post-stent patency are not preserved."
+      ],
+      "cpt": "31631 and 31641 are the defensible codes from the note. 31638 is not.",
+      "schema": "Core therapeutic intent is right, but stent action-type and coding are materially wrong."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_016",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Fibrinolytic plan is future care, not same-day treatment, and is appropriately not turned on."
+      ],
+      "cpt": "32557 is consistent with ultrasound-guided 14 Fr chest tube placement.",
+      "schema": "Accurate pleural drainage extraction."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_035",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent.action_type='revision' and CPT 31638 are unsupported for this note; it documents new Montgomery T-tube insertion."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "T-tube sizing and tracheomalacia-bridge rationale are incompletely represented."
+      ],
+      "cpt": "31641 is supported for laser. The T-tube/device placement is captured only partially and is coded as revision rather than insertion.",
+      "schema": "Better than the other T-tube insertions because a stent object exists, but the action logic is still wrong."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_045",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note documents re-expansion pulmonary edema, but no complication structure is surfaced.",
+        "CPT is downcoded to 32554 even though the note documents ultrasound guidance."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Drained volume (1,650 mL), left-sided location, and O2-responsive REPE management are not structured."
+      ],
+      "cpt": "32555 is supported by the note. 32554 is not.",
+      "schema": "Procedure presence is correct, but the major complication is missed."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_042",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Chest-tube coding is not cleanly aligned with the note's emergent tube thoracostomy language (the note itself points toward 32551-style work, not 32556)."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is not surfaced in sedation."
+      ],
+      "cpt": "31623, 31624, 31627, 31628, and +31654 are supported. The emergent pneumothorax management/chest-tube code selection is the weak point.",
+      "schema": "Good core peripheral bronchoscopy extraction with appropriate recognition of the true complication."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_002",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [
+        "inspection_findings lose negation and imply an endobronchial mass despite the note stating no discrete endobronchial mass."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "RLL B7/B8 localization is not preserved."
+      ],
+      "cpt": "31624 is defensible because BAL was collected from the RLL.",
+      "schema": "Core extraction is good with only a negation/polarity error."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_041",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 10R is marked malignant in the JSON, but the note only gives malignant ROSE for station 4R; 10R was hemorrhagic/contaminated.",
+        "31641 is not a clean fit for hemorrhage-control bronchoscopy in this note."
+      ],
+      "mismatches": [
+        "Sedation is collapsed to General even though the note clearly documents a moderate-sedation start with emergent conversion to GA."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Fogarty balloon tamponade is clinically important but not represented as a distinct hemostatic maneuver."
+      ],
+      "cpt": "31500 and 31652 are supported. The therapeutic hemorrhage-control coding selected via 31641 is not well supported by the documentation.",
+      "schema": "Major complication handling is recognized, but nodal outcome and CPT logic are wrong."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_003",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "A pneumothorax complication is created from 'post-procedure CXR ordered / monitor for PTX' language even though the note states no intraoperative complication.",
+        "Locations for brushings/biopsy are malformed and lifted from narrative fragments."
+      ],
+      "mismatches": [
+        "Radial EBUS view is labeled Adjacent even though the note says concentric ring."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "LUL target segment (LB1+2) is not cleanly structured."
+      ],
+      "cpt": "31623, 31624, 31627, 31628, and +31654 are supported.",
+      "schema": "High-level procedure recall is good, but false complication derivation is a material error."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_008",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "Bleeding is promoted to a moderate formal complication even though the note describes expected grade I laceration and bleeding controlled with cold saline."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pre/post lumen caliber and serial dilation details are only partly structured."
+      ],
+      "cpt": "31641 is defensible for laser relief of stenosis. Separate dilation coding is not clearly required from the same-site documentation.",
+      "schema": "Reasonable airway-therapy extraction with complication inflation."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_021",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Pass attribution across 10L vs 4L is not completely clean given the note's own inconsistent follow-up-pass wording."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Individual pass counts for 4R, 7, and 10R are not carried into node_events."
+      ],
+      "cpt": "31624 and 31653 are supported by the raw note.",
+      "schema": "Overall high recall and correct station count, but quantitative node detail is incomplete."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_015",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 11L is treated as sampled even though the note says it was not visualized.",
+        "peripheral_tbna is unsupported; the peripheral phase documents TBBX, brushings, and BAL, not peripheral TBNA."
+      ],
+      "mismatches": [
+        "EUS-B adrenal passes/gauge are wrong (note: 19G, 3 passes; JSON: 21G and 14 passes)."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Station 2R/4R/4L/7 pass counts are not preserved accurately."
+      ],
+      "cpt": "31653, 31623, 31624, 31627, 31628, and +31654 are broadly supported. The transesophageal adrenal sampling is real, but the extracted EUS-B granular details and code choice are unreliable.",
+      "schema": "Good broad recall, but several target-relationship fields are hallucinated or corrupted."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_004",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "31645 is not clearly supported; secretion suctioning is incidental in a major tumor-debulking case."
+      ],
+      "mismatches": [
+        "airway_dilation location is wrong (RMB stenotic tumor site, not RUL).",
+        "Coding selects 31640 but misses the same-site APC/electrocautery destruction logic where 31641 is the stronger code."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pre/post patency (70% obstruction to ~80% patency) is not preserved as outcome data."
+      ],
+      "cpt": "31641 best matches the documented therapeutic work. 31640 may be arguable mechanically, but same-site destruction work makes the selected 31640/31645 stack weak.",
+      "schema": "Therapeutic families are broadly recognized, but coding logic does not match the documented intervention mix."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_050",
+      "score": 40,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent.performed=true and CPT 31638 are unsupported; the note explicitly says covered stent was evaluated and deferred.",
+        "Bleeding is hallucinated as severe/Nashville 4 even though the note describes mild biopsy-site ooze controlled with cold saline."
+      ],
+      "mismatches": [
+        "Sedation is set to Moderate though the patient remained on baseline ICU propofol/fentanyl and no additional procedural sedation was given."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "BAL volumes from both lobes and bilateral TBBX lobe accounting are only partly structured."
+      ],
+      "cpt": "31624, 31628, and +31632 are supported. 31638 is not.",
+      "schema": "Major false-positive stent management and false severe complication make this a clear fail."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_001",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [
+        "inspection_findings are slightly malformed because diagnosis text bleeds into the inspection narrative."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "ROSE details could be more explicit per station."
+      ],
+      "cpt": "31653 is correct for sampling 4R, 7, and 11R.",
+      "schema": "Strong EBUS extraction with only minor text-noise contamination."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_012",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "procedures_performed is empty even though the note clearly documents flexible bronchoscopy through the tracheostomy."
+      ],
+      "missed_procedures": [
+        "Granulation tissue treatment with silver nitrate is omitted."
+      ],
+      "missed_details": [
+        "Trach position details (tip 3 cm above carina) and negative bleeding source are not reflected in structured bronchoscopy fields."
+      ],
+      "cpt": "31615 is supported by the note.",
+      "schema": "Coding is better than the registry body; the bronchoscopy itself should have been surfaced in performed procedures."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_048",
+      "score": 65,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note's primary therapeutic action is mucus-cast extraction, but only BAL is represented."
+      ],
+      "missed_procedures": [
+        "Therapeutic aspiration / mucus plug extraction is missed."
+      ],
+      "missed_details": [
+        "LUL target and forceps-extraction passes are not preserved."
+      ],
+      "cpt": "The note supports therapeutic aspiration/airway clearance work in addition to any lavage. A BAL-only coding stack is incomplete.",
+      "schema": "Under-calls the reason for bronchoscopy in an airway-clearance case."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_026",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Separate bronchoscopy coding (31622) is not clearly defensible in a PDT note.",
+        "Sedation is labeled Moderate despite propofol/fentanyl/rocuronium procedural anesthesia."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Device/tube position confirmation details are not richly structured."
+      ],
+      "cpt": "31600 is supported; separate 31622 is questionable.",
+      "schema": "Good procedural recall with residual coding inflation."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_032",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note is primarily a mature-tract tracheostomy tube exchange, but the registry surfaces only bronchoscopy coding."
+      ],
+      "missed_procedures": [
+        "Tracheostomy tube exchange is omitted as the main performed procedure."
+      ],
+      "missed_details": [
+        "New tube size/type (Shiley 6.0 cuffless) and safe-over-guide exchange technique are not represented."
+      ],
+      "cpt": "31615 may be supportable for bronchoscopic confirmation through the mature trach, but the primary tube-exchange work is missing and 31622 is not supported separately.",
+      "schema": "Bronchoscopic confirmation is captured, but the actual exchange procedure is lost."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_034",
+      "score": 35,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Only bronchoscopy is surfaced, despite a difficult immature-tract trach reinsertion/exchange being the main intervention."
+      ],
+      "missed_procedures": [
+        "Tracheostomy tube reinsertion/exchange in an immature tract is omitted.",
+        "Backup emergent orotracheal intubation documented in the note is not represented."
+      ],
+      "missed_details": [
+        "Stepwise smaller-to-larger trach exchange (5.0 then 7.0 over Aintree) is omitted."
+      ],
+      "cpt": "A tracheostomy-tube-change/reinsertion code is more aligned with the note than a standalone 31622-only result.",
+      "schema": "Major recall failure in a difficult airway rescue/exchange case."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_049",
+      "score": 70,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "BAL volume is corrupted (3 mL from epinephrine instillation rather than BAL volume)."
+      ],
+      "missed_procedures": [
+        "Therapeutic clot extraction/airway clearance is not represented as a procedure family."
+      ],
+      "missed_details": [
+        "Active RUL B2 hemorrhage localization and cold-saline hemostasis are incompletely structured."
+      ],
+      "cpt": "BAL is supported, but the note also documents therapeutic clot extraction and hemorrhage control that are not reflected in the coding stack.",
+      "schema": "Good localization of hemorrhage, but procedure recall is incomplete."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_040",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Montgomery T-tube insertion is documented, but no airway-stent/T-tube placement object is present."
+      ],
+      "missed_procedures": [
+        "T-tube insertion is omitted."
+      ],
+      "missed_details": [
+        "Device size (11 \u00d7 60 \u00d7 25), stoma creation, and sidearm/carina relationship are not represented."
+      ],
+      "cpt": "31641 is supported for laser. The defining T-tube placement piece is missing from extraction/coding.",
+      "schema": "Same major omission pattern as the other T-tube insertion notes."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_039",
+      "score": 28,
+      "status": "FAIL",
+      "hallucinations": [
+        "thermal_ablation/31641 are unsupported; the note describes routine T-tube exchange with cold-forceps trimming of small stomal granulation, not thermal ablation."
+      ],
+      "mismatches": [
+        "airway_stent is left false even though this is removal of an old T-tube and insertion of a new T-tube."
+      ],
+      "missed_procedures": [
+        "T-tube removal and replacement are both omitted."
+      ],
+      "missed_details": [
+        "New tube size, identical repositioning, and flexible confirmation via sidearm are not represented."
+      ],
+      "cpt": "A T-tube exchange/removal-replacement construct is supported; 31641 is not.",
+      "schema": "Near-total failure on the actual device-management work."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_043",
+      "score": 66,
+      "status": "FAIL",
+      "hallucinations": [
+        "The complication is converted into severe bleeding/Nashville 4, but the documented complication is posterior tracheal wall laceration with only minimal ooze."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Bronchoscopic guidance and the actual laceration complication type are not represented explicitly."
+      ],
+      "cpt": "31600 is supported. The omitted/incorrect issue is complication modeling, not the primary procedure.",
+      "schema": "Primary PDT extraction is acceptable, but the complication family is wrong."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_030",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "intubation/31500 is unsupported; the patient was already intubated and the note describes ETT withdrawal, not a separate emergency intubation.",
+        "31615 is unsupported; this is not bronchoscopy through an established tracheostomy route."
+      ],
+      "mismatches": [
+        "Percutaneous tracheostomy is present, but coding is dominated by extra bronchoscopic codes."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Post-trach bronchoscopy confirmation is present but does not justify the selected standalone bronchoscopic code stack."
+      ],
+      "cpt": "31600 is the supported primary procedure. 31500, 31615, and separate 31622 are not supported as selected.",
+      "schema": "High-severity CPT inflation around an otherwise straightforward PDT."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_025",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent is coded as revision/31638, but the note documents new covered SEMS placement across a TEF.",
+        "31640 is not the right code concept for APC treatment of granulation tissue around a fistula."
+      ],
+      "mismatches": [
+        "mechanical_debulking/therapeutic_aspiration are over-emphasized relative to the dominant stent-placement work."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Covered SEMS brand/diameter/length and pre/post patency/coverage metrics are not faithfully structured."
+      ],
+      "cpt": "31631 and 31641 are supported. The selected 31638/31640/31645 stack is not.",
+      "schema": "Major stent-action and CPT-family errors in a complex TEF case."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_018",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 4L is falsely treated as sampled even though the note says 4L was not identified."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Needle gauge and full per-station ROSE detail are not structured."
+      ],
+      "cpt": "31653 is still defensible because 4R, 7, and 11L were sampled. The problem is the unsupported extra station, not the final nodal count.",
+      "schema": "A wrong station is a serious precision error even though the headline code remains correct."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_019",
+      "score": 45,
+      "status": "FAIL",
+      "hallucinations": [
+        "pleurodesis.performed=true and CPT 32650 are unsupported; the note explicitly says pleurodesis was deferred pending pathology."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Pleural biopsy is a core performed procedure and is not represented."
+      ],
+      "missed_details": [
+        "Six parietal/diaphragmatic biopsies and ~600 mL drainage are omitted from structured fields."
+      ],
+      "cpt": "The note supports medical thoracoscopy/pleuroscopy with pleural biopsies. 32650 for pleurodesis is not supported.",
+      "schema": "Misses the main diagnostic tissue-acquisition event and hallucinates pleurodesis."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_020",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "31640 is not well supported; the note describes minimal granulation trimming rather than tumor excision."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Stent removal/re-use/repositioning sequence could be represented more explicitly."
+      ],
+      "cpt": "31638 is defensible for stent revision/repositioning. 31645 is arguable from mucus clearance. 31640 is the weak code.",
+      "schema": "Good overall recognition of stent management with some coding excess."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_028",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Sedation remains labeled Moderate despite propofol infusion plus paralytic and the note's explicit documentation conflict."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Minor platelet-related ooze and intraoperative platelet transfusion are not richly modeled."
+      ],
+      "cpt": "31600 is supported. Separate 31622 remains questionable.",
+      "schema": "Procedural recall is good, but coding and anesthesia normalization are imperfect."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_006",
+      "score": 30,
+      "status": "FAIL",
+      "hallucinations": [
+        "CPT 31573 is entirely unsupported.",
+        "Thoracentesis is over-selected as a standalone code in a thoracoscopy/biopsy/pleurodesis session."
+      ],
+      "mismatches": [
+        "The note documents pleural biopsies x6, but pleural_biopsy is missing.",
+        "The procedure is collapsed into 32650 even though the note separately documents medical thoracoscopy, pleural biopsy, talc pleurodesis, and chest tube placement."
+      ],
+      "missed_procedures": [
+        "Pleural biopsy is omitted as a performed procedure."
+      ],
+      "missed_details": [
+        "Talc dose, pleural fluid chemistry specimen, and loculation breakdown are incompletely surfaced."
+      ],
+      "cpt": "The note supports medical thoracoscopy with pleural biopsies, talc pleurodesis, and chest tube placement. 31573 is not supported, and the billing stack is materially unreliable.",
+      "schema": "Major pleural-procedure under-modeling with nonsensical coding."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_047",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [
+        "Sedation is labeled Moderate even though no additional procedural sedation was given beyond baseline ICU infusions."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Serial BAL aliquot progression and bilateral site detail could be more explicit."
+      ],
+      "cpt": "31624 is supported for serial BAL confirming DAH.",
+      "schema": "Good extraction of a BAL-only ICU bronchoscopy."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_005",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "airway_abnormalities include extrinsic compression despite the note stating no extrinsic compression."
+      ],
+      "mismatches": [
+        "BAL volume_instilled_ml is corrupted to 2 mL from topical lidocaine instead of the documented 60 mL BAL."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "RLL B10 target detail and biopsy pass count are only coarsely represented."
+      ],
+      "cpt": "31624 and 31625 are supported.",
+      "schema": "Strong core extraction with a quantitative BAL-field error and a negation miss."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_023",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "Severe bleeding/Nashville 3 is unsupported; the note describes minimal self-limited post-biopsy bleeding and mild hemoptysis that resolved before discharge."
+      ],
+      "mismatches": [
+        "inspection_findings are populated with post-procedure hemoptysis rather than airway findings."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "RML B5 target detail and cryobiopsy cycle details are only partly structured."
+      ],
+      "cpt": "31623, 31624, 31627, 31628, and +31654 are supported.",
+      "schema": "Core peripheral bronchoscopy extraction is good, but complication severity is materially overstated."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_027",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Separate 31622 coding is not clearly supported beyond bronchoscopic guidance of the PDT."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Extended-length Shiley XLT selection and confirmation detail are not surfaced."
+      ],
+      "cpt": "31600 is supported. 31622 is questionable as separately reportable guidance.",
+      "schema": "Good bedside PDT extraction with mild coding inflation."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_037",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Montgomery T-tube placement is documented but no airway-stent/T-tube procedure is represented."
+      ],
+      "missed_procedures": [
+        "T-tube insertion is omitted."
+      ],
+      "missed_details": [
+        "Device size (14 \u00d7 80 \u00d7 35) and carina/vocal-cord relationships are not structured."
+      ],
+      "cpt": "31641 is supported for laser; the T-tube insertion itself is not reflected in the extraction.",
+      "schema": "Another T-tube insertion with missing device-placement logic."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_044",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "The stent event is flattened into 'revision' even though the note describes migrated-stent extraction, balloon dilation, and new stent placement."
+      ],
+      "missed_procedures": [
+        "Airway dilation is not represented."
+      ],
+      "missed_details": [
+        "PEA arrest/ROSC complication and new tracheal stent dimensions are not deeply structured."
+      ],
+      "cpt": "31638 is partly defensible for stent revision-style work, but the full removal-plus-new-placement sequence is not cleanly resolved.",
+      "schema": "Usable core extraction, but relationship modeling of removal/replacement is incomplete."
+    },
+    {
+      "file": "my_results_batch_3.txt",
+      "note_id": "note_046",
+      "score": 18,
+      "status": "FAIL",
+      "hallucinations": [
+        "intubation is unsupported; the note explicitly says no intubation required.",
+        "BAL and brushings are unsupported; the note documents warm-saline lavage and mucus culture only.",
+        "mechanical_debulking/31640 are unsupported; this is mucus/cast clearance from a T-tube, not tumor excision."
+      ],
+      "mismatches": [
+        "The note's main therapeutic work is bronchoscopic toileting of a T-tube through the sidearm."
+      ],
+      "missed_procedures": [
+        "Therapeutic aspiration / mucus-impaction clearance is omitted."
+      ],
+      "missed_details": [
+        "T-tube patency restoration, saline-lavage aliquots, and intact tube integrity are not represented."
+      ],
+      "cpt": "The note supports airway toileting/therapeutic aspiration rather than the selected 31500/31623/31624/31640 stack.",
+      "schema": "Near-total procedure-family collapse."
+    }
+  ]
+}

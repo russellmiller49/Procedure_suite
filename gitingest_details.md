@@ -1,7 +1,7 @@
 # Procedure Suite — gitingest (details)
 
-Generated: `2026-03-04T07:49:40-08:00`
-Git: `codex/reporter-batch-quality` @ `bad4e67f`
+Generated: `2026-03-09T10:35:40-07:00`
+Git: `main` @ `0b231265`
 
 ## What this file is
 - A **second** document you can provide to an LLM when more detail is needed.
@@ -22,6 +22,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1025  ml/scripts/prepare_data.py
      1173  ml/scripts/merge_registry.py
      1323  ops/tools/validate_jsonschema.py
+     1356  ops/tools/summarize_reporter_seed_fallbacks.py
      1430  ops/tools/cpt_check.py
      1493  ops/tools/check_pydantic_models.py
      1724  ops/tools/verify_registry_runtime_bundle.py
@@ -47,6 +48,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      4638  ml/scripts/parse_golden_reporter_examples.py
      4649  ml/scripts/refine_ner_labels.py
      4761  ops/tools/provation_debug.py
+     4878  ops/tools/eval_reporter_prompt_baseline.py
      4972  ops/tools/endosoft_debug.py
      5160  ml/scripts/fix_registry_hallucinations.py
      5246  ml/scripts/force_merge_human_labels.py
@@ -82,7 +84,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      8204  ops/tools/test_phi_redaction_sample.py
      8398  ml/scripts/prodigy_prepare_registry_relabel_batch.py
      8430  ml/scripts/build_reporter_prompt_dataset.py
-     8444  ml/scripts/eval_golden.py
+     8734  ops/tools/eval_reporter_prompt_llm_findings.py
      8856  ops/tools/eval_reporter_gold_dataset.py
      9036  ml/scripts/find_critical_failures.py
      9061  ops/tools/generate_procedure_suite_one_pager_pdf.py
@@ -91,6 +93,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      9581  ml/scripts/registry_label_overlap_report.py
      9603  ml/scripts/align_synthetic_names.py
      9715  ops/tools/registry_pipeline_smoke.py
+    10063  ops/tools/run_quality_gates.py
     10375  ml/scripts/diamond_loop_cloud_sync.py
     10664  ml/scripts/merge_granular_attribute_spans.py
     11135  ops/tools/generate_cpt_keywords.py
@@ -102,8 +105,8 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     12109  ops/tools/export_phi_model_for_transformersjs.py
     12156  ml/scripts/convert_spans_to_bio.py
     13341  ml/scripts/bootstrap_relations_silver.py
-    13386  ops/tools/eval_reporter_prompt_baseline.py
     13510  ml/scripts/extract_ner_from_excel.py
+    14036  ml/scripts/eval_golden.py
     14201  ops/tools/index_repo.py
     14551  ml/scripts/review_llm_fallback_errors.py
     14712  ops/tools/unified_pipeline_batch.py
@@ -121,7 +124,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     17037  ml/scripts/prodigy_prepare_phi_batch.py
     18192  ml/scripts/build_model_agnostic_phi_spans.py
     18203  ml/scripts/generate_synthetic_phi_data.py
-    18417  ops/tools/eval_reporter_prompt_llm_findings.py
     18478  ops/tools/eval_reporter_prompt_model.py
     20516  ml/scripts/audit_model_fp.py
     20937  ml/scripts/train_roberta_pm3.py
@@ -246,7 +248,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
       607  app/coder/code_families.py
       610  app/infra/safe_logging.py
       615  app/reporting/second_pass/counts_backfill.py
-      628  tests/registry/test_tracheostomy_route.py
       630  proc_schemas/billing.py
       634  tests/registry/_notes_path.py
       639  proc_schemas/clinical/__init__.py
@@ -281,13 +282,12 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
       859  app/reporting/coder_view.py
       874  app/domain/knowledge_base/models.py
       874  tests/registry/test_note_240_cao_regression.py
-      887  tests/api/test_ui.py
+      889  tests/api/test_ui.py
       896  tests/unit/test_inference_engine.py
       901  app/registry/__init__.py
       901  tests/scripts/test_train_roberta_cli.py
       906  app/reporting/normalization/normalize.py
       907  app/infra/perf.py
-      912  tests/registry/test_complications_reconcile_precision.py
       918  tests/registry/test_navigation_targets_numbered_targets.py
       926  ml/lib/ml_coder/utils.py
       947  tests/scripts/test_audit_model_fp_cli.py
@@ -303,6 +303,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1021  app/api/registry_payload.py
      1024  app/registry/application/__init__.py
      1036  tests/registry/test_coding_support_builder_prefixes.py
+     1063  tests/registry/test_tracheostomy_route.py
      1064  app/coder/__init__.py
      1068  tests/registry/test_clinical_guardrails_radial_linear.py
      1074  tests/registry/test_extract_imaging_ct.py
@@ -327,8 +328,9 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1218  app/registry/heuristics/pipeline.py
      1220  tests/coding/test_sectionizer.py
      1235  tests/registry/test_aborted_targets_cleanup.py
-     1255  app/api/routes/umls.py
+     1256  app/common/path_redaction.py
      1262  tests/coding/test_peripheral_rules.py
+     1269  app/api/routes/umls.py
      1273  app/registry/aggregation/llm_models.py
      1275  app/phi/adapters/scrubber_stub.py
      1280  tests/registry/test_template_checkbox_negation.py
@@ -344,6 +346,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1339  app/common/knowledge_cli.py
      1342  tests/registry/test_structured_extraction_default.py
      1351  app/phi/adapters/fernet_encryption.py
+     1354  tests/common/test_path_redaction.py
      1354  tests/test_endosoft_section_parser.py
      1363  app/registry/schema.py
      1372  app/api/readiness.py
@@ -374,11 +377,12 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1548  app/common/rules_engine/ncci.py
      1551  proc_schemas/procedure_report.py
      1552  app/coder/reconciliation/__init__.py
-     1557  tests/api/test_umls_routes.py
      1557  tests/test_openai_responses_parse.py
      1561  tests/registry/test_modifier_22_apply_to_billing.py
      1564  tests/registry/test_raw_ml_unavailable_fallback.py
      1570  app/registry/ml/__init__.py
+     1570  tests/api/test_umls_routes.py
+     1573  tests/reporting/test_strict_render_validation.py
      1601  ops/preflight.py
      1601  tests/registry/test_registry_to_cpt_mechanical_debulking.py
      1614  tests/test_provation_examples_ocr.py
@@ -399,6 +403,8 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1759  app/reporting/util/path_access.py
      1759  tests/registry/test_kitchen_sink_extraction_first.py
      1767  tests/utils/case_filter.py
+     1772  tests/common/test_quality_gate_reports.py
+     1776  tests/registry/test_complications_reconcile_precision.py
      1813  app/vault/models.py
      1816  tests/registry/test_registry_to_cpt_diagnostic_bronchoscopy.py
      1823  app/registry/slots/tblb.py
@@ -414,7 +420,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1912  app/registry/aggregation/pathology/normalize.py
      1915  tests/coder/test_ncci_ptp_indicator.py
      1924  tests/unit/test_reporter_json_parse.py
-     1929  app/coder/constants.py
      1953  tests/api/test_phi_demo_cases.py
      1971  tests/scripts/test_split_reporter_gold_dataset.py
      1981  app/coder/phi_gating.py
@@ -439,6 +444,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      2167  app/registry/legacy/adapters/base.py
      2174  tests/test_ip_registry_schema_guardrails.py
      2196  tests/registry/test_extract_pathology.py
+     2197  app/coder/constants.py
      2209  tests/registry/test_sedation_blvr.py
      2213  app/reporting/__init__.py
      2246  ml/lib/ml_coder/self_correction.py
@@ -465,7 +471,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      2480  app/llm/client.py
      2529  tests/test_camera_ocr_fuzzy.py
      2533  tests/unit/test_relations_shadow_mode.py
-     2549  tests/api/test_patch_sets_manual_locks.py
+     2570  tests/api/test_patch_sets_manual_locks.py
      2579  tests/conftest.py
      2582  app/api/routes/legacy_registry.py
      2582  app/reporting/inference.py
@@ -486,7 +492,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      2797  tests/coding/test_phi_gating.py
      2803  app/registry/aggregation/clinical/patch_clinical_update.py
      2804  app/domain/rvu/calculator.py
-     2812  app/api/schemas/vault.py
+     2810  app/api/schemas/vault.py
      2832  tests/registry/test_fixpack_trach_stent_elastography_normalization.py
      2835  ml/lib/ml_coder/thresholds.py
      2847  tests/registry/test_keyword_guard_generated_keywords.py
@@ -499,7 +505,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      2955  app/registry/aggregation/pathology/patch_pathology_results.py
      2974  tests/coding/test_sectionizer_integration.py
      2977  tests/unit/test_openai_timeouts.py
-     3014  tests/api/test_append_triggers_aggregation.py
+     2999  tests/api/test_append_triggers_aggregation.py
      3028  tests/registry/test_case_aggregator_respects_locks.py
      3037  tests/unit/test_timeline_aggregator.py
      3060  app/common/umls_linking.py
@@ -520,6 +526,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      3197  config/startup_settings.py
      3198  tests/registry/test_navigation_targets_inline_target.py
      3220  tests/registry/test_missing_field_prompts_ebus.py
+     3241  tests/scripts/test_eval_golden.py
      3248  tests/registry/test_patcher_dedupe_titles.py
      3252  app/infra/cache.py
      3259  tests/registry/test_focusing_audit_guardrail.py
@@ -544,11 +551,11 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      3686  ml/lib/ml_coder/registry_label_schema.py
      3692  app/registry/slots/blvr.py
      3694  app/api/phi_redaction.py
-     3745  tests/api/test_append_guardrails_strict_zk.py
      3764  app/registry/aggregation/imaging/extract_pet_ct.py
      3774  app/common/knowledge_schema.py
+     3790  tests/api/test_append_guardrails_strict_zk.py
      3795  app/common/model_capabilities.py
-     3819  app/api/phi_dependencies.py
+     3805  app/api/phi_dependencies.py
      3829  app/registry/aggregation/imaging/extract_ct.py
      3835  tests/reporting/test_category_macros_externalized.py
      3838  tests/integration/test_pipeline_integrity.py
@@ -576,12 +583,13 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      4399  tests/phi/test_presidio_scrubber_adapter.py
      4413  app/document_fingerprint/registry.py
      4413  tests/registry/test_registry_to_cpt_thoracoscopy_biopsy.py
+     4432  app/common/quality_gate_reports.py
      4457  app/registry_store/models.py
      4461  proc_schemas/clinical/common.py
-     4486  tests/api/test_vault_api.py
      4487  app/document_fingerprint/provation.py
      4489  tests/phi/test_manual_scrub.py
      4491  tests/registry/test_disease_burden_extractor.py
+     4492  tests/api/test_vault_api.py
      4494  app/registry/ebus_config.py
      4514  tests/registry/test_regression_pack.py
      4518  tests/registry/test_registry_engine_sanitization.py
@@ -589,11 +597,10 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      4557  app/agents/relation_extraction/shadow_mode.py
      4560  app/registry/self_correction/judge.py
      4562  app/api/services/financials.py
-     4578  tests/api/test_coding_phi_gating.py
+     4582  tests/api/test_coding_phi_gating.py
      4584  tests/registry/test_note_300_multilobe_navigation_regression.py
      4619  tests/reporting/test_debug_notes_gating.py
      4666  app/api/routes/unified_process.py
-     4705  app/reporting/partial_schemas.py
      4738  tests/scripts/test_compare_reporter_prompt_llm_findings_models.py
      4748  tests/registry/test_outcomes_success_status.py
      4758  tests/registry/test_note_002_regression.py
@@ -601,12 +608,12 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      4800  tests/registry/test_evidence_required_policy.py
      4829  tests/reporting/test_render_parity_normalization.py
      4847  app/registry/aggregation/imaging/parse_common.py
-     4866  tests/api/test_vault_bearer_e2e.py
+     4872  tests/api/test_vault_bearer_e2e.py
      4946  tests/registry/test_auditor_raw_ml_only.py
      5041  app/coder/adapters/nlp/simple_negation_detector.py
+     5045  app/registry/cli.py
      5048  docs/phi_review_system/backend/main.py
-     5085  app/api/auth.py
-     5095  app/registry/cli.py
+     5102  app/api/auth.py
      5105  ml/lib/reporter_json_parse.py
      5115  tests/reporting/test_pipeline_parity.py
      5160  config/settings.py
@@ -616,7 +623,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      5219  ml/lib/reporter_bundle_codec.py
      5285  app/document_fingerprint/endosoft.py
      5334  app/api/phi_demo_store.py
-     5347  app/api/schemas/qa.py
+     5348  app/api/schemas/qa.py
      5353  tests/registry/test_masking.py
      5386  app/api/gemini_client.py
      5426  tests/registry/test_external_notes_2_18_26_regressions.py
@@ -625,27 +632,32 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      5633  app/coder/ebus_rules.py
      5649  app/phi/models.py
      5652  tests/registry/test_keyword_guard_overrides.py
+     5673  tests/scripts/test_run_quality_gates.py
      5702  app/registry/deterministic/anatomy.py
      5802  app/reporting/json_patch.py
-     5805  tests/api/test_registry_append_api.py
      5864  app/evidence/quote_anchor.py
+     5879  tests/api/test_registry_append_api.py
      5924  app/api/routes/legacy_coder.py
      5967  tests/registry/test_ner_procedure_extractor.py
-     6000  app/ner/entity_types.py
+     6013  app/reporting/partial_schemas.py
      6014  app/registry/extraction/structurer.py
      6074  app/api/bootstrap.py
-     6127  tests/api/test_phi_redaction.py
+     6075  tests/quality/test_reporter_precision_extra_flags.py
+     6129  tests/api/test_phi_redaction.py
+     6136  tests/scripts/test_reporter_seed_eval_tools.py
+     6141  app/ner/entity_types.py
      6150  app/coder/parallel_pathway/confidence_combiner.py
      6160  tests/integration/test_phi_workflow_end_to_end.py
      6165  tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py
      6200  app/coder/ncci.py
+     6200  tests/quality/test_reporter_seed_dual_path_matrix.py
      6206  tests/registry/test_ebus_postprocess_fallback.py
      6252  app/registry_cleaning/consistency_utils.py
      6254  tests/unit/test_phi_distillation_refinery.py
      6296  tests/registry/test_audit_compare_report.py
      6351  tests/registry/test_post_fix_regressions.py
      6377  app/sectioning/endosoft_section_parser.py
-     6387  app/api/routes/vault.py
+     6408  app/api/routes/vault.py
      6423  tests/phi/test_service.py
      6438  app/domain/procedure_store/repository.py
      6486  app/registry/aggregation/pathology/patch_pathology.py
@@ -660,14 +672,14 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      6912  app/registry/slots/therapeutics.py
      6919  tests/integration/api/test_startup_warmup.py
      7025  app/reporting/ip_addons.py
-     7029  app/api/routes/qa.py
      7036  app/registry/self_correction/apply.py
      7037  app/infra/nlp_warmup.py
      7106  app/coder/application/candidate_expansion.py
+     7153  app/api/routes/qa.py
      7160  app/agents/run_pipeline.py
      7160  app/registry/infra/model_provider.py
-     7207  tests/api/test_registry_case_api.py
      7289  app/registry/processing/navigation_fiducials.py
+     7293  tests/api/test_registry_case_api.py
      7295  tests/integration/coder/test_coding_service.py
      7367  tests/api/test_phi_endpoints.py
      7407  proc_schemas/clinical/pleural.py
@@ -696,10 +708,9 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      8598  tests/coder/test_hierarchy_bundling_fixes.py
      8648  app/coder/application/procedure_type_detector.py
      8691  tests/coding/test_json_rules_parity.py
-     8694  app/api/coder_adapter.py
-     8838  tests/reporting/test_reporter_batch_regressions.py
+     8814  app/api/coder_adapter.py
      8867  app/umls/ip_umls_store.py
-     9005  app/api/routes/metrics.py
+     9006  app/api/routes/metrics.py
      9276  tests/registry/test_extraction_quality_fixpack_jan2026.py
      9381  app/registry/processing/focus.py
      9451  tests/ml_coder/test_training_pipeline.py
@@ -713,21 +724,21 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     10056  ml/lib/ml_coder/predictor.py
     10063  tests/unit/test_procedure_type_detector.py
     10334  tests/unit/test_extraction_adapters.py
-    10389  tests/api/test_phi_redactor_ui.py
+    10386  tests/api/test_phi_redactor_ui.py
     10402  app/agents/relation_extraction/llm_proposer.py
     10402  app/api/routes_registry.py
     10712  app/registry/postprocess/template_checkbox_negation.py
     10787  tests/unit/test_inmemory_procedure_store.py
+    10804  app/common/quality_eval.py
     10930  tests/registry/test_ebus_config_station_count.py
     11177  tests/test_phi_redaction_contract.py
     11259  tests/registry/test_regression_pack_updates_march_2026.py
     11289  app/coder/adapters/nlp/keyword_mapping_loader.py
     11290  tests/registry/test_registry_guardrails.py
-    11392  app/common/knowledge.py
+    11333  app/common/knowledge.py
     11451  app/api/routes/phi.py
     11577  tests/reporting/test_reporter_regressions.py
     11787  app/registry/application/pathology_extraction.py
-    12117  app/reporting/normalization/text_enricher.py
     12339  app/registry_cleaning/schema_utils.py
     12446  docs/phi_review_system/backend/dependencies.py
     12533  app/domain/knowledge_base/validator.py
@@ -741,21 +752,23 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     13688  app/coder/rules.py
     13689  app/registry/application/registry_builder.py
     13766  tests/registry/test_self_correction_loop.py
-    13775  app/api/routes/registry_append.py
+    13878  app/api/routes/registry_append.py
     13936  tests/ml_advisor/test_router.py
     13954  app/registry/legacy/adapters/pleural.py
-    13993  tests/api/test_unified_process.py
     14076  app/registry/self_correction/validation.py
     14127  tests/integration/persistence/test_supabase_procedure_store.py
+    14135  tests/api/test_unified_process.py
     14244  ml/lib/ml_coder/registry_predictor.py
     14393  app/registry/ml/models.py
     14462  tests/integration/coder/test_hybrid_policy.py
     14585  docs/phi_review_system/backend/models.py
     14872  tests/phi/test_veto_regression.py
+    14916  app/reporting/normalization/text_enricher.py
     14928  app/registry/schema/adapters/v3_to_v2.py
     15130  app/registry/v2_booleans.py
     15235  tests/unit/test_dsl.py
     15259  app/domain/coding_rules/json_rules_evaluator.py
+    15285  tests/registry/test_extraction_quality_fixpack_batch4_march2026.py
     15342  tests/registry/test_action_predictor.py
     15385  app/registry/audit/raw_ml_auditor.py
     15404  app/autocode/ip_kb/canonical_rules.py
@@ -767,32 +780,32 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     15637  tests/registry/test_extraction_quality.py
     15796  app/ner/inference.py
     15812  app/registry/ner_mapping/station_extractor.py
-    15820  app/api/services/unified_pipeline.py
     15853  tests/registry/test_normalization.py
     15974  app/agents/aggregator/timeline_aggregator.py
     16020  app/coder/rules_engine.py
-    16178  tests/api/test_fastapi.py
-    16346  app/api/routes/registry_case.py
-    16541  app/registry/application/cpt_registry_mapping.py
-    16564  app/api/dependencies.py
+    16077  app/api/services/unified_pipeline.py
+    16162  tests/api/test_fastapi.py
+    16480  app/api/dependencies.py
+    16561  app/api/routes/registry_case.py
     16604  tests/integration/api/test_metrics_endpoint.py
     16910  tests/ml_coder/test_registry_first_data_prep.py
     17006  app/phi/safety/veto.py
+    17027  app/registry/application/cpt_registry_mapping.py
     17190  proc_schemas/clinical/airway.py
     17248  app/common/openai_responses.py
     17309  app/coder/reconciliation/reconciler.py
-    17493  app/api/schemas/base.py
+    17494  app/api/schemas/base.py
     17660  app/api/routes/registry_runs.py
-    17762  app/registry/postprocess/complications_reconcile.py
+    17802  app/api/services/qa_pipeline.py
     17842  app/coder/adapters/llm/gemini_advisor.py
     17939  tests/unit/test_template_coverage.py
-    17943  app/registry/application/coding_support_builder.py
     17947  app/registry/normalization.py
-    18086  app/api/services/qa_pipeline.py
-    18540  proc_schemas/registry/ip_v3.py
+    18060  app/registry/application/coding_support_builder.py
+    18210  app/common/reporter_seed_eval.py
+    18658  proc_schemas/registry/ip_v3.py
     18760  app/registry/inference_onnx.py
+    18825  tests/api/test_registry_extract_endpoint.py
     18912  tests/ml_coder/test_label_hydrator.py
-    18921  tests/api/test_registry_extract_endpoint.py
     18989  tests/coder/test_registry_coder.py
     19268  app/coder/adapters/persistence/csv_kb_adapter.py
     19751  tests/integration/api/test_registry_endpoints.py
@@ -802,14 +815,17 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     20318  app/registry/evidence/verifier.py
     20422  app/registry/model_bootstrap.py
     20519  app/registry/extractors/llm_detailed.py
-    20743  app/api/fastapi_app.py
+    20728  app/api/fastapi_app.py
     20815  app/reporting/macro_engine.py
+    21100  tests/registry/test_extraction_quality_fixpack_march2026.py
+    21105  app/registry/postprocess/complications_reconcile.py
     21200  app/coder/adapters/llm/openai_compat_advisor.py
     21434  app/domain/coding_rules/rule_engine.py
     21452  app/coder/adapters/persistence/supabase_procedure_store.py
     21459  tests/coder/test_reconciliation.py
     21514  tests/test_registry_normalization.py
     21591  app/registry/ner_mapping/procedure_extractor.py
+    21656  app/reporting/seed_pipeline.py
     21920  tests/reporting/test_llm_findings.py
     21983  app/reporting/questions.py
     22217  tests/reporter/test_macro_engine_features.py
@@ -821,34 +837,35 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     23556  app/api/routes/reporting.py
     24057  tests/ml_advisor/conftest.py
     24750  app/registry/application/case_aggregator.py
+    24803  tests/reporting/test_reporter_batch_regressions.py
     24902  tests/integration/api/test_coder_run_endpoint.py
     25630  app/coder/application/smart_hybrid_policy.py
-    26439  tests/coder/test_coding_rules_phase7.py
-    27570  app/api/normalization.py
-    27682  app/coder/adapters/registry_coder.py
+    27069  tests/coder/test_coding_rules_phase7.py
+    27903  app/api/normalization.py
+    28030  app/coder/adapters/registry_coder.py
     28720  ml/lib/ml_coder/registry_data_prep.py
     29088  app/registry/transform.py
     29714  ml/lib/ml_coder/label_hydrator.py
     29788  app/registry/completeness/missing_field_prompts.py
     29893  app/domain/coding_rules/coding_rules_engine.py
-    30039  app/api/ml_advisor_router.py
+    30300  app/api/ml_advisor_router.py
     31073  tests/integration/api/test_procedure_codes_endpoints.py
     31114  app/registry/processing/cao_interventions_detail.py
     32363  app/registry/processing/disease_burden.py
     33110  tests/registry/test_registry_service_hybrid_flow.py
-    33210  app/reporting/pipeline.py
     33544  app/registry/schema/v2_dynamic.py
-    33739  app/registry/legacy/adapters/airway.py
-    34127  app/registry/processing/linear_ebus_stations_detail.py
     35264  tests/coding/test_rules_validation.py
     35381  app/phi/adapters/phi_redactor_hybrid.py
     35945  app/registry/ml/action_predictor.py
     36526  app/coder/dictionary.py
+    36672  app/registry/legacy/adapters/airway.py
     36975  tests/unit/test_structured_reporter.py
-    36991  app/registry/schema/granular_models.py
+    38039  app/registry/schema/granular_models.py
     39275  tests/ml_advisor/test_schemas.py
+    40953  app/registry/processing/linear_ebus_stations_detail.py
     41897  app/proc_ml_advisor/schemas.py
-    42830  app/api/routes/procedure_codes.py
+    42527  app/reporting/pipeline.py
+    42695  app/api/routes/procedure_codes.py
     43205  app/common/llm.py
     44075  tests/registry/test_granular_registry_models.py
     46085  app/registry/schema/granular_logic.py
@@ -857,12 +874,12 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     56668  app/autocode/ip_kb/ip_kb.py
     63530  app/reporting/llm_findings.py
     63947  app/registry/prompts.py
-    64938  app/extraction/postprocessing/clinical_guardrails.py
-    75226  app/coder/domain_rules/registry_to_cpt/coding_rules.py
-   104173  app/reporting/engine.py
+    81679  app/coder/domain_rules/registry_to_cpt/coding_rules.py
+    90902  app/extraction/postprocessing/clinical_guardrails.py
    112649  app/registry/engine.py
-   134906  app/reporting/normalization/compat_enricher.py
-   191061  app/registry/application/registry_service.py
+   164582  app/reporting/normalization/compat_enricher.py
+   169378  app/reporting/engine.py
+   192075  app/registry/application/registry_service.py
        39  ui/source/registry_grid/src/vite-env.d.ts
        68  tests/fixtures/case_events/path_ebus_negative_simple.txt
        94  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/.bootstrap_state.json
@@ -1025,6 +1042,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      1819  ui/source/registry_grid/src/__tests__/hostPatch.test.ts
      1833  ui/source/registry_grid/src/__tests__/cameraCapability.test.js
      1857  ui/source/registry_grid/src/edits/usePatchStore.ts
+     1911  tests/fixtures/reporter_seed_eval_samples.json
      1925  app/reporting/templates/addons/general_bronchoscopy_note.jinja
      1961  app/phi/README.md
      1992  tests/fixtures/complex_tracheal_stenosis.txt
@@ -1032,13 +1050,14 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      2285  docs/KNOWLEDGE_INVENTORY.md
      2329  ui/source/registry_grid/src/__tests__/cameraTextAssembly.test.js
      2342  app/reporting/templates/addons/interventional_pulmonology_operative_report.jinja
+     2453  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
      2460  ui/source/registry_grid/src/__tests__/monacoBridge.test.ts
      2553  ui/source/registry_grid/src/__tests__/regexDetectors.test.js
      2612  ui/static/phi_redactor/vendor/phi_distilbert_ner/protected_terms.json
      2615  ui/source/registry_grid/src/__tests__/endosoftOcrHardening.test.js
      2670  docs/DEPLOY_MIRROR.md
+     2768  tests/fixtures/reporter_seed_eval_llm_fixture.json
      2800  docs/REGISTRY_RUNS.md
-     2838  tests/fixtures/reporting/seed_from_text_ion_nav_tbna_cryo.md
      2922  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/protected_terms.json
      2922  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/protected_terms.json
      2954  tests/fixtures/notes/note_315.txt
@@ -1056,6 +1075,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      3088  app/reporting/templates/stent.jinja
      3089  app/reporting/templates/thoracentesis.jinja
      3103  app/reporting/templates/ipc.jinja
+     3134  tests/fixtures/reporter_extra_flag_precision_cases.json
      3176  ui/source/registry_grid/src/__tests__/cryptoVault.test.js
      3215  ui/source/registry_grid/src/__tests__/privacyShield.test.js
      3423  ui/source/registry_grid/src/__tests__/caseSnapshotStore.test.js
@@ -1118,6 +1138,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      8643  docs/CMIO_UCSD_PHI_SECURITY_BRIEF_2026-03-04.md
      8655  app/reporting/EXTRACTION_RULES.md
      8695  ui/static/phi_redactor/linking.js
+     8828  tests/fixtures/unified_quality_corpus.json
      9296  ui/source/registry_grid/src/utils/cryptoVault.ts
      9369  docs/"Diamond" Improvement Plan 1_18_26.txt
      9493  ui/static/phi_redactor/caseSnapshotStore.js
@@ -1145,7 +1166,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     15081  docs/GRAFANA_DASHBOARDS.md
     15210  docs/REGISTRY_V3_IMPLEMENTATION_GUIDE.md
     16028  app/reporting/templates/macros/05_pleural.j2
-    16739  docs/AGENTS.md
     16948  ui/static/phi_redactor/vaultClient.js
     16948  ui/static/phi_redactor_classic/vaultClient.js
     17724  docs/phi_review_system/README.md
@@ -1158,6 +1178,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     19612  docs/2-13_AI_ARCHITECTURE_UPGRADE_GUIDE_UPDATED.md
     19817  docs/MAKEFILE_COMMANDS.md
     19835  app/registry/ip_registry_schema_additions.json
+    20341  docs/AGENTS.md
     20538  ui/static/phi_redactor/pdf_local/pdf/ocrPostprocess.js
     20538  ui/static/phi_redactor_classic/pdf_local/pdf/ocrPostprocess.js
     24586  app/reporting/templates/macros/template_schema.json
@@ -1180,11 +1201,11 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
     53848  ui/static/phi_redactor_classic/reporter_builder.js
     54813  ui/static/phi_redactor/pdf_local/workers/ocr.worker.js
     54813  ui/static/phi_redactor_classic/pdf_local/workers/ocr.worker.js
-    59867  docs/USER_GUIDE.md
     62540  ui/static/phi_redactor/protectedVeto.legacy.js
     62540  ui/static/phi_redactor_classic/protectedVeto.legacy.js
     64308  ui/static/phi_redactor/protectedVeto.js
     64308  ui/static/phi_redactor_classic/protectedVeto.js
+    64789  docs/USER_GUIDE.md
     67175  ui/static/phi_redactor/vendor/tesseract/tesseract.esm.min.js
     67175  ui/static/phi_redactor_classic/vendor/tesseract/tesseract.esm.min.js
     75852  tests/fixtures/reporter_golden_dataset.json
@@ -1201,6 +1222,9 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
 ## Skipped (reason)
 
 ```
+ inline_cap_reached>75  ops/tools/registry_pipeline_smoke.py
+ inline_cap_reached>75  ops/tools/run_quality_gates.py
+ inline_cap_reached>75  ml/scripts/diamond_loop_cloud_sync.py
  inline_cap_reached>75  ml/scripts/merge_granular_attribute_spans.py
  inline_cap_reached>75  ops/tools/generate_cpt_keywords.py
  inline_cap_reached>75  ops/tools/compare_reporter_prompt_llm_findings_models.py
@@ -1211,8 +1235,8 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  ops/tools/export_phi_model_for_transformersjs.py
  inline_cap_reached>75  ml/scripts/convert_spans_to_bio.py
  inline_cap_reached>75  ml/scripts/bootstrap_relations_silver.py
- inline_cap_reached>75  ops/tools/eval_reporter_prompt_baseline.py
  inline_cap_reached>75  ml/scripts/extract_ner_from_excel.py
+ inline_cap_reached>75  ml/scripts/eval_golden.py
  inline_cap_reached>75  ops/tools/index_repo.py
  inline_cap_reached>75  ml/scripts/review_llm_fallback_errors.py
  inline_cap_reached>75  ops/tools/unified_pipeline_batch.py
@@ -1230,7 +1254,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  ml/scripts/prodigy_prepare_phi_batch.py
  inline_cap_reached>75  ml/scripts/build_model_agnostic_phi_spans.py
  inline_cap_reached>75  ml/scripts/generate_synthetic_phi_data.py
- inline_cap_reached>75  ops/tools/eval_reporter_prompt_llm_findings.py
  inline_cap_reached>75  ops/tools/eval_reporter_prompt_model.py
  inline_cap_reached>75  ml/scripts/audit_model_fp.py
  inline_cap_reached>75  ml/scripts/train_roberta_pm3.py
@@ -1363,6 +1386,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry/slots/pleura.py
  inline_cap_reached>75  app/common/exceptions.py
  inline_cap_reached>75  app/registry/heuristics/pipeline.py
+ inline_cap_reached>75  app/common/path_redaction.py
  inline_cap_reached>75  app/api/routes/umls.py
  inline_cap_reached>75  app/registry/aggregation/llm_models.py
  inline_cap_reached>75  app/phi/adapters/scrubber_stub.py
@@ -1395,7 +1419,6 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/coder/parallel_pathway/reconciler.py
  inline_cap_reached>75  app/registry_store/dependencies.py
  inline_cap_reached>75  app/registry/aggregation/pathology/normalize.py
- inline_cap_reached>75  app/coder/constants.py
  inline_cap_reached>75  app/coder/phi_gating.py
  inline_cap_reached>75  app/registry/aggregation/locks.py
  inline_cap_reached>75  app/phi/ports.py
@@ -1409,6 +1432,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/reporting/metadata.py
  inline_cap_reached>75  app/registry/self_correction/__init__.py
  inline_cap_reached>75  app/registry/legacy/adapters/base.py
+ inline_cap_reached>75  app/coder/constants.py
  inline_cap_reached>75  app/reporting/__init__.py
  inline_cap_reached>75  app/api/schemas/__init__.py
  inline_cap_reached>75  app/reporting/macro_engine_template_adapter.py
@@ -1470,6 +1494,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry_cleaning/logging_utils.py
  inline_cap_reached>75  app/registry/audit/compare.py
  inline_cap_reached>75  app/document_fingerprint/registry.py
+ inline_cap_reached>75  app/common/quality_gate_reports.py
  inline_cap_reached>75  app/registry_store/models.py
  inline_cap_reached>75  proc_schemas/clinical/common.py
  inline_cap_reached>75  app/document_fingerprint/provation.py
@@ -1478,12 +1503,11 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry/self_correction/judge.py
  inline_cap_reached>75  app/api/services/financials.py
  inline_cap_reached>75  app/api/routes/unified_process.py
- inline_cap_reached>75  app/reporting/partial_schemas.py
  inline_cap_reached>75  app/common/sectionizer.py
  inline_cap_reached>75  app/registry/aggregation/imaging/parse_common.py
  inline_cap_reached>75  app/coder/adapters/nlp/simple_negation_detector.py
- inline_cap_reached>75  app/api/auth.py
  inline_cap_reached>75  app/registry/cli.py
+ inline_cap_reached>75  app/api/auth.py
  inline_cap_reached>75  app/registry/aggregation/pathology/extract_pathology_results.py
  inline_cap_reached>75  app/document_fingerprint/endosoft.py
  inline_cap_reached>75  app/api/phi_demo_store.py
@@ -1497,9 +1521,10 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/reporting/json_patch.py
  inline_cap_reached>75  app/evidence/quote_anchor.py
  inline_cap_reached>75  app/api/routes/legacy_coder.py
- inline_cap_reached>75  app/ner/entity_types.py
+ inline_cap_reached>75  app/reporting/partial_schemas.py
  inline_cap_reached>75  app/registry/extraction/structurer.py
  inline_cap_reached>75  app/api/bootstrap.py
+ inline_cap_reached>75  app/ner/entity_types.py
  inline_cap_reached>75  app/coder/parallel_pathway/confidence_combiner.py
  inline_cap_reached>75  app/coder/ncci.py
  inline_cap_reached>75  app/registry_cleaning/consistency_utils.py
@@ -1514,10 +1539,10 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/api/routes/process_bundle.py
  inline_cap_reached>75  app/registry/slots/therapeutics.py
  inline_cap_reached>75  app/reporting/ip_addons.py
- inline_cap_reached>75  app/api/routes/qa.py
  inline_cap_reached>75  app/registry/self_correction/apply.py
  inline_cap_reached>75  app/infra/nlp_warmup.py
  inline_cap_reached>75  app/coder/application/candidate_expansion.py
+ inline_cap_reached>75  app/api/routes/qa.py
  inline_cap_reached>75  app/agents/run_pipeline.py
  inline_cap_reached>75  app/registry/infra/model_provider.py
  inline_cap_reached>75  app/registry/processing/navigation_fiducials.py
@@ -1545,11 +1570,11 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/agents/relation_extraction/llm_proposer.py
  inline_cap_reached>75  app/api/routes_registry.py
  inline_cap_reached>75  app/registry/postprocess/template_checkbox_negation.py
+ inline_cap_reached>75  app/common/quality_eval.py
  inline_cap_reached>75  app/coder/adapters/nlp/keyword_mapping_loader.py
  inline_cap_reached>75  app/common/knowledge.py
  inline_cap_reached>75  app/api/routes/phi.py
  inline_cap_reached>75  app/registry/application/pathology_extraction.py
- inline_cap_reached>75  app/reporting/normalization/text_enricher.py
  inline_cap_reached>75  app/registry_cleaning/schema_utils.py
  inline_cap_reached>75  app/domain/knowledge_base/validator.py
  inline_cap_reached>75  app/registry/heuristics/navigation_targets.py
@@ -1561,6 +1586,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry/legacy/adapters/pleural.py
  inline_cap_reached>75  app/registry/self_correction/validation.py
  inline_cap_reached>75  app/registry/ml/models.py
+ inline_cap_reached>75  app/reporting/normalization/text_enricher.py
  inline_cap_reached>75  app/registry/schema/adapters/v3_to_v2.py
  inline_cap_reached>75  app/registry/v2_booleans.py
  inline_cap_reached>75  app/domain/coding_rules/json_rules_evaluator.py
@@ -1571,23 +1597,23 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry/extractors/v3_extractor.py
  inline_cap_reached>75  app/ner/inference.py
  inline_cap_reached>75  app/registry/ner_mapping/station_extractor.py
- inline_cap_reached>75  app/api/services/unified_pipeline.py
  inline_cap_reached>75  app/agents/aggregator/timeline_aggregator.py
  inline_cap_reached>75  app/coder/rules_engine.py
- inline_cap_reached>75  app/api/routes/registry_case.py
- inline_cap_reached>75  app/registry/application/cpt_registry_mapping.py
+ inline_cap_reached>75  app/api/services/unified_pipeline.py
  inline_cap_reached>75  app/api/dependencies.py
+ inline_cap_reached>75  app/api/routes/registry_case.py
  inline_cap_reached>75  app/phi/safety/veto.py
+ inline_cap_reached>75  app/registry/application/cpt_registry_mapping.py
  inline_cap_reached>75  proc_schemas/clinical/airway.py
  inline_cap_reached>75  app/common/openai_responses.py
  inline_cap_reached>75  app/coder/reconciliation/reconciler.py
  inline_cap_reached>75  app/api/schemas/base.py
  inline_cap_reached>75  app/api/routes/registry_runs.py
- inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
- inline_cap_reached>75  app/coder/adapters/llm/gemini_advisor.py
- inline_cap_reached>75  app/registry/application/coding_support_builder.py
- inline_cap_reached>75  app/registry/normalization.py
  inline_cap_reached>75  app/api/services/qa_pipeline.py
+ inline_cap_reached>75  app/coder/adapters/llm/gemini_advisor.py
+ inline_cap_reached>75  app/registry/normalization.py
+ inline_cap_reached>75  app/registry/application/coding_support_builder.py
+ inline_cap_reached>75  app/common/reporter_seed_eval.py
  inline_cap_reached>75  proc_schemas/registry/ip_v3.py
  inline_cap_reached>75  app/registry/inference_onnx.py
  inline_cap_reached>75  app/coder/adapters/persistence/csv_kb_adapter.py
@@ -1598,10 +1624,12 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/registry/extractors/llm_detailed.py
  inline_cap_reached>75  app/api/fastapi_app.py
  inline_cap_reached>75  app/reporting/macro_engine.py
+ inline_cap_reached>75  app/registry/postprocess/complications_reconcile.py
  inline_cap_reached>75  app/coder/adapters/llm/openai_compat_advisor.py
  inline_cap_reached>75  app/domain/coding_rules/rule_engine.py
  inline_cap_reached>75  app/coder/adapters/persistence/supabase_procedure_store.py
  inline_cap_reached>75  app/registry/ner_mapping/procedure_extractor.py
+ inline_cap_reached>75  app/reporting/seed_pipeline.py
  inline_cap_reached>75  app/reporting/questions.py
  inline_cap_reached>75  app/phi/adapters/presidio_scrubber.py
  inline_cap_reached>75  app/api/routes/reporting.py
@@ -1615,15 +1643,15 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/api/ml_advisor_router.py
  inline_cap_reached>75  app/registry/processing/cao_interventions_detail.py
  inline_cap_reached>75  app/registry/processing/disease_burden.py
- inline_cap_reached>75  app/reporting/pipeline.py
  inline_cap_reached>75  app/registry/schema/v2_dynamic.py
- inline_cap_reached>75  app/registry/legacy/adapters/airway.py
- inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/phi/adapters/phi_redactor_hybrid.py
  inline_cap_reached>75  app/registry/ml/action_predictor.py
  inline_cap_reached>75  app/coder/dictionary.py
+ inline_cap_reached>75  app/registry/legacy/adapters/airway.py
  inline_cap_reached>75  app/registry/schema/granular_models.py
+ inline_cap_reached>75  app/registry/processing/linear_ebus_stations_detail.py
  inline_cap_reached>75  app/proc_ml_advisor/schemas.py
+ inline_cap_reached>75  app/reporting/pipeline.py
  inline_cap_reached>75  app/api/routes/procedure_codes.py
  inline_cap_reached>75  app/common/llm.py
  inline_cap_reached>75  app/registry/schema/granular_logic.py
@@ -1632,11 +1660,11 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
  inline_cap_reached>75  app/autocode/ip_kb/ip_kb.py
  inline_cap_reached>75  app/reporting/llm_findings.py
  inline_cap_reached>75  app/registry/prompts.py
- inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/coder/domain_rules/registry_to_cpt/coding_rules.py
- inline_cap_reached>75  app/reporting/engine.py
+ inline_cap_reached>75  app/extraction/postprocessing/clinical_guardrails.py
  inline_cap_reached>75  app/registry/engine.py
  inline_cap_reached>75  app/reporting/normalization/compat_enricher.py
+ inline_cap_reached>75  app/reporting/engine.py
  inline_cap_reached>75  app/registry/application/registry_service.py
      too_large>200000B  app/registry/deterministic_extractors.py
      too_large>200000B  app/registry/postprocess/__init__.py
@@ -1644,6 +1672,7 @@ Git: `codex/reporter-batch-quality` @ `bad4e67f`
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner/vocab.txt
      too_large>200000B  ui/static/phi_redactor_classic/vendor/phi_distilbert_ner_quant/vocab.txt
+     too_large>200000B  tests/fixtures/reporter_seed_eval_llm_fixture_full.json
      too_large>200000B  ui/static/phi_redactor_classic/app.js
      too_large>200000B  ui/static/phi_redactor/app.js
      too_large>200000B  ui/static/phi_redactor/vendor/phi_distilbert_ner/tokenizer.json
@@ -1862,6 +1891,57 @@ def main() -> int:
         # for newer schemas without requiring flags.
         Draft202012Validator.check_schema(schema)
     print(f"Schema OK: {schema_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+```
+
+---
+### `ops/tools/summarize_reporter_seed_fallbacks.py`
+- Size: `1356` bytes
+```
+#!/usr/bin/env python3
+"""Summarize strict-render fallback reasons for two reporter seed-path evaluation reports."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from app.common.reporter_seed_eval import build_seed_path_fallback_reason_report, maybe_write_json
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--left-report", type=Path, required=True)
+    parser.add_argument("--right-report", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    return parser.parse_args(argv)
+
+
+def _load(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    payload = build_seed_path_fallback_reason_report(
+        left_report=_load(args.left_report),
+        right_report=_load(args.right_report),
+        left_path=str(args.left_report),
+        right_path=str(args.right_report),
+    )
+    maybe_write_json(args.output, payload)
+    print(f"Wrote fallback summary: {args.output}")
     return 0
 
 
@@ -4460,6 +4540,149 @@ if __name__ == "__main__":  # pragma: no cover
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
         raise SystemExit(2)
+
+```
+
+---
+### `ops/tools/eval_reporter_prompt_baseline.py`
+- Size: `4878` bytes
+```
+#!/usr/bin/env python3
+"""Evaluate reporter generation via the registry_extract_fields seed path."""
+
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
+
+
+def configure_eval_env() -> dict[str, str]:
+    if _truthy_env("PROCSUITE_ALLOW_ONLINE"):
+        return {}
+
+    forced = {
+        "PROCSUITE_SKIP_DOTENV": "1",
+        "PROCSUITE_PIPELINE_MODE": "extraction_first",
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        "REGISTRY_LLM_FALLBACK_ON_COVERAGE_FAIL": "0",
+        "REGISTRY_AUDITOR_SOURCE": "disabled",
+        "REGISTRY_USE_STUB_LLM": "1",
+        "GEMINI_OFFLINE": "1",
+        "OPENAI_OFFLINE": "1",
+        "REPORTER_DISABLE_LLM": "1",
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+        "PROCSUITE_FAST_MODE": "1",
+        "PROCSUITE_SKIP_WARMUP": "1",
+    }
+
+    applied: dict[str, str] = {}
+    for key, value in forced.items():
+        if os.environ.get(key) != value:
+            os.environ[key] = value
+            applied[key] = value
+    return applied
+
+
+_APPLIED_ENV_DEFAULTS = configure_eval_env()
+
+from app.common.reporter_seed_eval import (
+    ReporterEvalCaseOutput,
+    ReporterEvalRow,
+    evaluate_seed_path,
+    load_eval_rows,
+    maybe_subsample,
+    maybe_write_json,
+)
+from app.registry.application.registry_service import RegistryService
+from app.reporting.seed_pipeline import run_reporter_seed_pipeline, seed_outcome_from_registry_result
+
+DEFAULT_INPUT = Path("data/ml_training/reporter_prompt/v1/reporter_prompt_test.jsonl")
+DEFAULT_OUTPUT = Path("data/ml_training/reporter_prompt/v1/reporter_prompt_baseline_report.json")
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--max-cases", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--prompt-field", default="prompt_text")
+    parser.add_argument("--strict", action="store_true", help="Render in strict mode for fallback-rate measurement.")
+    return parser.parse_args(argv)
+
+
+def build_case_runner(*, registry_service: RegistryService, strict: bool):
+    def _run(row: ReporterEvalRow) -> ReporterEvalCaseOutput:
+        extraction_result = registry_service.extract_fields(row.prompt_text)
+        seed_outcome = seed_outcome_from_registry_result(
+            extraction_result,
+            masked_seed_text=row.prompt_text,
+        )
+        pipeline_result = run_reporter_seed_pipeline(
+            seed_outcome,
+            note_text=row.prompt_text,
+            strict=strict,
+            debug_enabled=False,
+        )
+        return ReporterEvalCaseOutput(
+            markdown=pipeline_result.markdown,
+            warnings=list(seed_outcome.warnings or []),
+            quality_flags=list(seed_outcome.quality_flags or []),
+            needs_review=bool(seed_outcome.needs_review),
+            render_fallback_used=bool(pipeline_result.render_fallback_used),
+            render_fallback_reason=pipeline_result.render_fallback_reason,
+            render_fallback_category=pipeline_result.render_fallback_category,
+            render_fallback_details=dict(pipeline_result.render_fallback_details or {}),
+        )
+
+    return _run
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if not args.input.exists():
+        raise FileNotFoundError(f"Input dataset not found: {args.input}")
+
+    rows = maybe_subsample(
+        load_eval_rows(Path(args.input), prompt_field=str(args.prompt_field or "prompt_text")),
+        int(args.max_cases),
+        int(args.seed),
+    )
+    registry_service = RegistryService()
+    payload = evaluate_seed_path(
+        rows=rows,
+        seed_path="registry_extract_fields",
+        run_case=build_case_runner(registry_service=registry_service, strict=bool(args.strict)),
+        registry_service=registry_service,
+        input_path=str(args.input),
+        output_path=str(args.output),
+        prompt_field=str(args.prompt_field or "prompt_text"),
+        environment_defaults_applied=_APPLIED_ENV_DEFAULTS,
+        metadata={
+            "production_default": True,
+            "challenger_only": False,
+            "strict_requested": bool(args.strict),
+        },
+    )
+    maybe_write_json(Path(args.output), payload)
+    print("Seed path: registry_extract_fields")
+    print(f"Wrote report: {args.output}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 ```
 
@@ -11694,262 +11917,228 @@ if __name__ == "__main__":
 ```
 
 ---
-### `ml/scripts/eval_golden.py`
-- Size: `8444` bytes
+### `ops/tools/eval_reporter_prompt_llm_findings.py`
+- Size: `8734` bytes
 ```
 #!/usr/bin/env python3
-"""Legacy golden evaluator (read-only).
-
-This script runs the extraction-first pipeline against golden fixtures and
-computes a simple baseline pass rate (primarily CPT code set equality).
-
-It is intentionally conservative:
-- it does not modify fixtures
-- it can be safely skipped when fixture data is not present in the repo/CI
-"""
+"""Evaluate reporter generation via the llm_findings seed path."""
 
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import sys
-from collections import Counter
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-def _normalize_code(code: str) -> str:
-    raw = (code or "").strip()
-    if not raw:
-        return ""
-    raw = raw.lstrip("+").strip()
-    return raw
+
+def _truthy_env(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
 
 
-def _iter_fixture_files(input_path: Path, pattern: str) -> Iterable[Path]:
-    if input_path.is_file():
-        yield input_path
-        return
-    if not input_path.exists():
-        return
-    if not input_path.is_dir():
-        return
-    yield from sorted(input_path.glob(pattern))
+def configure_eval_env() -> dict[str, str]:
+    allow_online = _truthy_env("PROCSUITE_ALLOW_ONLINE")
+
+    forced = {
+        "PROCSUITE_SKIP_DOTENV": "1",
+        "PROCSUITE_PIPELINE_MODE": "extraction_first",
+        "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+        "REGISTRY_SELF_CORRECT_ENABLED": "0",
+        "REGISTRY_LLM_FALLBACK_ON_COVERAGE_FAIL": "0",
+        "REGISTRY_AUDITOR_SOURCE": "disabled",
+        "REGISTRY_USE_STUB_LLM": "1",
+        "GEMINI_OFFLINE": "1",
+        "QA_REPORTER_ALLOW_SIMPLE_FALLBACK": "0",
+        "PROCSUITE_FAST_MODE": "1",
+        "PROCSUITE_SKIP_WARMUP": "1",
+    }
+
+    if allow_online:
+        forced["OPENAI_OFFLINE"] = "0"
+        forced["REPORTER_DISABLE_LLM"] = "0"
+    else:
+        forced["OPENAI_OFFLINE"] = "1"
+        forced["REPORTER_DISABLE_LLM"] = "1"
+
+    applied: dict[str, str] = {}
+    for key, value in forced.items():
+        if os.environ.get(key) != value:
+            os.environ[key] = value
+            applied[key] = value
+    return applied
 
 
-def _load_entries(path: Path) -> list[dict[str, Any]]:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    if isinstance(data, list):
-        return [d for d in data if isinstance(d, dict)]
-    if isinstance(data, dict):
-        for key in ("entries", "records", "data"):
-            value = data.get(key)
-            if isinstance(value, list):
-                return [d for d in value if isinstance(d, dict)]
-    raise ValueError(f"Unrecognized fixture JSON shape in {path}")
+_APPLIED_ENV_DEFAULTS = configure_eval_env()
 
+from app.common.exceptions import LLMError
+from app.common.reporter_seed_eval import (
+    ReporterEvalCaseOutput,
+    ReporterEvalRow,
+    drop_reason_counts,
+    evaluate_seed_path,
+    load_eval_rows,
+    load_seed_fixture,
+    maybe_subsample,
+    maybe_write_json,
+)
+from app.registry.application.registry_service import RegistryService
+from app.registry.schema import RegistryRecord
+from app.reporting.llm_findings import (
+    ClinicalContextV1,
+    LLMFindingsSeedResult,
+    build_record_payload_for_reporting,
+    seed_registry_record_from_llm_findings,
+)
+from app.reporting.seed_pipeline import run_reporter_seed_pipeline, seed_outcome_from_llm_findings_seed
 
-def _extract_note_text(entry: dict[str, Any]) -> str:
-    for key in ("note_text", "note", "text", "raw_text"):
-        value = entry.get(key)
-        if isinstance(value, str) and value.strip():
-            return value
-    return ""
-
-
-def _extract_expected_codes(entry: dict[str, Any]) -> list[str]:
-    for key in ("cpt_codes", "codes", "expected_codes"):
-        value = entry.get(key)
-        if isinstance(value, list):
-            out: list[str] = []
-            for item in value:
-                if isinstance(item, str):
-                    norm = _normalize_code(item)
-                    if norm:
-                        out.append(norm)
-            return out
-    return []
-
-
-def _extract_note_id(entry: dict[str, Any]) -> str | None:
-    registry = entry.get("registry_entry")
-    if isinstance(registry, dict):
-        for key in ("patient_mrn", "note_id", "patient_id"):
-            value = registry.get(key)
-            if isinstance(value, str) and value.strip():
-                return value.strip()
-    for key in ("note_id", "noteId", "id"):
-        value = entry.get(key)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    return None
-
-
-@dataclass(frozen=True)
-class CaseResult:
-    note_id: str | None
-    expected_codes: list[str]
-    predicted_codes: list[str]
-    exact_match: bool
+DEFAULT_INPUT = Path("data/ml_training/reporter_prompt/v1/reporter_prompt_test.jsonl")
+DEFAULT_OUTPUT = Path("data/ml_training/reporter_prompt/v1/reporter_prompt_llm_findings_eval_report.json")
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Evaluate extraction against golden fixtures.")
-    p.add_argument(
-        "--input",
-        type=Path,
-        default=Path("data/knowledge/golden_extractions_final"),
-        help="Directory containing golden_*.json (arrays) OR a single JSON file.",
-    )
-    p.add_argument(
-        "--pattern",
-        type=str,
-        default="golden_*.json",
-        help="Glob pattern for fixture files when --input is a directory.",
-    )
-    p.add_argument("--limit", type=int, default=0, help="Max cases to evaluate (0 = no limit).")
-    p.add_argument(
-        "--extraction-engine",
-        type=str,
-        default="",
-        help="Override REGISTRY_EXTRACTION_ENGINE for evaluation (e.g., engine, parallel_ner).",
-    )
-    p.add_argument(
-        "--output",
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--max-cases", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--prompt-field", default="prompt_text")
+    parser.add_argument("--strict", action="store_true", help="Render in strict mode for fallback-rate measurement.")
+    parser.add_argument(
+        "--seed-fixture",
         type=Path,
         default=None,
-        help="Optional path to write a JSON report.",
+        help="Optional offline fixture for canned llm_findings seeds keyed by row id.",
     )
-    p.add_argument(
-        "--fail-under",
-        type=float,
-        default=None,
-        help="Exit non-zero if exact-match rate is below this percent (0-100).",
+    return parser.parse_args(argv)
+
+
+def categorize_llm_error(exc: Exception) -> str | None:
+    if not isinstance(exc, LLMError):
+        return None
+    msg = str(exc).strip().lower()
+    if not msg:
+        return "other"
+    if any(token in msg for token in ("unauthorized", "invalid api key", "api_key", "authentication", "status=401")):
+        return "auth"
+    if any(token in msg for token in ("model", "not found", "does not exist", "you do not have access")):
+        return "model_access"
+    if any(token in msg for token in ("rate limit", "status=429", "too many requests")):
+        return "rate_limit"
+    if "timeout" in msg:
+        return "timeout"
+    if any(token in msg for token in ("network error", "connection", "dns", "ssl")):
+        return "network"
+    if any(token in msg for token in ("status=400", "bad request", "unsupported", "invalid", "parameter")):
+        return "bad_request"
+    return "other"
+
+
+def _seed_from_fixture_row(row: ReporterEvalRow, fixture_map: dict[str, dict[str, object]]) -> LLMFindingsSeedResult:
+    payload = fixture_map.get(row.id)
+    if payload is None:
+        raise KeyError(f"No llm seed fixture case found for {row.id}")
+
+    context_payload = payload.get("context")
+    context = ClinicalContextV1.model_validate(context_payload) if isinstance(context_payload, dict) else None
+
+    return LLMFindingsSeedResult(
+        record=RegistryRecord.model_validate(payload.get("record") or {}),
+        masked_prompt_text=str(payload.get("masked_prompt_text") or row.prompt_text),
+        cpt_codes=[str(code) for code in list(payload.get("cpt_codes") or [])],
+        warnings=[str(item) for item in list(payload.get("warnings") or []) if str(item)],
+        needs_review=bool(payload.get("needs_review")),
+        context=context,
+        accepted_items=[],
+        accepted_findings=int(payload.get("accepted_findings") or 0),
+        dropped_findings=int(payload.get("dropped_findings") or 0),
     )
-    return p.parse_args(argv)
+
+
+def build_case_runner(
+    *,
+    strict: bool,
+    fixture_map: dict[str, dict[str, object]] | None,
+):
+    def _run(row: ReporterEvalRow) -> ReporterEvalCaseOutput:
+        try:
+            if fixture_map is not None:
+                seed = _seed_from_fixture_row(row, fixture_map)
+            else:
+                seed = seed_registry_record_from_llm_findings(row.prompt_text)
+        except Exception as exc:  # noqa: BLE001
+            error_code = categorize_llm_error(exc)
+            raise RuntimeError(error_code or str(type(exc).__name__)) from exc
+
+        seed_outcome = seed_outcome_from_llm_findings_seed(
+            seed,
+            reporting_payload=build_record_payload_for_reporting(seed),
+        )
+        pipeline_result = run_reporter_seed_pipeline(
+            seed_outcome,
+            note_text=row.prompt_text,
+            strict=strict,
+            debug_enabled=False,
+        )
+        return ReporterEvalCaseOutput(
+            markdown=pipeline_result.markdown,
+            warnings=list(seed_outcome.warnings or []),
+            quality_flags=list(seed_outcome.quality_flags or []),
+            needs_review=bool(seed_outcome.needs_review),
+            render_fallback_used=bool(pipeline_result.render_fallback_used),
+            render_fallback_reason=pipeline_result.render_fallback_reason,
+            render_fallback_category=pipeline_result.render_fallback_category,
+            render_fallback_details=dict(pipeline_result.render_fallback_details or {}),
+            accepted_findings=int(getattr(seed, "accepted_findings", 0) or 0),
+            dropped_findings=int(getattr(seed, "dropped_findings", 0) or 0),
+            drop_reason_counts=drop_reason_counts(list(seed_outcome.warnings or [])),
+        )
+
+    return _run
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if not args.input.exists():
+        raise FileNotFoundError(f"Input dataset not found: {args.input}")
 
-    if args.extraction_engine:
-        os.environ["REGISTRY_EXTRACTION_ENGINE"] = str(args.extraction_engine).strip()
-
-    fixture_files = list(_iter_fixture_files(args.input, args.pattern))
-    if not fixture_files:
-        print(f"eval_golden: no fixture files found under {args.input}; skipping.")
-        return 0
-
-    try:
-        from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
-        from app.registry.application.registry_service import RegistryService
-    except Exception as exc:
-        print(f"eval_golden: import error: {exc}", file=sys.stderr)
+    if args.seed_fixture is None and not _truthy_env("PROCSUITE_ALLOW_ONLINE"):
+        print("This evaluation requires real GPT calls unless --seed-fixture is provided.")
+        print("Set PROCSUITE_ALLOW_ONLINE=1 or pass --seed-fixture for offline challenger evaluation.")
         return 2
 
-    service = RegistryService()
-
-    results: list[CaseResult] = []
-    evaluated = 0
-
-    for path in fixture_files:
-        try:
-            entries = _load_entries(path)
-        except Exception as exc:
-            print(f"eval_golden: failed to load {path}: {exc}", file=sys.stderr)
-            continue
-
-        for entry in entries:
-            note_text = _extract_note_text(entry)
-            if not note_text.strip():
-                continue
-
-            expected_codes = _extract_expected_codes(entry)
-            note_id = _extract_note_id(entry)
-
-            record, _warnings, _meta = service.extract_record(note_text, note_id=note_id)
-            predicted_codes, _rationales, _derive_warnings = derive_all_codes_with_meta(record)
-
-            expected_set = {c for c in (_normalize_code(c) for c in expected_codes) if c}
-            predicted_set = {c for c in (_normalize_code(c) for c in predicted_codes) if c}
-
-            results.append(
-                CaseResult(
-                    note_id=note_id,
-                    expected_codes=sorted(expected_set),
-                    predicted_codes=sorted(predicted_set),
-                    exact_match=expected_set == predicted_set,
-                )
-            )
-
-            evaluated += 1
-            if args.limit and evaluated >= int(args.limit):
-                break
-        if args.limit and evaluated >= int(args.limit):
-            break
-
-    if evaluated <= 0:
-        print("eval_golden: no runnable cases found; skipping.")
-        return 0
-
-    exact_matches = sum(1 for r in results if r.exact_match)
-    rate = (exact_matches / evaluated) * 100.0
-
-    failures = [r for r in results if not r.exact_match]
-    missing_counter: Counter[str] = Counter()
-    extra_counter: Counter[str] = Counter()
-    for r in failures:
-        expected_set = set(r.expected_codes)
-        predicted_set = set(r.predicted_codes)
-        missing_counter.update(expected_set - predicted_set)
-        extra_counter.update(predicted_set - expected_set)
-
-    print(f"eval_golden: evaluated={evaluated} exact_code_match={exact_matches} ({rate:.1f}%)")
-
-    if failures:
-        top_missing = ", ".join([f"{c}({n})" for c, n in missing_counter.most_common(10)])
-        top_extra = ", ".join([f"{c}({n})" for c, n in extra_counter.most_common(10)])
-        if top_missing:
-            print(f"  top_missing: {top_missing}")
-        if top_extra:
-            print(f"  top_extra: {top_extra}")
-
-    if args.output:
-        report = {
-            "evaluated": evaluated,
-            "exact_code_match": exact_matches,
-            "exact_code_match_rate": rate,
-            "extraction_engine": os.getenv("REGISTRY_EXTRACTION_ENGINE", ""),
-            "results": [
-                {
-                    "note_id": r.note_id,
-                    "exact_match": r.exact_match,
-                    "expected_codes": r.expected_codes,
-                    "predicted_codes": r.predicted_codes,
-                }
-                for r in results
-            ],
-        }
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(
-            json.dumps(report, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
-        print(f"eval_golden: wrote report to {args.output}")
-
-    if args.fail_under is not None and rate < float(args.fail_under):
-        threshold = float(args.fail_under)
-        print(
-            f"eval_golden: FAIL (rate {rate:.1f}% < {threshold:.1f}%)",
-            file=sys.stderr,
-        )
-        return 1
-
+    rows = maybe_subsample(
+        load_eval_rows(Path(args.input), prompt_field=str(args.prompt_field or "prompt_text")),
+        int(args.max_cases),
+        int(args.seed),
+    )
+    fixture_map = load_seed_fixture(Path(args.seed_fixture)) if args.seed_fixture else None
+    registry_service = RegistryService()
+    payload = evaluate_seed_path(
+        rows=rows,
+        seed_path="llm_findings",
+        run_case=build_case_runner(strict=bool(args.strict), fixture_map=fixture_map),
+        registry_service=registry_service,
+        input_path=str(args.input),
+        output_path=str(args.output),
+        prompt_field=str(args.prompt_field or "prompt_text"),
+        environment_defaults_applied=_APPLIED_ENV_DEFAULTS,
+        metadata={
+            "production_default": False,
+            "challenger_only": True,
+            "strict_requested": bool(args.strict),
+            "llm_provider": os.getenv("LLM_PROVIDER"),
+            "openai_primary_api": os.getenv("OPENAI_PRIMARY_API"),
+            "openai_model_structurer": os.getenv("OPENAI_MODEL_STRUCTURER"),
+            "seed_fixture_used": bool(args.seed_fixture),
+            "seed_fixture_path": str(args.seed_fixture) if args.seed_fixture else None,
+        },
+    )
+    maybe_write_json(Path(args.output), payload)
+    print("Seed path: llm_findings")
+    print(f"Wrote report: {args.output}")
     return 0
 
 
@@ -13837,538 +14026,6 @@ def main() -> int:
     else:
         logger.info("Output directory: %s", args.output_dir)
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-
-```
-
----
-### `ops/tools/registry_pipeline_smoke.py`
-- Size: `9715` bytes
-```
-#!/usr/bin/env python3
-from __future__ import annotations
-
-import argparse
-import os
-import sys
-from pathlib import Path
-from typing import Any
-
-from dotenv import load_dotenv
-
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-
-def _truthy_env(name: str) -> bool:
-    return os.getenv(name, "").strip().lower() in ("1", "true", "yes")
-
-
-if not _truthy_env("PROCSUITE_SKIP_DOTENV"):
-    load_dotenv(override=False)
-
-from app.registry.application.registry_service import RegistryService  # noqa: E402
-from app.registry.deterministic_extractors import run_deterministic_extractors  # noqa: E402
-from app.registry.processing.masking import mask_offset_preserving  # noqa: E402
-from app.registry.processing.navigation_fiducials import (  # noqa: E402
-    apply_navigation_fiducials,
-)
-from app.registry.schema import RegistryRecord  # noqa: E402
-from app.registry.self_correction.keyword_guard import scan_for_omissions  # noqa: E402
-
-
-def _read_note_text(path: str | None, inline_text: str | None) -> str:
-    if inline_text:
-        return inline_text
-    if not path:
-        raise ValueError("Provide --note or --text.")
-    note_path = Path(path)
-    return note_path.read_text(encoding="utf-8")
-
-
-def _collect_performed_flags(record_data: dict[str, Any]) -> set[str]:
-    flags: set[str] = set()
-    procs = record_data.get("procedures_performed")
-    if isinstance(procs, dict):
-        for name, payload in procs.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"procedures_performed.{name}.performed")
-
-    pleural = record_data.get("pleural_procedures")
-    if isinstance(pleural, dict):
-        for name, payload in pleural.items():
-            if isinstance(payload, dict) and payload.get("performed") is True:
-                flags.add(f"pleural_procedures.{name}.performed")
-
-    if record_data.get("established_tracheostomy_route") is True:
-        flags.add("established_tracheostomy_route")
-
-    granular = record_data.get("granular_data")
-    if isinstance(granular, dict):
-        targets = granular.get("navigation_targets")
-        if isinstance(targets, list):
-            for target in targets:
-                if isinstance(target, dict) and target.get("fiducial_marker_placed") is True:
-                    flags.add("granular_data.navigation_targets[*].fiducial_marker_placed")
-                    break
-
-    return flags
-
-
-def _apply_seed_uplift(
-    record_data: dict[str, Any],
-    seed: dict[str, Any],
-    masked_note_text: str,
-) -> tuple[dict[str, Any], list[str]]:
-    uplifted: list[str] = []
-
-    seed_procs = seed.get("procedures_performed")
-    if isinstance(seed_procs, dict):
-        record_procs = record_data.get("procedures_performed") or {}
-        if not isinstance(record_procs, dict):
-            record_procs = {}
-        for name, payload in seed_procs.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_procs.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"procedures_performed.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_procs[name] = existing
-        if record_procs:
-            record_data["procedures_performed"] = record_procs
-
-    seed_pleural = seed.get("pleural_procedures")
-    if isinstance(seed_pleural, dict):
-        record_pleural = record_data.get("pleural_procedures") or {}
-        if not isinstance(record_pleural, dict):
-            record_pleural = {}
-        for name, payload in seed_pleural.items():
-            if not isinstance(payload, dict) or payload.get("performed") is not True:
-                continue
-            existing = record_pleural.get(name) or {}
-            if not isinstance(existing, dict):
-                existing = {}
-            if existing.get("performed") is not True:
-                existing["performed"] = True
-                uplifted.append(f"pleural_procedures.{name}.performed")
-            for key, value in payload.items():
-                if key == "performed":
-                    continue
-                if existing.get(key) in (None, "", [], {}):
-                    existing[key] = value
-            record_pleural[name] = existing
-        if record_pleural:
-            record_data["pleural_procedures"] = record_pleural
-
-    if seed.get("established_tracheostomy_route") is True:
-        if record_data.get("established_tracheostomy_route") is not True:
-            record_data["established_tracheostomy_route"] = True
-            uplifted.append("established_tracheostomy_route")
-
-    if apply_navigation_fiducials(record_data, masked_note_text):
-        uplifted.append("granular_data.navigation_targets[*].fiducial_marker_placed")
-
-    return record_data, uplifted
-
-
-def _print_list(label: str, items: list[str] | set[str]) -> None:
-    if not items:
-        print(f"{label}: (none)")
-        return
-    if isinstance(items, set):
-        items = sorted(items)
-    print(f"{label}:")
-    for item in items:
-        print(f"  - {item}")
-
-
-def _print_self_correction_diagnostics(result) -> None:
-    audit_report = getattr(result, "audit_report", None)
-    high_conf = getattr(audit_report, "high_conf_omissions", None) if audit_report is not None else None
-    if not high_conf:
-        print("Audit high-conf omissions: (none)")
-    else:
-        print("Audit high-conf omissions:")
-        for pred in high_conf:
-            cpt = getattr(pred, "cpt", None)
-            prob = getattr(pred, "prob", None)
-            bucket = getattr(pred, "bucket", None)
-            try:
-                prob_str = f"{float(prob):.2f}" if prob is not None else "?"
-            except Exception:
-                prob_str = "?"
-            print(f"  - {cpt} (prob={prob_str}, bucket={bucket})")
-
-    warnings = getattr(result, "warnings", None)
-    if isinstance(warnings, list):
-        self_correct_warnings = [w for w in warnings if isinstance(w, str) and "SELF_CORRECT" in w]
-        auto_corrected = [w for w in warnings if isinstance(w, str) and "AUTO_CORRECTED" in w]
-        diag = self_correct_warnings + auto_corrected
-        if diag:
-            print("Self-correction diagnostics:")
-            for w in diag:
-                print(f"  - {w}")
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Smoke test the registry extraction pipeline on a note."
-    )
-    parser.add_argument("--note", help="Path to a note text file.")
-    parser.add_argument("--text", help="Inline note text.")
-    parser.add_argument(
-        "--self-correct",
-        action="store_true",
-        help="Attempt self-correction via extract_fields (requires raw-ML + LLM).",
-    )
-    parser.add_argument(
-        "--real-llm",
-        action="store_true",
-        help="Allow real LLM calls (disables stub/offline defaults).",
-    )
-    args = parser.parse_args()
-
-    try:
-        note_text = _read_note_text(args.note, args.text)
-    except Exception as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
-
-    if args.real_llm:
-        os.environ.setdefault("REGISTRY_USE_STUB_LLM", "0")
-        os.environ.setdefault("GEMINI_OFFLINE", "0")
-        os.environ.setdefault("OPENAI_OFFLINE", "0")
-    else:
-        if os.getenv("REGISTRY_USE_STUB_LLM") is None:
-            os.environ["REGISTRY_USE_STUB_LLM"] = "1"
-        if os.getenv("GEMINI_OFFLINE") is None:
-            os.environ["GEMINI_OFFLINE"] = "1"
-
-    masked = mask_offset_preserving(note_text)
-
-    service = RegistryService()
-    record, warnings, meta = service.extract_record(note_text)
-
-    before_flags = _collect_performed_flags(record.model_dump())
-
-    seed = run_deterministic_extractors(masked)
-    record_data = record.model_dump()
-    record_data, uplifted = _apply_seed_uplift(record_data, seed, masked)
-    uplifted_flags = set(uplifted)
-    after_flags = _collect_performed_flags(record_data)
-
-    record_after = RegistryRecord(**record_data)
-    omission_warnings = scan_for_omissions(masked, record_after)
-
-    _print_list("Performed flags (extract_record)", before_flags)
-    _print_list("Performed flags added by deterministic uplift", uplifted_flags)
-    _print_list("Performed flags (after uplift)", after_flags)
-    _print_list("Extract warnings", warnings)
-    _print_list("Omission warnings", omission_warnings)
-
-    if args.self_correct:
-        os.environ.setdefault("REGISTRY_SELF_CORRECT_ENABLED", "1")
-        try:
-            result = service.extract_fields(note_text)
-        except Exception as exc:
-            print(f"SELF_CORRECT_ERROR: {exc}")
-        else:
-            _print_self_correction_diagnostics(result)
-            if result.self_correction:
-                print("Self-correction applied:")
-                for item in result.self_correction:
-                    applied_paths = getattr(item, "applied_paths", None)
-                    if isinstance(applied_paths, list) and applied_paths:
-                        print(f"  - {item.trigger.target_cpt}: applied {', '.join(applied_paths)}")
-                    else:
-                        print(f"  - {item.trigger.target_cpt}: applied (no paths recorded)")
-            else:
-                print("Self-correction applied: (none)")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-```
-
----
-### `ml/scripts/diamond_loop_cloud_sync.py`
-- Size: `10375` bytes
-```
-#!/usr/bin/env python3
-"""
-Diamond Loop cloud sync helper.
-
-Goal:
-- Keep Diamond Loop state consistent across machines (WSL + macOS) using a cloud
-  drive folder (Google Drive).
-- Avoid syncing Prodigy's SQLite DB directly (unsafe). Instead sync via export/import.
-
-What this syncs:
-- Prodigy dataset snapshot (JSONL) for REGISTRY textcat workflow
-- Registry Prodigy manifest (prevents re-sampling)
-- Unlabeled notes pool (ensures consistent sampling universe)
-- Optional: current batch + human export CSV
-
-Two modes:
-- push: export Prodigy dataset → copy to cloud; copy local files → cloud
-- pull: copy cloud files → local; import Prodigy dataset (with --reset)
-
-WSL + Google Drive on Windows G: example:
-  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
-  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --gdrive-win-root "G:\\My Drive\\proc_suite_sync"
-
-macOS example (Drive path varies by install):
-  python ml/scripts/diamond_loop_cloud_sync.py push --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
-  python ml/scripts/diamond_loop_cloud_sync.py pull --dataset registry_v1 --sync-root "/Users/<you>/Library/CloudStorage/GoogleDrive-<acct>/My Drive/proc_suite_sync"
-"""
-
-from __future__ import annotations
-
-import argparse
-import os
-import shutil
-import subprocess
-import sys
-from dataclasses import dataclass
-from pathlib import Path
-
-
-@dataclass(frozen=True)
-class SyncPaths:
-    # Repo-local paths (relative to repo root)
-    manifest_rel: Path = Path("data/ml_training/registry_prodigy_manifest.json")
-    unlabeled_rel: Path = Path("data/ml_training/registry_unlabeled_notes.jsonl")
-    batch_rel: Path = Path("data/ml_training/registry_prodigy_batch.jsonl")
-    human_csv_rel: Path = Path("data/ml_training/registry_human.csv")
-
-    # Cloud layout (relative to sync root)
-    diamond_dir: Path = Path("diamond_loop")
-    prodigy_dir: Path = Path("prodigy")
-
-
-def _repo_root() -> Path:
-    return Path(__file__).resolve().parents[2]
-
-
-def _run(cmd: list[str], *, check: bool = True, capture: bool = False) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        cmd,
-        check=check,
-        text=True,
-        capture_output=capture,
-    )
-
-
-def _is_wsl() -> bool:
-    # Common signal in WSL envs.
-    return "WSL_INTEROP" in os.environ or "WSL_DISTRO_NAME" in os.environ
-
-
-def _wslpath_to_windows(path: Path) -> str:
-    """
-    Convert a Linux/WSL path to a Windows path usable by PowerShell.
-    Requires wslpath.
-    """
-    cp = _run(["wslpath", "-w", str(path)], capture=True)
-    out = (cp.stdout or "").strip()
-    if not out:
-        raise RuntimeError(f"wslpath returned empty output for {path}")
-    return out
-
-
-def _ps_copy_item(win_src: str, win_dst: str) -> None:
-    # Use Copy-Item with -Force; ensure destination directory exists.
-    # Use single quotes (PowerShell) for proper handling of spaces.
-    dst_dir = win_dst.rsplit("\\", 1)[0]
-    cmd = (
-        f"New-Item -ItemType Directory -Force -Path '{dst_dir}' | Out-Null; "
-        f"Copy-Item -Force '{win_src}' '{win_dst}'"
-    )
-    _run(["powershell.exe", "-NoProfile", "-Command", cmd], check=True)
-
-
-def _copy_local_to_cloud(local_src: Path, cloud_dst: Path, *, sync_root: Path | None, gdrive_win_root: str | None) -> None:
-    local_src = local_src.resolve()
-    if not local_src.exists():
-        return
-
-    if gdrive_win_root:
-        if not _is_wsl():
-            raise RuntimeError("--gdrive-win-root is intended for WSL environments.")
-        win_src = _wslpath_to_windows(local_src)
-        win_dst = str(Path(gdrive_win_root) / cloud_dst).replace("/", "\\")
-        _ps_copy_item(win_src, win_dst)
-        return
-
-    if sync_root is None:
-        raise RuntimeError("Must provide either --sync-root (mac/linux) or --gdrive-win-root (WSL).")
-    dst = (sync_root / cloud_dst).resolve()
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(local_src, dst)
-
-
-def _copy_cloud_to_local(cloud_src: Path, local_dst: Path, *, sync_root: Path | None, gdrive_win_root: str | None) -> bool:
-    local_dst = local_dst.resolve()
-
-    if gdrive_win_root:
-        if not _is_wsl():
-            raise RuntimeError("--gdrive-win-root is intended for WSL environments.")
-        win_dst = _wslpath_to_windows(local_dst)
-        win_src = str(Path(gdrive_win_root) / cloud_src).replace("/", "\\")
-        try:
-            _ps_copy_item(win_src, win_dst)
-            return True
-        except subprocess.CalledProcessError:
-            return False
-
-    if sync_root is None:
-        raise RuntimeError("Must provide either --sync-root (mac/linux) or --gdrive-win-root (WSL).")
-    src = (sync_root / cloud_src).resolve()
-    if not src.exists():
-        return False
-    local_dst.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src, local_dst)
-    return True
-
-
-def _prodigy_export(dataset: str, out_file: Path) -> None:
-    from ml.scripts.prodigy_cloud_sync import export_dataset  # local helper
-
-    export_dataset(dataset=dataset, out_file=out_file, answer=None)
-
-
-def _prodigy_import(dataset: str, in_file: Path, *, reset: bool) -> None:
-    from ml.scripts.prodigy_cloud_sync import import_dataset  # local helper
-
-    import_dataset(dataset=dataset, in_file=in_file, reset_first=reset, overwrite=False, rehash=False)
-
-
-def push(
-    *,
-    dataset: str,
-    sync_root: Path | None,
-    gdrive_win_root: str | None,
-    include_batch: bool,
-    include_human: bool,
-) -> None:
-    repo = _repo_root()
-    p = SyncPaths()
-
-    # 1) Export Prodigy dataset snapshot to a temp file, then copy it to cloud.
-    tmp = Path("/tmp") / f"{dataset}.prodigy.jsonl"
-    _prodigy_export(dataset, tmp)
-    _copy_local_to_cloud(tmp, p.prodigy_dir / f"{dataset}.prodigy.jsonl", sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-
-    # 2) Copy local Diamond Loop files to cloud if present.
-    _copy_local_to_cloud(repo / p.manifest_rel, p.diamond_dir / p.manifest_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    _copy_local_to_cloud(repo / p.unlabeled_rel, p.diamond_dir / p.unlabeled_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    if include_batch:
-        _copy_local_to_cloud(repo / p.batch_rel, p.diamond_dir / p.batch_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    if include_human:
-        _copy_local_to_cloud(repo / p.human_csv_rel, p.diamond_dir / p.human_csv_rel.name, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-
-    print(f"OK: pushed dataset '{dataset}' and Diamond Loop files to sync root")
-
-
-def pull(
-    *,
-    dataset: str,
-    sync_root: Path | None,
-    gdrive_win_root: str | None,
-    reset_dataset: bool,
-    include_batch: bool,
-    include_human: bool,
-) -> None:
-    repo = _repo_root()
-    p = SyncPaths()
-
-    # 1) Pull dataset snapshot from cloud into temp, then import into local Prodigy DB.
-    tmp = Path("/tmp") / f"{dataset}.prodigy.jsonl"
-    ok = _copy_cloud_to_local(p.prodigy_dir / f"{dataset}.prodigy.jsonl", tmp, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    if not ok:
-        raise FileNotFoundError(f"Missing cloud dataset snapshot: {p.prodigy_dir / f'{dataset}.prodigy.jsonl'}")
-    _prodigy_import(dataset, tmp, reset=reset_dataset)
-
-    # 2) Pull Diamond Loop files from cloud into repo (best-effort).
-    _copy_cloud_to_local(p.diamond_dir / p.manifest_rel.name, repo / p.manifest_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    _copy_cloud_to_local(p.diamond_dir / p.unlabeled_rel.name, repo / p.unlabeled_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    if include_batch:
-        _copy_cloud_to_local(p.diamond_dir / p.batch_rel.name, repo / p.batch_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-    if include_human:
-        _copy_cloud_to_local(p.diamond_dir / p.human_csv_rel.name, repo / p.human_csv_rel, sync_root=sync_root, gdrive_win_root=gdrive_win_root)
-
-    print(f"OK: pulled dataset '{dataset}' and Diamond Loop files from sync root")
-
-
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    sub = parser.add_subparsers(dest="cmd", required=True)
-
-    def add_common(p: argparse.ArgumentParser) -> None:
-        p.add_argument("--dataset", default="registry_v1", help="Prodigy dataset name (default: registry_v1)")
-        g = p.add_mutually_exclusive_group(required=True)
-        g.add_argument("--sync-root", type=Path, help="Local filesystem path to sync root (mac/linux)")
-        g.add_argument("--gdrive-win-root", type=str, help="Windows path to sync root (WSL), e.g. G:\\My Drive\\proc_suite_sync")
-        p.add_argument("--include-batch", action="store_true", help="Also sync the current batch JSONL")
-        p.add_argument("--include-human", action="store_true", help="Also sync registry_human.csv")
-
-    p_push = sub.add_parser("push", help="Export Prodigy dataset and push Diamond Loop files to cloud")
-    add_common(p_push)
-
-    p_pull = sub.add_parser("pull", help="Pull from cloud and import into local Prodigy DB")
-    add_common(p_pull)
-    p_pull.add_argument(
-        "--reset",
-        action="store_true",
-        help="Drop local dataset before import (recommended when switching machines)",
-    )
-
-    return parser.parse_args(argv)
-
-
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    sync_root = args.sync_root.resolve() if getattr(args, "sync_root", None) is not None else None
-    gdrive_win_root = getattr(args, "gdrive_win_root", None)
-
-    if args.cmd == "push":
-        push(
-            dataset=args.dataset,
-            sync_root=sync_root,
-            gdrive_win_root=gdrive_win_root,
-            include_batch=bool(args.include_batch),
-            include_human=bool(args.include_human),
-        )
-        return 0
-
-    if args.cmd == "pull":
-        pull(
-            dataset=args.dataset,
-            sync_root=sync_root,
-            gdrive_win_root=gdrive_win_root,
-            reset_dataset=bool(args.reset),
-            include_batch=bool(args.include_batch),
-            include_human=bool(args.include_human),
-        )
-        return 0
-
-    raise SystemExit(f"Unknown cmd: {args.cmd}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,814 @@
+{
+  "overall_average_score": 75.1,
+  "status_counts": {
+    "PASS": 18,
+    "WARNING": 11,
+    "FAIL": 21
+  },
+  "evaluations": [
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_001",
+      "score": 52,
+      "status": "FAIL",
+      "hallucinations": [
+        "clinical_context/risk_assessment ASA 3 is not supported by 'MONITORING: Standard ASA'.",
+        "Node events mark stations 7 and 4R as inspected_only even though the note explicitly says TBNA was performed at both stations."
+      ],
+      "mismatches": [
+        "Because sampled actions are not represented in node_events, no EBUS CPT is derived despite a 2-station EBUS-TBNA."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass counts (7 x4, 4R x3) and ROSE presence are not fully carried through."
+      ],
+      "cpt": "Should derive 31652 for 2 sampled stations (7 and 4R).",
+      "schema": "Internal contradiction between stations_sampled/granular detail and node_events."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_002",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 11R is falsely treated as sampled; the corrected note text supports 11L and station 7, not 11R."
+      ],
+      "mismatches": [
+        "EBUS is upcoded to 31653 even though only 2 stations (11L and 7) were sampled.",
+        "Evidence quotes for node events are pulled from the specimen list rather than the procedural sampling sentence."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "Should be 31652, not 31653.",
+      "schema": "High-severity target/laterality hallucination in a simple 2-station EBUS case."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_003",
+      "score": 95,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Sedation/anesthesia is not documented in the source note and is appropriately not invented."
+      ],
+      "cpt": "31652 is correct for single-station EBUS-TBNA of 4R.",
+      "schema": "Accurate extraction for a terse single-station note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_004",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings implies a mass even though the airway exam says mildly edematous mucosa and no mass."
+      ],
+      "mismatches": [
+        "General anesthesia is documented in the note but not surfaced in the structured sedation section."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "TBLB target RB3 is not preserved in the biopsy location fields.",
+        "Node-event evidence quotes for sampled stations are taken from specimen text rather than the procedural sampling sentence."
+      ],
+      "cpt": "31628/31653/+31654 are supported.",
+      "schema": "High-level procedure families are right, but narrative polarity and some grounding details are weak."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_005",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "linear_ebus.node_events labels station 4L as inspected_only even though the note documents EBUS-TBNA/FNA with 3 passes and a 22G needle."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Moderate sedation is documented but not captured.",
+        "Needle gauge and pass count are only partially reflected."
+      ],
+      "cpt": "Should derive 31652 from a single sampled station (4L).",
+      "schema": "Granular station detail says sampled=true while node_events say inspected_only; internal contradiction."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_006",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass count x4 is not deeply structured in the concise registry view.",
+        "Sedation documentation is conflicting in the note; choosing General is a reasonable interpretation because an explicit anesthesia line is present."
+      ],
+      "cpt": "31652 is correct for one sampled station.",
+      "schema": "Good extraction despite conflicting sedation text."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_007",
+      "score": 93,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could additionally structure the propofol/anesthesia details and the follow-up destination."
+      ],
+      "cpt": "31652 is correct for 2 sampled stations (4R and 10R).",
+      "schema": "Clean extraction of a straightforward 2-station EBUS note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_008",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Only minor detail loss; the note is otherwise represented correctly."
+      ],
+      "cpt": "31652 is appropriate for single-station station-7 EBUS-TBNA.",
+      "schema": "Good handling of malformed header codes without inventing extra work."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_009",
+      "score": 45,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus/31652 are not supported by the note; the target is a peripheral RUL mass, not a sampled nodal station."
+      ],
+      "mismatches": [
+        "The coder suppresses peripheral TBNA even though the note explicitly says TBNA was performed on the RUL mass."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "No nodal station is actually documented."
+      ],
+      "cpt": "31629 is supportable. 31652 is not.",
+      "schema": "Classic peripheral-TBNA versus nodal-EBUS confusion."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_010",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "BAL location is left vague instead of RB6/RLL superior segment.",
+        "The radial view changed from eccentric to concentric, but only the final state is preserved."
+      ],
+      "cpt": "31624/31627/31628/31629/+31654 are coherent with the note.",
+      "schema": "Good separation of navigation, radial EBUS, peripheral TBNA, TBBx, and BAL."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_011",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Apicoposterior LUL target detail and biopsy count x5 could be more explicit."
+      ],
+      "cpt": "31627/31628/+31654 are supported.",
+      "schema": "Strong extraction for a simple navigation + rEBUS + TBBx case."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_012",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Disposition/follow-up text is partially mangled by the conflicting note wording about extubation versus no ETT."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Fluoroscopy is present but not materially integrated into the structured procedure summary."
+      ],
+      "cpt": "31627 and 31628 are supported.",
+      "schema": "Core procedure family is correct; only the conflicting peri-procedural narrative is messy."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_013",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Navigational bronchoscopy is explicitly documented (\"Nav bronch\") but not extracted."
+      ],
+      "missed_details": [
+        "Fluoroscopic confirmation/no pneumothorax is not represented."
+      ],
+      "cpt": "31628 is supported, but 31627 is also supported and was missed.",
+      "schema": "The extractor captures the biopsy but drops the navigation procedure that drove it."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_014",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass count (x3) and corrected lesion depth (2.0 cm, not 20 cm) are not preserved in granular fields."
+      ],
+      "cpt": "31627/31629 are supported.",
+      "schema": "Good handling of noisy units without inventing extra procedures."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_015",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Transbronchial biopsy / forceps biopsy of the LUL target is documented but not extracted."
+      ],
+      "missed_details": [
+        "Target is only represented generically rather than as LUL.",
+        "Sampling counts (TBNA 3, forceps 4, brush 1) are not fully structured."
+      ],
+      "cpt": "31623/31627/31629 are supported, but 31628 is also supported and missing.",
+      "schema": "Partial recall loss in a multi-tool robotic bronchoscopy case."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_016",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Upper-third tracheal location could be more specific in airway outcome fields."
+      ],
+      "cpt": "31630 is supported.",
+      "schema": "Good capture of rigid bronchoscopy with balloon dilation for tracheal stenosis."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_017",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Primary indication remains right mainstem obstruction even though the corrected therapeutic target is the left mainstem lesion.",
+        "diagnostic_bronchoscopy.inspection_findings is noisy/unhelpful."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Explicit location laterality and APC settings (40W) are not carried into therapeutic fields."
+      ],
+      "cpt": "31641 is supported.",
+      "schema": "The core thermal-ablation family is right, but laterality normalization is shaky."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_018",
+      "score": 66,
+      "status": "FAIL",
+      "hallucinations": [
+        "mechanical_debulking.method=\"Forceps debulking\" is unsupported; the note says cryo-debulking, not forceps debulking."
+      ],
+      "mismatches": [
+        "The case is over-normalized into a mechanical-excision family from sparse cryotherapy-style wording."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Location LLL is captured, but the actual cryo modality is not."
+      ],
+      "cpt": "Therapeutic tumor debulking is supported, but the specific 31640 mechanical-excision inference is not firmly grounded from this note alone.",
+      "schema": "Procedure-family specificity is too confident for an ultra-short cryo-debulking note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_019",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [
+        "Bleeding severity is overstated as a Nashville grade-2 / moderate bleeding complication; the note says minimal bleeding controlled with cold saline."
+      ],
+      "mismatches": [
+        "Billing selects 31640 even though the note clearly documents laser ablation plus mechanical coring; 31641 is the more defensible dominant code for same-site destruction work."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Specimen/biopsy detail is present in the note but not surfaced as a separate structured sampling event."
+      ],
+      "cpt": "31645 is arguable for copious purulent secretion clearance. The therapeutic tumor work is better represented by 31641 than 31640.",
+      "schema": "Major therapeutic events are recognized, but complication grading and CPT dominance logic are off."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_020",
+      "score": 93,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Dilation duration (60 seconds) is not preserved."
+      ],
+      "cpt": "31630 is supported.",
+      "schema": "Good extraction of flexible balloon dilation for LMS stenosis."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_021",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "airway_stent.stent_type is labeled as uncovered, but the note explicitly says fully covered self-expanding metallic stent."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia with paralysis is the corrected procedural anesthesia context and could be better emphasized."
+      ],
+      "cpt": "31631 is supported for tracheal stent placement.",
+      "schema": "Core stent-placement family is right, but covered-versus-uncovered device detail is wrong."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_022",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Granulation-tissue target detail after stent removal could be more explicit."
+      ],
+      "cpt": "31638 is supported for airway stent removal; the APC adjunct is reasonably captured as therapeutic ablation.",
+      "schema": "Good separation of rigid bronchoscopy, stent removal, and APC treatment."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_023",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Stent surveillance/assessment is not represented as a distinct event."
+      ],
+      "missed_details": [
+        "Corrected laterality/type of the stent are not preserved."
+      ],
+      "cpt": "31645 is supportable for mucus-plug clearance. No separate stent-management CPT is clearly supported from the note.",
+      "schema": "Usable extraction, but it flattens the stent-check context into aspiration alone."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_024",
+      "score": 95,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Drained volume (1.2 L) and yellow fluid appearance are not structured."
+      ],
+      "cpt": "32555 is correct for US-guided thoracentesis.",
+      "schema": "Clean pleural extraction."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_025",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "therapeutic_injection.performed=true with CPT 31573 is unsupported; the note describes intrapleural fibrinolytic instillation via the pigtail, not a separate airway injection procedure.",
+        "pleural_procedures.chest_tube_removal.performed=true is unsupported; the note contains only a future plan to remove the tube when output decreases."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Drainage volume (500 cc), turbid fluid appearance, and 1-hour clamp time are not preserved."
+      ],
+      "cpt": "32557 and 32561 are supported. 31573 is not.",
+      "schema": "Correct pleural families are present, but they are contaminated by unrelated hallucinated procedure families."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_026",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "Stations 7 and 4R are marked inspected_only in node_events even though the note says TBNA was performed at both stations."
+      ],
+      "mismatches": [
+        "No EBUS CPT is derived despite a documented 2-station EBUS-TBNA."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Moderate sedation and pass counts are incompletely surfaced."
+      ],
+      "cpt": "Should derive 31652 for stations 7 and 4R.",
+      "schema": "Same sampled-versus-inspected failure pattern as note_001."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_027",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "Station 4R is falsely treated as sampled; the corrected note supports 4L and station 7 only."
+      ],
+      "mismatches": [
+        "EBUS is upcoded to 31653 even though only 2 stations were sampled.",
+        "Evidence quotes are anchored to specimen text instead of the procedural sampling sentence."
+      ],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "Should be 31652, not 31653.",
+      "schema": "High-severity corrected-laterality hallucination in a simple EBUS case."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_028",
+      "score": 95,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Only minor detail loss in a terse single-station EBUS note."
+      ],
+      "cpt": "31652 is correct for single-station 11L sampling.",
+      "schema": "Accurate extraction for an ultra-short EBUS note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_029",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "linear_ebus.stations_sampled incorrectly includes 11R even though only station 7 was sampled; 4R and 11R were inspected only.",
+        "transbronchial_biopsy location/sample fields are malformed (e.g., location tied to \"Needle aspiration x 3\")."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "RUL apical-segment target detail and the exact counts (TBNA 3, forceps 5, washings 1) are not cleanly preserved."
+      ],
+      "cpt": "31627/31628/31629/31652 are supported.",
+      "schema": "High-level recall is good, but station and target granularity are noisy."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_030",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "Node events mark 4R and 4L as inspected_only even though the note says all three stations (4R, 4L, 7) were sampled."
+      ],
+      "mismatches": [
+        "Station 7 is omitted from structured EBUS detail.",
+        "No CPT is derived despite an explicit 3-station EBUS-TBNA and even a procedure header naming 31653."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Moderate sedation is documented but not captured."
+      ],
+      "cpt": "Should derive 31653 for 3 sampled stations.",
+      "schema": "Major sampled-versus-inspected logic failure with substantial undercoding."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_031",
+      "score": 89,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass counts (11R x4, 10R x3) are not fully structured.",
+        "Sedation choice is based on conflicting note text; General with LMA is a reasonable read, but the conflict remains in the source note."
+      ],
+      "cpt": "31652 is correct for 2 sampled stations.",
+      "schema": "Core EBUS extraction is correct despite conflicting anesthesia text."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_032",
+      "score": 93,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could additionally preserve that airway inspection showed no endobronchial lesions."
+      ],
+      "cpt": "31652 is correct for stations 7 and 10L.",
+      "schema": "Good extraction of a simple 2-station EBUS note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_033",
+      "score": 50,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Station 7 is omitted even though the note says 4R, 4L, and 7 were all sampled.",
+        "31652 is selected instead of 31653 despite 3 sampled stations."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pass counts (3 each) are not fully represented for all stations."
+      ],
+      "cpt": "Should be 31653, not 31652.",
+      "schema": "Undercoding cascades directly from incomplete EBUS station extraction."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_034",
+      "score": 45,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus/31652 are not supported by the note; the target is a peripheral LUL mass, not a nodal EBUS station."
+      ],
+      "mismatches": [
+        "Peripheral TBNA is suppressed even though the note explicitly documents TBNA on the LUL mass."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "No nodal station is actually documented."
+      ],
+      "cpt": "31629 is supportable. 31652 is not.",
+      "schema": "Another peripheral-TBNA versus nodal-EBUS confusion."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_035",
+      "score": 70,
+      "status": "FAIL",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings implies a lesion rather than reflecting the documented navigational/peripheral target workflow."
+      ],
+      "mismatches": [
+        "Navigational bronchoscopy is explicit in the note and header but is not extracted, so 31627 is missing."
+      ],
+      "missed_procedures": [
+        "Navigational bronchoscopy."
+      ],
+      "missed_details": [
+        "RML lateral-segment target detail could be more explicit."
+      ],
+      "cpt": "31628/31629/+31654 are supported, but 31627 is also supported and missing.",
+      "schema": "The peripheral sampling work is captured, but the parent navigation procedure is dropped."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_036",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "Radial probe position is simplified to concentric even though the note says eccentric then adjusted to concentric."
+      ],
+      "missed_procedures": [
+        "Peripheral TBNA / needle aspiration x2 is not extracted."
+      ],
+      "missed_details": [
+        "Posterior basal LLL target detail is only partially preserved."
+      ],
+      "cpt": "31627/31628/+31654 are supported, and 31629 is also supported from the documented needle aspiration passes.",
+      "schema": "Combined navigation + rEBUS + TBBx case loses the concurrent TBNA event."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_037",
+      "score": 87,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Sedation is left as local only even though the note contains conflicting robotic/LMA language that suggests deeper anesthesia support.",
+        "Disposition text is partially mangled by the conflicting source wording."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Biopsy count x5 and RUL anterior-segment target could be more explicit."
+      ],
+      "cpt": "31627 and 31628 are supported.",
+      "schema": "Core navigation + TBBx extraction is sound; only the conflicting anesthesia narrative is messy."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_038",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Navigational bronchoscopy (\"Nav bronch\") is documented but not extracted."
+      ],
+      "missed_details": [
+        "Apicoposterior LUL target and biopsy count x5 are only partially preserved."
+      ],
+      "cpt": "31628 and +31654 are supported, and 31627 is also supported and missing.",
+      "schema": "Ultra-short note still clearly supports navigation, which the extractor drops."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_039",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Transbronchial biopsy / forceps biopsy x4 is documented but not extracted."
+      ],
+      "missed_details": [
+        "Corrected lesion depth (1.5 cm, not 15 cm) is not preserved."
+      ],
+      "cpt": "31627/31629 are supported, and 31628 is also supported and missing.",
+      "schema": "Partial recall loss in a combined nav + TBNA + forceps-biopsy case."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_040",
+      "score": 72,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Peripheral TBNA is documented (needle x2, blood only) but not extracted."
+      ],
+      "missed_details": [
+        "RLL target detail and per-tool counts are incompletely preserved."
+      ],
+      "cpt": "31623/31627/31628/+31654 are supported, and 31629 is also supportable because needle aspiration was performed even though the result was blood only.",
+      "schema": "Another multi-tool navigation case with incomplete recall."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_041",
+      "score": 91,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Subglottic location and 2-minute dilation duration could be structured more explicitly."
+      ],
+      "cpt": "31630 is supported.",
+      "schema": "Good extraction of rigid bronchoscopy with balloon dilation."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_042",
+      "score": 66,
+      "status": "FAIL",
+      "hallucinations": [
+        "The case is normalized into thermal ablation/31641 even though the note says an electrocautery snare transected the tumor base, which is more consistent with excision/debulking language than pure destruction."
+      ],
+      "mismatches": [
+        "Corrected laterality is right lower lobe, but the indication remains left lower lobe."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The endobronchial tumor biopsy specimen is not surfaced as a structured supporting detail."
+      ],
+      "cpt": "31641 is shaky here; 31640 is more defensible from the excision/transection wording.",
+      "schema": "Procedure-family choice is too aggressive toward ablation in a snare-transection note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_043",
+      "score": 30,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Rigid bronchoscopy.",
+        "Therapeutic aspiration / airway-clearance of a large mucus plug."
+      ],
+      "missed_details": [
+        "Right-mainstem location and cryo-extraction technique are not represented at all."
+      ],
+      "cpt": "31645 is supportable, with rigid bronchoscopy context documented.",
+      "schema": "Near-complete miss of a short but clear therapeutic airway note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_044",
+      "score": 70,
+      "status": "FAIL",
+      "hallucinations": [
+        "mechanical_debulking/31640 are overcalled as the primary coding conclusion; the note clearly centers on Nd:YAG laser ablation."
+      ],
+      "mismatches": [
+        "The coder outputs 31640 even though 31641 is the better fit for same-site laser destruction work."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Left-mainstem location, pre/post obstruction percentages, and jet-ventilation context could be more explicit."
+      ],
+      "cpt": "31641 is the more defensible primary code. 31640 is not well supported as the dominant CPT from this note.",
+      "schema": "Therapeutic family is partly right, but CPT dominance logic is wrong."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_045",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Dilation duration (120 seconds) is not preserved."
+      ],
+      "cpt": "31630 is supported.",
+      "schema": "Good extraction of flexible bronchoscopy with tracheal balloon dilation."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_046",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "stent_brand=\"way\" is unsupported and appears to be a parsing artifact."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia with rigid bronchoscopy is the corrected procedural context and could be emphasized more cleanly."
+      ],
+      "cpt": "31636 is supported for bronchial stent placement in the right mainstem.",
+      "schema": "Core stent-placement extraction is good, but device-normalization has a clear artifact."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_047",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Granulation-tissue burden and exact post-removal patency are not preserved in outcome fields."
+      ],
+      "cpt": "31638 is supported for airway stent removal.",
+      "schema": "Reasonable extraction; unlike the common false-bleeding pattern, this note does document moderate bleeding controlled with cold saline."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_048",
+      "score": 72,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Diagnostic bronchoscopy / stent assessment event is not extracted."
+      ],
+      "missed_details": [
+        "Corrected laterality (left mainstem), stent type, and absence of tissue ingrowth are not represented."
+      ],
+      "cpt": "No specific stent-intervention CPT is supported, but the bronchoscopic stent-surveillance finding is missed.",
+      "schema": "Recall loss in an ultra-short surveillance note."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_049",
+      "score": 95,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Volume (800 cc), fluid appearance (serosanguinous), and laboratory plan are not fully structured."
+      ],
+      "cpt": "32555 is correct for US-guided thoracentesis.",
+      "schema": "Clean pleural extraction."
+    },
+    {
+      "file": "my_results_batch_2.txt",
+      "note_id": "note_050",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Septations, drained volume (600 cc), and purulent fluid character are not fully preserved."
+      ],
+      "cpt": "32557 is supported for US-guided small-bore pleural drain placement.",
+      "schema": "Good extraction of chest tube placement for empyema."
+    }
+  ]
+}

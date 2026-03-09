@@ -1,0 +1,12 @@
+category,batch_1,batch_2,batch_3,batch_4,batch_5,batch_6
+EBUS station/action logic,11,12,2,2,0,10
+Negation/polarity in inspection findings,7,3,2,7,9,11
+Percutaneous ablation misrouted into bronchoscopic family,0,0,3,0,41,2
+BLVR / valve count / 31634 bundling,0,0,2,16,2,2
+Trach exchange / PDT family confusion,0,0,6,1,0,1
+Stent or T-tube action-type/location,7,4,13,3,0,4
+Complication severity overcall or miss,3,3,12,2,5,6
+Target/location normalization,17,13,3,3,0,8
+Sedation/anesthesia handling,1,10,9,2,26,0
+Evidence anchored to specimen text,3,3,0,0,0,0
+Bundling / NCCI policy,2,0,0,0,10,1
