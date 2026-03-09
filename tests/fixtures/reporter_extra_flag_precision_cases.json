@@ -1,0 +1,82 @@
+{
+  "schema_version": "reporter_extra_flag_precision_cases.v1",
+  "cases": [
+    {
+      "id": "suppress_chest_ultrasound_thoracoscopy",
+      "family": "procedures_performed.chest_ultrasound.performed",
+      "mode": "suppress",
+      "source_case_id": "example_3",
+      "expected_absent": "procedures_performed.chest_ultrasound.performed"
+    },
+    {
+      "id": "preserve_chest_ultrasound_tunneled_pleural_catheter",
+      "family": "procedures_performed.chest_ultrasound.performed",
+      "mode": "preserve",
+      "source_case_id": "example_22",
+      "expected_present": "procedures_performed.chest_ultrasound.performed"
+    },
+    {
+      "id": "suppress_diagnostic_bronchoscopy_catheter_only",
+      "family": "procedures_performed.diagnostic_bronchoscopy.performed",
+      "mode": "suppress",
+      "source_case_id": "example_5",
+      "expected_absent": "procedures_performed.diagnostic_bronchoscopy.performed"
+    },
+    {
+      "id": "preserve_diagnostic_bronchoscopy_explicit_bronch",
+      "family": "procedures_performed.diagnostic_bronchoscopy.performed",
+      "mode": "preserve",
+      "source_case_id": "example_2",
+      "expected_present": "procedures_performed.diagnostic_bronchoscopy.performed"
+    },
+    {
+      "id": "suppress_bal_from_washing_only",
+      "family": "procedures_performed.bal.performed",
+      "mode": "suppress",
+      "source_case_id": "example_9",
+      "expected_absent": "procedures_performed.bal.performed"
+    },
+    {
+      "id": "preserve_bal_from_explicit_bal",
+      "family": "procedures_performed.bal.performed",
+      "mode": "preserve",
+      "source_case_id": "example_18",
+      "expected_present": "procedures_performed.bal.performed"
+    },
+    {
+      "id": "suppress_peripheral_tbna_from_generic_needle_passes",
+      "family": "procedures_performed.peripheral_tbna.performed",
+      "mode": "suppress",
+      "source_case_id": "example_15",
+      "expected_absent": "procedures_performed.peripheral_tbna.performed"
+    },
+    {
+      "id": "preserve_peripheral_tbna_from_explicit_tbna",
+      "family": "procedures_performed.peripheral_tbna.performed",
+      "mode": "preserve",
+      "source_case_id": "example_11",
+      "expected_present": "procedures_performed.peripheral_tbna.performed"
+    },
+    {
+      "id": "suppress_peripheral_tbna_from_biopsy_block_tbna_passes",
+      "family": "procedures_performed.peripheral_tbna.performed",
+      "mode": "suppress",
+      "source_case_id": "example_19",
+      "expected_absent": "procedures_performed.peripheral_tbna.performed"
+    },
+    {
+      "id": "suppress_tbbx_from_generic_forceps_specimens",
+      "family": "procedures_performed.transbronchial_biopsy.performed",
+      "mode": "suppress",
+      "source_case_id": "example_9",
+      "expected_absent": "procedures_performed.transbronchial_biopsy.performed"
+    },
+    {
+      "id": "preserve_tbbx_from_explicit_forceps_biopsy",
+      "family": "procedures_performed.transbronchial_biopsy.performed",
+      "mode": "preserve",
+      "source_case_id": "example_12",
+      "expected_present": "procedures_performed.transbronchial_biopsy.performed"
+    }
+  ]
+}
