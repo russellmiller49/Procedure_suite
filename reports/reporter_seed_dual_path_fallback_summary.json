@@ -1,0 +1,16 @@
+{
+  "schema_version": "procedure_suite.reporter_seed_fallback_summary.v1",
+  "kind": "reporter_seed_fallback_summary",
+  "created_at": "2026-03-08T22:36:05.009395+00:00",
+  "left_seed_path": "registry_extract_fields",
+  "right_seed_path": "llm_findings",
+  "left_report_path": "reports/reporter_seed_registry_extract_fields_baseline.json",
+  "right_report_path": "reports/reporter_seed_llm_findings_baseline.json",
+  "counts": {
+    "total_cases": 3,
+    "left_fallback_cases": 0,
+    "right_fallback_cases": 0,
+    "reason_bucket_count": 0
+  },
+  "reasons": []
+}
