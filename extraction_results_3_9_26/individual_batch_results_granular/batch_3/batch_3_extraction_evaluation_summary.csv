@@ -1,0 +1,51 @@
+file,note_id,score,status,top_issue
+my_results_batch_3.txt,note_033,12,FAIL,"BLVR/valve placement is entirely unsupported. The note is a routine tracheostomy tube exchange with stomal granulation treated by silver nitrate, not bronchoscopic lung-volume reduction."
+my_results_batch_3.txt,note_007,95,PASS,"Right side, drained volume (1,050 mL), and specimen panel could be more granular."
+my_results_batch_3.txt,note_038,58,FAIL,"The note clearly documents Montgomery T-tube insertion, but no airway-stent/T-tube placement object is present."
+my_results_batch_3.txt,note_011,52,FAIL,Station 3P is hallucinated from the specimen label '4L node (3p)'; only stations 4L and 7 were sampled by EBUS.
+my_results_batch_3.txt,note_013,78,WARNING,Therapeutic aspiration/31645 is not clearly required by the note; secretion clearance may be incidental toileting during a navigational case.
+my_results_batch_3.txt,note_029,35,FAIL,"established_tracheostomy_route=true and CPT 31615 are unsupported; this note is percutaneous tracheostomy placement, not bronchoscopy through an established trach."
+my_results_batch_3.txt,note_017,55,FAIL,"The registry treats this as BLVR, but the note is valve placement for postoperative bronchopleural fistula/persistent air leak, not lung-volume reduction."
+my_results_batch_3.txt,note_024,84,WARNING,Bleeding is promoted to a moderate complication although the note describes mild diffuse mucosal hemorrhage controlled with cold saline.
+my_results_batch_3.txt,note_009,68,FAIL,"Station 7 is labeled malignant by ROSE in the JSON, but the note says station 7 ROSE showed atypical cells."
+my_results_batch_3.txt,note_014,74,FAIL,"The note's main therapeutic work is mucus plug extraction and lavage, but therapeutic aspiration is not represented."
+my_results_batch_3.txt,note_022,92,PASS,"inspection_findings lose negation and read as if there were an endobronchial abnormality, though the note says none."
+my_results_batch_3.txt,note_031,80,WARNING,Separate diagnostic bronchoscopy coding is likely overcalled in a PDT note where bronchoscopy is guidance rather than a standalone diagnostic service.
+my_results_batch_3.txt,note_036,55,FAIL,"Montgomery T-tube insertion is documented, but no airway-stent/T-tube placement object is present."
+my_results_batch_3.txt,note_010,60,FAIL,airway_stent.action_type='revision' is unsupported; the note documents new Y-stent placement.
+my_results_batch_3.txt,note_016,94,PASS,"Fibrinolytic plan is future care, not same-day treatment, and is appropriately not turned on."
+my_results_batch_3.txt,note_035,68,FAIL,airway_stent.action_type='revision' and CPT 31638 are unsupported for this note; it documents new Montgomery T-tube insertion.
+my_results_batch_3.txt,note_045,62,FAIL,"The note documents re-expansion pulmonary edema, but no complication structure is surfaced."
+my_results_batch_3.txt,note_042,82,WARNING,"Chest-tube coding is not cleanly aligned with the note's emergent tube thoracostomy language (the note itself points toward 32551-style work, not 32556)."
+my_results_batch_3.txt,note_002,88,WARNING,inspection_findings lose negation and imply an endobronchial mass despite the note stating no discrete endobronchial mass.
+my_results_batch_3.txt,note_041,58,FAIL,"Station 10R is marked malignant in the JSON, but the note only gives malignant ROSE for station 4R; 10R was hemorrhagic/contaminated."
+my_results_batch_3.txt,note_003,68,FAIL,A pneumothorax complication is created from 'post-procedure CXR ordered / monitor for PTX' language even though the note states no intraoperative complication.
+my_results_batch_3.txt,note_008,80,WARNING,Bleeding is promoted to a moderate formal complication even though the note describes expected grade I laceration and bleeding controlled with cold saline.
+my_results_batch_3.txt,note_021,84,WARNING,Pass attribution across 10L vs 4L is not completely clean given the note's own inconsistent follow-up-pass wording.
+my_results_batch_3.txt,note_015,62,FAIL,Station 11L is treated as sampled even though the note says it was not visualized.
+my_results_batch_3.txt,note_004,58,FAIL,31645 is not clearly supported; secretion suctioning is incidental in a major tumor-debulking case.
+my_results_batch_3.txt,note_050,40,FAIL,airway_stent.performed=true and CPT 31638 are unsupported; the note explicitly says covered stent was evaluated and deferred.
+my_results_batch_3.txt,note_001,92,PASS,inspection_findings are slightly malformed because diagnosis text bleeds into the inspection narrative.
+my_results_batch_3.txt,note_012,84,WARNING,procedures_performed is empty even though the note clearly documents flexible bronchoscopy through the tracheostomy.
+my_results_batch_3.txt,note_048,65,FAIL,"The note's primary therapeutic action is mucus-cast extraction, but only BAL is represented."
+my_results_batch_3.txt,note_026,80,WARNING,Separate bronchoscopy coding (31622) is not clearly defensible in a PDT note.
+my_results_batch_3.txt,note_032,48,FAIL,"The note is primarily a mature-tract tracheostomy tube exchange, but the registry surfaces only bronchoscopy coding."
+my_results_batch_3.txt,note_034,35,FAIL,"Only bronchoscopy is surfaced, despite a difficult immature-tract trach reinsertion/exchange being the main intervention."
+my_results_batch_3.txt,note_049,70,FAIL,BAL volume is corrupted (3 mL from epinephrine instillation rather than BAL volume).
+my_results_batch_3.txt,note_040,58,FAIL,"Montgomery T-tube insertion is documented, but no airway-stent/T-tube placement object is present."
+my_results_batch_3.txt,note_039,28,FAIL,"thermal_ablation/31641 are unsupported; the note describes routine T-tube exchange with cold-forceps trimming of small stomal granulation, not thermal ablation."
+my_results_batch_3.txt,note_043,66,FAIL,"The complication is converted into severe bleeding/Nashville 4, but the documented complication is posterior tracheal wall laceration with only minimal ooze."
+my_results_batch_3.txt,note_030,38,FAIL,"intubation/31500 is unsupported; the patient was already intubated and the note describes ETT withdrawal, not a separate emergency intubation."
+my_results_batch_3.txt,note_025,42,FAIL,"airway_stent is coded as revision/31638, but the note documents new covered SEMS placement across a TEF."
+my_results_batch_3.txt,note_018,68,FAIL,Station 4L is falsely treated as sampled even though the note says 4L was not identified.
+my_results_batch_3.txt,note_019,45,FAIL,pleurodesis.performed=true and CPT 32650 are unsupported; the note explicitly says pleurodesis was deferred pending pathology.
+my_results_batch_3.txt,note_020,78,WARNING,31640 is not well supported; the note describes minimal granulation trimming rather than tumor excision.
+my_results_batch_3.txt,note_028,78,WARNING,Sedation remains labeled Moderate despite propofol infusion plus paralytic and the note's explicit documentation conflict.
+my_results_batch_3.txt,note_006,30,FAIL,CPT 31573 is entirely unsupported.
+my_results_batch_3.txt,note_047,90,PASS,Sedation is labeled Moderate even though no additional procedural sedation was given beyond baseline ICU infusions.
+my_results_batch_3.txt,note_005,82,WARNING,airway_abnormalities include extrinsic compression despite the note stating no extrinsic compression.
+my_results_batch_3.txt,note_023,60,FAIL,Severe bleeding/Nashville 3 is unsupported; the note describes minimal self-limited post-biopsy bleeding and mild hemoptysis that resolved before discharge.
+my_results_batch_3.txt,note_027,82,WARNING,Separate 31622 coding is not clearly supported beyond bronchoscopic guidance of the PDT.
+my_results_batch_3.txt,note_037,60,FAIL,Montgomery T-tube placement is documented but no airway-stent/T-tube procedure is represented.
+my_results_batch_3.txt,note_044,76,WARNING,"The stent event is flattened into 'revision' even though the note describes migrated-stent extraction, balloon dilation, and new stent placement."
+my_results_batch_3.txt,note_046,18,FAIL,intubation is unsupported; the note explicitly says no intubation required.

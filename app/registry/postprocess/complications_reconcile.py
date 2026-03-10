@@ -55,6 +55,14 @@ _EMBOLIZATION_RE = re.compile(r"(?i)\bemboliz(?:ation|ed)\b")
 _SURGERY_RE = re.compile(r"(?i)\bsurger(?:y|ical)\b")
 _DIRECT_PRESSURE_RE = re.compile(r"(?i)\b(?:direct\s+pressure|compression)\b")
 _PROTAMINE_RE = re.compile(r"(?i)\bprotamine\b")
+_ROUTINE_HEMOSTASIS_INTERVENTION_RE = re.compile(
+    r"(?i)\b(?:suction(?:ed|ing)?|wedge(?:d|ing)?|bronchoscope\s+wedged|(?:cold|iced)\s+saline|"
+    r"ice\s+saline|(?:endobronchial\s+)?epi(?:nephrine)?|direct\s+pressure|compression)\b"
+)
+_ROUTINE_HEMOSTASIS_RESOLUTION_RE = re.compile(
+    r"(?i)\b(?:hemostasis\s+(?:was\s+)?(?:achieved|confirmed)|bleeding\s+(?:resolved|ceased|controlled)|"
+    r"no\s+active\s+bleeding)\b"
+)
 _ABORT_FOR_BLEEDING_RE = re.compile(
     r"(?i)\b(?:abort(?:ed|ing)|terminate(?:d|ing)|stop(?:ped|ping))\b[^.\n]{0,120}\b(?:bleed(?:ing)?|hemorrhage|haemorrhage)\b"
 )
@@ -141,6 +149,20 @@ def _first_match_with_pneumothorax_context(
     return None
 
 
+def _first_unnegated_match(
+    pattern: re.Pattern[str],
+    text: str,
+    *,
+    prefix_window: int = 80,
+) -> re.Match[str] | None:
+    for match in pattern.finditer(text or ""):
+        prefix = text[max(0, match.start() - prefix_window) : match.start()]
+        if _NEGATION_PREFIX_RE.search(prefix):
+            continue
+        return match
+    return None
+
+
 def _low_ebl_milliliters(text: str) -> int | None:
     match = re.search(
         r"(?i)\b(?:ebl|estimated\s+blood\s+loss|blood\s+loss)\b[^0-9]{0,20}(?P<first>\d{1,3})(?:\s*[-–]\s*(?P<second>\d{1,3}))?\s*(?:ml|cc)\b",
@@ -166,9 +188,40 @@ def _minor_bleeding_with_supportive_transfusion(text: str) -> bool:
     thrombocytopenia_context = bool(
         re.search(r"(?i)\b(?:platelets?|plt)\b[^.\n]{0,40}\b(?:low|k\b|thrombocytopenia)\b", text)
     )
-    return low_grade and controlled and not _HIGH_GRADE_BLEEDING_CUE_RE.search(text) and bool(
+    return low_grade and controlled and _first_unnegated_match(_HIGH_GRADE_BLEEDING_CUE_RE, text) is None and bool(
         thrombocytopenia_context or (low_ebl is not None and low_ebl <= 20)
     )
+
+
+def _routine_hemostasis_only(text: str) -> bool:
+    if not text or not text.strip():
+        return False
+    low_grade = bool(
+        _LOW_GRADE_BLEEDING_CUE_RE.search(text)
+        or re.search(r"(?i)\b(?:small|trace|minimal)\s+amount\s+of\s+(?:bleeding|oozing)\b", text)
+    )
+    if not low_grade:
+        return False
+    if not _ROUTINE_HEMOSTASIS_INTERVENTION_RE.search(text):
+        return False
+    if not _ROUTINE_HEMOSTASIS_RESOLUTION_RE.search(text):
+        return False
+    if _first_unnegated_match(_HIGH_GRADE_BLEEDING_CUE_RE, text):
+        return False
+    if any(
+        pattern.search(text)
+        for pattern in (
+            _BALLOON_RE,
+            _BLOCKER_RE,
+            _TRANSFUSION_RE,
+            _EMBOLIZATION_RE,
+            _SURGERY_RE,
+            _PROTAMINE_RE,
+            _ABORT_FOR_BLEEDING_RE,
+        )
+    ):
+        return False
+    return True
 
 
 def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str] | None]:
@@ -186,12 +239,14 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
                 pass
 
     complications_none = bool(_COMPLICATIONS_NONE_RE.search(text))
+    if _routine_hemostasis_only(text):
+        return None, None
 
     def _suppress_low_grade_intervention(match: re.Match[str]) -> bool:
         if not complications_none:
             return False
         window = text[max(0, match.start() - 220) : min(len(text), match.end() + 220)]
-        if _HIGH_GRADE_BLEEDING_CUE_RE.search(window):
+        if _first_unnegated_match(_HIGH_GRADE_BLEEDING_CUE_RE, window):
             return False
         return bool(_LOW_GRADE_BLEEDING_CUE_RE.search(window))
 

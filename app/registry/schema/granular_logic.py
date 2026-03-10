@@ -367,6 +367,84 @@ def derive_procedures_from_granular(
     # 5. Derive navigational_bronchoscopy.sampling_tools_used from navigation_targets
     # ==========================================================================
     if navigation_targets:
+        def _nav_target_label_from_value(value: object) -> str | None:
+            if not isinstance(value, str):
+                return None
+            raw = value.strip()
+            if not raw:
+                return None
+            lower = raw.lower()
+            if lower in {"unknown", "unknown target", "target", "target lesion", "lung mass"}:
+                return None
+            if re.match(r"(?i)^\d+\.\s+", raw) and re.search(
+                r"(?i)\b(?:tbna|forceps|transbronchial|cryobiops(?:y|ies)|bal|biops(?:y|ies)|aspirat(?:e|ion)|sample)\b",
+                raw,
+            ):
+                return None
+            if re.search(
+                r"(?i)\b(?:tbna|forceps|transbronchial|cryobiops(?:y|ies)|bal|biops(?:y|ies)|aspirat(?:e|ion)|sample)\b",
+                raw,
+            ) and not re.search(
+                r"(?i)\b(?:RUL|RML|RLL|LUL|LLL|LINGULA|RIGHT\s+UPPER|RIGHT\s+MIDDLE|RIGHT\s+LOWER|LEFT\s+UPPER|LEFT\s+LOWER|segment|[LR]B\d{1,2})\b",
+                raw,
+            ):
+                return None
+            for token in ("RUL", "RML", "RLL", "LUL", "LLL"):
+                if re.search(rf"(?i)\b{token}\b", raw):
+                    return token
+            if re.search(r"(?i)\blingula\b", raw):
+                return "Lingula"
+            if re.search(r"(?i)\bleft\s+upper\b", raw):
+                return "LUL"
+            if re.search(r"(?i)\bleft\s+lower\b", raw):
+                return "LLL"
+            if re.search(r"(?i)\bright\s+upper\b", raw):
+                return "RUL"
+            if re.search(r"(?i)\bright\s+middle\b", raw):
+                return "RML"
+            if re.search(r"(?i)\bright\s+lower\b", raw):
+                return "RLL"
+            bronchus_match = re.search(r"\b([LR]B\d{1,2})\b", raw, re.IGNORECASE)
+            if bronchus_match:
+                return bronchus_match.group(1).upper()
+            if re.search(r"(?i)\b(?:apicoposterior|anterior|posterior|superior|inferior|medial|lateral)\b", raw):
+                return raw
+            return None
+
+        def _clean_site_values(values: object) -> list[str]:
+            cleaned: list[str] = []
+            iterable = values if isinstance(values, list) else [values]
+            for value in iterable:
+                label = _nav_target_label_from_value(value)
+                if label and label not in cleaned:
+                    cleaned.append(label)
+            return cleaned
+
+        def _canonical_nav_site_candidates() -> list[str]:
+            for proc_name, field_name in (
+                ("peripheral_tbna", "targets_sampled"),
+                ("transbronchial_biopsy", "locations"),
+                ("transbronchial_cryobiopsy", "locations_biopsied"),
+                ("brushings", "locations"),
+            ):
+                proc = procedures.get(proc_name) or {}
+                cleaned = _clean_site_values(proc.get(field_name))
+                if cleaned:
+                    return cleaned
+            cleaned_targets = [
+                label
+                for label in (
+                    _nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text"))
+                    for t in navigation_targets
+                )
+                if label
+            ]
+            deduped: list[str] = []
+            for label in cleaned_targets:
+                if label not in deduped:
+                    deduped.append(label)
+            return deduped
+
         def _nav_primary_location_text() -> str | None:
             for t in navigation_targets:
                 loc = t.get("target_location_text")
@@ -381,8 +459,12 @@ def derive_procedures_from_granular(
                     or re.search(r"(?i)\b(?:mrn|dob)\b\s*:", loc_clean)
                 ):
                     continue
-                if loc_clean:
-                    return loc_clean
+                normalized = _nav_target_label_from_value(loc_clean)
+                if normalized:
+                    return normalized
+                lobe = _nav_target_lobe_label(t)
+                if lobe:
+                    return lobe
             return None
 
         def _nav_primary_location_parts() -> dict[str, str] | None:
@@ -432,6 +514,17 @@ def derive_procedures_from_granular(
             if re.search(r"(?i)\blingula\b", loc):
                 return "Lingula"
             return None
+
+        canonical_nav_sites = _canonical_nav_site_candidates()
+        if canonical_nav_sites:
+            canonical_primary = canonical_nav_sites[0]
+            for target in navigation_targets:
+                loc = target.get("target_location_text")
+                if _nav_target_label_from_value(loc):
+                    continue
+                target["target_location_text"] = canonical_primary
+                if not target.get("target_lobe") and canonical_primary in {"RUL", "RML", "RLL", "LUL", "LLL", "Lingula"}:
+                    target["target_lobe"] = canonical_primary
 
         nav_bronch = procedures.get("navigational_bronchoscopy") or {}
         if not nav_bronch.get("performed"):
@@ -485,23 +578,28 @@ def derive_procedures_from_granular(
                 peripheral_tbna["performed"] = True
 
             existing_targets = peripheral_tbna.get("targets_sampled") or []
+            cleaned_existing_targets = _clean_site_values(existing_targets)
             is_placeholder = len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
             targets = [
-                t.get("target_location_text")
+                _nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text"))
                 for t in navigation_targets
-                if t.get("target_location_text")
+                if (_nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text")))
                 and (
                     (t.get("number_of_needle_passes") or 0) > 0
                     or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
                 )
             ]
             if not targets:
-                targets = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+                targets = [
+                    _nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text"))
+                    for t in navigation_targets
+                    if (_nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text")))
+                ]
 
             if not existing_targets or is_placeholder:
                 peripheral_tbna["targets_sampled"] = targets or ["Lung Mass"]
             elif targets:
-                existing_clean = [str(x) for x in existing_targets if str(x).strip()]
+                existing_clean = cleaned_existing_targets or [str(x) for x in existing_targets if str(x).strip()]
                 if len(existing_clean) == 1 and len(targets) > 1:
                     existing_lower = existing_clean[0].strip().lower()
                     if existing_lower and any(
@@ -524,8 +622,10 @@ def derive_procedures_from_granular(
                             continue
                         if candidate not in merged:
                             merged.append(candidate)
-                    if merged != existing_targets:
-                        peripheral_tbna["targets_sampled"] = merged
+                        if merged != existing_targets:
+                            peripheral_tbna["targets_sampled"] = merged
+            elif cleaned_existing_targets and cleaned_existing_targets != existing_targets:
+                peripheral_tbna["targets_sampled"] = cleaned_existing_targets
 
             procedures["peripheral_tbna"] = peripheral_tbna
         else:
@@ -616,6 +716,11 @@ def derive_procedures_from_granular(
                     warnings.append(
                         f"BACKFILL: Assigned target '{loc_label}' to transbronchial_biopsy.locations"
                     )
+            elif tbbx.get("performed") is True and tbbx.get("locations"):
+                cleaned_tbbx_locations = _clean_site_values(tbbx.get("locations"))
+                if cleaned_tbbx_locations and cleaned_tbbx_locations != tbbx.get("locations"):
+                    tbbx["locations"] = cleaned_tbbx_locations
+                    procedures["transbronchial_biopsy"] = tbbx
 
         if has_brush:
             brushings = procedures.get("brushings") or {}
@@ -732,6 +837,9 @@ def derive_procedures_from_granular(
                             merged.append(candidate)
                     if merged != existing_locations:
                         cryo["locations_biopsied"] = merged
+            cleaned_cryo_locations = _clean_site_values(cryo.get("locations_biopsied"))
+            if cleaned_cryo_locations and cleaned_cryo_locations != cryo.get("locations_biopsied"):
+                cryo["locations_biopsied"] = cleaned_cryo_locations
 
             if cryo.get("number_of_samples") in (None, "", 0):
                 total = sum((t.get("number_of_cryo_biopsies") or 0) for t in navigation_targets)

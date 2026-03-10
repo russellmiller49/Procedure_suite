@@ -178,7 +178,7 @@ def test_stent_dilation_distinct_location_keeps_31630() -> None:
     )
 
     codes, _rationales, warnings = derive_all_codes_with_meta(record)
-    assert "31636" in codes
+    assert "31631" in codes
     assert "31630" in codes
     assert not any("31630 (dilation) bundled into 31636" in w for w in warnings)
 

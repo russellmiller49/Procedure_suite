@@ -1,0 +1,838 @@
+{
+  "overall_average_score": 63.5,
+  "status_counts": {
+    "WARNING": 12,
+    "FAIL": 31,
+    "PASS": 7
+  },
+  "evaluations": [
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_001",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "navigation_platform='SPiN' is not supported; the note says robotic navigation but never names a platform."
+      ],
+      "mismatches": [
+        "peripheral_tbna.targets_sampled and granular_data.navigation_targets are polluted with specimen-count strings ('TBNA x4 passes', 'TBBx x6 fragments') instead of true anatomic targets."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Could preserve the exact RUL posterior segment target in a cleaner target object rather than duplicating 'RUL' and specimen-count text."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are procedurally supported, but 31628/31629 form an NCCI bundled pair in the provided table, so the final CPT stack is not defensible as-is. 31641 and 77012 remain gray-zone inferences from peripheral ablation and CBCT mention.",
+      "schema": "Core procedure families are correct, but target granularity is malformed."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_002",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; the note documents CT-guided percutaneous cryoablation, not bronchoscopic cryotherapy/tumor destruction."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The true CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Post-procedure CT guidance context is present in the note but no guidance-specific evidence or code is surfaced."
+      ],
+      "cpt": "31641 is not supported for this purely CT-guided percutaneous case.",
+      "schema": "Primary procedure is forced into the wrong bronchoscopic family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_003",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "thermal_ablation/31641 are not supported; the note explicitly documents pulsed electric field ablation and even describes it as non-thermal.",
+        "navigation_platform='SPiN' is not supported; no platform is named.",
+        "diagnostic_bronchoscopy.inspection_findings turns a normal airway survey into a 'lesion confirmed' narrative."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is left blank."
+      ],
+      "cpt": "31624, 31627, 31628, 31629, and +31654 are supported by the note. 31641 is not. Also, 31628/31629 appear together despite the provided NCCI pair marking them bundled with modifier indicator 0.",
+      "schema": "The primary therapeutic event is misclassified: bronchoscopic PEF is recast as thermal ablation."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_004",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Sedation is internally conflicted in the note (moderate sedation vs later GA with LMA); the JSON chooses Moderate without carrying the ambiguity."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "LMA airway detail is not surfaced.",
+        "TBNA/TBBx exact counts are not preserved."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are procedurally supported. 31628/31629 together remain NCCI-inconsistent in the provided table. 31641 is still a gray-zone peripheral-ablation inference.",
+      "schema": "Overall extraction is clinically coherent despite the sedation ambiguity."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_005",
+      "score": 54,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus.performed=true is not supported; the note only mentions Doppler on linear EBUS from a segmental takeoff to exclude an adjacent vessel, not a formal linear EBUS staging procedure.",
+        "balloon_occlusion.performed=true and CPT 31634 are not supported; the balloon language is hemostasis readiness during cryobiopsy, not a stand-alone Chartis/balloon occlusion assessment."
+      ],
+      "mismatches": [
+        "The note documents TBNA x4 and transbronchial cryobiopsy x3, but the JSON also creates a standard transbronchial_biopsy object with sample count 4, blurring cryobiopsy vs conventional TBBx."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Cryobiopsy counts and the 1.1 mm probe are captured, but the biopsy-family logic remains internally messy."
+      ],
+      "cpt": "31627, 31629, and +31654 are supported. 31634 is not. 31628 may be arguable only if cryobiopsy is intentionally mapped to TBLB, but the current schema does not state that cleanly. 31641 is routed through the wrong family and remains gray-zone for peripheral ablation.",
+      "schema": "Multiple adjunct phrases are over-interpreted into extra procedure families."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_006",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note is CT-guided microwave ablation, not bronchoscopic destruction."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The true CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Small apical pneumothorax documented in the note is not surfaced in outcomes/complications."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family plus missed complication detail."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_007",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings says 'endobronchial abnormality' even though the note says no endobronchial abnormality."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "Exact TBBx x6 and brushing x1 counts are not deeply structured."
+      ],
+      "cpt": "31623, 31627, 31628, and +31654 are supported. 31641 is still a gray-zone inference for peripheral RFA ablation.",
+      "schema": "Core procedure families are correct; the main precision issue is the false airway finding."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_008",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "thermal_ablation/31641 are not supported; the note documents pulsed electric field ablation, not thermal destruction.",
+        "diagnostic_bronchoscopy.inspection_findings reduces a normal airway survey to a vague 'lesion' finding."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "TBNA/TBBx counts are only partially preserved."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are supported. 31641 is not. As extracted, 31628/31629 are also NCCI-inconsistent when billed together.",
+      "schema": "Primary ablation modality is misclassified."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_009",
+      "score": 46,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note documents percutaneous RFA under CT."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "CT guidance is explicit in the note but not carried into the coded output."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family assigned to a percutaneous ablation."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_010",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings ('lesion with robotic platform') is not supported; the note describes no endobronchial lesion and no specimens were collected."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported by the performed navigation/radial workflow. 31641 and 77012 remain gray-zone inferences for peripheral microwave ablation plus CBCT.",
+      "schema": "Core no-specimen ablation workflow is captured correctly."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_011",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "cryotherapy.performed=true is not cleanly supported; the note documents peripheral cryoablation of a pulmonary nodule, not an endobronchial cryotherapy procedure.",
+        "diagnostic_bronchoscopy.inspection_findings says 'lesion' despite a normal airway survey."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "TBNA/TBBx counts are not deeply structured beyond the procedure flags."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are supported procedurally, but 31628/31629 are an NCCI bundled pair in the provided table. 31641 is currently derived from cryotherapy rather than the peripheral-ablation concept, which is the wrong family.",
+      "schema": "Core capture is good, but cryoablation is routed through the cryotherapy family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_012",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "CT-guided percutaneous PEF ablation is missed entirely; no primary procedure is extracted."
+      ],
+      "missed_details": [
+        "Small perilesional hemorrhage in the operative summary is not surfaced as an outcome detail."
+      ],
+      "cpt": "No defensible ablation CPT is produced because the primary procedure is omitted.",
+      "schema": "Major recall failure: the note's only real procedure is absent."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_013",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "TBBx x5 and brush x1 counts are not deeply structured."
+      ],
+      "cpt": "31623, 31627, 31628, and +31654 are supported. 31641 is still a gray-zone peripheral-ablation inference, but the extraction itself is otherwise coherent.",
+      "schema": "Good separation of brushing, transbronchial biopsy, navigation, radial EBUS, and ablation."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_014",
+      "score": 44,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; this is percutaneous microwave ablation under CT guidance."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Small tract hemorrhage documented in the note is omitted from outcomes/complications."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Primary procedure family is wrong and the only documented complication detail is missed."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_015",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "radial_ebus.probe_position='Not visualized' conflicts with the note, which explicitly says the lesion was concentric on radial EBUS."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The missing +31654 logic is notable because radial EBUS localization is clearly documented alongside peripheral sampling.",
+        "Airway survey detail ('mild anthracosis; no endobronchial lesion') is not carried through cleanly."
+      ],
+      "cpt": "31624, 31627, 31628, and 31629 are supported. +31654 should also be considered. 31628/31629 together are NCCI-inconsistent in the provided pair file. 31641 remains a gray-zone peripheral-ablation inference.",
+      "schema": "High recall overall, but radial EBUS specifics are wrong and coding is incomplete."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_016",
+      "score": 44,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; the note is CT-guided cryoablation, not bronchoscopic cryotherapy."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family assigned to a percutaneous cryoablation note."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_017",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings='lesion' is not supported; the note says airway survey without lesion."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The primary bronchoscopic PEF ablation is not extracted at all."
+      ],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "77012 alone is not a defensible final output for this case. The note supports navigation/radial localization and a bronchoscopic PEF ablation, not just guidance.",
+      "schema": "Major recall failure: the therapeutic event is missing."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_018",
+      "score": 46,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note documents CT-guided RFA ablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Mild perilesional hemorrhage in the tab summary is not surfaced."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family plus incomplete outcome capture."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_019",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "cryotherapy.performed=true is not cleanly supported; the note documents peripheral cryoablation rather than an endobronchial cryotherapy service."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented only as 'GA' in the note and sedation is left blank."
+      ],
+      "cpt": "31627 and +31654 are supported by the navigation/radial workflow. 31641 is being sourced from cryotherapy rather than the peripheral-ablation concept and remains a gray-zone coding inference.",
+      "schema": "Core no-sampling cryoablation workflow is captured, but the family used to justify 31641 is wrong."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_020",
+      "score": 50,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note is CT-guided microwave ablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The true percutaneous/CT-guided ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_021",
+      "score": 44,
+      "status": "FAIL",
+      "hallucinations": [
+        "A formal moderate bleeding complication is overcalled even though the note says Complications: None and describes only mild biopsy bleeding controlled endoscopically.",
+        "diagnostic_bronchoscopy.inspection_findings turns a non-endobronchial peripheral lesion into an airway lesion narrative."
+      ],
+      "mismatches": [
+        "radial_ebus.probe_position='Adjacent' is not what the note says; the documented view is eccentric with adjacent atelectasis."
+      ],
+      "missed_procedures": [
+        "The primary bronchoscopic PEF ablation is not represented."
+      ],
+      "missed_details": [
+        "TBBx x5 is not carried with full count granularity."
+      ],
+      "cpt": "31627, 31628, and +31654 are supported. The therapeutic PEF portion is missing, and 77012 is only an inference from CBCT mention.",
+      "schema": "This is a combined recall and complication-logic failure."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_022",
+      "score": 44,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; the note documents CT-guided cryoablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Sedation/anesthesia is not captured at all."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family with incomplete peri-procedure context."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_023",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "navigation_platform='SPiN' is not supported; the note never names a platform.",
+        "diagnostic_bronchoscopy.inspection_findings='lesion' is not supported by the normal airway survey."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported. 31641 and 77012 remain gray-zone/inferred from peripheral RFA ablation plus CBCT.",
+      "schema": "Core extraction is usable, but there are avoidable unsupported details."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_024",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "CT-guided PEF ablation is missed entirely."
+      ],
+      "missed_details": [],
+      "cpt": "No defensible ablation CPT is produced because the primary procedure is omitted.",
+      "schema": "Pure recall failure on the only performed procedure."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_025",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported by the note's navigation/radial workflow. 31641 and 77012 are still gray-zone peripheral-ablation/CBCT inferences.",
+      "schema": "Good capture of a no-sampling bronchoscopic microwave ablation case."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_026",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "navigation_platform='SPiN' is not supported; the note does not name a platform.",
+        "cryotherapy.performed=true is not cleanly supported; the note documents peripheral cryoablation rather than endobronchial cryotherapy."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31627 and +31654 are supported. 31641 is routed through the cryotherapy family and remains a gray-zone coding inference for peripheral cryoablation. 77012 is inferred from CBCT mention.",
+      "schema": "Core capture is good, but the ablation family used for coding is wrong."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_027",
+      "score": 50,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note is CT-guided microwave ablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_028",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchoscopic PEF ablation is omitted even though it is one of the named performed procedures."
+      ],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "TBNA x2 and TBBx x4 counts are not deeply structured."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are supported. The therapeutic PEF portion is missing. Also, 31628/31629 are an NCCI bundled pair in the provided table.",
+      "schema": "High recall for sampling, but the primary ablation event is missing."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_029",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "TBBx x5 and brushing x1 counts are not deeply structured."
+      ],
+      "cpt": "31623, 31627, 31628, and +31654 are supported. 31641 remains a gray-zone peripheral-ablation inference.",
+      "schema": "Good overall separation of biopsy, brushing, navigation, radial EBUS, and ablation."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_030",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; the note is CT-guided cryoablation."
+      ],
+      "mismatches": [
+        "sedation.type='General' overreads a conflicting template line; the note's actual procedural sedation description is moderate sedation."
+      ],
+      "missed_procedures": [
+        "The CT-guided percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family plus sedation overread."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_031",
+      "score": 66,
+      "status": "FAIL",
+      "hallucinations": [
+        "A formal moderate bleeding complication (Nashville grade 2) is not supported; the note says Complications: None and describes only mild biopsy bleeding controlled with suction and iced saline."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [],
+      "cpt": "31627, 31628, 31629, and +31654 are supported procedurally. 31628/31629 are nonetheless NCCI-inconsistent as a final stack. 31641 and 77012 remain gray-zone/inferred.",
+      "schema": "Core extraction is good, but complication logic is materially overstated."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_032",
+      "score": 52,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "CT-guided PEF ablation is missed entirely."
+      ],
+      "missed_details": [
+        "Moderate sedation is not captured.",
+        "Small perilesional hemorrhage in the note is not surfaced."
+      ],
+      "cpt": "No defensible ablation CPT is produced because the primary procedure is omitted.",
+      "schema": "Major recall failure."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_033",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported by the navigation/radial workflow. 31641 and 77012 are gray-zone inferences for peripheral microwave ablation plus CBCT.",
+      "schema": "Good capture of an ablation-only bronchoscopic case."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_034",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note documents CT-guided RFA."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_035",
+      "score": 40,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note is CT-guided microwave ablation, not bronchoscopic ablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Small pneumothorax documented in the note is not surfaced in outcomes/complications."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong bronchoscopic family plus missed complication detail."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_036",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings='lesion (32998\u2014??)' is not supported; the note says no endobronchial lesion."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported. 31641 and 77012 remain gray-zone inferences for peripheral microwave ablation plus CBCT.",
+      "schema": "Core extraction is otherwise appropriate."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_037",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "cryotherapy.performed=true is not cleanly supported; the note documents peripheral cryoablation, not an endobronchial cryotherapy service."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented only as 'GA' and sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported. 31641 is sourced from cryotherapy rather than the peripheral-ablation concept and is therefore justified from the wrong family.",
+      "schema": "Good overall capture, but cryoablation is routed through the cryotherapy family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_038",
+      "score": 55,
+      "status": "FAIL",
+      "hallucinations": [
+        "diagnostic_bronchoscopy.inspection_findings='lesion' is not supported; the note describes a normal airway exam."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The primary bronchoscopic PEF ablation is not extracted."
+      ],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "77012 alone is not a defensible final stack. The note supports navigation/radial localization plus bronchoscopic PEF ablation.",
+      "schema": "Major recall failure on the therapeutic event."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_039",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note documents CT-guided RFA."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Moderate sedation is not captured."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_040",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; this is CT-guided percutaneous cryoablation, not bronchoscopic cryotherapy."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The true percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_041",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "TBNA x2 and TBBx x5 counts are not deeply structured."
+      ],
+      "cpt": "31627, 31628, and 31629 are procedurally supported, but 31628/31629 form an NCCI bundled pair in the provided table. 31641 remains a gray-zone peripheral-ablation inference.",
+      "schema": "Strong core extraction with a CPT stack that needs bundling review."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_042",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "CT-guided PEF ablation is missed entirely."
+      ],
+      "missed_details": [],
+      "cpt": "No defensible ablation CPT is produced because the primary procedure is omitted.",
+      "schema": "Primary procedure missing."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_043",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported. 31641 and 77012 remain gray-zone inferences for peripheral RFA ablation plus CBCT.",
+      "schema": "Good capture of a no-specimen RFA ablation case."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_044",
+      "score": 56,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchoscopic PEF ablation is not extracted."
+      ],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted.",
+        "diagnostic_bronchoscopy is not explicitly surfaced even though bronchoscopic access is implicit."
+      ],
+      "cpt": "77012 alone is not defensible as the final output; the therapeutic PEF event is missing.",
+      "schema": "Major recall failure on the primary therapeutic procedure."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_045",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [
+        "balloon_occlusion.performed=true and CPT 31634 are not supported; the note describes brief balloon occlusion for hemostasis during biopsy bleeding, not a stand-alone Chartis/balloon occlusion assessment.",
+        "navigation_platform='SPiN' is not supported; the note never names a platform.",
+        "diagnostic_bronchoscopy.inspection_findings implies an endobronchial lesion although the note says there was no endobronchial lesion."
+      ],
+      "mismatches": [
+        "radial_ebus.probe_position='Adjacent' is not the documented view; the note says eccentric lesion with catheter manipulation to improve engagement."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "ETT airway detail is not captured."
+      ],
+      "cpt": "31627, 31628, 31629, and +31654 are supported procedurally. 31634 is not. 31628/31629 are also NCCI-inconsistent as a final pair. 31641 and 77012 remain gray-zone peripheral-ablation/CBCT inferences.",
+      "schema": "A hemostatic adjunct is misread as a distinct balloon-occlusion procedure."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_046",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "peripheral_ablation.performed=true and 31641 are not supported; the note is CT-guided microwave ablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [
+        "Moderate sedation is not captured."
+      ],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_047",
+      "score": 92,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented only as 'GA' and sedation is omitted."
+      ],
+      "cpt": "31624 and 31627 are clearly supported. +31654, 31641, and 77012 remain policy-dependent/gray-zone inferences for radial localization, peripheral cryoablation, and CBCT.",
+      "schema": "Strong overall capture of BAL plus no-sampling cryoablation workflow."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_048",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "CT-guided PEF ablation is missed entirely."
+      ],
+      "missed_details": [],
+      "cpt": "No defensible ablation CPT is produced because the primary procedure is omitted.",
+      "schema": "Primary procedure missing."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_049",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "cryotherapy.performed=true and 31641 are not supported; the note is CT-guided cryoablation."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "The CT-guided/percutaneous ablation family is not represented."
+      ],
+      "missed_details": [],
+      "cpt": "31641 is not supported for this percutaneous case.",
+      "schema": "Wrong procedure family."
+    },
+    {
+      "file": "my_results_batch_5.txt",
+      "note_id": "note_050",
+      "score": 90,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "General anesthesia is documented but sedation is omitted."
+      ],
+      "cpt": "31627 and +31654 are supported. 31641 and 77012 remain gray-zone/inferred for peripheral RFA ablation plus CBCT.",
+      "schema": "Good capture of a straightforward no-specimen RFA ablation case."
+    }
+  ]
+}
