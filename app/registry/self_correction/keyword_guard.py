@@ -893,6 +893,25 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
             if field_path == "procedures_performed.peripheral_ablation.performed":
                 if _looks_like_endobronchial_ablation_context(note_text or "", match):
                     continue
+            if field_path == "procedures_performed.brushings.performed":
+                window_start = max(0, match.start() - 180)
+                window_end = min(len(note_text or ""), match.end() + 180)
+                local_window = (note_text or "")[window_start:window_end]
+                ttube_context = bool(re.search(r"(?i)\b(?:montgomery\s+)?t[- ]?tube\b|\bsidearm\b", note_text or ""))
+                maintenance_brushing = bool(
+                    re.search(
+                        r"(?i)\b(?:daily\s+)?brushing\s+protocol\b|\bpipe\s+cleaner\b|\breinstruct\w*\b|\bhygiene\b",
+                        local_window,
+                    )
+                )
+                non_sampling_brush = ttube_context and bool(re.search(r"(?i)\bbrush(?:ing|ings?)\b", local_window)) and not bool(
+                    re.search(
+                        r"(?i)\b(?:cytology|obtained|performed|taken|sent|sample|specimen|collected)\b",
+                        local_window,
+                    )
+                )
+                if maintenance_brushing or non_sampling_brush:
+                    continue
 
             if field_path == "pleural_procedures.fibrinolytic_therapy.performed":
                 pleural = record_data.get("pleural_procedures")

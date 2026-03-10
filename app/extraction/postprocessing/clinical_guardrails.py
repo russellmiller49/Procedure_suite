@@ -684,6 +684,33 @@ class ClinicalGuardrails:
                     )
                     changed = True
 
+        thermal_ablation = procedures.get("thermal_ablation") if isinstance(procedures, dict) else None
+        if isinstance(thermal_ablation, dict) and thermal_ablation.get("performed") is True:
+            ttube_exchange_context = bool(
+                re.search(r"(?i)\b(?:montgomery\s+)?t[- ]?tube\b", note_text or "")
+                and re.search(
+                    r"(?i)\b(?:exchange|exchanged|old\b[^.\n]{0,120}\bremoved|new\b[^.\n]{0,120}\b(?:inserted|folded|repositioned)|sidearm\s+exteriorized)\b",
+                    note_text or "",
+                )
+            )
+            standby_laser_only = bool(
+                re.search(
+                    r"(?i)\blaser\b[^.\n]{0,80}\b(?:on\s+standby|standby|stand-by|available\s+if\s+needed|if\s+needed)\b"
+                    r"|\b(?:on\s+standby|standby|stand-by|available\s+if\s+needed|if\s+needed)\b[^.\n]{0,80}\blaser\b",
+                    note_text or "",
+                )
+            ) and not bool(
+                re.search(
+                    r"(?i)\blaser\b[^.\n]{0,120}\b(?:performed|used|applied|treated|radial\s+incisions?|coagulat|hemostas|ablat|destruct)\b"
+                    r"|\b(?:performed|used|applied|treated|radial\s+incisions?|coagulat|hemostas|ablat|destruct)\b[^.\n]{0,120}\blaser\b",
+                    note_text or "",
+                )
+            )
+            if ttube_exchange_context and standby_laser_only:
+                if self._set_procedure_performed(record_data, "thermal_ablation", False):
+                    warnings.append("Thermal ablation cleared: Montgomery T-tube exchange note documents laser on standby only.")
+                    changed = True
+
         brushings = procedures.get("brushings") if isinstance(procedures, dict) else None
         if isinstance(brushings, dict) and brushings.get("performed") is True:
             if _NEGATED_BRUSHINGS_RE.search(note_text or ""):
@@ -744,6 +771,40 @@ class ClinicalGuardrails:
             procedures.get("diagnostic_bronchoscopy") if isinstance(procedures, dict) else None
         )
         if isinstance(diagnostic_bronchoscopy, dict):
+            ttube_maintenance_context = bool(
+                re.search(r"(?i)\b(?:montgomery\s+)?t[- ]?tube\b|\bsidearm\b", note_text or "")
+                and re.search(
+                    r"(?i)\b(?:mucus|mucous|mucoid|secretions?|plug|lavage|patency|clearance)\b",
+                    note_text or "",
+                )
+            )
+            history_only_stenosis = bool(
+                re.search(r"(?i)\bpre[-\s]?procedure\s+diagnosis\b[^.\n]{0,200}\b(?:stenosis|stricture)\b", note_text or "")
+                or re.search(r"(?i)\bpost-intubation\s+subglottic\s+stenosis\b", note_text or "")
+            )
+            active_stenosis_finding = bool(
+                re.search(
+                    r"(?i)\b(?:stenosis|stricture)\b[^.\n]{0,120}\b(?:seen|noted|visualized|identified|dilated|treated|obstruct|tight|severe|moderate|web)\b"
+                    r"|\b(?:seen|noted|visualized|identified|dilated|treated)\b[^.\n]{0,120}\b(?:stenosis|stricture)\b",
+                    note_text or "",
+                )
+            )
+            abnormalities = diagnostic_bronchoscopy.get("airway_abnormalities")
+            if (
+                ttube_maintenance_context
+                and history_only_stenosis
+                and not active_stenosis_finding
+                and isinstance(abnormalities, list)
+                and "Stenosis" in abnormalities
+            ):
+                filtered_abnormalities = [item for item in abnormalities if str(item) != "Stenosis"]
+                if filtered_abnormalities != abnormalities:
+                    diagnostic_bronchoscopy["airway_abnormalities"] = filtered_abnormalities
+                    warnings.append(
+                        "Diagnostic bronchoscopy findings corrected: cleared history-only stenosis from T-tube maintenance note."
+                    )
+                    changed = True
+
             no_endobronchial_disease = bool(_NEGATED_ENDOBRONCHIAL_DISEASE_RE.search(note_text or ""))
             explicit_positive_endobronchial_disease = bool(
                 re.search(

@@ -969,11 +969,11 @@
             }
           }
         },
-        "intubation": {
-          "type": [
-            "object",
-            "null"
-          ],
+    "intubation": {
+      "type": [
+        "object",
+        "null"
+      ],
           "description": "Endotracheal intubation performed as a distinct procedure (e.g., emergency/fiberoptic airway management).",
           "properties": {
             "performed": {
@@ -1002,14 +1002,69 @@
                 "string",
                 "null"
               ]
-            }
-          }
+        }
+      }
+    },
+    "airway_device_action": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Structured airway-device management that does not safely map to existing stent/trach CPT fields.",
+      "properties": {
+        "performed": {
+          "type": "boolean"
         },
-        "bal": {
+        "device_type": {
           "type": [
-            "object",
+            "string",
             "null"
           ],
+          "enum": [
+            "Tracheostomy tube",
+            "Montgomery T-tube",
+            "Other",
+            null
+          ]
+        },
+        "action": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Placement",
+            "Exchange",
+            "Removal",
+            "Assessment only",
+            null
+          ]
+        },
+        "device_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "device_size": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "bal": {
+      "type": [
+        "object",
+        "null"
+      ],
           "description": "Bronchoalveolar lavage",
           "properties": {
             "performed": {

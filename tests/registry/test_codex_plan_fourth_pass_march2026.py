@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 from unittest.mock import MagicMock
 
@@ -61,7 +62,10 @@ class _StubParallelOrchestrator:
 
 
 def _extract_record_parallel_ner(monkeypatch: pytest.MonkeyPatch, note_text: str) -> RegistryRecord:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "0")
     service = RegistryService(
         hybrid_orchestrator=MagicMock(),
         registry_engine=MagicMock(),
@@ -73,7 +77,10 @@ def _extract_record_parallel_ner(monkeypatch: pytest.MonkeyPatch, note_text: str
 
 
 def _extract_fields_parallel_ner(monkeypatch: pytest.MonkeyPatch, note_text: str):
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
     monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "0")
     service = RegistryService(
         hybrid_orchestrator=MagicMock(),
         registry_engine=MagicMock(),
@@ -81,6 +88,17 @@ def _extract_fields_parallel_ner(monkeypatch: pytest.MonkeyPatch, note_text: str
     )
     monkeypatch.setattr(service, "_get_registry_ml_predictor", lambda: None)
     return service.extract_fields(note_text)
+
+
+def _march_2026_notes_dir() -> Path:
+    return Path(__file__).resolve().parents[2].parent / "proc_suite_notes" / "new_synthetic_notes_3_5_26"
+
+
+def _load_march_2026_note(*, batch: str, note_name: str) -> str:
+    note_path = _march_2026_notes_dir() / batch / f"{note_name}.txt"
+    if not note_path.is_file():
+        raise FileNotFoundError(note_path)
+    return note_path.read_text(encoding="utf-8")
 
 
 def test_routine_trach_exchange_does_not_promote_established_route(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -147,7 +165,7 @@ def test_montgomery_t_tube_insertion_routes_to_airway_stent(monkeypatch: pytest.
     assert "31631" in codes
 
 
-def test_montgomery_t_tube_exchange_routes_to_stent_revision(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_montgomery_t_tube_exchange_routes_to_airway_device_action(monkeypatch: pytest.MonkeyPatch) -> None:
     note_text = (
         "MONTGOMERY T-TUBE MANAGEMENT - TUBE EXCHANGE\n"
         "New T-tube confirmed at bedside. Rigid bronchoscope and laser on standby.\n"
@@ -159,17 +177,18 @@ def test_montgomery_t_tube_exchange_routes_to_stent_revision(monkeypatch: pytest
 
     record = _extract_record_parallel_ner(monkeypatch, note_text)
     assert record.procedures_performed is not None
+    airway_device_action = getattr(record.procedures_performed, "airway_device_action", None)
+    assert airway_device_action is not None
+    assert airway_device_action.performed is True
+    assert airway_device_action.device_type == "Montgomery T-tube"
+    assert airway_device_action.action == "Exchange"
+    assert airway_device_action.location == "Trachea"
+
     stent = record.procedures_performed.airway_stent
-    assert stent is not None
-    assert stent.performed is True
-    assert stent.action == "Revision/Repositioning"
-    assert stent.airway_stent_removal is True
-    assert stent.stent_brand == "Montgomery"
-    assert stent.stent_type == "Other"
-    assert stent.location == "Trachea"
+    assert stent is None or stent.performed is not True
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "31638" in codes
+    assert "31638" not in codes
     assert "31641" not in codes
 
 
@@ -251,6 +270,65 @@ def test_real_note_compact_ebus_pass_list_derives_three_sampled_stations(monkeyp
     assert all(event.action != "forceps_biopsy" for event in linear.node_events or [])
 
     assert "31653" in result.cpt_codes
+
+
+def test_real_note_minimal_heading_ebus_pass_list_keeps_three_sampled_stations(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    try:
+        note_text = _load_march_2026_note(batch="batch_1", note_name="note_009")
+    except FileNotFoundError as exc:
+        pytest.skip(f"Fixture note not available: {exc}")
+
+    extracted = extract_linear_ebus(note_text)
+    assert set(extracted.get("linear_ebus", {}).get("stations_sampled") or []) == {"4R", "7", "10R"}
+
+    result = _extract_fields_parallel_ner(monkeypatch, note_text)
+    record = result.record
+    assert record.procedures_performed is not None
+    linear = record.procedures_performed.linear_ebus
+    assert linear is not None
+    assert set(linear.stations_sampled or []) == {"4R", "7", "10R"}
+
+    node_map = {event.station: event for event in linear.node_events or [] if event.station}
+    assert set(node_map) == {"4R", "7", "10R"}
+    assert node_map["4R"].action == "needle_aspiration"
+    assert node_map["7"].action == "needle_aspiration"
+    assert node_map["10R"].action == "needle_aspiration"
+    assert node_map["4R"].passes == 5
+    assert node_map["7"].passes == 5
+    assert node_map["10R"].passes == 3
+
+    assert "31653" in result.cpt_codes
+    assert "31652" not in result.cpt_codes
+
+
+def test_real_note_all_three_station_ebus_tbna_keeps_station_7_and_31653(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    try:
+        note_text = _load_march_2026_note(batch="batch_2", note_name="note_033")
+    except FileNotFoundError as exc:
+        pytest.skip(f"Fixture note not available: {exc}")
+
+    extracted = extract_linear_ebus(note_text)
+    assert set(extracted.get("linear_ebus", {}).get("stations_sampled") or []) == {"4R", "4L", "7"}
+
+    result = _extract_fields_parallel_ner(monkeypatch, note_text)
+    record = result.record
+    assert record.procedures_performed is not None
+    linear = record.procedures_performed.linear_ebus
+    assert linear is not None
+    assert set(linear.stations_sampled or []) == {"4R", "4L", "7"}
+
+    node_map = {event.station: event for event in linear.node_events or [] if event.station}
+    assert set(node_map) == {"4R", "4L", "7"}
+    assert all(event.station is not None for event in linear.node_events or [])
+    assert all(event.action == "needle_aspiration" for event in node_map.values())
+    assert all(event.passes == 3 for event in node_map.values())
+
+    assert "31653" in result.cpt_codes
+    assert "31652" not in result.cpt_codes
 
 
 def test_real_note_keeps_eus_b_separate_from_bronchoscopic_ebus(monkeypatch: pytest.MonkeyPatch) -> None:

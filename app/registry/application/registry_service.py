@@ -1530,7 +1530,11 @@ class RegistryService:
                                 full_lower = full_text.lower()
                                 if "bronchoscop" not in full_lower:
                                     return
-                                non_bronch_keys = {"percutaneous_tracheostomy", "peg_insertion"}
+                                non_bronch_keys = {
+                                    "airway_device_action",
+                                    "percutaneous_tracheostomy",
+                                    "peg_insertion",
+                                }
                                 other_bronch_proc_present = any(
                                     isinstance(v, dict)
                                     and v.get("performed") is True

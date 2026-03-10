@@ -85,7 +85,9 @@ def test_real_note_blue_rhino_pdt_routes_to_percutaneous_trach(monkeypatch: pyte
     assert "31615" not in result.cpt_codes
 
 
-def test_real_note_mature_trach_exchange_keeps_established_route(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_real_note_mature_trach_exchange_confirmation_only_does_not_keep_established_route(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     note_text = (
         "TRACHEOSTOMY EXCHANGE NOTE\n"
         "INDICATION: Mature tracheostomy (14 days post-PDT); first trach tube exchange for smaller cuffless tube.\n"
@@ -97,8 +99,16 @@ def test_real_note_mature_trach_exchange_keeps_established_route(monkeypatch: py
     result = _extract_fields_parallel_ner(monkeypatch, note_text)
     record = result.record
 
-    assert record.established_tracheostomy_route is True
-    assert "31615" in result.cpt_codes
+    assert record.procedures_performed is not None
+    airway_device_action = getattr(record.procedures_performed, "airway_device_action", None)
+    assert airway_device_action is not None
+    assert airway_device_action.performed is True
+    assert airway_device_action.device_type == "Tracheostomy tube"
+    assert airway_device_action.action == "Exchange"
+
+    assert record.established_tracheostomy_route is not True
+    assert "31615" not in result.cpt_codes
+    assert "31622" not in result.cpt_codes
     assert "31600" not in result.cpt_codes
 
 

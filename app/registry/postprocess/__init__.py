@@ -2990,6 +2990,13 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
             if pat.search(search_text):
                 kept_events.append(event)
                 continue
+            if station_token.isdigit():
+                list_context_re = re.compile(
+                    rf"(?i)\bstations?\b[^.\n]{{0,120}}\b{re.escape(station_token)}\b"
+                )
+                if list_context_re.search(search_text):
+                    kept_events.append(event)
+                    continue
             # Allow common anatomic aliases when templates omit the numeric station token.
             aliases = alias_patterns.get(station_token)
             if aliases and any(alias.search(search_text) for alias in aliases):
@@ -4596,6 +4603,7 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     station_events: dict[str, NodeInteraction] = {}
     station_evidence: dict[str, dict[str, int]] = {}
     stations_sampled: list[str] = []
+    existing_station_tokens: list[str] = []
     in_sampled_section = False
     in_station_list = False
     station_list_default_sampling = False
@@ -4604,6 +4612,23 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     passes_re = re.compile(r"(?i)\b(\d{1,2})\s*(?:pass|passes)\b")
     rose_re = re.compile(r"(?i)\brose\s*(?:showed|revealed|:|was)?\s*([^.\\n]{1,180})")
     sampling_order_header_re = re.compile(r"(?i)^\s*sampling(?:\s+order)?\s*:?\s*$")
+    each_station_passes_re = re.compile(
+        r"(?i)\b(?P<n>\d{1,2})\s+(?:passes?|biops(?:y|ies))\b[^.\n]{0,40}\beach\s+station\b"
+        r"|\b(?P<n2>\d{1,2})\s+(?:passes?|biops(?:y|ies))\s+each\b"
+    )
+    global_station_sampling_re = re.compile(
+        r"(?is)\b(?:tbna|fna|sampling|sampled|passes?)\b.{0,140}\b(?:all\s+(?:one|two|three|four|five|six|\d+)\s+stations?|\d+\s+stations?)\b"
+        r"|\b(?:all\s+(?:one|two|three|four|five|six|\d+)\s+stations?|\d+\s+stations?)\b.{0,140}\b(?:tbna|fna|sampling|sampled|passes?)\b"
+    )
+
+    for value in getattr(linear, "stations_sampled", None) or []:
+        token = normalize_station(str(value or "").strip())
+        if not token:
+            continue
+        token = validate_station_format(str(token)) or str(token).strip().upper()
+        token = token.strip().upper()
+        if token and token not in existing_station_tokens:
+            existing_station_tokens.append(token)
 
     cursor = 0
     for masked_line, raw_line in zip(search_text.splitlines(keepends=True), full_text.splitlines(keepends=True)):
@@ -4798,6 +4823,44 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
             if target:
                 return target
         return snippet[:120] if snippet else None
+
+    if not station_events:
+        aggregate_match = global_station_sampling_re.search(full_text)
+        if aggregate_match and existing_station_tokens:
+            aggregate_quote = re.sub(r"\s+", " ", (aggregate_match.group(0) or "").strip())
+            aggregate_passes: int | None = None
+            passes_match = each_station_passes_re.search(aggregate_match.group(0) or "")
+            if passes_match:
+                raw_passes = passes_match.group("n") or passes_match.group("n2")
+                try:
+                    aggregate_passes = int(raw_passes) if raw_passes else None
+                except Exception:
+                    aggregate_passes = None
+
+            for station in existing_station_tokens:
+                pat = _ebus_station_pattern(station)
+                token_match = pat.search(search_text) if pat is not None else None
+                token_start = int(token_match.start()) if token_match is not None else int(aggregate_match.start())
+                token_end = int(token_match.end()) if token_match is not None else int(aggregate_match.end())
+                station_events[station] = NodeInteraction(
+                    station=station,
+                    action="needle_aspiration",
+                    outcome=None,
+                    passes=aggregate_passes,
+                    evidence_quote=aggregate_quote[:280] if aggregate_quote else None,
+                )
+                station_evidence[station] = {
+                    "token_start": token_start,
+                    "token_end": token_end,
+                    "quote_start": int(aggregate_match.start()),
+                    "quote_end": int(aggregate_match.end()),
+                }
+                if aggregate_passes is not None:
+                    stations_sampled.append(station)
+            if station_events:
+                warnings.append(
+                    f"EBUS_NODE_FALLBACK_FROM_AGGREGATE_STATIONS: stations={existing_station_tokens}"
+                )
 
     if not station_events:
         # Some notes clearly document EBUS-TBNA sampling but omit station tokens
