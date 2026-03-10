@@ -1,7 +1,0 @@
-batch,label,avg_score,pass,warning,fail,source_file
-1,Batch 1,83.3,21,19,10,extraction_quality_structured_batch1.json
-2,Batch 2,75.1,18,11,21,extraction_quality_structured_batch_2.json
-3,Batch 3,64.3,5,14,31,batch_3_extraction_evaluation_structured.json
-4,Batch 4,75.6,13,17,20,batch_4_extraction_quality_structured.json
-5,Batch 5,63.5,7,12,31,batch5_extraction_evaluation_structured.json
-6,Batch 6,81.1,11,31,8,extraction_evaluation_batch6_structured.json
