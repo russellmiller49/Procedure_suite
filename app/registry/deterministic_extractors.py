@@ -3483,13 +3483,20 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
         count_match = re.search(
             r"(?i)\b(?:endobronchial\s+)?valve\s+(?:deployment|placement)\s*x?\s*(?P<count0>\d{1,2})\b"
             r"|\b(?<!size\s)(?P<count>\d{1,2}|one|two|three|four|five|six)\s+valves\b[^.\n]{0,40}\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b"
-            r"|\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b[^.\n]{0,40}\b(?:with\s+)?(?<!size\s)(?P<count2>\d{1,2}|one|two|three|four|five|six)\s+valves\b",
+            r"|\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b[^.\n]{0,40}\b(?:with\s+)?(?<!size\s)(?P<count2>\d{1,2}|one|two|three|four|five|six)\s+valves\b"
+            r"|\(\s*total(?:ing)?(?:\s+of)?\s*(?P<count3>\d{1,2}|one|two|three|four|five|six)\s+valves?\s*\)"
+            r"|\b(?:for\s+a\s+)?total(?:ing)?(?:\s+of)?\s+(?P<count4>\d{1,2}|one|two|three|four|five|six)\s+valves?\b",
             preferred_text,
         )
         explicit_count: int | None = None
         if count_match:
             raw_count = (
-                count_match.group("count0") or count_match.group("count") or count_match.group("count2") or ""
+                count_match.group("count0")
+                or count_match.group("count")
+                or count_match.group("count2")
+                or count_match.group("count3")
+                or count_match.group("count4")
+                or ""
             ).strip().lower()
             try:
                 explicit_count = int(raw_count)
@@ -3500,7 +3507,7 @@ def extract_blvr(note_text: str) -> Dict[str, Any]:
                 existing_count = int(proc.get("number_of_valves")) if proc.get("number_of_valves") is not None else None
             except Exception:
                 existing_count = None
-            if existing_count is None or existing_count < explicit_count:
+            if existing_count != explicit_count:
                 proc["number_of_valves"] = explicit_count
 
     if not proc.get("target_lobe"):

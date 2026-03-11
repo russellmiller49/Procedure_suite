@@ -1541,6 +1541,14 @@ class ClinicalGuardrails:
             "right lower": "RLL",
             "lingula": "Lingula",
         }
+        lobe_token_map = {
+            "RUL": "RUL",
+            "RML": "RML",
+            "RLL": "RLL",
+            "LUL": "LUL",
+            "LLL": "LLL",
+            "LINGULA": "Lingula",
+        }
         selected_lobes: list[str] = []
         for label, code in lobe_map.items():
             if self._checkbox_state(note_text, (label,)) is True:
@@ -1692,10 +1700,79 @@ class ClinicalGuardrails:
                 blvr["valve_sizes"] = sizes
                 changed = True
 
+        valve_count_rows: list[tuple[str, int]] = []
+        valves_header = re.search(r"(?im)^\s*valves\s*:\s*$", note_text or "")
+        if valves_header:
+            valve_count_block = (note_text or "")[valves_header.end() : valves_header.end() + 1000]
+            stop = re.search(
+                r"(?im)^\s*(?:ebl|complications?|plan|disposition(?:/plan)?|sedation|anesthesia|findings?)\b",
+                valve_count_block,
+            )
+            if stop:
+                valve_count_block = valve_count_block[: stop.start()]
+
+            row_re = re.compile(
+                r"(?i)^\s*(?:[-*]\s*)?(?P<label>(?:RUL|RML|RLL|LUL|LLL|Lingula|"
+                r"right\s+upper(?:\s+lobe)?|right\s+middle(?:\s+lobe)?|right\s+lower(?:\s+lobe)?|"
+                r"left\s+upper(?:\s+lobe)?|left\s+lower(?:\s+lobe)?)[^:\n]{0,60})\s*:\s*(?P<count>\d{1,2})\s*$"
+            )
+            for raw_line in valve_count_block.splitlines():
+                line = (raw_line or "").strip()
+                if not line:
+                    continue
+                match = row_re.match(line)
+                if not match:
+                    continue
+                try:
+                    row_count = int(match.group("count"))
+                except Exception:
+                    continue
+                if row_count <= 0:
+                    continue
+                valve_count_rows.append((match.group("label").strip(), row_count))
+
+        counted_segments: list[str] = []
+        counted_lobes: set[str] = set()
+        if valve_count_rows:
+            counted_total = sum(row_count for _label, row_count in valve_count_rows)
+            for label_text, _row_count in valve_count_rows:
+                counted_segments.append(label_text)
+                label_upper = label_text.upper()
+                for token, code in lobe_token_map.items():
+                    if token in label_upper:
+                        counted_lobes.add(code)
+                        break
+                else:
+                    for label, code in lobe_map.items():
+                        if label in label_text.lower():
+                            counted_lobes.add(code)
+                            break
+
+            try:
+                existing_count = int(blvr.get("number_of_valves")) if blvr.get("number_of_valves") is not None else None
+            except Exception:
+                existing_count = None
+            if existing_count != counted_total:
+                blvr["number_of_valves"] = counted_total
+                changed = True
+
+            existing_segments = blvr.get("segments_treated")
+            existing_len = len(existing_segments) if isinstance(existing_segments, list) else 0
+            if existing_len < len(counted_segments):
+                blvr["segments_treated"] = counted_segments
+                changed = True
+
         explicit_count_match = re.search(
             r"(?i)\b(?:endobronchial\s+)?valve\s+(?:deployment|placement)\s*x?\s*(?P<count0>\d{1,2})\b"
             r"|\b(?<!size\s)(?P<count>\d{1,2}|one|two|three|four|five|six)\s+valves\b[^.\n]{0,40}\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b"
-            r"|\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b[^.\n]{0,40}\b(?:with\s+)?(?<!size\s)(?P<count2>\d{1,2}|one|two|three|four|five|six)\s+valves\b",
+            r"|\b(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?|treat(?:ed|ment)?)\b[^.\n]{0,40}\b(?:with\s+)?(?<!size\s)(?P<count2>\d{1,2}|one|two|three|four|five|six)\s+valves\b"
+            r"|\(\s*total(?:ing)?(?:\s+of)?\s*(?P<count3>\d{1,2}|one|two|three|four|five|six)\s+valves?\s*\)"
+            r"|\b(?:for\s+a\s+)?total(?:ing)?(?:\s+of)?\s+(?P<count4>\d{1,2}|one|two|three|four|five|six)\s+valves?\b",
+            note_text,
+        )
+        sequential_second_valve_match = re.search(
+            r"(?i)\bone\s+valve\s+(?:deploy(?:ed|ment)?|place(?:d|ment)?|insert(?:ed|ion)?)\b[^.\n]{0,140}"
+            r"\b(?:a\s+second|second(?:\s+valve)?|another\s+valve)\b",
             note_text,
         )
         if explicit_count_match:
@@ -1711,6 +1788,8 @@ class ClinicalGuardrails:
                 explicit_count_match.group("count0")
                 or explicit_count_match.group("count")
                 or explicit_count_match.group("count2")
+                or explicit_count_match.group("count3")
+                or explicit_count_match.group("count4")
                 or ""
             ).strip().lower()
             try:
@@ -1722,9 +1801,17 @@ class ClinicalGuardrails:
                     existing_count = int(blvr.get("number_of_valves")) if blvr.get("number_of_valves") is not None else None
                 except Exception:
                     existing_count = None
-                if existing_count is None or existing_count < explicit_count:
+                if existing_count != explicit_count:
                     blvr["number_of_valves"] = explicit_count
                     changed = True
+        elif sequential_second_valve_match:
+            try:
+                existing_count = int(blvr.get("number_of_valves")) if blvr.get("number_of_valves") is not None else None
+            except Exception:
+                existing_count = None
+            if existing_count != 2:
+                blvr["number_of_valves"] = 2
+                changed = True
         if segments:
             existing_segments = blvr.get("segments_treated")
             existing_len = len(existing_segments) if isinstance(existing_segments, list) else 0
@@ -1814,17 +1901,33 @@ class ClinicalGuardrails:
             if inferred:
                 valve_lobes.add(inferred)
 
-        explicit_lobe_hits = [
-            code
-            for label, code in lobe_map.items()
-            if re.search(
-                rf"(?i)\b{label}\s+lobe\b[^.\n]{{0,100}}\b(?:blvr|valve|collateral\s+ventilation)\b"
-                rf"|\b(?:blvr|valve|collateral\s+ventilation)\b[^.\n]{{0,100}}\b{label}\s+lobe\b",
-                note_text,
-            )
-        ]
+        explicit_lobe_hits = list(counted_lobes)
+        explicit_lobe_hits.extend(
+            [
+                code
+                for label, code in lobe_map.items()
+                if re.search(
+                    rf"(?i)\b{label}(?:\s+lobe)?\b[^.\n]{{0,100}}\b(?:blvr|valve|chartis|collateral\s+ventilation)\b"
+                    rf"|\b(?:blvr|valve|chartis|collateral\s+ventilation)\b[^.\n]{{0,100}}\b{label}(?:\s+lobe)?\b",
+                    note_text,
+                )
+            ]
+        )
+        explicit_lobe_hits.extend(
+            [
+                code
+                for token, code in lobe_token_map.items()
+                if re.search(
+                    rf"(?i)\b{token}\b[^.\n]{{0,100}}\b(?:blvr|valve|chartis|collateral\s+ventilation)\b"
+                    rf"|\b(?:blvr|valve|chartis|collateral\s+ventilation)\b[^.\n]{{0,100}}\b{token}\b",
+                    note_text,
+                )
+            ]
+        )
         if len(set(explicit_lobe_hits)) == 1:
             valve_lobes.add(explicit_lobe_hits[0])
+        elif set(explicit_lobe_hits) == {"LUL", "Lingula"}:
+            valve_lobes.update({"LUL", "Lingula"})
 
         canonical_target_lobe: str | None = None
         if valve_lobes == {"LUL", "Lingula"}:
