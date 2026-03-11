@@ -759,6 +759,39 @@ def _looks_like_endobronchial_ablation_context(note_text: str, match: re.Match[s
     return True
 
 
+def _looks_like_percutaneous_ablation_context(note_text: str, match: re.Match[str]) -> bool:
+    """Return True when ablation language is CT-guided/percutaneous rather than bronchoscopic."""
+    if not note_text:
+        return False
+
+    local_start = max(0, match.start() - 260)
+    local_end = min(len(note_text), match.end() + 260)
+    window = note_text[local_start:local_end]
+
+    percutaneous_context = bool(
+        re.search(
+            r"(?i)\b(?:ct[-\s]?guided|computed\s+tomography|transthoracic|percutaneous|coaxial|chest\s+wall|"
+            r"pleural[-\s]?based|microwave\s+antenna|ablation\s+antenna|ablation\s+probe|cryo\s*probe|"
+            r"cryo(?:genic)?\s+probe|electrode\s+placement|needle\s+path)\b",
+            window,
+        )
+    )
+    if not percutaneous_context:
+        return False
+
+    for bronch_match in re.finditer(
+        r"(?i)\b(?:bronchoscop|bronchoscope|navigation|navigational|robotic|ion\b|monarch|galaxy|"
+        r"radial\s+(?:ebus|probe)|tool[-\s]?in[-\s]?lesion|working\s+channel|cbct|cone\s*beam)\b",
+        window,
+    ):
+        lead = window[max(0, bronch_match.start() - 40) : bronch_match.start()]
+        if re.search(r"(?i)\b(?:no|not|without|declined|deferred)\b[^.\n]{0,24}$", lead):
+            continue
+        return False
+
+    return True
+
+
 def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str | None = None) -> bool:
     """Return True when a keyword match is negated in local context."""
     if not note_text:
@@ -842,6 +875,9 @@ def scan_for_omissions(note_text: str, record: RegistryRecord) -> list[str]:
                 if field_path == "procedures_performed.peripheral_ablation.performed":
                     if _looks_like_endobronchial_ablation_context(note_text or "", match):
                         continue
+                if field_path == "procedures_performed.cryotherapy.performed":
+                    if _looks_like_percutaneous_ablation_context(note_text or "", match):
+                        continue
                 warning = f"SILENT_FAILURE: {msg} (Pattern: '{pattern}')"
                 warnings.append(warning)
                 logger.warning(warning, extra={"field": field_path, "pattern": pattern})
@@ -892,6 +928,9 @@ def apply_required_overrides(note_text: str, record: RegistryRecord) -> tuple[Re
                     continue
             if field_path == "procedures_performed.peripheral_ablation.performed":
                 if _looks_like_endobronchial_ablation_context(note_text or "", match):
+                    continue
+            if field_path == "procedures_performed.cryotherapy.performed":
+                if _looks_like_percutaneous_ablation_context(note_text or "", match):
                     continue
             if field_path == "procedures_performed.brushings.performed":
                 window_start = max(0, match.start() - 180)

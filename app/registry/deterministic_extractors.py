@@ -4068,6 +4068,39 @@ def extract_eus_b(note_text: str) -> Dict[str, Any]:
     return {}
 
 
+def _has_positive_bronchoscopic_ablation_context(text: str) -> bool:
+    if not text:
+        return False
+
+    for match in re.finditer(
+        r"\b(?:bronchoscop|bronchoscope|navigation|navigational|robotic|ion\b|monarch|galaxy|"
+        r"radial\s+(?:ebus|probe)|tool[-\s]?in[-\s]?lesion|working\s+channel|cbct|cone\s*beam)\b",
+        text,
+        re.IGNORECASE,
+    ):
+        lead = text[max(0, match.start() - 40) : match.start()]
+        if re.search(r"(?i)\b(?:no|not|without|declined|deferred)\b[^.\n]{0,24}$", lead):
+            continue
+        return True
+    return False
+
+
+def _is_percutaneous_nonbronchoscopic_ablation_context(text: str) -> bool:
+    if not text:
+        return False
+
+    percutaneous_context = bool(
+        re.search(
+            r"\b(?:ct[-\s]?guided|computed\s+tomography|transthoracic|percutaneous|coaxial|chest\s+wall|"
+            r"pleural[-\s]?based|microwave\s+antenna|ablation\s+antenna|ablation\s+probe|cryo\s*probe|"
+            r"cryo(?:genic)?\s+probe|electrode\s+placement|needle\s+path)\b",
+            text,
+            re.IGNORECASE,
+        )
+    )
+    return percutaneous_context and not _has_positive_bronchoscopic_ablation_context(text)
+
+
 def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
     """Extract cryotherapy (tumor destruction/stenosis relief) indicator."""
     preferred_text, used_detail = _preferred_procedure_detail_text(note_text)
@@ -4075,6 +4108,8 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
         preferred_text = _strip_cpt_definition_lines(preferred_text)
     else:
         preferred_text = _strip_cpt_definition_lines(preferred_text)
+    if _is_percutaneous_nonbronchoscopic_ablation_context(preferred_text):
+        return {}
     text_lower = preferred_text.lower()
     for pattern in CRYOTHERAPY_PATTERNS:
         for match in re.finditer(pattern, text_lower, re.IGNORECASE):
@@ -4941,23 +4976,7 @@ def extract_peripheral_ablation(note_text: str) -> Dict[str, Any]:
     if not (has_mwa or has_rfa or has_cryo):
         return {}
 
-    percutaneous_context = bool(
-        re.search(
-            r"\b(?:ct[-\s]?guided|computed\s+tomography|transthoracic|percutaneous|coaxial|chest\s+wall|"
-            r"pleural[-\s]?based|microwave\s+antenna|ablation\s+antenna|ablation\s+probe)\b",
-            text_lower,
-            re.IGNORECASE,
-        )
-    )
-    bronchoscopic_context = bool(
-        re.search(
-            r"\b(?:bronchoscop|bronchoscope|navigation|navigational|robotic|ion\b|monarch|galaxy|"
-            r"radial\s+(?:ebus|probe)|tool[-\s]?in[-\s]?lesion|working\s+channel|cbct|cone\s*beam)\b",
-            text_lower,
-            re.IGNORECASE,
-        )
-    )
-    if percutaneous_context and not bronchoscopic_context:
+    if _is_percutaneous_nonbronchoscopic_ablation_context(text_lower):
         return {}
 
     peripheral_context = bool(
