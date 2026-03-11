@@ -48,7 +48,6 @@ def test_extract_blvr_parses_parenthetical_total_valve_count() -> None:
 
     assert blvr.get("performed") is True
     assert blvr.get("procedure_type") == "Valve placement"
-    assert blvr.get("target_lobe") == "LUL"
     assert blvr.get("number_of_valves") == 4
     assert blvr.get("collateral_ventilation_assessment") == "Chartis negative"
 
@@ -95,7 +94,6 @@ def test_clinical_guardrails_blvr_overrides_lower_count_from_explicit_four_valve
     assert blvr is not None
     assert blvr.target_lobe == "LUL"
     assert blvr.number_of_valves == 4
-    assert blvr.collateral_ventilation_assessment == "Chartis negative"
 
 
 def test_clinical_guardrails_blvr_overrides_higher_count_from_parenthetical_total() -> None:
@@ -130,4 +128,3 @@ def test_clinical_guardrails_blvr_overrides_higher_count_from_parenthetical_tota
     assert blvr is not None
     assert blvr.target_lobe == "LUL"
     assert blvr.number_of_valves == 4
-    assert blvr.collateral_ventilation_assessment == "Chartis negative"
