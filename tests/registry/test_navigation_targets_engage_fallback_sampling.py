@@ -30,3 +30,25 @@ def test_extract_navigation_targets_engage_fallback_extracts_sampling_counts_and
     assert target.get("number_of_needle_passes") == 6
     assert target.get("number_of_cryo_biopsies") == 7
 
+
+def test_extract_navigation_targets_prefers_confirmed_procedural_target_before_impression() -> None:
+    note_text = """
+    PROCEDURE IN DETAIL:
+    Robotic navigation plan loaded from preoperative CT chest.
+    Catheter navigated to right [sic] upper lobe target - operator note:
+    target confirmed LEFT upper lobe, apical-posterior segment (LB1+2).
+    Radial EBUS concentric and fluoroscopic spot image confirmed position.
+
+    Nodule characteristics on radial EBUS:
+    Target\tSize (CT)\trEBUS signal
+    LUL apical-posterior\t2.8 cm\tConcentric
+
+    IMPRESSION/PLAN:
+    1. Technically successful robotic navigational bronchoscopy with rEBUS confirmation of LUL 2.8 cm target.
+    """.strip()
+
+    targets = extract_navigation_targets(note_text)
+
+    assert len(targets) == 1
+    assert targets[0]["target_location_text"] == "LUL apical-posterior segment (LB1+2)"
+    assert targets[0]["target_lobe"] == "LUL"

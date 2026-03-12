@@ -131,7 +131,7 @@ _TIL_METHOD_FLUORO_RE = re.compile(r"(?i)\bfluor(?:oscopy|o)\b")
 _TIL_METHOD_REBUS_RE = re.compile(r"(?i)\b(?:radial\s+ebus|r-?ebus|rebus)\b")
 
 _INLINE_TARGET_RE = re.compile(
-    r"\bTarget(?:\s+Lesion)?\s*[:\-]\s*(?P<loc>[^\n\r]+)",
+    r"(?im)^\s*Target(?:\s+Lesion)?\s*[:\-]\s*(?P<loc>[^\n\r]+)",
     re.IGNORECASE | re.MULTILINE,
 )
 _INLINE_NAV_WORKFLOW_TARGET_RE = re.compile(
@@ -146,6 +146,13 @@ _INLINE_NAV_WORKFLOW_TARGET_RE = re.compile(
     r")"
 )
 
+_PROCEDURAL_TARGET_CONFIRMED_RE = re.compile(
+    r"(?is)\btarget\s+confirmed\s+(?P<loc>"
+    r"(?:LEFT|RIGHT)\s+(?:UPPER|MIDDLE|LOWER)\s+LOBE"
+    r"(?:\s*,\s*[A-Za-z0-9+/\- ]{1,80}?(?:segment|target|lesion|nodule))?"
+    r"(?:\s*\([^)]+\))?"
+    r")"
+)
 _FIDUCIAL_SENTENCE_RE = re.compile(r"(?i)\b(fiducial(?:\s+marker)?s?\b[^\n]{0,260})")
 _FIDUCIAL_ACTION_RE = re.compile(r"(?i)\b(?:plac(?:ed|ement)|deploy\w*|position\w*|insert\w*)\b")
 _FIDUCIAL_EXPLICIT_NEG_RE = re.compile(
@@ -516,6 +523,28 @@ def _extract_rose_result(text: str) -> str | None:
     return None
 
 
+def _canonicalize_procedural_target_location(raw_loc: str) -> str:
+    loc = re.sub(r"\s+", " ", raw_loc or "").strip(" .;:-")
+    if not loc:
+        return ""
+
+    loc = re.sub(r"(?i)\[sic\]", "", loc)
+    replacements = {
+        "LEFT UPPER LOBE": "LUL",
+        "LEFT LOWER LOBE": "LLL",
+        "RIGHT UPPER LOBE": "RUL",
+        "RIGHT MIDDLE LOBE": "RML",
+        "RIGHT LOWER LOBE": "RLL",
+    }
+    for phrase, abbrev in replacements.items():
+        loc = re.sub(rf"(?i)\b{phrase}\b", abbrev, loc)
+
+    loc = re.sub(r"(?i)\b(RUL|RML|RLL|LUL|LLL|Lingula)\s*,\s*", r"\1 ", loc)
+    loc = re.sub(r"(?i)\b(?:target|lesion|nodule)\b$", "", loc).strip(" ,;-")
+    loc = re.sub(r"\s+", " ", loc).strip(" ,;-")
+    return _truncate_location(loc)
+
+
 def _fiducial_in_section(section_text: str) -> tuple[bool, str | None, tuple[int, int] | None]:
     """Return (placed, details, local_span) for fiducial placement language.
 
@@ -804,6 +833,22 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
 
         if targets:
             return targets
+
+        confirmed_target = _PROCEDURAL_TARGET_CONFIRMED_RE.search(scan_text)
+        if confirmed_target:
+            location_text = _canonicalize_procedural_target_location(confirmed_target.group("loc") or "")
+            if location_text:
+                target: dict[str, Any] = {
+                    "target_number": 1,
+                    "target_location_text": location_text,
+                }
+                lobe = _infer_lobe_from_text(location_text)
+                if lobe:
+                    target["target_lobe"] = lobe
+                segment_match = re.search(r"(?i)\b([A-Za-z][A-Za-z0-9+/\- ]{1,80}?segment)\b", location_text)
+                if segment_match:
+                    target["target_segment"] = segment_match.group(1).strip()
+                return [target]
 
         # Fallback: some templates use navigation prose ("... used to engage the <segment> of RLL (RB6)")
         # without explicit "... TARGET" headings or inline "Target:" markers. Treat each distinct "engage"
