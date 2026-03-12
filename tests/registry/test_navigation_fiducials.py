@@ -68,3 +68,55 @@ def test_apply_navigation_fiducials_treats_placed_with_failed_retention_as_place
     assert isinstance(targets, list)
     assert targets
     assert targets[0].get("fiducial_marker_placed") is True
+
+
+def test_apply_navigation_fiducials_reads_target_in_segment_sentence() -> None:
+    data: dict[str, object] = {
+        "granular_data": {
+            "navigation_targets": [
+                {"target_number": 1, "target_location_text": "Unknown target"},
+            ]
+        }
+    }
+    note_text = (
+        "Robotic navigation completed.\n"
+        "Navigation completed to target in LLL posterior basal segment. Radial EBUS confirmed position.\n"
+        "Three fiducials deployed around lesion margins under fluoroscopy.\n"
+    )
+
+    changed = apply_navigation_fiducials(data, note_text)
+
+    assert changed is True
+    granular = data.get("granular_data")
+    assert isinstance(granular, dict)
+    targets = granular.get("navigation_targets")
+    assert isinstance(targets, list)
+    assert targets
+    assert targets[0].get("target_location_text") == "LLL posterior basal segment"
+    assert targets[0].get("target_lobe") == "LLL"
+
+
+def test_apply_navigation_fiducials_reads_target_in_was_reached_sentence() -> None:
+    data: dict[str, object] = {
+        "granular_data": {
+            "navigation_targets": [
+                {"target_number": 1, "target_location_text": "Unknown target"},
+            ]
+        }
+    }
+    note_text = (
+        "Computer-assisted guided bronchoscopy performed.\n"
+        "Target in the apicoposterior LUL was reached with guided bronchoscopy.\n"
+        "Fiducials were placed adjacent to the lesion after tissue sampling.\n"
+    )
+
+    changed = apply_navigation_fiducials(data, note_text)
+
+    assert changed is True
+    granular = data.get("granular_data")
+    assert isinstance(granular, dict)
+    targets = granular.get("navigation_targets")
+    assert isinstance(targets, list)
+    assert targets
+    assert targets[0].get("target_location_text") == "apicoposterior LUL"
+    assert targets[0].get("target_lobe") == "LUL"
