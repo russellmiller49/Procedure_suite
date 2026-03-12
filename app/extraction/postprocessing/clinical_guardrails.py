@@ -153,7 +153,7 @@ _ROUTINE_HEMOSTASIS_INTERVENTION_RE = re.compile(
 )
 _ROUTINE_HEMOSTASIS_RESOLUTION_RE = re.compile(
     r"(?i)\b(?:hemostasis\s+(?:was\s+)?(?:achieved|confirmed)|bleeding\s+(?:resolved|ceased|controlled)|"
-    r"no\s+active\s+bleeding)\b"
+    r"no\s+active\s+bleeding|(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding)\b"
 )
 _ROUTINE_HEMOSTASIS_ESCALATION_RE = re.compile(
     r"(?i)\b(?:balloon\s+tamponade|tamponade|fogarty|endobronchial\s+blocker|arndt|transfus(?:ion|ed)|"
@@ -1128,7 +1128,8 @@ class ClinicalGuardrails:
                 re.search(
                     r"(?i)\b(?:minor|minimal|mild|trace|scant|contact|blood-tinged)\b(?:\s+\w+){0,2}\s+(?:bleeding|oozing|hemorrhag(?:e|ic))\b"
                     r"|\bminor\s+oozing\b|\bmild\s+oozing\b|\boo?zing\b"
-                    r"|\b(?:small|trace|minimal)\s+amount\s+of\s+(?:bleeding|oozing)\b",
+                    r"|\b(?:small|trace|minimal)\s+amount\s+of\s+(?:bleeding|oozing)\b"
+                    r"|\b(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding\b",
                     note_text or "",
                 )
             )

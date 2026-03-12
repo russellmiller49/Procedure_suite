@@ -1640,6 +1640,21 @@ class RegistryService:
 
                             # Endobronchial lesions/tumors. Use the schema enum value
                             # "Endobronchial lesion" (covers tumor/mass language).
+                            raw_diag_text = raw_note_text or full_text or masked_note_text or ""
+                            negated_endobronchial_disease = bool(
+                                re.search(
+                                    r"(?i)\b(?:airways?\s+(?:otherwise\s+)?)?(?:with\s+)?(?:no|without)\s+(?:focal\s+|visible\s+|obvious\s+)?"
+                                    r"endobronchial\s+(?:lesions?|tumou?rs?|mass(?:es)?|abnormalit(?:y|ies)|disease)\b",
+                                    raw_diag_text,
+                                )
+                            )
+                            explicit_positive_endobronchial_disease = bool(
+                                re.search(
+                                    r"(?i)\b(?:there\s+(?:was|were)|found|noted|seen|visualized)\b[^.\n]{0,120}\bendobronchial\b[^.\n]{0,120}\b(?:lesion|tumou?r|mass)\b"
+                                    r"|\bendobronchial\b[^.\n]{0,120}\b(?:lesion|tumou?r|mass)\b[^.\n]{0,120}\b(?:was|were)\b",
+                                    raw_diag_text,
+                                )
+                            )
                             if "Endobronchial lesion" not in abnormalities:
                                 lesion_match = _first_nonnegated_match(
                                     r"\bendobronchial\b[^.\n]{0,120}\b(?:lesion|tumou?r|tumors?|mass)\b",
@@ -1649,7 +1664,9 @@ class RegistryService:
                                     r"\b(?:tumou?r|tumors?|mass|lesion)\b[^.\n]{0,120}\b(?:endobronch|airway|trachea|carina|bronch(?:us|ial))\b",
                                     full_text,
                                 )
-                                if lesion_match or airway_lesion_match:
+                                if (lesion_match or airway_lesion_match) and not (
+                                    negated_endobronchial_disease and not explicit_positive_endobronchial_disease
+                                ):
                                     abnormalities.append("Endobronchial lesion")
                                     found.append("endobronchial_lesion")
 
@@ -1778,6 +1795,12 @@ class RegistryService:
                                     r"\bsecretions?\b[^.\n]{0,160}",
                                 ]
                                 for pat in patterns:
+                                    if (
+                                        pat in (r"\bendobronchial\b[^.\n]{0,160}", r"\b(?:tumou?r|tumors?|mass|lesion)\b[^.\n]{0,160}")
+                                        and negated_endobronchial_disease
+                                        and not explicit_positive_endobronchial_disease
+                                    ):
+                                        continue
                                     match = re.search(pat, masked_note_text or "", re.IGNORECASE)
                                     if match:
                                         snippet = re.sub(r"\s+", " ", (match.group(0) or "").strip())

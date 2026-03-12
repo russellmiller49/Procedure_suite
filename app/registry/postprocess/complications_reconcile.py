@@ -38,6 +38,7 @@ _PROCEDURAL_NONE_RE = re.compile(
 _LOW_GRADE_BLEEDING_CUE_RE = re.compile(
     r"(?i)\b(?:minor|minimal|mild|trace|scant|contact|blood-tinged)\b(?:\s+\w+){0,2}\s+(?:bleeding|oozing|hemorrhag(?:e|ic))\b"
     r"|\bminor\s+oozing\b|\bmild\s+oozing\b|\boo?zing\b|\bminor\s+procedural\s+hemorrhage\b"
+    r"|\b(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding\b"
 )
 _HIGH_GRADE_BLEEDING_CUE_RE = re.compile(
     r"(?i)\b(?:moderate|significant|severe|massive|brisk|active)\s+(?:bleeding|hemorrhag(?:e|ic))\b"
@@ -61,7 +62,7 @@ _ROUTINE_HEMOSTASIS_INTERVENTION_RE = re.compile(
 )
 _ROUTINE_HEMOSTASIS_RESOLUTION_RE = re.compile(
     r"(?i)\b(?:hemostasis\s+(?:was\s+)?(?:achieved|confirmed)|bleeding\s+(?:resolved|ceased|controlled)|"
-    r"no\s+active\s+bleeding)\b"
+    r"no\s+active\s+bleeding|(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding)\b"
 )
 _ABORT_FOR_BLEEDING_RE = re.compile(
     r"(?i)\b(?:abort(?:ed|ing)|terminate(?:d|ing)|stop(?:ped|ping))\b[^.\n]{0,120}\b(?:bleed(?:ing)?|hemorrhage|haemorrhage)\b"
