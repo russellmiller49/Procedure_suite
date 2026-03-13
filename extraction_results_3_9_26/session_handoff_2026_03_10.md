@@ -1,6 +1,6 @@
 # Session Handoff - March 10, 2026
 
-This handoff is the authoritative working summary for the `extraction_improvements` branch as of the March 10, 2026 desktop session. It includes the earlier March-plan work plus everything completed and validated later in the same day.
+This handoff is the authoritative working summary for the `extraction_improvements` branch. It preserves the March 10, 2026 desktop-session baseline and now also records the later March 11-13 follow-on work completed after that session.
 
 Start the next session by reading, in order:
 - `extraction_results_3_9_26/codex_master_prompt.md`
@@ -234,6 +234,309 @@ EBUS closure status:
   - broader consumer/UI validation
   - non-default runtime configurations
 
+## Post-March 10 Follow-On Updates (March 11, 2026)
+
+### Completed - Percutaneous Ablation
+
+This slice is now complete at the requested evidence level for the anchored extraction family.
+
+Committed change:
+
+- `a56173c3 Guard percutaneous cryoablation from bronchoscopic cryotherapy routing`
+
+What changed:
+
+- Explicit CT-guided / percutaneous / non-bronchoscopic cryoablation no longer leaks into bronchoscopic `cryotherapy`.
+- Unsupported bronchoscopic CPT `31641` no longer derives from that percutaneous language.
+- The fix was kept conservative:
+  - it prevents false bronchoscopic routing / CPT leakage
+  - it does **not** yet assert a positive structured percutaneous-ablation extraction
+  - it does **not** add broader percutaneous CPT derivation
+
+Primary files touched:
+
+- `app/registry/deterministic_extractors.py`
+- `app/registry/self_correction/keyword_guard.py`
+- `tests/registry/test_fixpack_percutaneous_ablation_regressions.py`
+
+Measured percutaneous anchor-note subset:
+
+- `batch_5/note_002`: improved
+  - before: `cryotherapy.performed=True`, `cpt_codes=['31641']`
+  - after: no bronchoscopic ablation family, `cpt_codes=[]`
+- `batch_5/note_006`: same / protected
+- `batch_5/note_012`: same / protected
+- `batch_5/note_024`: same / protected
+
+Percutaneous validation completed:
+
+- new real-note regression:
+  - `tests/registry/test_fixpack_percutaneous_ablation_regressions.py`
+- adjacent focused protections:
+  - `tests/registry/test_codex_plan_first_pass_march2026.py`
+  - `tests/registry/test_keyword_guard_overrides.py -k 'ablation or cryo'`
+
+Percutaneous closure status:
+
+- Closed only for:
+  - the committed anchored fix
+  - the measured four-note subset above
+- Still unverified:
+  - broader March-family impact
+  - downstream/UI/export behavior
+
+### Completed - BLVR / PAL Valve
+
+This slice is now complete at the requested anchored implementation level and committed on branch.
+
+Committed changes:
+
+- `b68b2a64 Normalize BLVR PAL valve counts and bundling`
+- `4c647f88 Relax BLVR parenthetical count unit expectations`
+
+What changed:
+
+- BLVR/PAL notes now better preserve:
+  - explicit valve totals
+  - target-lobe normalization
+  - same-session Chartis / localization bundling when integral to same-session valve placement
+- Same-session `31634` is suppressed only in the measured same-lobe / integral-localization scenarios supported by the selected anchors.
+
+Primary files touched:
+
+- `app/extraction/postprocessing/clinical_guardrails.py`
+- `app/registry/deterministic_extractors.py`
+- `tests/registry/test_codex_plan_third_pass_march2026.py`
+- `tests/registry/test_fixpack_blvr_pal_regressions.py`
+
+Measured BLVR/PAL anchor-note outcomes:
+
+- `batch_4/note_004`: improved
+  - before: `target_lobe=None`, no valve count, `cpt_codes=['31634', '31647']`
+  - after: `target_lobe='LUL'`, `number_of_valves=4`, `cpt_codes=['31647']`
+- `batch_4/note_007`: improved
+  - before: `target_lobe='Lingula'`, no valve count
+  - after: `target_lobe='LUL'`, `number_of_valves=4`, preserved treated segments
+- `batch_4/note_018`: improved
+  - before: `target_lobe='RLL'`, valve count missing
+  - after: `target_lobe='RLL'`, `number_of_valves=2`, `cpt_codes=['31647']`
+
+BLVR/PAL validation completed:
+
+- new real-note regression:
+  - `tests/registry/test_fixpack_blvr_pal_regressions.py`
+- adjacent focused validations:
+  - `tests/registry/test_codex_plan_third_pass_march2026.py`
+  - `tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py`
+  - `tests/registry/test_extraction_quality_fixpack_batch4_march2026.py`
+
+Important caveat:
+
+- The pre-fix live probe evidence for BLVR/PAL used the TF-IDF fallback path while the current workspace used the ONNX-backed path.
+- Those probes are supportive note-level evidence, not a clean apples-to-apples batch measurement.
+
+BLVR/PAL closure status:
+
+- Closed only for:
+  - the committed anchored implementation slice
+  - the focused validations above
+- Still unverified:
+  - broader March-family impact
+  - downstream/UI/export behavior
+  - broader batch-level shadow measurement
+
+### Completed - Negation / Complication Gating
+
+This slice is now committed on branch and closed at the requested anchored evidence level.
+
+Committed change:
+
+- `9596d1db updates`
+
+What changed:
+
+- routine hemostasis / `no significant bleeding` language no longer becomes a bleeding complication
+- masked-text lesion snippets no longer reintroduce false endobronchial lesion findings when the raw note negates endobronchial disease
+
+Primary files touched:
+
+- `app/extraction/postprocessing/clinical_guardrails.py`
+- `app/registry/postprocess/complications_reconcile.py`
+- `app/registry/application/registry_service.py`
+- `tests/registry/test_fixpack_negation_complication_regressions.py`
+
+Measured anchor-note outcomes:
+
+- `batch_1/note_004`: improved
+  - false bleeding complication / Nashville 2 cleared
+- `batch_1/note_039`: improved
+  - false bleeding complication / Nashville 2 cleared
+- `batch_6/note_009`: improved
+  - corrected evidence shows the reliable pre-fix baseline under the exact regression path was `diagnostic_bronchoscopy=None`
+  - committed state restores `diagnostic_bronchoscopy.performed=True` with no lesion/mass/tumor carryover
+
+Important note on `batch_6/note_009`:
+
+- An earlier review report incorrectly described the pre-fix baseline as `inspection_findings='lesion'`.
+- The clean rerun using the exact single-note regression path showed the reliable pre-fix baseline was actually missing `diagnostic_bronchoscopy` entirely.
+- Treat the corrected interpretation above as authoritative.
+
+Focused validation completed:
+
+- `tests/registry/test_fixpack_negation_complication_regressions.py`
+- `tests/registry/test_codex_plan_first_pass_march2026.py`
+- `tests/registry/test_codex_plan_second_pass_march2026.py`
+- `tests/registry/test_extraction_quality_fixpack_march2026.py -k 'endobronchial or bleeding or hemostasis'`
+
+Important caveat:
+
+- The pre-fix `batch_6/note_009` anchor run used the TF-IDF fallback path while the committed-state run used the ONNX-backed path.
+- That note should be treated as supportive anchored evidence, not a clean backend A/B measurement.
+
+Negation/complication closure status:
+
+- Closed only for:
+  - the committed anchored note-level slice
+  - the focused validations above
+- Still unverified:
+  - broader March-family impact
+  - downstream/UI/export behavior
+
+### Completed - Target Location Normalization
+
+This cluster now has two committed, measured sub-slices and one broader measurement-only follow-up.
+
+Committed target-location sub-slices:
+
+- `6576c818 Normalize fiducial target location text`
+- `06e7ec31 Clean navigation target pollution from note text`
+- `50ebf29d Tighten`
+
+#### Sub-slice 1 - Fiducial target-location normalization
+
+What changed:
+
+- Fiducial/navigation notes now recognize narrow procedural phrases such as:
+  - `target in LLL posterior basal segment`
+  - `target in the apicoposterior LUL was reached`
+- This prevents those notes from falling back to `Unknown target` when a true target is explicitly documented.
+
+Primary files touched:
+
+- `app/registry/processing/navigation_fiducials.py`
+- `tests/registry/test_navigation_fiducials.py`
+- `tests/registry/test_fixpack_target_location_regressions.py`
+
+Measured anchor-note outcomes:
+
+- `batch_1/note_014`: improved
+  - before: `target_location_text='Unknown target'`, `target_lobe=None`
+  - after: `target_location_text='LLL posterior basal segment'`, `target_lobe='LLL'`
+- `batch_6/note_030`: improved
+  - before: `target_location_text='Unknown target'`, `target_lobe=None`
+  - after: `target_location_text='apicoposterior LUL'`, `target_lobe='LUL'`
+
+Focused validation completed:
+
+- `tests/registry/test_fixpack_target_location_regressions.py`
+- `tests/registry/test_navigation_fiducials.py`
+
+Important caveat:
+
+- The pre-fix live probe used the TF-IDF fallback path while the committed-state probe used the ONNX-backed path.
+- Those probe outputs are supportive anchored evidence, not a clean apples-to-apples batch measurement.
+
+#### Sub-slice 2 - Navigation target pollution cleanup (`batch_3/note_003`)
+
+What changed:
+
+- `navigation_targets.py` no longer promotes planning/table/impression prose into `navigation_targets` for the original pollution anchor.
+- The parser now prefers narrow intra-procedural target confirmation text and avoids treating mid-sentence pseudo-headers as real target lines.
+
+Primary files touched:
+
+- `app/registry/processing/navigation_targets.py`
+- `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+- `tests/registry/test_fixpack_target_location_pollution_regressions.py`
+
+Measured anchor-note outcome:
+
+- `batch_3/note_003`: improved
+  - before: 2 polluted targets from planning/impression prose
+  - after: 1 clean target
+  - final structured target: `LUL apical-posterior segment (LB1+2)` / `target_lobe='LUL'`
+
+Focused validation completed:
+
+- `tests/registry/test_fixpack_target_location_pollution_regressions.py`
+- `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+- `tests/registry/test_navigation_targets_numbered_targets.py`
+
+#### Sub-slice 3 - Navigation target header/planning cleanup (`batch_4/note_011`, `batch_4/note_015`, `batch_6/note_005`)
+
+What changed:
+
+- `navigation_targets.py` now handles:
+  - target-table first-column rows such as `LLL nodule`
+  - short lobe-first target phrases such as `LLL nodule` / `PET-avid LLL nodule`
+- This prevents the later heuristic fallback from promoting non-procedural header/planning prose into `navigation_targets`.
+
+Primary files touched:
+
+- `app/registry/processing/navigation_targets.py`
+- `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+- `tests/registry/test_fixpack_target_location_header_planning_regressions.py`
+
+Measured anchor-note outcomes:
+
+- `batch_4/note_011`: improved
+  - before: demographic/header prose populated the target field
+  - after: `target_location_text='LLL nodule'`, `target_lobe='LLL'`
+- `batch_4/note_015`: improved
+  - before: note-header prose populated the target field
+  - after: `target_location_text='LLL nodule'`, `target_lobe='LLL'`
+- `batch_6/note_005`: improved
+  - before: planning prose populated the target field
+  - after: `target_location_text='PET-avid LLL nodule'`, `target_lobe='LLL'`
+- `batch_3/note_003`: preserved as a compatibility check
+
+Focused validation completed:
+
+- `tests/registry/test_fixpack_target_location_header_planning_regressions.py`
+- `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+- `tests/registry/test_navigation_targets_numbered_targets.py`
+
+Broader measurement-only pollution-family follow-up:
+
+- A later comparison pass re-checked:
+  - `batch_3/note_003`
+  - `batch_2/note_011`
+  - `batch_2/note_036`
+  - `batch_1/note_023`
+  - `batch_5/note_031`
+  - `batch_4/note_011`
+  - `batch_4/note_015`
+  - `batch_6/note_005`
+- Result:
+  - the original `batch_3/note_003` anchor improved
+  - the later three-note header/planning cleanup was justified by still-live same-family pollution on:
+    - `batch_4/note_011`
+    - `batch_4/note_015`
+    - `batch_6/note_005`
+
+Target-location closure status:
+
+- Closed only for:
+  - the committed fiducial target-location sub-slice
+  - the committed `batch_3/note_003` pollution sub-slice
+  - the committed header/planning pollution sub-slice for:
+    - `batch_4/note_011`
+    - `batch_4/note_015`
+    - `batch_6/note_005`
+- Still unverified:
+  - broader `target_location_normalization` family closure
+  - downstream/UI/export behavior
+
 ## Files Currently Touched On Branch
 
 Core code files now known to be part of the March-plan work on this branch:
@@ -262,6 +565,15 @@ Regression / plan tests currently in play:
 - `tests/registry/test_codex_plan_fourth_pass_march2026.py`
 - `tests/registry/test_codex_plan_fifth_pass_march2026.py`
 - `tests/registry/test_fixpack_device_action_regressions.py`
+- `tests/registry/test_fixpack_percutaneous_ablation_regressions.py`
+- `tests/registry/test_fixpack_blvr_pal_regressions.py`
+- `tests/registry/test_fixpack_negation_complication_regressions.py`
+- `tests/registry/test_fixpack_target_location_regressions.py`
+- `tests/registry/test_fixpack_target_location_pollution_regressions.py`
+- `tests/registry/test_fixpack_target_location_header_planning_regressions.py`
+- `tests/registry/test_navigation_fiducials.py`
+- `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+- `tests/registry/test_navigation_targets_numbered_targets.py`
 
 ## Validation Completed
 
@@ -290,7 +602,7 @@ Full repo validation from the earlier branch-triage step still had 15 failures c
 
 Important scope note:
 
-- `make test` was not rerun again after the later airway-device and EBUS anchor-note work, so the current repo-wide failure picture beyond the focused validations above remains unrefreshed.
+- `make test` was not rerun again after the later airway-device, EBUS, percutaneous, BLVR/PAL, negation/complication, or target-location follow-on work, so the current repo-wide failure picture beyond the focused validations remains unrefreshed.
 
 ## March 9 Batch / Shadow-Diff Summary
 
@@ -313,8 +625,8 @@ Known broader comparison signal from that March 9 rerun:
 
 Important limitation:
 
-- No broader March rerun or shadow diff was performed after today's airway-device semantic work or today's EBUS station fix.
-- So broader batch impact from today's two completed slices remains unverified.
+- No broader March rerun or shadow diff was performed after the later airway-device semantic work, EBUS station fix, committed percutaneous slice, or committed BLVR/PAL slice.
+- So broader batch impact from all of those later completed slices remains unverified.
 
 ## Known Note-Level Changes After Today
 
@@ -326,18 +638,48 @@ Anchor notes now explicitly measured and updated this session:
 - `batch_6/note_012`: preserved as the trach-exchange non-regression guard
 - `batch_1/note_009`: preserved and measured good for EBUS
 - `batch_2/note_033`: improved / fixed for EBUS station counting and CPT derivation
+- `batch_5/note_002`: improved for percutaneous cryoablation leakage
+- `batch_5/note_006`: same / protected in the measured percutaneous subset
+- `batch_5/note_012`: same / protected in the measured percutaneous subset
+- `batch_5/note_024`: same / protected in the measured percutaneous subset
+- `batch_4/note_004`: improved for BLVR target-lobe / valve-count / same-session `31634`
+- `batch_4/note_007`: improved for BLVR `LUL` normalization and valve count
+- `batch_4/note_018`: improved for PAL valve count
+- `batch_1/note_004`: improved for false bleeding complication removal
+- `batch_1/note_039`: improved for false bleeding complication removal
+- `batch_6/note_009`: improved, with corrected evidence showing restored diagnostic bronchoscopy and no lesion carryover
+- `batch_1/note_014`: improved for fiducial target-location extraction
+- `batch_6/note_030`: improved for fiducial target-location extraction
+- `batch_3/note_003`: improved for navigation target planning/impression pollution
+- `batch_4/note_011`: improved for navigation target header pollution
+- `batch_4/note_015`: improved for navigation target header pollution
+- `batch_6/note_005`: improved for navigation target planning pollution
 
 Notes that should no longer be described as the next open anchors from this session:
 
 - `batch_1/note_009`
 - `batch_3/note_032`
 - `batch_3/note_039`
+- `batch_5/note_002`
+- `batch_4/note_004`
+- `batch_4/note_007`
+- `batch_4/note_018`
+- `batch_1/note_014`
+- `batch_6/note_030`
+- `batch_3/note_003`
+- `batch_4/note_011`
+- `batch_4/note_015`
+- `batch_6/note_005`
 
 ## What Still Needs Completed
 
 Still unverified / still deferred:
 
-- Broader March batch impact for today's completed airway-device and EBUS slices
+- Broader March batch impact for the later completed slices:
+  - `airway_device_action`
+  - `ebus_station_logic`
+  - `percutaneous_ablation`
+  - `blvr_pal_valve`
   - requires a new March rerun / shadow diff if quantified improvement is needed
 
 - Broader consumer/UI validation
@@ -346,10 +688,17 @@ Still unverified / still deferred:
     - generic procedure enumeration checks
     - one anchored reporter/render path check
   - EBUS has no broader consumer/UI validation from today's work
+  - percutaneous only has the measured four-note anchored subset
+  - BLVR/PAL only has the anchored implementation slice plus focused validations
 
 - Full repo validation refresh
   - the branch-triage `make test` failure list above is still the latest repo-wide snapshot
-  - no later full-suite rerun was done after the airway-device semantic slice or EBUS fix
+  - no later full-suite rerun was done after the airway-device semantic slice, EBUS fix, percutaneous slice, BLVR/PAL slice, or local negation/complication work
+
+- Broader quantified impact still remains unmeasured for the later committed slices:
+  - `negation_complication_gating`
+  - committed `target_location_normalization` sub-slices
+  - requires a broader March rerun / shadow diff if quantified family or batch impact is needed
 
 - Existing deferred in-scope failures from the earlier full-suite triage still remain separate work:
   - `tests/quality/test_reporter_precision_extra_flags.py`
@@ -366,21 +715,29 @@ Still unverified / still deferred:
 
 ## Recommended Next Step
 
-Two reasonable next moves, depending on what is needed next:
+Current best next move:
+
+- pause `target_location_normalization` here and re-rank the next unresolved extraction cluster rather than continuing to broaden navigation work
+
+After that, two reasonable choices remain:
 
 - If quantified impact is needed before more feature work:
-  - run a broader March rerun / shadow diff first
+  - run a broader March rerun / shadow diff
   - optionally refresh `make test` after that to separate true new regressions from already-known repo-wide failures
 
-- If continuing with another PR-sized implementation slice without doing the broader rerun first:
-  - move to `percutaneous_ablation` only
-  - keep it note-anchored and test-first, the same way airway-device and EBUS were handled
+- If another PR-sized extraction slice is preferred before the broader rerun:
+  - select the next unresolved cluster from the plan/handoff context now that:
+    - `negation_complication_gating` is committed
+    - the current measured `target_location_normalization` sub-slices are committed
 
 Updated cluster status from this session:
 
 - `airway_device_action`: closed only for the anchored slice and limited downstream checks described above
 - `ebus_station_logic`: closed only for the measured anchor-note slice through the normal extraction path
-- `percutaneous_ablation`: likely the next highest-yield unresolved implementation chunk if broader measurement is deferred
+- `percutaneous_ablation`: closed only for the committed anchored fix plus the measured four-note subset
+- `blvr_pal_valve`: closed only for the committed anchored implementation slice plus focused validations
+- `negation_complication_gating`: closed only for the committed anchored note-level slice plus focused validations
+- `target_location_normalization`: partially closed only for the committed measured sub-slices described above; broader family closure remains unverified
 
 ## Repro Commands Used During This Session
 
@@ -409,8 +766,62 @@ Updated cluster status from this session:
     - `batch_1/note_009`
     - `batch_2/note_033`
 
+- Focused percutaneous validations:
+  - targeted `pytest` runs on:
+    - `tests/registry/test_fixpack_percutaneous_ablation_regressions.py`
+    - `tests/registry/test_codex_plan_first_pass_march2026.py`
+    - `tests/registry/test_keyword_guard_overrides.py -k 'ablation or cryo'`
+  - focused four-note comparison on:
+    - `batch_5/note_002`
+    - `batch_5/note_006`
+    - `batch_5/note_012`
+    - `batch_5/note_024`
+
+- Focused BLVR/PAL validations:
+  - targeted `pytest` runs on:
+    - `tests/registry/test_fixpack_blvr_pal_regressions.py`
+    - `tests/registry/test_codex_plan_third_pass_march2026.py`
+    - `tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py`
+    - `tests/registry/test_extraction_quality_fixpack_batch4_march2026.py`
+  - targeted extraction measurement on:
+    - `batch_4/note_004`
+    - `batch_4/note_007`
+    - `batch_4/note_018`
+
+- Focused local negation/complication validations:
+  - targeted `pytest` runs on:
+    - `tests/registry/test_fixpack_negation_complication_regressions.py`
+    - `tests/registry/test_codex_plan_first_pass_march2026.py`
+    - `tests/registry/test_codex_plan_second_pass_march2026.py`
+    - `tests/registry/test_extraction_quality_fixpack_march2026.py -k 'endobronchial or bleeding or hemostasis'`
+  - targeted extraction / regression-path measurement on:
+    - `batch_1/note_004`
+    - `batch_1/note_039`
+    - `batch_6/note_009`
+
+- Focused target-location validations:
+  - targeted `pytest` runs on:
+    - `tests/registry/test_fixpack_target_location_regressions.py`
+    - `tests/registry/test_navigation_fiducials.py`
+    - `tests/registry/test_fixpack_target_location_pollution_regressions.py`
+    - `tests/registry/test_fixpack_target_location_header_planning_regressions.py`
+    - `tests/registry/test_navigation_targets_engage_fallback_sampling.py`
+    - `tests/registry/test_navigation_targets_numbered_targets.py`
+  - targeted extraction measurement on:
+    - `batch_1/note_014`
+    - `batch_6/note_030`
+    - `batch_3/note_003`
+    - `batch_4/note_011`
+    - `batch_4/note_015`
+    - `batch_6/note_005`
+  - broader measurement-only pollution-family subset re-check on:
+    - `batch_2/note_011`
+    - `batch_2/note_036`
+    - `batch_1/note_023`
+    - `batch_5/note_031`
+
 ## Suggested Fresh-Session Prompt
 
 Use something close to this on the next machine:
 
-`Read extraction_results_3_9_26/codex_master_prompt.md, extraction_results_3_9_26/pipeline_improvement_plan.md, and extraction_results_3_9_26/session_handoff_2026_03_10.md. Use the handoff as the authoritative working summary. Treat airway_device_action as closed only for the anchored extraction slice plus limited compatibility checks, and treat ebus_station_logic as closed only for the measured anchor-note slice. If quantified impact is needed, rerun the broader March shadow diff first; otherwise continue with the next PR-sized cluster, likely percutaneous_ablation only, staying test-first and note-anchored.`
+`Read extraction_results_3_9_26/codex_master_prompt.md, extraction_results_3_9_26/pipeline_improvement_plan.md, and extraction_results_3_9_26/session_handoff_2026_03_10.md. Use the handoff as the authoritative working summary. Treat airway_device_action, ebus_station_logic, percutaneous_ablation, blvr_pal_valve, and negation_complication_gating as closed only for their explicitly measured slices. Treat target_location_normalization as partially closed only for the committed measured sub-slices in this handoff, with broader family closure still unverified. If quantified impact is needed, rerun the broader March shadow diff first; otherwise re-rank the next unresolved extraction cluster instead of broadening navigation work further.`
