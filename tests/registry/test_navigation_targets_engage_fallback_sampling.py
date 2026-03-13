@@ -52,3 +52,32 @@ def test_extract_navigation_targets_prefers_confirmed_procedural_target_before_i
     assert len(targets) == 1
     assert targets[0]["target_location_text"] == "LUL apical-posterior segment (LB1+2)"
     assert targets[0]["target_lobe"] == "LUL"
+
+
+def test_extract_navigation_targets_reads_table_target_without_header_prose_pollution() -> None:
+    note_text = """
+    Robotic bronchoscopy note: 58-year-old female with LLL nodule and mild mediastinal adenopathy.
+    Navigation completed successfully.
+
+    Target\tTool\tPasses\tNotes
+    LLL nodule\tNeedle\t4\tConcentric view
+    """.strip()
+
+    targets = extract_navigation_targets(note_text)
+
+    assert len(targets) == 1
+    assert targets[0]["target_location_text"] == "LLL nodule"
+    assert targets[0]["target_lobe"] == "LLL"
+
+
+def test_extract_navigation_targets_reads_brief_lobe_first_target_phrase() -> None:
+    note_text = """
+    Robotic bronchoscopy note: [PATIENT] 59-year-old female, LLL nodule (R91.1). GA.
+    Radial ultrasound confirmed lesion location and biopsies were obtained.
+    """.strip()
+
+    targets = extract_navigation_targets(note_text)
+
+    assert len(targets) == 1
+    assert targets[0]["target_location_text"] == "LLL nodule"
+    assert targets[0]["target_lobe"] == "LLL"
