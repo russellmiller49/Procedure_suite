@@ -822,6 +822,154 @@ Updated cluster status from this session:
 
 ## Suggested Fresh-Session Prompt
 
+## March 15, 2026 Addendum - Sedation Family Follow-Up
+
+This addendum records the later sedation-family work and stop points after the earlier March extraction slices above.
+Treat this section as the latest guidance for the sedation family.
+
+### Completed Locally - Explicit GA Recognition Slice
+
+This narrow follow-up slice was completed and externally approved at the requested evidence level.
+
+What the slice targeted:
+
+- explicit GA recognition only
+- not broader sedation cleanup
+- not provider/time ambiguity
+
+Measured anchors:
+
+- `batch_4/note_019`
+  - raw cue: `Anesthesia: GA`
+  - pre-fix live state on the task machine:
+    - `sedation=None`
+    - `cpt_codes=['31634', '31647']`
+  - post-fix measured state:
+    - `sedation.type='General'`
+    - CPT output unchanged for the measured slice
+
+- `batch_4/note_030`
+  - raw cue: `Moderate sedation planned; procedure performed under GA due to ongoing bleeding`
+  - pre-fix live state on the task machine:
+    - `sedation.type='Moderate'`
+    - `cpt_codes=[]`
+    - warning: `Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153`
+  - post-fix measured state:
+    - `sedation.type='General'`
+    - `cpt_codes=[]`
+    - the moderate-sedation warning cleared for the measured slice
+
+Implemented seam for that approved slice:
+
+- `app/registry/deterministic_extractors.py`
+  - narrow update to `extract_sedation_airway()`
+  - explicit GA abbreviations / performed-under-GA phrasing were recognized before the moderate-sedation fallback
+
+Regression added for that approved slice:
+
+- `tests/registry/test_fixpack_sedation_anesthesia_regressions.py`
+  - two-note extraction-only protection for:
+    - `batch_4/note_019`
+    - `batch_4/note_030`
+
+Focused validation reported for that approved slice:
+
+- `tests/registry/test_fixpack_sedation_anesthesia_regressions.py`
+- `tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py`
+- `tests/registry/test_extraction_quality_fixpack_march2026.py -k 'sedation or fixpack_sedation_anesthesia_regressions or blvr_chartis_sedation'`
+
+Carry-forward closure state for this slice:
+
+- `sedation_anesthesia_ambiguity` is closed only for the measured two-note extraction slice:
+  - `batch_4/note_019`
+  - `batch_4/note_030`
+- broader sedation-family closure remains unverified
+- broader March impact remains unverified
+- broader downstream/UI/export impact remains unverified
+
+Important note:
+
+- The current machine where this handoff was updated does **not** currently show those sedation changes in the clean working tree.
+- Treat the above as authoritative session memory / review state for the next machine.
+- On the machine that has the actual task branch state, first verify whether the code/test changes above are already present before redoing anything.
+
+### Blocked Locally - Provider/Time Ambiguity Follow-Up
+
+The next requested sedation slice was:
+
+- `sedation_provider_time_ambiguity`
+
+That slice was **not** implemented on this machine and was intentionally stopped with a blocker because the required real March-note anchors were not available locally.
+
+What was rechecked before stopping:
+
+- reread:
+  - `extraction_results_3_9_26/codex_master_prompt.md`
+  - `extraction_results_3_9_26/pipeline_improvement_plan.md`
+  - `extraction_results_3_9_26/session_handoff_2026_03_10.md`
+- re-inspected seams:
+  - `app/registry/deterministic_extractors.py`
+  - `app/extraction/postprocessing/clinical_guardrails.py`
+  - `app/coder/domain_rules/registry_to_cpt/coding_rules.py`
+  - `app/registry/application/registry_service.py`
+  - `tests/registry/test_registry_to_cpt_blvr_chartis_sedation.py`
+  - `tests/registry/test_extraction_quality_fixpack_march2026.py`
+- probed the locally available checked-in March artifact:
+  - `extraction_test_3_6/my_results_batch_4.txt`
+
+What was found:
+
+- The batch-4 moderate-sedation notes available on this machine (for example `note_018`, `note_020`, `note_026`, `note_029`) still extract:
+  - `sedation.type='Moderate'`
+  - no provider/time fields
+  - no `99152/99153`
+  - warning: `Moderate sedation present but anesthesia_provider missing; not deriving 99152/99153`
+- But those available batch-4 notes do **not** document the explicit provider/time support needed to prove a live provider/time defect.
+- In other words, on this machine the suppression looked defensible rather than clearly wrong.
+
+Why the slice was blocked:
+
+- the actual March notes were not available on this computer
+- the `/tmp` March rerun artifacts referenced in the older handoff were also not available
+- without 1–3 real March notes showing an actual still-live provider/time mismatch, proceeding would have required inventing anchors or broadening scope
+
+Correct stop state for that follow-up slice:
+
+- `sedation_provider_time_ambiguity` remains open
+- no code changes were made for that follow-up slice on this machine
+- no new regression file was added for that slice on this machine
+
+Best restart condition for the next machine:
+
+- wait until the actual March note corpus is available
+- then choose 1–3 real March provider/time anchors with one of these shapes:
+  - moderate sedation text present but provider support absent/contradicted
+  - moderate sedation plus proceduralist support should be preserved but is currently lost
+  - explicit moderate sedation by proceduralist with timing support still fails to derive or preserve correctly
+  - stale moderate-sedation header/template conflicts with performed sedation/provider/time state
+
+What not to reopen when restarting sedation work:
+
+- do not reopen the approved explicit-GA slice for:
+  - `batch_4/note_019`
+  - `batch_4/note_030`
+- do not reopen:
+  - `airway_device_action`
+  - `ebus_station_logic`
+  - `percutaneous_ablation`
+  - `blvr_pal_valve`
+  - `negation_complication_gating`
+  - the already closed target-location sub-slices
+
+Updated next-step recommendation for the next machine:
+
+- if the actual March notes are available there, resume with `sedation_provider_time_ambiguity`
+- otherwise stop and do **not** broaden into a broad March rerun or a non-March substitute corpus unless explicitly approved
+- keep the sedation family status phrased as:
+  - explicit-GA slice closed only for the measured two-note extraction slice
+  - broader sedation-family closure unverified
+  - broader March/downstream/UI/export impact unverified
+
 Use something close to this on the next machine:
 
-`Read extraction_results_3_9_26/codex_master_prompt.md, extraction_results_3_9_26/pipeline_improvement_plan.md, and extraction_results_3_9_26/session_handoff_2026_03_10.md. Use the handoff as the authoritative working summary. Treat airway_device_action, ebus_station_logic, percutaneous_ablation, blvr_pal_valve, and negation_complication_gating as closed only for their explicitly measured slices. Treat target_location_normalization as partially closed only for the committed measured sub-slices in this handoff, with broader family closure still unverified. If quantified impact is needed, rerun the broader March shadow diff first; otherwise re-rank the next unresolved extraction cluster instead of broadening navigation work further.`
+`Read extraction_results_3_9_26/codex_master_prompt.md, extraction_results_3_9_26/pipeline_improvement_plan.md, and extraction_results_3_9_26/session_handoff_2026_03_10.md. Use the handoff as the authoritative working summary. Treat airway_device_action, ebus_station_logic, percutaneous_ablation, blvr_pal_valve, and negation_complication_gating as closed only for their explicitly measured slices. Treat target_location_normalization as partially closed only for the committed measured sub-slices in this handoff, with broader family closure still unverified. Treat sedation_anesthesia_ambiguity as closed only for the measured `batch_4/note_019` / `batch_4/note_030` extraction slice. Resume only with `sedation_provider_time_ambiguity` if the real March notes are available; otherwise stop rather than broadening scope.`
