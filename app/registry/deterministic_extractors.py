@@ -314,16 +314,22 @@ def extract_sedation_airway(note_text: str) -> Dict[str, Any]:
         return result
 
     # Check for general anesthesia indicators
-    ga_indicators = [
-        "general anesthesia",
-        "general anesthetic",
-        "under general",
-        "ga with",
-        "propofol/fentanyl/rocuronium",
-        "jet ventilation",
-    ]
+    general_present = bool(
+        re.search(
+            r"(?i)\bgeneral\s+anesthe(?:sia|tic)\b"
+            r"|\bunder\s+general\b"
+            r"|\bperformed\s+under\s+ga\b"
+            r"|\bunder\s+ga\b"
+            r"|^\s*anesthesia\s*:\s*ga\b"
+            r"|\bga\s+with\b"
+            r"|\bpropofol/fentanyl/rocuronium\b"
+            r"|\bjet\s+ventilation\b",
+            note_text or "",
+            re.MULTILINE,
+        )
+    )
 
-    if any(ind in note_lower for ind in ga_indicators):
+    if general_present:
         result["sedation_type"] = "General"
 
         # Check airway type for GA
