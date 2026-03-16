@@ -48,12 +48,19 @@ def build_repo_state_fingerprint(repo_root: Path, head_sha: str, branch: str, di
 
 
 def discover_tools(codex_executable: str | None = None) -> dict[str, str]:
+    repo_wrapper = Path(__file__).resolve().parents[1] / "tools" / "codex_exec_json_wrapper.sh"
     tools = {
         "git": shutil.which("git") or "",
         "make": shutil.which("make") or "",
         "pytest": shutil.which("pytest") or "",
         "python": shutil.which("python3") or shutil.which("python") or "",
-        "codex": codex_executable or os.environ.get("CODEX_EXECUTABLE") or shutil.which("codex") or "",
+        "codex": (
+            codex_executable
+            or os.environ.get("CODEX_EXECUTABLE")
+            or (str(repo_wrapper) if repo_wrapper.is_file() and os.access(repo_wrapper, os.X_OK) else "")
+            or shutil.which("codex")
+            or ""
+        ),
     }
     return {name: path for name, path in tools.items() if path}
 
@@ -127,4 +134,3 @@ def ensure_session_branch(repo_root: Path, session_branch: str) -> str:
         text=True,
     )
     return session_branch
-

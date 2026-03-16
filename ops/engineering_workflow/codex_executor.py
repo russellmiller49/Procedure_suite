@@ -22,7 +22,13 @@ class CodexCliExecutor:
     """Runs the local Codex CLI and expects strict JSON stdout."""
 
     def __init__(self, executable: str | None = None, extra_args: list[str] | None = None) -> None:
-        self.executable = executable or os.environ.get("CODEX_EXECUTABLE") or shutil.which("codex")
+        repo_wrapper = Path(__file__).resolve().parents[1] / "tools" / "codex_exec_json_wrapper.sh"
+        self.executable = (
+            executable
+            or os.environ.get("CODEX_EXECUTABLE")
+            or (str(repo_wrapper) if repo_wrapper.is_file() and os.access(repo_wrapper, os.X_OK) else None)
+            or shutil.which("codex")
+        )
         self.extra_args = extra_args or []
 
     def _build_command(self) -> list[str]:
@@ -63,4 +69,3 @@ class CodexCliExecutor:
             stderr_path=str(stderr_path),
             parsed_json_path=str(stdout_path),
         )
-
