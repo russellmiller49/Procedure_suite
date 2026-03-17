@@ -694,6 +694,20 @@ def derive_all_codes_with_meta(
     if added_31629 and _performed(peripheral_tbna):
         targets = _get(peripheral_tbna, "targets_sampled") or []
         lobes = _lobe_tokens([str(x) for x in targets if x])
+        if len(lobes) < 2:
+            for target in _navigation_targets(record):
+                used_needle = (int(_get(target, "number_of_needle_passes") or 0) > 0) or any(
+                    "needle" in str(tool).lower() for tool in (_get(target, "sampling_tools_used") or [])
+                )
+                if not used_needle:
+                    continue
+                target_lobe = _get(target, "target_lobe")
+                if isinstance(target_lobe, str) and target_lobe.strip():
+                    lobes |= _lobe_tokens([target_lobe])
+                    continue
+                target_location = _get(target, "target_location_text")
+                if isinstance(target_location, str) and target_location.strip():
+                    lobes |= _lobe_tokens([target_location])
         if len(lobes) >= 2:
             codes.append("31633")
             rationales["31633"] = f"peripheral_tbna.targets_sampled spans lobes={sorted(lobes)}"
