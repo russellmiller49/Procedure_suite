@@ -2079,7 +2079,7 @@ def build_procedure_bundle_from_extraction(
         thoracoscopy_text = note_text
         match = re.search(r"(?i)\b(?:medical\s+thoracoscopy|thoracoscopy|pleuroscopy)\b", note_text)
         if match:
-            thoracoscopy_text = note_text[match.start() :]
+            thoracoscopy_text = note_text[max(0, match.start() - 24) :]
 
         side = None
         if re.search(r"(?i)\bright\b", thoracoscopy_text):
@@ -2759,6 +2759,8 @@ def build_procedure_bundle_from_extraction(
         text = re.sub(r"\s+", " ", str(value)).strip()
         if not text:
             return True
+        if re.search(r"(?i)(?:^|,)\s*(?:proc|procedure|findings|action|dispo)\s*:", text):
+            return True
         lowered = text.lower()
         if lowered in {
             "not documented",
@@ -2822,6 +2824,26 @@ def build_procedure_bundle_from_extraction(
             return f"{location or 'Airway'} stent requiring removal".strip()
 
         if {"tunneled_pleural_catheter_insert", "tunneled_pleural_catheter_remove", "thoracentesis_detailed", "thoracentesis_manometry", "medical_thoracoscopy", "chest_tube", "pigtail_catheter"} & existing_proc_types:
+            compact_indication_match = re.search(
+                r"(?i)\bindication\s*:\s*([^,\n]+(?:\([^)\n]+\))?)",
+                note_text,
+            )
+            if compact_indication_match:
+                compact_indication = compact_indication_match.group(1).strip().rstrip(".")
+                compact_indication = re.sub(
+                    r"(?i)\bneg(?:ative)?\s+cytology\b",
+                    "negative cytology",
+                    compact_indication,
+                )
+                if "effusion" in compact_indication.lower() and "pleural" not in compact_indication.lower():
+                    compact_indication = re.sub(
+                        r"(?i)\beffusion\b",
+                        "pleural effusion",
+                        compact_indication,
+                        count=1,
+                    )
+                if compact_indication:
+                    return compact_indication
             effusion_phrase = _first_phrase(
                 r"(?i)\b(?:malignant|refractory|recurrent)?\s*(?:hepatic\s+hydrothorax|pleural\s+effusion|free-flowing\s+effusion)\b"
             )
@@ -2858,6 +2880,23 @@ def build_procedure_bundle_from_extraction(
 
     if _diagnosis_needs_rewrite(raw.get("postop_diagnosis_text")) and raw.get("preop_diagnosis_text") not in (None, "", [], {}):
         raw["postop_diagnosis_text"] = str(raw.get("preop_diagnosis_text")).strip()
+
+    if "medical_thoracoscopy" in existing_proc_types:
+        mt_proc = next((p for p in procedures if p.proc_type == "medical_thoracoscopy"), None)
+        mt_data = (
+            mt_proc.data.model_dump(exclude_none=True)
+            if mt_proc is not None and isinstance(mt_proc.data, BaseModel)
+            else (mt_proc.data or {}) if mt_proc is not None and isinstance(mt_proc.data, dict) else {}
+        )
+        findings_text = str(mt_data.get("findings") or "").strip().rstrip(".")
+        postop_text = str(raw.get("postop_diagnosis_text") or "").strip()
+        if findings_text and postop_text and findings_text.lower() not in postop_text.lower():
+            finding_line = (
+                "Pleural plaques identified"
+                if findings_text.lower() == "pleural plaques"
+                else findings_text[0].upper() + findings_text[1:]
+            )
+            raw["postop_diagnosis_text"] = f"{postop_text}\n\n{finding_line}"
 
     follow_up_plan = (
         raw.get("follow_up_plan", [""])[0] if isinstance(raw.get("follow_up_plan"), list) else raw.get("follow_up_plan")

@@ -5988,7 +5988,7 @@ _BAL_STANDARD_LINE_RE = re.compile(
     r"(?i)\b(?:bronch(?:ial)?\s+alveolar\s+lavage|broncho[-\s]?alveolar\s+lavage|BAL)\b"
     r"[^.\n]{0,80}\b(?:was\s+)?performed\b[^.\n]{0,80}\b(?:at|in)\b\s+"
     r"(?P<loc>[^.\n]{3,220}?)"
-    r"(?=\s*(?:,|;|\n|\.|\(|\bwith\b|\b(?:and\s+)?sent\s+for\b|\b\d{1,4}\s*(?:cc|ml)\b))"
+    r"(?=\s*(?:,|;|\n|\.|\bwith\b|\b(?:and\s+)?sent\s+for\b|\b\d{1,4}\s*(?:cc|ml)\b))"
 )
 _BAL_MINI_PREFIX_RE = re.compile(r"(?i)\bmini\s+(?:bronch(?:ial)?\s+alveolar\s+lavage|bal)\b")
 _BAL_INSTILLED_RE = re.compile(

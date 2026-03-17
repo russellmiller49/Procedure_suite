@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from app.common.path_redaction import repo_relative_path, sanitize_path_fields
+from app.registry.deterministic_extractors import extract_tbna_conventional
 from ml.scripts.generate_reporter_gold_dataset import (
     CRITICAL_FLAG_EXACT,
     CRITICAL_FLAG_PREFIXES,
@@ -152,6 +153,14 @@ def extract_flags_and_cpt(note_text: str, registry_service: Any) -> tuple[set[st
     result = registry_service.extract_fields_extraction_first(note_text)
     record_data = result.record.model_dump(exclude_none=True)
     flags = collect_performed_flags(record_data)
+    peripheral_tbna_flag = "procedures_performed.peripheral_tbna.performed"
+    if peripheral_tbna_flag in flags:
+        deterministic_tbna = extract_tbna_conventional(note_text)
+        deterministic_has_peripheral = bool(
+            (deterministic_tbna.get("peripheral_tbna") or {}).get("performed") is True
+        )
+        if not deterministic_has_peripheral:
+            flags.discard(peripheral_tbna_flag)
     cpt = {str(code) for code in (result.cpt_codes or [])}
     return flags, cpt
 

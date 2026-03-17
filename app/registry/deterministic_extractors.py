@@ -4114,6 +4114,29 @@ def _is_percutaneous_nonbronchoscopic_ablation_context(text: str) -> bool:
     return percutaneous_context and not _has_positive_bronchoscopic_ablation_context(text)
 
 
+def _has_populated_cryotherapy_table_row(text: str) -> bool:
+    if not text:
+        return False
+
+    for line in _maybe_unescape_newlines(text).splitlines():
+        if not re.search(r"(?i)\bcryoprobe\b", line):
+            continue
+        if not re.search(r"(?i)\bcryotherap(?:y|ies)\b", line):
+            continue
+        if not re.search(r"\t| {2,}", line):
+            continue
+        if re.search(r"(?i)\b(?:biops(?:y|ies|ied)|specimen(?:s)?|patholog(?:y|ic))\b", line):
+            continue
+        if not re.search(
+            r"(?i)\b(?:treat(?:ed|ment)?|freeze|thaw|cycle(?:s)?|ablat(?:ed|ion)?|destroy(?:ed|ing)?|"
+            r"debulk(?:ed|ing)?|recanaliz(?:ed|ation)?)\b",
+            line,
+        ):
+            continue
+        return True
+    return False
+
+
 def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
     """Extract cryotherapy (tumor destruction/stenosis relief) indicator."""
     preferred_text, used_detail = _preferred_procedure_detail_text(note_text)
@@ -4121,6 +4144,8 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
         preferred_text = _strip_cpt_definition_lines(preferred_text)
     else:
         preferred_text = _strip_cpt_definition_lines(preferred_text)
+    if _has_populated_cryotherapy_table_row(preferred_text):
+        return {"cryotherapy": {"performed": True}}
     if _is_percutaneous_nonbronchoscopic_ablation_context(preferred_text):
         return {}
     text_lower = preferred_text.lower()

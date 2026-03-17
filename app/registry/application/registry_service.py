@@ -138,6 +138,43 @@ def _hash_note_text(text: str) -> str:
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 
+def _normalize_clock_time(value: str | None) -> str | None:
+    raw = (value or "").strip()
+    if not raw:
+        return None
+
+    compact = re.fullmatch(r"(?i)(\d{3,4})(?:\s*([AP]M))?", raw)
+    if compact:
+        digits = compact.group(1)
+        meridiem = (compact.group(2) or "").upper()
+        if len(digits) == 3:
+            hour = int(digits[0])
+            minute = int(digits[1:])
+        else:
+            hour = int(digits[:2])
+            minute = int(digits[2:])
+    else:
+        colon = re.fullmatch(r"(?i)(\d{1,2}):(\d{2})(?:\s*([AP]M))?", raw)
+        if not colon:
+            return None
+        hour = int(colon.group(1))
+        minute = int(colon.group(2))
+        meridiem = (colon.group(3) or "").upper()
+
+    if minute < 0 or minute > 59:
+        return None
+
+    if meridiem:
+        if 1 <= hour <= 12:
+            if meridiem == "AM":
+                hour = 0 if hour == 12 else hour
+            else:
+                hour = 12 if hour == 12 else hour + 12
+    if hour < 0 or hour > 23:
+        return None
+    return f"{hour:02d}:{minute:02d}"
+
+
 def _append_self_correction_log(path: str, payload: dict[str, Any]) -> None:
     if not path:
         return
@@ -1428,35 +1465,39 @@ class RegistryService:
 
                                 if not sedation.get("start_time"):
                                     match = re.search(
-                                        r"(?i)\b(?:anesthesia|sedation)\s+start\s+time\b[^0-9]{0,40}(\d{1,2}:\d{2})\b",
+                                        r"(?i)\b(?:anesthesia|sedation)\s+start\s+time\b[^0-9]{0,40}(\d{1,2}:\d{2}(?:\s*[AP]M)?|\d{3,4}(?:\s*[AP]M)?)\b",
                                         raw_note_text or "",
                                     )
                                     if match:
-                                        sedation["start_time"] = match.group(1)
-                                        record_data["sedation"] = sedation
-                                        other_modified = True
-                                        _add_first_span_skip_cpt_headers(
-                                            "sedation.start_time",
-                                            [
-                                                r"\b(?:anesthesia|sedation)\s+start\s+time\b[^\n]{0,60}\b\d{1,2}:\d{2}\b"
-                                            ],
-                                        )
+                                        start_time = _normalize_clock_time(match.group(1))
+                                        if start_time:
+                                            sedation["start_time"] = start_time
+                                            record_data["sedation"] = sedation
+                                            other_modified = True
+                                            _add_first_span_skip_cpt_headers(
+                                                "sedation.start_time",
+                                                [
+                                                    r"\b(?:anesthesia|sedation)\s+start\s+time\b[^\n]{0,60}\b(?:\d{1,2}:\d{2}(?:\s*[AP]M)?|\d{3,4}(?:\s*[AP]M)?)\b"
+                                                ],
+                                            )
 
                                 if not sedation.get("end_time"):
                                     match = re.search(
-                                        r"(?i)\b(?:anesthesia|sedation)\s+(?:stop|end)\s+time\b[^0-9]{0,40}(\d{1,2}:\d{2})\b",
+                                        r"(?i)\b(?:anesthesia|sedation)\s+(?:stop|end)\s+time\b[^0-9]{0,40}(\d{1,2}:\d{2}(?:\s*[AP]M)?|\d{3,4}(?:\s*[AP]M)?)\b",
                                         raw_note_text or "",
                                     )
                                     if match:
-                                        sedation["end_time"] = match.group(1)
-                                        record_data["sedation"] = sedation
-                                        other_modified = True
-                                        _add_first_span_skip_cpt_headers(
-                                            "sedation.end_time",
-                                            [
-                                                r"\b(?:anesthesia|sedation)\s+(?:stop|end)\s+time\b[^\n]{0,60}\b\d{1,2}:\d{2}\b"
-                                            ],
-                                        )
+                                        end_time = _normalize_clock_time(match.group(1))
+                                        if end_time:
+                                            sedation["end_time"] = end_time
+                                            record_data["sedation"] = sedation
+                                            other_modified = True
+                                            _add_first_span_skip_cpt_headers(
+                                                "sedation.end_time",
+                                                [
+                                                    r"\b(?:anesthesia|sedation)\s+(?:stop|end)\s+time\b[^\n]{0,60}\b(?:\d{1,2}:\d{2}(?:\s*[AP]M)?|\d{3,4}(?:\s*[AP]M)?)\b"
+                                                ],
+                                            )
 
                             # Procedure setting: apply airway_type only if explicitly evidenced.
                             airway_type = seed_data.get("airway_type")

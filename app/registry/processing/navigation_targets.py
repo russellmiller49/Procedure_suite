@@ -634,7 +634,10 @@ def extract_navigation_targets(note_text: str) -> list[dict[str, Any]]:
             leading_trim = len(raw_loc_full_raw) - len(raw_loc_full_raw.lstrip())
             raw_loc_full = raw_loc_full_raw.strip()
             loc_offset = match.start("loc") + leading_trim
-            raw_loc = _canonicalize_inline_location(raw_loc_full)
+            if match.re is _INLINE_TARGET_RE:
+                raw_loc = _truncate_location(raw_loc_full)
+            else:
+                raw_loc = _canonicalize_inline_location(raw_loc_full)
             if not raw_loc:
                 continue
             if len(raw_loc) <= 2:

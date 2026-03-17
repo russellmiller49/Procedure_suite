@@ -515,6 +515,19 @@ def derive_procedures_from_granular(
                 return "Lingula"
             return None
 
+        def _nav_target_specific_label(target: dict[str, Any]) -> str | None:
+            loc = str(target.get("target_location_text") or "").strip()
+            if loc:
+                bronchus_match = re.search(r"\b([LR]B\d{1,2})\b", loc, re.IGNORECASE)
+                if bronchus_match:
+                    return bronchus_match.group(1).upper()
+                if re.search(r"(?i)\bsegment\b|\bapicoposterior\b|\banterior\b|\bposterior\b|\bsuperior\b|\binferior\b|\bmedial\b|\blateral\b", loc):
+                    return loc
+                normalized = _nav_target_label_from_value(loc)
+                if normalized:
+                    return normalized
+            return _nav_target_lobe_label(target)
+
         canonical_nav_sites = _canonical_nav_site_candidates()
         if canonical_nav_sites:
             canonical_primary = canonical_nav_sites[0]
@@ -581,9 +594,9 @@ def derive_procedures_from_granular(
             cleaned_existing_targets = _clean_site_values(existing_targets)
             is_placeholder = len(existing_targets) == 1 and str(existing_targets[0]).strip().lower() in {"lung mass"}
             targets = [
-                _nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text"))
+                _nav_target_specific_label(t)
                 for t in navigation_targets
-                if (_nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text")))
+                if _nav_target_specific_label(t)
                 and (
                     (t.get("number_of_needle_passes") or 0) > 0
                     or any("needle" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
@@ -591,9 +604,9 @@ def derive_procedures_from_granular(
             ]
             if not targets:
                 targets = [
-                    _nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text"))
+                    _nav_target_specific_label(t)
                     for t in navigation_targets
-                    if (_nav_target_lobe_label(t) or _nav_target_label_from_value(t.get("target_location_text")))
+                    if _nav_target_specific_label(t)
                 ]
 
             if not existing_targets or is_placeholder:
@@ -796,16 +809,16 @@ def derive_procedures_from_granular(
             if not cryo.get("performed"):
                 cryo["performed"] = True
             cryo_locations = [
-                t.get("target_location_text")
+                _nav_target_specific_label(t)
                 for t in navigation_targets
-                if t.get("target_location_text")
+                if _nav_target_specific_label(t)
                 and (
                     (t.get("number_of_cryo_biopsies") or 0) > 0
                     or any("cryo" in str(x).lower() for x in (t.get("sampling_tools_used") or ()))
                 )
             ]
             if not cryo_locations:
-                cryo_locations = [t.get("target_location_text") for t in navigation_targets if t.get("target_location_text")]
+                cryo_locations = [_nav_target_specific_label(t) for t in navigation_targets if _nav_target_specific_label(t)]
 
             existing_locations = cryo.get("locations_biopsied") or []
             if not existing_locations:
@@ -837,7 +850,20 @@ def derive_procedures_from_granular(
                             merged.append(candidate)
                     if merged != existing_locations:
                         cryo["locations_biopsied"] = merged
-            cleaned_cryo_locations = _clean_site_values(cryo.get("locations_biopsied"))
+            cleaned_cryo_locations: list[str] = []
+            for value in cryo.get("locations_biopsied") or []:
+                if not value:
+                    continue
+                if isinstance(value, str):
+                    bronchus_match = re.search(r"\b([LR]B\d{1,2})\b", value, re.IGNORECASE)
+                    if bronchus_match:
+                        label = bronchus_match.group(1).upper()
+                    else:
+                        label = _nav_target_label_from_value(value)
+                else:
+                    label = _nav_target_label_from_value(value)
+                if label and label not in cleaned_cryo_locations:
+                    cleaned_cryo_locations.append(label)
             if cleaned_cryo_locations and cleaned_cryo_locations != cryo.get("locations_biopsied"):
                 cryo["locations_biopsied"] = cleaned_cryo_locations
 
