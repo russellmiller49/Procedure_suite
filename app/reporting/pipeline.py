@@ -873,8 +873,12 @@ class ReportPipeline:
 
             label_summary = _build_procedure_summary()
             cpt_summary = _summarize_cpt_candidates(state.procedures_metadata, unmatched_autocode)
+            shell_indication_text = _clean_shell_text(bundle.indication_text)
+            if not shell_indication_text and bundle.free_text_hint:
+                shell_indication_text = "[indication]"
+
             shell_payload = OperativeShellInputs(
-                indication_text=_clean_shell_text(bundle.indication_text),
+                indication_text=shell_indication_text,
                 preop_diagnosis_text=bundle.preop_diagnosis_text,
                 postop_diagnosis_text=bundle.postop_diagnosis_text,
                 procedures_summary=label_summary,
