@@ -2286,6 +2286,17 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         )
     )
     ebus_like_without_peripheral = (has_ebus_context or ebus_station_syntax) and not has_peripheral_context
+    conventional_tbna_only_context = not has_ebus_context and not ebus_station_syntax
+    if (
+        not tbna_rose_result
+        and rose_hint
+        and conventional_tbna_only_context
+        and (tbna_count is not None or (isinstance(peripheral_tbna, dict) and peripheral_tbna.get("performed") is True))
+    ):
+        cleaned_tbna_rose = str(rose_hint).strip().rstrip(".")
+        if cleaned_tbna_rose and not re.search(r"(?i)\b(?:available|yes|no|pending)\b", cleaned_tbna_rose):
+            tbna_rose_result = cleaned_tbna_rose
+
     if ebus_like_without_peripheral:
         # Guardrail: EBUS station sampling (e.g., "station 4R/7") is often misclassified as peripheral TBNA.
         # Do not allow a peripheral TBNA payload to leak into the reporter bundle without explicit peripheral context.
