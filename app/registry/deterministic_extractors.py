@@ -4105,13 +4105,24 @@ def _is_percutaneous_nonbronchoscopic_ablation_context(text: str) -> bool:
     percutaneous_context = bool(
         re.search(
             r"\b(?:ct[-\s]?guided|computed\s+tomography|transthoracic|percutaneous|coaxial|chest\s+wall|"
-            r"pleural[-\s]?based|microwave\s+antenna|ablation\s+antenna|ablation\s+probe|cryo\s*probe|"
-            r"cryo(?:genic)?\s+probe|electrode\s+placement|needle\s+path)\b",
+            r"pleural[-\s]?based|microwave\s+antenna|ablation\s+antenna|ablation\s+probe|"
+            r"electrode\s+placement|needle\s+path)\b",
             text,
             re.IGNORECASE,
         )
     )
-    return percutaneous_context and not _has_positive_bronchoscopic_ablation_context(text)
+    # A cryoprobe alone is not enough to imply nonbronchoscopic ablation because it is
+    # also used bronchoscopically for therapeutic cryotherapy and diagnostic cryobiopsy.
+    cryoprobe_percutaneous_context = bool(
+        re.search(r"\b(?:cryo\s*probe|cryo(?:genic)?\s+probe)\b", text, re.IGNORECASE)
+        and re.search(
+            r"\b(?:ct[-\s]?guided|computed\s+tomography|transthoracic|percutaneous|coaxial|"
+            r"chest\s+wall|pleural[-\s]?based|ablation|needle\s+path)\b",
+            text,
+            re.IGNORECASE,
+        )
+    )
+    return (percutaneous_context or cryoprobe_percutaneous_context) and not _has_positive_bronchoscopic_ablation_context(text)
 
 
 def _has_populated_cryotherapy_table_row(text: str) -> bool:
