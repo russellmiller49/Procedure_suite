@@ -3596,7 +3596,7 @@ def extract_diagnostic_bronchoscopy(note_text: str) -> Dict[str, Any]:
             r"(?i)\b(?:"
             r"the\s+airway\s+was\s+inspected|"
             r"initial\s+airway\s+inspection\s+findings|"
-            r"tracheobronchial\s+tree\s+was\s+examined|"
+            r"tracheobronchial\s+tree\s+(?:was\s+)?(?:examined|inspected)|"
             r"dynamic\s+bronchoscopy|"
             r"dynamic\s+assessment|"
             r"forced\s+expiratory\s+maneuver|"
