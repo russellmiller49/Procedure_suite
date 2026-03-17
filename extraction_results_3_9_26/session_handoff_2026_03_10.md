@@ -973,3 +973,150 @@ Updated next-step recommendation for the next machine:
 Use something close to this on the next machine:
 
 `Read extraction_results_3_9_26/codex_master_prompt.md, extraction_results_3_9_26/pipeline_improvement_plan.md, and extraction_results_3_9_26/session_handoff_2026_03_10.md. Use the handoff as the authoritative working summary. Treat airway_device_action, ebus_station_logic, percutaneous_ablation, blvr_pal_valve, and negation_complication_gating as closed only for their explicitly measured slices. Treat target_location_normalization as partially closed only for the committed measured sub-slices in this handoff, with broader family closure still unverified. Treat sedation_anesthesia_ambiguity as closed only for the measured `batch_4/note_019` / `batch_4/note_030` extraction slice. Resume only with `sedation_provider_time_ambiguity` if the real March notes are available; otherwise stop rather than broadening scope.`
+
+## March 17, 2026 Addendum - Narrow Follow-Up Slices And Current Truth Surface
+
+This addendum records the later bounded follow-up slices completed after the March 15 sedation note above.
+Treat these as narrow measured closures only. Do not infer broader family closure from them.
+
+### Completed - Cryoprobe Therapeutic-vs-Cryobiopsy
+
+This slice was completed only for the measured deterministic extraction surface.
+
+What changed:
+
+- `app/registry/deterministic_extractors.py`
+  - narrowed the percutaneous/nonbronchoscopic cryoprobe guard so a bare therapeutic `cryo probe` mention no longer misroutes into the nonbronchoscopic/percutaneous path
+  - preserved the existing therapeutic cryotherapy path
+
+Measured behavior for this slice:
+
+- `Cryo probe was used for tumor debulking.` still maps to `cryotherapy`
+- a therapeutic cryoprobe note with clot removal and `SPECIMEN(S): --None` does not map to `transbronchial_cryobiopsy`
+- that therapeutic note continues to seed `cryotherapy.performed=True`
+
+Focused validation completed:
+
+- `tests/coder/test_coding_rules_phase7.py::TestCryotherapyExtractor::test_extract_cryotherapy_cryo_probe`
+- `tests/registry/test_deterministic_extractors_phase6.py::test_extract_transbronchial_cryobiopsy_does_not_fire_when_specimen_none_is_present_and_cryoprobe_is_therapeutic`
+- adjacent narrow ring:
+  - `tests/coder/test_coding_rules_phase7.py -k 'CryotherapyExtractor or extract_transbronchial_cryobiopsy'`
+  - `tests/registry/test_deterministic_extractors_phase6.py -k 'transbronchial_cryobiopsy'`
+
+Carry-forward closure state:
+
+- closed only for the measured cryoprobe therapeutic-vs-cryobiopsy deterministic extraction slice
+- no broader cryotherapy, cryobiopsy, or peripheral-ablation closure claim
+
+### Completed - Note 009 Negated Endobronchial Lesion Registry Slice
+
+This slice was completed only for the measured real-note registry-side regression.
+
+What changed:
+
+- `app/registry/deterministic_extractors.py`
+  - the diagnostic bronchoscopy fallback now accepts `tracheobronchial tree inspected` as a strong inspection cue alongside the existing examined/inspection wording
+
+Measured behavior for this slice:
+
+- `batch_6/note_009` again seeds `diagnostic_bronchoscopy.performed=True`
+- the negated phrase `without focal endobronchial lesion` is not preserved as a positive finding
+- the true erythema finding remains preserved
+
+Focused validation completed:
+
+- `tests/registry/test_fixpack_negation_complication_regressions.py::test_real_note_009_negated_endobronchial_lesion_is_not_preserved_in_inspection_findings`
+- adjacent narrow ring:
+  - `tests/registry/test_fixpack_negation_complication_regressions.py`
+
+Carry-forward closure state:
+
+- closed only for the measured note_009 registry-side regression slice
+- no broader negation/complication family closure claim
+
+### Completed - Note 300 Multilobe Navigation Add-On/Imaging Coding Slice
+
+This slice was completed only for the measured coding surface.
+
+What changed:
+
+- `app/coder/domain_rules/registry_to_cpt/coding_rules.py`
+  - added a narrow `31633` add-on fallback so lobe counting can recover from needle-qualified navigation targets when `peripheral_tbna.targets_sampled` only carries bronchus tokens such as `RB6` / `RB3`
+
+Measured behavior for this slice:
+
+- the note-300 multilobe robotic-navigation regression now derives:
+  - `31632`
+  - `31633`
+  - `77012`
+  - `76377`
+
+Focused validation completed:
+
+- `tests/registry/test_note_300_multilobe_navigation_regression.py::test_note300_multilobe_navigation_targets_drive_addon_codes_and_imaging`
+- adjacent narrow ring:
+  - `tests/registry/test_note_300_multilobe_navigation_regression.py`
+
+Carry-forward closure state:
+
+- closed only for the measured note_300 multilobe navigation add-on/imaging coding slice
+- no broader navigation-family or multilobe-coding closure claim
+
+### Completed - Focused Conventional-TBNA Detail-Preservation Reporter Slice
+
+This slice was completed only for the measured reporter surface.
+
+What changed:
+
+- `app/reporting/normalization/compat_enricher.py`
+  - when there is no EBUS/station context, a standalone `ROSE result: ...` line now fills the synthesized conventional-TBNA reporter payload so the structured reporter can render the ROSE detail
+
+Measured behavior for this slice:
+
+- the focused reporter case preserves:
+  - `22G`
+  - `4 passes`
+  - `ROSE`
+  - `small cell carcinoma`
+
+Focused validation completed:
+
+- `tests/reporting/test_reporter_batch_regressions.py::test_reporter_batch_regressions_focused_prompts[focused_conventional_tbna_details_preserved]`
+- adjacent narrow guardrail:
+  - `tests/reporting/test_reporter_batch_regressions.py::test_reporter_batch_regressions_focused_prompts[focused_ebus_negation_no_malignant_rose]`
+
+Carry-forward closure state:
+
+- closed only for the measured conventional-TBNA detail-preservation reporter slice
+- no broader reporter-family closure claim
+
+### Current Truth-Surface Status On This Machine
+
+A fresh repo-wide sweep was rerun after the narrow slices above using:
+
+- `.venv/bin/python -m pytest -q --disable-warnings --tb=no`
+
+What happened:
+
+- an earlier full-suite refresh on this machine had shown 4 failures in:
+  - `tests/ml_coder/test_training_pipeline.py`
+- when the next bounded task was started correctly, the required first rerun:
+  - `tests/ml_coder/test_training_pipeline.py::TestPipelineFit::test_pipeline_fits_without_error`
+  passed immediately
+- because the target was unexpectedly green, the full-suite truth surface was refreshed again
+- that refreshed full-suite run completed green with no failures
+
+Correct interpretation:
+
+- there was no safe current live red slice left to take from that ML training-pipeline target on this machine
+- treat that prior ML file selection as stale truth-surface history rather than an active remaining defect
+
+Current local-only dirt observed during this later session and not to be blindly reverted:
+
+- `data/coding_traces.jsonl`
+- `phi_demo.db`
+
+Updated next-step recommendation:
+
+- before choosing another bounded task, refresh the full current red truth surface again on the machine where the next session starts
+- if the suite is still green there, stop with a blocker rather than guessing a new bug family from stale history
