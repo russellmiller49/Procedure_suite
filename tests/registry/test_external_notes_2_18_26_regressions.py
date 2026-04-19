@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.registry.deterministic_extractors import (
     extract_demographics,
+    extract_transbronchial_biopsy,
     extract_therapeutic_aspiration,
     extract_therapeutic_injection,
 )
@@ -51,6 +52,31 @@ def test_extract_therapeutic_aspiration_detects_therapeutic_suctioning() -> None
     note = "Therapeutic suctioning was performed in the trachea. Mucus was removed from the airway."
     result = extract_therapeutic_aspiration(note)
     assert result.get("therapeutic_aspiration", {}).get("performed") is True
+
+
+def test_extract_therapeutic_injection_preserves_decimal_doses() -> None:
+    note = (
+        "Amphotericin 0.4mg was instilled into the RUL lesion.\n"
+        "Amphotericin 0.2mg was instilled into the RML lesion.\n"
+    )
+    result = extract_therapeutic_injection(note)
+
+    assert result.get("therapeutic_injection", {}).get("performed") is True
+    assert result.get("therapeutic_injection", {}).get("dose") == "0.4mg; 0.2mg"
+
+
+def test_extract_transbronchial_biopsy_survives_adjacent_cryobiopsy_sentence() -> None:
+    note = (
+        "Transbronchial biopsy was performed with alligator forceps via the extended working channel catheter. "
+        "Total 2 samples were collected. Samples sent for Pathology.\n"
+        "Transbronchial cryobiopsy was performed with 1.1mm cryoprobe via the extended working channel catheter. "
+        "Freeze time of 6 seconds were used.\n"
+    )
+
+    result = extract_transbronchial_biopsy(note)
+
+    assert result.get("transbronchial_biopsy", {}).get("performed") is True
+    assert result.get("transbronchial_biopsy", {}).get("number_of_samples") == 2
 
 
 def test_extract_cao_interventions_detail_preserves_line_wrapped_location_context() -> None:
@@ -109,6 +135,23 @@ def test_enrich_bal_from_procedure_detail_prefers_standard_bal_when_bal_detail_u
     assert bal.volume_instilled_ml == 60
     assert bal.volume_recovered_ml == 60
     assert any("selected largest standard BAL candidate" in w for w in warnings)
+
+
+def test_enrich_bal_from_procedure_detail_captures_bal_in_lingula_with_return_noun() -> None:
+    note = (
+        "BAL in lingula with 100 mL instilled, 35 mL return, blood-tinged initially then clearing.\n"
+    )
+    record = RegistryRecord.model_validate({"procedures_performed": {"bal": {"performed": True}}})
+
+    warnings = enrich_bal_from_procedure_detail(record, note)
+
+    assert any("AUTO_BAL_DETAIL" in str(w) for w in warnings)
+    assert record.procedures_performed is not None
+    bal = record.procedures_performed.bal
+    assert bal is not None
+    assert bal.location == "lingula"
+    assert bal.volume_instilled_ml == 100
+    assert bal.volume_recovered_ml == 35
 
 
 def test_airway_stent_action_type_is_kept_consistent_with_action() -> None:

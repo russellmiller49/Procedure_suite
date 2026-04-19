@@ -331,6 +331,197 @@ def test_real_note_all_three_station_ebus_tbna_keeps_station_7_and_31653(
     assert "31652" not in result.cpt_codes
 
 
+def test_real_note_blank_separated_ebus_specimens_keep_all_three_stations_and_tbna_specimens(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    note_text = (
+        "PRE-PROCEDURE DIAGNOSIS: Mediastinal adenopathy; pulmonary nodule (R91.1, R59.0)\n"
+        "POST-PROCEDURE DIAGNOSIS: Same\n"
+        "PROCEDURES: Bronchoscopy with BAL; Linear EBUS-TBNA of mediastinal/hilar lymph nodes "
+        "(include codes: CPT 31624, 31652)\n"
+        "ANESTHESIA: General anesthesia with LMA\n"
+        "ESTIMATED BLOOD LOSS: Minimal\n"
+        "COMPLICATIONS: None\n"
+        "\n"
+        "INDICATION: [PATIENT] is a 64-year-old male with right upper lobe pulmonary nodule and "
+        "PET-avid mediastinal nodes for diagnosis and staging.\n"
+        "\n"
+        "FINDINGS:\n"
+        "\n"
+        "Trachea and main carina normal.\n"
+        "\n"
+        "Mild bronchitic secretions in right lower lobe; no endobronchial mass.\n"
+        "\n"
+        "EBUS: Enlarged station 4R and station 7 with heterogeneous echotexture; "
+        "station 11L small but visualized.\n"
+        "\n"
+        "PROCEDURE IN DETAIL:\n"
+        "After informed consent and time-out, flexible bronchoscopy was performed through the LMA. "
+        "Airway inspection was completed to segmental level bilaterally. BAL was performed in the "
+        "right upper lobe posterior segment with 120 mL instilled, 48 mL returned, mildly turbid. "
+        "The EBUS bronchoscope was then introduced. Doppler was used prior to each pass.\n"
+        "\n"
+        "EBUS-TBNA sampling:\n"
+        "\n"
+        "Station 4R: 5 passes with 22G needle\n"
+        "\n"
+        "Station 7: 6 passes with 22G needle\n"
+        "\n"
+        "Station 11L: 3 passes with 22G needle\n"
+        "\n"
+        "SPECIMENS:\n"
+        "\n"
+        "“4R TBNA” (passes 1-5)\n"
+        "\n"
+        "“7 TBNA” (passes 1-6)\n"
+        "\n"
+        "“11L TBNA” (passes 1-3)\n"
+        "\n"
+        "“RUL BAL”\n"
+        "\n"
+        "IMPRESSION/PLAN:\n"
+        "\n"
+        "No endobronchial lesion.\n"
+        "\n"
+        "Await cytology/pathology and flow as ordered.\n"
+    )
+
+    result = _extract_fields_parallel_ner(monkeypatch, note_text)
+
+    record = result.record
+    assert record.procedures_performed is not None
+    linear = record.procedures_performed.linear_ebus
+    assert linear is not None
+    assert linear.stations_sampled == ["4R", "7", "11L"]
+
+    node_map = {event.station: event for event in linear.node_events or [] if event.station}
+    assert set(node_map) == {"4R", "7", "11L"}
+    assert all(event.action == "needle_aspiration" for event in node_map.values())
+    assert node_map["4R"].passes == 5
+    assert node_map["7"].passes == 6
+    assert node_map["11L"].passes == 3
+
+    assert record.specimens is not None
+    specimens = record.specimens.specimens_collected
+    assert specimens is not None
+    assert [(spec.type, spec.location) for spec in specimens] == [
+        ("TBNA", "4R"),
+        ("TBNA", "7"),
+        ("TBNA", "11L"),
+        ("BAL", "RUL"),
+    ]
+
+    assert "31653" in result.cpt_codes
+    assert "31652" not in result.cpt_codes
+    assert "31624" in result.cpt_codes
+
+
+def test_real_note_brushings_and_bal_locations_survive_pipeline(monkeypatch: pytest.MonkeyPatch) -> None:
+    note_text = (
+        "Indication: Hemoptysis and left upper lobe mass on CT in a 58-year-old female.\n"
+        "\n"
+        "Procedure: Bronchoscopy, endobronchial biopsy, brushings, BAL, linear EBUS-TBNA.\n"
+        "\n"
+        "Sedation: Moderate sedation (midazolam and fentanyl) with topical lidocaine.\n"
+        "\n"
+        "Narrative:\n"
+        "\n"
+        "Consent obtained and time-out performed. Flexible bronchoscopy was advanced via oral bite block. "
+        "Vocal cords normal. There was an exophytic lesion at the left upper lobe apicoposterior segment "
+        "entrance with contact bleeding. Suction and cold saline were used for hemostasis.\n"
+        "\n"
+        "Interventions:\n"
+        "\n"
+        "Endobronchial biopsies x6 from LUL lesion.\n"
+        "\n"
+        "Cytology brush x2 from LUL lesion.\n"
+        "\n"
+        "BAL in lingula with 100 mL instilled, 35 mL return, blood-tinged initially then clearing.\n"
+        "\n"
+        "EBUS portion:\n"
+        "EBUS scope introduced. Doppler confirmed no intervening vessels. Sampling performed in the following order:\n"
+        "\n"
+        "Station 11L: 4 passes (22G)\n"
+        "\n"
+        "Station 7: 4 passes (22G)\n"
+        "\n"
+        "Station 4L: 3 passes (22G)\n"
+        "\n"
+        "Specimens labeled:\n"
+        "\n"
+        "“LUL endobronchial bx”\n"
+        "\n"
+        "“LUL brush”\n"
+        "\n"
+        "“Lingula BAL”\n"
+        "\n"
+        "“11L TBNA”\n"
+        "\n"
+        "“7 TBNA”\n"
+        "\n"
+        "“4L TBNA”\n"
+        "\n"
+        "Complications: None. EBL minimal.\n"
+    )
+
+    result = _extract_fields_parallel_ner(monkeypatch, note_text)
+
+    record = result.record
+    assert record.procedures_performed is not None
+
+    brushings = record.procedures_performed.brushings
+    assert brushings is not None
+    assert brushings.performed is True
+    assert brushings.locations == ["LUL"]
+
+    bal = record.procedures_performed.bal
+    assert bal is not None
+    assert bal.performed is True
+    assert bal.location == "lingula"
+    assert bal.volume_instilled_ml == 100
+    assert bal.volume_recovered_ml == 35
+
+    assert {"31623", "31624", "31625", "31653"}.issubset(set(result.cpt_codes or []))
+
+
+def test_reconciled_three_station_ebus_note_keeps_station_7_sampled_in_pipeline(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    note_text = """
+    The convex probe EBUS bronchoscope was introduced through the mouth, via laryngeal mask airway and advanced to the tracheobronchial tree.
+    A systematic hilar and mediastinal lymph node survey was carried out.
+    Sampling criteria (5mm short axis diameter PET avid) were met in station 11 L, 7, 3P lymph nodes.
+    Sampling by transbronchial needle aspiration was performed with the EBUS TBNA 21 gauge needle beginning with the 11 L lymph node, followed by the 7 lymph node, followed by the 3P lymph node.
+    A total of at least 5 biopsies were performed in each station.
+    ROSE evaluation yielded malignancy at station 7 and 3P.
+
+    Lymph nodes
+    3p: 4.0 mm; 4 passes
+    4R: <3mm;
+    4L: 3mm;
+    7: 7.6; 7passes
+    11Rs: 4.9 mm;
+    11Ri: 3.5 mm;
+    11L: 5.4mm; 6of passes
+    """.strip()
+
+    result = _extract_fields_parallel_ner(monkeypatch, note_text)
+
+    record = result.record
+    assert record.procedures_performed is not None
+    linear = record.procedures_performed.linear_ebus
+    assert linear is not None
+    assert set(linear.stations_sampled or []) == {"3P", "7", "11L"}
+
+    node_map = {event.station: event for event in linear.node_events or [] if event.station}
+    assert node_map["3P"].action == "needle_aspiration"
+    assert node_map["7"].action == "needle_aspiration"
+    assert node_map["11L"].action == "needle_aspiration"
+
+    assert "31653" in result.cpt_codes
+    assert "31652" not in result.cpt_codes
+
+
 def test_real_note_keeps_eus_b_separate_from_bronchoscopic_ebus(monkeypatch: pytest.MonkeyPatch) -> None:
     note_text = (
         "Procedure note:\n"

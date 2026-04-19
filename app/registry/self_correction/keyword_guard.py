@@ -204,7 +204,18 @@ CPT_KEYWORDS: dict[str, list[str]] = {
     ],
     # Therapeutics: dilation
     "31630": ["balloon", "dilation", "dilate", "dilated"],
-    "31631": ["balloon", "dilation", "dilate", "dilated"],
+    "31631": [
+        "tracheal stent",
+        "stent placement",
+        "stent placed",
+        "stent deployed",
+        "stent inserted",
+        "silicone stent",
+        "metallic stent",
+        "dumon",
+        "ultraflex",
+        "aerostent",
+    ],
     # Therapeutics: airway stent
     "31636": ["stent", "silicone", "metal", "metallic", "hybrid", "y-stent", "dumon", "ultraflex", "aero"],
     "31637": ["stent", "silicone", "metal", "metallic", "hybrid", "y-stent", "dumon", "ultraflex", "aero"],
@@ -727,9 +738,16 @@ def _looks_like_ebus_nodal_context(note_text: str, match: re.Match[str]) -> bool
 
     if not _TBNA_EBUS_CONTEXT_RE.search(window):
         return False
+    if re.search(
+        r"(?i)\bendobronchial\s+ultrasound\b[^.\n]{0,180}\btransbronchial\s+biops(?:y|ies)\b",
+        window,
+    ):
+        return True
     if _EBUS_STATION_TOKEN_RE.search(window):
         return True
     if re.search(r"(?i)\blymph\s+node(?:s)?\b", window):
+        return True
+    if re.search(r"(?i)\bsite\s+\d+\b", window) and re.search(r"(?i)\btransbronchial\s+biops(?:y|ies)\b", window):
         return True
     return False
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extraction Hotfix"
+  short_description: "Fix extraction precision regressions"
+  default_prompt: "Use $procsuite-extraction-hotfix to fix a focused extraction precision or deterministic parse regression and add a narrow regression test."

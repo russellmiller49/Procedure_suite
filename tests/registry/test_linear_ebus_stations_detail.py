@@ -171,3 +171,22 @@ def test_extract_linear_ebus_stations_detail_rose_malignant_cells_marked_maligna
 
     assert by_station["4R"]["sampled"] is True
     assert by_station["4R"]["rose_result"] == "Malignant"
+
+
+def test_extract_linear_ebus_stations_detail_site_header_number_does_not_become_station() -> None:
+    note = (
+        "EBUS-Findings\n"
+        "Lymph Nodes Evaluated:\n"
+        "Site 5: The 11Ri lymph node was < 10 mm on CT. "
+        "The site was not sampled: Sampling this lymph node was not clinically indicated. "
+        "Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. "
+        "The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions.\n"
+    )
+
+    details = extract_linear_ebus_stations_detail(note)
+    by_station = _by_station(details)
+
+    assert "5" not in by_station
+    assert by_station["11Ri"]["sampled"] is False
+    assert by_station["11Ri"]["elastography_performed"] is True
+    assert by_station["11Ri"]["elastography_pattern"] == "blue_green"

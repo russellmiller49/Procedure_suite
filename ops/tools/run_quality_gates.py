@@ -21,6 +21,7 @@ from app.common.quality_gate_reports import build_report_delta, render_delta_mar
 
 PR_PYTEST_TARGETS = [
     "tests/registry/test_regression_pack.py",
+    "tests/registry/test_header_evidence_integrity.py",
     "tests/common/test_path_redaction.py",
     "tests/common/test_quality_gate_reports.py",
     "tests/scripts/test_eval_golden.py",

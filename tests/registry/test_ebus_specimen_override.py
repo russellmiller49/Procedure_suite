@@ -64,3 +64,74 @@ def test_reconcile_ebus_sampling_from_specimen_log_restricts_station_count() -> 
     span_7 = evidence["procedures_performed.linear_ebus.stations_sampled.1"][0]
     assert note_text[span_4l.start:span_4l.end].upper() == "4L"
     assert note_text[span_7.start:span_7.end] == "7"
+
+
+def test_reconcile_ebus_sampling_from_specimen_log_keeps_blank_separated_station_entries() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["4R", "7", "11L"],
+                    "node_events": [
+                        {
+                            "station": "4R",
+                            "action": "needle_aspiration",
+                            "passes": 5,
+                            "outcome": None,
+                            "evidence_quote": "Station 4R: 5 passes with 22G needle",
+                        },
+                        {
+                            "station": "7",
+                            "action": "needle_aspiration",
+                            "passes": 6,
+                            "outcome": None,
+                            "evidence_quote": "Station 7: 6 passes with 22G needle",
+                        },
+                        {
+                            "station": "11L",
+                            "action": "needle_aspiration",
+                            "passes": 3,
+                            "outcome": None,
+                            "evidence_quote": "Station 11L: 3 passes with 22G needle",
+                        },
+                    ],
+                }
+            }
+        }
+    )
+
+    note_text = (
+        "EBUS-TBNA sampling:\n"
+        "Station 4R: 5 passes with 22G needle\n"
+        "Station 7: 6 passes with 22G needle\n"
+        "Station 11L: 3 passes with 22G needle\n"
+        "\n"
+        "SPECIMENS:\n"
+        "\n"
+        "“4R TBNA” (passes 1-5)\n"
+        "\n"
+        "“7 TBNA” (passes 1-6)\n"
+        "\n"
+        "“11L TBNA” (passes 1-3)\n"
+        "\n"
+        "“RUL BAL”\n"
+    )
+
+    warnings = reconcile_ebus_sampling_from_specimen_log(record, note_text)
+
+    linear = record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+    assert linear.stations_sampled == ["4R", "7", "11L"]
+
+    by_station = {e.station.upper(): e for e in (linear.node_events or [])}
+    assert by_station["4R"].action == "needle_aspiration"
+    assert by_station["7"].action == "needle_aspiration"
+    assert by_station["11L"].action == "needle_aspiration"
+    assert by_station["7"].passes == 6
+    assert by_station["11L"].passes == 3
+
+    assert any("EBUS_SPECIMEN_OVERRIDE" in w for w in warnings)
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "31653" in codes
+    assert "31652" not in codes

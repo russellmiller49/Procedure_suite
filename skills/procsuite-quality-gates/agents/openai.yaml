@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quality Gates"
+  short_description: "Add durable regression coverage"
+  default_prompt: "Use $procsuite-quality-gates to turn a Procedure Suite regression into durable fixture, eval, or PR-gate coverage."

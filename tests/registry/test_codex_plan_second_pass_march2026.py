@@ -17,6 +17,19 @@ def test_extract_brushings_ignores_not_obtained_sentence() -> None:
     assert extract_brushings(note_text) == {}
 
 
+def test_extract_brushings_prefers_intervention_location_over_header_only_mention() -> None:
+    note_text = (
+        "Procedure: Bronchoscopy, endobronchial biopsy, brushings, BAL, linear EBUS-TBNA.\n"
+        "Interventions:\n"
+        "Cytology brush x2 from LUL lesion.\n"
+    )
+
+    result = extract_brushings(note_text)
+
+    assert result.get("brushings", {}).get("performed") is True
+    assert result.get("brushings", {}).get("locations") == ["LUL"]
+
+
 def test_extract_endobronchial_biopsy_ignores_not_obtained_sentence() -> None:
     note_text = (
         "A flexible bronchoscopy was performed under moderate sedation. "

@@ -251,6 +251,26 @@ def derive_procedures_from_granular(
             if merged:
                 linear_ebus["stations_sampled"] = merged
 
+        elastography_patterns: list[str] = []
+        elastography_used = False
+        for station in linear_ebus_detail:
+            if not isinstance(station, dict):
+                continue
+            pattern = station.get("elastography_pattern")
+            if station.get("elastography_performed") is True or (
+                isinstance(pattern, str) and pattern.strip()
+            ):
+                elastography_used = True
+            if isinstance(pattern, str):
+                cleaned = pattern.strip()
+                if cleaned and cleaned not in elastography_patterns:
+                    elastography_patterns.append(cleaned)
+
+        if elastography_used and linear_ebus.get("elastography_used") is not True:
+            linear_ebus["elastography_used"] = True
+        if len(elastography_patterns) == 1 and not linear_ebus.get("elastography_pattern"):
+            linear_ebus["elastography_pattern"] = elastography_patterns[0]
+
         if not linear_ebus.get("performed"):
             linear_ebus["performed"] = True
 
@@ -1064,7 +1084,44 @@ def derive_procedures_from_granular(
 
     # Check: performed=True but required detail missing (e.g., EBUS without stations)
     linear_ebus = procedures.get("linear_ebus") or {}
-    if linear_ebus.get("performed") is True and not (linear_ebus.get("stations_sampled") or []):
+    inspection_only_elastography = False
+    if isinstance(linear_ebus_detail, list):
+        for station in linear_ebus_detail:
+            if not isinstance(station, dict):
+                continue
+            pattern = station.get("elastography_pattern")
+            if station.get("sampled") is False and (
+                station.get("elastography_performed") is True or (isinstance(pattern, str) and pattern.strip())
+            ):
+                inspection_only_elastography = True
+                break
+
+    inspection_only_node_events = False
+    node_events = linear_ebus.get("node_events") or []
+    if isinstance(node_events, list) and node_events:
+        sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+        has_stationed_node_event = False
+        has_sampling_node_event = False
+        for event in node_events:
+            if not isinstance(event, dict):
+                continue
+            station = str(event.get("station") or "").strip()
+            if not station:
+                continue
+            has_stationed_node_event = True
+            action = str(event.get("action") or "").strip().lower()
+            if action in sampling_actions:
+                has_sampling_node_event = True
+                break
+        if has_stationed_node_event and not has_sampling_node_event:
+            inspection_only_node_events = True
+
+    if (
+        linear_ebus.get("performed") is True
+        and not (linear_ebus.get("stations_sampled") or [])
+        and not inspection_only_elastography
+        and not inspection_only_node_events
+    ):
         warnings.append("procedures_performed.linear_ebus.performed=true but stations_sampled is empty/missing")
 
     tbna = procedures.get("tbna_conventional") or {}

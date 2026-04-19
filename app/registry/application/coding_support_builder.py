@@ -12,6 +12,7 @@ from app.registry.schema import RegistryRecord
 
 
 _CPT_RE = re.compile(r"\b(\d{5})\b")
+_BARE_CPT_TEXT_RE = re.compile(r"^\s*\d{5}\s*$")
 
 
 @lru_cache(maxsize=1)
@@ -39,6 +40,8 @@ def _evidence_items_for_prefix(
             continue
         if key != prefix and not key.startswith(prefix + "."):
             continue
+        if key == "header_code_hints" or key.startswith("header_code_hints.") or key == "code_evidence" or key.startswith("code_evidence."):
+            continue
         if not isinstance(spans, list):
             continue
 
@@ -54,6 +57,9 @@ def _evidence_items_for_prefix(
                 start_val = int(start)
                 end_val = int(end)
             except (TypeError, ValueError):
+                continue
+
+            if _BARE_CPT_TEXT_RE.match(str(text)):
                 continue
 
             billing_items.append(

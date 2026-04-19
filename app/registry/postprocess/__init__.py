@@ -2878,6 +2878,14 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
         if not isinstance(station, str) or not station.strip():
             continue
         station_token = station.strip().upper()
+        existing_quote = getattr(event, "evidence_quote", None)
+        if (
+            isinstance(existing_quote, str)
+            and existing_quote.strip()
+            and _EBUS_STRONG_SAMPLING_RE.search(existing_quote)
+            and not _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(existing_quote)
+        ):
+            continue
         reason: str | None = None
         if _station_has_sampling_negation(search_text, station_token):
             reason = "Found negation for"
@@ -2890,7 +2898,7 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
             reason = "Criteria/measurement without sampling for"
 
         if reason:
-            original_quote = getattr(event, "evidence_quote", None)
+            original_quote = existing_quote
             setattr(event, "action", "inspected_only")
 
             # Evidence must remain verifiable (note-derived). Prefer the line that triggered
@@ -2938,6 +2946,17 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
                 warnings.append(f"AUTO_CORRECTED_EBUS_ZERO_PASS_DETAIL: {station_token}")
             else:
                 warnings.append(f"AUTO_CORRECTED_EBUS_CRITERIA_ONLY: {station_token}")
+
+    if hasattr(linear, "stations_sampled"):
+        sampled_from_events = sort_ebus_stations(
+            {
+                str(getattr(event, "station", "")).strip().upper()
+                for event in node_events
+                if getattr(event, "action", None) in sampling_actions
+                and str(getattr(event, "station", "")).strip()
+            }
+        )
+        setattr(linear, "stations_sampled", sampled_from_events or None)
 
     def _add_nonstation_target(value: str) -> None:
         cleaned = str(value or "").strip()
@@ -3026,7 +3045,12 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
     if isinstance(stations_detail, list) and stations_detail:
         for detail in stations_detail:
             sampled_flag = getattr(detail, "sampled", None)
-            if sampled_flag is False:
+            passes = getattr(detail, "number_of_passes", None)
+            try:
+                passes_int = int(passes) if passes not in (None, "") else 0
+            except Exception:
+                passes_int = 0
+            if sampled_flag is False or (sampled_flag is not True and passes_int <= 0):
                 continue
             station = getattr(detail, "station", None)
             if isinstance(station, str) and station.strip():
@@ -3169,6 +3193,18 @@ def reconcile_ebus_sampling_from_narrative(record: RegistryRecord, full_text: st
             return False
         if re.search(r"(?i)\b(?:biops(?:y|ies)|passes?)\b", local) and re.search(r"(?i)\beach\s+station\b", local):
             return False
+
+        immediate_tail = line[end : min(len(line), end + 18)]
+        if re.match(r"(?i)^\s*(?:mm|cm|ml|mL|cc|gauge|g|fr|french)\b", immediate_tail):
+            return False
+
+        measurement_prefix = line[max(0, start - 48) : start]
+        if re.search(
+            r"(?i)\b(?:short\s+axis|long\s+axis|diameter|size|measuring|measured|approximately|approx|gauge|caliber|width|depth)\b[^.\n]{0,20}$",
+            measurement_prefix,
+        ):
+            return False
+
         if re.search(r"\b\d{1,2}[RL](?:[SI])?\b", local, re.IGNORECASE):
             return True
 
@@ -4024,8 +4060,6 @@ def _extract_tbna_stations_from_specimen_log(full_text: str) -> dict[str, dict[s
         search_line = raw_search_line.rstrip("\r\n")
         stripped = search_line.strip()
         if not stripped:
-            if stations:
-                break
             cursor += len(raw_line)
             continue
         if _EBUS_SPECIMEN_SECTION_STOP_RE.search(search_line) and stations:
@@ -4087,7 +4121,7 @@ def reconcile_ebus_sampling_from_specimen_log(record: RegistryRecord, full_text:
     if not station_to_meta:
         return warnings
 
-    confirmed = sorted(station_to_meta.keys())
+    confirmed = sort_ebus_stations(station_to_meta.keys())
     existing = getattr(linear, "node_events", None)
     node_events = list(existing) if isinstance(existing, list) else []
 
@@ -4216,11 +4250,7 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
         return warnings
 
     existing_spec = getattr(record, "specimens", None)
-    existing_list = (
-        getattr(existing_spec, "specimens_collected", None) if existing_spec is not None else None
-    )
-    if isinstance(existing_list, list) and existing_list:
-        return warnings
+    existing_list = getattr(existing_spec, "specimens_collected", None) if existing_spec is not None else None
 
     header = _SPECIMEN_SECTION_HEADER_RE.search(full_text)
     if not header:
@@ -4237,6 +4267,13 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
     lobe_re = re.compile(r"(?i)\b(RUL|RML|RLL|LUL|LLL|LINGULA)\b")
     segment_re = re.compile(r"(?i)\b([LR]B\d{1,2})\b")
     bal_re = re.compile(r"(?i)\bBAL\b|bronchial\s+alveolar\s+lavage")
+    tbna_re = re.compile(
+        r"(?i)\b(?:ebus[- ]?tbna|tbna|fna|transbronchial\s+needle\s+aspirat)\w*\b"
+    )
+    station_re = re.compile(
+        rf"\b({_EBUS_STATION_TOKEN_PATTERN})\b",
+        re.IGNORECASE,
+    )
 
     def _normalize_location(raw: str) -> str | None:
         token = (raw or "").strip().upper()
@@ -4245,6 +4282,20 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
         if token == "LINGULA":
             return "Lingula"
         return token
+
+    def _normalize_station(raw: str) -> str | None:
+        token = (raw or "").strip()
+        if not token:
+            return None
+        try:
+            from app.ner.entity_types import normalize_station
+        except Exception:  # pragma: no cover
+            normalize_station = None  # type: ignore[assignment]
+
+        if normalize_station is not None:
+            token = normalize_station(token) or token
+        token = validate_station_format(str(token)) or str(token).strip().upper()
+        return str(token).strip().upper() or None
 
     def _map_sent_for_token(raw: str) -> str | None:
         t = (raw or "").strip().lower()
@@ -4276,19 +4327,12 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
     for raw_line in tail.splitlines():
         line = (raw_line or "").strip()
         if not line:
-            if candidates:
-                break
             continue
 
         # Strip common bullet prefixes ("-", "--", "*", "•").
         line = re.sub(r"^[\s\-\*\u2022]+", "", line).strip()
         if not line:
             continue
-        if not bal_re.search(line):
-            continue
-
-        loc_match = lobe_re.search(line) or segment_re.search(line)
-        location = _normalize_location(loc_match.group(1)) if loc_match else None
 
         sent_for: list[str] = []
         paren = re.search(r"\(([^)]{1,200})\)", line)
@@ -4299,12 +4343,27 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
                 if mapped and mapped not in sent_for:
                     sent_for.append(mapped)
 
-        item: dict[str, object] = {"type": "BAL"}
-        if location:
-            item["location"] = location
-        if sent_for:
-            item["sent_for"] = sent_for
-        candidates.append(item)
+        if bal_re.search(line):
+            loc_match = lobe_re.search(line) or segment_re.search(line)
+            location = _normalize_location(loc_match.group(1)) if loc_match else None
+
+            item: dict[str, object] = {"type": "BAL"}
+            if location:
+                item["location"] = location
+            if sent_for:
+                item["sent_for"] = sent_for
+            candidates.append(item)
+            continue
+
+        if tbna_re.search(line):
+            station_match = station_re.search(line)
+            station = _normalize_station(station_match.group(1)) if station_match else None
+            if not station:
+                continue
+            item = {"type": "TBNA", "location": station}
+            if sent_for:
+                item["sent_for"] = sent_for
+            candidates.append(item)
 
     if not candidates:
         return warnings
@@ -4320,15 +4379,25 @@ def enrich_specimens_from_specimen_section(record: RegistryRecord, full_text: st
 
         validated: list[object] = []
         seen: set[tuple[str, str]] = set()
+        if isinstance(existing_list, list):
+            for item in existing_list:
+                item_type = str(getattr(item, "type", "") or "").strip() or "Other"
+                loc = str(getattr(item, "location", "") or "").strip()
+                seen.add((item_type, loc.upper()))
+                validated.append(item)
+
+        added = 0
         for cand in candidates:
+            item_type = str(cand.get("type") or "Other").strip()
             loc = str(cand.get("location") or "").strip()
-            key = ("BAL", loc.upper())
+            key = (item_type, loc.upper())
             if key in seen:
                 continue
             seen.add(key)
             validated.append(item_cls.model_validate(cand))
+            added += 1
 
-        if not validated:
+        if not validated or added == 0:
             return warnings
 
         record.specimens = spec_cls.model_validate({"specimens_collected": validated})
@@ -4733,11 +4802,19 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
                 token = match.group(1) or ""
                 if token.isdigit():
                     prefix = line[: match.start(1)]
+                    measurement_prefix = line[max(0, match.start(1) - 48) : match.start(1)]
                     if re.search(r"(?i)\b(?:site|case|patient)\s+#?\s*$", prefix):
                         continue
                     before_char = line[match.start(1) - 1] if match.start(1) > 0 else ""
                     after_char = line[match.end(1)] if match.end(1) < len(line) else ""
                     if before_char in {"/", "-"} or after_char in {"/", "-"}:
+                        continue
+                    if re.match(r"(?i)^\s*(?:mm|cm|ml|mL|cc|gauge|g|fr|french)\b", line[match.end(1) :]):
+                        continue
+                    if re.search(
+                        r"(?i)\b(?:short\s+axis|long\s+axis|diameter|size|measuring|measured|approximately|approx|gauge|caliber|width|depth)\b[^.\n]{0,20}$",
+                        measurement_prefix,
+                    ):
                         continue
                     lookbehind = line[max(0, match.start(1) - 24) : match.start(1)].lower()
                     lookahead = line[match.end(1) : match.end(1) + 42].lower()
@@ -5986,7 +6063,7 @@ def enrich_outcomes_complication_details(record: RegistryRecord, full_text: str)
 
 _BAL_STANDARD_LINE_RE = re.compile(
     r"(?i)\b(?:bronch(?:ial)?\s+alveolar\s+lavage|broncho[-\s]?alveolar\s+lavage|BAL)\b"
-    r"[^.\n]{0,80}\b(?:was\s+)?performed\b[^.\n]{0,80}\b(?:at|in)\b\s+"
+    r"[^.\n]{0,80}(?:\b(?:was\s+)?performed\b[^.\n]{0,80})?\b(?:at|in)\b\s+"
     r"(?P<loc>[^.\n]{3,220}?)"
     r"(?=\s*(?:,|;|\n|\.|\bwith\b|\b(?:and\s+)?sent\s+for\b|\b\d{1,4}\s*(?:cc|ml)\b))"
 )
@@ -5997,8 +6074,8 @@ _BAL_INSTILLED_RE = re.compile(
 )
 _BAL_RETURN_RE = re.compile(
     r"(?i)\b(?:"
-    r"(?:suction\s*returned(?:\s+with)?|returned\s+with|returned|recovered)\s+(?P<num>\d{1,4})\s*(?:cc|ml)\b"
-    r"|(?P<num2>\d{1,4})\s*(?:cc|ml)\b(?:\s*(?:was|were|is|are))?\s*(?:returned|recovered)\b"
+    r"(?:suction\s*returned(?:\s+with)?|returned\s+with|return(?:ed)?|recovered)\s+(?P<num>\d{1,4})\s*(?:cc|ml)\b"
+    r"|(?P<num2>\d{1,4})\s*(?:cc|ml)\b(?:\s*(?:was|were|is|are))?\s*(?:return(?:ed)?|recovered)\b"
     r")"
 )
 
@@ -6351,5 +6428,5 @@ def enrich_bal_from_procedure_detail(record: RegistryRecord, full_text: str) -> 
     if not changed:
         return warnings
 
-    warnings.append("AUTO_BAL_DETAIL: set BAL location/volumes from explicit 'performed at' statement")
+    warnings.append("AUTO_BAL_DETAIL: set BAL location/volumes from explicit BAL sentence")
     return warnings

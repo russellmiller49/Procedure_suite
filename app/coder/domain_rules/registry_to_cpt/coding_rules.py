@@ -551,7 +551,11 @@ def derive_all_codes_with_meta(
     codes: list[str] = []
     rationales: dict[str, str] = {}
     warnings: list[str] = []
-    header_code_text = _evidence_text_for_prefixes(record, ("code_evidence",))
+    header_code_text = _evidence_text_for_prefixes(record, ("header_code_hints",))
+    if not header_code_text:
+        # Backward-compatibility for older tests/fixtures that still inject header numerals
+        # through code_evidence directly.
+        header_code_text = _evidence_text_for_prefixes(record, ("code_evidence",))
 
     # --- Airway management ---
     if _performed(_proc(record, "intubation")):
@@ -759,7 +763,7 @@ def derive_all_codes_with_meta(
                 # explicit node/station tokens (e.g., "11L", "Station 7").
                 evidence_text = _evidence_text_for_prefixes(
                     record,
-                    ("procedures_performed.linear_ebus", "procedures_performed.linear_ebus.node_events", "code_evidence"),
+                    ("procedures_performed.linear_ebus", "procedures_performed.linear_ebus.node_events"),
                 )
                 has_station_token = bool(
                     re.search(
@@ -861,7 +865,7 @@ def derive_all_codes_with_meta(
                 "Suppressed 31645: therapeutic aspiration is bundled into EBUS-TBNA (31652/31653) per NCCI (no modifier allowed)."
             )
         else:
-            evidence = _evidence_text_for_prefixes(record, ("code_evidence",)) + "\n" + _evidence_text_for_prefixes(
+            evidence = header_code_text + "\n" + _evidence_text_for_prefixes(
                 record,
                 (
                     "procedures_performed.therapeutic_aspiration.is_subsequent",
@@ -1023,7 +1027,7 @@ def derive_all_codes_with_meta(
     ):
         codes.append("31641")
         rationales["31641"] = (
-            "code_evidence lists 31641 and transbronchial_cryobiopsy.performed=true "
+            "header code hint lists 31641 and transbronchial_cryobiopsy.performed=true "
             "(header-explicit fallback)"
         )
         warnings.append(
@@ -1180,7 +1184,7 @@ def derive_all_codes_with_meta(
     balloon_occlusion = _proc(record, "balloon_occlusion")
     balloon_evidence = _evidence_text_for_prefixes(
         record,
-        ("procedures_performed.balloon_occlusion", "code_evidence"),
+        ("procedures_performed.balloon_occlusion",),
     ).lower()
     blvr_evidence = _evidence_text_for_prefixes(
         record,
@@ -1224,13 +1228,17 @@ def derive_all_codes_with_meta(
             warnings.append(
                 "Suppressed 31634: balloon occlusion documented as leak localization integral to valve placement."
             )
+        elif occlusion_source != "Chartis":
+            warnings.append(
+                f"Suppressed 31634: non-Chartis {occlusion_source.lower()} documented; keep clinical signal without billing code."
+            )
         elif not chartis_lobes:
             codes.append("31634")
-            rationales["31634"] = f"{occlusion_source} documented (target lobe missing)"
+            rationales["31634"] = "Chartis documented (target lobe missing)"
             warnings.append(
-                f"{occlusion_source} documented but target lobe missing; verify documentation supports 31634 and consider modifiers/bundling when applicable."
+                "Chartis documented but target lobe missing; verify documentation supports 31634 and consider modifiers/bundling when applicable."
             )
-        elif valve_lobes and occlusion_source == "Chartis":
+        elif valve_lobes:
             overlap = chartis_lobes & valve_lobes
             distinct = chartis_lobes - valve_lobes
             if not distinct:
@@ -1249,11 +1257,7 @@ def derive_all_codes_with_meta(
                     )
         else:
             codes.append("31634")
-            rationales["31634"] = f"{occlusion_source} documented (lobes={sorted(chartis_lobes)})"
-            if valve_lobes and occlusion_source != "Chartis":
-                warnings.append(
-                    f"31634 ({occlusion_source}) performed alongside valve work; ensure documentation supports separate billing and consider modifier -59/-XS when appropriate."
-                )
+            rationales["31634"] = f"Chartis documented (lobes={sorted(chartis_lobes)})"
 
     # Bronchial thermoplasty: 31660 initial + 31661 additional lobes.
     bt = _proc(record, "bronchial_thermoplasty")
@@ -1316,7 +1320,7 @@ def derive_all_codes_with_meta(
     if re.search(r"(?i)\b31502\b", header_code_text or "") and immature_trach_change_supported and not pt_performed:
         if "31502" not in codes:
             codes.append("31502")
-            rationales["31502"] = "code_evidence lists 31502 with immature-tract tracheostomy tube change support"
+            rationales["31502"] = "header code hint lists 31502 with immature-tract tracheostomy tube change support"
         if "31615" in codes:
             codes = [code for code in codes if code != "31615"]
             rationales.pop("31615", None)
@@ -1328,6 +1332,7 @@ def derive_all_codes_with_meta(
         (
             "procedures_performed.tracheal_puncture",
             "procedures_performed.percutaneous_tracheostomy",
+            "header_code_hints",
             "code_evidence",
         ),
     )

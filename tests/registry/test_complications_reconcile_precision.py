@@ -34,3 +34,22 @@ def test_minor_trach_ooze_with_platelet_support_is_not_overcalled_as_grade4() ->
     assert record.complications.bleeding is not None
     assert record.complications.bleeding.bleeding_grade_nashville == 1
     assert "Bleeding - Severe" not in (record.complications.complication_list or [])
+
+
+def test_prophylactic_cold_saline_language_does_not_create_bleeding_complication() -> None:
+    record = RegistryRecord.model_validate({})
+    note_text = (
+        "Transbronchial cryobiopsy was performed in the RLL.\n"
+        "Cold saline was available to control any distal bleeding should bleeding occur.\n"
+        "No active bleeding was seen at the end of the procedure.\n"
+        "COMPLICATIONS: None.\n"
+        "EBL: 5 mL.\n"
+    )
+
+    _warnings = reconcile_complications_from_narrative(record, note_text)
+
+    if record.complications is not None:
+        assert record.complications.any_complication is not True
+        if record.complications.bleeding is not None:
+            assert record.complications.bleeding.occurred is not True
+            assert record.complications.bleeding.bleeding_grade_nashville in (None, 0)

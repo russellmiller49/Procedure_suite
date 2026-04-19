@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coding Evidence"
+  short_description: "Audit-ready CPT evidence rules"
+  default_prompt: "Use $procsuite-coding-evidence to clean up CPT evidence anchoring, separate header hints from proof, and add a structural invariant test."

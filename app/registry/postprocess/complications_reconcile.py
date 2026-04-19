@@ -28,7 +28,7 @@ _PNEUMO_INTERVENTIONS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("Observation", re.compile(r"(?i)\b(?:observ(?:ed|ation)|managed\s+conservatively|no\s+intervention)\b")),
 )
 
-_BLEEDING_WORD_RE = re.compile(r"(?i)\b(?:bleed(?:ing)?|hemorrhag(?:e|ic)|haemorrhag(?:e|ic)|ooz(?:ing)?)\b")
+_BLEEDING_WORD_RE = re.compile(r"(?i)\b(?:bleed(?:ing)?|hemorrhag(?:e|ic)|haemorrhag(?:e|ic)|ooz(?:e|ed|ing)?)\b")
 _NO_BLEEDING_RE = re.compile(r"(?i)\b(?:no|without)\b[^.\n]{0,40}\b(?:bleeding|hemorrhage|haemorrhage|oozing)\b")
 _NASHVILLE_GRADE_RE = re.compile(r"(?i)\bnashville\b[^.\n]{0,40}\bgrade\b\s*(?P<grade>[0-4])\b")
 _COMPLICATIONS_NONE_RE = re.compile(r"(?i)\bcomplications?\s*:?\s*none\b|\bno\s+immediate\s+complications\b")
@@ -37,7 +37,7 @@ _PROCEDURAL_NONE_RE = re.compile(
 )
 _LOW_GRADE_BLEEDING_CUE_RE = re.compile(
     r"(?i)\b(?:minor|minimal|mild|trace|scant|contact|blood-tinged)\b(?:\s+\w+){0,2}\s+(?:bleeding|oozing|hemorrhag(?:e|ic))\b"
-    r"|\bminor\s+oozing\b|\bmild\s+oozing\b|\boo?zing\b|\bminor\s+procedural\s+hemorrhage\b"
+    r"|\bminor\s+ooz(?:e|ing)\b|\bmild\s+ooz(?:e|ing)\b|\boo?z(?:e|ing)\b|\bminor\s+procedural\s+hemorrhage\b"
     r"|\b(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding\b"
 )
 _HIGH_GRADE_BLEEDING_CUE_RE = re.compile(
@@ -63,6 +63,10 @@ _ROUTINE_HEMOSTASIS_INTERVENTION_RE = re.compile(
 _ROUTINE_HEMOSTASIS_RESOLUTION_RE = re.compile(
     r"(?i)\b(?:hemostasis\s+(?:was\s+)?(?:achieved|confirmed)|bleeding\s+(?:resolved|ceased|controlled)|"
     r"no\s+active\s+bleeding|(?:no|without)\s+(?:clinically\s+)?significant\s+bleeding)\b"
+)
+_PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE = re.compile(
+    r"(?i)\b(?:control\s+any\s+(?:distal\s+)?bleeding|in\s+case\s+of\s+bleeding|prevent\s+bleeding|"
+    r"should\s+bleeding\s+occur|if\s+bleeding\s+occurs?|available\s+to\s+control\b[^.\n]{0,80}\bbleeding)\b"
 )
 _ABORT_FOR_BLEEDING_RE = re.compile(
     r"(?i)\b(?:abort(?:ed|ing)|terminate(?:d|ing)|stop(?:ped|ping))\b[^.\n]{0,120}\b(?:bleed(?:ing)?|hemorrhage|haemorrhage)\b"
@@ -112,6 +116,39 @@ def _line_snippet(text: str, start: int, end: int, *, limit: int = 240) -> str:
     return snippet[:limit].rstrip()
 
 
+def _sentence_window(text: str, start: int, end: int) -> str:
+    raw = text or ""
+    if not raw:
+        return ""
+    left_boundary = max(raw.rfind(".", 0, start), raw.rfind("\n", 0, start), raw.rfind(";", 0, start))
+    sentence_start = left_boundary + 1 if left_boundary != -1 else 0
+    right_candidates = [pos for pos in (raw.find(".", end), raw.find("\n", end), raw.find(";", end)) if pos != -1]
+    sentence_end = min(right_candidates) if right_candidates else len(raw)
+    return raw[sentence_start:sentence_end]
+
+
+def _sentence_prefix(text: str, start: int, end: int) -> str:
+    sentence = _sentence_window(text, start, end)
+    if not sentence:
+        return ""
+    left_boundary = max((text or "").rfind(".", 0, start), (text or "").rfind("\n", 0, start), (text or "").rfind(";", 0, start))
+    sentence_start = left_boundary + 1 if left_boundary != -1 else 0
+    local_start = max(0, start - sentence_start)
+    return sentence[:local_start]
+
+
+def _has_low_ebl_context(text: str) -> bool:
+    low_ebl = _low_ebl_milliliters(text)
+    if low_ebl is not None and low_ebl <= 20:
+        return True
+    return bool(
+        re.search(
+            r"(?i)\b(?:minimal|low|trace|scant)\s+(?:ebl|estimated\s+blood\s+loss|blood\s+loss)\b",
+            text or "",
+        )
+    )
+
+
 def _first_match_with_bleeding_context(
     pattern: re.Pattern[str],
     text: str,
@@ -121,10 +158,14 @@ def _first_match_with_bleeding_context(
     for match in pattern.finditer(text or ""):
         start = match.start()
         end = match.end()
-        window = text[max(0, start - context_window) : min(len(text), end + context_window)]
-        if not _BLEEDING_WORD_RE.search(window):
+        sentence = _sentence_window(text, start, end)
+        if not _BLEEDING_WORD_RE.search(sentence):
             continue
-        prefix = text[max(0, start - 80) : start]
+        if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(sentence):
+            continue
+        prefix = _sentence_prefix(text, start, end)
+        if not prefix:
+            prefix = text[max(0, start - 80) : start]
         if _NEGATION_PREFIX_RE.search(prefix):
             continue
         return match
@@ -240,16 +281,23 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
                 pass
 
     complications_none = bool(_COMPLICATIONS_NONE_RE.search(text))
+    low_ebl_context = _has_low_ebl_context(text)
+    explicit_high_grade = _first_unnegated_match(_HIGH_GRADE_BLEEDING_CUE_RE, text)
     if _routine_hemostasis_only(text):
         return None, None
 
     def _suppress_low_grade_intervention(match: re.Match[str]) -> bool:
         if not complications_none:
             return False
+        sentence = _sentence_window(text, match.start(), match.end())
+        if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(sentence):
+            return True
         window = text[max(0, match.start() - 220) : min(len(text), match.end() + 220)]
-        if _first_unnegated_match(_HIGH_GRADE_BLEEDING_CUE_RE, window):
+        if explicit_high_grade and explicit_high_grade.start() >= max(0, match.start() - 220) and explicit_high_grade.end() <= min(len(text), match.end() + 220):
             return False
-        return bool(_LOW_GRADE_BLEEDING_CUE_RE.search(window))
+        if low_ebl_context and explicit_high_grade is None:
+            return True
+        return bool(_LOW_GRADE_BLEEDING_CUE_RE.search(sentence) or _LOW_GRADE_BLEEDING_CUE_RE.search(window))
 
     # Grade 4: escalation (transfusion/embolization/surgery) in bleeding context.
     for pat in (_TRANSFUSION_RE, _EMBOLIZATION_RE, _SURGERY_RE):
@@ -303,6 +351,9 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
             suction_match = None
         else:
             return 1, suction_match
+
+    if complications_none and low_ebl_context and explicit_high_grade is None:
+        return None, None
 
     # Grade 0: explicit no-bleeding statement (only if no higher-grade evidence).
     no_bleed_match = _NO_BLEEDING_RE.search(text)
