@@ -35,7 +35,7 @@ def _fixture(note_id: str) -> str:
     return (repo_root / "regression_pack" / "fixtures" / f"note_{note_id}.txt").read_text(encoding="utf-8")
 
 
-def test_nonstation_ebus_target_captured_and_31652_derives() -> None:
+def test_nonstation_ebus_target_captured_without_deriving_nodal_cpt() -> None:
     note_text = _fixture("138")
     record = RegistryRecord.model_validate({"procedures_performed": {"linear_ebus": {"performed": True}}})
 
@@ -52,8 +52,10 @@ def test_nonstation_ebus_target_captured_and_31652_derives() -> None:
     assert "pulmonary artery mass" in str(linear.node_events[0].target_text or "").lower()
     assert any("EBUS_NONSTATION_TARGET_CAPTURED" in w for w in warnings)
 
-    codes, _rationales, _code_warnings = derive_all_codes_with_meta(record)
-    assert "31652" in codes
+    codes, _rationales, code_warnings = derive_all_codes_with_meta(record)
+    assert "31652" not in codes
+    assert "31653" not in codes
+    assert any("non-station EBUS targets only" in str(w) for w in code_warnings)
 
 
 def test_rose_sentence_capture_and_multi_station_mapping() -> None:

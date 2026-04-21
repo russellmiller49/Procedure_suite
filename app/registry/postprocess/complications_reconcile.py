@@ -4,6 +4,7 @@ import re
 from typing import Any
 
 from app.common.spans import Span
+from app.registry.quality_signals import make_quality_signal_warning
 from app.registry.schema import RegistryRecord
 
 
@@ -49,6 +50,7 @@ _SUCTION_RE = re.compile(r"(?i)\bsuction(?:ed|ing)?(?:\s+only|\s+alone)?\b")
 _WEDGE_RE = re.compile(r"(?i)\bwedge(?:d|ing)?\b|\bbronchoscope\s+wedged\b")
 _COLD_SALINE_RE = re.compile(r"(?i)\b(?:cold|iced)\s+saline\b|\bice\s+saline\b")
 _EPI_RE = re.compile(r"(?i)\b(?:endobronchial\s+)?epi(?:nephrine)?\b")
+_TXA_RE = re.compile(r"(?i)\b(?:tranexamic\s+acid|txa)\b")
 _BALLOON_RE = re.compile(r"(?i)\b(?:balloon\s+tamponade|tamponade|fogarty)\b")
 _BLOCKER_RE = re.compile(r"(?i)\b(?:endobronchial\s+blocker|arndt|blocker)\b")
 _TRANSFUSION_RE = re.compile(r"(?i)\b(?:transfus(?:ion|ed)|prbc|packed\s+red\s+blood)\b")
@@ -58,7 +60,7 @@ _DIRECT_PRESSURE_RE = re.compile(r"(?i)\b(?:direct\s+pressure|compression)\b")
 _PROTAMINE_RE = re.compile(r"(?i)\bprotamine\b")
 _ROUTINE_HEMOSTASIS_INTERVENTION_RE = re.compile(
     r"(?i)\b(?:suction(?:ed|ing)?|wedge(?:d|ing)?|bronchoscope\s+wedged|(?:cold|iced)\s+saline|"
-    r"ice\s+saline|(?:endobronchial\s+)?epi(?:nephrine)?|direct\s+pressure|compression)\b"
+    r"ice\s+saline|(?:endobronchial\s+)?epi(?:nephrine)?|(?:tranexamic\s+acid|txa)|direct\s+pressure|compression)\b"
 )
 _ROUTINE_HEMOSTASIS_RESOLUTION_RE = re.compile(
     r"(?i)\b(?:hemostasis\s+(?:was\s+)?(?:achieved|confirmed)|bleeding\s+(?:resolved|ceased|controlled)|"
@@ -85,6 +87,24 @@ _ARRHYTHMIA_RE = re.compile(
     r"(?i)\b(?:arrhythmia|atrial\s+fibrillation|a\.?\s*fib|afib|a\s+fib|rvr|tachyarrhythmia)\b"
 )
 _CARDIOVERSION_RE = re.compile(r"(?i)\bcardioversion\b")
+_AIRWAY_INJURY_RE = re.compile(
+    r"(?i)\b(?:trachea|airway|posterior\s+membrane|bronch(?:us|ial))\b[^.\n]{0,140}\b(?:tear|lacerat(?:ion|ed)?|injur(?:y|ed)|defect|perforat(?:ion|ed)?)\b"
+    r"|\b(?:tear|lacerat(?:ion|ed)?|injur(?:y|ed)|defect|perforat(?:ion|ed)?)\b[^.\n]{0,140}\b(?:trachea|airway|posterior\s+membrane|bronch(?:us|ial))\b"
+)
+_ASPIRATION_RE = re.compile(
+    r"(?i)\b(?:aspirat(?:ion|ed)|aspiration)\b[^.\n]{0,140}\b(?:emesis|vomit|gastric|contents?)\b"
+    r"|\b(?:emesis|vomit|gastric\s+contents?)\b[^.\n]{0,140}\baspirat(?:ion|ed)?\b"
+)
+_DENTAL_INJURY_RE = re.compile(
+    r"(?i)\b(?:tooth|teeth|dental)\b[^.\n]{0,140}\b(?:loss|lost|injur(?:y|ed)|fractur(?:e|ed)|avuls(?:ion|ed)|dislodg(?:ed|ement))\b"
+    r"|\b(?:loss|lost|injur(?:y|ed)|fractur(?:e|ed)|avuls(?:ion|ed)|dislodg(?:ed|ement))\b[^.\n]{0,140}\b(?:tooth|teeth|dental)\b"
+)
+_CARDIAC_ARREST_RE = re.compile(
+    r"(?i)\b(?:cardiac\s+arrest|pulseless\s+electrical\s+activity|pea|asystole|coded|arrested)\b"
+)
+_DEATH_RE = re.compile(
+    r"(?i)\b(?:pronounced\s+dead|declared\s+dead|expired|death|died)\b"
+)
 
 
 def _maybe_unescape_newlines(text: str) -> str:
@@ -238,9 +258,11 @@ def _minor_bleeding_with_supportive_transfusion(text: str) -> bool:
 def _routine_hemostasis_only(text: str) -> bool:
     if not text or not text.strip():
         return False
+    complications_none = bool(_COMPLICATIONS_NONE_RE.search(text) or _PROCEDURAL_NONE_RE.search(text))
     low_grade = bool(
         _LOW_GRADE_BLEEDING_CUE_RE.search(text)
         or re.search(r"(?i)\b(?:small|trace|minimal)\s+amount\s+of\s+(?:bleeding|oozing)\b", text)
+        or complications_none
     )
     if not low_grade:
         return False
@@ -324,7 +346,7 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
                 return 3, match
 
     # Grade 2: wedge/cold saline/topical vasoconstrictor in bleeding context.
-    for pat in (_WEDGE_RE, _COLD_SALINE_RE, _EPI_RE):
+    for pat in (_WEDGE_RE, _COLD_SALINE_RE, _EPI_RE, _TXA_RE):
         match = _first_match_with_bleeding_context(pat, text)
         if match:
             if _suppress_low_grade_intervention(match):
@@ -376,6 +398,7 @@ def reconcile_complications_from_narrative(record: RegistryRecord, full_text: st
     text = _maybe_unescape_newlines(full_text or "")
     if not text.strip():
         return warnings
+    routine_hemostasis_only = _routine_hemostasis_only(text)
 
     # Match in narrative text. Use simple negation guards to avoid "no pneumothorax"/"no hematoma".
     pneumothorax_match = _PNEUMOTHORAX_RE.search(text)
@@ -410,8 +433,36 @@ def reconcile_complications_from_narrative(record: RegistryRecord, full_text: st
         if _NEGATION_PREFIX_RE.search(prefix) or re.search(r"(?i)\b(?:history|prior|previous|known)\b", prefix):
             arrhythmia_match = None
 
-    if not pneumothorax_match and not hematoma_match and arrhythmia_match is None:
+    airway_injury_match = _first_unnegated_match(_AIRWAY_INJURY_RE, text)
+    aspiration_match = _first_unnegated_match(_ASPIRATION_RE, text)
+    dental_injury_match = _first_unnegated_match(_DENTAL_INJURY_RE, text)
+    cardiac_arrest_match = _first_unnegated_match(_CARDIAC_ARREST_RE, text)
+    death_match = _first_unnegated_match(_DEATH_RE, text)
+
+    if (
+        not pneumothorax_match
+        and not hematoma_match
+        and arrhythmia_match is None
+        and airway_injury_match is None
+        and aspiration_match is None
+        and dental_injury_match is None
+        and cardiac_arrest_match is None
+        and death_match is None
+    ):
         if bleeding_grade is None:
+            if routine_hemostasis_only:
+                warnings.append(
+                    "ROUTINE_HEMOSTASIS_SUPPRESSED: routine topical hemostasis/no-complication language did not create a bleeding complication."
+                )
+                warnings.append(
+                    make_quality_signal_warning(
+                        "routine_hemostasis_bleeding_suppressed",
+                        field="complications.bleeding",
+                        action="suppressed",
+                        detail="Routine TXA/epinephrine/cold saline/wedging hemostasis with no-complication language was not promoted to a bleeding complication.",
+                        source="complications_reconcile",
+                    )
+                )
             return warnings
 
     record_data: dict[str, Any] = record.model_dump()
@@ -481,6 +532,33 @@ def reconcile_complications_from_narrative(record: RegistryRecord, full_text: st
             return
         spans.append(Span(text=snippet, start=match.start(), end=match.end(), confidence=0.9))
         changed = True
+
+    def _interventions_from_window(start: int, end: int) -> list[str]:
+        window = text[max(0, start - 260) : min(len(text), end + 260)]
+        interventions: list[str] = []
+        if re.search(
+            r"(?i)\bleft\b[^.\n]{0,80}\bchest\s+tube\b[^.\n]{0,80}\bright\b[^.\n]{0,80}\bchest\s+tube\b"
+            r"|\bright\b[^.\n]{0,80}\bchest\s+tube\b[^.\n]{0,80}\bleft\b[^.\n]{0,80}\bchest\s+tube\b"
+            r"|\bbilateral\s+chest\s+tubes?\b",
+            window,
+        ):
+            interventions.append("Bilateral chest tubes")
+        elif re.search(r"(?i)\b(?:chest\s+tube|pigtail)\b", window):
+            interventions.append("Chest tube")
+        if _ROUTINE_HEMOSTASIS_INTERVENTION_RE.search(window) or _BLEEDING_CONTROL_RE.search(window):
+            interventions.append("Hemostatic measures")
+        return interventions
+
+    def _append_other_detail(match: re.Match[str], label: str) -> None:
+        nonlocal changed
+        snippet = _line_snippet(text, match.start(), match.end()) or label
+        details = str(complications.get("other_complication_details") or "").strip()
+        if not details:
+            complications["other_complication_details"] = snippet
+            changed = True
+        elif snippet and snippet.lower() not in details.lower():
+            complications["other_complication_details"] = (details + "; " + snippet).strip()
+            changed = True
 
     if bleeding_grade is not None and bleeding_match is not None:
         bleeding = complications.get("bleeding")
@@ -577,6 +655,97 @@ def reconcile_complications_from_narrative(record: RegistryRecord, full_text: st
         if interventions:
             _append_evidence("complications.events", arrhythmia_match)
         warnings.append("COMPLICATION_OVERRIDE: arrhythmia mentioned in narrative; overriding summary 'None'.")
+
+    if airway_injury_match:
+        _ensure_any_complication()
+        _add_comp_list("Other")
+        snippet = _line_snippet(text, airway_injury_match.start(), airway_injury_match.end())
+        _append_other_detail(airway_injury_match, "Airway injury")
+        _add_event("Airway injury", snippet, _interventions_from_window(airway_injury_match.start(), airway_injury_match.end()) or None)
+        _append_evidence("complications.other_complication_details", airway_injury_match)
+        warnings.append("COMPLICATION_OVERRIDE: airway injury mentioned in narrative; overriding summary 'None'.")
+        warnings.append(
+            make_quality_signal_warning(
+                "airway_injury_promoted_from_narrative",
+                field="complications.other_complication_details",
+                action="promoted",
+                detail="Narrative airway tear/injury language was promoted to a structured complication.",
+                source="complications_reconcile",
+            )
+        )
+
+    if aspiration_match:
+        _ensure_any_complication()
+        _add_comp_list("Aspiration")
+        snippet = _line_snippet(text, aspiration_match.start(), aspiration_match.end())
+        _add_event("Aspiration", snippet, _interventions_from_window(aspiration_match.start(), aspiration_match.end()) or None)
+        _append_evidence("complications.complication_list", aspiration_match)
+        warnings.append("COMPLICATION_OVERRIDE: aspiration mentioned in narrative; overriding summary 'None'.")
+        warnings.append(
+            make_quality_signal_warning(
+                "aspiration_promoted_from_narrative",
+                field="complications.complication_list",
+                action="promoted",
+                detail="Narrative aspiration language was promoted to a structured complication.",
+                source="complications_reconcile",
+            )
+        )
+
+    if dental_injury_match:
+        _ensure_any_complication()
+        _add_comp_list("Other")
+        snippet = _line_snippet(text, dental_injury_match.start(), dental_injury_match.end())
+        _append_other_detail(dental_injury_match, "Dental injury")
+        _add_event("Dental injury", snippet)
+        _append_evidence("complications.other_complication_details", dental_injury_match)
+        warnings.append("COMPLICATION_OVERRIDE: dental injury mentioned in narrative; overriding summary 'None'.")
+        warnings.append(
+            make_quality_signal_warning(
+                "dental_injury_promoted_from_narrative",
+                field="complications.other_complication_details",
+                action="promoted",
+                detail="Narrative tooth-loss/dental-injury language was promoted to a structured complication.",
+                source="complications_reconcile",
+            )
+        )
+
+    if cardiac_arrest_match:
+        _ensure_any_complication()
+        _add_comp_list("Cardiac arrest")
+        snippet = _line_snippet(text, cardiac_arrest_match.start(), cardiac_arrest_match.end())
+        _add_event(
+            "Cardiac arrest",
+            snippet,
+            _interventions_from_window(cardiac_arrest_match.start(), cardiac_arrest_match.end()) or None,
+        )
+        _append_evidence("complications.complication_list", cardiac_arrest_match)
+        warnings.append("COMPLICATION_OVERRIDE: cardiac arrest mentioned in narrative; overriding summary 'None'.")
+        warnings.append(
+            make_quality_signal_warning(
+                "cardiac_arrest_promoted_from_narrative",
+                field="complications.complication_list",
+                action="promoted",
+                detail="Narrative cardiac-arrest/PEA/asystole language was promoted to a structured complication.",
+                source="complications_reconcile",
+            )
+        )
+
+    if death_match:
+        _ensure_any_complication()
+        _add_comp_list("Death")
+        snippet = _line_snippet(text, death_match.start(), death_match.end())
+        _add_event("Death", snippet, _interventions_from_window(death_match.start(), death_match.end()) or None)
+        _append_evidence("complications.complication_list", death_match)
+        warnings.append("COMPLICATION_OVERRIDE: death mentioned in narrative; overriding summary 'None'.")
+        warnings.append(
+            make_quality_signal_warning(
+                "death_promoted_from_narrative",
+                field="complications.complication_list",
+                action="promoted",
+                detail="Narrative death/expired/declared-dead language was promoted to a structured complication.",
+                source="complications_reconcile",
+            )
+        )
 
     if not changed:
         return warnings

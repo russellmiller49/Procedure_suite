@@ -128,3 +128,82 @@ def test_mapper_keeps_actionable_stent_placement_and_derives_31636() -> None:
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
     assert "31636" in codes
+
+
+def test_mapper_preserves_node_event_passes_and_rose_result() -> None:
+    text = "Station 7 sampled with 4 passes; ROSE malignant."
+    station_start = text.index("Station 7")
+    action_start = text.index("sampled")
+    rose_start = text.index("malignant")
+    station = NEREntity(
+        text="Station 7",
+        label="ANAT_LN_STATION",
+        start_char=station_start,
+        end_char=station_start + len("Station 7"),
+        confidence=0.9,
+    )
+    action = NEREntity(
+        text="sampled",
+        label="PROC_ACTION",
+        start_char=action_start,
+        end_char=action_start + len("sampled"),
+        confidence=0.9,
+    )
+    rose = NEREntity(
+        text="malignant",
+        label="OBS_ROSE",
+        start_char=rose_start,
+        end_char=rose_start + len("malignant"),
+        confidence=0.9,
+    )
+
+    result = NERToRegistryMapper().map_entities(_result_for_entities(text, [station, action, rose]))
+    linear = result.record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+
+    assert linear is not None
+    assert linear.node_events is not None
+    event = linear.node_events[0]
+    assert event.station == "7"
+    assert event.passes == 4
+    assert event.pass_count == 4
+    assert event.rose_result == "malignant"
+
+
+def test_mapper_preserves_nonstation_ebus_target_text() -> None:
+    text = "EBUS-TBNA of pulmonary artery mass with 3 passes; ROSE suspicious."
+    action_start = text.index("EBUS-TBNA")
+    target_start = text.index("pulmonary artery mass")
+    rose_start = text.index("suspicious")
+    action = NEREntity(
+        text="EBUS-TBNA",
+        label="PROC_ACTION",
+        start_char=action_start,
+        end_char=action_start + len("EBUS-TBNA"),
+        confidence=0.9,
+    )
+    target = NEREntity(
+        text="pulmonary artery mass",
+        label="ANAT_AIRWAY",
+        start_char=target_start,
+        end_char=target_start + len("pulmonary artery mass"),
+        confidence=0.9,
+    )
+    rose = NEREntity(
+        text="suspicious",
+        label="OBS_ROSE",
+        start_char=rose_start,
+        end_char=rose_start + len("suspicious"),
+        confidence=0.9,
+    )
+
+    result = NERToRegistryMapper().map_entities(_result_for_entities(text, [action, target, rose]))
+    linear = result.record.procedures_performed.linear_ebus  # type: ignore[union-attr]
+
+    assert linear is not None
+    assert isinstance(linear.targets_sampled, list) and linear.targets_sampled == ["pulmonary artery mass"]
+    assert linear.node_events is not None
+    event = linear.node_events[0]
+    assert event.station is None
+    assert event.target_text == "pulmonary artery mass"
+    assert event.passes == 3
+    assert event.rose_result == "suspicious"

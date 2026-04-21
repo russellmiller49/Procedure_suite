@@ -24,7 +24,10 @@ PR_PYTEST_TARGETS = [
     "tests/registry/test_header_evidence_integrity.py",
     "tests/common/test_path_redaction.py",
     "tests/common/test_quality_gate_reports.py",
+    "tests/reporting/test_reporter_clinical_fidelity.py",
+    "tests/quality/test_reporter_seed_dual_path_matrix.py",
     "tests/scripts/test_eval_golden.py",
+    "tests/scripts/test_reporter_seed_eval_tools.py",
     "tests/scripts/test_run_quality_gates.py",
 ]
 

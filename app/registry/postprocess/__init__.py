@@ -10,6 +10,7 @@ import re
 from datetime import datetime
 import logging
 
+from app.registry.quality_signals import make_quality_signal_warning
 from app.registry.schema import RegistryRecord
 
 logger = logging.getLogger(__name__)
@@ -169,6 +170,7 @@ __all__ = [
     "enrich_linear_ebus_needle_gauge",
     "enrich_eus_b_sampling_details",
     "enrich_medical_thoracoscopy_biopsies_taken",
+    "suppress_conditional_pleural_and_stent_procedures",
     "enrich_bal_from_procedure_detail",
 ]
 
@@ -2596,12 +2598,14 @@ POSTPROCESSORS: Dict[str, Callable[[Any], Any]] = {
 
 
 _EBUS_SAMPLING_INDICATORS_RE = re.compile(
-    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|sampl(?:e|ed|es)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b"
+    r"|\b\d+\s*(?:of\s+)?passes?\b",
     re.IGNORECASE,
 )
 
 _EBUS_STRONG_SAMPLING_RE = re.compile(
-    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b",
+    r"\b(?:needle(?:s)?|tbna|fna|biops(?:y|ied|ies)|pass(?:es)?|aspirat(?:e|ed|ion)|core|forceps)\b"
+    r"|\b\d+\s*(?:of\s+)?passes?\b",
     re.IGNORECASE,
 )
 
@@ -2884,6 +2888,7 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
             and existing_quote.strip()
             and _EBUS_STRONG_SAMPLING_RE.search(existing_quote)
             and not _EBUS_EXPLICIT_NEGATION_PHRASES_RE.search(existing_quote)
+            and _station_has_strong_sampling_evidence(search_text, station_token)
         ):
             continue
         reason: str | None = None
@@ -3820,6 +3825,10 @@ def cull_hollow_ebus_claims(record: RegistryRecord, full_text: str) -> list[str]
 
     stations_sampled = getattr(linear, "stations_sampled", None)
     if isinstance(stations_sampled, list) and stations_sampled:
+        return warnings
+
+    targets_sampled = getattr(linear, "targets_sampled", None)
+    if isinstance(targets_sampled, list) and targets_sampled:
         return warnings
 
     text = full_text or ""
@@ -5681,9 +5690,130 @@ def enrich_eus_b_sampling_details(record: RegistryRecord, full_text: str) -> lis
 _PLEURAL_THORACOSCOPY_BIOPSY_RE = re.compile(
     r"\bbiops(?:y|ies)\b[^.\n]{0,120}\bpleur(?:a|al|e)?\b"
     r"|\bpleur(?:a|al|e)?\b[^.\n]{0,120}\bbiops(?:y|ies)\b"
+    r"|\b(?:parietal|diaphragmatic|visceral|chest\s+wall)\s+pleur(?:a|al|e)?\b[^.\n]{0,140}\b(?:forceps\s+)?biops(?:y|ies)\b"
+    r"|\b(?:forceps\s+)?biops(?:y|ies)\b[^.\n]{0,140}\b(?:parietal|diaphragmatic|visceral|chest\s+wall)\s+pleur(?:a|al|e)?\b"
     r"|\b(?:one|two|three|four|five|six|seven|eight|nine|ten|\d{1,2})\s+biops(?:y|ies)\s+specimens?\b",
     re.IGNORECASE,
 )
+
+
+def suppress_conditional_pleural_and_stent_procedures(record: RegistryRecord, full_text: str) -> list[str]:
+    """Suppress conditional/planned pleural and stent procedures that were not completed."""
+    warnings: list[str] = []
+    text = full_text or ""
+    if not text.strip():
+        return warnings
+
+    procedures = getattr(record, "procedures_performed", None)
+    pleural = getattr(record, "pleural_procedures", None)
+
+    def _clear_fields(obj: Any, field_names: tuple[str, ...]) -> None:
+        for field_name in field_names:
+            if hasattr(obj, field_name):
+                setattr(obj, field_name, None)
+
+    chest_tube = getattr(pleural, "chest_tube", None) if pleural is not None else None
+    chest_tube_conditional = bool(
+        re.search(
+            r"(?i)\b(?:observe|observation|conservative(?:ly)?)\b[^.\n]{0,120}\b(?:without|no)\b[^.\n]{0,40}\bchest\s+tube\b"
+            r"|\b(?:no|not)\b[^.\n]{0,60}\bchest\s+tube\b[^.\n]{0,60}\b(?:placed|needed|required|inserted)\b"
+            r"|\b(?:consider(?:ed|ing)?|would|plan(?:ned)?)\b[^.\n]{0,80}\b(?:place|placing|placement|insert(?:ing|ion)?)\b[^.\n]{0,80}\bchest\s+tube\b"
+            r"|\bchest\s+tube\b[^.\n]{0,80}\b(?:if|unless)\b",
+            text,
+        )
+    )
+    if chest_tube is not None and getattr(chest_tube, "performed", None) is True and chest_tube_conditional:
+        setattr(chest_tube, "performed", False)
+        _clear_fields(chest_tube, ("action", "side", "indication", "tube_type", "tube_size_fr", "guidance"))
+        warnings.append("AUTO_SUPPRESSED: conditional/planned chest tube language did not set performed=true")
+        warnings.append(
+            make_quality_signal_warning(
+                "conditional_chest_tube_suppressed",
+                field="pleural_procedures.chest_tube",
+                action="suppressed",
+                detail="Conditional/observation-only chest tube language was suppressed as not performed.",
+                source="postprocess",
+            )
+        )
+
+    thoracentesis = getattr(pleural, "thoracentesis", None) if pleural is not None else None
+    thoracentesis_aborted = bool(
+        re.search(
+            r"(?i)\b(?:thoracentesis|pleural\s+tap)\b[^.\n]{0,220}"
+            r"\b(?:aborted|not\s+performed|unsuccessful|unable\s+to|could\s+not|no\s+fluid\s+return|dry\s+tap|no\s+safe\s+(?:window|access|pocket)|unsafe)\b"
+            r"|\b(?:aborted|not\s+performed|unsuccessful|unable\s+to|could\s+not|no\s+fluid\s+return|dry\s+tap|no\s+safe\s+(?:window|access|pocket)|unsafe)\b"
+            r"[^.\n]{0,220}\b(?:thoracentesis|pleural\s+tap)\b",
+            text,
+        )
+    )
+    if thoracentesis is not None and getattr(thoracentesis, "performed", None) is True and thoracentesis_aborted:
+        setattr(thoracentesis, "performed", False)
+        _clear_fields(
+            thoracentesis,
+            (
+                "side",
+                "guidance",
+                "indication",
+                "fluid_appearance",
+                "volume_removed_ml",
+                "manometry_performed",
+                "opening_pressure_cmh2o",
+                "closing_pressure_cmh2o",
+            ),
+        )
+        warnings.append("AUTO_SUPPRESSED: aborted/no-return thoracentesis language did not set performed=true")
+        warnings.append(
+            make_quality_signal_warning(
+                "aborted_thoracentesis_suppressed",
+                field="pleural_procedures.thoracentesis",
+                action="suppressed",
+                detail="Aborted or no-return thoracentesis language was suppressed as not performed.",
+                source="postprocess",
+            )
+        )
+
+    airway_stent = getattr(procedures, "airway_stent", None) if procedures is not None else None
+    stent_planned_only = bool(
+        re.search(
+            r"(?i)\b(?:consider(?:ed|ing)?|candidate\s+for|plan(?:ned)?|possible|would|if\s+needed)\b"
+            r"[^.\n]{0,120}\b(?:stent|y-?\s*stent|tracheobronchial\s+stent|airway\s+stent)\b",
+            text,
+        )
+        and not re.search(
+            r"(?i)\b(?:deploy(?:ed|ment)?|insert(?:ed|ion)?|place(?:d|ment)?|implant(?:ed|ation)?)\b[^.\n]{0,120}\b(?:stent|y-?\s*stent|tracheobronchial\s+stent)\b"
+            r"|\b(?:stent|y-?\s*stent|tracheobronchial\s+stent)\b[^.\n]{0,120}\b(?:deploy(?:ed|ment)?|insert(?:ed|ion)?|place(?:d|ment)?|implant(?:ed|ation)?)\b",
+            text,
+        )
+    )
+    if airway_stent is not None and getattr(airway_stent, "performed", None) is True and stent_planned_only:
+        setattr(airway_stent, "performed", False)
+        _clear_fields(
+            airway_stent,
+            (
+                "action",
+                "airway_stent_removal",
+                "stent_type",
+                "stent_brand",
+                "location",
+                "device_size",
+                "diameter_mm",
+                "length_mm",
+                "deployment_successful",
+                "action_type",
+            ),
+        )
+        warnings.append("AUTO_SUPPRESSED: planned-only airway stent language did not set performed=true")
+        warnings.append(
+            make_quality_signal_warning(
+                "planned_only_airway_stent_suppressed",
+                field="procedures_performed.airway_stent",
+                action="suppressed",
+                detail="Planned/considered airway stent language was suppressed as not performed.",
+                source="postprocess",
+            )
+        )
+
+    return warnings
 
 
 def enrich_medical_thoracoscopy_biopsies_taken(record: RegistryRecord, full_text: str) -> list[str]:
@@ -5823,6 +5953,12 @@ def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> l
         for fail_match in _OUTCOMES_FAIL_RE.finditer(text):
             s, e = _sentence_span(fail_match.start(), fail_match.end())
             snippet = text[s:e].strip()
+            local_substep_limitation = bool(
+                re.search(
+                    r"(?i)\b(?:attempt(?:ed|s)?|trial|reposition|position|sample|sampling|pass(?:es)?|access|navigation|probe|radial|stent|target|fiducial|marker|locali[sz]ation|mapping)\b",
+                    snippet or "",
+                )
+            )
             traverse_baseline = bool(
                 re.search(r"(?i)\b(?:could\s+not|cannot|unable\s+to)\s+(?:traverse|bypass|pass)\b", snippet or "")
             )
@@ -5871,6 +6007,11 @@ def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> l
             # If the note documents a failed sub-step but the overall procedure
             # is completed, classify as partial success instead of full failure.
             if procedure_completed_flag or completion_language_present or strong_progressed_after:
+                status = "Partial success"
+            elif local_substep_limitation and not re.search(
+                r"(?i)\b(?:procedure\s+failed|unable\s+to\s+complete|could\s+not\s+complete)\b",
+                snippet or "",
+            ):
                 status = "Partial success"
             break
 

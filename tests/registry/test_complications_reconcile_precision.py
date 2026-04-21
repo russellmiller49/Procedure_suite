@@ -53,3 +53,57 @@ def test_prophylactic_cold_saline_language_does_not_create_bleeding_complication
         if record.complications.bleeding is not None:
             assert record.complications.bleeding.occurred is not True
             assert record.complications.bleeding.bleeding_grade_nashville in (None, 0)
+
+
+def test_txa_hemostasis_with_no_complications_does_not_create_bleeding_event() -> None:
+    record = RegistryRecord.model_validate({})
+    note_text = (
+        "Minor mucosal oozing was treated with topical TXA and epinephrine with hemostasis achieved. "
+        "No active bleeding remained. Complications: none procedural."
+    )
+
+    warnings = reconcile_complications_from_narrative(record, note_text)
+
+    assert record.complications is None or record.complications.bleeding is None
+    assert any("ROUTINE_HEMOSTASIS_SUPPRESSED" in str(w) for w in warnings)
+
+
+def test_narrative_promotes_airway_injury_and_dental_injury() -> None:
+    record = RegistryRecord.model_validate({})
+    note_text = (
+        "During rigid intubation a full thickness posterior membrane tear was identified in the trachea. "
+        "Two teeth were lost during intubation.\n"
+    )
+
+    warnings = reconcile_complications_from_narrative(record, note_text)
+
+    assert record.complications is not None
+    assert record.complications.any_complication is True
+    assert "Other" in (record.complications.complication_list or [])
+    assert "tear" in str(record.complications.other_complication_details or "").lower()
+    event_types = {str(event.type) for event in (record.complications.events or [])}
+    assert "Airway injury" in event_types
+    assert "Dental injury" in event_types
+    assert any("QUALITY_SIGNAL:" in str(w) for w in warnings)
+
+
+def test_narrative_promotes_aspiration_arrest_death_with_rescue_interventions() -> None:
+    record = RegistryRecord.model_validate({})
+    note_text = (
+        "The patient aspirated emesis during the procedure and then developed PEA arrest. "
+        "A left chest tube was placed followed by a right chest tube. "
+        "Despite resuscitation efforts the patient was declared dead.\n"
+    )
+
+    warnings = reconcile_complications_from_narrative(record, note_text)
+
+    assert record.complications is not None
+    complications = set(record.complications.complication_list or [])
+    assert {"Aspiration", "Cardiac arrest", "Death"}.issubset(complications)
+    events = list(record.complications.events or [])
+    by_type = {str(event.type): event for event in events}
+    assert "Aspiration" in by_type
+    assert "Cardiac arrest" in by_type
+    assert "Death" in by_type
+    assert "Bilateral chest tubes" in (by_type["Cardiac arrest"].interventions or [])
+    assert any("QUALITY_SIGNAL:" in str(w) for w in warnings)

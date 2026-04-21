@@ -336,10 +336,10 @@ class TestTherapeuticAspirationExtractor:
 
 
 class TestRadialEBUSExtractor:
-    def test_extract_radial_ebus_phrase(self):
+    def test_extract_radial_ebus_phrase_requires_peripheral_target_context(self):
         text = "Radial EBUS was utilized to identify vasculature and airways."
         result = extract_radial_ebus(text)
-        assert result == {"radial_ebus": {"performed": True}}
+        assert result == {}
 
 
 class TestCryotherapyExtractor:

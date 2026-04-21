@@ -21,7 +21,10 @@ def test_run_quality_gates_pr_targets_cover_required_suites() -> None:
 
     assert "tests/registry/test_regression_pack.py" in mod.PR_PYTEST_TARGETS
     assert "tests/registry/test_header_evidence_integrity.py" in mod.PR_PYTEST_TARGETS
+    assert "tests/reporting/test_reporter_clinical_fidelity.py" in mod.PR_PYTEST_TARGETS
+    assert "tests/quality/test_reporter_seed_dual_path_matrix.py" in mod.PR_PYTEST_TARGETS
     assert "tests/scripts/test_eval_golden.py" in mod.PR_PYTEST_TARGETS
+    assert "tests/scripts/test_reporter_seed_eval_tools.py" in mod.PR_PYTEST_TARGETS
     assert mod.PR_EXTRACTION_INPUT.name == "unified_quality_corpus.json"
     assert mod.PR_EXTRACTION_BASELINE.name == "unified_quality_corpus_extraction_baseline.json"
 

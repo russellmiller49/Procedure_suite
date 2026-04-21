@@ -8,6 +8,7 @@ from typing import Any
 from config.settings import CoderSettings
 from app.coder.adapters.persistence.csv_kb_adapter import JsonKnowledgeBaseAdapter
 from app.domain.knowledge_base.repository import KnowledgeBaseRepository
+from app.registry.quality_signals import parse_quality_signal_warning
 from app.registry.schema import RegistryRecord
 
 
@@ -368,6 +369,7 @@ def build_coding_support_payload(
     code_units: dict[str, int] | None = None,
     code_rationales: dict[str, str] | None = None,
     derivation_warnings: list[str] | None = None,
+    quality_signal_warnings: list[str] | None = None,
     kb_repo: KnowledgeBaseRepository | None = None,
 ) -> dict[str, Any]:
     """Build the optional `coding_support` payload for the IP registry schema."""
@@ -452,9 +454,18 @@ def build_coding_support_payload(
             }
         )
 
+    quality_signals: list[dict[str, Any]] = []
+    for warning in quality_signal_warnings or []:
+        payload = parse_quality_signal_warning(warning)
+        if payload is None:
+            continue
+        entry = dict(payload)
+        entry.setdefault("source_warning", warning)
+        quality_signals.append(entry)
+
     generated_at = datetime.now(timezone.utc).isoformat()
 
-    return {
+    payload: dict[str, Any] = {
         "version": "coding_support.v1",
         "generated_at": generated_at,
         "generator": "registry_to_cpt",
@@ -466,6 +477,9 @@ def build_coding_support_payload(
             "global_comments": warnings or None,
         },
     }
+    if quality_signals:
+        payload["quality_pass"] = {"signals": quality_signals}
+    return payload
 
 
 __all__ = [

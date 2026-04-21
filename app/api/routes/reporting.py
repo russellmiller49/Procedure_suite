@@ -44,6 +44,11 @@ from app.reporting.engine import (
 from app.reporting.inference import InferenceEngine
 from app.reporting.macro_registry import get_macro_registry
 from app.reporting.normalization.normalize import normalize_bundle
+from app.reporting.quality_gate import build_reporter_quality_flags
+from app.reporting.seed_pipeline import (
+    seed_outcome_from_llm_findings_seed,
+    seed_outcome_from_registry_result,
+)
 from app.reporting.validation import ValidationEngine
 
 router = APIRouter(tags=["reporting"])
@@ -453,6 +458,10 @@ async def report_verify(req: VerifyRequest) -> VerifyResponse:
 async def report_questions(req: QuestionsRequest) -> QuestionsResponse:
     bundle, issues, warnings, suggestions, notes = _verify_bundle(req.bundle)
     questions = build_questions(bundle, issues)
+    quality_flags, needs_manual_review = build_reporter_quality_flags(
+        source_text=bundle.free_text_hint,
+        bundle=bundle,
+    )
     return QuestionsResponse(
         bundle=bundle,
         issues=issues,
@@ -460,6 +469,8 @@ async def report_questions(req: QuestionsRequest) -> QuestionsResponse:
         suggestions=suggestions,
         inference_notes=notes,
         questions=questions,
+        quality_flags=quality_flags,
+        needs_manual_review=needs_manual_review,
     )
 
 
@@ -489,6 +500,7 @@ async def report_seed_from_text(
     seed_record_for_completeness = None
     seed_text_for_bundle = note_text
     extraction_source: Any = None
+    seed_outcome = None
 
     if debug_notes is not None:
         debug_notes.append(
@@ -517,6 +529,10 @@ async def report_seed_from_text(
             seed_record_for_completeness = seed.record
             seed_text_for_bundle = seed.masked_prompt_text
             extraction_source = build_record_payload_for_reporting(seed)
+            seed_outcome = seed_outcome_from_llm_findings_seed(
+                seed,
+                reporting_payload=extraction_source,
+            )
             if debug_notes is not None:
                 debug_notes.append(
                     {
@@ -548,6 +564,10 @@ async def report_seed_from_text(
         extraction_source = extraction_result.record
         seed_record_for_completeness = extraction_result.record
         seed_text_for_bundle = note_text
+        seed_outcome = seed_outcome_from_registry_result(
+            extraction_result,
+            masked_seed_text=note_text,
+        )
 
     # Apply completeness addendum uplift for reporter flow (age/ASA/ECOG + EBUS detail).
     seed_record_for_completeness = _apply_reporter_completeness_uplift(
@@ -603,6 +623,14 @@ async def report_seed_from_text(
         embed_metadata=False,
         debug_notes=debug_notes,
     )
+    quality_flags, needs_manual_review = build_reporter_quality_flags(
+        source_text=seed_text_for_bundle,
+        bundle=bundle,
+        markdown=markdown,
+        prior_flags=list(getattr(seed_outcome, "quality_flags", []) or []),
+    )
+    if getattr(seed_outcome, "needs_review", False):
+        needs_manual_review = True
     return SeedFromTextResponse(
         bundle=bundle,
         markdown=markdown,
@@ -611,6 +639,8 @@ async def report_seed_from_text(
         inference_notes=notes,
         suggestions=suggestions,
         questions=questions,
+        quality_flags=quality_flags,
+        needs_manual_review=needs_manual_review,
         missing_field_prompts=missing_field_prompts,
         debug_notes=debug_notes if debug_enabled else None,
     )
@@ -638,6 +668,11 @@ async def report_render(req: RenderRequest) -> RenderResponse:
         embed_metadata=req.embed_metadata,
         debug_notes=debug_notes,
     )
+    quality_flags, needs_manual_review = build_reporter_quality_flags(
+        source_text=bundle.free_text_hint,
+        bundle=bundle,
+        markdown=markdown,
+    )
     return RenderResponse(
         bundle=bundle,
         markdown=markdown,
@@ -645,6 +680,8 @@ async def report_render(req: RenderRequest) -> RenderResponse:
         warnings=warnings,
         inference_notes=notes,
         suggestions=suggestions,
+        quality_flags=quality_flags,
+        needs_manual_review=needs_manual_review,
         debug_notes=debug_notes if debug_enabled else None,
     )
 

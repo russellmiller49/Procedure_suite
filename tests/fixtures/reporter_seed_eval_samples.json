@@ -47,6 +47,52 @@
         "```",
         "See procedure details below"
       ]
+    },
+    {
+      "id": "seed_from_text_voriconazole_injection",
+      "prompt_text": "Patient: 45 F\nIndication: Aspergilloma\nAirway: Tracheostomy\nProcedure: Injection of Voriconazole (50mg)\nTarget: Left Lower Lobe (LLL)\nFindings: thick tan secretions",
+      "completion_canonical_path": "reporting/seed_from_text_voriconazole_injection.md",
+      "critical_flags_present": [
+        "procedures_performed.therapeutic_injection.performed"
+      ],
+      "critical_flags_absent": [
+        "pleural_procedures.chest_tube.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "See procedure details below"
+      ]
+    },
+    {
+      "id": "seed_from_text_pleural_fibrinolytic_existing_drain",
+      "prompt_text": "Procedure codes 76604 and 32562. 64 year old female. Dx: Empyema. left hemithorax US findings: Large volume. Meds: 5 mg tPA / 5 mg DNase. Comps: None.",
+      "completion_canonical_path": "reporting/seed_from_text_pleural_fibrinolytic_existing_drain.md",
+      "critical_flags_present": [
+        "pleural_procedures.fibrinolytic_therapy.performed"
+      ],
+      "critical_flags_absent": [
+        "pleural_procedures.chest_tube.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "Image-Guided Chest Tube"
+      ]
+    },
+    {
+      "id": "seed_from_text_stent_removal_lul_bal",
+      "prompt_text": "Patient: 71 M\nSurgeon: Dr. Chen\nProcedure: Bronchoscopy with Stent Removal & Cryo\nKey Findings:\n- LMSB stent completely occluded by inspissated secretions\n- blood-tinged mucus plugs\n- LUL BAL performed\nPlan: Admit, polymicrobial infection, Unasyn and Dexamethasone 4 mg.",
+      "completion_canonical_path": "reporting/seed_from_text_stent_removal_lul_bal.md",
+      "critical_flags_present": [
+        "procedures_performed.airway_stent.performed",
+        "procedures_performed.bal.performed"
+      ],
+      "critical_flags_absent": [
+        "pleural_procedures.chest_tube.performed"
+      ],
+      "forbidden_artifacts": [
+        "```",
+        "Airway Stent Placement"
+      ]
     }
   ]
 }

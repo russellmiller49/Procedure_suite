@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta, derive_units_for_codes
 from app.registry.postprocess import enrich_medical_thoracoscopy_biopsies_taken
 from app.registry.schema import RegistryRecord
 
@@ -70,6 +70,28 @@ def test_postprocess_sets_medical_thoracoscopy_biopsies_taken_from_text() -> Non
     assert "32604" in codes
 
 
+def test_postprocess_sets_medical_thoracoscopy_biopsies_taken_from_diaphragmatic_and_parietal_pleura() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "pleural_procedures": {
+                "medical_thoracoscopy": {"performed": True},
+            }
+        }
+    )
+
+    note_text = (
+        "Forceps biopsies were obtained from the diaphragmatic pleura and chest wall parietal pleura."
+    )
+    warnings = enrich_medical_thoracoscopy_biopsies_taken(record, note_text)
+
+    thor = record.pleural_procedures.medical_thoracoscopy  # type: ignore[union-attr]
+    assert thor.biopsies_taken is True
+    assert any("AUTO_THORACOSCOPY_BIOPSY" in w for w in warnings)
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "32604" in codes
+
+
 def test_thoracoscopy_bundles_same_side_chest_tube_insertion() -> None:
     record = RegistryRecord.model_validate(
         {
@@ -121,3 +143,24 @@ def test_chest_tube_repositioning_does_not_bill_insertion_codes() -> None:
     codes, _rationales, warnings = derive_all_codes_with_meta(record)
     assert not any(code in codes for code in ("32551", "32556", "32557"))
     assert any("skipping insertion codes" in str(w).lower() for w in warnings)
+
+
+def test_bilateral_chest_tube_insertion_derives_two_units() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "pleural_procedures": {
+                "chest_tube": {
+                    "performed": True,
+                    "action": "Insertion",
+                    "side": "Bilateral",
+                    "tube_type": "Surgical/Large bore",
+                }
+            }
+        }
+    )
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    units = derive_units_for_codes(record, codes)
+
+    assert "32551" in codes
+    assert units.get("32551") == 2

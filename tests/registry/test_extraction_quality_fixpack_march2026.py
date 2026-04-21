@@ -547,6 +547,27 @@ def test_registry_to_cpt_uses_tracheal_stent_family_and_suppresses_31573_for_txa
     assert any("suppressing 31573" in str(w) for w in warnings)
 
 
+def test_registry_to_cpt_treats_carinal_y_stent_as_tracheal_family() -> None:
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "airway_stent": {
+                    "performed": True,
+                    "action": "Placement",
+                    "action_type": "placement",
+                    "location": "Carina (Y)",
+                    "stent_type": "Y-Stent",
+                }
+            }
+        }
+    )
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+
+    assert "31631" in codes
+    assert "31636" not in codes
+
+
 def test_extract_ipc_uses_side_checkbox_for_removal_templates() -> None:
     note_text = """
     PROCEDURE:

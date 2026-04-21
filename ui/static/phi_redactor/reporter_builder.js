@@ -622,6 +622,28 @@ function currentInferenceNotes() {
   return state.seed?.inference_notes || [];
 }
 
+function currentQualityFlags() {
+  if (state.verify?.quality_flags) return state.verify.quality_flags;
+  if (state.render?.quality_flags) return state.render.quality_flags;
+  return state.seed?.quality_flags || [];
+}
+
+function currentNeedsManualReview() {
+  if (typeof state.verify?.needs_manual_review === "boolean") return state.verify.needs_manual_review;
+  if (typeof state.render?.needs_manual_review === "boolean") return state.render.needs_manual_review;
+  return Boolean(state.seed?.needs_manual_review);
+}
+
+function isBlockingQualityFlag(flag) {
+  const severity = String(flag?.severity || "").trim().toLowerCase();
+  if (severity === "blocker") return true;
+  return Boolean(flag?.metadata?.blocking);
+}
+
+function currentBlockerFlags() {
+  return currentQualityFlags().filter((flag) => isBlockingQualityFlag(flag));
+}
+
 function currentMarkdown() {
   if (typeof state.render?.markdown === "string") return state.render.markdown;
   if (typeof state.seed?.markdown === "string") return state.seed.markdown;
@@ -685,6 +707,14 @@ function consumeDashboardTransferPayload() {
 }
 
 function transferToDashboard() {
+  const blockerCount = currentBlockerFlags().length;
+  if (blockerCount) {
+    showBanner(
+      "warning",
+      `Resolve ${blockerCount} blocker flag${blockerCount === 1 ? "" : "s"} before sending this note to the dashboard.`,
+    );
+    return;
+  }
   const note = buildTransferNoteText();
   if (!note) {
     showBanner("warning", "No note text available to transfer.");
@@ -713,6 +743,7 @@ function updateControls() {
   const hasBundle = Boolean(state.bundle);
   const hasQuestions = Array.isArray(state.questions) && state.questions.length > 0;
   const hasTransferNote = buildTransferNoteText().length > 0;
+  const hasBlockers = currentBlockerFlags().length > 0;
   const requiresPhi = Boolean(phiRunBtn && phiApplyBtn && phiStatusTextEl);
   const ackChecked = !phiConfirmAckEl || Boolean(phiConfirmAckEl.checked);
   const phiOk = !requiresPhi || (phiScrubbedConfirmed && ackChecked);
@@ -724,7 +755,12 @@ function updateControls() {
   refreshBtn.disabled = state.busy || !hasBundle;
   clearBtn.disabled = state.busy;
   applyPatchBtn.disabled = state.busy || !hasBundle || !hasQuestions;
-  if (transferToDashboardBtn) transferToDashboardBtn.disabled = state.busy || !hasTransferNote;
+  if (transferToDashboardBtn) {
+    transferToDashboardBtn.disabled = state.busy || !hasTransferNote || hasBlockers;
+    transferToDashboardBtn.title = hasBlockers
+      ? "Resolve reporter blocker flags before sending this note to the dashboard"
+      : "";
+  }
   if (completenessInsertBtn) completenessInsertBtn.disabled = state.busy || !completenessPrompts.length;
   if (completenessCopyBtn) completenessCopyBtn.disabled = state.busy || !buildCompletenessAddendumBlock();
   strictToggleEl.disabled = state.busy;
@@ -753,13 +789,36 @@ function renderValidation() {
   const warnings = currentWarnings();
   const suggestions = currentSuggestions();
   const notes = currentInferenceNotes();
+  const qualityFlags = currentQualityFlags();
+  const blockers = currentBlockerFlags();
 
-  if (!issues.length && !warnings.length && !suggestions.length && !notes.length) {
+  if (!issues.length && !warnings.length && !suggestions.length && !notes.length && !qualityFlags.length) {
     validationHostEl.innerHTML = '<div class="empty-state">No validation output yet.</div>';
     return;
   }
 
   let html = "";
+  if (blockers.length) {
+    html += "<h4>Blockers</h4><ul class=\"builder-list blocker-list\">";
+    blockers.forEach((flag) => {
+      const code = String(flag?.code || "BLOCKER");
+      const message = String(flag?.message || "Manual review required.");
+      html += `<li><strong>${escapeHtml(code)}</strong>: ${escapeHtml(message)}</li>`;
+    });
+    html += "</ul>";
+  }
+
+  const nonBlockingFlags = qualityFlags.filter((flag) => !isBlockingQualityFlag(flag));
+  if (nonBlockingFlags.length) {
+    html += "<h4>Quality Flags</h4><ul class=\"builder-list\">";
+    nonBlockingFlags.forEach((flag) => {
+      const code = String(flag?.code || "FLAG");
+      const message = String(flag?.message || "");
+      html += `<li><strong>${escapeHtml(code)}</strong>: ${escapeHtml(message)}</li>`;
+    });
+    html += "</ul>";
+  }
+
   if (issues.length) {
     html += "<h4>Issues</h4><ul class=\"builder-list\">";
     issues.forEach((issue) => {
@@ -1261,6 +1320,8 @@ async function seedBundleFromText() {
       warnings: seed.warnings || [],
       inference_notes: seed.inference_notes || [],
       suggestions: seed.suggestions || [],
+      quality_flags: seed.quality_flags || [],
+      needs_manual_review: Boolean(seed.needs_manual_review),
     };
     state.verify = {
       bundle: seed.bundle,
@@ -1269,15 +1330,20 @@ async function seedBundleFromText() {
       inference_notes: seed.inference_notes || [],
       suggestions: seed.suggestions || [],
       questions: seed.questions || [],
+      quality_flags: seed.quality_flags || [],
+      needs_manual_review: Boolean(seed.needs_manual_review),
     };
     state.bundle = seed.bundle;
     state.questions = seed.questions || [];
     state.lastPatch = [];
     renderAll();
 
+    const blockerCount = currentBlockerFlags().length;
     showBanner(
-      "success",
-      `Bundle seeded. ${state.questions.length} follow-up question${state.questions.length === 1 ? "" : "s"} generated.`,
+      blockerCount ? "warning" : "success",
+      blockerCount
+        ? `Bundle seeded, but ${blockerCount} blocker flag${blockerCount === 1 ? "" : "s"} require manual review before dashboard transfer.`
+        : `Bundle seeded. ${state.questions.length} follow-up question${state.questions.length === 1 ? "" : "s"} generated.`,
     );
   });
 }
@@ -1300,9 +1366,12 @@ async function refreshQuestions() {
     state.questions = verify.questions || [];
     renderAll();
 
+    const blockerCount = currentBlockerFlags().length;
     showBanner(
-      "success",
-      `Questions refreshed. ${state.questions.length} question${state.questions.length === 1 ? "" : "s"} remaining.`,
+      blockerCount ? "warning" : "success",
+      blockerCount
+        ? `Questions refreshed. ${blockerCount} blocker flag${blockerCount === 1 ? "" : "s"} still require manual review.`
+        : `Questions refreshed. ${state.questions.length} question${state.questions.length === 1 ? "" : "s"} remaining.`,
     );
   });
 }
@@ -1347,11 +1416,14 @@ async function applyPatchAndRender() {
     state.lastPatch = patchOps;
     renderAll();
 
+    const blockerCount = currentBlockerFlags().length;
     showBanner(
-      "success",
-      `Patch applied (${patchOps.length} op${patchOps.length === 1 ? "" : "s"}). ${state.questions.length} question${
-        state.questions.length === 1 ? "" : "s"
-      } remaining.`,
+      blockerCount ? "warning" : "success",
+      blockerCount
+        ? `Patch applied, but ${blockerCount} blocker flag${blockerCount === 1 ? "" : "s"} still require manual review.`
+        : `Patch applied (${patchOps.length} op${patchOps.length === 1 ? "" : "s"}). ${state.questions.length} question${
+            state.questions.length === 1 ? "" : "s"
+          } remaining.`,
     );
   });
 }

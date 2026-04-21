@@ -140,6 +140,8 @@ class RenderResponse(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     inference_notes: list[str] = Field(default_factory=list)
     suggestions: list[str] = Field(default_factory=list)
+    quality_flags: list[dict[str, Any]] = Field(default_factory=list)
+    needs_manual_review: bool = False
     debug_notes: list[dict[str, Any]] | None = None
 
     @model_serializer(mode="wrap")
@@ -162,6 +164,8 @@ class QuestionsResponse(BaseModel):
     inference_notes: list[str] = Field(default_factory=list)
     suggestions: list[str] = Field(default_factory=list)
     questions: list[QuestionSpec] = Field(default_factory=list)
+    quality_flags: list[dict[str, Any]] = Field(default_factory=list)
+    needs_manual_review: bool = False
     markdown: str | None = None
 
 
@@ -182,6 +186,8 @@ class SeedFromTextResponse(BaseModel):
     inference_notes: list[str] = Field(default_factory=list)
     suggestions: list[str] = Field(default_factory=list)
     questions: list[QuestionSpec] = Field(default_factory=list)
+    quality_flags: list[dict[str, Any]] = Field(default_factory=list)
+    needs_manual_review: bool = False
     missing_field_prompts: list[MissingFieldPrompt] = Field(
         default_factory=list,
         description="Suggested missing fields to document (completeness nudges).",

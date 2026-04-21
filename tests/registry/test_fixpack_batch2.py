@@ -86,6 +86,22 @@ def test_note_008_tracheal_puncture_derives_31612_and_has_evidence(monkeypatch: 
     assert record.evidence.get("procedures_performed.tracheal_puncture.performed")
 
 
+def test_tracheal_puncture_used_to_secure_stent_does_not_derive_31612(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    note_text = (
+        "PROCEDURE IN DETAIL:\n"
+        "A Bonostent was deployed into the trachea.\n"
+        "A 14 gauge angiocath was used to puncture the anterior tracheal wall so sutures could be passed "
+        "through the trachea and stent to secure the stent in position.\n"
+    )
+    record = _extract_record_parallel_ner(monkeypatch, note_text)
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31612" not in codes
+    assert any("stent fixation" in str(w).lower() for w in warnings)
+
+
 def test_note_011_subsequent_aspiration_31646_overrides_31645(monkeypatch: pytest.MonkeyPatch) -> None:
     note_text = (
         "PROCEDURE:\n"

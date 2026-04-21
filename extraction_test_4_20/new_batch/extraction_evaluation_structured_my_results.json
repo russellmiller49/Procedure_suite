@@ -1,0 +1,373 @@
+{
+  "overall_average_score": 68.95,
+  "status_counts": {
+    "FAIL": 10,
+    "WARNING": 8,
+    "PASS": 2
+  },
+  "evaluations": [
+    {
+      "file": "my_results.txt",
+      "note_id": "note_179",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus is forced into nodal staging even though the target was a 45 mm hilar cyst, not a nodal station.",
+        "CPT 31652 is not supported; no mediastinal/hilar nodal station was sampled."
+      ],
+      "mismatches": [
+        "outcomes.procedure_success_status='Partial success' and aborted_reason overstate the note; the procedure was completed and yielded material for cytology/culture."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Actual EBUS target was a proximal left upper lobe hilar cyst with multiple septations.",
+        "Samples were sent for both culture and routine cytology."
+      ],
+      "cpt": "Diagnostic bronchoscopy is supported. Nodal EBUS code 31652 is not defensible from a cyst aspiration with no sampled station.",
+      "schema": "This is a non-nodal EBUS target, and the current schema collapses it into a fake station-based EBUS event."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_052",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [
+        "The top-level elastography_pattern='blue_green' is not stated in the note; the note documents Type 2 patterns."
+      ],
+      "mismatches": [
+        "specimens.specimens_collected lists only 11L, but the specimen section documents 11L, 11Rs, and 4R TBNA."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Per-station specimen locations are incomplete.",
+        "diagnostic_bronchoscopy.inspection_findings does not actually summarize airway inspection findings."
+      ],
+      "cpt": "31653 is supported by 3 sampled stations. Elastography is documented for 3 targets and supports the elastography add-ons within this pipeline's coding framework.",
+      "schema": "Overall extraction is coherent; the main misses are specimen completeness and an unsupported color-pattern normalization."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_131",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "CPT 32601 (diagnostic thoracoscopy without biopsy) understates the documented pleural biopsies."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Pleural biopsy is omitted despite targeted biopsies of diaphragmatic pleural lesions and additional chest-wall pleural biopsies."
+      ],
+      "missed_details": [
+        "Right-sided procedure location is not preserved.",
+        "Approximately 3000 mL of serous pleural fluid suctioned is not captured.",
+        "15.5 Fr PleurX size and biopsy sites are not captured."
+      ],
+      "cpt": "32550 is supported. Thoracoscopic coding should reflect pleural biopsy rather than a no-biopsy diagnostic thoracoscopy code.",
+      "schema": "Good pleuroscopy + IPC recognition, but major recall loss for the pleural biopsy component."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_047",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Fiducial marker placement is documented but not represented as its own structured procedure/event."
+      ],
+      "missed_details": [
+        "The second RLL target attempt and abort due inability to localize the nodule are not represented.",
+        "Cryobiopsy count (6 samples) and first-target peripheral sampling counts could be more explicit in structured fields."
+      ],
+      "cpt": "31623/31624/31626/31627/31628/31629/31653/+31654 are supported by the note. Elastography coding is also supported for the sampled EBUS targets documented.",
+      "schema": "Strong separation of navigation, peripheral sampling, and mediastinal staging, with the main recall loss being fiducial placement and the aborted second target."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_043",
+      "score": 87,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [
+        "Loculations are captured as 'Thin' only even though the template marks both thin and thick loculations."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Dnase is omitted; only tPA is captured.",
+        "Subsequent-day context and left-sided chest tube context are not fully structured."
+      ],
+      "cpt": "76604 and 32562 are supported.",
+      "schema": "Core fibrinolytic therapy extraction is correct, but agent/detail capture is incomplete."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_228",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Kenalog dose and some post-dilation patency percentages could be captured more granularly."
+      ],
+      "cpt": "31638 and 31641 are defensible from left mainstem stent removal plus cryotherapy/debulking of distal granulation tissue.",
+      "schema": "Good recognition of existing-stent removal, rigid bronchoscopy, dilation, cryotherapy, and therapeutic injection."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_165",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "No CPTs are derived even though navigation and radial EBUS are clearly documented."
+      ],
+      "missed_procedures": [
+        "ICG dye injection / localization marking adjacent to the RUL nodule is not represented as its own event."
+      ],
+      "missed_details": [
+        "0.75 mL isocyanate green volume is omitted.",
+        "Right upper lobe pleural-adjacent target context is omitted."
+      ],
+      "cpt": "The note supports navigational bronchoscopy and radial EBUS. It does not support peripheral TBNA because no aspirate/sample was actually obtained; the coded 31629 line in the note header is not backed by the narrative.",
+      "schema": "The extractor appropriately avoids hallucinating TBNA, but it misses the actual localization/injection work and drops the supported navigation/radial coding."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_189",
+      "score": 52,
+      "status": "FAIL",
+      "hallucinations": [
+        "chest_tube/performed=true and CPT 32551 are not supported; the note explicitly says they chose observation and would place a chest tube only if the pneumothorax expanded or symptoms developed."
+      ],
+      "mismatches": [
+        "station 7 is marked inspected_only even though the note says station 11L, 7, 11Rs, and 10R were sampled by EBUS-TBNA."
+      ],
+      "missed_procedures": [
+        "Peripheral TBNA of the pulmonary nodule is described ('peripheral needle') but not represented as its own sampling event."
+      ],
+      "missed_details": [
+        "Complications are not surfaced despite explicit post-procedure emesis/possible aspiration and a small apical pneumothorax."
+      ],
+      "cpt": "Brushings, transbronchial biopsy, radial EBUS, and 31653 are supported. 32551 is not supported.",
+      "schema": "High-severity post-procedure logic error: false chest tube placement plus incomplete EBUS station capture."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_259",
+      "score": 34,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent.performed=true is not supported; stent placement was considered but never performed before the patient arrested."
+      ],
+      "mismatches": [
+        "Only one chest tube event/code is surfaced even though the note documents both a left and a right chest tube placed intraoperatively."
+      ],
+      "missed_procedures": [
+        "Bilateral chest tube placement is incompletely captured.",
+        "Forceps biopsy work is not represented."
+      ],
+      "missed_details": [
+        "Intraoperative PEA/asystolic arrest and death are not modeled as major outcomes/complications.",
+        "Hemostatic measures (TXA, epinephrine, cold saline) are omitted."
+      ],
+      "cpt": "The note supports rigid bronchoscopy with thermal ablation/mechanical debulking and bilateral rescue chest tube placement. A stent code is not supported because no stent was placed.",
+      "schema": "Severe failure in a high-acuity case: false stent placement, incomplete rescue procedures, and omission of intraoperative death."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_042",
+      "score": 54,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Percutaneous tracheostomy is a major performed procedure and is omitted.",
+        "PEG insertion is also documented but omitted."
+      ],
+      "missed_details": [
+        "BAL location (RB4/RB5) and broad aspiration locations could be more explicit.",
+        "The registry follow-up text points to tracheostomy/PEG, underscoring the omitted procedures."
+      ],
+      "cpt": "31624 and 31645 are supported, but the extraction materially undercalls the combined procedure note by omitting tracheostomy and PEG components.",
+      "schema": "Core bronchoscopic work is present, but recall is materially incomplete for the overall case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_110",
+      "score": 46,
+      "status": "FAIL",
+      "hallucinations": [
+        "thoracentesis.performed=true and CPT 32555 are overcalled as completed work even though no fluid was aspirated and the procedure was aborted."
+      ],
+      "mismatches": [
+        "The registry simultaneously marks the thoracentesis as performed while outcomes correctly say the procedure was aborted."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The failed left 1st intercostal space mid-clavicular attempt and no-fluid result are not preserved in the procedural object."
+      ],
+      "cpt": "76604 is supported. A completed thoracentesis code is not defensible from an aborted, no-aspirate attempt without stronger attempted-procedure handling.",
+      "schema": "Classic attempted-versus-completed failure."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_148",
+      "score": 94,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Purulent secretions in the superior segment of the left lower lobe could be captured more explicitly."
+      ],
+      "cpt": "Bronchoscopy through an established tracheostomy route with BAL is consistent with the note.",
+      "schema": "Good capture of tracheostomy route and BAL."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_023",
+      "score": 74,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [
+        "Bronchial blocker exchange/repositioning for hemoptysis control is not represented."
+      ],
+      "missed_details": [
+        "The blocker moved from the RLL to the distal bronchus intermedius with 3 mL of air for occlusion, which is clinically important context.",
+        "Hemoptysis-control context is reduced to aspiration alone."
+      ],
+      "cpt": "31645 is supported. The note header's 31622 is not clearly supported by the narrative because no washing specimen is described.",
+      "schema": "The aspiration event is real, but the principal blocker-based hemorrhage-control workflow is omitted."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_008",
+      "score": 68,
+      "status": "FAIL",
+      "hallucinations": [
+        "CPT 31612 is not supported; the note does not document percutaneous transtracheal aspiration/injection."
+      ],
+      "mismatches": [
+        "airway_stent_revision location is misassigned to the left mainstem even though the stent was tracheal and revised proximally within the trachea."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Bona 14 x 60 mm stent size and the trans-tracheal securing suture are not preserved.",
+        "Balloon dilation sizes (12/13.5/15) are not preserved."
+      ],
+      "cpt": "31631, 31638, and 31645 are supported. 31612 is not.",
+      "schema": "Strong procedural recall, but a material CPT hallucination and wrong stent-revision location keep this out of PASS."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_094",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "mechanical_debulking location is too narrow/imprecise; the note describes excision/debridement at RC2, bronchus intermedius, and LC1, not simply 'RUL'."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "BAL volumes (60 mL in / 25 mL out) are not fully surfaced.",
+        "Site-by-site patency changes and stent details could be more granular."
+      ],
+      "cpt": "31624, 31646, and 31641 are supported.",
+      "schema": "Good capture of transplant-airway surveillance with aspiration, cryotherapy, and BAL, with mainly location/detail imprecision."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_056",
+      "score": 64,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The registry does not surface the explicit complication of posterior distal tracheal injury / full-thickness tear."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Posterior membrane defect measurements are omitted.",
+        "Final tubular tracheal stent size (16 x 45 mm) is omitted.",
+        "This was inspection-only EBUS with no biopsy, and that nuance is only partially preserved."
+      ],
+      "cpt": "31624, 31645, and 31631 are supported. The note does not support a nodal sampling CPT because no EBUS biopsy was performed.",
+      "schema": "The major miss is failure to structure a clearly documented complication in a high-stakes rescue-stent case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_201",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "The coding stack selects 31640 only even though the note explicitly documents APC/cryotherapy destruction work that strongly supports 31641."
+      ],
+      "mismatches": [
+        "outcomes.procedure_success_status='Partial success' with an aborted_reason is a slightly awkward fit; the procedure completed, albeit with residual disease."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Residual 60% obstruction at the end of the case is not preserved.",
+        "Hemostatic epinephrine/iced saline details are not surfaced."
+      ],
+      "cpt": "Rigid bronchoscopy with APC plus cryotherapy/debulking is supported. 31641 is the stronger therapeutic code; 31640 alone is questionable under the pipeline's own bundling logic.",
+      "schema": "Therapeutic modalities are recognized, but CPT selection is shaky."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_019",
+      "score": 86,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Only a shallow chest-ultrasound summary is captured despite bilateral findings.",
+        "Dnase is omitted.",
+        "The 400 cc bloody output after dwell is omitted."
+      ],
+      "cpt": "76604 and 32561 are supported.",
+      "schema": "Good core first-day fibrinolytic extraction with incomplete ultrasound and agent detail."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_229",
+      "score": 60,
+      "status": "FAIL",
+      "hallucinations": [
+        "airway_stent location is collapsed to the left mainstem even though the procedure was placement of a silicone tracheobronchial Y-stent spanning the trachea and both mainstems.",
+        "CPT 31636 alone under-represents the tracheal/Y-stent work."
+      ],
+      "mismatches": [
+        "mechanical_debulking location is wrong; debulking was tracheal/carina/proximal bilateral mainstem work, not an RUL procedure."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Customized stent dimensions and limb lengths are omitted.",
+        "Loss of two teeth during rigid intubation is omitted as a procedural complication/event."
+      ],
+      "cpt": "31641 is supported for APC/cryotherapy tumor debulking. Stent coding should reflect tracheal Y-stent logic rather than an isolated bronchial stent placement code.",
+      "schema": "Major location/coding compression in a complex central-airway stent case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_083",
+      "score": 72,
+      "status": "WARNING",
+      "hallucinations": [
+        "Radial EBUS / CPT 31654 is not clearly supported; the note uses radial EBUS to identify vasculature/airways in complex stenotic anatomy rather than for a peripheral lesion intervention."
+      ],
+      "mismatches": [
+        "airway_stent removal location is mislabeled; the removed device was an LMSB stent, not an LLL stent."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "BAL volumes (40 mL in / 15 mL out) are incompletely surfaced.",
+        "No-new-stent decision and complex anatomy are not well structured."
+      ],
+      "cpt": "31645, 31624, 31638, and 31641 are supported. 31625 is supported by the explicit 'LMSB EBBx' specimen. 31654 is doubtful.",
+      "schema": "Complex airway-stent management is mostly captured, but device location and radial-EBUS logic are off."
+    }
+  ]
+}

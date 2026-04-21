@@ -2455,18 +2455,43 @@ class RegistryService:
                             if not (has_header_31646 or has_body_signal):
                                 return
 
-                            # Prefer keeping header numerals in the hint channel; otherwise anchor to body phrasing.
+                            # Prefer keeping header numerals in the hint channel, but still add a structured
+                            # subsequent-episode evidence marker so downstream rules/tests can rely on it.
                             if has_header_31646:
                                 other_modified = _add_header_code_hint("31646") or other_modified
-                            else:
-                                _add_first_span_skip_cpt_headers(
-                                    "procedures_performed.therapeutic_aspiration.is_subsequent",
-                                    [
-                                        r"\bsubsequent\s+aspirat\w*\b",
-                                        r"\brepeat\s+aspirat\w*\b",
-                                        r"\bsubsequent\s+episode(?:s)?\b",
-                                    ],
-                                )
+                            _add_first_span(
+                                "procedures_performed.therapeutic_aspiration.is_subsequent",
+                                [
+                                    r"\btherapeutic\s+aspiration\s+subsequent\s+episode(?:s)?\b",
+                                    r"\bsubsequent\s+aspirat\w*\b",
+                                    r"\brepeat\s+aspirat\w*\b",
+                                    r"\bsubsequent\s+episode(?:s)?\b",
+                                ],
+                            )
+                            if has_header_31646 and not evidence.get(
+                                "procedures_performed.therapeutic_aspiration.is_subsequent"
+                            ):
+                                for pat in (
+                                    r"\btherapeutic\s+aspiration\s+subsequent\s+episode(?:s)?\b",
+                                    r"\bsubsequent\s+aspirat\w*\b",
+                                    r"\brepeat\s+aspirat\w*\b",
+                                    r"\bsubsequent\s+episode(?:s)?\b",
+                                ):
+                                    match = re.search(pat, raw_note_text or "", re.IGNORECASE)
+                                    if not match:
+                                        continue
+                                    evidence.setdefault(
+                                        "procedures_performed.therapeutic_aspiration.is_subsequent",
+                                        [],
+                                    ).append(
+                                        Span(
+                                            text=match.group(0).strip(),
+                                            start=match.start(),
+                                            end=match.end(),
+                                        )
+                                    )
+                                    break
+                            if evidence.get("procedures_performed.therapeutic_aspiration.is_subsequent"):
                                 other_modified = True
 
                         # Fill common missing clinical context/sedation/demographics from deterministic extractors.
@@ -2766,6 +2791,7 @@ class RegistryService:
             reconcile_peripheral_tbna_against_nodal_context,
             sanitize_ebus_events,
             sort_ebus_stations,
+            suppress_conditional_pleural_and_stent_procedures,
         )
 
         ebus_fallback_warnings = populate_ebus_node_events_fallback(record, masked_note_text)
@@ -2842,6 +2868,9 @@ class RegistryService:
         aborted_target_warnings = reconcile_aborted_targets(record, masked_note_text)
         if aborted_target_warnings:
             extraction_warnings.extend(aborted_target_warnings)
+        conditional_proc_warnings = suppress_conditional_pleural_and_stent_procedures(record, masked_note_text)
+        if conditional_proc_warnings:
+            extraction_warnings.extend(conditional_proc_warnings)
         outcomes_status_warnings = enrich_procedure_success_status(record, masked_note_text)
         if outcomes_status_warnings:
             extraction_warnings.extend(outcomes_status_warnings)
@@ -3438,8 +3467,15 @@ class RegistryService:
         derivation_warnings = list(derivation.warnings)
         code_rationales = {c.code: c.rationale for c in derivation.codes}
 
+        quality_signal_warnings = (
+            list(base_warnings)
+            + list(derivation_warnings)
+            + list(self_correct_warnings)
+            + list(coverage_warnings)
+        )
+
         # Populate billing CPT codes deterministically (never from the LLM).
-        if derived_codes:
+        if derived_codes or quality_signal_warnings:
             from app.registry.application.coding_support_builder import (
                 build_coding_support_payload,
                 build_traceability_for_code,
@@ -3525,8 +3561,9 @@ class RegistryService:
                     item["modifiers"] = mods
                 cpt_payload.append(item)
 
-            billing["cpt_codes"] = cpt_payload
-            record_data["billing"] = billing
+            if derived_codes:
+                billing["cpt_codes"] = cpt_payload
+                record_data["billing"] = billing
 
             record_data["coding_support"] = build_coding_support_payload(
                 record=record,
@@ -3534,6 +3571,7 @@ class RegistryService:
                 code_units=code_units,
                 code_rationales=code_rationales,
                 derivation_warnings=derivation_warnings,
+                quality_signal_warnings=quality_signal_warnings,
                 kb_repo=kb_repo,
             )
 

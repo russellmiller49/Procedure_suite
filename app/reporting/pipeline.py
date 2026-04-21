@@ -554,6 +554,41 @@ class ReportPipeline:
 
                 lines: list[str] = []
 
+                def _is_fibrinolytic_only_pleural_proc(data: dict[str, Any]) -> bool:
+                    if not isinstance(data, dict):
+                        return False
+                    has_fibrinolytic = bool(
+                        (data.get("fibrinolytic_agents") or [])
+                        or data.get("tpa_dose_mg") is not None
+                        or data.get("dnase_dose_mg") is not None
+                    )
+                    if not has_fibrinolytic:
+                        return False
+                    has_insertion_details = any(
+                        data.get(field) not in (None, "", [], {})
+                        for field in ("fluid_removed_ml", "fluid_appearance", "specimen_tests")
+                    )
+                    if has_insertion_details:
+                        return False
+                    if re.search(
+                        r"(?i)\b(?:existing|already\s+had|right-sided\s+tube|left-sided\s+tube|through\s+the\s+tube|via\s+(?:the\s+)?(?:tube|catheter)|dose\s+number|dose\s*#|subsequent|initial\s+dose|32561|32562)\b",
+                        note_text,
+                    ):
+                        return True
+                    return False
+
+                for pleural_proc in [*_by_type("chest_tube"), *_by_type("pigtail_catheter")]:
+                    data = _proc_data_dict(pleural_proc)
+                    side = str(data.get("side") or "").strip().lower()
+                    side_prefix = f"{side.title()} " if side in {"left", "right"} else ""
+                    if _is_fibrinolytic_only_pleural_proc(data):
+                        lines.append(f"{side_prefix}intrapleural fibrinolytic instillation via existing pleural drain".strip())
+                        continue
+                    if pleural_proc.proc_type == "chest_tube":
+                        lines.append(f"{side_prefix}Image-Guided Chest Tube".strip())
+                    else:
+                        lines.append(f"{side_prefix}Image-Guided Pigtail Catheter".strip())
+
                 for tpc_proc in _by_type("tunneled_pleural_catheter_insert"):
                     data = _proc_data_dict(tpc_proc)
                     side = str(data.get("side") or "").strip().lower()
@@ -597,7 +632,7 @@ class ReportPipeline:
                         target = _as_text(data.get("lesion_location") or data.get("target_lung_segment"))
                         if target:
                             target = re.sub(r"(?i)^the\s+", "", target).strip()
-                            nav_targets.append(_lobe_token(target) or target)
+                            nav_targets.append(target if re.search(r"\([^)]+\)", target) else (_lobe_token(target) or target))
                     nav_targets = _dedupe_labels(nav_targets)
                     base = "Robotic navigational bronchoscopy"
                     if nav_platform:
@@ -699,6 +734,8 @@ class ReportPipeline:
                 def _format_target_label(value: Any) -> str:
                     text = _as_text(value)
                     text = re.sub(r"(?i)^the\s+", "", text).strip()
+                    if re.search(r"\([^)]+\)", text):
+                        return f"{text} target"
                     lobes = [m.group(1).upper() for m in re.finditer(r"(?i)\b(RUL|RML|RLL|LUL|LLL)\b", text)]
                     lobes = _dedupe_labels([l for l in lobes if l])
                     if len(lobes) == 2:
@@ -798,6 +835,22 @@ class ReportPipeline:
                     else:
                         lines.append("Bronchoalveolar lavage (BAL)")
 
+                for ebbx_proc in _by_type("endobronchial_biopsy"):
+                    data = _proc_data_dict(ebbx_proc)
+                    airway_segment = _as_text(data.get("airway_segment"))
+                    if airway_segment:
+                        lines.append(f"Endobronchial biopsy ({airway_segment})")
+                    else:
+                        lines.append("Endobronchial biopsy")
+
+                for dilation_proc in _by_type("airway_dilation"):
+                    data = _proc_data_dict(dilation_proc)
+                    airway_segment = _as_text(data.get("airway_segment"))
+                    if airway_segment:
+                        lines.append(f"Airway dilation ({airway_segment})")
+                    else:
+                        lines.append("Airway dilation")
+
                 for _ in _by_type("fiducial_marker_placement"):
                     lines.append("Fiducial marker placement")
 
@@ -869,19 +922,20 @@ class ReportPipeline:
                 if lines:
                     return "\n".join(_dedupe_labels([str(line).strip() for line in lines if str(line).strip()]))
 
-                return "\n".join(_dedupe_labels(procedure_labels)) if procedure_labels else "See procedure details below"
+                return "\n".join(_dedupe_labels(procedure_labels)) if procedure_labels else "Procedure details documented below"
 
             label_summary = _build_procedure_summary()
             cpt_summary = _summarize_cpt_candidates(state.procedures_metadata, unmatched_autocode)
             shell_indication_text = _clean_shell_text(bundle.indication_text)
-            if not shell_indication_text and bundle.free_text_hint:
-                shell_indication_text = "[indication]"
+            if not shell_indication_text:
+                shell_indication_text = "Not documented"
 
             shell_payload = OperativeShellInputs(
                 indication_text=shell_indication_text,
                 preop_diagnosis_text=bundle.preop_diagnosis_text,
                 postop_diagnosis_text=bundle.postop_diagnosis_text,
                 procedures_summary=label_summary,
+                findings_text=_clean_shell_block_text(bundle.findings_text),
                 cpt_summary=cpt_summary,
                 estimated_blood_loss=bundle.estimated_blood_loss,
                 complications_text=bundle.complications_text,
