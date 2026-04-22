@@ -149,9 +149,13 @@ async def test_report_clean_seed_text_success(api_client, monkeypatch) -> None:
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node is required for JS repair test")
 def test_speech_transcript_repair_preserves_negation_measurements_and_station_ids() -> None:
+    sample = (
+        "No biopsies were performed in station four are. "
+        "Lidocane 4 ml was used in the r u l."
+    )
     script = f"""
 import {{ repairSpeechTranscript }} from {json.dumps(_REPAIR_MODULE.as_uri())};
-const result = repairSpeechTranscript({json.dumps("No biopsies were performed in station four are. Lidocane 4 ml was used in the r u l.")});
+const result = repairSpeechTranscript({json.dumps(sample)});
 console.log(JSON.stringify(result));
 """
 
@@ -175,28 +179,60 @@ def test_speech_transcript_repair_handles_robust_bundle_cases() -> None:
     cases = [
         {
             "name": "core bronchoscopy and station repair",
-            "input": "e bus staging with rows positive at station for our. r u l lesion was sampled by t b n a using a twenty two gauge needle. broncho alveolar lavage from the left upper low with 30 cc normal saline and lido cane.",
-            "expected": "EBUS staging with ROSE positive at station 4R. RUL lesion was sampled by TBNA using a 22-gauge needle. bronchoalveolar lavage from the left upper lobe with 30 mL normal saline and lidocaine.",
+            "input": (
+                "e bus staging with rows positive at station for our. r u l lesion was sampled "
+                "by t b n a using a twenty two gauge needle. broncho alveolar lavage from the "
+                "left upper low with 30 cc normal saline and lido cane."
+            ),
+            "expected": (
+                "EBUS staging with ROSE positive at station 4R. RUL lesion was sampled by TBNA "
+                "using a 22-gauge needle. bronchoalveolar lavage from the left upper lobe with "
+                "30 mL normal saline and lidocaine."
+            ),
         },
         {
             "name": "avoid unsafe station homophones without side",
-            "input": "The station for the procedure was moved. station to be used later. pain level seven out of ten.",
-            "expected": "The station for the procedure was moved. station to be used later. pain level seven out of ten.",
+            "input": (
+                "The station for the procedure was moved. station to be used later. "
+                "pain level seven out of ten."
+            ),
+            "expected": (
+                "The station for the procedure was moved. station to be used later. "
+                "pain level seven out of ten."
+            ),
         },
         {
             "name": "pleural procedure repair",
-            "input": "thor a centesis for plural effusion with no new mo thorax. pleur x catheter placed.",
-            "expected": "thoracentesis for pleural effusion with no pneumothorax. PleurX catheter placed.",
+            "input": (
+                "thor a centesis for plural effusion with no new mo thorax. "
+                "pleur x catheter placed."
+            ),
+            "expected": (
+                "thoracentesis for pleural effusion with no pneumothorax. "
+                "PleurX catheter placed."
+            ),
         },
         {
             "name": "device and specimen repair",
-            "input": "Ion robotic bronchoscopy with combo ct and guide sheet. formal in and cyto light were sent.",
-            "expected": "Ion robotic bronchoscopy with cone beam CT and guide sheath. formalin and CytoLyt were sent.",
+            "input": (
+                "Ion robotic bronchoscopy with combo ct and guide sheet. "
+                "formal in and cyto light were sent."
+            ),
+            "expected": (
+                "Ion robotic bronchoscopy with cone beam CT and guide sheath. "
+                "formalin and CytoLyt were sent."
+            ),
         },
         {
             "name": "station word numbers and lobe repair",
-            "input": "station one one are and station seven were sampled with EBUS. right middle love examined. level four left also sampled.",
-            "expected": "station 11R and station 7 were sampled with EBUS. right middle lobe examined. station 4L also sampled.",
+            "input": (
+                "station one one are and station seven were sampled with EBUS. "
+                "right middle love examined. level four left also sampled."
+            ),
+            "expected": (
+                "station 11R and station 7 were sampled with EBUS. "
+                "right middle lobe examined. station 4L also sampled."
+            ),
         },
     ]
     script = f"""
@@ -226,9 +262,10 @@ console.log(JSON.stringify(results));
 def test_speech_transcript_repair_fixes_reporter_navigation_and_ebus_terms() -> None:
     sample = (
         "Ion robotic bronchosby for leftover low 1.8 cm ground glass opacity navigation successful "
-        "radial probe eccentric view tool lesion confirmed with combi-CT after cathart adjusted to concentric "
-        "three needle biopsies with rows positive for a double cells followed by four cryoopsies with a 1.1 "
-        "millimeter probe, even staging station 7, 5.1 millimeters, 4 passes with 22 gauge needle, rows negative, "
+        "radial probe eccentric view tool lesion confirmed with combi-CT after cathart adjusted "
+        "to concentric three needle biopsies with rows positive for a double cells followed by "
+        "four cryoopsies with a 1.1 millimeter probe, even staging station 7, 5.1 millimeters, "
+        "4 passes with 22 gauge needle, rows negative, "
         "4L, 6.8 millimeters, 3 passes with 22 gauge needle, rows negative, no complications."
     )
     script = f"""
@@ -288,7 +325,13 @@ def test_speech_transcript_repair_handles_recent_real_world_dictation_failures()
         },
         {
             "name": "ebus tbna granulomas and sarcoidosis",
-            "input": "EVIS TBNA for meters panel and fed an op at the station 718 millimeters 5 passes with 22-gauge and 25-gauge needles ROSE showed granny aloma is consistent with sacriosis 4r was 14 millimeters 4 passes with 22-gauge ROSE showed granny aloma is 11 out 12 millimeters 3 passes with 22-gauge rose road, ship, granny, lumbar, airway inspection, normal, new complications.",
+            "input": (
+                "EVIS TBNA for meters panel and fed an op at the station 718 millimeters 5 "
+                "passes with 22-gauge and 25-gauge needles ROSE showed granny aloma is "
+                "consistent with sacriosis 4r was 14 millimeters 4 passes with 22-gauge "
+                "ROSE showed granny aloma is 11 out 12 millimeters 3 passes with 22-gauge "
+                "rose road, ship, granny, lumbar, airway inspection, normal, new complications."
+            ),
             "contains": [
                 "EBUS-TBNA",
                 "mediastinal lymphadenopathy",
@@ -300,7 +343,16 @@ def test_speech_transcript_repair_handles_recent_real_world_dictation_failures()
         },
         {
             "name": "cone beam ct and cryobiopsies",
-            "input": "Robotic bronchoscopy, right lower lobe 3.1 centimeter mass navigation successful radial probe concentric on first attempt. Combating CT, confirmed tool in lesion, five needle aspirates, rows, positive for malignancy, followed by four cryovolopsies with 1.1 millimeter probe, staging evis station 7 9.1 millimeters, five passes with 22-gauge and 25-gauge needles ROSE adequate for our 7.3 millimeters, five passes with 22-gauge and 25-gauge needles rose malignant, 11r, 5.8 millimeter, three passes with 22-gauge ROSE adequate no complications.",
+            "input": (
+                "Robotic bronchoscopy, right lower lobe 3.1 centimeter mass navigation "
+                "successful radial probe concentric on first attempt. Combating CT, confirmed "
+                "tool in lesion, five needle aspirates, rows, positive for malignancy, "
+                "followed by four cryovolopsies with 1.1 millimeter probe, staging evis "
+                "station 7 9.1 millimeters, five passes with 22-gauge and 25-gauge needles "
+                "ROSE adequate for our 7.3 millimeters, five passes with 22-gauge and "
+                "25-gauge needles rose malignant, 11r, 5.8 millimeter, three passes with "
+                "22-gauge ROSE adequate no complications."
+            ),
             "contains": [
                 "cone beam CT",
                 "ROSE, positive for malignancy",
@@ -312,7 +364,13 @@ def test_speech_transcript_repair_handles_recent_real_world_dictation_failures()
         },
         {
             "name": "flexible bronchoscopy fluoroscopy and pneumothorax",
-            "input": "Flex will bronch with BAL and transbronchial biopsy for suspected ILD BAL from right middle lobe, three aliquots, 60 mL each returned approximately 55% transbronchial biopsy from right lower lobe, time six with fluoresce B, small amount of bleeding controlled with suction, no neomorphoax on post-resver church s x-ray.",
+            "input": (
+                "Flex will bronch with BAL and transbronchial biopsy for suspected ILD BAL "
+                "from right middle lobe, three aliquots, 60 mL each returned approximately "
+                "55% transbronchial biopsy from right lower lobe, time six with fluoresce B, "
+                "small amount of bleeding controlled with suction, no neomorphoax on "
+                "post-resver church s x-ray."
+            ),
             "contains": [
                 "Flexible bronchoscopy",
                 "BAL",
@@ -344,4 +402,6 @@ console.log(JSON.stringify(results));
     payload = json.loads(completed.stdout)
     for case in payload:
         for expected in case["contains"]:
-            assert expected in case["text"], f'{case["name"]}: missing {expected!r} in {case["text"]!r}'
+            assert expected in case["text"], (
+                f'{case["name"]}: missing {expected!r} in {case["text"]!r}'
+            )

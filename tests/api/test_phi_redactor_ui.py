@@ -106,7 +106,10 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
     assert 'id="speechCleanBtn"' not in html
     assert "Do not speak patient names, MRN, DOB, phone, address, or exact dates." in html
     assert "Confirm and Start Dictation" in html
-    assert "I confirm that I will not include patient names, MRN, DOB, phone, address, or exact dates in this dictation." in html
+    assert (
+        "I confirm that I will not include patient names, MRN, DOB, phone, address, "
+        "or exact dates in this dictation."
+    ) in html
     assert "Base (default)" in html
     assert "Tiny (recommended on mobile)" in html
     assert "If you are dictating on a phone or tablet, Tiny usually starts faster." in html

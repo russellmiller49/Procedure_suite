@@ -66,6 +66,9 @@ _logger = logging.getLogger(__name__)
 _ready_dep = Depends(require_ready)
 _registry_service_dep = Depends(get_registry_service)
 _phi_scrubber_dep = Depends(get_phi_scrubber)
+_report_audio_file = File(...)
+_report_audio_source = Form("reporter_builder")
+_report_audio_cloud_fallback_confirmed = Form(False)
 
 
 def _verify_bundle(
@@ -657,9 +660,9 @@ async def report_seed_from_text(
 
 @router.post("/report/transcribe_audio", response_model=ReporterSpeechTranscriptionResponse)
 async def report_transcribe_audio(
-    audio_file: UploadFile = File(...),
-    source: str = Form("reporter_builder"),
-    cloud_fallback_confirmed: bool = Form(False),
+    audio_file: UploadFile = _report_audio_file,
+    source: str = _report_audio_source,
+    cloud_fallback_confirmed: bool = _report_audio_cloud_fallback_confirmed,
     _ready: None = _ready_dep,
 ) -> ReporterSpeechTranscriptionResponse:
     try:
