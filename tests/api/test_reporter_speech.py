@@ -29,8 +29,8 @@ async def test_report_transcribe_audio_success(api_client, monkeypatch) -> None:
             transcript="EBUS TBNA at station 7",
             provider="openai",
             model="gpt-4o-mini-transcribe",
-            fallback_used=True,
-            warnings=["REPORTER_SPEECH_FALLBACK_USED"],
+            fallback_used=False,
+            warnings=["REPORTER_SPEECH_CLOUD_TRANSCRIPT"],
         )
 
     monkeypatch.setattr(reporting_module, "transcribe_reporter_audio", _fake_transcribe)
@@ -46,8 +46,8 @@ async def test_report_transcribe_audio_success(api_client, monkeypatch) -> None:
     assert payload["transcript"] == "EBUS TBNA at station 7"
     assert payload["provider"] == "openai"
     assert payload["model"] == "gpt-4o-mini-transcribe"
-    assert payload["fallback_used"] is True
-    assert payload["warnings"] == ["REPORTER_SPEECH_FALLBACK_USED"]
+    assert payload["fallback_used"] is False
+    assert payload["warnings"] == ["REPORTER_SPEECH_CLOUD_TRANSCRIPT"]
 
 
 @pytest.mark.asyncio

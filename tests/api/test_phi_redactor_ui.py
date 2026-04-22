@@ -101,8 +101,8 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
     assert 'id="speechStopBtn"' in html
     assert 'id="speechDiscardBtn"' in html
     assert 'id="speechCloudFallbackBtn"' in html
-    assert 'id="speechModelSelect"' in html
-    assert 'id="speechModelHintText"' in html
+    assert 'id="speechModelSelect"' not in html
+    assert 'id="speechModelHintText"' not in html
     assert 'id="speechCleanBtn"' not in html
     assert "Do not speak patient names, MRN, DOB, phone, address, or exact dates." in html
     assert "Confirm and Start Dictation" in html
@@ -110,9 +110,9 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
         "I confirm that I will not include patient names, MRN, DOB, phone, address, "
         "or exact dates in this dictation."
     ) in html
-    assert "Tiny (recommended)" in html
-    assert "Base (slower desktop option)" in html
-    assert "Tiny is the recommended local model right now." in html
+    assert "Cloud transcription runs by default after you stop" in html
+    assert "Use Local Tiny Fallback" in html
+    assert "uploaded to the configured cloud transcription provider after I stop recording" in html
 
     reporter_js = client.get("/ui/reporter_builder.js")
     assert reporter_js.status_code == 200
@@ -128,8 +128,9 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
     assert "Auto-cleaning scrubbed transcript" in js
     assert "Transcript auto-cleaned after redaction. Confirm PHI removal, then seed." in js
     assert 'const REPORTER_SPEECH_DEFAULT_MODEL_KEY = "tiny"' in js
-    assert "ps.reporter_speech_model_v1" in js
-    assert "Using a phone or tablet? Tiny is recommended" in js
+    assert "Cloud transcription ready. Record a short non-PHI dictation." in js
+    assert "Cloud transcription failed. Trying local Tiny fallback" in js
+    assert "Cloud transcription was unavailable, so local Tiny fallback was used." in js
     assert "transcription timed out after" in js
 
     worker_js = client.get("/ui/speech.worker.js")
