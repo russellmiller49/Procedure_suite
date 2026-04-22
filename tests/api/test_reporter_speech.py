@@ -312,7 +312,28 @@ console.log(JSON.stringify(result));
 
     payload = json.loads(completed.stdout)
     repaired = payload["text"]
-    assert repaired == "Ion robotic bronchoscopy for 1.3 centimeter right upper lobe lesion."
+    assert repaired == "Ion robotic bronchoscopy for 1.3 cm right upper lobe lesion."
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node is required for JS repair test")
+def test_speech_transcript_repair_fixes_recent_base_mishearing_example() -> None:
+    sample = "Hi, I'm Robotic Run Cosby for 1.8-seminer ground glass capacity."
+    script = f"""
+import {{ repairSpeechTranscript }} from {json.dumps(_REPAIR_MODULE.as_uri())};
+const result = repairSpeechTranscript({json.dumps(sample)});
+console.log(JSON.stringify(result));
+"""
+
+    completed = subprocess.run(
+        [shutil.which("node") or "node", "--input-type=module", "-e", script],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    payload = json.loads(completed.stdout)
+    repaired = payload["text"]
+    assert repaired == "Ion robotic bronchoscopy for 1.8 cm ground glass opacity."
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node is required for JS repair test")

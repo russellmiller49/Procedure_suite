@@ -110,9 +110,9 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
         "I confirm that I will not include patient names, MRN, DOB, phone, address, "
         "or exact dates in this dictation."
     ) in html
-    assert "Base (default)" in html
-    assert "Tiny (recommended on mobile)" in html
-    assert "If you are dictating on a phone or tablet, Tiny usually starts faster." in html
+    assert "Tiny (recommended)" in html
+    assert "Base (slower desktop option)" in html
+    assert "Tiny is the recommended local model right now." in html
 
     reporter_js = client.get("/ui/reporter_builder.js")
     assert reporter_js.status_code == 200
@@ -127,9 +127,10 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
     assert "Allow microphone access for localhost in Chrome and macOS System Settings" in js
     assert "Auto-cleaning scrubbed transcript" in js
     assert "Transcript auto-cleaned after redaction. Confirm PHI removal, then seed." in js
-    assert 'const REPORTER_SPEECH_DEFAULT_MODEL_KEY = "base"' in js
+    assert 'const REPORTER_SPEECH_DEFAULT_MODEL_KEY = "tiny"' in js
     assert "ps.reporter_speech_model_v1" in js
     assert "Using a phone or tablet? Tiny is recommended" in js
+    assert "transcription timed out after" in js
 
     worker_js = client.get("/ui/speech.worker.js")
     assert worker_js.status_code == 200
@@ -138,7 +139,8 @@ def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
     assert "wasmPaths = ONNX_WASM_BASE_URL" in worker_body
     assert 'bundleId: "speech_whisper_base_en"' in worker_body
     assert 'bundleId: "speech_whisper_tiny_en"' in worker_body
-    assert 'const DEFAULT_MODEL_KEY = "base"' in worker_body
+    assert 'const DEFAULT_MODEL_KEY = "tiny"' in worker_body
+    assert 'type: "status"' in worker_body
     assert "cdn.jsdelivr" not in worker_body
 
     repair_js = client.get("/ui/speechTranscriptRepair.js")
