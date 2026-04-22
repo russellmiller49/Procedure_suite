@@ -2,17 +2,17 @@ INTERVENTIONAL PULMONOLOGY OPERATIVE REPORT
 
 DATE OF PROCEDURE: [Date] CC Referred Physician: [Name]
 
-INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with [indication]. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
+INDICATION FOR OPERATION [Patient Name] is a [Age]-year-old [Sex] who presents with Not documented. The nature, purpose, risks, benefits, and alternatives to bronchoscopy were discussed with the patient in detail. The patient wished to proceed and informed consent was obtained.
 
 CONSENT Obtained before the procedure. Indications, potential complications, and alternatives were discussed with the patient or surrogate. Consent was signed and witnessed by an assisting medical professional.
 
 PREOPERATIVE DIAGNOSIS
 
-[indication]
+Not documented
 
 POSTOPERATIVE DIAGNOSIS
 
-[indication]
+Not documented
 
 PROCEDURE
 

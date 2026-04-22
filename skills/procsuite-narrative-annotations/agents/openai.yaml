@@ -1,0 +1,4 @@
+interface:
+  display_name: "Narrative Annotations"
+  short_description: "Add durable narrative preservation"
+  default_prompt: "Use $procsuite-narrative-annotations to add a small narrative preservation channel and thread it through ProcedureBundle end to end."

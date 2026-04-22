@@ -1,0 +1,371 @@
+{
+  "overall_average_score": 65.4,
+  "status_counts": {
+    "FAIL": 10,
+    "WARNING": 9,
+    "PASS": 1
+  },
+  "evaluations": [
+    {
+      "file": "my_results.txt",
+      "note_id": "note_246",
+      "score": 78,
+      "status": "WARNING",
+      "hallucinations": [
+        "procedure.indication and clinical_context.primary_indication are contaminated with consent text rather than just the indication.",
+        "outcomes.procedure_success_status='Failed' overcalls the result; the note describes full reopening of the LUL and partial reopening of the LLL, which is better characterized as partial success."
+      ],
+      "mismatches": [
+        "therapeutic_injection is turned on from topical TXA hemostasis; this is supportive bleeding control rather than a clearly separate primary procedural family."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note clearly distinguishes complete reopening of the LUL versus only ~70% reopening of the LLL; that sided outcome granularity is only partially preserved."
+      ],
+      "cpt": "31640 is defensible for mechanical tumor excision/debulking. Additional destruction work was performed, but the main coding error is the failed/aborted outcome overcall rather than the primary CPT.",
+      "schema": "Core CAO procedure families are captured, but indication and outcome fields are noisy."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_162",
+      "score": 54,
+      "status": "FAIL",
+      "hallucinations": [
+        "linear_ebus.stations_sampled incorrectly includes 10R and 4L as sampled even though the note only says they met sampling criteria.",
+        "node_events assign malignant or generic 'malig' ROSE results to stations without note support."
+      ],
+      "mismatches": [
+        "The actually sampled stations are 11Rs, 7, 4R, 2R, and 11L. The JSON treats surveyed nodes as sampled nodes."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "11L had 8 additional passes for molecular studies and a dedicated flow cytometry pass, which are not properly preserved."
+      ],
+      "cpt": "31653 remains supported because 3 or more structures were truly sampled, but the station-level extraction is materially inaccurate.",
+      "schema": "Classic surveyed-versus-sampled EBUS failure."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_122",
+      "score": 82,
+      "status": "WARNING",
+      "hallucinations": [
+        "stations_sampled includes a synthetic 'NONE' station and target labeling is not anatomically clean."
+      ],
+      "mismatches": [
+        "procedure_setting.airway_type is set inconsistently with the note's LMA wording in parts of the record."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The JSON does not cleanly preserve that this was a mediastinal mass in the 4R position sampled with 5 biopsies using a 22G Vizishot needle."
+      ],
+      "cpt": "A single EBUS-sampled target/structure is present, so 31652 is defensible.",
+      "schema": "Usable extraction overall, but non-station target representation is awkward."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_240",
+      "score": 84,
+      "status": "WARNING",
+      "hallucinations": [
+        "31640 is not well supported as tumor excision; the note describes coring/debridement of granulation tissue in stenosis management."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note separately documents migrated stent removal, balloon dilation, rigid coring of granulation tissue, and stent replacement with a new 12 x 40 Bonastent; some of that granularity is flattened."
+      ],
+      "cpt": "31638 is consistent with revision/replacement work on the migrated tracheal stent. 31640 is shaky because this is granulation tissue rather than tumor.",
+      "schema": "Good high-level stent-management extraction with a coding overreach on tumor excision."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_146",
+      "score": 42,
+      "status": "FAIL",
+      "hallucinations": [],
+      "mismatches": [
+        "The note clearly documents silicone Y-stent placement across trachea/carina/both mainstems, but the billing output omits the stent placement family."
+      ],
+      "missed_procedures": [
+        "Airway stent placement is a major performed procedure and should drive stent-family CPT logic.",
+        "Thermal tumor destruction/APC work is incompletely reflected in the final coding output."
+      ],
+      "missed_details": [
+        "Stent brand/type/size are important and the note gives them: silicone Y-stent, Novatec 14-10-10 mm, customized limbs."
+      ],
+      "cpt": "Endobronchial biopsy and tumor excision/debulking are supported, but stent placement is also clearly supported and should not be omitted.",
+      "schema": "Major recall failure in a complex therapeutic airway case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_144",
+      "score": 76,
+      "status": "WARNING",
+      "hallucinations": [
+        "mechanical_debulking method details are not faithful to the note; forceps-type debulking is not clearly described."
+      ],
+      "mismatches": [
+        "therapeutic_aspiration content is described too generically; the note specifically says retained blood and secretions at the end of the case."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note distinguishes left lower lobe snare/coagulation debulking from right lower lobe APC/electrocautery destruction with residual peripheral tumor; this separation is underdeveloped."
+      ],
+      "cpt": "Therapeutic aspiration is supported. Tumor debulking/destruction is also supported, but the coding stack is likely incomplete because distinct destruction work is not well represented.",
+      "schema": "Broadly correct extraction with under-specified therapeutic detail."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_062",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note documents separate right mainstem dilation in addition to left mainstem stent exchange; that contralateral dilation detail is not carried very cleanly.",
+        "Outcome/follow-up text is partially mangled."
+      ],
+      "cpt": "BAL, therapeutic aspiration, rigid bronchoscopy, dilation, and stent revision/replacement are all supported. The main concern is detail loss, not core procedure family error.",
+      "schema": "Strong overall extraction for a complicated transplant-airway case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_191",
+      "score": 80,
+      "status": "WARNING",
+      "hallucinations": [
+        "ROSE/outcome values are corrupted for some node events."
+      ],
+      "mismatches": [
+        "Granular EBUS station detail is incomplete or misassigned relative to the note, which documents stations 7, 4R, and 4L sampled with at least 5 passes each."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "Dual-needle use (22G and 19G) is important and not reflected cleanly."
+      ],
+      "cpt": "31653 is correct because 3 nodal stations were sampled.",
+      "schema": "High-level EBUS extraction is right, but quantitative and station-level detail is unreliable."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_242",
+      "score": 58,
+      "status": "FAIL",
+      "hallucinations": [
+        "The EBUS portion is embellished with extra sampled/station detail not supported by the note.",
+        "ROSE positivity from the endobronchial lesion is effectively leaked into the nodal sampling interpretation."
+      ],
+      "mismatches": [
+        "The only sampled EBUS node documented is station 7 x4. The JSON's station logic is not coherent."
+      ],
+      "missed_procedures": [
+        "Endobronchial forceps biopsy of the RLL superior segment lesion is a key performed procedure and should be explicitly represented."
+      ],
+      "missed_details": [
+        "Hemostasis with lidocaine/epinephrine plus cold saline is present but not clearly tied to the lesion biopsy event."
+      ],
+      "cpt": "31652 is supported for single-station EBUS sampling, but 31625-class endobronchial biopsy work is also supported and should not be absent.",
+      "schema": "Combined lesion-biopsy plus staging case is incompletely and inconsistently extracted."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_138",
+      "score": 79,
+      "status": "WARNING",
+      "hallucinations": [
+        "The non-station target is awkwardly normalized into station-style structures."
+      ],
+      "mismatches": [
+        "This is EBUS sampling of a left pulmonary artery mass rather than nodal staging in the usual station schema."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note documents 3 passes with a 22G needle and nondiagnostic ROSE from the pulmonary artery mass; those details are only partially preserved."
+      ],
+      "cpt": "A one-target EBUS-guided sampling construct is defensible, so 31652 is reasonable.",
+      "schema": "Reasonable extraction overall, but the schema struggles with a non-station EBUS target."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_195",
+      "score": 62,
+      "status": "FAIL",
+      "hallucinations": [
+        "pleural_procedures.chest_tube_removal is not supported.",
+        "A formal bleeding-complication construct is overcalled despite the note ending with no immediate complications."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Pleural biopsy detail (~5 biopsies) is not well surfaced."
+      ],
+      "cpt": "Medical thoracoscopy with pleural biopsies and tunneled IPC placement are supported. The false chest-tube-removal and complication logic reduce reliability.",
+      "schema": "Pleural core is captured, but false ancillary events hurt precision."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_247",
+      "score": 48,
+      "status": "FAIL",
+      "hallucinations": [
+        "mechanical_debulking / 31640 are not supported; the note documents multiple forceps biopsies of a mycetoma/cavitary lesion, not tumor excision.",
+        "Complication severity is overstated from intraprocedural bleeding control despite 'Complications: None'."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "A forceps biopsy procedure family should be represented instead of tumor excision."
+      ],
+      "missed_details": [
+        "The note gives BAL volumes (60 mL in / 20 mL out) and describes epinephrine + iced saline + wedging for hemostasis."
+      ],
+      "cpt": "31624 is supported. 31640 is not. The biopsy family should be represented as biopsy, not excision/debulking.",
+      "schema": "Procedure-family confusion is the dominant error."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_076",
+      "score": 93,
+      "status": "PASS",
+      "hallucinations": [],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Aspiration material is described more specifically in the note (clear thick secretions/mucus) than in the structured output."
+      ],
+      "cpt": "31624 and 31645 are both supported.",
+      "schema": "Clean BAL plus therapeutic aspiration extraction."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_200",
+      "score": 52,
+      "status": "FAIL",
+      "hallucinations": [
+        "sedation.type='Local Only' is not supported; the note says medications were per anesthesia record."
+      ],
+      "mismatches": [],
+      "missed_procedures": [
+        "Tunneled pleural catheter / IPC placement is clearly documented but missing from the retained pleural procedures."
+      ],
+      "missed_details": [
+        "The note documents ~1600 cc serosanguinous fluid removed and ~12 pleural biopsies from abnormal parietal pleura."
+      ],
+      "cpt": "Medical thoracoscopy is supported, but IPC insertion is also supported and should not be dropped.",
+      "schema": "Major pleural recall failure."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_202",
+      "score": 38,
+      "status": "FAIL",
+      "hallucinations": [
+        "Stent work is treated as revision-style work rather than new tracheobronchial stent placement.",
+        "therapeutic_aspiration is spuriously turned on from pleural/airway fluid handling that does not support bronchoscopic therapeutic aspiration coding.",
+        "pleural_procedures.chest_tube_removal is not supported."
+      ],
+      "mismatches": [
+        "The note describes a new Aero tracheobronchial stent in the bronchus intermedius/right-sided airway, not the extracted stent action/location construct."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The IPC placement and airway stent placement are both real major interventions, but the structured relationship between them is muddled."
+      ],
+      "cpt": "The billing logic is materially unreliable because the airway stent family is misclassified and the pleural component contains false ancillary events.",
+      "schema": "High-severity airway-stent logic failure in a mixed bronchoscopy-plus-pleural case."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_184",
+      "score": 57,
+      "status": "FAIL",
+      "hallucinations": [
+        "11L is effectively treated as sampled despite the note explicitly explaining why it was not sampled.",
+        "Pass and outcome detail are overgeneralized across targets."
+      ],
+      "mismatches": [
+        "The truly sampled structures are 4R, 4L, and the transvascular station-5 target. The JSON's node-event logic does not preserve that accurately."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note's transvascular station-5 biopsy route through the pulmonary artery is a major nuance and should be preserved explicitly."
+      ],
+      "cpt": "A 3-structure EBUS sampling construct is plausible, but the station-level logic is inaccurate enough to merit failure.",
+      "schema": "Another sampled-versus-not-sampled EBUS logic error, with transvascular complexity layered on top."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_226",
+      "score": 40,
+      "status": "FAIL",
+      "hallucinations": [
+        "31573 is not supported as a defensible CPT conclusion from this note.",
+        "31640 tumor excision is not supported; the note describes cryo/forceps debulking of necrotic or inflammatory obstructive tissue/granulation rather than tumor excision."
+      ],
+      "mismatches": [
+        "Indication and medication fields are noisy/malformed in the extraction."
+      ],
+      "missed_procedures": [],
+      "missed_details": [
+        "The note explicitly documents Kenalog 80 mg submucosal injection with a 21G needle and balloon dilation of the LLL orifice/subsegments."
+      ],
+      "cpt": "Airway dilation and cryo/forceps obstruction management are supported. 31573 and 31640 are not well supported as coded here.",
+      "schema": "Inflammatory/necrotic obstruction is miscast as tumor excision and formal injection coding."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_029",
+      "score": 88,
+      "status": "WARNING",
+      "hallucinations": [
+        "pleural_procedures.chest_tube_removal is not supported."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Only minor follow-up/disposition text loss."
+      ],
+      "cpt": "76604 and 32557 are supported.",
+      "schema": "Good pleural extraction apart from a false removal event."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_245",
+      "score": 75,
+      "status": "WARNING",
+      "hallucinations": [
+        "pleural_procedures.chest_tube_removal is not supported.",
+        "The outcome is overstated toward partial success/aborted logic even though the case completed; the note only says full inspection was limited by fused lung/adhesions."
+      ],
+      "mismatches": [],
+      "missed_procedures": [],
+      "missed_details": [
+        "Biopsy targets included both parietal pleura and adherent non-ventilated fused lung, which deserves more explicit capture."
+      ],
+      "cpt": "Medical thoracoscopy with biopsy and tunneled IPC placement are supported.",
+      "schema": "Core pleural extraction is decent, but false removal and outcome framing reduce confidence."
+    },
+    {
+      "file": "my_results.txt",
+      "note_id": "note_009",
+      "score": 34,
+      "status": "FAIL",
+      "hallucinations": [
+        "endobronchial_biopsy / 31625 are not supported by the operative narrative.",
+        "31640 tumor excision is not supported; the note describes hair/granulation removal and airway cleanup, not tumor excision."
+      ],
+      "mismatches": [
+        "The case includes migrated stent management and endobronchial hair/granulation removal, but the extracted procedure families do not model that faithfully."
+      ],
+      "missed_procedures": [
+        "Existing-stent removal/management is insufficiently represented."
+      ],
+      "missed_details": [
+        "The note's unusual-work narrative centers on significant airway management and endobronchial hair removal."
+      ],
+      "cpt": "BAL and therapeutic aspiration are supported. 31625 and 31640 are not supported as documented.",
+      "schema": "Severe family-classification error in a complex airway-clearance/stent-management case."
+    }
+  ]
+}

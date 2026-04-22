@@ -1,0 +1,21 @@
+file,note_id,score,status,headline
+my_results.txt,note_179,42,FAIL,"linear_ebus is forced into nodal staging even though the target was a 45 mm hilar cyst, not a nodal station."
+my_results.txt,note_052,88,WARNING,The top-level elastography_pattern='blue_green' is not stated in the note; the note documents Type 2 patterns.
+my_results.txt,note_131,58,FAIL,CPT 32601 (diagnostic thoracoscopy without biopsy) understates the documented pleural biopsies.
+my_results.txt,note_047,86,WARNING,Fiducial marker placement is documented but not represented as its own structured procedure/event.
+my_results.txt,note_043,87,WARNING,76604 and 32562 are supported.
+my_results.txt,note_228,94,PASS,31638 and 31641 are defensible from left mainstem stent removal plus cryotherapy/debulking of distal granulation tissue.
+my_results.txt,note_165,60,FAIL,ICG dye injection / localization marking adjacent to the RUL nodule is not represented as its own event.
+my_results.txt,note_189,52,FAIL,chest_tube/performed=true and CPT 32551 are not supported; the note explicitly says they chose observation and would place a chest tube only if the pneumothorax expanded or symptoms developed.
+my_results.txt,note_259,34,FAIL,airway_stent.performed=true is not supported; stent placement was considered but never performed before the patient arrested.
+my_results.txt,note_042,54,FAIL,Percutaneous tracheostomy is a major performed procedure and is omitted.
+my_results.txt,note_110,46,FAIL,thoracentesis.performed=true and CPT 32555 are overcalled as completed work even though no fluid was aspirated and the procedure was aborted.
+my_results.txt,note_148,94,PASS,Bronchoscopy through an established tracheostomy route with BAL is consistent with the note.
+my_results.txt,note_023,74,WARNING,Bronchial blocker exchange/repositioning for hemoptysis control is not represented.
+my_results.txt,note_008,68,FAIL,CPT 31612 is not supported; the note does not document percutaneous transtracheal aspiration/injection.
+my_results.txt,note_094,82,WARNING,"mechanical_debulking location is too narrow/imprecise; the note describes excision/debridement at RC2, bronchus intermedius, and LC1, not simply 'RUL'."
+my_results.txt,note_056,64,FAIL,"31624, 31645, and 31631 are supported. The note does not support a nodal sampling CPT because no EBUS biopsy was performed."
+my_results.txt,note_201,78,WARNING,The coding stack selects 31640 only even though the note explicitly documents APC/cryotherapy destruction work that strongly supports 31641.
+my_results.txt,note_019,86,WARNING,76604 and 32561 are supported.
+my_results.txt,note_229,60,FAIL,airway_stent location is collapsed to the left mainstem even though the procedure was placement of a silicone tracheobronchial Y-stent spanning the trachea and both mainstems.
+my_results.txt,note_083,72,WARNING,Radial EBUS / CPT 31654 is not clearly supported; the note uses radial EBUS to identify vasculature/airways in complex stenotic anatomy rather than for a peripheral lesion intervention.

@@ -296,6 +296,102 @@
           "ROSE Results:"
         ]
       }
+    },
+    {
+      "id": "ebus_dimension_text_not_station_9",
+      "tags": [
+        "ebus_measurement_guardrail"
+      ],
+      "source_refs": [
+        "tests/registry/regression_cases.jsonl",
+        "tests/registry/test_fixpack_batch2.py"
+      ],
+      "note_text": "PROCEDURE IN DETAIL:\nLinear EBUS was performed.\nStation 7 lymph node 6 mm sampled with 4 passes.\nStation 11L lymph node 9 mm sampled with 3 passes.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31652"
+        ],
+        "must_not_have_codes": [
+          "31653"
+        ],
+        "must_have_fields": {
+          "procedures_performed.linear_ebus.stations_sampled": [
+            "7",
+            "11L"
+          ]
+        }
+      },
+      "reporter_expectations": {}
+    },
+    {
+      "id": "non_chartis_blocker_does_not_emit_31634",
+      "tags": [
+        "chartis_guardrail",
+        "balloon_occlusion"
+      ],
+      "source_refs": [
+        "tests/registry/regression_cases.jsonl",
+        "tests/registry/test_fixpack_batch2.py"
+      ],
+      "note_text": "PROCEDURE IN DETAIL:\nNew Uniblocker (5Fr) balloon occlusion was performed at the Left Carina (LC2).\nThe endobronchial blocker balloon was left inflated in the LUL.\n",
+      "extraction_expectations": {
+        "must_not_have_codes": [
+          "31634",
+          "31647"
+        ],
+        "must_have_fields": {
+          "procedures_performed.balloon_occlusion.performed": true
+        },
+        "must_have_warnings_substrings": [
+          "Suppressed 31634"
+        ]
+      },
+      "reporter_expectations": {}
+    },
+    {
+      "id": "therapeutic_injection_decimal_dose_preserved",
+      "tags": [
+        "therapeutic_injection",
+        "dose_precision"
+      ],
+      "source_refs": [
+        "tests/registry/regression_cases.jsonl",
+        "tests/registry/test_external_notes_2_18_26_regressions.py"
+      ],
+      "note_text": "PROCEDURE IN DETAIL:\nAmphotericin 0.4mg was instilled into the RUL lesion.\nAmphotericin 0.2mg was instilled into the RML lesion.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31573"
+        ],
+        "must_have_fields": {
+          "procedures_performed.therapeutic_injection.dose": "0.4mg; 0.2mg"
+        }
+      },
+      "reporter_expectations": {}
+    },
+    {
+      "id": "prophylactic_cold_saline_does_not_create_bleeding_complication",
+      "tags": [
+        "bleeding_precision",
+        "prophylactic_hemostasis"
+      ],
+      "source_refs": [
+        "tests/registry/regression_cases.jsonl",
+        "tests/registry/test_complications_reconcile_precision.py"
+      ],
+      "note_text": "PROCEDURE IN DETAIL:\nTransbronchial cryobiopsy was performed in the RLL.\nCold saline was available to control any distal bleeding should bleeding occur.\nNo active bleeding was seen at the end of the procedure.\nCOMPLICATIONS: None.\nEBL: 5 mL.\n",
+      "extraction_expectations": {
+        "must_have_codes": [
+          "31628"
+        ],
+        "must_not_have_fields": {
+          "complications.bleeding.occurred": true
+        },
+        "must_not_have_warnings_substrings": [
+          "BLEEDING_GRADE_DERIVED"
+        ]
+      },
+      "reporter_expectations": {}
     }
   ]
 }

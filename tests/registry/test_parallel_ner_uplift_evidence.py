@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 
 import pytest
 
@@ -189,7 +190,7 @@ Some malacia noted.
     assert any(key.startswith("procedures_performed.diagnostic_bronchoscopy.performed") for key in evidence.keys())
     assert "clinical_context.primary_indication" in evidence
     assert "sedation.type" in evidence
-    assert "code_evidence" in evidence
+    assert "header_code_hints" in evidence
 
 
 def test_parallel_ner_deterministic_uplift_extracts_bronchus_sign_ecog_and_radial_view_with_evidence(
@@ -564,6 +565,100 @@ def test_parallel_ner_deterministic_uplift_overrides_generic_indication_placehol
     assert record.clinical_context.primary_indication == "lung mass with mediastinal adenopathy"
     assert record.procedure is not None
     assert record.procedure.indication == "lung mass with mediastinal adenopathy"
+
+
+def test_parallel_ner_deterministic_uplift_derives_navigation_imaging_codes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_EXTRACTION_ENGINE", "parallel_ner")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+
+    service = RegistryService(parallel_orchestrator=_StubParallelOrchestrator())
+    monkeypatch.setattr(service, "_get_registry_ml_predictor", lambda: None)
+
+    note_text = (
+        "RIGHT UPPER LOBE TARGET\n"
+        "Robotic navigation bronchoscopy was performed with Ion platform.\n"
+        "Radial EBUS was performed to confirm that the location of the nodule is Eccentric.\n"
+        "Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation. "
+        "Cios Spin system was used for evaluation of nodule location. "
+        "Low dose spin was performed to acquire CT imaging. "
+        "This was passed on to Ion platform system for reconstruction and nodule location. "
+        "The 3D images was interpreted on an independent workstation (Ion). "
+        "Fiducial marker was loaded with bone wax and placed under fluoroscopy guidance.\n"
+    )
+
+    result = service.extract_fields(note_text)
+    record = result.record
+
+    assert record.equipment is not None
+    assert record.equipment.navigation_platform == "Ion"
+    assert record.equipment.cbct_used is True
+    assert record.equipment.augmented_fluoroscopy is True
+    assert record.equipment.fluoroscopy_used is True
+    assert "77012" in result.cpt_codes
+    assert "76377" in result.cpt_codes
+
+
+def test_extraction_first_keeps_navigation_imaging_equipment_for_coding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "0")
+    monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+
+    service = RegistryService()
+    monkeypatch.setattr(service, "_get_registry_ml_predictor", lambda: None)
+
+    note_text = (
+        "PROCEDURE:\n"
+        "31627 Navigational Bronchoscopy\n"
+        "77012 CT guidance\n"
+        "76377 3D rendering\n"
+        "PROCEDURE IN DETAIL:\n"
+        "Robotic navigation bronchoscopy was performed with Ion platform. "
+        "Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation. "
+        "Cios Spin system was used for evaluation of nodule location. "
+        "Low dose spin was performed to acquire CT imaging. "
+        "This was passed on to Ion platform system for reconstruction and nodule location. "
+        "The 3D images was interpreted on an independent workstation (Ion). "
+        "Fiducial marker was loaded with bone wax and placed under fluoroscopy guidance.\n"
+    )
+
+    result = service.extract_fields(note_text)
+
+    assert result.record.equipment is not None
+    assert result.record.equipment.navigation_platform == "Ion"
+    assert result.record.equipment.cbct_used is True
+    assert result.record.equipment.augmented_fluoroscopy is True
+    assert result.record.equipment.fluoroscopy_used is True
+    assert "77012" in result.cpt_codes
+    assert "76377" in result.cpt_codes
+
+
+def test_extraction_first_real_note_keeps_navigation_imaging_equipment_for_coding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PROCSUITE_PIPELINE_MODE", "extraction_first")
+    monkeypatch.setenv("REGISTRY_AUDITOR_SOURCE", "disabled")
+    monkeypatch.setenv("REGISTRY_SELF_CORRECT_ENABLED", "0")
+    monkeypatch.setenv("REGISTRY_USE_STUB_LLM", "1")
+
+    service = RegistryService()
+    note_text = Path("registry_granular_data/notes_text/note_078.txt").read_text()
+
+    result = service.extract_fields(note_text)
+
+    assert result.record.equipment is not None
+    assert result.record.equipment.navigation_platform == "Ion"
+    assert result.record.equipment.cbct_used is True
+    assert result.record.equipment.augmented_fluoroscopy is True
+    assert result.record.equipment.fluoroscopy_used is True
+    assert "77012" in result.cpt_codes
+    assert "76377" in result.cpt_codes
 
 
 def test_parallel_ner_filters_stale_ml_only_review_reasons_after_uplift(

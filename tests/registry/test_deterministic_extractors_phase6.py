@@ -1,18 +1,27 @@
 import pytest
 
+from app.coder.domain_rules.registry_to_cpt.coding_rules import derive_all_codes_with_meta
 from app.registry.deterministic_extractors import (
     extract_airway_stent,
     extract_blvr,
     extract_bpf_sealant,
     extract_chest_tube,
+    extract_chest_tube_removal,
     extract_endobronchial_biopsy,
     extract_ipc,
     extract_navigational_bronchoscopy,
+    extract_dye_marker_placement,
+    extract_fiducial_placement,
+    extract_peg_insertion,
+    extract_radial_ebus,
     extract_primary_indication,
+    extract_thoracentesis,
     extract_therapeutic_aspiration,
+    extract_therapeutic_injection,
     extract_transbronchial_cryobiopsy,
     run_deterministic_extractors,
 )
+from app.registry.schema import RegistryRecord
 
 
 def test_navigation_robotic_bronch_abbrev_triggers():
@@ -86,11 +95,42 @@ def test_run_deterministic_extractors_includes_pleural_ipc():
     assert seed.get("pleural_procedures", {}).get("ipc", {}).get("performed") is True
 
 
+def test_extract_ipc_recovers_tunneled_pleural_catheter_from_placement_mechanics() -> None:
+    note_text = (
+        "Medical thoracoscopy was performed for recurrent right pleural effusion. "
+        "A tunneled pleural catheter was advanced through a peel-away sheath into the pleural space "
+        "using guidewire and serial dilation technique. "
+        "Post-procedure: indwelling pleural catheter in place."
+    )
+
+    out = extract_ipc(note_text)
+
+    assert out.get("ipc", {}).get("performed") is True
+    assert out.get("ipc", {}).get("action") == "Insertion"
+    assert out.get("ipc", {}).get("tunneled") is True
+
+
 def test_chest_tube_existing_left_in_place_maps_to_repositioning() -> None:
     text = "Existing chest tube was left in place and connected to suction."
     out = extract_chest_tube(text)
     assert out.get("chest_tube", {}).get("performed") is True
     assert out.get("chest_tube", {}).get("action") == "Repositioning"
+
+
+def test_extract_chest_tube_skips_observation_only_pneumothorax_plan() -> None:
+    text = (
+        "A small apical pneumothorax was seen post-procedure. "
+        "We elected observation without chest tube placement unless the pneumothorax enlarged or symptoms developed."
+    )
+    assert extract_chest_tube(text) == {}
+
+
+def test_extract_thoracentesis_skips_aborted_no_return_case() -> None:
+    text = (
+        "Thoracentesis was attempted but no fluid return was obtained and the procedure was aborted "
+        "because there was no safe window."
+    )
+    assert extract_thoracentesis(text) == {}
 
 
 def test_forceps_biopsy_in_cavity_triggers_endobronchial_biopsy() -> None:
@@ -103,6 +143,107 @@ def test_forceps_biopsy_in_cavity_triggers_endobronchial_biopsy() -> None:
     ebx = out.get("endobronchial_biopsy") or {}
     assert ebx.get("performed") is True
     assert ebx.get("locations") == ["RLL"]
+
+
+def test_extract_endobronchial_biopsy_ignores_header_only_apply_to_31625() -> None:
+    note_text = (
+        "UNUSUAL PROCEDURE: Substantially greater work than usual.\n"
+        "Apply to: 31625 Endobronchial biopsy(s)\n"
+        "Procedure in detail: Hair and necrotic debris were removed from the airway. "
+        "No forceps biopsies were obtained.\n"
+    )
+
+    assert extract_endobronchial_biopsy(note_text) == {}
+
+
+def test_extract_airway_stent_skips_planned_only_stent_language() -> None:
+    note_text = (
+        "Given the bleeding and instability, we considered airway stent placement if needed. "
+        "The patient then became pulseless before any stent was deployed."
+    )
+    assert extract_airway_stent(note_text) == {}
+
+
+def test_extract_airway_stent_normalizes_y_stent_location() -> None:
+    note_text = (
+        "A customized silicone tracheobronchial Y-stent was deployed across the carina "
+        "with the limbs seated in the mainstem bronchi."
+    )
+    out = extract_airway_stent(note_text).get("airway_stent", {})
+    assert out.get("performed") is True
+    assert out.get("stent_type") == "Y-Stent"
+    assert out.get("location") == "Carina (Y)"
+
+
+def test_extract_therapeutic_injection_marks_submucosal_kenalog_cpt_ineligible() -> None:
+    note_text = (
+        "Using a 25 gauge needle, we injected a total of 1 mL of Kenalog 40 mg "
+        "into the submucosa of the distal trachea."
+    )
+
+    result = extract_therapeutic_injection(note_text)
+    injection = result.get("therapeutic_injection") or {}
+
+    assert injection.get("performed") is True
+    assert injection.get("medication") == "Kenalog"
+    assert injection.get("dose") == "40mg"
+    assert injection.get("location") == "Distal trachea"
+    assert injection.get("cpt31573_eligible") is False
+
+
+def test_extract_therapeutic_injection_skips_topical_txa_hemostasis() -> None:
+    note_text = (
+        "Following endobronchial biopsy there was mild oozing. "
+        "Topical tranexamic acid 500 mg was instilled for hemostasis with bleeding controlled."
+    )
+
+    assert extract_therapeutic_injection(note_text) == {}
+
+
+def test_extract_radial_ebus_skips_vascular_mapping_without_peripheral_target() -> None:
+    note_text = (
+        "Radial EBUS was used to identify the surrounding vasculature and airway anatomy in the stenotic segment. "
+        "No peripheral lesion localization or sampling was performed."
+    )
+    assert extract_radial_ebus(note_text) == {}
+
+
+def test_extract_dye_marker_placement_captures_icg_localization() -> None:
+    note_text = (
+        "Using navigational bronchoscopy and fluoroscopy guidance, 0.75 mL of ICG dye was injected "
+        "adjacent to the right upper lobe nodule for surgical localization."
+    )
+    out = extract_dye_marker_placement(note_text).get("dye_marker_placement", {})
+    assert out.get("performed") is True
+    assert out.get("agent") == "Indocyanine green"
+    assert out.get("volume_ml") == 0.75
+
+
+def test_extract_fiducial_placement_and_peg_insertion_capture_first_class_surfaces() -> None:
+    fiducial_text = "Three fiducial markers were placed around the lesion under fluoroscopy."
+    peg_text = "Percutaneous endoscopic gastrostomy (PEG) tube placement was performed successfully."
+
+    assert extract_fiducial_placement(fiducial_text) == {"fiducial_placement": {"performed": True}}
+    assert extract_peg_insertion(peg_text) == {"peg_insertion": {"performed": True}}
+
+
+def test_extract_therapeutic_aspiration_rejects_pleural_space_verification_language() -> None:
+    note_text = (
+        "A Yueh needle was introduced into the pleural space. "
+        "Aspiration of air and fluid was performed to verify placement over the guidewire. "
+        "A peel-away sheath was then advanced."
+    )
+
+    assert extract_therapeutic_aspiration(note_text) == {}
+
+
+def test_extract_chest_tube_removal_ignores_ipc_placement_mechanics() -> None:
+    note_text = (
+        "The tunneled pleural catheter was advanced through the peel-away sheath and placed in the pleural space. "
+        "A guidewire and serial dilators were used to complete insertion."
+    )
+
+    assert extract_chest_tube_removal(note_text) == {}
 
 
 def test_run_deterministic_extractors_airway_dilation_target_anatomy_with_evidence() -> None:
@@ -134,6 +275,51 @@ def test_run_deterministic_extractors_balloon_occlusion_fields_with_evidence() -
     assert evidence.get("procedures_performed.balloon_occlusion.occlusion_location")
     assert evidence.get("procedures_performed.balloon_occlusion.air_leak_result")
     assert evidence.get("procedures_performed.balloon_occlusion.device_size")
+
+
+def test_run_deterministic_extractors_marks_inspection_only_ebus_and_elastography() -> None:
+    note_text = (
+        "INSTRUMENT:\n"
+        "Linear EBUS\n"
+        "\n"
+        "EBUS-Findings\n"
+        "Indications: Diagnostic\n"
+        "Lymph Nodes/Sites Inspected: 4R (lower paratracheal) node\n"
+        "11Ri lymph node\n"
+        "No biopsies taken based upon ultrasound appearance\n"
+        "Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics.\n"
+        "Lymph Nodes Evaluated:\n"
+        "Site 5: The 11Ri lymph node was < 10 mm on CT. "
+        "The site was not sampled: Sampling this lymph node was not clinically indicated. "
+        "Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. "
+        "The target lymph node demonstrated a Type 2 elastographic pattern with mixed soft and stiff regions.\n"
+    )
+
+    seed = run_deterministic_extractors(note_text)
+    linear = seed.get("procedures_performed", {}).get("linear_ebus") or {}
+
+    assert linear.get("performed") is True
+    assert linear.get("elastography_used") is True
+    assert not (linear.get("stations_sampled") or [])
+
+
+def test_run_deterministic_extractors_extracts_fibrinolytic_therapy_from_subsequent_day_note() -> None:
+    note_text = (
+        "PROCEDURE:\n"
+        "32562 Instillation(s), via chest tube/catheter, agent for fibrinolysis; subsequent day\n"
+        "Date of chest tube insertion: 12/15/25\n"
+        "10 mg/5 mg tPA/DNase dose #: 4\n"
+        "Instillation of agents for fibrinolysis (subsequent)\n"
+    )
+
+    seed = run_deterministic_extractors(note_text)
+    fibrinolytic = seed.get("pleural_procedures", {}).get("fibrinolytic_therapy") or {}
+
+    assert fibrinolytic.get("performed") is True
+    assert set(fibrinolytic.get("agents") or []) == {"tPA", "DNase"}
+    assert fibrinolytic.get("tpa_dose_mg") == 10.0
+    assert fibrinolytic.get("dnase_dose_mg") == 5.0
+    assert fibrinolytic.get("number_of_doses") == 4
 
 
 def test_extract_transbronchial_cryobiopsy_does_not_fire_for_cryoprobe_clot_removal_with_endobronchial_pathology_word() -> None:
@@ -196,3 +382,68 @@ def test_extract_bpf_sealant_fires_for_alveolar_pleural_fistula_glue_instillatio
     )
     out = extract_bpf_sealant(note_text)
     assert out.get("bpf_sealant", {}).get("performed") is True
+
+
+def test_run_deterministic_extractors_derives_cryotherapy_from_cryoprobe_ablation_row() -> None:
+    note_text = (
+        "Endobronchial obstruction at RML was treated with the following modalities:\n"
+        "Modality  Tools  Setting/Mode  Duration  Results\n"
+        "Cryoprobe  1.7mm probe    30sec freeze-thaw cycles; total 6 applications  Ablation\n"
+        "Balloon dilation was performed at RML.\n"
+    )
+
+    seed = run_deterministic_extractors(note_text)
+    record = RegistryRecord(**seed)
+
+    assert record.procedures_performed is not None
+    assert record.procedures_performed.cryotherapy is not None
+    assert record.procedures_performed.cryotherapy.performed is True
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "31641" in codes
+
+
+def test_run_deterministic_extractors_derives_mechanical_debulking_from_granulation_row() -> None:
+    note_text = (
+        "Area of stenosis at the right middle lobe was treated with the following modalities:\n"
+        "Modality  Tools  Setting/Mode  Duration  Results\n"
+        "Mechanical  Pulmonary alligator forceps  N/A  N/A  Good granulation tissue removal from distal RML bronchus\n"
+        "Cryospray  Cryospray cryotherapy catheter  Low-flow  10-second application x 5 total applications  "
+        "Excellent application of spray cryotherapy to proximal RML bronchus and around the RML take-off\n"
+    )
+
+    seed = run_deterministic_extractors(note_text)
+    record = RegistryRecord(**seed)
+
+    assert record.procedures_performed is not None
+    assert record.procedures_performed.mechanical_debulking is not None
+    assert record.procedures_performed.mechanical_debulking.performed is True
+    assert record.procedures_performed.mechanical_debulking.material_type == "granulation"
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "31640" not in codes
+
+
+def test_run_deterministic_extractors_extracts_navigation_imaging_equipment() -> None:
+    note_text = (
+        "Robotic navigation bronchoscopy was performed with Ion platform.\n"
+        "Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation. "
+        "Cios Spin system was used for evaluation of nodule location. "
+        "Low dose spin was performed to acquire CT imaging. "
+        "This was passed on to Ion platform system for reconstruction and nodule location. "
+        "The 3D images was interpreted on an independent workstation (Ion). "
+        "Fiducial marker was loaded with bone wax and placed under fluoroscopy guidance.\n"
+    )
+
+    seed = run_deterministic_extractors(note_text)
+    record = RegistryRecord(**seed)
+
+    assert record.equipment is not None
+    assert record.equipment.navigation_platform == "Ion"
+    assert record.equipment.cbct_used is True
+    assert record.equipment.augmented_fluoroscopy is True
+    assert record.equipment.fluoroscopy_used is True
+
+    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
+    assert "77012" in codes
+    assert "76377" in codes

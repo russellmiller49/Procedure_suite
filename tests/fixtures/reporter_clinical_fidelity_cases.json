@@ -1,0 +1,145 @@
+{
+  "schema_version": "reporter_clinical_fidelity_cases.v1",
+  "cases": [
+    {
+      "id": "case_01_voriconazole_injection",
+      "prompt_text": "Patient: 45 F\nIndication: Aspergilloma\nAirway: Tracheostomy\nProcedure: Injection of Voriconazole (50mg)\nTarget: Left Lower Lobe (LLL)\nFindings: thick tan secretions",
+      "required_proc_types": ["therapeutic_injection"],
+      "required_markdown_contains": ["45-year-old Female", "Voriconazole", "Left Lower Lobe (LLL)"],
+      "forbidden_markdown_contains": ["[Age]", "Await final pathology", "See procedure details below"]
+    },
+    {
+      "id": "case_02_stent_migration_and_tear",
+      "prompt_text": "Prepare an operative report for a 96 year old female undergoing bronchoscopy for airway obstruction. Note a complication: EBUS caused a tear in the distal tracheal posterior membrane. GI consult ruled out esophageal injury. Initial studded silicone stent failed because migration occurred immediately upon deployment requiring removal. Successful placement of straight silicone stent measuring 18mm x 50mm and dilation to 18 mm.",
+      "required_proc_types": ["airway_stent_placement", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["96-year-old Female", "tear in the distal tracheal posterior membrane", "18mm x 50mm"],
+      "forbidden_markdown_contains": ["COMPLICATIONS None"]
+    },
+    {
+      "id": "case_03_bleeding_airway_change",
+      "prompt_text": "Please document IP bronchoscopy. Codes 31645, 31640, 31641 with modifier 22. Patient required switch from LMA to 7.5mm ETT due to bleeding. Bronchus Intermedius opened from 10% to 40%.",
+      "required_proc_types": ["therapeutic_aspiration", "endobronchial_tumor_destruction"],
+      "required_markdown_contains": ["Bronchus intermedius obstruction requiring therapeutic bronchoscopy", "Therapeutic aspiration of Bronchus intermedius", "Modifier 22 complexity documented.", "switch from LMA to 7.5mm ETT due to bleeding"],
+      "forbidden_markdown_contains": ["COMPLICATIONS None", "[Age]"]
+    },
+    {
+      "id": "case_04_rigid_bronch_with_bal",
+      "prompt_text": "Patient: 80 M\nIndication: large thyroid mass / ~10 days intubation\nProcedure: Rigid Bronch, EBUS, BAL (Right Middle Lobe (RML))\nFindings: Stenosis length 4.0 cm, Left VC erythema\nOutcome: Tracheostomy by ENT",
+      "required_proc_types": ["bal", "rigid_bronchoscopy", "ebus_tbna"],
+      "required_markdown_contains": ["80-year-old Male", "Bronchoalveolar lavage (BAL) RML", "Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA)", "Rigid Bronchoscopy (Therapeutic)", "large thyroid mass / ~10 days intubation", "Stenosis length 4.0 cm", "Tracheostomy by ENT"],
+      "forbidden_markdown_contains": ["[Age]", "See procedure details below", "RML pulmonary nodule"]
+    },
+    {
+      "id": "case_05_stent_exchange_without_dilation_mixup",
+      "prompt_text": "PATIENT: 58/F\nINDICATION: post-transplant anastomotic stricture\nPROCEDURE: Rigid Bronchoscopy, Stent Exchange (Left), Balloon Dilation (Right), BAL.\nFINDINGS: Web-like stenosis at the right bronchial anastomosis; Stent in place at LMSB with thick mucus throughout.\nDETAILS: Stent Ultraflex 12 x 40mm; Balloon Elation.",
+      "required_proc_types": ["bal", "airway_stent_placement", "airway_stent_removal_revision", "rigid_bronchoscopy"],
+      "required_markdown_contains": ["58-year-old Female", "Airway Stent Placement (Ultraflex SEMS)", "Airway Stent Removal / Revision (Left Main Stem (LMS) bronchus)"],
+      "forbidden_markdown_contains": ["Dilation sizes: 40 mm", "COMPLICATIONS None tear"]
+    },
+    {
+      "id": "case_06_apc_and_lll_stent",
+      "prompt_text": "Please generate a rigid bronchoscopy report. Patient is a 58 year old female with recurrent granulation tissue. We found a 80% obstruction in the Left Lower Lobe. Used APC and mechanical debulking to open it. Placed a Bonastent 10x20 stent in the LLL basal subsegment. Also did a BAL of the Left Upper Lobe.",
+      "required_proc_types": ["bal", "rigid_bronchoscopy", "endobronchial_tumor_destruction", "airway_stent_placement"],
+      "required_markdown_contains": ["Bronchoalveolar lavage (BAL) Left Upper Lobe", "Endobronchial Tumor Destruction (APC)", "Airway Stent Placement (Bonastent)", "Dimensions: 10mm x 20mm.", "Location: LLL."],
+      "forbidden_markdown_contains": ["See procedure details below", "tumor ablation"]
+    },
+    {
+      "id": "case_07_radial_ebus_multisite_sampling",
+      "prompt_text": "Please generate an IP op note for a 59 year old female with mediastinal adenopathy and pulmonary nodules. We did a BAL at the Lateral Segment of RML and EBBX at multiple carinas. Used radial EBUS for a LLL lesion, taking biopsies. Staged mediastinum, sampled Station 7 which was Type 3, skipped the smaller nodes.",
+      "required_proc_types": ["radial_ebus_survey", "ebus_tbna", "bal", "endobronchial_biopsy"],
+      "required_markdown_contains": ["Mediastinal adenopathy and pulmonary nodules", "Bronchoalveolar lavage (BAL) Lateral Segment of RML", "Endobronchial biopsy (multiple carinas)", "LLL Target Sampling", "Stations 7", "Type 3", "multiple carinas", "59-year-old Female"],
+      "forbidden_markdown_contains": ["[Age]", "See procedure details below"]
+    },
+    {
+      "id": "case_08_bpf_stent_revision_with_disposition",
+      "prompt_text": "Pt: 65 M. S/p Ivor Lewis with BPF (2.0 cm, distal left mainstem). Proc: Bronch, Biopsy, Stenting. Complication: 14x30 mm pushed distal by 14x40 mm. Action: Removed 14x40 mm via stoma (trach exchange), retracted 14x30 mm. Plan: ICU, nebs Q6H.",
+      "required_proc_types": ["airway_stent_placement", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["65-year-old Male", "14mm x 30mm", "ICU, nebs Q6H"],
+      "forbidden_markdown_contains": ["COMPLICATIONS None"]
+    },
+    {
+      "id": "case_09_ion_ebus_lul_nodule",
+      "prompt_text": "Bronchoscopy report. 59yo M. Indication: Lung nodule. Procedure: Ion nav bronch to LUL Apicoposterior Segment (LB1+2) + EBUS. Findings: 0.8 cm Concentric nodule. Sampling: TBNA x5, TBBX x4, BAL. EBUS sampled Station 4R. Fiducial placed. No comps.",
+      "required_proc_types": ["robotic_navigation", "ebus_tbna", "bal", "fiducial_marker_placement", "transbronchial_biopsy", "transbronchial_needle_aspiration"],
+      "required_markdown_contains": ["59-year-old Male", "Robotic navigational bronchoscopy (Ion) to LUL target", "Transbronchial needle aspiration of LUL (5 passes)", "Transbronchial biopsy of LUL target (4 samples)", "Fiducial marker placement"],
+      "forbidden_markdown_contains": ["See procedure details below"]
+    },
+    {
+      "id": "case_10_subsequent_pleural_fibrinolytic",
+      "prompt_text": "Please write a procedure note for a 72 year old female with a Parapneumonic Effusion. We performed a bedside ultrasound and subsequent fibrinolytic instillation on the left. Ultrasound showed Small volume with Thick loculations. We gave dose number 6 of tPA / DNase.",
+      "required_proc_types": ["chest_tube"],
+      "required_markdown_contains": ["Parapneumonic pleural effusion", "Left intrapleural fibrinolytic instillation via existing pleural drain", "Thoracic ultrasound of the left hemithorax", "dose number 6", "Small volume with Thick loculations", "Pleural Effusion Volume: Small volume", "Loculations: Thick Loculations"],
+      "forbidden_markdown_contains": ["Image-Guided Chest Tube", "COMPLICATIONS None tear"]
+    },
+    {
+      "id": "case_11_ion_rul_with_station7",
+      "prompt_text": "41yo F D14.31. Ion bronch RUL 1.5 cm lesion. tortuous airway anatomy so used balloon. EBUS 7 Sampled. rose conclusive for adenocarcinoma. no comps.",
+      "required_proc_types": ["robotic_navigation", "ebus_tbna"],
+      "required_markdown_contains": ["41-year-old Female", "Robotic navigational bronchoscopy (Ion) to RUL target", "Station 7 EBUS aspirates", "Balloon support was used due to tortuous airway anatomy.", "Preliminary result consistent with adenocarcinoma"],
+      "forbidden_markdown_contains": ["[Age]", "See procedure details below"]
+    },
+    {
+      "id": "case_12_ion_rll_with_4l",
+      "prompt_text": "PROCEDURE: Robotic Bronchoscopy (Ion) & EBUS.\nPATIENT: 81 M.\nTARGETS: RLL (RB6) & RLL (RB9).\nNODE: Station 4L.\nRESULT: Adenocarcinoma.",
+      "required_proc_types": ["robotic_navigation", "ebus_tbna"],
+      "required_markdown_contains": ["81-year-old Male", "Pulmonary target(s): RLL (RB6), RLL (RB9)", "Robotic navigational bronchoscopy (Ion) to 2 targets (RLL (RB6), RLL (RB9))", "Station 4L EBUS aspirates", "RLL (RB6) and RLL (RB9) targets successfully sampled via robotic bronchoscopy.", "Adenocarcinoma"],
+      "forbidden_markdown_contains": ["[Age]", "See procedure details below"]
+    },
+    {
+      "id": "case_13_airway_stenosis_bal",
+      "prompt_text": "Bronchoscopy note for 62yo F. Dx: Airway stenosis (Right). Findings: ~5mm stenosis RMSB, malacia moderate. BAL performed RLL BAL.",
+      "required_proc_types": ["bal"],
+      "required_markdown_contains": ["62-year-old Female", "Right airway stenosis", "Bronchoalveolar lavage (BAL) RLL", "5mm stenosis RMSB, malacia moderate."],
+      "forbidden_markdown_contains": ["[Age]", "See procedure details below", "Moderate sedation"]
+    },
+    {
+      "id": "case_14_lmsb_stent_removal_with_lul_bal",
+      "prompt_text": "Patient: 71 M\nSurgeon: Dr. Chen\nProcedure: Bronchoscopy with Stent Removal & Cryo\nKey Findings:\n- LMSB stent completely occluded by inspissated secretions\n- blood-tinged mucus plugs\n- LUL BAL performed\nPlan: Admit, polymicrobial infection, Unasyn and Dexamethasone 4 mg.",
+      "required_proc_types": ["bal", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["ATTENDING Dr. Chen", "Bronchoalveolar lavage (BAL) LUL", "Airway Stent Removal / Revision (Left Main Stem (LMS) bronchus)", "Admit, polymicrobial infection, Unasyn and Dexamethasone 4 mg"],
+      "forbidden_markdown_contains": ["Airway Stent Placement", "COMPLICATIONS None tear"]
+    },
+    {
+      "id": "case_15_multisite_stent_and_cryo",
+      "prompt_text": "Patient: 52 M\nIndication: transplant complications/stenosis\nRML Procedure: Dilation, BAL, 6mm x 22mm stent.\nLingula Procedure: Attempted 7mm x 16mm stent (failed/removed), balloon dilation.\nDebridement: RMS using Cryotherapy.\nComplications: no active bleeding, minimal oozing",
+      "required_proc_types": ["bal", "airway_stent_placement", "airway_stent_removal_revision", "endobronchial_cryoablation"],
+      "required_markdown_contains": ["52-year-old Male", "Bronchoalveolar lavage (BAL) RML", "Airway dilation (RML)", "Airway dilation (Lingula)", "Airway Stent Placement", "Dimensions: 6mm x 22mm.", "Location: RML.", "Airway Stent Removal / Revision (Lingula)", "Right Main Stem (RMS) bronchus was treated with a cryoprobe", "minimal oozing"],
+      "forbidden_markdown_contains": ["Dilation sizes:", "COMPLICATIONS None", "Endobronchial obstruction at RML was treated with a cryoprobe"]
+    },
+    {
+      "id": "case_16_initial_fibrinolytic_existing_tube",
+      "prompt_text": "47yo M w/ complicated effusion. right-sided tube. gave tpa/dnase initial dose. code 32561. no issues.",
+      "required_proc_types": ["chest_tube"],
+      "required_markdown_contains": ["Complicated pleural effusion", "Right intrapleural fibrinolytic instillation via existing pleural drain", "dose number 1"],
+      "forbidden_markdown_contains": ["Right Image-Guided Chest Tube", "COMPLICATIONS tear"]
+    },
+    {
+      "id": "case_17_ultrasound_plus_subsequent_fibrinolytic",
+      "prompt_text": "Procedure codes 76604 and 32562. 64 year old female. Dx: Empyema. left hemithorax US findings: Large volume. Meds: 5 mg tPA / 5 mg DNase. Comps: None.",
+      "required_proc_types": ["chest_tube"],
+      "required_markdown_contains": ["Empyema", "Left intrapleural fibrinolytic instillation via existing pleural drain", "Thoracic ultrasound of the left hemithorax", "tPA 5.0 mg, DNase 5.0 mg", "dose number 2", "Pleural Effusion Volume: Large volume"],
+      "forbidden_markdown_contains": ["Left Image-Guided Chest Tube", "COMPLICATIONS tear"]
+    },
+    {
+      "id": "case_18_bpf_stent_revision_with_icu",
+      "prompt_text": "Procedures: Bronchoscopy, Stent Placement (Aero 14x20 mm, 12x40 mm), Trach Exchange. Diagnosis: BPF post-esophagectomy. Indication: 1.5 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. Disposition: ICU.",
+      "required_proc_types": ["airway_stent_placement", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["BPF post-esophagectomy", "Airway Stent Placement (Aero)", "Trach Exchange.", "14mm x 20mm, 12mm x 40mm", "Dimensions: 12mm x 40mm.", "Technique: retrieval via tracheostomy stoma", "ICU."],
+      "forbidden_markdown_contains": ["COMPLICATIONS None", "Disposition: ICU"]
+    },
+    {
+      "id": "case_19_bilateral_transplant_stent_work",
+      "prompt_text": "Please generate an operative report for a 56 year old male referred by Dr. Banerji. Patient has bilateral transplant complications. We did a BAL, RML stenting with a 7mm x 19mm iCast fully covered, and attempted Lingula stenting which failed and required removal. We used the Erbe for RMS debridement. Note the complex dual scope work.",
+      "required_proc_types": ["bal", "airway_stent_placement", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["CC Referred Physician: Dr. Banerji", "bilateral transplant complications", "Airway Stent Placement (iCast fully covered)", "Airway Stent Removal / Revision (Lingula)", "Endobronchial Tumor Destruction (Erbe debridement)", "Performed at the Right Main Stem (RMS) bronchus", "attempted Lingula stenting which failed and required removal"],
+      "forbidden_markdown_contains": ["COMPLICATIONS None", "[Age]"]
+    },
+    {
+      "id": "case_20_bpf_stent_revision_repeat",
+      "prompt_text": "Procedures: Bronchoscopy, Stent Placement (Aero 14x20 mm, 12x40 mm), Trach Exchange. Diagnosis: BPF post-esophagectomy. Indication: 1.0 cm fistula in proximal left mainstem. Complication: Stent migration requiring revision. Disposition: ICU.",
+      "required_proc_types": ["airway_stent_placement", "airway_stent_removal_revision"],
+      "required_markdown_contains": ["BPF post-esophagectomy", "Airway Stent Placement (Aero)", "Trach Exchange.", "14mm x 20mm, 12mm x 40mm", "Dimensions: 12mm x 40mm.", "Technique: retrieval via tracheostomy stoma", "ICU."],
+      "forbidden_markdown_contains": ["COMPLICATIONS None", "Disposition: ICU"]
+    }
+  ]
+}

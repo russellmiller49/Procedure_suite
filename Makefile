@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 .PHONY: setup lint typecheck test deps-compile deps-check validate-schemas validate-kb validate-knowledge-release test-kb-strict autopatch autocommit codex-train codex-metrics run-coder distill-phi distill-phi-silver sanitize-phi-silver normalize-phi-silver build-phi-platinum eval-phi-client audit-phi-client patch-phi-client-hardneg finetune-phi-client-hardneg finetune-phi-client-hardneg-cpu export-phi-client-model export-phi-client-model-quant export-phi-client-model-quant-static dev-iu pull-model-pytorch prodigy-prepare prodigy-prepare-file prodigy-annotate prodigy-export prodigy-retrain prodigy-finetune prodigy-cycle prodigy-clear-unannotated prodigy-prepare-registry prodigy-annotate-registry prodigy-export-registry prodigy-merge-registry prodigy-retrain-registry prodigy-registry-cycle registry-prodigy-prepare registry-prodigy-annotate registry-prodigy-export relations-prodigy-reset relations-prodigy-prepare relations-prodigy-annotate relations-prodigy-export relations-prodigy-eval check-corrections-fresh gold-export gold-split gold-train gold-finetune gold-audit gold-eval gold-cycle gold-incremental reporter-gold-generate-pilot reporter-gold-split reporter-gold-eval reporter-gold-pilot platinum-test platinum-build platinum-sanitize platinum-apply platinum-apply-dry platinum-cycle platinum-final registry-prep registry-prep-with-human registry-prep-dry registry-prep-final registry-prep-raw registry-prep-module test-registry-prep
-.PHONY: venv deps test-conda ui-deps ui-test
+.PHONY: venv deps test-conda ui-deps ui-test bootstrap-reporter-speech-vendor
 
 PYTHON ?= python3
 VENV ?= .venv
@@ -38,6 +38,9 @@ venv:
 deps: venv
 	$(VENV_PIP) install -r $(REQUIREMENTS_FILE)
 	$(VENV_PIP) install -r $(REQUIREMENTS_DEV_FILE)
+
+bootstrap-reporter-speech-vendor: venv
+	$(VENV_PY) ops/tools/bootstrap_reporter_speech_vendor_bundle.py
 
 lint:
 	$(CONDA_ACTIVATE) && ruff check --cache-dir .ruff_cache .
@@ -784,6 +787,7 @@ help:
 	@echo "  typecheck      - Run mypy type checker"
 	@echo "  ui-deps        - Install UI test/build deps (not required for make test)"
 	@echo "  ui-test        - Run UI tests (not required for make test)"
+	@echo "  bootstrap-reporter-speech-vendor - Download the local Whisper base/tiny speech bundles into ui/static/*/vendor/"
 	@echo "  validate-schemas - Validate JSON schemas and Pydantic models"
 	@echo "  validate-kb    - Validate knowledge base"
 	@echo "  run-coder      - Run smart-hybrid coder over notes"

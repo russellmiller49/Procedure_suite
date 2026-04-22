@@ -86,6 +86,22 @@ def test_note_008_tracheal_puncture_derives_31612_and_has_evidence(monkeypatch: 
     assert record.evidence.get("procedures_performed.tracheal_puncture.performed")
 
 
+def test_tracheal_puncture_used_to_secure_stent_does_not_derive_31612(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    note_text = (
+        "PROCEDURE IN DETAIL:\n"
+        "A Bonostent was deployed into the trachea.\n"
+        "A 14 gauge angiocath was used to puncture the anterior tracheal wall so sutures could be passed "
+        "through the trachea and stent to secure the stent in position.\n"
+    )
+    record = _extract_record_parallel_ner(monkeypatch, note_text)
+
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31612" not in codes
+    assert any("stent fixation" in str(w).lower() for w in warnings)
+
+
 def test_note_011_subsequent_aspiration_31646_overrides_31645(monkeypatch: pytest.MonkeyPatch) -> None:
     note_text = (
         "PROCEDURE:\n"
@@ -103,7 +119,9 @@ def test_note_011_subsequent_aspiration_31646_overrides_31645(monkeypatch: pytes
     assert record.evidence.get("procedures_performed.therapeutic_aspiration.is_subsequent")
 
 
-def test_note_011_balloon_occlusion_derives_31634_without_chartis(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_note_011_balloon_occlusion_without_chartis_does_not_derive_31634(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     note_text = (
         "PROCEDURE IN DETAIL:\n"
         "New Uniblocker (5Fr) balloon occlusion was performed at the Left Carina (LC2).\n"
@@ -111,9 +129,10 @@ def test_note_011_balloon_occlusion_derives_31634_without_chartis(monkeypatch: p
     )
     record = _extract_record_parallel_ner(monkeypatch, note_text)
 
-    codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "31634" in codes
+    codes, _rationales, warnings = derive_all_codes_with_meta(record)
+    assert "31634" not in codes
     assert "31647" not in codes
+    assert any("Suppressed 31634" in warning for warning in warnings)
 
     assert record.procedures_performed
     assert record.procedures_performed.balloon_occlusion

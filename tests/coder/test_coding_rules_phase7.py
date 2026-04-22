@@ -336,10 +336,10 @@ class TestTherapeuticAspirationExtractor:
 
 
 class TestRadialEBUSExtractor:
-    def test_extract_radial_ebus_phrase(self):
+    def test_extract_radial_ebus_phrase_requires_peripheral_target_context(self):
         text = "Radial EBUS was utilized to identify vasculature and airways."
         result = extract_radial_ebus(text)
-        assert result == {"radial_ebus": {"performed": True}}
+        assert result == {}
 
 
 class TestCryotherapyExtractor:
@@ -603,7 +603,7 @@ class TestTBNABundling:
 class TestHeaderExplicitFallback:
     def test_header_explicit_31641_with_cryobiopsy_adds_31641(self):
         record = make_record(transbronchial_cryobiopsy=True)
-        record.evidence = {"code_evidence": [{"text": "31641"}]}
+        record.evidence = {"header_code_hints": [{"text": "31641"}]}
         codes, _rationales, warnings = derive_all_codes_with_meta(record)
 
         assert "31628" in codes
@@ -612,7 +612,7 @@ class TestHeaderExplicitFallback:
 
     def test_header_explicit_31641_without_cryobiopsy_does_not_add(self):
         record = make_record()
-        record.evidence = {"code_evidence": [{"text": "31641"}]}
+        record.evidence = {"header_code_hints": [{"text": "31641"}]}
         codes, _rationales, _warnings = derive_all_codes_with_meta(record)
         assert "31641" not in codes
 
@@ -638,7 +638,7 @@ class TestTracheostomyCPTLogic:
     def test_immature_trach_change_header_31502_suppresses_31615(self):
         record = make_record(diagnostic_bronchoscopy=True, established_tracheostomy_route=True)
         record.evidence = {
-            "code_evidence": [{"text": "31502"}],
+            "header_code_hints": [{"text": "31502"}],
             "tracheostomy_context": [
                 {"text": "day 6 immature tract accidental decannulation with tracheostomy tube reinsertion"}
             ],

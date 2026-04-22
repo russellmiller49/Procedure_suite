@@ -53,3 +53,27 @@ def test_scan_for_omissions_does_not_misfire_peripheral_tbna_on_specimen_station
     )
     warnings = scan_for_omissions(note_text, record)
     assert not any("peripheral/lung tbna" in w.lower() for w in warnings)
+
+
+def test_scan_for_omissions_does_not_misfire_tbbx_on_ebus_site_block() -> None:
+    note_text = (
+        "Site 2: The 7 (subcarinal) node was => 10 mm on CT and metabolic activity was present. "
+        "The lymph node was photographed. The site was sampled. "
+        "4 endobronchial ultrasound guided transbronchial biopsies were performed with samples obtained. "
+        "Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness.\n"
+    )
+    record = RegistryRecord.model_validate(
+        {
+            "procedures_performed": {
+                "linear_ebus": {
+                    "performed": True,
+                    "stations_sampled": ["7"],
+                },
+                "transbronchial_cryobiopsy": {"performed": True},
+            }
+        }
+    )
+
+    warnings = scan_for_omissions(note_text, record)
+
+    assert not any("transbronchial (lung) biopsy" in w.lower() for w in warnings)

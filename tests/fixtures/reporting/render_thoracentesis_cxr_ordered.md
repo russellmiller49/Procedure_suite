@@ -33,4 +33,4 @@ A total of 900 mL of serous fluid was removed. A post-procedure chest x-ray was 
 
 IMPRESSION / PLAN
 
-Await final pathology and cytology. Post-procedure monitoring per protocol; obtain post-procedure chest imaging.
+Successful left thoracentesis with 900 mL removed (serous).

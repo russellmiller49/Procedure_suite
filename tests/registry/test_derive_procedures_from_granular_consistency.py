@@ -42,6 +42,53 @@ def test_derive_procedures_from_granular_up_propagates_linear_ebus_performed() -
     assert not any("procedures_performed.linear_ebus.performed=true" in w for w in warnings)
 
 
+def test_derive_procedures_from_granular_up_propagates_linear_ebus_elastography() -> None:
+    granular_data = {
+        "linear_ebus_stations_detail": [
+            {
+                "station": "11Ri",
+                "sampled": False,
+                "elastography_performed": True,
+                "elastography_pattern": "blue_green",
+            }
+        ]
+    }
+    existing_procedures = {
+        "linear_ebus": {"performed": False}
+    }
+
+    updated, warnings = derive_procedures_from_granular(
+        granular_data=granular_data,
+        existing_procedures=existing_procedures,
+    )
+
+    assert updated["linear_ebus"]["performed"] is True
+    assert not (updated["linear_ebus"].get("stations_sampled") or [])
+    assert updated["linear_ebus"]["elastography_used"] is True
+    assert updated["linear_ebus"]["elastography_pattern"] == "blue_green"
+    assert not any("procedures_performed.linear_ebus.performed=true" in w for w in warnings)
+
+
+def test_derive_procedures_from_granular_does_not_warn_for_inspection_only_node_events() -> None:
+    updated, warnings = derive_procedures_from_granular(
+        granular_data={},
+        existing_procedures={
+            "linear_ebus": {
+                "performed": True,
+                "elastography_used": True,
+                "node_events": [
+                    {"station": "4R", "action": "inspected_only"},
+                    {"station": "7", "action": "inspected_only"},
+                ],
+            }
+        },
+    )
+
+    assert updated["linear_ebus"]["performed"] is True
+    assert not (updated["linear_ebus"].get("stations_sampled") or [])
+    assert not any("procedures_performed.linear_ebus.performed=true" in w for w in warnings)
+
+
 def test_derive_procedures_from_granular_up_propagates_bal_performed() -> None:
     granular_data = {
         "specimens_collected": [

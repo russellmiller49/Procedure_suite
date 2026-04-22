@@ -42,6 +42,8 @@ def test_phi_redactor_assets_have_coop_coep_headers(client: TestClient) -> None:
         "/ui/phi_redactor/index.html",
         "/ui/reporter_builder.html",
         "/ui/reporter_builder.js",
+        "/ui/speech.worker.js",
+        "/ui/speechTranscriptRepair.js",
         "/ui/phi_redactor/app.js",
         "/ui/phi_redactor/redactor.worker.js",
         "/ui/phi_redactor/styles.css",
@@ -84,6 +86,66 @@ def test_reporter_builder_can_transfer_note_to_dashboard(client: TestClient) -> 
     assert dashboard_js.status_code == 200
     assert "consumeReporterTransferPayload" in dashboard_js.text
     assert "ps.reporter_to_dashboard_note_v1" in dashboard_js.text
+
+
+def test_reporter_builder_has_speech_dictation_controls_and_same_origin_worker(
+    client: TestClient,
+) -> None:
+    reporter_html = client.get("/ui/reporter_builder.html")
+    assert reporter_html.status_code == 200
+    html = reporter_html.text
+    assert 'id="speechStartConfirmModal"' in html
+    assert 'id="speechStartConfirmBtn"' in html
+    assert 'id="speechStartCancelBtn"' in html
+    assert 'id="speechStartBtn"' in html
+    assert 'id="speechStopBtn"' in html
+    assert 'id="speechDiscardBtn"' in html
+    assert 'id="speechCloudFallbackBtn"' in html
+    assert 'id="speechModelSelect"' in html
+    assert 'id="speechModelHintText"' in html
+    assert 'id="speechCleanBtn"' not in html
+    assert "Do not speak patient names, MRN, DOB, phone, address, or exact dates." in html
+    assert "Confirm and Start Dictation" in html
+    assert (
+        "I confirm that I will not include patient names, MRN, DOB, phone, address, "
+        "or exact dates in this dictation."
+    ) in html
+    assert "Base (default)" in html
+    assert "Tiny (recommended on mobile)" in html
+    assert "If you are dictating on a phone or tablet, Tiny usually starts faster." in html
+
+    reporter_js = client.get("/ui/reporter_builder.js")
+    assert reporter_js.status_code == 200
+    js = reporter_js.text
+    assert '"/report/transcribe_audio"' in js
+    assert '"/report/clean_seed_text"' in js
+    assert "cloud_fallback_confirmed" in js
+    assert "speechStartConfirmModal" in js
+    assert "speechStartConfirmedForCurrentNote" in js
+    assert "http://localhost:8000 or http://127.0.0.1:8000 instead of http://0.0.0.0:8000" in js
+    assert "Waiting for microphone permission" in js
+    assert "Allow microphone access for localhost in Chrome and macOS System Settings" in js
+    assert "Auto-cleaning scrubbed transcript" in js
+    assert "Transcript auto-cleaned after redaction. Confirm PHI removal, then seed." in js
+    assert 'const REPORTER_SPEECH_DEFAULT_MODEL_KEY = "base"' in js
+    assert "ps.reporter_speech_model_v1" in js
+    assert "Using a phone or tablet? Tiny is recommended" in js
+
+    worker_js = client.get("/ui/speech.worker.js")
+    assert worker_js.status_code == 200
+    worker_body = worker_js.text
+    assert 'from "./transformers.min.js"' in worker_body
+    assert "wasmPaths = ONNX_WASM_BASE_URL" in worker_body
+    assert 'bundleId: "speech_whisper_base_en"' in worker_body
+    assert 'bundleId: "speech_whisper_tiny_en"' in worker_body
+    assert 'const DEFAULT_MODEL_KEY = "base"' in worker_body
+    assert "cdn.jsdelivr" not in worker_body
+
+    repair_js = client.get("/ui/speechTranscriptRepair.js")
+    assert repair_js.status_code == 200
+    repair_body = repair_js.text
+    assert "station_with_side" in repair_body
+    assert '"lidocaine"' in repair_body
 
 
 def test_phi_redactor_index_has_formatted_report_sections(client: TestClient) -> None:

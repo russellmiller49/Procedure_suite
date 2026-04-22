@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reporter Fidelity"
+  short_description: "Preserve detail in reporter output"
+  default_prompt: "Use $procsuite-reporter-fidelity to keep clinically important detail in reporter output without changing the current ProcedureBundle contract."
