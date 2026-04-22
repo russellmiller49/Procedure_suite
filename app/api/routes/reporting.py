@@ -6,7 +6,7 @@ import logging
 import os
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from pydantic import BaseModel
 
 from app.api.dependencies import get_registry_service
@@ -18,8 +18,11 @@ from app.api.schemas import (
     QuestionsResponse,
     RenderRequest,
     RenderResponse,
+    ReporterSpeechTranscriptionResponse,
     SeedFromTextRequest,
     SeedFromTextResponse,
+    SpeechTranscriptCleanupRequest,
+    SpeechTranscriptCleanupResponse,
     VerifyRequest,
     VerifyResponse,
 )
@@ -48,6 +51,12 @@ from app.reporting.quality_gate import build_reporter_quality_flags
 from app.reporting.seed_pipeline import (
     seed_outcome_from_llm_findings_seed,
     seed_outcome_from_registry_result,
+)
+from app.reporting.speech_support import (
+    ReporterSpeechUnavailable,
+    ReporterSpeechUnsafeInput,
+    clean_scrubbed_reporter_transcript,
+    transcribe_reporter_audio,
 )
 from app.reporting.validation import ValidationEngine
 
@@ -643,6 +652,59 @@ async def report_seed_from_text(
         needs_manual_review=needs_manual_review,
         missing_field_prompts=missing_field_prompts,
         debug_notes=debug_notes if debug_enabled else None,
+    )
+
+
+@router.post("/report/transcribe_audio", response_model=ReporterSpeechTranscriptionResponse)
+async def report_transcribe_audio(
+    audio_file: UploadFile = File(...),
+    source: str = Form("reporter_builder"),
+    cloud_fallback_confirmed: bool = Form(False),
+    _ready: None = _ready_dep,
+) -> ReporterSpeechTranscriptionResponse:
+    try:
+        payload = await audio_file.read()
+        result = await transcribe_reporter_audio(
+            audio_bytes=payload,
+            filename=audio_file.filename,
+            content_type=audio_file.content_type,
+            source=source,
+            cloud_fallback_confirmed=cloud_fallback_confirmed,
+        )
+    except ReporterSpeechUnavailable as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    return ReporterSpeechTranscriptionResponse(
+        transcript=result.transcript,
+        provider=result.provider,
+        model=result.model,
+        fallback_used=result.fallback_used,
+        warnings=list(result.warnings or []),
+    )
+
+
+@router.post("/report/clean_seed_text", response_model=SpeechTranscriptCleanupResponse)
+async def report_clean_seed_text(
+    req: SpeechTranscriptCleanupRequest,
+    _ready: None = _ready_dep,
+) -> SpeechTranscriptCleanupResponse:
+    try:
+        result = clean_scrubbed_reporter_transcript(
+            req.text,
+            already_scrubbed=bool(req.already_scrubbed),
+            strict=bool(req.strict),
+        )
+    except ReporterSpeechUnsafeInput as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except ReporterSpeechUnavailable as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    return SpeechTranscriptCleanupResponse(
+        cleaned_text=result.cleaned_text,
+        changed=result.changed,
+        correction_applied=result.correction_applied,
+        model=result.model,
+        warnings=list(result.warnings or []),
     )
 
 

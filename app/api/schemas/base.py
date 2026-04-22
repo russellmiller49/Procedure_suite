@@ -202,6 +202,29 @@ class SeedFromTextResponse(BaseModel):
         return data
 
 
+class ReporterSpeechTranscriptionResponse(BaseModel):
+    transcript: str
+    provider: str
+    model: str | None = None
+    fallback_used: bool = False
+    warnings: list[str] = Field(default_factory=list)
+
+
+class SpeechTranscriptCleanupRequest(BaseModel):
+    text: str
+    already_scrubbed: bool = False
+    source: str | None = None
+    strict: bool = False
+
+
+class SpeechTranscriptCleanupResponse(BaseModel):
+    cleaned_text: str
+    changed: bool
+    correction_applied: bool
+    model: str | None = None
+    warnings: list[str] = Field(default_factory=list)
+
+
 class KnowledgeMeta(BaseModel):
     version: str
     sha256: str
@@ -511,8 +534,11 @@ __all__ = [
     "JsonPatchOperation",
     "QuestionsRequest",
     "QuestionsResponse",
+    "ReporterSpeechTranscriptionResponse",
     "SeedFromTextRequest",
     "SeedFromTextResponse",
+    "SpeechTranscriptCleanupRequest",
+    "SpeechTranscriptCleanupResponse",
     "UnifiedProcessRequest",
     "UnifiedProcessResponse",
     "BundleTimepointRole",
