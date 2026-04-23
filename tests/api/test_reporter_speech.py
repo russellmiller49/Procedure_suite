@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from app.api.routes import reporting as reporting_module
+from app.reporting import speech_support as speech_support_module
 from app.reporting.speech_support import (
     ReporterSpeechCleanupResult,
     ReporterSpeechTranscriptionResult,
@@ -79,6 +80,169 @@ async def test_report_transcribe_audio_offline_returns_503(api_client, monkeypat
 
     assert response.status_code == 503
     assert "offline" in response.json()["detail"].lower()
+
+
+@pytest.mark.asyncio
+async def test_transcribe_reporter_audio_retries_with_whisper_fallback(monkeypatch) -> None:
+    monkeypatch.setenv("REPORTER_SPEECH_ENABLED", "1")
+    monkeypatch.setenv("REPORTER_SPEECH_ALLOW_CLOUD_FALLBACK", "1")
+    monkeypatch.setenv("LLM_PROVIDER", "openai_compat")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    monkeypatch.setenv("REPORTER_SPEECH_TRANSCRIBE_MODEL", "gpt-4o-mini-transcribe")
+    monkeypatch.delenv("REPORTER_SPEECH_TRANSCRIBE_FALLBACK_MODELS", raising=False)
+    monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+
+    calls: list[dict[str, object]] = []
+
+    class _FakeResponse:
+        def __init__(
+            self,
+            status_code: int,
+            *,
+            text: str = "",
+            json_payload: dict[str, object] | None = None,
+            headers: dict[str, str] | None = None,
+        ) -> None:
+            self.status_code = status_code
+            self._text = text
+            self._json_payload = json_payload
+            self.headers = headers or {}
+
+        @property
+        def text(self) -> str:
+            if self._text:
+                return self._text
+            if self._json_payload is not None:
+                return json.dumps(self._json_payload)
+            return ""
+
+        def json(self) -> dict[str, object]:
+            if self._json_payload is None:
+                raise ValueError("No JSON payload")
+            return self._json_payload
+
+    responses = [
+        _FakeResponse(
+            400,
+            json_payload={
+                "error": {
+                    "message": (
+                        "The model `gpt-4o-mini-transcribe` does not exist "
+                        "or you do not have access to it."
+                    )
+                }
+            },
+            headers={"x-request-id": "req-model"},
+        ),
+        _FakeResponse(200, text="Ion robotic bronchoscopy for LUL lesion"),
+    ]
+
+    class _FakeAsyncClient:
+        def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002, ANN003
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> None:  # noqa: ANN001, ANN002, ANN003
+            return None
+
+        async def post(self, url, *, headers=None, data=None, files=None):  # noqa: ANN001
+            calls.append(
+                {
+                    "url": url,
+                    "headers": dict(headers or {}),
+                    "data": dict(data or {}),
+                    "filename": files["file"][0] if files else "",
+                }
+            )
+            return responses.pop(0)
+
+    monkeypatch.setattr(speech_support_module.httpx, "AsyncClient", _FakeAsyncClient)
+
+    result = await speech_support_module.transcribe_reporter_audio(
+        audio_bytes=b"fake-audio",
+        filename="dictation.webm",
+        content_type="audio/webm",
+        source="reporter_builder",
+        cloud_fallback_confirmed=True,
+    )
+
+    assert result.transcript == "Ion robotic bronchoscopy for LUL lesion"
+    assert result.provider == "openai"
+    assert result.model == "whisper-1"
+    assert result.fallback_used is True
+    assert result.warnings == [
+        "Cloud transcription used whisper-1 after the primary model was rejected."
+    ]
+    assert len(calls) == 2
+    assert calls[0]["data"]["model"] == "gpt-4o-mini-transcribe"
+    assert calls[0]["data"]["response_format"] == "text"
+    assert calls[1]["data"]["model"] == "whisper-1"
+    assert calls[1]["data"]["response_format"] == "text"
+
+
+@pytest.mark.asyncio
+async def test_transcribe_reporter_audio_surfaces_provider_reason(monkeypatch) -> None:
+    monkeypatch.setenv("REPORTER_SPEECH_ENABLED", "1")
+    monkeypatch.setenv("REPORTER_SPEECH_ALLOW_CLOUD_FALLBACK", "1")
+    monkeypatch.setenv("LLM_PROVIDER", "openai_compat")
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    monkeypatch.setenv("REPORTER_SPEECH_TRANSCRIBE_MODEL", "gpt-4o-mini-transcribe")
+    monkeypatch.setenv("REPORTER_SPEECH_TRANSCRIBE_FALLBACK_MODELS", "whisper-1")
+    monkeypatch.delenv("OPENAI_OFFLINE", raising=False)
+
+    class _FakeResponse:
+        def __init__(self, status_code: int, *, json_payload: dict[str, object]) -> None:
+            self.status_code = status_code
+            self._json_payload = json_payload
+            self.headers = {"x-request-id": "req-final"}
+
+        @property
+        def text(self) -> str:
+            return json.dumps(self._json_payload)
+
+        def json(self) -> dict[str, object]:
+            return self._json_payload
+
+    responses = [
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported parameter: prompt"}}),
+        _FakeResponse(
+            400,
+            json_payload={"error": {"message": "Unsupported parameter: response_format"}},
+        ),
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported audio format"}}),
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported audio format"}}),
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported audio format"}}),
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported audio format"}}),
+        _FakeResponse(400, json_payload={"error": {"message": "Unsupported audio format"}}),
+    ]
+
+    class _FakeAsyncClient:
+        def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002, ANN003
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> None:  # noqa: ANN001, ANN002, ANN003
+            return None
+
+        async def post(self, url, *, headers=None, data=None, files=None):  # noqa: ANN001, ARG002
+            return responses.pop(0)
+
+    monkeypatch.setattr(speech_support_module.httpx, "AsyncClient", _FakeAsyncClient)
+
+    with pytest.raises(speech_support_module.ReporterSpeechUnavailable) as exc_info:
+        await speech_support_module.transcribe_reporter_audio(
+            audio_bytes=b"fake-audio",
+            filename="dictation.webm",
+            content_type="audio/webm",
+            source="reporter_builder",
+            cloud_fallback_confirmed=True,
+        )
+
+    assert "Unsupported audio format" in str(exc_info.value)
 
 
 @pytest.mark.asyncio
