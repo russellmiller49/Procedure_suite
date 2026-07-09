@@ -98,6 +98,63 @@ Hard constraints for this path:
   - `OPENAI_API_KEY=...`
 - Reporter baseline and challenger evals should share the same machine-readable schema, and `--strict` is the intended render-stability mode.
 
+## Ancillary Documents & Longitudinal Outcomes (Case Aggregation)
+
+The registry houses more than the procedure note. Ancillary documents append to a case
+(`POST` via `app/api/routes/registry_append.py`, stored in `registry_appended_documents`)
+and `CaseAggregator` (`app/registry/application/case_aggregator.py`) merges them into the
+canonical case snapshot (`registry_case_records`), deterministic-first with optional LLM fallback:
+
+- **Imaging** (`event_type=imaging`): CT + PET-CT (targets, sizes, SUV, response) and — new 2026-07 —
+  **CXR/US** (`app/registry/aggregation/imaging/extract_cxr.py`): pneumothorax presence/side/trend,
+  effusion presence/side/trend, device position, `subtype=post_procedure`. Free-text
+  `source_modality` is canonicalized by `normalize_modality()` (e.g. "portable chest x-ray" → `cxr`).
+  Snapshots land in `imaging_summary.baseline/followups`.
+- **Pathology** (`event_type=pathology`): final diagnosis, staging, biomarkers (PD-L1), micro;
+  per-station results are checked against `stations_sampled` (QA flags
+  `path_station_not_in_stations_sampled` / `sampled_station_missing_from_path`).
+  Per-specimen yield (`app/registry/aggregation/pathology/specimen_yield.py`) parses specimen
+  blocks into `pathology_results.specimen_results[]` — sampling modality (tbna / brushing /
+  washing / bal / transbronchial_biopsy / endobronchial_biopsy / cryobiopsy / pleural_biopsy…),
+  station, and result category — so the registry can answer "which modality made the diagnosis".
+- **Clinical follow-up** (`event_type=clinical_update|treatment_update|complication`):
+  admission/ICU/deceased/disease status plus — new 2026-07 — `ed_visit`, `readmission`, and
+  structured `complication_types` (pneumothorax, bleeding, infection, respiratory_failure,
+  effusion_recurrence, stent_migration_or_obstruction, drain_malfunction). Updates land in
+  `clinical_course.updates` (+ distilled `current_state`).
+- **Longitudinal rollup** (new 2026-07): after event patching, `derive_longitudinal_outcomes()`
+  (`app/registry/aggregation/outcomes_rollup.py`) computes `registry.longitudinal_outcomes`:
+  day-30 complication/readmission/ED-visit/mortality flags, survival status,
+  last-known-status day offset, `diagnostic_yield` (Malignant / Benign-specific / Nondiagnostic /
+  Pending — classified from `pathology_results.final_diagnosis`, falling back to the best
+  per-specimen result), and `reintervention_within_30d` (procedure/procedure_addendum events
+  at day 1–30). Manual-override locks on `/longitudinal_outcomes` are honored; the block is
+  omitted until any longitudinal signal exists.
+- **LLM fallbacks** mirror per event type (pathology / imaging / clinical): CXR/US events fall
+  back to `CxrFindingsLLM` only when deterministic extraction produced no structured findings
+  (`llm_cxr_fallback` / `llm_cxr_failed` QA flags).
+- **Dashboard**: the workflow UI's Flattened Tables render "Longitudinal Outcomes (Case Rollup)"
+  and "Pathology Specimen Yield" (when present), plus pneumothorax/effusion/device rows in the
+  Imaging Summary and ED-visit/readmission/complication-type rows in Clinical Follow-up
+  (`ui/static/phi_redactor/app.js:buildFlattenedTables`).
+- Schema notes: sections are declared in `data/knowledge/IP_Registry.json` +
+  `proc_schemas/registry/ip_v3.py` + mirrored in `app/registry/schema/v2_dynamic.py`
+  (attach hand-written models via `CUSTOM_FIELD_TYPES`). All changes are additive.
+- Tests: `tests/registry/test_longitudinal_extension.py`, `tests/registry/test_case_aggregator_*.py`.
+
+## Recent Updates (2026-07-04)
+
+- **Location integrity:** intervention locations (mechanical_debulking/cryotherapy/thermal_ablation) are now sentence-scoped around action verbs; normal-anatomy ("trachea was normal") and scope-navigation sentences no longer contribute sites; prose double-spaces no longer count as table rows (`_is_multicell_table_line`).
+- **PR1 completion:** consent scrub covers "consent was obtained"/"explanation in lay terms"; percent-reopened/partial-opening language yields `Partial success` (negation-aware); chest-tube-removal has an IPC-placement-mechanics veto; lidocaine-with-epinephrine and hemostasis-context instillations are not therapeutic injection.
+- **EBUS:** `reconcile_ebus_node_event_consistency` enforces inspected-only nodes carry no ROSE and granular `sampled` flags match `stations_sampled`; ROSE sentence capture fixed (`[^.\\n]` typo truncated "identified" to "ide"); 31652/31653 count "stations or structures" — non-station targets count only when no station was identified, deduped against peripheral-TBNA targets (no 31629+31652 double-bill, no alias upcoding).
+- **Stents:** placement/removal classification is subject-aware (scope removal ≠ stent removal; scope-as-instrument removal still counts); bullet-style "Deployed under direct vision" lines detect placement (Y-stent → 31631); first-time SEMS deployment no longer misreads as revision.
+- **Endobronchial biopsy:** menu/mod-22 text can't force 31625; forceps biopsies with the lesion in the previous sentence are recovered; transbronchial/guide-sheath forceps biopsies are excluded.
+- **Pleural:** thoracoscopy with pleural biopsies derives **32609** (32604 is pericardial and was wrong); biopsy enrichment re-runs after the thoracoscopy backstop; IPC "catheter ... with tunneling" phrasing verifies; pleural-needle "aspiration of air/fluid to verify placement" is not 31645 (airway anchors override).
+- **Header hierarchy:** the ≤3-code header-authoritative shortcut applies only when there is no substantive narrative (narrative supersedes header codes).
+- **Complications:** bleeding-context window fallback requires control-language + unnegated bleeding (blocker-for-blood-soiling = grade 3 without fabricating grade 4 from tumor-board/pre-op mentions); event notes are sentence-scoped, not paragraph heads.
+- **Reporter:** tracheostomy route requires stoma language (`via/through ... tracheostom-`, not "through the trachea"); CHEST ULTRASOUND FINDINGS renders only when an ultrasound exam is documented; quality-gate "removed"/"required" adverse cues exclude routine fluid-removal and "no further intervention was required" idioms only; pleural fluid appearance and intercostal-space ordinals render correctly. Reporter seed eval: cpt_jaccard/F1 1.0, zero blockers/contradictions/extra flags.
+- Stale tests updated to current policy: fungal debulking ≠ 31640, pleural biopsy = 32609, non-station EBUS structures derive 31652 (see tests with "Policy update" comments).
+
 ## Recent Updates (2026-03-09)
 
 - Quality gates were hardened: `eval_golden.py` now exercises the real extraction-first runtime, gate artifacts are path-sanitized, and failing gates still write summaries.

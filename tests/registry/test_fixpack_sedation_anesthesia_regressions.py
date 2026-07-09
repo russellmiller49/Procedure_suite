@@ -13,7 +13,7 @@ _BATCH4_RESULTS_PATH = Path(__file__).resolve().parents[2] / "extraction_test_3_
 
 def _load_batch4_note(note_name: str) -> str:
     if not _BATCH4_RESULTS_PATH.is_file():
-        raise FileNotFoundError(_BATCH4_RESULTS_PATH)
+        pytest.skip(f"Fixture batch not available: {_BATCH4_RESULTS_PATH}")
 
     text = _BATCH4_RESULTS_PATH.read_text(encoding="utf-8")
     match = re.search(

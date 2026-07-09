@@ -56,8 +56,11 @@ def patch_clinical_update(
                 "summary_text": update.get("summary_text"),
                 "hospital_admission": update.get("hospital_admission"),
                 "icu_admission": update.get("icu_admission"),
+                "ed_visit": update.get("ed_visit"),
+                "readmission": update.get("readmission"),
                 "deceased": update.get("deceased"),
                 "disease_status": update.get("disease_status"),
+                "complication_types": update.get("complication_types") or [],
                 "source_event_id": event_id,
             }
             if clinical_course.get("current_state") != next_state:

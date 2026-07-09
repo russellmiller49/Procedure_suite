@@ -1025,11 +1025,22 @@ def derive_procedures_from_granular(
                 if not mechanical.get("method"):
                     mechanical["method"] = mechanical_method
                 if not mechanical.get("location"):
+                    # Only sites where a mechanical modality was actually applied;
+                    # other CAO sites (inspected or treated with other modalities)
+                    # must not leak into the debulking location.
+                    mechanical_mod_re = re.compile(
+                        r"cryoextraction|microdebrider|rigid coring|mechanical debulking"
+                    )
                     locations = sorted(
                         {
                             str(detail.get("location")).strip()
                             for detail in cao_details
-                            if detail.get("location") and str(detail.get("location")).strip()
+                            if detail.get("location")
+                            and str(detail.get("location")).strip()
+                            and any(
+                                mechanical_mod_re.search(str(app.get("modality") or "").lower())
+                                for app in detail.get("modalities_applied") or []
+                            )
                         }
                     )
                     if locations:

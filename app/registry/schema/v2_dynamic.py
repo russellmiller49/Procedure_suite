@@ -202,11 +202,19 @@ class ImagingSnapshot(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
     relative_day_offset: int
-    modality: Literal["ct", "pet_ct", "cta", "mri", "other"]
-    subtype: Literal["preop", "followup", "restaging", "surveillance"] | None = None
+    modality: Literal["ct", "pet_ct", "cta", "mri", "cxr", "us", "other"]
+    subtype: Literal["preop", "followup", "restaging", "surveillance", "post_procedure"] | None = None
     event_title: str | None = None
     response: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
     overall_impression_text: str | None = None
+    # Structured post-procedure findings (primarily CXR/US; additive 2026-07).
+    pneumothorax: bool | None = None
+    pneumothorax_side: Literal["Left", "Right", "Bilateral"] | None = None
+    pneumothorax_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = None
+    pleural_effusion: bool | None = None
+    effusion_side: Literal["Left", "Right", "Bilateral"] | None = None
+    effusion_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = None
+    device_position_text: str | None = None
     qa_flags: list[str] = Field(default_factory=list)
 
 
@@ -230,9 +238,29 @@ class ClinicalUpdate(BaseModel):
     summary_text: str | None = None
     hospital_admission: bool | None = None
     icu_admission: bool | None = None
+    ed_visit: bool | None = None
+    readmission: bool | None = None
     deceased: bool | None = None
     disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    complication_types: list[str] = Field(default_factory=list)
     source_event_id: UUID | None = None
+    qa_flags: list[str] = Field(default_factory=list)
+
+
+class LongitudinalOutcomes(BaseModel):
+    """Case-level outcome rollup derived from appended follow-up events (additive 2026-07)."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    day30_complication: bool | None = None
+    day30_readmission: bool | None = None
+    day30_ed_visit: bool | None = None
+    day30_mortality: bool | None = None
+    survival_status: Literal["Alive", "Deceased", "Unknown"] | None = None
+    last_known_status_day_offset: int | None = None
+    diagnostic_yield: Literal["Malignant", "Benign-specific", "Nondiagnostic", "Pending", "Unknown"] | None = None
+    reintervention_within_30d: bool | None = None
+    complication_types: list[str] = Field(default_factory=list)
     qa_flags: list[str] = Field(default_factory=list)
 
 
@@ -247,8 +275,11 @@ class ClinicalState(BaseModel):
     summary_text: str | None = None
     hospital_admission: bool | None = None
     icu_admission: bool | None = None
+    ed_visit: bool | None = None
+    readmission: bool | None = None
     deceased: bool | None = None
     disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    complication_types: list[str] = Field(default_factory=list)
     source_event_id: UUID | None = None
 
 
@@ -272,6 +303,7 @@ CUSTOM_FIELD_TYPES[("RegistryRecord", "procedures_performed", "thermal_ablation"
 CUSTOM_FIELD_TYPES[("RegistryRecord", "targets")] = CaseTargets
 CUSTOM_FIELD_TYPES[("RegistryRecord", "imaging_summary")] = ImagingSummary
 CUSTOM_FIELD_TYPES[("RegistryRecord", "clinical_course")] = ClinicalCourse
+CUSTOM_FIELD_TYPES[("RegistryRecord", "longitudinal_outcomes")] = LongitudinalOutcomes
 _MODEL_CACHE: dict[tuple[str, ...], type[BaseModel]] = {}
 
 

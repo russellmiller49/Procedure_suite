@@ -969,6 +969,7 @@ class RegistryService:
                 from app.registry.postprocess import (
                     cull_hollow_ebus_claims,
                     populate_ebus_node_events_fallback,
+                    reconcile_ebus_node_event_consistency,
                     sanitize_ebus_events,
                 )
 
@@ -977,6 +978,7 @@ class RegistryService:
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
                 warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
+                warnings.extend(reconcile_ebus_node_event_consistency(record, masked_note_text))
 
                 from app.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -2570,6 +2572,7 @@ class RegistryService:
                 from app.registry.postprocess import (
                     cull_hollow_ebus_claims,
                     populate_ebus_node_events_fallback,
+                    reconcile_ebus_node_event_consistency,
                     sanitize_ebus_events,
                 )
 
@@ -2578,6 +2581,7 @@ class RegistryService:
                 warnings.extend(sanitize_ebus_events(record, masked_note_text))
                 warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
                 warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
+                warnings.extend(reconcile_ebus_node_event_consistency(record, masked_note_text))
 
                 from app.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -2620,6 +2624,7 @@ class RegistryService:
         from app.registry.postprocess import (
             cull_hollow_ebus_claims,
             populate_ebus_node_events_fallback,
+            reconcile_ebus_node_event_consistency,
             sanitize_ebus_events,
         )
 
@@ -2628,6 +2633,7 @@ class RegistryService:
         warnings.extend(sanitize_ebus_events(record, masked_note_text))
         warnings.extend(populate_ebus_node_events_fallback(record, masked_note_text))
         warnings.extend(cull_hollow_ebus_claims(record, masked_note_text))
+        warnings.extend(reconcile_ebus_node_event_consistency(record, masked_note_text))
 
         from app.registry.application.pathology_extraction import apply_pathology_extraction
 
@@ -2786,6 +2792,7 @@ class RegistryService:
             populate_ebus_node_events_fallback,
             reconcile_aborted_targets,
             reconcile_ebus_inspected_only_stations,
+            reconcile_ebus_node_event_consistency,
             reconcile_ebus_sampling_from_narrative,
             reconcile_ebus_sampling_from_specimen_log,
             reconcile_peripheral_tbna_against_nodal_context,
@@ -2836,6 +2843,9 @@ class RegistryService:
         ebus_hollow_warnings = cull_hollow_ebus_claims(record, masked_note_text)
         if ebus_hollow_warnings:
             extraction_warnings.extend(ebus_hollow_warnings)
+        ebus_consistency_warnings = reconcile_ebus_node_event_consistency(record, masked_note_text)
+        if ebus_consistency_warnings:
+            extraction_warnings.extend(ebus_consistency_warnings)
 
         try:
             procedures = record.procedures_performed if record.procedures_performed else None
@@ -2884,6 +2894,13 @@ class RegistryService:
         record = guardrail_outcome.record or record
         if guardrail_outcome.warnings:
             extraction_warnings.extend(guardrail_outcome.warnings)
+
+        # The thoracoscopy backstop inside the guardrails can set performed=true
+        # after the earlier enrichment pass ran; re-run the (idempotent) biopsy
+        # enrichment so 32609-relevant detail is not lost.
+        late_pleural_biopsy_warnings = enrich_medical_thoracoscopy_biopsies_taken(record, masked_note_text)
+        if late_pleural_biopsy_warnings:
+            extraction_warnings.extend(late_pleural_biopsy_warnings)
 
         # Production backstop: apply raw-text checkbox negation after all heuristics/guardrails
         # so downstream omission scan + CPT derivation never build on template false-positives.
@@ -3102,7 +3119,13 @@ class RegistryService:
                     # they are especially prone to menu/header leakage and should not be
                     # elevated to primary omission findings from the header alone.
                     supported: list[str] = []
-                    if len(header_codes) <= 3:
+                    # Hierarchy of truth: when a substantive narrative exists it
+                    # supersedes the header code list, so even short headers must
+                    # find narrative keyword support. The header stays
+                    # authoritative only for terse template notes without a
+                    # narrative to contradict it.
+                    substantive_narrative = len((non_header_evidence or "").strip()) >= 400
+                    if len(header_codes) <= 3 and not substantive_narrative:
                         supported = [
                             code
                             for code in missing_header_codes
@@ -3330,6 +3353,32 @@ class RegistryService:
                     candidate_record, candidate_granular_warnings = _apply_granular_up_propagation(
                         patched_record
                     )
+
+                    # A patch that enables mechanical_debulking without material_type
+                    # would be vacuously suppressed by the non-tumor 31640 guard;
+                    # backfill the classification from the judge's evidence. Only
+                    # for 31640 triggers — other triggers must not opportunistically
+                    # classify unrelated debulking material from whole-note scans.
+                    mech = getattr(
+                        getattr(candidate_record, "procedures_performed", None),
+                        "mechanical_debulking",
+                        None,
+                    )
+                    if (
+                        str(getattr(trigger, "target_cpt", "")) == "31640"
+                        and mech is not None
+                        and getattr(mech, "performed", None) is True
+                        and not getattr(mech, "material_type", None)
+                    ):
+                        from app.registry.deterministic_extractors import (
+                            infer_mechanical_debulking_material_type,
+                        )
+
+                        inferred_material = infer_mechanical_debulking_material_type(
+                            proposal.evidence_quote or ""
+                        )
+                        if inferred_material != "unknown":
+                            setattr(mech, "material_type", inferred_material)
 
                     candidate_derivation = derive_registry_to_cpt(candidate_record)
                     candidate_codes = [c.code for c in candidate_derivation.codes]

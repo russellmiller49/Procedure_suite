@@ -124,6 +124,11 @@ def _targets_sampled(record: RegistryRecord) -> tuple[list[str], str]:
         for event in node_events:
             if _get(event, "action") not in qualifying_actions:
                 continue
+            # An event that already carries a station is counted as that
+            # station; its target_text must not count a second time.
+            station = _get(event, "station")
+            if isinstance(station, str) and station.strip():
+                continue
             target_text = _get(event, "target_text")
             if target_text is None:
                 continue
@@ -731,41 +736,64 @@ def derive_all_codes_with_meta(
             codes.append("31633")
             rationales["31633"] = f"peripheral_tbna.targets_sampled spans lobes={sorted(lobes)}"
 
-    # Linear EBUS TBNA (31652/31653) based on station count.
+    # Linear EBUS TBNA (31652/31653). The CPT descriptors count "mediastinal
+    # and/or hilar lymph node stations or structures", so non-station targets
+    # sampled under EBUS (e.g. mediastinal mass, PA mass) can back the code
+    # when no nodal station was identified. To avoid double counting (a target
+    # that aliases a counted station, stale targets_sampled copies) and double
+    # billing (the same lesion already carrying 31629 via peripheral TBNA),
+    # targets are counted only when station_count == 0 and the target is not
+    # also a peripheral-TBNA target.
     if _performed(_proc(record, "linear_ebus")):
         station_count = ebus_station_count
-        if station_count >= 3:
+        counted_target_count = 0
+        if station_count == 0 and ebus_target_count:
+            peripheral_targets = {
+                str(t).strip().lower()
+                for t in (_get(peripheral_tbna, "targets_sampled") or [])
+                if str(t).strip()
+            }
+            counted_target_count = len(
+                {
+                    t.strip().lower()
+                    for t in ebus_targets
+                    if isinstance(t, str) and t.strip() and t.strip().lower() not in peripheral_targets
+                }
+            )
+        structure_count = station_count + counted_target_count
+        structure_suffix = (
+            f" + nonstation_structures={counted_target_count} from {target_source}"
+            if counted_target_count
+            else ""
+        )
+        if structure_count >= 3:
             codes.append("31653")
             rationales["31653"] = (
-                f"linear_ebus.performed=true and sampled_station_count={station_count} (>=3) "
-                f"from {station_source}"
+                f"linear_ebus.performed=true and sampled_station_count={station_count} "
+                f"from {station_source}{structure_suffix} (>=3 stations/structures)"
             )
-        elif station_count in (1, 2):
+        elif structure_count in (1, 2):
             codes.append("31652")
             rationales["31652"] = (
-                f"linear_ebus.performed=true and sampled_station_count={station_count} (1-2) "
-                f"from {station_source}"
+                f"linear_ebus.performed=true and sampled_station_count={station_count} "
+                f"from {station_source}{structure_suffix} (1-2 stations/structures)"
             )
-        elif ebus_target_count >= 1:
-            warnings.append(
-                "linear_ebus.performed=true with non-station EBUS targets only; "
-                "cannot derive 31652/31653 without sampled nodal stations"
-            )
+        if counted_target_count >= 1:
             warnings.append(
                 make_quality_signal_warning(
-                    "nonstation_ebus_targets_do_not_derive_nodal_cpt",
+                    "nonstation_ebus_structures_counted_for_nodal_cpt",
                     field="procedures_performed.linear_ebus",
-                    action="suppressed",
+                    action="informational",
                     detail=(
-                        f"Non-station EBUS target sampling ({ebus_target_count} target"
-                        + ("" if ebus_target_count == 1 else "s")
-                        + f") was preserved structurally but did not derive 31652/31653."
+                        f"Non-station EBUS target sampling ({counted_target_count} target"
+                        + ("" if counted_target_count == 1 else "s")
+                        + ") counted as adjacent structure(s) for 31652/31653; verify documentation."
                     ),
                     source="registry_to_cpt",
-                    extra={"target_source": target_source, "target_count": ebus_target_count},
+                    extra={"target_source": target_source, "target_count": counted_target_count},
                 )
             )
-        else:
+        if structure_count == 0:
             if station_source == "node_events":
                 warnings.append(
                     "linear_ebus.performed=true but node_events contains no qualifying sampling actions; "
@@ -1633,8 +1661,10 @@ def derive_all_codes_with_meta(
         else:
             biopsies_taken = _get(thoracoscopy, "biopsies_taken")
             if biopsies_taken is True:
-                codes.append("32604")
-                rationales["32604"] = (
+                # 32609: thoracoscopy with biopsy(ies) of pleura (32604 is
+                # pericardial sac biopsy and does not apply to pleuroscopy).
+                codes.append("32609")
+                rationales["32609"] = (
                     "pleural_procedures.medical_thoracoscopy.performed=true and biopsies_taken=true"
                 )
             else:
@@ -1842,7 +1872,8 @@ def derive_all_codes_with_meta(
             derived = [c for c in derived if c != "31641"]
             rationales.pop("31641", None)
             warnings.append(
-                "31641 (destruction) bundled into 31640 (excision) because both were documented at the same anatomic site."
+                "31641 (destruction) bundled into 31640 (excision) because both were documented at the same anatomic site. "
+                "If destruction was performed on a separate lesion, add 31641 with modifier 59/XS."
             )
         elif distinct_locations:
             warnings.append(

@@ -125,8 +125,11 @@ def test_header_trigger_suppresses_bundled_dilation_and_destruction(monkeypatch:
         {
             "procedures_performed": {
                 "airway_dilation": {"performed": True},
-                "mechanical_debulking": {"performed": True},
-                "thermal_ablation": {"performed": True},
+                # material_type=tumor keeps 31640 billable under the 2026-04
+                # non-tumor mechanical-debulking policy; explicit same-site
+                # locations keep the 31641-into-31640 bundling active.
+                "mechanical_debulking": {"performed": True, "material_type": "tumor", "location": "Trachea"},
+                "thermal_ablation": {"performed": True, "location": "Trachea"},
             }
         }
     )
@@ -136,7 +139,7 @@ def test_header_trigger_suppresses_bundled_dilation_and_destruction(monkeypatch:
         "31630 Balloon dilation\n"
         "31640 Excision of lesion\n"
         "31641 Destruction by APC\n"
-        "PROCEDURE IN DETAIL: Mechanical debulking and APC were performed for airway obstruction. "
+        "PROCEDURE IN DETAIL: Mechanical debulking of tumor and APC were performed for airway obstruction. "
         "Balloon dilation was also performed.\n"
         "ANESTHESIA: General\n"
     )

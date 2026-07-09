@@ -32,5 +32,18 @@ class ImagingSnapshotLLM(BaseModel):
     overall_impression_text: str | None = Field(default=None)
 
 
-__all__ = ["ClinicalFollowupLLM", "ImagingSnapshotLLM", "PathologyResultsLLM"]
+class CxrFindingsLLM(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    pneumothorax: bool | None = Field(default=None)
+    pneumothorax_side: Literal["Left", "Right", "Bilateral"] | None = Field(default=None)
+    pneumothorax_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = Field(default=None)
+    pleural_effusion: bool | None = Field(default=None)
+    effusion_side: Literal["Left", "Right", "Bilateral"] | None = Field(default=None)
+    effusion_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = Field(default=None)
+    device_position_text: str | None = Field(default=None)
+    overall_impression_text: str | None = Field(default=None)
+
+
+__all__ = ["ClinicalFollowupLLM", "CxrFindingsLLM", "ImagingSnapshotLLM", "PathologyResultsLLM"]
 

@@ -303,14 +303,30 @@ def extract_sedation_airway(note_text: str) -> Dict[str, Any]:
         )
     )
 
+    # "orally intubated with a LMA" is an LMA airway: the generic word
+    # "intubated" must not outrank an explicit laryngeal-mask mention. But a
+    # failed/removed LMA followed by intubation is an ETT airway.
+    def _ga_airway_type() -> str:
+        lma_present = bool(re.search(r"\blma\b|laryngeal mask", note_lower))
+        explicit_ett = bool(re.search(r"\bett\b|endotracheal tube", note_lower))
+        lma_abandoned_then_intubated = bool(
+            re.search(
+                r"(?:\blma\b|laryngeal mask)[^.\n]{0,80}\b(?:failed|removed|abandoned|exchanged|converted)\b"
+                r"[^.\n]{0,120}\bintubated\b",
+                note_lower,
+            )
+        )
+        if explicit_ett or lma_abandoned_then_intubated or (
+            re.search(r"\bintubated\b", note_lower) and not lma_present
+        ):
+            return "ETT"
+        if lma_present:
+            return "LMA"
+        return ""
+
     if proceduralist_moderate_context:
         result["sedation_type"] = "Moderate"
-        if re.search(r"\bett\b|endotracheal tube|intubated", note_lower):
-            result["airway_type"] = "ETT"
-        elif re.search(r"\blma\b|laryngeal mask", note_lower):
-            result["airway_type"] = "LMA"
-        else:
-            result["airway_type"] = "Native"
+        result["airway_type"] = _ga_airway_type() or "Native"
         return result
 
     # Check for general anesthesia indicators
@@ -333,13 +349,12 @@ def extract_sedation_airway(note_text: str) -> Dict[str, Any]:
         result["sedation_type"] = "General"
 
         # Check airway type for GA
+        ga_airway = _ga_airway_type()
         if "rigid bronchoscop" in note_lower:
             # Rigid bronchoscopy - airway managed by scope
             pass  # Leave airway_type unset
-        elif re.search(r"\bett\b|endotracheal tube|intubated", note_lower):
-            result["airway_type"] = "ETT"
-        elif re.search(r"\blma\b|laryngeal mask", note_lower):
-            result["airway_type"] = "LMA"
+        elif ga_airway:
+            result["airway_type"] = ga_airway
         elif re.search(r"\bi-?gel\b", note_lower):
             result["airway_type"] = "iGel"
         else:
@@ -467,7 +482,10 @@ def extract_primary_indication(note_text: str) -> Optional[str]:
                 r"|consent\s+was\s+signed"
                 r"|after\s+informed\s+consent(?:\s+and\s+time[-\s]?out)?"
                 r"|informed\s+consent\s+(?:was\s+)?obtained"
-                r"|consent\s+obtained"
+                r"|consent\s+(?:was\s+)?(?:obtained|reviewed)"
+                r"|explanation\s+in\s+lay\s+terms"
+                r"|understood\s+and\s+agreed"
+                r"|pre-?procedure\s+briefing"
                 r"|time[-\s]?out\s+(?:was\s+)?performed"
                 r"|timeout\s+(?:was\s+)?performed"
                 r"|confirming\s+the\s+patient'?s\s+name"
@@ -1010,6 +1028,10 @@ ENDOBRONCHIAL_BIOPSY_PATTERNS = [
     # "endobronchial" (e.g., cavity/mycetoma within an airway segment).
     r"\bforceps\s+biops(?:y|ies)\b[^.\n]{0,140}\b(?:cavity|endobronch|airway|bronch(?:us|ial)|trachea|carina|mainstem)\b",
     r"\b(?:cavity|endobronch|airway|bronch(?:us|ial)|trachea|carina|mainstem)\b[^.\n]{0,140}\bforceps\s+biops(?:y|ies)\b",
+    # Bare "forceps biopsies were obtained" — the clause/preceding-sentence
+    # context checks in extract_endobronchial_biopsy enforce an airway-lesion
+    # anchor before this can assert performed=true.
+    r"\bforceps\s+biops(?:y|ies)\b[^.\n]{0,60}\b(?:were\s+)?(?:obtained|taken|collected|performed)\b",
     # EBUS intranodal mini-forceps (often documented without the word "biopsy")
     r"\bmini[-\s]?forceps\b[^.\n]{0,240}\b(?:ebus|endobronchial\s+ultrasound|lymph\s+node|station)\b",
     r"\b(?:ebus|endobronchial\s+ultrasound|lymph\s+node|station)\b[^.\n]{0,240}\bmini[-\s]?forceps\b",
@@ -1202,6 +1224,9 @@ IPC_PATTERNS = [
     r"\btunne(?:l|ll)ed\s+catheter\b",
     r"\btunnel(?:ing)?\s+catheter\b",
     r"\btunneling\s+device\b",
+    # "pleural catheter was placed ... with tunneling anteriorly"
+    r"\bpleural\s+catheter\b[^.\n]{0,100}\btunnel(?:ing|ed|led)\b",
+    r"\btunnel(?:ing|ed|led)\b[^.\n]{0,100}\bpleural\s+catheter\b",
 ]
 
 # Therapeutic aspiration patterns (exclude routine suction)
@@ -1250,7 +1275,7 @@ AIRWAY_STENT_DEVICE_PATTERNS = [
 
 _AIRWAY_STENT_DEVICE_PATTERN = (
     r"(?:stent|y-?\s*stent|dumon|aero(?:stent)?|aerstent|ultraflex|sems|"
-    r"silicone\s+stent|metal(?:lic)?\s+stent|bonostent|vascular\s+plug|endobronchial\s+plug|"
+    r"silicone\s+stent|metal(?:lic)?\s+stent|bon[oa]stent|vascular\s+plug|endobronchial\s+plug|"
     r"montgomery\s+t[- ]?tube|t[- ]?tube)"
 )
 
@@ -2280,6 +2305,44 @@ def _stent_action_window_hit(text_lower: str, *, verbs: list[str], max_chars: in
     return any(re.search(p, text_lower, re.IGNORECASE) for p in patterns)
 
 
+_SCOPE_SUBJECT_TAIL_RE = re.compile(
+    # The scope must be the grammatical subject of the verb ("bronchoscope was
+    # removed"); instrument phrasing ("bronchoscope was used to remove the
+    # stent", "using the bronchoscope, we removed...") must not veto.
+    r"(?i)\b(?:flexible\s+|rigid\s+|video\s+|ventilating\s+)?"
+    r"(?:bronchoscop\w*|scope|lma|laryngeal\s+mask(?:\s+airway)?|endotracheal\s+tube|ett|"
+    r"needle|dilator|guidewire|guide\s?wire)\b\s+"
+    r"(?:was|were|is|are)\s+(?:then\s+|also\s+|subsequently\s+|carefully\s+)?$"
+)
+
+
+def _stent_removal_window_hit(text_lower: str, *, verbs: list[str], max_chars: int = 80) -> bool:
+    """Like _stent_action_window_hit, but the removal verb's subject must not be
+    the scope/airway device ("the flexible bronchoscope was removed and an Aero
+    stent ... was advanced" is a placement workflow, not stent removal)."""
+    if not text_lower:
+        return False
+
+    verb_union = "|".join(verbs)
+    span = max(0, int(max_chars))
+    if re.search(
+        rf"\b{_AIRWAY_STENT_DEVICE_PATTERN}\b[^.\n]{{0,{span}}}\b(?:{verb_union})\w*\b",
+        text_lower,
+        re.IGNORECASE,
+    ):
+        return True
+    for m in re.finditer(
+        rf"\b(?:{verb_union})\w*\b[^.\n]{{0,{span}}}\b{_AIRWAY_STENT_DEVICE_PATTERN}\b",
+        text_lower,
+        re.IGNORECASE,
+    ):
+        before = text_lower[max(0, m.start() - 60) : m.start()]
+        if _SCOPE_SUBJECT_TAIL_RE.search(before):
+            continue
+        return True
+    return False
+
+
 _STENT_PLACEMENT_NEGATION_PATTERNS = [
     r"\bdecision\b[^.\n]{0,80}\bnot\b[^.\n]{0,40}\b(?:place|insert|deploy|perform)\w*\b[^.\n]{0,80}\bstent\b",
     r"\bno\s+additional\s+stents?\b[^.\n]{0,40}\b(?:place|placed|placement|insert|inserted|deploy|deployed)\b",
@@ -2419,16 +2482,34 @@ def classify_stent_action(note_text: str) -> Dict[str, Any]:
             text,
         )
     )
+    if not placement:
+        # Bullet-style notes put the deployment verb on its own line right after
+        # the stent-selection line ("Silicone Y-stent ... customized." /
+        # "Deployed under direct vision across trachea ...").
+        nonempty_lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        stent_line_re = re.compile(rf"(?i)\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})\b")
+        deploy_lead_re = re.compile(r"(?i)^(?:the\s+)?(?:stent\s+)?(?:deployed|placed|inserted|implanted)\b")
+        for idx, line in enumerate(nonempty_lines):
+            if not deploy_lead_re.match(line):
+                continue
+            context = " ".join(nonempty_lines[max(0, idx - 2) : idx])
+            if stent_line_re.search(context) and not _stent_placement_negated(
+                (context + " " + line).lower()
+            ):
+                placement = True
+                break
+    # The "placed" evidence in the exception below must not be the history
+    # phrase itself ("previously placed ... stent").
     if history_only_placement and not re.search(
         rf"(?i)\b(?:new|replacement|another|custom)\b[^.\n]{{0,80}}\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})\b"
         rf"|\b(?:insert(?:ed|ion)?|placed|deployed)\b[^.\n]{{0,80}}\bnew\b"
         rf"|\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})\b[^.\n]{{0,100}}\b(?:was\s+)?(?:placed|insert(?:ed|ion)?|deployed)\b"
-        rf"|\b(?:placed|insert(?:ed|ion)?|deployed)\b[^.\n]{{0,100}}\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})\b",
+        rf"|(?<!previously\s)(?<!previously-)(?<!prior\s)(?<!prior-)\b(?:placed|insert(?:ed|ion)?|deployed)\b[^.\n]{{0,100}}\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})\b",
         text,
     ):
         placement = False
     removal = bool(
-        _stent_action_window_hit(
+        _stent_removal_window_hit(
             text_lower,
             verbs=["remov", "retriev", "extract", "explant", "pull", "withdraw", "exchange", "replace"],
         )
@@ -2457,13 +2538,21 @@ def classify_stent_action(note_text: str) -> Dict[str, Any]:
 
     # If stent/plug removal is documented before any same-session placement event,
     # treat as an exchange/revision of an existing airway device.
-    first_removal_event = re.search(
+    first_removal_event: re.Match[str] | None = re.search(
         rf"(?i)\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})(?:s)?\b[^.\n]{{0,120}}"
-        r"\b(?:remov(?:e|ed|al)|retriev(?:e|ed|al)|extract(?:ed|ion)?|withdrawn|explant(?:ed|ation)?)\b"
-        rf"|\b(?:remov(?:e|ed|al)|retriev(?:e|ed|al)|extract(?:ed|ion)?|withdrawn|explant(?:ed|ation)?)\b[^.\n]{{0,120}}"
-        rf"\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})(?:s)?\b",
+        r"\b(?:remov(?:e|ed|al)|retriev(?:e|ed|al)|extract(?:ed|ion)?|withdrawn|explant(?:ed|ation)?)\b",
         text,
     )
+    if first_removal_event is None:
+        for _removal_match in re.finditer(
+            rf"(?i)\b(?:remov(?:e|ed|al)|retriev(?:e|ed|al)|extract(?:ed|ion)?|withdrawn|explant(?:ed|ation)?)\b"
+            rf"[^.\n]{{0,120}}\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})(?:s)?\b",
+            text,
+        ):
+            if _SCOPE_SUBJECT_TAIL_RE.search(text[max(0, _removal_match.start() - 60) : _removal_match.start()]):
+                continue
+            first_removal_event = _removal_match
+            break
     first_placement_event = re.search(
         rf"(?i)\b(?:{_AIRWAY_STENT_DEVICE_PATTERN})(?:s)?\b[^.\n]{{0,120}}"
         r"\b(?:placed|insert(?:ed|ion)?|deployed|implanted)\b"
@@ -3848,7 +3937,7 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
     )
     hemostatic_med_re = re.compile(r"(?i)\b(?:tranexamic\s+acid|txa|epinephrine|epi)\b")
     hemostatic_context_re = re.compile(
-        r"(?i)\b(?:hemostas|bleed(?:ing)?|ooz(?:e|ing)|hemoptysis|vasoconstrictor|control(?:led)?\s+bleeding)\b"
+        r"(?i)\b(?:h(?:a)?emostas\w*|bleed(?:ing)?|ooz(?:e|ing)|hemoptysis|vasoconstrictor|control(?:led)?\s+bleeding)\b"
     )
     submucosal_context_re = re.compile(r"(?i)\b(?:submucosa(?:l)?|intralesional)\b")
     anti_inflammatory_med_re = re.compile(
@@ -3896,6 +3985,14 @@ def extract_therapeutic_injection(note_text: str) -> Dict[str, Any]:
 
         lower_sentence = sentence.lower()
         if hemostatic_med_re.search(lower_sentence) and hemostatic_context_re.search(lower_sentence):
+            continue
+        # "Lidocaine with epinephrine" is a topical anesthesia/hemostasis mix,
+        # not a standalone therapeutic injection.
+        if (
+            exclude_re.search(sentence)
+            and specific_med_match is not None
+            and re.fullmatch(r"(?i)epi(?:nephrine)?", (specific_med_match.group(0) or "").strip())
+        ):
             continue
 
         proc: dict[str, Any] = {"performed": True}
@@ -4163,11 +4260,16 @@ def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
             ):
                 continue
 
+            # Transbronchial forceps biopsies are parenchymal sampling, never
+            # endobronchial biopsy.
+            if re.search(r"(?i)\btransbronchial\s*$", text_lower[max(0, int(match.start()) - 24) : int(match.start())]):
+                continue
+
             # Guardrail: avoid classifying peripheral/radial/fluoro lesion sampling
             # as endobronchial biopsy unless there is explicit airway context.
             peripheral_context = bool(
                 re.search(
-                    r"(?i)\b(?:peripheral|radial|fluoro(?:scop)?y|sheath|concentric|eccentric|nodule|parenchym|subsegment)\b",
+                    r"(?i)\b(?:peripheral|radial|fluoroscop\w*|sheath|concentric|eccentric|nodule|parenchym|subsegment|transbronchial)\b",
                     clause_lower,
                 )
             )
@@ -4180,7 +4282,19 @@ def extract_endobronchial_biopsy(note_text: str) -> Dict[str, Any]:
             if not _has_narrative_biopsy_action(clause):
                 continue
             if not (airway_context or _has_airway_or_lesion_context(clause)):
-                continue
+                # The biopsied lesion is often described in the preceding sentence
+                # ("...endobronchial lesion noted in the RLL superior segment.
+                # Multiple forceps biopsies were obtained at this time.").
+                prev_window = text[max(0, clause_start - 260) : clause_start]
+                if not (
+                    _has_airway_or_lesion_context(prev_window)
+                    and not re.search(
+                        r"(?i)\b(?:peripheral|radial|nodule|parenchym|station|lymph\s+node|"
+                        r"transbronchial|fluoroscop\w*|sheath|navigat\w*|tbbx|tblb)\b",
+                        prev_window,
+                    )
+                ):
+                    continue
             if peripheral_context and not airway_context:
                 continue
 
@@ -4342,6 +4456,19 @@ def _is_percutaneous_nonbronchoscopic_ablation_context(text: str) -> bool:
     return (percutaneous_context or cryoprobe_percutaneous_context) and not _has_positive_bronchoscopic_ablation_context(text)
 
 
+def _is_multicell_table_line(line: str) -> bool:
+    """True when a line looks like a real table row (>=3 delimited cells).
+
+    Prose paragraphs contain incidental double spaces, but those almost always
+    follow sentence punctuation; table cell gaps follow ordinary words. Require
+    multiple non-punctuation cell breaks yielding at least three populated cells.
+    """
+    if not line or not line.strip():
+        return False
+    cells = [cell for cell in re.split(r"\t+|(?<![.!?:;,]) {2,}", line.strip()) if cell.strip()]
+    return len(cells) >= 3
+
+
 def _has_populated_cryotherapy_table_row(text: str) -> bool:
     if not text:
         return False
@@ -4349,7 +4476,7 @@ def _has_populated_cryotherapy_table_row(text: str) -> bool:
     for line in _maybe_unescape_newlines(text).splitlines():
         if not re.search(r"(?i)\b(?:cryoprobe|cryospray|cryotherap(?:y|ies))\b", line):
             continue
-        if not re.search(r"\t| {2,}", line):
+        if not _is_multicell_table_line(line):
             continue
         if re.search(r"(?i)\b(?:biops(?:y|ies|ied)|specimen(?:s)?|patholog(?:y|ic)|samples?)\b", line):
             continue
@@ -4368,7 +4495,7 @@ def _has_populated_mechanical_debulking_table_row(text: str) -> bool:
         return False
 
     for line in _maybe_unescape_newlines(text).splitlines():
-        if not re.search(r"\t| {2,}", line):
+        if not _is_multicell_table_line(line):
             continue
         if not re.search(r"(?i)\b(?:mechanical|alligator\s+forceps|forceps|snare|microdebrider)\b", line):
             continue
@@ -4397,7 +4524,13 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
         preferred_text = _strip_cpt_definition_lines(preferred_text)
     if _has_populated_cryotherapy_table_row(preferred_text):
         proc = {"performed": True}
-        location = _extract_airway_location_summary(preferred_text)
+        # Scope location to the table rows themselves, not the whole note.
+        table_lines = "\n".join(
+            line
+            for line in _maybe_unescape_newlines(preferred_text).splitlines()
+            if _is_multicell_table_line(line)
+        )
+        location = _extract_airway_location_summary(table_lines)
         if location:
             proc["location"] = location
         return {"cryotherapy": proc}
@@ -4423,13 +4556,15 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
             if planning_context:
                 continue
             location_windows.append(
-                preferred_text[max(0, match.start() - 220) : min(len(preferred_text), match.end() + 260)]
+                _sentence_scoped_window(preferred_text, match.start(), match.end(), 220, 260)
             )
-            proc = {"performed": True}
-            location = _extract_airway_location_summary(" ".join(location_windows))
-            if location:
-                proc["location"] = location
-            return {"cryotherapy": proc}
+
+    if location_windows:
+        proc = {"performed": True}
+        location = _extract_airway_location_summary(" ".join(location_windows))
+        if location:
+            proc["location"] = location
+        return {"cryotherapy": proc}
 
     if re.search(CRYOPROBE_PATTERN, text_lower, re.IGNORECASE) and not re.search(
         CRYOBIOPSY_PATTERN, text_lower, re.IGNORECASE
@@ -4464,7 +4599,9 @@ def extract_cryotherapy(note_text: str) -> Dict[str, Any]:
 
             if therapeutic_context:
                 saw_therapeutic = True
-                location_windows.append(local)
+                location_windows.append(
+                    _sentence_scoped_window(preferred_text, cryo_match.start(), cryo_match.end(), 240, 260)
+                )
             if biopsy_context and not therapeutic_context:
                 saw_biopsy_only = True
 
@@ -5021,9 +5158,85 @@ def _extract_lung_locations_from_text(text: str) -> list[str]:
     return locations
 
 
+_NORMAL_ANATOMY_SENTENCE_RE = re.compile(
+    r"(?i)\b(?:normal|unremarkable|widely\s+patent|patent|without\s+(?:lesion|abnormalit)|"
+    r"no\s+(?:lesions?|abnormalit\w*|evidence\s+of)|non-?obstructive)\b"
+)
+_AIRWAY_INTERVENTION_SENTENCE_RE = re.compile(
+    r"(?i)\b(?:debulk|ablat|cauteriz|resect|excis|dilat|stent|treat|laser|apc|argon|cryo|snare|"
+    r"forceps|microdebrid|coring|recanaliz|remov|extract|deploy|balloon|inject|instill)\w*\b"
+)
+_SCOPE_NAVIGATION_SENTENCE_RE = re.compile(
+    r"(?i)\b(?:bronchoscop\w*|scope|lma|laryngeal\s+mask|endotracheal\s+tube|ett)\b"
+    r"[^.\n]{0,140}\b(?:advanc|insert|introduc|pass(?:ed)?|withdraw|reinsert|attach|remov)\w*\b"
+    r"|\b(?:advanc|insert|introduc|pass(?:ed)?|withdraw|reinsert)\w*\b"
+    r"[^.\n]{0,140}\b(?:bronchoscop\w*|scope|lma|laryngeal\s+mask)\b"
+)
+_TISSUE_TOKEN_RE = re.compile(
+    r"(?i)\b(?:tumou?r|lesion|mass|granulation|tissue|web|stenos\w*|debris|hair|mycetoma|"
+    r"fungal|clot|plug|secretions?)\b"
+)
+# Therapeutic actions that mark a navigation-looking sentence as an
+# intervention site ("the scope was advanced to the RLL where APC was
+# applied"). Deliberately excludes remove/insert/advance-type verbs, which are
+# the navigation verbs themselves.
+_THERAPEUTIC_ACTION_TOKEN_RE = re.compile(
+    r"(?i)\b(?:debulk|ablat|cauteriz|resect|excis|dilat|laser|apc|argon|cryo|snare|"
+    r"microdebrid|coring|recanaliz|inject|instill)\w*\b"
+)
+
+
+def _sentence_scoped_window(
+    text: str, match_start: int, match_end: int, before: int = 220, after: int = 220
+) -> str:
+    """Return a char window around a match, snapped to sentence boundaries.
+
+    Raw character windows bleed fragments of neighboring sentences into the
+    window, which lets unrelated location tokens contaminate site summaries.
+    """
+    win_start = max(0, match_start - before)
+    win_end = min(len(text), match_end + after)
+    if win_start > 0:
+        boundary = -1
+        for m in re.finditer(r"[.!?\n]", text[win_start:match_start]):
+            boundary = win_start + m.end()
+        if boundary != -1:
+            win_start = boundary
+    if win_end < len(text):
+        last = -1
+        for m in re.finditer(r"[.!?\n]", text[match_end:win_end]):
+            last = match_end + m.end()
+        if last != -1:
+            win_end = last
+    return text[win_start:win_end]
+
+
+def _strip_normal_anatomy_sentences(text: str) -> str:
+    """Drop sentences that cannot describe an intervention site.
+
+    Prevents survey statements ("The trachea was normal.") and scope-navigation
+    statements ("the bronchoscope was advanced to the distal trachea") from
+    contributing their locations to intervention-site summaries.
+    """
+    kept: list[str] = []
+    for sentence in re.split(r"(?:\n+|(?<=[.!?])\s+)", text or ""):
+        if not sentence.strip():
+            continue
+        if _NORMAL_ANATOMY_SENTENCE_RE.search(sentence) and not _AIRWAY_INTERVENTION_SENTENCE_RE.search(sentence):
+            continue
+        if (
+            _SCOPE_NAVIGATION_SENTENCE_RE.search(sentence)
+            and not _TISSUE_TOKEN_RE.search(sentence)
+            and not _THERAPEUTIC_ACTION_TOKEN_RE.search(sentence)
+        ):
+            continue
+        kept.append(sentence)
+    return " ".join(kept)
+
+
 def _extract_airway_location_summary(text: str) -> str | None:
     """Return a coarse airway location summary preserving central-airway sites."""
-    raw = text or ""
+    raw = _strip_normal_anatomy_sentences(text or "")
     if not raw.strip():
         return None
 
@@ -5101,6 +5314,28 @@ def extract_brushings(note_text: str) -> Dict[str, Any]:
     return {"brushings": fallback_brushings} if fallback_brushings else {}
 
 
+def infer_mechanical_debulking_material_type(raw: str) -> str:
+    """Classify the material acted on by mechanical debulking (drives 31640 eligibility)."""
+    window = raw or ""
+    if re.search(r"(?i)\bgranulation\b", window):
+        return "granulation"
+    if re.search(r"(?i)\b(?:fungal(?:-appearing)?|fungal\s+ball|mycetoma|aspergill)\b", window):
+        return "fungal_material"
+    if re.search(r"(?i)\bhair\b", window):
+        return "hair"
+    if re.search(r"(?i)\b(?:foreign\s+body|dental\s+fragment|coin|tooth)\b", window):
+        return "foreign_body"
+    if re.search(r"(?i)\b(?:necrotic|slough|debris|necrosis|inflammatory)\b", window):
+        return "necrotic_inflammatory"
+    if re.search(r"(?i)\b(?:mucous?|mucus|secretions?|plug|blood\s+clot)\b", window):
+        return "mucus"
+    if re.search(r"(?i)\b(?:tumou?r|endobronchial\s+tumou?r|mass|fungating|exophytic)\b", window):
+        return "tumor"
+    if re.search(r"(?i)\b(?:scar|web|stenos(?:is|ed)|fibrotic)\b", window):
+        return "other_non_tumor"
+    return "unknown"
+
+
 def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
     """Extract mechanical debulking / excision indicator.
 
@@ -5113,26 +5348,7 @@ def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
-    def _infer_material_type(raw: str) -> str:
-        window = raw or ""
-        lowered = window.lower()
-        if re.search(r"(?i)\bgranulation\b", window):
-            return "granulation"
-        if re.search(r"(?i)\b(?:fungal(?:-appearing)?|fungal\s+ball|mycetoma|aspergill)\b", window):
-            return "fungal_material"
-        if re.search(r"(?i)\bhair\b", window):
-            return "hair"
-        if re.search(r"(?i)\b(?:foreign\s+body|dental\s+fragment|coin|tooth)\b", window):
-            return "foreign_body"
-        if re.search(r"(?i)\b(?:necrotic|slough|debris|necrosis|inflammatory)\b", window):
-            return "necrotic_inflammatory"
-        if re.search(r"(?i)\b(?:mucous?|mucus|secretions?|plug|blood\s+clot)\b", window):
-            return "mucus"
-        if re.search(r"(?i)\b(?:tumou?r|endobronchial\s+tumou?r|mass|fungating|exophytic)\b", window):
-            return "tumor"
-        if re.search(r"(?i)\b(?:scar|web|stenos(?:is|ed)|fibrotic)\b", window):
-            return "other_non_tumor"
-        return "unknown"
+    _infer_material_type = infer_mechanical_debulking_material_type
 
     def _apply_location(proc: dict[str, Any], raw: str) -> None:
         location = _extract_airway_location_summary(raw)
@@ -5141,8 +5357,14 @@ def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
 
     if _has_populated_mechanical_debulking_table_row(text):
         proc: dict[str, Any] = {"performed": True}
-        _apply_location(proc, text)
-        proc["material_type"] = _infer_material_type(text)
+        # Scope location/material to the table rows themselves, not the whole note.
+        table_lines = "\n".join(
+            line
+            for line in _maybe_unescape_newlines(text).splitlines()
+            if _is_multicell_table_line(line)
+        )
+        _apply_location(proc, table_lines)
+        proc["material_type"] = _infer_material_type(table_lines or text)
         return {"mechanical_debulking": proc}
 
     # Guardrail: "debulking" can be used loosely for mucus/secretions clearance.
@@ -5169,10 +5391,28 @@ def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
     )
     if obstructing_material_context:
         proc: dict[str, Any] = {"performed": True}
-        _apply_location(proc, text)
-        proc["material_type"] = _infer_material_type(text)
+        # Scope location/material to the removal-action context so unrelated
+        # airway mentions elsewhere in the note are not swept in. Location is
+        # sentence-bounded; material keeps the wider raw window since material
+        # words often sit in the preceding sentence.
+        loc_windows: list[str] = []
+        mat_windows: list[str] = []
+        for action_match in re.finditer(
+            r"(?i)\b(?:remov(?:ed|al)?|debulk(?:ed|ing)?|excise(?:d|ion)?|resect(?:ed|ion)?)\b",
+            text,
+        ):
+            loc_windows.append(
+                _sentence_scoped_window(text, action_match.start(), action_match.end(), 220, 220)
+            )
+            mat_windows.append(
+                text[max(0, action_match.start() - 220) : min(len(text), action_match.end() + 220)]
+            )
+        _apply_location(proc, " ".join(loc_windows) or text)
+        proc["material_type"] = _infer_material_type(" ".join(mat_windows) or text)
         return {"mechanical_debulking": proc}
 
+    debulk_windows: list[str] = []
+    material_windows: list[str] = []
     for pattern in MECHANICAL_DEBULKING_PATTERNS:
         for match in re.finditer(pattern, text_lower, re.IGNORECASE):
             prefix = text_lower[max(0, match.start() - 120) : match.start()]
@@ -5224,11 +5464,19 @@ def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
             ):
                 continue
 
-            proc: dict[str, Any] = {"performed": True}
-            _apply_location(proc, window)
-            proc["material_type"] = _infer_material_type(window)
+            # Location must not bleed across sentence boundaries; material words
+            # (e.g. "necrotic tissue") often sit in the preceding sentence, so
+            # material inference keeps the wider raw window.
+            debulk_windows.append(
+                _sentence_scoped_window(text_lower, match.start(), match.end(), 220, 220)
+            )
+            material_windows.append(window)
 
-            return {"mechanical_debulking": proc}
+    if debulk_windows:
+        proc: dict[str, Any] = {"performed": True}
+        _apply_location(proc, " ".join(debulk_windows))
+        proc["material_type"] = _infer_material_type(" ".join(material_windows))
+        return {"mechanical_debulking": proc}
 
     return {}
 
@@ -5671,7 +5919,9 @@ def extract_thermal_ablation(note_text: str) -> Dict[str, Any]:
                     continue
 
             performed_hit = True
-            location_windows.append(local)
+            location_windows.append(
+                _sentence_scoped_window(raw_text, match.start(), match.end(), 220, 260)
+            )
             local_modalities: list[str] = []
             if re.search(r"\bapc\b|\bargon\s+plasma\b", local, re.IGNORECASE):
                 local_modalities.append("APC")
@@ -5977,10 +6227,13 @@ def _extract_checked_option(note_text: str, header: str, options: list[str]) -> 
 def extract_chest_ultrasound(note_text: str) -> Dict[str, Any]:
     """Extract chest ultrasound indicator (76604 family).
 
-    Conservative: requires explicit "CHEST ULTRASOUND FINDINGS" or CPT 76604 context.
+    Conservative: requires ultrasound narrative language. A bare "76604" token
+    (e.g. "Procedure codes 76604 and 32562.") is header/menu content and must
+    not set performed=true by itself.
     """
     text = note_text or ""
-    if not re.search("|".join(CHEST_ULTRASOUND_PATTERNS), text, re.IGNORECASE):
+    narrative_patterns = [p for p in CHEST_ULTRASOUND_PATTERNS if "76604" not in p]
+    if not re.search("|".join(narrative_patterns), text, re.IGNORECASE):
         return {}
 
     proc: dict[str, Any] = {"performed": True}

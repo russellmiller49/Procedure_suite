@@ -148,5 +148,6 @@ def test_thoracoscopy_note_does_not_hallucinate_ipc_from_unchecked_checkbox() ->
     assert thor.adhesiolysis_performed is True
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
-    assert "32604" in codes
+    # 32609 (pleural biopsy), not 32604 (pericardial sac biopsy).
+    assert "32609" in codes
     assert "32653" in codes

@@ -52,10 +52,14 @@ def test_nonstation_ebus_target_captured_without_deriving_nodal_cpt() -> None:
     assert "pulmonary artery mass" in str(linear.node_events[0].target_text or "").lower()
     assert any("EBUS_NONSTATION_TARGET_CAPTURED" in w for w in warnings)
 
-    codes, _rationales, code_warnings = derive_all_codes_with_meta(record)
-    assert "31652" not in codes
+    # Policy update (2026-07): CPT 31652/31653 count "lymph node stations or
+    # structures", so a single non-station EBUS-sampled structure derives 31652
+    # (flagged for documentation review), not a suppression.
+    codes, rationales, code_warnings = derive_all_codes_with_meta(record)
+    assert "31652" in codes
     assert "31653" not in codes
-    assert any("non-station EBUS targets only" in str(w) for w in code_warnings)
+    assert "nonstation_structures=1" in str(rationales.get("31652") or "")
+    assert any("nonstation_ebus_structures_counted_for_nodal_cpt" in str(w) for w in code_warnings)
 
 
 def test_rose_sentence_capture_and_multi_station_mapping() -> None:
@@ -159,7 +163,7 @@ def test_age_guardrail_prefers_year_old_over_french_size_tokens() -> None:
     assert demo.get("patient_age") == 65
 
 
-def test_thoracoscopy_biopsy_note_145_upgrades_to_32604_and_keeps_ipc_code() -> None:
+def test_thoracoscopy_biopsy_note_145_upgrades_to_32609_and_keeps_ipc_code() -> None:
     note_text = _fixture("145")
     ipc_data = extract_ipc(note_text)
     record_dict = {
@@ -174,7 +178,7 @@ def test_thoracoscopy_biopsy_note_145_upgrades_to_32604_and_keeps_ipc_code() -> 
     enrich_medical_thoracoscopy_biopsies_taken(record, note_text)
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(record)
-    assert "32604" in codes
+    assert "32609" in codes
     assert "32550" in codes
 
 

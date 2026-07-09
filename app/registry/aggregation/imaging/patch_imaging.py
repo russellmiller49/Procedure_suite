@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from app.registry.aggregation.imaging.normalize import normalize_modality
 from app.registry.aggregation.locks import (
     assign_if_unlocked,
     ensure_dict,
@@ -116,7 +117,7 @@ def patch_imaging_update(
         if relative_day_offset is not None:
             snapshot["relative_day_offset"] = int(relative_day_offset)
         if source_modality:
-            snapshot["modality"] = str(source_modality).strip().lower()
+            snapshot["modality"] = normalize_modality(source_modality) or str(source_modality).strip().lower()
         if event_subtype:
             snapshot["subtype"] = str(event_subtype).strip().lower()
         if event_title:

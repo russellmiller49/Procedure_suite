@@ -38,6 +38,44 @@ _ICU_POS_RE = re.compile(r"\b(?:icu|micu|sicu|ccu|intensive\s+care)\b", re.IGNOR
 _DECEASED_NEG_RE = re.compile(r"\b(?:not|no)\s+deceased\b", re.IGNORECASE)
 _DECEASED_POS_RE = re.compile(r"\b(?:deceased|died|passed\s+away|expired)\b", re.IGNORECASE)
 
+_ED_VISIT_NEG_RE = re.compile(
+    r"\b(?:no|not|without|denies)\b[^.\n;]{0,40}\b(?:ed|er|emergency\s+(?:department|room))\b",
+    re.IGNORECASE,
+)
+_ED_VISIT_POS_RE = re.compile(
+    r"\b(?:presented|seen|evaluated|visit(?:ed)?)\b[^.\n;]{0,50}\b(?:ed|er|emergency\s+(?:department|room))\b"
+    r"|\b(?:ed|er|emergency\s+(?:department|room))\s+visit\b"
+    r"|\bpresented\s+to\s+the\s+(?:ed|er|emergency)\b",
+    re.IGNORECASE,
+)
+_READMISSION_NEG_RE = re.compile(r"\b(?:no|not|without)\b[^.\n;]{0,30}\bre-?admi(?:tted|ssion)\b", re.IGNORECASE)
+_READMISSION_POS_RE = re.compile(r"\bre-?admi(?:tted|ssion)\b", re.IGNORECASE)
+
+# Structured post-procedure complication categories for longitudinal rollups.
+_COMPLICATION_TYPE_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\bpneumothora(?:x|ces)\b", re.IGNORECASE), "pneumothorax"),
+    (re.compile(r"\b(?:hemoptysis|bleed(?:ing)?|hemorrhage)\b", re.IGNORECASE), "bleeding"),
+    (re.compile(r"\b(?:pneumonia|empyema|abscess|infect\w+|cellulitis)\b", re.IGNORECASE), "infection"),
+    (re.compile(r"\brespiratory\s+failure\b|\bintubat\w+\b[^.\n;]{0,40}\bfailure\b", re.IGNORECASE), "respiratory_failure"),
+    (re.compile(r"\b(?:recurrent|re-?accumulat\w+)\b[^.\n;]{0,50}\beffusion\b", re.IGNORECASE), "effusion_recurrence"),
+    (re.compile(r"\bstent\b[^.\n;]{0,50}\b(?:migrat\w+|obstruct\w+|occlud\w+)\b", re.IGNORECASE), "stent_migration_or_obstruction"),
+    (re.compile(r"\b(?:catheter|ipc|pleurx|chest\s+tube|drain)\b[^.\n;]{0,50}\b(?:dislodg\w+|malfunction\w*|blocked|clogged)\b", re.IGNORECASE), "drain_malfunction"),
+)
+
+
+def _complication_types(text: str) -> list[str]:
+    found: list[str] = []
+    for sentence in re.split(r"(?<=[.\n;])\s+", text or ""):
+        sample = sentence.strip()
+        if not sample:
+            continue
+        if re.search(r"(?i)\b(?:no|without|denies|negative\s+for|resolved)\b", sample):
+            continue
+        for pattern, label in _COMPLICATION_TYPE_PATTERNS:
+            if pattern.search(sample) and label not in found:
+                found.append(label)
+    return found
+
 _DISEASE_PROGRESSION_RE = re.compile(
     r"\b(?:progression|progressive)\b[^\n\.;]{0,30}\b(?:disease|cancer|tumou?r)\b|\bprogression\s+of\s+disease\b",
     re.IGNORECASE,
@@ -113,6 +151,11 @@ def extract_clinical_update_event(
     icu_admission = _extract_tri_state(clean, neg_re=_ICU_NEG_RE, pos_re=_ICU_POS_RE)
     deceased = _extract_tri_state(clean, neg_re=_DECEASED_NEG_RE, pos_re=_DECEASED_POS_RE)
     disease_status = _extract_disease_status(clean)
+    ed_visit = _extract_tri_state(clean, neg_re=_ED_VISIT_NEG_RE, pos_re=_ED_VISIT_POS_RE)
+    readmission = _extract_tri_state(clean, neg_re=_READMISSION_NEG_RE, pos_re=_READMISSION_POS_RE)
+    if readmission is True and hospital_admission is None:
+        hospital_admission = True
+    complication_types = _complication_types(clean)
 
     performance_status_text = None
     performance_match = _PERFORMANCE_RE.search(clean)
@@ -134,8 +177,11 @@ def extract_clinical_update_event(
             treatment_change_text,
             complication_text,
             symptom_change,
+            complication_types,
             hospital_admission is not None,
             icu_admission is not None,
+            ed_visit is not None,
+            readmission is not None,
             deceased is not None,
             disease_status is not None,
         ]
@@ -153,8 +199,11 @@ def extract_clinical_update_event(
             "summary_text": summary_text or None,
             "hospital_admission": hospital_admission,
             "icu_admission": icu_admission,
+            "ed_visit": ed_visit,
+            "readmission": readmission,
             "deceased": deceased,
             "disease_status": disease_status,
+            "complication_types": complication_types,
             "qa_flags": sorted(set(qa_flags)),
         },
         "qa_flags": sorted(set(qa_flags)),

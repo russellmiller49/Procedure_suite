@@ -616,11 +616,11 @@ REQUIRED_PATTERNS: dict[str, list[tuple[str, str]]] = {
             "Text indicates combined tPA/DNase intrapleural therapy.",
         ),
     ],
-    # Diagnostic chest ultrasound (76604)
+    # Diagnostic chest ultrasound (76604). A bare "76604" token is header/menu
+    # content and must not force performed=true (narrative wording required).
     "procedures_performed.chest_ultrasound.performed": [
         (r"(?i)\bchest\s+ultrasound\s+findings\b", "Text contains 'Chest ultrasound findings'."),
         (r"(?i)\bultrasound,\s*chest\b", "Text contains 'Ultrasound, chest'."),
-        (r"\b76604\b", "Text lists CPT 76604 (chest ultrasound)."),
     ],
 }
 
@@ -634,6 +634,11 @@ _CHEST_TUBE_REMOVAL_CUES_RE = re.compile(
 )
 _CHEST_TUBE_INSERTION_CUES_RE = re.compile(
     r"(?i)\b(?:place(?:d|ment)?|insert(?:ed|ion)?|tube\s+thoracostomy|thoracostomy|pigtail|seldinger)\b"
+)
+_IPC_PLACEMENT_MECHANICS_RE = re.compile(
+    r"(?i)\b(?:tunneler|tunnel(?:ed|led|ing)|peel[-\s]?away\s+sheath|introducer|"
+    r"subcutaneous\s+tract|seldinger|guide\s?wire|left\s+in\s+place|"
+    r"dilat(?:or|ation)\b[^.\n]{0,60}\b(?:tract|access))\b"
 )
 _TBNA_EBUS_CONTEXT_RE = re.compile(
     r"(?i)\b(?:ebus|endobronchial\s+ultrasound|convex\s+probe|ebus[-\s]?tbna)\b"
@@ -839,6 +844,34 @@ def _match_is_negated(note_text: str, match: re.Match[str], *, field_path: str |
         if re.search(r"(?i)\bdate\s+of\s+(?:the\s+)?chest\s+tube\s+insertion\b", window):
             return True
         if _CHEST_TUBE_REMOVAL_CUES_RE.search(window) and not _CHEST_TUBE_INSERTION_CUES_RE.search(window):
+            return True
+
+    if field_path == "pleural_procedures.chest_tube_removal.performed":
+        # IPC placement mechanics ("Pleurx catheter ... pulled through the
+        # subcutaneous tract", "needle removed and catheter left in place")
+        # describe insertion, not removal of an existing drain. A same-session
+        # exchange that explicitly removes the EXISTING/old drain still counts.
+        window = note_text[max(0, start - 200) : min(len(note_text), end + 200)]
+        if _IPC_PLACEMENT_MECHANICS_RE.search(window) and not re.search(
+            r"(?i)\b(?:existing|old|prior|previous|indwelling)\b[^.\n]{0,60}"
+            r"\b(?:chest\s+tube|catheter|drain|pigtail)\b[^.\n]{0,80}"
+            r"\b(?:removed|pulled|withdrawn|explanted)\b",
+            window,
+        ):
+            return True
+
+    if field_path == "procedures_performed.endobronchial_biopsy.performed":
+        # Header/menu or modifier-22 justification text ("Apply to: 31625
+        # Endobronchial Biopsy(s)") is not narrative evidence of a biopsy.
+        window = note_text[max(0, start - 120) : min(len(note_text), end + 60)]
+        if re.search(
+            r"(?i)\b(?:apply\s+to|modifier\s*22|unusual\s+procedure|substantially\s+greater\s+work|"
+            r"increased\s+work|cpt)\b|\b31625\b",
+            window,
+        ) and not re.search(
+            r"(?i)\b(?:obtained|taken|collected|performed|sent)\b",
+            window,
+        ):
             return True
 
     if field_path == "procedures_performed.tbna_conventional.performed":

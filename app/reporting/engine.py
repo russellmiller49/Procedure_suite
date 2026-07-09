@@ -1598,6 +1598,44 @@ def _extract_ultrasound_fields_from_text(text: str) -> dict[str, Any]:
     return fields
 
 
+# Text-mined ultrasound keys that seed a CHEST ULTRASOUND FINDINGS block in the
+# pleural templates (as opposed to guidance/side, which only feed narrative text).
+_ULTRASOUND_FINDINGS_DETAIL_KEYS = frozenset({"effusion_volume", "loculations"})
+
+
+def _chest_ultrasound_documented(raw: dict[str, Any], note_text: str) -> bool:
+    """True when the registry (or the note itself) explicitly documents a chest ultrasound exam.
+
+    Ultrasound-adjacent wording alone (e.g., a pre-instillation ultrasound check in a
+    fibrinolytic note) must not seed a CHEST ULTRASOUND FINDINGS block.
+    """
+    for section_key in ("procedures_performed", "pleural_procedures"):
+        section = raw.get(section_key)
+        if not isinstance(section, dict):
+            continue
+        chest_us = section.get("chest_ultrasound")
+        if isinstance(chest_us, BaseModel):
+            chest_us = chest_us.model_dump()
+        if isinstance(chest_us, dict):
+            if chest_us.get("performed"):
+                return True
+        elif chest_us:
+            return True
+    text = note_text or ""
+    if re.search(r"(?i)\bchest\s+ultrasound\s+findings\b", text):
+        return True
+    # Active-voice narrative documenting an ultrasound exam. Hierarchy of truth:
+    # narrative outranks terse header/menu shorthand (e.g. "US findings:"), which
+    # alone does not document an exam.
+    return bool(
+        re.search(
+            r"(?i)\b(?:performed|completed)\s+(?:a\s+)?(?:bedside\s+|thoracic\s+|chest\s+)*ultrasound\b"
+            r"|\bultrasound\s+(?:showed|demonstrated|revealed)\b",
+            text,
+        )
+    )
+
+
 def _normalize_sedation_type(value: Any) -> str | None:
     if value in (None, "", [], {}):
         return None
@@ -3316,7 +3354,13 @@ def build_procedure_bundle_from_extraction(
     for proc in procedures:
         if proc.proc_type == "therapeutic_injection":
             data = proc.data.model_dump(exclude_none=False) if isinstance(proc.data, BaseModel) else dict(proc.data or {})
-            if not str(data.get("notes") or "").strip() and re.search(r"(?i)\btracheostomy\b", note_text):
+            # Require actual route/delivery language through a stoma; a
+            # device-status mention ("Airway: Tracheostomy") or ordinary
+            # trachea navigation ("advanced through the trachea") must not
+            # fabricate a delivery route.
+            if not str(data.get("notes") or "").strip() and re.search(
+                r"(?i)\b(?:via|through)\b[^\n.]{0,40}\btracheo?stom", note_text
+            ):
                 data["notes"] = "Delivered via tracheostomy."
                 proc.data = data
         if proc.proc_type == "radial_ebus_sampling":
@@ -3390,6 +3434,15 @@ def build_procedure_bundle_from_extraction(
     fibrinolytic_number_of_doses = _extract_fibrinolytic_dose_number(note_text)
     tpa_dose_mg, dnase_dose_mg = _extract_fibrinolytic_agent_doses(note_text)
     ultrasound_fields = _extract_ultrasound_fields_from_text(note_text)
+    if not _chest_ultrasound_documented(raw, note_text):
+        # Without a documented chest ultrasound exam, keep only guidance/side (which
+        # feed the ultrasound narrative sentence) and drop findings details so the
+        # CHEST ULTRASOUND FINDINGS block is not fabricated from adjacent wording.
+        ultrasound_fields = {
+            key: value
+            for key, value in ultrasound_fields.items()
+            if key not in _ULTRASOUND_FINDINGS_DETAIL_KEYS
+        }
     for proc in procedures:
         if proc.proc_type not in {"chest_tube", "pigtail_catheter"}:
             continue

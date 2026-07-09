@@ -1338,6 +1338,8 @@ const IMAGING_MODALITY_OPTIONS = [
   { value: "pet_ct", label: "PET-CT" },
   { value: "cta", label: "CTA" },
   { value: "mri", label: "MRI" },
+  { value: "cxr", label: "CXR" },
+  { value: "us", label: "Ultrasound" },
   { value: "other", label: "Other" },
 ];
 const IMAGING_SUBTYPE_OPTIONS = [
@@ -1346,6 +1348,7 @@ const IMAGING_SUBTYPE_OPTIONS = [
   { value: "followup", label: "Follow-up" },
   { value: "restaging", label: "Restaging" },
   { value: "surveillance", label: "Surveillance" },
+  { value: "post_procedure", label: "Post-procedure" },
 ];
 
 const HEMITHORAX_OPTIONS = [
@@ -9202,6 +9205,39 @@ function buildFlattenedTables(data) {
         },
       },
       {
+        field: "Latest pneumothorax",
+        value:
+          latestImaging?.pneumothorax == null
+            ? ""
+            : [
+                toYesNo(latestImaging.pneumothorax),
+                latestImaging.pneumothorax_side || "",
+                latestImaging.pneumothorax_trend || "",
+              ]
+                .filter(Boolean)
+                .join(" / "),
+        __meta: { valueType: "text" },
+      },
+      {
+        field: "Latest effusion",
+        value:
+          latestImaging?.pleural_effusion == null
+            ? ""
+            : [
+                toYesNo(latestImaging.pleural_effusion),
+                latestImaging.effusion_side || "",
+                latestImaging.effusion_trend || "",
+              ]
+                .filter(Boolean)
+                .join(" / "),
+        __meta: { valueType: "text" },
+      },
+      {
+        field: "Latest device position",
+        value: latestImaging?.device_position_text || "",
+        __meta: { valueType: "text" },
+      },
+      {
         field: "Latest impression",
         value: latestImaging?.overall_impression_text || "",
         __meta: { path: `${latestPrefix}.overall_impression_text`, valueType: "text" },
@@ -9268,6 +9304,33 @@ function buildFlattenedTables(data) {
         },
       },
       {
+        field: "ED visit",
+        value: toYesNo(currentState?.ed_visit),
+        __meta: {
+          path: "registry.clinical_course.current_state.ed_visit",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Readmission",
+        value: toYesNo(currentState?.readmission),
+        __meta: {
+          path: "registry.clinical_course.current_state.readmission",
+          valueType: "boolean",
+          inputType: "select",
+          options: YES_NO_OPTIONS,
+        },
+      },
+      {
+        field: "Complication types",
+        value: Array.isArray(currentState?.complication_types)
+          ? currentState.complication_types.join(", ")
+          : "",
+        __meta: { valueType: "text" },
+      },
+      {
         field: "Current summary",
         value: currentState?.summary_text || "",
         __meta: {
@@ -9293,6 +9356,129 @@ function buildFlattenedTables(data) {
     allowDelete: false,
     emptyMessage: "No clinical follow-up fields populated.",
   });
+
+  const longitudinalOutcomes =
+    registry?.longitudinal_outcomes && typeof registry.longitudinal_outcomes === "object"
+      ? registry.longitudinal_outcomes
+      : null;
+  if (longitudinalOutcomes) {
+    tables.push({
+      id: "longitudinal_outcomes",
+      title: "Longitudinal Outcomes (Case Rollup)",
+      columns: [
+        { key: "field", label: "Field", readOnly: true },
+        { key: "value", label: "Value", type: "text" },
+      ],
+      rows: [
+        {
+          field: "30-day complication",
+          value: toYesNo(longitudinalOutcomes?.day30_complication),
+          __meta: {
+            path: "registry.longitudinal_outcomes.day30_complication",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "30-day readmission",
+          value: toYesNo(longitudinalOutcomes?.day30_readmission),
+          __meta: {
+            path: "registry.longitudinal_outcomes.day30_readmission",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "30-day ED visit",
+          value: toYesNo(longitudinalOutcomes?.day30_ed_visit),
+          __meta: {
+            path: "registry.longitudinal_outcomes.day30_ed_visit",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "30-day mortality",
+          value: toYesNo(longitudinalOutcomes?.day30_mortality),
+          __meta: {
+            path: "registry.longitudinal_outcomes.day30_mortality",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "Survival status",
+          value: longitudinalOutcomes?.survival_status || "",
+          __meta: { path: "registry.longitudinal_outcomes.survival_status", valueType: "text" },
+        },
+        {
+          field: "Last known status (day offset)",
+          value:
+            longitudinalOutcomes?.last_known_status_day_offset != null
+              ? String(longitudinalOutcomes.last_known_status_day_offset)
+              : "",
+          __meta: { valueType: "text" },
+        },
+        {
+          field: "Diagnostic yield",
+          value: longitudinalOutcomes?.diagnostic_yield || "",
+          __meta: { path: "registry.longitudinal_outcomes.diagnostic_yield", valueType: "text" },
+        },
+        {
+          field: "Reintervention within 30 days",
+          value: toYesNo(longitudinalOutcomes?.reintervention_within_30d),
+          __meta: {
+            path: "registry.longitudinal_outcomes.reintervention_within_30d",
+            valueType: "boolean",
+            inputType: "select",
+            options: YES_NO_OPTIONS,
+          },
+        },
+        {
+          field: "Complication types",
+          value: Array.isArray(longitudinalOutcomes?.complication_types)
+            ? longitudinalOutcomes.complication_types.join(", ")
+            : "",
+          __meta: { valueType: "text" },
+        },
+      ],
+      allowAdd: false,
+      allowDelete: false,
+      emptyMessage: "No longitudinal outcomes derived yet.",
+    });
+  }
+
+  const specimenYields = Array.isArray(registry?.pathology_results?.specimen_results)
+    ? registry.pathology_results.specimen_results
+    : [];
+  if (specimenYields.length) {
+    tables.push({
+      id: "pathology_specimen_yield",
+      title: "Pathology Specimen Yield",
+      columns: [
+        { key: "specimen_label", label: "Specimen", type: "text" },
+        { key: "specimen_type", label: "Sampling Modality", type: "text" },
+        { key: "station", label: "Station", type: "text" },
+        { key: "result_category", label: "Result", type: "text" },
+        { key: "diagnosis_text", label: "Diagnosis", type: "text" },
+      ],
+      rows: specimenYields.map((s) => ({
+        specimen_label: String(s?.specimen_label || ""),
+        specimen_type: String(s?.specimen_type || ""),
+        station: String(s?.station || ""),
+        result_category: String(s?.result_category || ""),
+        diagnosis_text: String(s?.diagnosis_text || ""),
+      })),
+      allowAdd: false,
+      allowDelete: false,
+      readOnly: true,
+      emptyMessage: "No specimen-level pathology results.",
+    });
+  }
 
   const evidence = getEvidence(data);
   const evRows = [];

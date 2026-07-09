@@ -71,6 +71,35 @@ def patch_pathology_results(
             manual_overrides=manual_overrides,
         )
 
+    specimen_results = extracted.get("specimen_results")
+    if isinstance(specimen_results, list) and specimen_results:
+        specimens_pointer = pointer_join("pathology_results", "specimen_results")
+        if is_pointer_locked(manual_overrides, specimens_pointer):
+            qa_flags.append("specimen_results_locked")
+        else:
+            dest_list = pathology.get("specimen_results")
+            if not isinstance(dest_list, list):
+                dest_list = []
+                pathology["specimen_results"] = dest_list
+
+            def _specimen_key(item: dict[str, Any]) -> tuple[Any, ...]:
+                return (
+                    str(item.get("specimen_label") or "").upper(),
+                    str(item.get("specimen_type") or ""),
+                    str(item.get("station") or "").upper(),
+                )
+
+            seen = {_specimen_key(item) for item in dest_list if isinstance(item, dict)}
+            for item in specimen_results:
+                if not isinstance(item, dict):
+                    continue
+                key = _specimen_key(item)
+                if key in seen:
+                    continue
+                dest_list.append(item)
+                seen.add(key)
+                changed = True
+
     markers = update.get("molecular_markers")
     if isinstance(markers, dict) and markers:
         markers_pointer = pointer_join("pathology_results", "molecular_markers")

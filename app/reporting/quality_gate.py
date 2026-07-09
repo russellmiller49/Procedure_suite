@@ -190,9 +190,34 @@ def _complication_contradiction_flags(
     if not source_text:
         return []
     adverse_patterns = (
-        r"(?i)\b(?:complication|tear|bleeding|oozing|migration|migrated|failed|failure|removed|required|converted|switch\s+from)\b",
+        r"(?i)\b(?:complication|tear|bleeding|oozing|migration|migrated|failed|failure|converted|switch\s+from)\b",
+        # Inadvertent/accidental device removals always count.
+        r"(?i)\b(?:inadvertent(?:ly)?|accidental(?:ly)?|dislodg\w+)\b[^.;\n]{0,60}\bremov\w+\b",
+        # "required" counts unless it is the routine closing idiom ("no further
+        # intervention was required"); adverse events described with a negation
+        # elsewhere in the clause ("did not tolerate ... and required reversal
+        # agents") still count.
+        r"(?i)(?:^|[.;\n])(?![^.;\n]*\bno\s+(?:further|additional|other)\b[^.;\n]{0,40}\brequired\b)[^.;\n]*\brequired\b",
     )
-    if not any(re.search(pattern, source_text) for pattern in adverse_patterns):
+
+    def _removed_is_adverse(text: str) -> bool:
+        # "removed" counts unless the removed object is fluid ("900 mL of
+        # serous fluid was removed", "Removed 900 mL of serous fluid") — those
+        # must not contradict "COMPLICATIONS None". Inadvertent/accidental
+        # removals are caught by their own pattern above regardless.
+        for removed_match in re.finditer(r"(?i)\bremoved\b", text):
+            prefix = text[max(0, removed_match.start() - 40) : removed_match.start()]
+            if re.search(r"(?i)\b(?:fluid|effusion|ml|cc)\b[^.;\n]{0,30}$", prefix):
+                continue
+            suffix = text[removed_match.end() : removed_match.end() + 40]
+            if re.search(r"(?i)^[^.;\n]{0,30}\b(?:fluid|effusion|ml|cc)\b", suffix):
+                continue
+            return True
+        return False
+
+    if not any(re.search(pattern, source_text) for pattern in adverse_patterns) and not _removed_is_adverse(
+        source_text
+    ):
         return []
     existing = str(bundle.complications_text or "").strip()
     rendered_none = bool(re.search(r"(?im)^\s*COMPLICATIONS\s+None\s*$", markdown or ""))
