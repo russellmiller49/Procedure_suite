@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SMART on FHIR Launch — ATLAS-IP Procedure Suite</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="page-hero">
+        <h1>Connecting to your EHR</h1>
+        <p class="subtle">SMART on FHIR launch for the ATLAS-IP Procedure Suite.</p>
+      </div>
+      <div class="content-card">
+        <h3>Status</h3>
+        <p id="smartLaunchStatus">Contacting server for the issuer allowlist…</p>
+        <div id="smartIssuerPicker"></div>
+        <div class="callout">
+          Your EHR sign-in and any patient data stay in this browser. The coding server receives
+          only de-identified note text after you apply redactions in the dashboard.
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./launch.js"></script>
+  </body>
+</html>

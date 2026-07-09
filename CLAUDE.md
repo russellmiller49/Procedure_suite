@@ -81,6 +81,33 @@ Hard constraints for this path:
 - OCR/model assets are same-origin vendored files.
 - Debug logging is metrics-only (no raw clinical text).
 
+## SMART on FHIR (Epic / Oracle Health–Cerner) EHR Launch
+
+Optional, **disabled by default**. Full guide: `docs/SMART_ON_FHIR.md`.
+
+- Launch pages: `/ui/smart/launch.html` (register as the EHR's SMART launch URL) and
+  `/ui/smart/callback.html` (OAuth redirect URI). Standalone launch (issuer picker) is
+  supported for sandbox testing.
+- **Browser-only** OAuth (authorization-code + PKCE S256) and FHIR reads; EHR tokens and
+  unredacted note text never reach the server. The server's sole surface is the public
+  issuer allowlist at `GET /api/v1/smart/config` (`app/api/routes/smart.py`, settings in
+  `config/smart_settings.py`, fail-soft `config_errors`).
+- Env: `SMART_ENABLED=1` + `SMART_ISSUERS` (inline JSON) or `SMART_ISSUERS_FILE`
+  (see `configs/smart/issuers.example.json`); optional `SMART_DEFAULT_SCOPES`.
+  Issuers are exact-`iss` allowlisted (https required; http only on localhost); Cerner
+  issuers get `online_access` appended (short-lived tokens → in-session refresh).
+- Dashboard: `#smartEhrCard` (index.html) renders only when a SMART session exists
+  (`ui/static/phi_redactor/smart/smartPanel.js`). Loading a note resolves the best
+  DocumentReference attachment (text → HTML → RTF best-effort → PDF via the local
+  `pdf_local` pipeline), inserts it with `note_source_type=ehr_fhir`, then the normal
+  detect → redact → submit PHI flow applies unchanged.
+- Hard constraints: never send the Bearer token off the issuer origin; SMART pages load
+  same-origin assets only; panel DOM is built via `textContent` (no innerHTML with EHR
+  data); logging stays metrics/status-only.
+- Tests: `tests/api/test_smart_config.py` (endpoint) and
+  `ui/source/registry_grid/src/__tests__/smartCore.test.js` (PKCE/scopes/parsing/RTF-HTML
+  conversion, Vitest).
+
 ## Reporter Module (Builder + Seeding)
 
 - Reporter Builder UI: `http://localhost:8000/ui/reporter_builder.html`

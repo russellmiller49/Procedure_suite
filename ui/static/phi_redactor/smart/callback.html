@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SMART on FHIR Sign-in — ATLAS-IP Procedure Suite</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="page-hero">
+        <h1>Completing EHR sign-in</h1>
+        <p class="subtle">Exchanging the authorization code with your EHR…</p>
+      </div>
+      <div class="content-card">
+        <h3>Status</h3>
+        <p id="smartCallbackStatus">Working…</p>
+        <p id="smartCallbackRetry" class="hidden">
+          <a href="./launch.html">Start the launch again</a>
+        </p>
+      </div>
+    </div>
+    <script type="module" src="./callback.js"></script>
+  </body>
+</html>

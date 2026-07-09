@@ -30,6 +30,7 @@ import {
   getCompletenessEbusStationHintForPath,
   normalizeCompletenessStationToken,
 } from "./completenessHelpers.js";
+import { initSmartEhrPanel } from "./smart/smartPanel.js";
 
 // Linking layer (ATLAS-only). Loaded via index.html before this module.
 const L = typeof window !== "undefined" ? window.ATLASLinking : null;
@@ -15725,6 +15726,27 @@ async function main() {
 	      if (runBtn) runBtn.disabled = extractingPdf || extractingCamera || correctingCameraOcr || !workerReady;
 	    });
 	  }
+
+  // SMART on FHIR (EHR launch) panel — visible only when an EHR session exists in
+  // this tab (arrival via /ui/smart/launch.html). Loaded notes enter the editor and
+  // then follow the unchanged detect -> redact -> submit PHI workflow.
+  initSmartEhrPanel({
+    insertNoteText: (text) => {
+      if (newNoteBtn && !newNoteBtn.disabled) newNoteBtn.click();
+      setEditorText(String(text || ""));
+      setNoteSourceType("ehr_fhir");
+      setStatus("EHR note loaded — review, then Run Detection");
+    },
+    insertPdfBytes: async (bytes, fileName) => {
+      if (newNoteBtn && !newNoteBtn.disabled) newNoteBtn.click();
+      const file = new File([bytes], String(fileName || "ehr_note.pdf"), {
+        type: "application/pdf",
+      });
+      return extractSelectedPdfIntoEditor(file);
+    },
+  }).catch((err) => {
+    console.warn("SMART on FHIR panel init failed:", err);
+  });
 
   // Optional: service worker (local assets only)
   if ("serviceWorker" in navigator && new URL(location.href).searchParams.get("sw") === "1") {

@@ -57,6 +57,7 @@ from app.api.routes.registry_append import router as registry_append_router
 from app.api.routes.registry_case import router as registry_case_router
 from app.api.routes.registry_runs import router as registry_runs_router
 from app.api.routes.reporting import router as reporting_router
+from app.api.routes.smart import router as smart_router
 from app.api.routes.umls import router as umls_router
 from app.api.routes.unified_process import router as unified_process_router
 from app.api.routes.vault import router as vault_router
@@ -148,6 +149,8 @@ app.include_router(registry_case_router, prefix="/api", tags=["registry-case"])
 app.include_router(unified_process_router, prefix="/api")
 # UMLS term suggestion / concept lookup
 app.include_router(umls_router, prefix="/api")
+# SMART on FHIR launch config (public issuer allowlist for the browser launch client)
+app.include_router(smart_router, prefix="/api")
 # Client-side encrypted vault (ciphertext-only persistence)
 app.include_router(vault_router, prefix="/api")
 # Bundle process router (multi-doc ZK ingestion)
