@@ -11,7 +11,7 @@
 
 These repositories have independent Git histories, private visibility, independent CI and fresh synthetic installations. Main requires the validate check, an approval of the latest push and administrator enforcement; force pushes and deletion are disabled. No institutional credentials, PHI, existing R&D databases, trained-model binaries or historical sessions were copied.
 
-Procedure_suite remains the synthetic R&D workspace. Its new packages and candidate builder are on codex/registry-secure-foundation. Existing application behavior and the deployment mirror were not modified. The private repositories contain reviewed-source candidates for further qualification, not a fork of the development application.
+Procedure_suite remains the synthetic R&D workspace. Its new packages and candidate builder are on codex/registry-secure-foundation. Existing application behavior and the deployment mirror were not modified. The private repositories contain allowlisted source candidates awaiting independent review and qualification.
 
 ## Working implementation
 
