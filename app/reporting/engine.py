@@ -1812,7 +1812,11 @@ def _extract_explicit_complications(note_text: str) -> str | None:
         for match in re.finditer(pattern, note_text):
             if re.match(r"(?i)(?:bleeding|oozing)\b", match.group(0)):
                 prefix = note_text[max(0, match.start() - 80):match.start()]
-                if re.search(r"(?i)\b(?:no|without|absence of|no evidence of)\s+(?:(?:active|significant|ongoing)\s+|(?:mass|lesions?)\s*,\s*)*$", prefix):
+                if re.search(
+                    r"(?i)\b(?:no|without|absence of|no evidence of)\s+"
+                    r"(?:(?:active|significant|ongoing)\s+|(?:mass|lesions?)\s*,\s*)*$",
+                    prefix,
+                ):
                     continue
             snippet = re.sub(r"\s+", " ", match.group(0)).strip().rstrip(".")
             if not snippet:

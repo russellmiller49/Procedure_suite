@@ -237,8 +237,9 @@ def _complication_contradiction_flags(
             return True
         return False
 
-    if not any(_has_adverse_match(pattern) for pattern in adverse_patterns) and not _removed_is_adverse(
-        source_text
+    if (
+        not any(_has_adverse_match(pattern) for pattern in adverse_patterns)
+        and not _removed_is_adverse(source_text)
     ):
         return []
     existing = str(bundle.complications_text or "").strip()
@@ -509,7 +510,8 @@ def _multi_target_collapse_flags(
         return [_make_flag(
             "MULTI_TARGET_COLLAPSE",
             "The bundle preserves fewer targets than the explicit operative target blocks.",
-            source="quality_gate.bundle", metadata={"target_count": len(operative_targets)}, blocking=False,
+            source="quality_gate.bundle",
+            metadata={"target_count": len(operative_targets)}, blocking=False,
         )]
     targets = [
         f"{match.group(1).upper()} ({str(match.group(2) or '').strip()})".strip()

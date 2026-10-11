@@ -18,7 +18,7 @@ import httpx
 
 from app.common.logger import get_logger
 from app.common.exceptions import LLMError
-from app.common.model_capabilities import filter_payload_for_model, is_gpt5, is_gpt6_luna
+from app.common.model_capabilities import is_gpt5, is_gpt6_luna
 from app.infra.llm_control import backoff_seconds, llm_slot, parse_retry_after_seconds
 from app.infra.settings import get_infra_settings
 
