@@ -1048,7 +1048,9 @@
         "no_stent": true,
         "node_passes": {
           "11L": null
-        }
+        },
+        "generic_peripheral_biopsy": true,
+        "cbct_guidance": true
       },
       "ebus_warning_review": {
         "decision": "pipeline_error",

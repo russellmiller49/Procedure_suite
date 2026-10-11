@@ -196,8 +196,7 @@ def test_explicit_station_label_takes_precedence_over_named_region():
     bundle = build_procedure_bundle_from_extraction(
         {},
         source_text=(
-            "Ion RUL nodule biopsy. EBUS sampled 11L (left hilar) "
-            "and station 7 (subcarinal)."
+            "Ion RUL nodule biopsy. EBUS sampled 11L (left hilar) and station 7 (subcarinal)."
         ),
     )
     nodes = [
@@ -207,3 +206,37 @@ def test_explicit_station_label_takes_precedence_over_named_region():
         for s in p.data["stations"]
     ]
     assert nodes == ["11L", "7"]
+
+
+@pytest.mark.parametrize(
+    "sampling",
+    ["Brushed the nodule. No biopsy.", "Brush biopsy only.", "Nodule not biopsied; brushed only."],
+)
+def test_brushing_alone_does_not_add_generic_biopsy(sampling):
+    source = "Navigated to LLL nodule with radial EBUS. " + sampling
+    bundle = build_procedure_bundle_from_extraction({}, source_text=source)
+    assert "Peripheral lung biopsy" not in (bundle.findings_text or "")
+
+
+def test_sequential_cone_beam_and_biopsy_survive_brushing_and_render_patch():
+    from app.reporting import apply_bundle_json_patch
+
+    source = next(r["prompt_text"] for r in CORPUS if r["id"] == "RB-07-04")
+    bundle = build_procedure_bundle_from_extraction({}, source_text=source)
+    index = next(i for i, p in enumerate(bundle.procedures) if p.proc_type == "ebus_tbna")
+    patched = apply_bundle_json_patch(
+        bundle, [{"op": "add", "path": f"/procedures/{index}/data/stations/0/passes", "value": 3}]
+    )
+    rendered = compose_structured_report(patched, strict=True)
+    assert "Peripheral lung biopsy at LLL; sampling technique unspecified" in rendered
+    assert "used sequential cone-beam spins until needle placement was confirmed" in rendered
+    assert "Station 11L: 3 passes" in rendered
+
+
+@pytest.mark.parametrize(
+    "imaging", ["Never used cone-beam spins.", "Planned to perform cone-beam spins, not performed."]
+)
+def test_unused_cone_beam_does_not_add_guidance(imaging):
+    source = "Navigated to LLL nodule with radial EBUS and brushed. " + imaging
+    bundle = build_procedure_bundle_from_extraction({}, source_text=source)
+    assert "CBCT guidance:" not in (bundle.findings_text or "")
