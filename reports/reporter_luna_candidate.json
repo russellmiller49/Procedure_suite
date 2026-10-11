@@ -1,0 +1,721 @@
+{
+  "schema_version": "reporter_luna_candidate.v1",
+  "generated_at": "2026-10-11T07:03:01.873200+00:00",
+  "status": "candidate_validated_not_deployed",
+  "production_changes_applied": false,
+  "proposed_settings": {
+    "OPENAI_MODEL_STRUCTURER": "gpt-6-luna",
+    "OPENAI_MODEL_JUDGE": "gpt-6-luna"
+  },
+  "unchanged_settings": {
+    "OPENAI_MODEL": "gpt-5.2",
+    "OPENAI_MODEL_SUMMARIZER": "gpt-5-mini",
+    "REPORTER_SEED_STRATEGY": "registry_extract_fields (default)"
+  },
+  "reasoning_effort": "none, matching the previous GPT-5.2 effective default",
+  "api": "Responses; production credential confirmed model access, no credentials saved",
+  "scope": {
+    "structurer": "22 previously reviewed EBUS warning prompts; direct LLM findings tested as a candidate path, not enabled in production",
+    "source_slot_checks_per_model": 53,
+    "warning_review_checks_per_model": 22,
+    "judge": "8 synthetic positive/negative correction pairs, proposals passed through runtime evidence validation and patch application"
+  },
+  "tests": {
+    "tests": 226,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "models": [
+    {
+      "model": "gpt-5.2",
+      "reasoning_effort": "none (explicit for Luna; model default for GPT-5.2)",
+      "structurer": [
+        {
+          "id": "RB-01-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 8,
+          "dropped_findings": 0,
+          "latency_s": 9.477
+        },
+        {
+          "id": "RB-01-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 7.266
+        },
+        {
+          "id": "RB-01-10",
+          "error": "ReporterFindingsParseError: LLM response did not match ReporterFindingsV1: ValidationError",
+          "latency_s": 6.189
+        },
+        {
+          "id": "RB-02-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 4,
+          "dropped_findings": 1,
+          "latency_s": 6.399
+        },
+        {
+          "id": "RB-02-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 4,
+          "dropped_findings": 0,
+          "latency_s": 6.934
+        },
+        {
+          "id": "RB-02-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 4.579
+        },
+        {
+          "id": "RB-03-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 5.94
+        },
+        {
+          "id": "RB-03-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 5.42
+        },
+        {
+          "id": "RB-05-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 6.3
+        },
+        {
+          "id": "RB-06-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 0,
+          "dropped_findings": 0,
+          "latency_s": 2.053
+        },
+        {
+          "id": "RB-07-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 7,
+          "dropped_findings": 0,
+          "latency_s": 7.859
+        },
+        {
+          "id": "RB-07-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 4.39
+        },
+        {
+          "id": "RB-09-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 6.992
+        },
+        {
+          "id": "RB-09-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 1,
+          "latency_s": 4.39
+        },
+        {
+          "id": "RB-10-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 1,
+          "latency_s": 8.212
+        },
+        {
+          "id": "RB-10-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 7.08
+        },
+        {
+          "id": "RB-10-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 4,
+          "dropped_findings": 0,
+          "latency_s": 5.571
+        },
+        {
+          "id": "RB-11-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 7,
+          "dropped_findings": 0,
+          "latency_s": 8.979
+        },
+        {
+          "id": "RB-11-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 7.151
+        },
+        {
+          "id": "RB-11-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 7.152
+        },
+        {
+          "id": "RB-11-09",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 7.371
+        },
+        {
+          "id": "RB-11-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 0,
+          "dropped_findings": 0,
+          "latency_s": 2.668
+        }
+      ],
+      "judge": [
+        {
+          "id": "cryo_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The note explicitly states that a cryobiopsy was performed, but the registry record marks transbronchial_cryobiopsy as not performed. This is a clear omission that should be corrected to reflect the documented procedure.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/transbronchial_cryobiopsy/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "Cryobiopsy of the RUL nodule was performed with a 1.1 mm cryoprobe, obtaining four samples."
+          },
+          "latency_s": 2.06
+        },
+        {
+          "id": "cryo_not_performed",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.061
+        },
+        {
+          "id": "stent_placed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The note explicitly states that a silicone stent was placed in the left mainstem bronchus, which means an airway stent procedure was performed. The registry currently has airway_stent.performed=false, which conflicts with the documented clinical action.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/airway_stent/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "A silicone stent was placed in the left mainstem bronchus to treat the stenosis."
+          },
+          "latency_s": 2.153
+        },
+        {
+          "id": "stent_inspection",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.137
+        },
+        {
+          "id": "radial_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The note explicitly states that Radial EBUS was performed, but the registry record incorrectly marks radial_ebus.performed as false.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/radial_ebus/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "Radial EBUS was performed to localize the RUL nodule before biopsy."
+          },
+          "latency_s": 1.838
+        },
+        {
+          "id": "radial_planned",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.966
+        },
+        {
+          "id": "debulking_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The note explicitly states that an obstructing endobronchial tumor was mechanically debulked using forceps, which indicates mechanical debulking was performed. The current registry incorrectly has mechanical_debulking.performed=false.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/mechanical_debulking/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "The obstructing endobronchial tumor was mechanically debulked using forceps."
+          },
+          "latency_s": 2.154
+        },
+        {
+          "id": "tools_only",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 0.946
+        }
+      ],
+      "summary": {
+        "structurer_cases": 22,
+        "structurer_errors": 1,
+        "slot_failures": 0,
+        "warning_review_failures": 0,
+        "render_fallbacks": 0,
+        "judge_passed": 8,
+        "judge_cases": 8,
+        "structurer_median_latency_s": 6.6665,
+        "judge_median_latency_s": 1.9020000000000001
+      }
+    },
+    {
+      "model": "gpt-6-luna",
+      "reasoning_effort": "none (explicit for Luna; model default for GPT-5.2)",
+      "structurer": [
+        {
+          "id": "RB-01-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 7,
+          "dropped_findings": 0,
+          "latency_s": 6.229
+        },
+        {
+          "id": "RB-01-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 8,
+          "dropped_findings": 0,
+          "latency_s": 5.881
+        },
+        {
+          "id": "RB-01-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 2,
+          "dropped_findings": 0,
+          "latency_s": 2.895
+        },
+        {
+          "id": "RB-02-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 3.346
+        },
+        {
+          "id": "RB-02-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 9.915
+        },
+        {
+          "id": "RB-02-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 1,
+          "dropped_findings": 1,
+          "latency_s": 4.219
+        },
+        {
+          "id": "RB-03-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 7.363
+        },
+        {
+          "id": "RB-03-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 4.272
+        },
+        {
+          "id": "RB-05-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 4,
+          "dropped_findings": 1,
+          "latency_s": 3.009
+        },
+        {
+          "id": "RB-06-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 8.884
+        },
+        {
+          "id": "RB-07-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 1,
+          "latency_s": 4.275
+        },
+        {
+          "id": "RB-07-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 0,
+          "dropped_findings": 0,
+          "latency_s": 2.495
+        },
+        {
+          "id": "RB-09-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 5.114
+        },
+        {
+          "id": "RB-09-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 3.712
+        },
+        {
+          "id": "RB-10-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 5,
+          "dropped_findings": 0,
+          "latency_s": 5.866
+        },
+        {
+          "id": "RB-10-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 4.375
+        },
+        {
+          "id": "RB-10-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 3,
+          "dropped_findings": 0,
+          "latency_s": 4.166
+        },
+        {
+          "id": "RB-11-04",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 4.969
+        },
+        {
+          "id": "RB-11-07",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 5.947
+        },
+        {
+          "id": "RB-11-08",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 6,
+          "dropped_findings": 0,
+          "latency_s": 5.778
+        },
+        {
+          "id": "RB-11-09",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 0,
+          "dropped_findings": 0,
+          "latency_s": 1.38
+        },
+        {
+          "id": "RB-11-10",
+          "slot_failures": [],
+          "warning_review_failures": [],
+          "render_fallback": false,
+          "accepted_findings": 0,
+          "dropped_findings": 0,
+          "latency_s": 1.54
+        }
+      ],
+      "judge": [
+        {
+          "id": "cryo_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The registry incorrectly records transbronchial cryobiopsy as not performed; the note explicitly states that cryobiopsy was performed.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/transbronchial_cryobiopsy/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "Cryobiopsy of the RUL nodule was performed with a 1.1 mm cryoprobe, obtaining four samples."
+          },
+          "latency_s": 2.122
+        },
+        {
+          "id": "cryo_not_performed",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.171
+        },
+        {
+          "id": "stent_placed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The registry incorrectly records that airway stenting was not performed; the note explicitly states that a silicone stent was placed.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/airway_stent/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "A silicone stent was placed in the left mainstem bronchus to treat the stenosis."
+          },
+          "latency_s": 2.208
+        },
+        {
+          "id": "stent_inspection",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.049
+        },
+        {
+          "id": "radial_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The registry incorrectly records radial EBUS as not performed; the note explicitly states it was performed.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/radial_ebus/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "Radial EBUS was performed to localize the RUL nodule before biopsy."
+          },
+          "latency_s": 2.096
+        },
+        {
+          "id": "radial_planned",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.392
+        },
+        {
+          "id": "debulking_performed",
+          "expected_performed": true,
+          "actual_performed": true,
+          "passed": true,
+          "proposal_valid": true,
+          "validation_reason": "Valid",
+          "proposal": {
+            "rationale": "The registry incorrectly records mechanical debulking as not performed; the note explicitly states the tumor was mechanically debulked.",
+            "json_patch": [
+              {
+                "op": "replace",
+                "path": "/procedures_performed/mechanical_debulking/performed",
+                "value": true
+              }
+            ],
+            "evidence_quote": "The obstructing endobronchial tumor was mechanically debulked using forceps."
+          },
+          "latency_s": 1.508
+        },
+        {
+          "id": "tools_only",
+          "expected_performed": false,
+          "actual_performed": false,
+          "passed": true,
+          "proposal_valid": false,
+          "validation_reason": "no proposal",
+          "proposal": null,
+          "latency_s": 1.07
+        }
+      ],
+      "summary": {
+        "structurer_cases": 22,
+        "structurer_errors": 0,
+        "slot_failures": 0,
+        "warning_review_failures": 0,
+        "render_fallbacks": 0,
+        "judge_passed": 8,
+        "judge_cases": 8,
+        "structurer_median_latency_s": 4.325,
+        "judge_median_latency_s": 1.45
+      }
+    }
+  ],
+  "limitations": [
+    "One run per model and case, not a statistical latency benchmark.",
+    "22 of the 110 minimal prompts used for this online comparison.",
+    "Existing deterministic reporter reconciliation contributes to source-slot fidelity; this does not measure raw model extraction accuracy alone.",
+    "Production parallel NER plus RAW-ML-triggered correction was not exercised end-to-end in this comparison.",
+    "No promotion of llm_findings; keep the production extraction-first seed strategy."
+  ],
+  "release": {
+    "prerequisite": "Deploy app/common Luna compatibility changes before changing model settings.",
+    "overrides_file": "ops/deploy/reporter_luna.env.example",
+    "rollback": {
+      "OPENAI_MODEL_STRUCTURER": "gpt-5.2",
+      "OPENAI_MODEL_JUDGE": "gpt-5.2"
+    }
+  },
+  "sources": [
+    "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "https://developers.openai.com/api/docs/models/gpt-5.2",
+    "https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md#migration-quickstart"
+  ]
+}

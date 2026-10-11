@@ -1,0 +1,1819 @@
+{
+  "source_filename": "robotic_ebus_110_minimal_prompts.md",
+  "source_sha256": "1f8ad8662b5db49daec84ade513f4e092453c285cf51d18cd49e232b8d1ccc8e",
+  "cases": [
+    {
+      "id": "RB-01-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion robotic bronch for 1 cm LUL apicoposterior nodule, eccentric radial EBUS, low-dose Cios spin and retargeting. 21G TBNA x6, forceps x2, 1.1 cryo x8, brush, BAL, fiducial. ROSE no malignancy; EBUS 11Ri/7/11L four passes each. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-01-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We navigated to a small LUL apicoposterior lesion and needed cone-beam CT to adjust our target. It was quite firm. We obtained needle, forceps, cryo and brush samples, washed the area, placed a fiducial, and sampled 11Ri, 7 and 11L with EBUS. ROSE was not malignant.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-01-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "LUL LB1/2 ~10mm. Ion + rEBUS ecc + CBCT low-dose reposition. 21g FNA 6 / forceps 2 / cryo 8 / brush 1 / BAL 60:15 / marker. ROSE neg malignant cells. cEBUS 11Ri,7,11L x4.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "bal": [
+          [
+            "LB1/2",
+            60,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RB-01-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Started with airway clearance, then navigated Ion to LB1/2. Eccentric radial image led to a low-dose spin and target adjustment, followed by biopsies, lavage and fiducial placement. Linear EBUS afterward sampled stations 11Ri, 7 and 11L. No bleeding or complications.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-01-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target: LUL 1 cm. Guidance: Ion, eccentric rEBUS, Cios low-dose CBCT. Sampling: 6 needle, 2 forceps, 8 cryo, 1 brush, BAL. Fiducial: yes. ROSE: no malignant neoplasm. Nodes: 11Ri/7/11L, 4 passes each.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-01-06",
+      "style": "Sampling-focused",
+      "prompt_text": "LUL firm small lesion: six 21G passes for cytology/micro, two forceps pieces, eight 1.1 mm cryobiopsies with 6-second freezes, one protected brush and 60/15 BAL. Gold marker deployed. EBUS-TBNA four each at 11Ri, 7 and 11L; elastography mixed type 2.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-01-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "robotic bronch left upper lobe apical posterior one centimeter eccentric radial signal spin was done target adjusted sampled needle six forceps two cryo eight brush and lavage fiducial went in then EBUS eleven right inferior seven eleven left no issues",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          null
+        ]
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-01-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "A 1 cm LB1/2 target was reached with Ion; low-dose cone beam localization was used after eccentric radial EBUS. Needle sampling was CBCT guided. ROSE showed no malignant neoplasm. Additional forceps/cryo/brush/BAL and fluoroscopic fiducial, then 3-station EBUS.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+        "remaining_warning": true,
+        "missing_details": [
+          "station_labels",
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-01-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Please draft the op note for robotic LUL nodule biopsy with 6 TBNA, 2 forceps, 8 cryo, brushing and BAL, fiducial placement, and EBUS sampling of 11Ri, 7 and 11L; eccentric radial EBUS, CBCT retargeting and negative malignant ROSE.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ]
+      }
+    },
+    {
+      "id": "RB-01-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "LUL 1 cm Ion biopsy, CBCT adjusted, fiducial; EBUS 11Ri/7/11L, uncomplicated.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-02-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Two-site Ion robotic biopsy: RUL RB2 2 cm, eccentric rEBUS, needle x3, cryo x6, mini-BAL, ROSE atypical nonmalignant; lingula LB4 1 cm GGO, concentric mixed blizzard, needle x3, cryo x6, mini-BAL, ROSE malignant. Low-dose CBCT each. EBUS 7 and 4R x4.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        }
+      }
+    },
+    {
+      "id": "RB-02-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We worked on two separate lung abnormalities, first a 2 cm posterior RUL lesion and then a 1 cm superior lingular ground-glass target. Both required spin CT correction and had three needle and six cryo samples. Lingular ROSE was malignant; RUL showed atypia only. We also sampled 7 and 4R.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-02-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "Ion RUL RB2 20mm ecc + LB4 10mm conc/blizzard. CBCT low-dose both. Each TBNA 21g x3, TBCBx x6, BAL 20:10. ROSE RUL atypical/no CA; LB4 malignancy. EBUS 7,4R four each. No issues.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        }
+      }
+    },
+    {
+      "id": "RB-02-04",
+      "style": "Chronological sequence",
+      "prompt_text": "After clearing copious foamy secretions, navigated and biopsied RB2 under radial EBUS and low-dose CBCT. Repeated navigation and biopsies in the lingula; ROSE positive there. Finished with diagnostic linear EBUS biopsies of subcarinal and right paratracheal nodes. Uncomplicated.",
+      "expected": {
+        "no_stent": true,
+        "node_passes": {
+          "7": null
+        }
+      },
+      "ebus_warning_review": {
+        "decision": "pipeline_error_and_missing_detail",
+        "reason": "Subcarinal identifies station 7. Right paratracheal lacks an upper/lower designation; preserve the sampled region without selecting 2R or 4R.",
+        "remaining_warning": true,
+        "missing_details": [
+          "station_labels"
+        ]
+      }
+    },
+    {
+      "id": "RB-02-05",
+      "style": "EHR fragments",
+      "prompt_text": "Sites: RUL posterior 2 cm / lingula superior 1 cm. Tools: Ion, radial EBUS, Cios spin x each. RUL ROSE atypical, not malignant. Lingula ROSE malignant. Both 3 TBNA + 6 cryo + small BAL. EBUS TBNA 7, 4R.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-02-06",
+      "style": "Sampling-focused",
+      "prompt_text": "RUL RB2: three 21-gauge aspirates, six 1.1 mm cryos, lavage. LB4: three 21-gauge aspirates, six cryos, lavage. Preliminary cytology negative for malignancy at RUL but diagnostic malignant cells from lingula. EBUS station 7 and 4R four needle passes each.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        }
+      }
+    },
+    {
+      "id": "RB-02-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "did two robotic sites today right upper lobe posterior two cm then superior lingula about one cm both got low dose spins and needle and cryo the right only atypical cells the lingula malignant on ROSE then ebus seven and four right no complications",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-02-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "RUL 2 cm eccentric radial signal; lingular 1 cm concentric mixed-blizzard GGO signal. Each target corrected using low-dose Cios CBCT before 3 needle and 6 cryobiopsy specimens. EBUS subsequently sampled 7 and 4R, type-1 elastography.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-02-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Generate a note for Ion bronchoscopy of two lung targets, RB2 and LB4, with CBCT-guided re-registration, three needle and six cryo passes each, BAL at both, malignant ROSE only from lingula, and 7/4R EBUS-TBNA.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-02-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "Robot biopsies RUL 2 cm and lingula 1 cm; positive lingular ROSE; EBUS 7/4R.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-03-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion two RLL sites: clustered RB9 ~5 mm nodules, eccentric rEBUS, 3 CBCT spins, tool-in-lesion, 21/23G TBNA x6, cryo x5, mini BAL, inflammatory ROSE; RB8 ~1 cm GGO, low-dose CBCT, cryo x6 and BAL 60/20. EBUS 11Rs x5, 11Ri x4. No PTX.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        }
+      }
+    },
+    {
+      "id": "RB-03-02",
+      "style": "Conversational dictation",
+      "prompt_text": "This was a challenging two-target RLL robotic case. For the tiny clustered lateral-basilar nodules we needed repeated spins to confirm the needle in the lesion and took needle and cryo samples. For the anterior-basilar GGO we took six cryos and a lavage. EBUS sampled 11Rs and 11Ri; postbiopsy spin excluded pneumothorax.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-03-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RLL RB9 nodules 0.5cm: ecc rEBUS, 3 spins low/high/standard, TIL+, TBNA6, cryo5, miniBAL; ROSE inflammation. RB8 GGO 1cm: ecc rEBUS, CBCT low, cryo6, BAL60/20. EBUS 11Rs5, 11Ri4. PTX neg.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        }
+      }
+    },
+    {
+      "id": "RB-03-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Navigated to the clustered lateral RLL nodules first and used serial cone-beam imaging to verify needle placement. Sampled with two needle gauges and cryoprobe. Then navigated to the anterior-basal opacity for cryobiopsies and BAL. Final cone-beam showed no pneumothorax and EBUS included 11Rs and 11Ri biopsies.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "id": "RB-03-05",
+      "style": "EHR fragments",
+      "prompt_text": "Targets: RB9 nodularity 5 mm and RB8 GGO 10 mm. First: 6 TBNA, 5 cryo, 10/5 lavage, multiple spins. Second: 6 cryo, 60/20 BAL. EBUS-TBNA: 11Rs 5 passes, 11Ri 4. Complications: none.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        }
+      }
+    },
+    {
+      "id": "RB-03-06",
+      "style": "Sampling-focused",
+      "prompt_text": "First RLL site yielded six 21/23G aspirates and five cryobiopsies; cytology on ROSE was macrophages and inflammatory cells. Second site yielded six cryobiopsies without ROSE. Performed RB8 BAL. During linear EBUS sampled station 11Rs five times and 11Ri four times.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        }
+      }
+    },
+    {
+      "id": "RB-03-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "two spots in the right lower lobe little lateral clusters about five millimeters and anterior ground glass about a centimeter lots of spins on the first one needle confirmed in lesion six aspirates five cryos second spot six cryos lavage then EBUS eleven Rs eleven Ri no pneumo",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ]
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-03-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "CBCT-heavy Ion case: eccentric rEBUS over tiny lateral RLL nodules, low/high/standard-dose spins for localization and TIL confirmation. A separate RB8 ground-glass lesion had low-dose localization. Sampling as above plus EBUS-guided 11Rs and 11Ri aspirates; final CBCT no pneumothorax.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-03-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Write a bronchoscopy note covering RLL clustered nodule robotic TBNA/cryo after multiple CBCT spins, separate RB8 GGO cryobiopsies and BAL, plus EBUS 11Rs and 11Ri sampling; inflammatory first-site ROSE and no postbiopsy pneumothorax.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "id": "RB-03-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "Two RLL robotic targets, repeat CBCT for small nodules, cryobiopsies, BAL, EBUS 11Rs/11Ri; uncomplicated.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-04-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion RLL posterior basal RB10 1.5 cm lesion, eccentric rEBUS, low-dose Cios spin and 3-plane CBCT needle guidance. TBNA 21/23G x7, 1.1 cryo x5, BAL 40 in/15 out, ROSE lesional. EBUS node survey/elastography, all tiny/soft, no nodal biopsies. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We sampled a 1.5 cm posterior basal RLL nodule robotically after an eccentric radial EBUS view and a low-dose spin to correct the target. Seven needle samples and five cryobiopsies were obtained, plus lavage. Touch prep showed lesional cells. The staging EBUS survey did not warrant any node sampling.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RB10 RLL 15mm Ion. ecc rEBUS, CBCT low dose 3-axis needle; TBNA 7 (21+23g), cryo 5, BAL 40:15, ROSE lesional. EBUS 4R/4L/7/11Rs/11Ri/11L scanned only <4mm soft. neg comps.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Navigated Ion to posterior basal RLL, verified an eccentric radial signal, then spun and adjusted the planned target. Sampled with needles and cryoprobe and lavaged. Linear EBUS with elastography showed only very small soft nodes, so none were biopsied. Extubated without issue.",
+      "expected": {
+        "no_stent": true,
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-05",
+      "style": "EHR fragments",
+      "prompt_text": "Lesion: RB10, 1.5 cm. Guidance: Ion + radial EBUS + low-dose CBCT. Material: 7 needle passes, 5 cryo pieces, BAL. ROSE: lesional. Nodal evaluation: EBUS only, zero TBNA. Complications: none.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Seven transbronchial aspirations with 21/23 gauge needles, five 1.1 mm cryobiopsies, 40/15 BAL from RLL posterior-basilar target. Lesional cells on rapid cytology. Six mediastinal/hilar stations inspected with EBUS; no nodal specimens collected.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "right lower lobe posterior basal nodule about one point five centimeter eccentric ultrasound low dose spin target corrected seven needles five cryos lavage rose lesional cells then ebus looked at nodes too small and soft to stick no problems",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "CT-based targeting of 15 mm RB10 nodule: radial image eccentric, CBCT correction, needle location guided in three orthogonal planes. Biopsies and lavage performed. EBUS elastography survey without node puncture because nodes were <4 mm.",
+      "expected": {
+        "no_stent": true,
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Please prepare a robotic RB10 biopsy note: low-dose Cios-guided navigation, 7 TBNA, 5 cryobiopsies, BAL, lesional ROSE, and EBUS elastography survey without lymph-node biopsy.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-04-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "RLL 1.5 cm Ion biopsy, needle x7 cryo x5, ROSE lesional; EBUS survey only.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-05-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "RLL RB8 1 cm ground glass nodule, Ion navigation, concentric blizzard rEBUS, low-dose CBCT spin retargeted. 21/23G TBNA x6, cryo 1.1 x6, brush x1, mini-BAL plus RB8 BAL 60/15, gold fiducial placed. ROSE lesional; EBUS 11Rs x4. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We went to the anterior-basilar right lower lobe GGO with Ion. Radial ultrasound was concentric with a blizzard pattern. After the spin we sampled with needle, cryoprobe and brush, performed two lavages, then dropped a fiducial. ROSE was lesional. EBUS station 11Rs was sampled four times.",
+      "expected": {
+        "no_stent": true,
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RB8 GGO 10mm. Ion/rEBUS concentric blizzard, CBCT low. TBNA6 21/23G; cryo6; brush1; miniBAL10/5 + BAL60/15; fiducial yes. ROSE lesional. EBUS 11Rs x4, elastography T1.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "bal": [
+          [
+            "RB8",
+            10,
+            5
+          ],
+          [
+            "RB8",
+            60,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RB-05-04",
+      "style": "Chronological sequence",
+      "prompt_text": "First cleared the airways and navigated to the RB8 ground-glass opacity. Concentric radial EBUS and cone-beam spin guided biopsy. Six needle and six cryo passes followed by a brush, lavage and fiducial. EBUS then sampled right superior interlobar station 11Rs. Uncomplicated.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-05-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target RB8 anterior basal 1 cm GGO. Imaging concentric radial/blizzard and low-dose Cios. Samples needle 6, cryo 6, brushing 1; lavage x2. Marker yes. ROSE lesional cells. EBUS sampled 11Rs, 4 passes.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Six transbronchial needle samples with 21/23G, six cryobiopsy cores using 1.1 mm probe, one protected brush. Ion-guided RLL RB8 lesion, 10/5 mini wash and 60/15 BAL. Fiducial under fluoro. Four 22G EBUS passes in 11Rs.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "robotic case right lower anterior basal one centimeter ground glass concentric radial blizzard sign did low dose spin and moved target six needles six cryos brushing wash and full bal fiducial placed ROSE lesional EBUS 11 Rs four no complication",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "The CT-localized RB8 GGO showed a concentric blizzard sign on radial EBUS. A low-dose CBCT update guided six TBNA and six cryobiopsies; brush and BAL completed. Fiducial inserted before EBUS sampling of 11Rs.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-05-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Generate procedure note for robotic 1 cm RB8 GGO, concentric radial ultrasound, CBCT retarget, 6 TBNA/6 cryobiopsies/1 brush, mini and full BAL, fiducial, lesional ROSE, plus EBUS 11Rs TBNA x4.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11RS": 4
+        }
+      }
+    },
+    {
+      "id": "RB-05-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "Ion RB8 GGO biopsy, concentric radial, fiducial and BAL, lesional ROSE; 11Rs EBUS.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-06-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "PET-avid LUL 1.1 cm nodule, Ion navigation to LB1/2, concentric radial EBUS, low-dose CBCT target correction. 21/23G TBNA x7, 1.1 mm cryobiopsies x6, mini-BAL 10/5. ROSE lesional. EBUS 4R x5, benign lymphocytes on ROSE. Uncomplicated.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        }
+      }
+    },
+    {
+      "id": "RB-06-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We biopsied the PET-positive left upper lobe nodule with the robot using radial EBUS and a low-dose spin to fine-tune our location. Seven needle and six cryo samples were collected. The lesion touch prep was lesional; subsequent 4R EBUS sampling showed lymphoid tissue.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-06-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "LUL LB1/2 PET+ 11mm. Ion + concentric rEBUS + CBCT low. TBNA 7 (21/23G), cryo6, miniBAL. ROSE lesional. Linear EBUS 4R five 22g passes, ROSE lymphocytes/benign.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        }
+      }
+    },
+    {
+      "id": "RB-06-04",
+      "style": "Chronological sequence",
+      "prompt_text": "After navigating to the apicoposterior LUL target we confirmed a concentric radial image. Cone-beam localized the 1.1 cm lesion, and we then obtained needle and cryobiopsies and a small lavage. We finished by sampling 4R on EBUS; no complications.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-06-05",
+      "style": "EHR fragments",
+      "prompt_text": "Indication: PET-avid LUL nodule. Navigation: Ion, rEBUS concentric, low-dose Cios. Specimens: 7 TBNA, 6 cryobiopsies, miniBAL. Lung ROSE: lesional. Nodes: 4R sampled five times; benign lymphoid ROSE.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        }
+      }
+    },
+    {
+      "id": "RB-06-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Seven aspirations using 21 and 23 gauge needles and six 1.1 mm cryos for the LUL apicoposterior lesion. Mini lavage 10 instilled, 5 recovered. EBUS at station 4R with five 22G passes and type-1 elastography; adequate benign lymphoid cytology.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        },
+        "bal": [
+          [
+            "LUL",
+            10,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RB-06-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "pet avid left upper nodule just over a centimeter robotic ion concentric ultrasound did low dose spin sampled seven needle six cryo did small lavage ROSE had lesional cells four right node sampled five times looked benign no issues",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        }
+      }
+    },
+    {
+      "id": "RB-06-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "PET-avid 11 mm LUL lesion showed concentric rEBUS; CT spin was transferred to Ion to update its target and guide needle sampling. Seven needle, six cryo, and small lavage specimens. EBUS elastography/biopsy of 4R followed.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-06-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Please write the standard bronchoscopy note for Ion biopsy of a PET-avid 1.1 cm LUL nodule, CT spin guidance, 7 needle and 6 cryobiopsy samples, lesional ROSE, and EBUS station 4R x5 with benign lymphocytes.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "4R": 5
+        }
+      }
+    },
+    {
+      "id": "RB-06-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "PET-positive LUL Ion nodule biopsy, lesional ROSE, EBUS 4R benign lymphocytes.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "node_passes": {
+          "4R": null
+        }
+      },
+      "ebus_warning_review": {
+        "decision": "pipeline_error",
+        "reason": "Nodal lymphocytes document a sampling result.",
+        "remaining_warning": false
+      }
+    },
+    {
+      "id": "RB-07-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "LLL LB9 7 mm nodule Ion biopsy, eccentric rEBUS. Two CBCT spins; needle in lesion confirmed in 3 planes. 21/23G TBNA x7, cryo x6, protected brush, mini and full BAL, fiducial. Lung ROSE lesional. EBUS 11L x5 with benign lymphocytes. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        }
+      }
+    },
+    {
+      "id": "RB-07-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We targeted a very small lateral-basilar LLL nodule robotically. The radial view was eccentric and it took a second spin to get the needle into the lesion. We took seven needles, six cryos, brushing and lavage, left a marker, then sampled 11L with EBUS. ROSE from the nodule was lesional.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-07-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "LLL LB9 0.7cm, Ion/rEBUS ecc, CBCT x2 TIL 3 planes. TBNA 7, cryo 6, brush 1, miniBAL 10:5, BAL 60:20, fiducial. ROSE lesional. 11L EBUS x5 benign lymphoid.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        }
+      }
+    },
+    {
+      "id": "RB-07-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Navigated to the lateral basal LLL lesion, checked with radial EBUS, then used sequential cone-beam spins until needle placement was confirmed. Biopsied, brushed and washed the nodule, deployed a fiducial, and performed 11L needle staging with EBUS. No complications.",
+      "expected": {
+        "no_stent": true,
+        "node_passes": {
+          "11L": null
+        }
+      },
+      "ebus_warning_review": {
+        "decision": "pipeline_error",
+        "reason": "The phrase 11L needle staging with EBUS explicitly documents nodal sampling.",
+        "remaining_warning": false
+      }
+    },
+    {
+      "id": "RB-07-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target LB9 LLL, 7 mm. Guidance Ion/eccentric rEBUS/CBCT spin twice. Material 7 FNA, 6 cryo, brush and 2 BAL collections. Fiducial yes. ROSE lesional. EBUS 11L, five samples, benign cytology.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        }
+      }
+    },
+    {
+      "id": "RB-07-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Seven transbronchial needle passes with 21 and 23 gauge, six 1.1 mm cryobiopsies, one brush, 10/5 mini lavage and 60/20 segmental BAL for the LLL nodule. Fluoroscopic fiducial placed. Five 22G EBUS passes at 11L; benign lymphoid rapid assessment.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        }
+      }
+    },
+    {
+      "id": "RB-07-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "left lower lateral basal seven mm lesion radial was eccentric needed second spin needle verified three views needle seven cryo six brush BAL and fiducial rose lesional then station eleven left five EBUS passes benign no complications",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "brush_counts": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "RB-07-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "Two Cios spins during Ion localization of the 0.7 cm LB9 nodule, the second confirming needle location in all three orthogonal planes. Needle/cryo/brush sampling and fiducial followed. Linear EBUS elastography and TBNA of 11L.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-07-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Create a bronchoscopy note for LLL LB9 7 mm robotic target, eccentric radial EBUS, two spins to verify tool-in-lesion, seven needle/six cryo/one brush, dual lavage, fiducial, and EBUS 11L x5.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 5
+        }
+      }
+    },
+    {
+      "id": "RB-07-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "LLL 7 mm Ion lesion, repeat CBCT, biopsies and fiducial; benign 11L EBUS.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-08-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion RML lateral RB4 5 mm nodule, concentric heterogeneous rEBUS, standard-dose Cios spin/target update. 21/23G TBNA x5, 1.1 cryo x6, brush x1, mini-BAL and RML BAL 60/20, fiducial. ROSE blood only. EBUS elastography all small soft nodes, no TBNA. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We biopsied a 5 mm lateral segment right middle lobe target using Ion. Radial EBUS was concentric and we adjusted after cone-beam imaging. We collected needles, cryobiopsies, brushings and lavage, and left a marker. The rapid smear was just blood. EBUS surveyed nodes but did not sample them.",
+      "expected": {
+        "no_stent": true,
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RML RB4 0.5cm Ion, concentric hetero rEBUS, regular CBCT. TBNA x5 (21/23G), cryo x6, brush1, miniBAL10/5 + BAL60/20, fiducial. ROSE blood. cEBUS scanned 4R4L7 11Rs/Ri 11L, type1, no bx.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-04",
+      "style": "Chronological sequence",
+      "prompt_text": "After airway suctioning, navigated to RB4, confirmed a concentric radial ultrasound target, then performed cone-beam-guided sampling. Brushed, lavaged and marked the lesion. Onsite cytology showed only blood. Linear EBUS examination and elastography identified no nodes requiring biopsy.",
+      "expected": {
+        "no_stent": true,
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-05",
+      "style": "EHR fragments",
+      "prompt_text": "RML 5 mm nodule. Ion + radial EBUS concentric; regular-dose spin. 5 TBNA, 6 cryo, brush, two washes, fiducial. ROSE blood only. Nodes assessed on EBUS, none aspirated. Stable recovery.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Five aspirations with 21/23 gauge needles, six cryobiopsy cores (1.1 mm, 6 seconds), protected brush x1, 10/5 mini lavage and 60/20 BAL. RML RB4 lesion had blood-only ROSE. Marker placed. Mediastinal/hilar survey by EBUS elastography only.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "right middle lobe lateral five millimeter target robotic spin done concentric radial image got five needles six cryos brush lavage placed fiducial ROSE blood only EBUS looked all stations small and soft did not sample any nodes no complications",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true,
+        "brush_counts": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "RB-08-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "Regular-dose CBCT confirmed the concentric radial EBUS location in the tiny RML lateral nodule and was used to update Ion. Collected TBNA, cryo, brushing and BAL and deployed a fiducial. Subsequent EBUS was diagnostic survey without node biopsy.",
+      "expected": {
+        "no_stent": true,
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Draft an op note for Ion sampling of a 0.5 cm RML RB4 lesion with CBCT, five needle and six cryo biopsies, brushing, lavage, fiducial, blood-only ROSE and EBUS elastography without sampling.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-08-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "RML RB4 5 mm robotic biopsy plus fiducial; ROSE blood; EBUS inspection only.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "survey_only": true
+      }
+    },
+    {
+      "id": "RB-09-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion RUL RB3 3 cm mass, fish-mouth anterior segment and heavy secretions suctioned. Concentric hetero rEBUS, two low-dose CBCT spins, tool-in-lesion. 23G TBNA x5, 1.1 cryo x6, RUL mini plus full BAL. ROSE acute inflammation. EBUS 7 x4, RML BAL. No issues.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": 4
+        }
+      }
+    },
+    {
+      "id": "RB-09-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We saw an edematous fish-mouthed RB3 with copious pale secretions, which we cleared. Navigated to the 3 cm RUL mass, used two cone-beam spins, then took five needle samples and six cryos. Rapid cytology was inflammatory. We lavaged the RUL and RML and performed station 7 EBUS aspiration.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-09-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RB3 RUL mass 30mm. Ion rEBUS concentric, CBCT low x2 TIL+. TBNA 23g x5 / cryo1.1 x6 / RUL BAL pooled 10:5 + 60:10. ROSE acute inflam. EBUS 7 x4 type2. RML RB4/5 BAL 60:15.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": 4
+        },
+        "bal": [
+          [
+            "RB3",
+            70,
+            15
+          ],
+          [
+            "RB4/5",
+            60,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RB-09-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Started with inspection and suctioning the RUL mucus. The anterior RUL mass was navigated robotically; radial EBUS and repeat cone-beam confirmed the instrument within it. Needle and cryobiopsy samples were obtained, followed by lavage. We then sampled subcarinal station 7 and performed a separate RML lavage.",
+      "expected": {
+        "no_stent": true
+      }
+    },
+    {
+      "id": "RB-09-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target RUL RB3 3 cm mass. Findings boggy RB3, copious pale secretions. Guidance Ion/2 CBCT spins. Tissue needle 5, cryo 6; ROSE acute inflammation. Lavage RUL and RML. EBUS station 7 sampled 4 times. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": 4
+        }
+      }
+    },
+    {
+      "id": "RB-09-06",
+      "style": "Sampling-focused",
+      "prompt_text": "23G aspirations x5 and 1.1 mm cryobiopsies x6 from RUL anterior 3 cm mass; RUL lavage 10/5 plus 60/10 pooled. ROSE acute inflammation. Station 7 EBUS-TBNA with 22G needle, four passes, type-2 elastography. Additional RML RB4/RB5 BAL 60/15.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": 4
+        }
+      }
+    },
+    {
+      "id": "RB-09-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "large right upper anterior mass about three centimeters fish mouthed airway suctioned lots of pale mucus robotic navigation two low dose spins needle in lesion took five 23 gauge needles six cryos ROSE inflammation BAL right upper and middle and EBUS seven four passes no complications",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": 4
+        }
+      }
+    },
+    {
+      "id": "RB-09-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "Concentric radial EBUS and two low-dose Cios scans confirmed tool-in-lesion in the 3 cm RB3 mass. Five needle and six cryobiopsies were acquired. RUL lavage, 7-node EBUS aspiration, and RML lavage completed; onsite cytology showed acute inflammation.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "7": null
+        }
+      },
+      "ebus_warning_review": {
+        "decision": "pipeline_error",
+        "reason": "7-node EBUS aspiration includes both station and sampling action.",
+        "remaining_warning": false
+      }
+    },
+    {
+      "id": "RB-09-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Prepare note for robotic RUL RB3 mass biopsies under two CBCT spins with TIL confirmation, 5 TBNA/6 cryos, inflammatory ROSE, airway suctioning, RUL and RML lavage, and EBUS sampling of station 7.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-09-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "RUL 3 cm mass Ion biopsy, inflammatory ROSE; EBUS 7 and RUL/RML BAL.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-10-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion RLL RB8 3 cm mass, extrinsic RB8/9 compression, concentric rEBUS, low-dose CBCT tool-in-lesion. 21/23G TBNA x6 with pus aspirated, 1.1 cryobiopsy x6, mini and full pooled BAL. ROSE necrosis/inflammation. EBUS 11L x4, 7 x6 type-2. Uncomplicated.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        }
+      }
+    },
+    {
+      "id": "RB-10-02",
+      "style": "Conversational dictation",
+      "prompt_text": "We navigated to a 3 cm anterior-basal right lower lobe mass and confirmed needle position with cone-beam CT. Pus came back during aspiration. We took six needle and six cryobiopsy samples and lavaged the area. Preliminary cytology showed necrosis and inflammation; EBUS sampled 11L and 7.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-10-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "RLL RB8 mass 30mm, extrinsic compression RB8/9. Ion/rEBUS concentric + CBCT low TIL. TBNA6 21/23g -> pus; cryo6 1.1mm; BAL10/5+60/10 pooled; ROSE necrotic/inflam. EBUS 11L4, 7 six.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        },
+        "bal": [
+          [
+            "RB8",
+            70,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RB-10-04",
+      "style": "Chronological sequence",
+      "prompt_text": "After suctioning pale secretions, we advanced Ion to the RB8 mass, verified a concentric radial image and tool-in-lesion on the spin. Needle aspiration yielded purulent material, followed by cryobiopsies and lavage. Linear EBUS then sampled left hilar and subcarinal nodes. No immediate complications.",
+      "expected": {
+        "no_stent": true,
+        "node_passes": {
+          "10L": null,
+          "7": null
+        }
+      },
+      "ebus_warning_review": {
+        "decision": "pipeline_error",
+        "reason": "Left hilar and subcarinal are identifiable IASLC station names (10L and 7).",
+        "remaining_warning": false
+      }
+    },
+    {
+      "id": "RB-10-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target RLL RB8 3 cm. CBCT needle in lesion. Specimens 6 TBNA (purulent), 6 cryo and pooled BAL. ROSE necrosis/inflammation. EBUS TBNA 11L four passes, station 7 six passes. Stable post procedure.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        }
+      }
+    },
+    {
+      "id": "RB-10-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Six 21/23G needle samples from RB8 mass with frank pus on aspiration, six 1.1 mm cryobiopsies using 6-8 second freeze times, and 10/5 plus 60/10 lavage. EBUS elastography type 2 with four passes at 11L and six at station 7.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        }
+      }
+    },
+    {
+      "id": "RB-10-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "right lower lobe anterior basal three cm mass compressed adjacent airways concentric radial signal spin confirmed tool in lesion six needle aspirates pus came out six cryo biopsies BAL ROSE necrosis and inflammation EBUS eleven left and seven biopsied no complications",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-10-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "Low-dose cone-beam imaging confirmed sampling tool within the RB8 mass following Ion navigation and concentric radial EBUS. Needle aspiration produced pus. Cryobiopsies and BAL followed. Staging EBUS targeted type-2 elastography nodes at 11L and 7.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-10-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Write the op note for a 3 cm RLL RB8 mass sampled robotically with confirmed TIL, pus from TBNA, 6 needle/6 cryo samples, BAL, inflammatory-necrotic ROSE, and EBUS biopsies of 11L and 7.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "RB-10-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "RLL 3 cm Ion mass biopsy, purulent TBNA, ROSE necrosis; EBUS 11L/7.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-11-01",
+      "style": "Telegraphic case summary",
+      "prompt_text": "Ion LUL LB1/2 8 mm GGO, radial EBUS nondiagnostic/white specks, difficult CBCT visualization, very-high-dose then low-dose spin showed TIL. 23G TBNA x3, 1.1 cryo x7, brush, mini/full pooled BAL, fiducial. ROSE atypical no malignancy. EBUS 11Ri/11Rs/7/11L x4 each. No complications.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-11-02",
+      "style": "Conversational dictation",
+      "prompt_text": "This was a very small upper left ground-glass target that we struggled to see on radial ultrasound or even the initial high-dose spin. A subsequent spin confirmed tool-in-lesion. We took three needle and seven cryo samples, did brushing and lavage, placed a marker and biopsied four nodal stations. ROSE was atypical but not malignant.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "RB-11-03",
+      "style": "Abbreviated shorthand",
+      "prompt_text": "LUL LB1/2 GGO 0.8cm. rEBUS not seen, white flecks. CBCT very high then low, TIL+. 23g TBNA3, cryo7, brush1, BAL pooled, fiducial. ROSE atypia/no CA. EBUS 11Ri,11Rs,7,11L four passes ea.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-11-04",
+      "style": "Chronological sequence",
+      "prompt_text": "Navigated to the apicoposterior LUL opacity but could not identify a definite radial EBUS lesion. Very-high-dose cone-beam was followed by a low-dose acquisition confirming needle location. Completed needle, cryo, brushing, BAL and fiducial placement, then EBUS-guided four-station nodal sampling.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling is explicit.",
+        "remaining_warning": true,
+        "missing_details": [
+          "station_labels"
+        ]
+      }
+    },
+    {
+      "id": "RB-11-05",
+      "style": "EHR fragments",
+      "prompt_text": "Target 8 mm LUL GGO. Issue difficult to visualize; initial radial image not diagnostic. Imaging very-high-dose plus low-dose CBCT, finally TIL confirmed. Samples 3 needle, 7 cryo, brush, lavage; fiducial. EBUS 11Ri/11Rs/7/11L all sampled.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "RB-11-06",
+      "style": "Sampling-focused",
+      "prompt_text": "Three 23-gauge needle passes, seven 1.1 mm cryobiopsy pieces, one protected brush, mini lavage 10/5 pooled with 60/10 lavage, and fiducial for LB1/2 GGO. ROSE atypical cells without malignancy. EBUS-TBNA four passes each at 11Ri, 11Rs, 7 and 11L.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        }
+      }
+    },
+    {
+      "id": "RB-11-07",
+      "style": "Rough voice transcription",
+      "prompt_text": "very small left upper lobe ground glass eight millimeters hard to see radial only white specks high dose spin followed by low dose showed needle in lesion three needles seven cryos brushing lavage fiducial and EBUS 11 Ri 11 Rs seven 11 left atypical ROSE no cancer called",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          null
+        ]
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-11-08",
+      "style": "Imaging/target-first",
+      "prompt_text": "Subcentimeter LUL opacity not identifiable by radial EBUS. Cios initially used very-high-dose imaging and then a low-dose spin that demonstrated tool-in-lesion. Sampling included needle, cryo, brush and BAL with marker deployment, plus EBUS of four type-2 nodes.",
+      "expected": {
+        "no_stent": true
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+        "remaining_warning": true,
+        "missing_details": [
+          "station_labels",
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-11-09",
+      "style": "One-sentence note request",
+      "prompt_text": "Draft a procedure note for difficult 8 mm LUL GGO robotic biopsy with CBCT localization and eventual tool-in-lesion, 3 TBNA/7 cryobiopsies/1 brush, BAL, fiducial, atypical nonmalignant ROSE, and EBUS stations 11Ri, 11Rs, 7, 11L.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ]
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+        "remaining_warning": true,
+        "missing_details": [
+          "sampling_status"
+        ]
+      }
+    },
+    {
+      "id": "RB-11-10",
+      "style": "Ultra-short sparse input",
+      "prompt_text": "Hard-to-see 8 mm LUL GGO Ion biopsy, two CBCT spins, marker; four-station EBUS.",
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": []
+      },
+      "ebus_warning_review": {
+        "decision": "missing_detail",
+        "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+        "remaining_warning": true,
+        "missing_details": [
+          "station_labels",
+          "sampling_status"
+        ]
+      }
+    }
+  ],
+  "expectations_note": "Source-reviewed numeric slots and precision checks; unlisted facts are not scored. Prompts are independent. Parent reports and case/style metadata are never supplied to the reporter."
+}
