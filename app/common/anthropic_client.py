@@ -20,6 +20,7 @@ from app.common.logger import get_logger
 logger = get_logger("common.anthropic_client")
 
 PROVIDER = "anthropic"
+DEFAULT_BASE_URL = "https://api.anthropic.com"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
 # USD per million tokens. Cache writes are priced from the input rate
@@ -190,7 +191,12 @@ class ClaudeClient:
         if self._sdk is None:
             import anthropic
 
-            self._sdk = anthropic.Anthropic(timeout=self.settings.timeout_s)
+            # Explicit endpoint: never inherit an ambient ANTHROPIC_BASE_URL
+            # (for example a developer tool's proxy) for clinical-text egress.
+            self._sdk = anthropic.Anthropic(
+                timeout=self.settings.timeout_s,
+                base_url=os.getenv("PROCSUITE_ANTHROPIC_BASE_URL") or DEFAULT_BASE_URL,
+            )
         return self._sdk
 
     def complete_json(self, *, system: str, user: str, schema: dict[str, Any]) -> ClaudeResult:
