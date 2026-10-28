@@ -1,0 +1,95 @@
+{
+  "version": "0.2.0",
+  "profile": "robotic_ebus_v1",
+  "base_model": "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+  "synthetic_only": true,
+  "clinical_reviewed": false,
+  "annotation_method": "source_verified_lexical_weak_labels",
+  "independent_gold": false,
+  "review_status": "lexical_concordance_reviewed",
+  "corpus_manifest_sha256": "100a47971eab7cf315db0a2543489baf8028dbe016179cc18a89457c09e7728e",
+  "inventory": {
+    "train": {
+      "documents": 374,
+      "chunks": 902
+    },
+    "validation": {
+      "documents": 79,
+      "chunks": 186
+    },
+    "test": {
+      "documents": 77,
+      "chunks": 0
+    },
+    "regression": {
+      "documents": 126,
+      "chunks": 0
+    }
+  },
+  "concordance": {
+    "ANAT_LN_STATION": {
+      "11L": 108,
+      "7": 298,
+      "4R": 199,
+      "11R": 83,
+      "4L": 162,
+      "2R": 22,
+      "10R": 23,
+      "10L": 16,
+      "11r": 12,
+      "4l": 14,
+      "2r": 4,
+      "2L": 19,
+      "2l": 3,
+      "4r": 16,
+      "11l": 7,
+      "10r": 1,
+      "10l": 2,
+      "8": 1
+    },
+    "PROC_ACTION": {
+      "PERFORMED": 151,
+      "introduced": 288,
+      "docked": 103,
+      "performed": 1160,
+      "obtained": 368,
+      "Sampled": 71,
+      "advanced": 193,
+      "sampled": 811,
+      "navigated": 83,
+      "repositioned": 50,
+      "SAMPLED": 13,
+      "NAVIGATED": 1,
+      "OBTAINED": 5,
+      "REDIRECTED": 1,
+      "redirected": 29,
+      "Performed": 7,
+      "Advanced": 12,
+      "INTRODUCED": 2,
+      "Obtained": 12,
+      "Navigated": 10,
+      "ADVANCED": 1,
+      "biopsied": 1
+    },
+    "OBS_ROSE": {
+      "ROSE": 1160,
+      "Rose": 5,
+      "rose": 54,
+      "Rapid on-site evaluation": 122
+    }
+  },
+  "files": {
+    "validation.bio.jsonl": "1a57208860c09e2948d4fac5cebacba87f8e1e109b88e7483672c38c957c88d4",
+    "test.spans.jsonl": "d0f7c8ee285e3bce9293437bfd6c7bd6b8e008486276c0ed861de65f8297ea4d",
+    "train.spans.jsonl": "d3e7136e12fa354a7a544d99c7fa2b76213434fd0527cf7021eaa8ce8cec4320",
+    "validation.spans.jsonl": "3674bf57b0ce3f008e5f6a3fbdf459b99112a8223ec811542abb0a66ee8d7fc2",
+    "regression.spans.jsonl": "240501e5f382e05debd6774c5914f9d4836b5edf7ace73304dd0cb6a7bd95fee",
+    "train.bio.jsonl": "8062755e71021bfdb3e451d2e13ed8eb61d4cf9f2753722a4b21afcf8ce9c642"
+  },
+  "review": {
+    "reviewer": "Codex",
+    "date": "2026-09-14",
+    "scope": "All unique label surfaces and station-prefix/action/ROSE lexical rules reviewed; source spans mechanically verified. Context, relationships and clinical outcomes are not adjudicated.",
+    "independent_gold": false
+  }
+}

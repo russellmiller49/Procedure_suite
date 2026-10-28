@@ -407,6 +407,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ml_training/granular_ner/ner_bio_format.jsonl")
     ap.add_argument("--train-data", default=None)
+    ap.add_argument("--validation-data", default=None, help="Explicit case-family validation split; never re-split these rows")
     ap.add_argument("--patched-data", default=None)
     ap.add_argument("--hard-negative-jsonl", default=None)
     ap.add_argument("--model", default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext")
@@ -591,6 +592,13 @@ def main():
         else:
             _, eval_rows = split_train_eval(rows, eval_ratio=args.eval_ratio, seed=args.seed)
         train_rows = []
+    elif args.validation_data:
+        train_rows = rows
+        eval_rows = apply_label_allowlist(read_jsonl(args.validation_data), ALLOWED_LABEL_TYPES)
+        train_families = {row.get("family_id") for row in train_rows}
+        eval_families = {row.get("family_id") for row in eval_rows}
+        if None in train_families or None in eval_families or train_families & eval_families:
+            raise RuntimeError("Explicit validation requires disjoint case-family identifiers")
     else:
         train_rows, eval_rows = split_train_eval(rows, eval_ratio=args.eval_ratio, seed=args.seed)
 

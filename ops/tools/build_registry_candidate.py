@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import tarfile
 import io
+import gzip
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCES = [
@@ -51,10 +52,12 @@ def build(output: Path):
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "working_tree_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT)),
         "clinical_qualification": "pending", "license_review": "pending", "sources": sources,
+        "contract_version": "0.2.0", "registry_profile": "robotic_ebus_v1",
+        "launch_dictionary_sha256": hashlib.sha256((ROOT / "data/knowledge/robotic_ebus_v1/launch_dictionary.json").read_bytes()).hexdigest(),
         "files": {str(p.relative_to(PACKAGE_ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    with tarfile.open(output, "w:gz") as archive:
+    with output.open("wb") as destination, gzip.GzipFile(fileobj=destination, mode="wb", filename="", mtime=0) as compressed, tarfile.open(fileobj=compressed, mode="w") as archive:
         for p in files:
             info = tarfile.TarInfo(str(p.relative_to(PACKAGE_ROOT)))
             data = p.read_bytes()
