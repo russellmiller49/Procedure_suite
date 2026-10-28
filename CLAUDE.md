@@ -212,6 +212,38 @@ canonical case snapshot (`registry_case_records`), deterministic-first with opti
   (attach hand-written models via `CUSTOM_FIELD_TYPES`). All changes are additive.
 - Tests: `tests/registry/test_longitudinal_extension.py`, `tests/registry/test_case_aggregator_*.py`.
 
+## Robotic/EBUS Registry: Claude Extractor (2026-10-28)
+
+The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
+`data/knowledge/robotic_ebus_v1/launch_dictionary.json`) is the same one the Epic app
+(`ip-registry-clinical`) vendors. The packages stay local-only: no LLM/network/app imports
+(`packages/tests/test_registry_package_imports.py`). Cloud extraction lives in `app/`.
+
+- **Sparse facts, not a nullable record.** Claude structured outputs cap a request at 24 optional
+  and 16 union-typed parameters, so `ClinicalRevision` cannot be the output schema. Claude returns
+  rows + typed facts (`app/llm_extraction/facts_schema.py`); the schema is generated from the
+  contract (`app/registry_workbench/extraction/contract_spec.py`): all properties required, no unions.
+- **Prompt from the dictionary** (`extraction/prompt.py`): definitions, values, units, applicability
+  and the extraction-relevant QA rules; every dictionary QA rule is prompted or explicitly excluded
+  (tested). Deterministic text so the 1-hour prompt cache holds; the note goes in the user turn.
+- **Deterministic assembly** (`extraction/assembler.py`): every value needs an anchored verbatim
+  quote (`app/llm_extraction/anchoring.py`, no fuzzy matches); planned/historical/uncertain facts
+  become unresolved mentions; validator trips become `conflict_status=unresolved` (approval blocked);
+  link errors are fixed deterministically, then at most one stateless repair call.
+- **Provider** `ClaudeRegistryProvider` (`extraction/claude_provider.py`) implements the engine's
+  `ExtractionProvider` and returns the same proposal shape as `LocalDeterministicProvider`.
+  Non-procedure documents still go to the local engine.
+- **Egress gate** (`app/common/llm_egress.py`): callers declare text provenance with
+  `egress_context(...)`; only `synthetic` passes unless `PROCSUITE_LLM_EGRESS_APPROVED` +
+  `PROCSUITE_LLM_EGRESS_PROVIDERS` are set. Client: `app/common/anthropic_client.py` (streams,
+  never sends temperature/top_p/top_k, refusal fallbacks online, cache/batch-aware cost).
+- Env: `ANTHROPIC_API_KEY`, `PROCSUITE_ANTHROPIC_MODEL` (default `claude-opus-5-5`),
+  `PROCSUITE_ANTHROPIC_EFFORT` (default `medium`), `PROCSUITE_ANTHROPIC_FALLBACKS=default|off`.
+- **Eval:** `python ops/tools/eval_registry_llm.py --splits validation --arms deterministic
+  claude:opus:medium --output /tmp/registry_llm.json` (`--mode batch` for half price, `--dry-run`
+  offline, `--gold` for the 8 reviewed docs; those are exposed, engineering regression only).
+- Tests: `tests/registry_workbench/`, `packages/tests/`.
+
 ## Recent Updates (2026-07-04)
 
 - **Location integrity:** intervention locations (mechanical_debulking/cryotherapy/thermal_ablation) are now sentence-scoped around action verbs; normal-anatomy ("trachea was normal") and scope-navigation sentences no longer contribute sites; prose double-spaces no longer count as table rows (`_is_multicell_table_line`).
