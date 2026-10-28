@@ -437,7 +437,8 @@ async def test_report_seed_input_spec(api_client: AsyncClient) -> None:
         "Type 3",
     ]
     assert by_pointer["/ebus/elastography/stations_type_1"]["input_type"] == "multiselect"
-    assert {dep["pointer"] for dep in by_pointer["/ebus/elastography/stations_type_1"]["depends_on"]} == {
+    type_1_deps = by_pointer["/ebus/elastography/stations_type_1"]["depends_on"]
+    assert {dep["pointer"] for dep in type_1_deps} == {
         "/ebus/elastography/used",
         "/ebus/elastography/scope",
     }

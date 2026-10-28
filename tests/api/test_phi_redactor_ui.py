@@ -329,7 +329,8 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(
 
 def test_reporter_builder_has_structured_seed_inputs_panel(client: TestClient) -> None:
     html = client.get("/ui/reporter_builder.html").text
-    for element_id in ("seedInputsPanel", "seedInputsBody", "seedInputsCount", "seedInputsResetBtn"):
+    panel_ids = ("seedInputsPanel", "seedInputsBody", "seedInputsCount", "seedInputsResetBtn")
+    for element_id in panel_ids:
         assert f'id="{element_id}"' in html
 
     js = client.get("/ui/reporter_builder.js").text
@@ -337,7 +338,8 @@ def test_reporter_builder_has_structured_seed_inputs_panel(client: TestClient) -
     assert "structured_inputs: structuredInputs" in js
     # Selections are sent beside the dictation; they are never written into the
     # note text (that would bypass the PHI gate and short-prompt handling).
-    collect = js[js.index("function collectStructuredInputs") : js.index("function resetSeedInputs")]
+    start, end = js.index("function collectStructuredInputs"), js.index("function resetSeedInputs")
+    collect = js[start:end]
     assert "seedTextEl" not in collect
 
     spec = client.get("/report/seed_input_spec")

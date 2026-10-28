@@ -12,7 +12,7 @@ from app.coder.schema import CoderOutput
 from app.common.spans import Span
 from app.registry.schema import RegistryRecord
 from app.reporting import BundlePatch, MissingFieldIssue, ProcedureBundle, QuestionSpec
-from app.reporting.seed_inputs import ReporterSeedInputs, SeedInputSpecResponse
+from app.reporting.seed_inputs import ReporterSeedInputs
 
 
 class CoderRequest(BaseModel):
