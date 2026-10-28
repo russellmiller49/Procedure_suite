@@ -46,7 +46,9 @@ def test_package_source_has_no_network_llm_or_app_imports(path):
 
 
 def test_launch_dictionary_schema_matches_live_contract():
-    dictionary = json.loads((ROOT / "data/knowledge/robotic_ebus_v1/launch_dictionary.json").read_text())
+    dictionary = json.loads(
+        (ROOT / "data/knowledge/robotic_ebus_v1/launch_dictionary.json").read_text()
+    )
     assert dictionary["clinical_schema"] == ClinicalRevision.model_json_schema()
     fields = {(entry["entity"], entry["field"]) for entry in dictionary["fields"]}
     models = {**ENTITY_MODELS, "procedures": ProcedureEvent, "field_provenance": FieldProvenance}

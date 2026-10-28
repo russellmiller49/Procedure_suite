@@ -8,13 +8,14 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache, lru_cache
 from typing import Any
 
-from app.llm_extraction.facts_schema import CollectionSpec, FieldSpec, build_facts_schema
-from app.registry_workbench._contracts import DICTIONARY_PATH
 from ip_registry_contracts.launch import ENTITY_MODELS, MissingReason
 from ip_registry_contracts.models import ClinicalRevision, ProcedureEvent
+
+from app.llm_extraction.facts_schema import CollectionSpec, FieldSpec, build_facts_schema
+from app.registry_workbench import DICTIONARY_PATH
 
 SINGLETON_REVISION = "revision"
 
@@ -146,16 +147,24 @@ def _model_specs(collection: str, model: Any):
     return tuple(specs), parents, tuple(required), tuple(required_parents)
 
 
-@lru_cache(maxsize=None)
+@cache
 def contract_spec(collections: tuple[str, ...] = PROCEDURE_COLLECTIONS) -> ContractSpec:
     built, required, required_parents = [], {}, {}
     for name in collections:
         if name == SINGLETON_REVISION:
             defs = ClinicalRevision.model_json_schema()["$defs"]
-            prop = _resolve(ClinicalRevision.model_json_schema()["properties"]["complication_assessment"], defs)
+            prop = _resolve(
+                ClinicalRevision.model_json_schema()["properties"]["complication_assessment"], defs
+            )
             built.append(
                 CollectionSpec(
-                    name, (FieldSpec(name, "complication_assessment", "enum", values=tuple(prop["enum"])),), True
+                    name,
+                    (
+                        FieldSpec(
+                            name, "complication_assessment", "enum", values=tuple(prop["enum"])
+                        ),
+                    ),
+                    True,
                 )
             )
             continue

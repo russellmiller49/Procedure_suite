@@ -59,7 +59,9 @@ def anchor(
             start=start,
             end=end,
             excerpt=document[start:end],
-            method=AnchorMethod.exact.value if exact else AnchorMethod.whitespace_case_insensitive.value,
+            method=AnchorMethod.exact.value
+            if exact
+            else AnchorMethod.whitespace_case_insensitive.value,
             occurrences=len(spans),
         )
     result = anchor_quote(document, quote)

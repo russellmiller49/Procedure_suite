@@ -9,7 +9,7 @@ prompt cache prefix stays byte-identical across requests.
 from __future__ import annotations
 
 import hashlib
-from functools import lru_cache
+from functools import cache
 
 from app.registry_workbench.extraction.contract_spec import (
     PROCEDURE_COLLECTIONS,
@@ -39,8 +39,25 @@ ENTITY_SUMMARIES = {
 # Dictionary QA rules that govern abstraction from a procedure note. Every rule
 # in the dictionary is either here or in EXCLUDED_QA_RULES (tested).
 PROMPT_QA_RULES = (
-    "Q003", "Q006", "Q007", "Q008", "Q010", "Q011", "Q012", "Q013", "Q014", "Q018",
-    "Q019", "Q020", "Q021", "Q023", "Q024", "Q026", "Q034", "Q039", "Q041",
+    "Q003",
+    "Q006",
+    "Q007",
+    "Q008",
+    "Q010",
+    "Q011",
+    "Q012",
+    "Q013",
+    "Q014",
+    "Q018",
+    "Q019",
+    "Q020",
+    "Q021",
+    "Q023",
+    "Q024",
+    "Q026",
+    "Q034",
+    "Q039",
+    "Q041",
 )
 EXCLUDED_QA_RULES = {
     "Q001": "database key integrity, enforced by the assembler",
@@ -93,7 +110,7 @@ Recording rules:
 """
 
 
-@lru_cache(maxsize=None)
+@cache
 def _qa_rules() -> dict[str, dict[str, str]]:
     return {rule["Rule ID"]: rule for rule in dictionary()["qa_rules"]}
 
@@ -127,7 +144,7 @@ def _field_line(path: str) -> str:
     return " ".join(parts)
 
 
-@lru_cache(maxsize=None)
+@cache
 def system_prompt(collections: tuple[str, ...] = PROCEDURE_COLLECTIONS) -> str:
     spec = contract_spec(collections)
     sections = [
@@ -138,7 +155,8 @@ def system_prompt(collections: tuple[str, ...] = PROCEDURE_COLLECTIONS) -> str:
         RECORDING_RULES,
         "Dictionary QA rules:\n"
         + "\n".join(
-            f"- {rule_id}: {_qa_rules()[rule_id]['Condition / check'].strip()}" for rule_id in PROMPT_QA_RULES
+            f"- {rule_id}: {_qa_rules()[rule_id]['Condition / check'].strip()}"
+            for rule_id in PROMPT_QA_RULES
         ),
     ]
     for collection in spec.collections:
@@ -146,7 +164,9 @@ def system_prompt(collections: tuple[str, ...] = PROCEDURE_COLLECTIONS) -> str:
         if collection.parents:
             lines.append(
                 "Parents: "
-                + ", ".join(f"{key} -> {parent}" for key, parent in sorted(collection.parents.items()))
+                + ", ".join(
+                    f"{key} -> {parent}" for key, parent in sorted(collection.parents.items())
+                )
             )
         required = spec.required.get(collection.name, ())
         if required:

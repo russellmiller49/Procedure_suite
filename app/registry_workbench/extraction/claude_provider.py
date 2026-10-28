@@ -15,6 +15,10 @@ import hashlib
 import json
 from typing import Any
 
+from ip_registry_contracts.models import ExtractionRequest, ExtractionResponse
+from ip_registry_engine.engine import LocalDeterministicProvider
+from ip_registry_engine.focused import prepare_text
+
 from app.common.anthropic_client import (
     ClaudeClient,
     ClaudeResult,
@@ -30,9 +34,6 @@ from app.registry_workbench.extraction.prompt import (
     system_prompt,
     user_message,
 )
-from ip_registry_contracts.models import ExtractionRequest, ExtractionResponse
-from ip_registry_engine.engine import LocalDeterministicProvider
-from ip_registry_engine.focused import prepare_text
 
 PROVIDER_NAME = "claude"
 
@@ -54,10 +55,22 @@ class ClaudeRegistryProvider:
         self.spec = contract_spec()
 
     # Shared by online calls and the Batch API runner.
-    def build_params(self, request: ExtractionRequest, *, previous: dict | None = None, errors: list[str] | None = None) -> dict[str, Any]:
+    def build_params(
+        self,
+        request: ExtractionRequest,
+        *,
+        previous: dict | None = None,
+        errors: list[str] | None = None,
+    ) -> dict[str, Any]:
         prepared = prepare_text(request.text)
-        user = repair_message(prepared, previous, errors or []) if previous is not None else user_message(prepared)
-        return build_params(self.client.settings, system=system_prompt(), user=user, schema=self.spec.schema())
+        user = (
+            repair_message(prepared, previous, errors or [])
+            if previous is not None
+            else user_message(prepared)
+        )
+        return build_params(
+            self.client.settings, system=system_prompt(), user=user, schema=self.spec.schema()
+        )
 
     def _assemble(self, request: ExtractionRequest, facts: dict[str, Any], model: str) -> Assembly:
         return Assembler(
@@ -119,7 +132,10 @@ class ClaudeRegistryProvider:
                     "status": "passed" if assembly and assembly.valid else "failed",
                     "errors": assembly.errors if assembly else [],
                 },
-                {"phase": "approval_checks", "errors": assembly.approval_errors if assembly else []},
+                {
+                    "phase": "approval_checks",
+                    "errors": assembly.approval_errors if assembly else [],
+                },
             ],
             "unresolved_mentions": assembly.unresolved if assembly else [],
             "assembly_stats": assembly.stats if assembly else {},
@@ -150,7 +166,9 @@ class ClaudeRegistryProvider:
             warnings=sorted(set(warnings)),
         )
 
-    def needs_repair(self, request: ExtractionRequest, result: ClaudeResult) -> tuple[Assembly | None, list[str]]:
+    def needs_repair(
+        self, request: ExtractionRequest, result: ClaudeResult
+    ) -> tuple[Assembly | None, list[str]]:
         if not result.ok:
             return None, []
         assembly = self._assemble(request, result.parsed or {}, result.model)

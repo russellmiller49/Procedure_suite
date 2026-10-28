@@ -12,22 +12,31 @@ import uuid
 from pathlib import Path
 
 import pytest
+from ip_registry_contracts.models import ExtractionRequest, ExtractionResponse
+from ip_registry_engine.focused import prepare_text
 
-from app.common.anthropic_client import ClaudeClient, ClaudeSettings, build_params, estimate_cost_usd
+from app.common.anthropic_client import (
+    ClaudeClient,
+    ClaudeSettings,
+    build_params,
+    estimate_cost_usd,
+)
 from app.common.llm_egress import EgressDenied, egress_context
 from app.llm_extraction.anchoring import anchor
 from app.llm_extraction.facts_schema import schema_complexity
 from app.registry_workbench.extraction.assembler import Assembler
 from app.registry_workbench.extraction.claude_provider import ClaudeRegistryProvider
-from app.registry_workbench.extraction.contract_spec import contract_spec, dictionary, dictionary_fields
+from app.registry_workbench.extraction.contract_spec import (
+    contract_spec,
+    dictionary,
+    dictionary_fields,
+)
 from app.registry_workbench.extraction.prompt import (
     EXCLUDED_QA_RULES,
     PROMPT_QA_RULES,
     system_prompt,
     user_message,
 )
-from ip_registry_contracts.models import ExtractionRequest, ExtractionResponse
-from ip_registry_engine.focused import prepare_text
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures/registry_workbench"
 TEXT = (FIXTURES / "rebus_demo_procedure.txt").read_text()
@@ -108,7 +117,11 @@ def test_fixture_assembles_into_a_valid_approvable_revision():
     proposal = result.proposal
     lung, node = proposal["targets"]
     assert (lung["site"], lung["lobe"], lung["max_diameter_mm"]) == ("lung", "RUL", 18.0)
-    assert (node["iaslc_station"], node["short_axis_mm"], node["size_axis_explicit"]) == ("7", 10.0, True)
+    assert (node["iaslc_station"], node["short_axis_mm"], node["size_axis_explicit"]) == (
+        "7",
+        10.0,
+        True,
+    )
     surveys = {s["iaslc_station"]: s for s in proposal["station_surveys"]}
     assert surveys["4R"]["station_sampled"] is False and surveys["7"]["station_sampled"] is True
     assert proposal["localization_events"][1]["tool_lesion_relationship"] == "TIL"
@@ -152,7 +165,9 @@ def test_unanchored_evidence_is_dropped():
 
 def test_short_axis_without_explicit_axis_becomes_a_blocking_conflict():
     facts = copy.deepcopy(FACTS)
-    facts["bool_facts"] = [f for f in facts["bool_facts"] if f["field"] != "targets.size_axis_explicit"]
+    facts["bool_facts"] = [
+        f for f in facts["bool_facts"] if f["field"] != "targets.size_axis_explicit"
+    ]
     result = assemble(facts)
     assert result.valid
     assert "short_axis_mm" not in result.proposal["targets"][1]
@@ -176,7 +191,10 @@ def test_inspected_station_with_sampling_results_is_flagged_on_the_survey():
     result = assemble(facts)
     assert result.valid
     assert "station_sampled" not in result.proposal["station_surveys"][0]
-    assert provenance(result.proposal, "/station_surveys/0/station_sampled")["conflict_status"] == "unresolved"
+    assert (
+        provenance(result.proposal, "/station_surveys/0/station_sampled")["conflict_status"]
+        == "unresolved"
+    )
 
 
 def test_rows_missing_required_parents_cascade_out():
@@ -238,7 +256,10 @@ def _message(payload, *, model="claude-opus-5-5", stop="end_turn"):
         "id": "msg_test",
         "model": model,
         "stop_reason": stop,
-        "content": [{"type": "thinking", "thinking": ""}, {"type": "text", "text": json.dumps(payload)}],
+        "content": [
+            {"type": "thinking", "thinking": ""},
+            {"type": "text", "text": json.dumps(payload)},
+        ],
         "usage": {
             "input_tokens": 900,
             "output_tokens": 2500,
@@ -261,7 +282,10 @@ def _request(text=TEXT, kind="procedure"):
 def test_request_parameters_are_cached_and_never_send_sampling_controls():
     params = build_params(ClaudeSettings(), system="S", user="U", schema={"type": "object"})
     assert params["system"][0]["cache_control"] == {"type": "ephemeral", "ttl": "1h"}
-    assert params["output_config"] == {"effort": "medium", "format": {"type": "json_schema", "schema": {"type": "object"}}}
+    assert params["output_config"] == {
+        "effort": "medium",
+        "format": {"type": "json_schema", "schema": {"type": "object"}},
+    }
     assert not {"temperature", "top_p", "top_k", "thinking"} & set(params)
 
 
@@ -275,15 +299,21 @@ def test_egress_is_denied_without_declared_synthetic_provenance():
 def test_provider_returns_a_proposed_response_with_inference_metadata():
     sdk = _FakeSDK([_message(FACTS)])
     with egress_context("synthetic", source="test"):
-        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(_request())
+        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(
+            _request()
+        )
     assert isinstance(response, ExtractionResponse)
     assert response.status == "proposed"
     call = sdk.messages.calls[0]
     assert call["betas"] == ["server-side-fallback-2026-07-01"] and call["fallbacks"] == "default"
     inference = response.observations["inference"]
     assert inference["model"] == "claude-opus-5-5" and not inference["repair_used"]
-    assert inference["cost_usd"] == pytest.approx(estimate_cost_usd("claude-opus-5-5", {
-        "input_tokens": 900, "output_tokens": 2500, "cache_read_input_tokens": 7000}))
+    assert inference["cost_usd"] == pytest.approx(
+        estimate_cost_usd(
+            "claude-opus-5-5",
+            {"input_tokens": 900, "output_tokens": 2500, "cache_read_input_tokens": 7000},
+        )
+    )
 
 
 def test_unfixable_answer_triggers_one_stateless_repair_call(monkeypatch):
@@ -293,18 +323,25 @@ def test_unfixable_answer_triggers_one_stateless_repair_call(monkeypatch):
     monkeypatch.setattr(Assembler, "_fix_link", lambda self, code: False)
     sdk = _FakeSDK([_message(broken), _message(FACTS)])
     with egress_context("synthetic", source="test"):
-        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(_request())
+        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(
+            _request()
+        )
     assert response.status == "proposed" and response.observations["inference"]["repair_used"]
     first, repair = sdk.messages.calls
     assert repair["system"] == first["system"] and len(repair["messages"]) == 1
     content = repair["messages"][0]["content"]
-    assert "navigation_requires_started_robotic_component" in content and "<previous_answer>" in content
+    assert (
+        "navigation_requires_started_robotic_component" in content
+        and "<previous_answer>" in content
+    )
 
 
 def test_refusal_is_degraded_not_raised():
     sdk = _FakeSDK([_message({}, stop="refusal")])
     with egress_context("synthetic", source="test"):
-        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(_request())
+        response = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings(), sdk=sdk)).extract(
+            _request()
+        )
     assert response.status == "degraded" and "model_inference_failed" in response.warnings
     assert response.observations["proposal"] is None
 

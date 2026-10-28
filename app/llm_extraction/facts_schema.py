@@ -129,7 +129,9 @@ def build_facts_schema(
         )
     }
     value_types = {
-        "enum_facts": _string_enum(v for spec in by_kind.get("enum_facts", []) for v in spec.values),
+        "enum_facts": _string_enum(
+            v for spec in by_kind.get("enum_facts", []) for v in spec.values
+        ),
         "bool_facts": {"type": "boolean"},
         "number_facts": {"type": "number"},
         "text_facts": {"type": "string"},

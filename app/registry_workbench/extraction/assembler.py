@@ -16,6 +16,9 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Any
 
+from ip_registry_contracts.launch import ENTITY_MODELS, PROFILE, VERSION
+from ip_registry_contracts.models import ClinicalRevision, approval_errors
+from ip_registry_engine.focused import stable_id
 from pydantic import ValidationError
 
 from app.llm_extraction.anchoring import AnchoredSpan, anchor
@@ -28,15 +31,16 @@ from app.registry_workbench.extraction.contract_spec import (
     ContractSpec,
     contract_spec,
 )
-from ip_registry_contracts.launch import ENTITY_MODELS, PROFILE, VERSION
-from ip_registry_contracts.models import ClinicalRevision, approval_errors
-from ip_registry_engine.focused import stable_id
 
 # Only used to run the revision validators; the encounter supplies the real date.
 VALIDATION_EVENT_DATE = date(2000, 1, 1)
 MAX_REPAIR_PASSES = 40
 NEGATED_VALUES = {"present": "absent", "performed": "not_performed"}
-DEFERRED_ASSERTIONS = {"planned": "planned_only", "historical": "historical", "uncertain": "uncertain"}
+DEFERRED_ASSERTIONS = {
+    "planned": "planned_only",
+    "historical": "historical",
+    "uncertain": "uncertain",
+}
 
 # Row validator code -> fields that become unresolved conflicts.
 ROW_TRIPS = {
@@ -139,7 +143,9 @@ class Assembler:
         if span is None:
             return None
         # Excerpts come from the stored source, not the masked copy sent to the model.
-        return AnchoredSpan(span.start, span.end, self.text[span.start : span.end], span.method, span.occurrences)
+        return AnchoredSpan(
+            span.start, span.end, self.text[span.start : span.end], span.method, span.occurrences
+        )
 
     def _add_row(self, collection: str, local_id: str, span: AnchoredSpan | None) -> RowDraft:
         row = RowDraft(collection, local_id, span)
@@ -188,7 +194,9 @@ class Assembler:
         if row is None:
             self._count("facts_unknown_row")
             return
-        span = self._anchor(item.get("evidence_quote") or "", near=row.anchor.start if row.anchor else None)
+        span = self._anchor(
+            item.get("evidence_quote") or "", near=row.anchor.start if row.anchor else None
+        )
         if span is None:
             self._count("facts_unanchored")
             self._note("unmapped_detail", f"unanchored evidence for {path}")
@@ -233,13 +241,19 @@ class Assembler:
             row = self._row_for(str(item.get("local_id") or "").strip(), spec.collection)
             if row is None or spec.field in row.values:
                 continue
-            span = self._anchor(item.get("evidence_quote") or "", near=row.anchor.start if row.anchor else None)
+            span = self._anchor(
+                item.get("evidence_quote") or "", near=row.anchor.start if row.anchor else None
+            )
             row.values[spec.field] = Fact(None, span, None, "missing", item.get("reason"))
             self._count("missing_explicit")
 
     def _ingest_unresolved(self, items: list[dict[str, Any]]) -> None:
         for item in items:
-            self._note(item.get("kind") or "unmapped_detail", item.get("note") or "", self._anchor(item.get("evidence_quote") or ""))
+            self._note(
+                item.get("kind") or "unmapped_detail",
+                item.get("note") or "",
+                self._anchor(item.get("evidence_quote") or ""),
+            )
 
     # -- structural integrity ---------------------------------------------
 
@@ -247,7 +261,9 @@ class Assembler:
         self.rows[row.collection].remove(row)
         del self.by_id[(row.collection, row.local_id)]
         self._count("rows_dropped")
-        self._note("unmapped_detail", f"{row.collection} {row.local_id} dropped: {reason}", row.anchor)
+        self._note(
+            "unmapped_detail", f"{row.collection} {row.local_id} dropped: {reason}", row.anchor
+        )
 
     def _prune(self) -> None:
         """Drop rows missing required fields or parents, cascading to their children."""
@@ -259,11 +275,20 @@ class Assembler:
                     continue
                 for row in list(self.rows[collection]):
                     for key, parent_id in list(row.parents.items()):
-                        if (self.spec.collection(collection).parents[key], parent_id) not in self.by_id:
+                        if (
+                            self.spec.collection(collection).parents[key],
+                            parent_id,
+                        ) not in self.by_id:
                             del row.parents[key]
                             self._count("parents_unresolved")
-                    missing = [f for f in self.spec.required.get(collection, ()) if row.value(f) is None]
-                    missing += [p for p in self.spec.required_parents.get(collection, ()) if p not in row.parents]
+                    missing = [
+                        f for f in self.spec.required.get(collection, ()) if row.value(f) is None
+                    ]
+                    missing += [
+                        p
+                        for p in self.spec.required_parents.get(collection, ())
+                        if p not in row.parents
+                    ]
                     if missing:
                         self._drop(row, "missing " + ", ".join(missing))
                         changed = True
@@ -285,10 +310,14 @@ class Assembler:
         if code == "inspected_station_cannot_have_sampling_results":
             for target in self.rows.get("targets", []):
                 survey = get(("station_surveys", target.parents.get("station_survey_id", "")))
-                if survey is not None and survey.value("station_sampled") is False and (
-                    target.value("sampling_attempted") is True
-                    or target.value("needle_pass_count")
-                    or target.value("rose_result")
+                if (
+                    survey is not None
+                    and survey.value("station_sampled") is False
+                    and (
+                        target.value("sampling_attempted") is True
+                        or target.value("needle_pass_count")
+                        or target.value("rose_result")
+                    )
                 ):
                     return self._conflict(survey, "station_sampled")
         if code == "target_station_context_mismatch":
@@ -296,11 +325,18 @@ class Assembler:
                 survey = get(("station_surveys", target.parents.get("station_survey_id", "")))
                 if survey is not None and (
                     survey.value("iaslc_station") != target.value("iaslc_station")
-                    or ("ebus_session_id" in target.parents
-                        and survey.parents.get("ebus_session_id") != target.parents["ebus_session_id"])
+                    or (
+                        "ebus_session_id" in target.parents
+                        and survey.parents.get("ebus_session_id")
+                        != target.parents["ebus_session_id"]
+                    )
                 ):
                     del target.parents["station_survey_id"]
-                    self._note("conflicting_statements", f"target {target.local_id} station differs from survey", target.anchor)
+                    self._note(
+                        "conflicting_statements",
+                        f"target {target.local_id} station differs from survey",
+                        target.anchor,
+                    )
                     return True
         if code == "navigation_localization_target_mismatch":
             for event in self.rows.get("localization_events", []):
@@ -308,15 +344,27 @@ class Assembler:
                 if run is not None and self._target_of(run) != self._target_of(event):
                     del event.parents["navigation_run_id"]
                     return True
-        if code in {"sampling_localization_target_mismatch", "sampling_requires_reconfirmation_after_tool_change"}:
+        if code in {
+            "sampling_localization_target_mismatch",
+            "sampling_requires_reconfirmation_after_tool_change",
+        }:
             for acquisition in self.rows.get("sampling_acquisitions", []):
-                event = get(("localization_events", acquisition.parents.get("localization_event_id_before_pass", "")))
+                event = get(
+                    (
+                        "localization_events",
+                        acquisition.parents.get("localization_event_id_before_pass", ""),
+                    )
+                )
                 if event is not None and (
                     self._target_of(event) != self._target_of(acquisition)
                     or event.value("catheter_or_tool_changed_after_confirmation") is True
                 ):
                     del acquisition.parents["localization_event_id_before_pass"]
-                    self._note("conflicting_statements", f"acquisition {acquisition.local_id} confirmation link removed: {code}", acquisition.anchor)
+                    self._note(
+                        "conflicting_statements",
+                        f"acquisition {acquisition.local_id} confirmation link removed: {code}",
+                        acquisition.anchor,
+                    )
                     return True
         if code == "sampling_specimen_target_mismatch":
             for link in self.rows.get("sampling_specimen_links", []):
@@ -329,7 +377,9 @@ class Assembler:
                         and self._attribution(specimen, "target_attribution_status") == "attributed"
                         and self._target_of(acquisition) != self._target_of(specimen)
                     ):
-                        link.values["link_certainty"] = Fact("uncertain", link.values["link_certainty"].span, origin="derived")
+                        link.values["link_certainty"] = Fact(
+                            "uncertain", link.values["link_certainty"].span, origin="derived"
+                        )
                         return True
         if code == "duplicate_procedure_component":
             seen = set()
@@ -342,7 +392,10 @@ class Assembler:
             "robotic_navigation_requires_robotic_component": ("navigation_runs",),
             "navigation_requires_started_robotic_component": ("navigation_runs",),
             "ebus_session_requires_linear_component": ("ebus_sessions", "station_surveys"),
-            "station_survey_requires_started_linear_component": ("ebus_sessions", "station_surveys"),
+            "station_survey_requires_started_linear_component": (
+                "ebus_sessions",
+                "station_surveys",
+            ),
         }.get(code)
         if component:
             for collection in component:
@@ -420,7 +473,12 @@ class Assembler:
                 proposal[collection].append(data)
                 derived = lambda value: Fact(value, row.anchor, None, "derived")  # noqa: E731
                 if collection in PRIMARY_KEYS:
-                    emit(prefix, data, PRIMARY_KEYS[collection], derived(self._uuid(collection, row.local_id)))
+                    emit(
+                        prefix,
+                        data,
+                        PRIMARY_KEYS[collection],
+                        derived(self._uuid(collection, row.local_id)),
+                    )
                 for key, parent_id in row.parents.items():
                     parent = self.spec.collection(collection).parents[key]
                     emit(prefix, data, key, derived(self._uuid(parent, parent_id)))
@@ -433,8 +491,14 @@ class Assembler:
                     sequences[slot] = sequences.get(slot, 0) + 1
                     emit(prefix, data, sequence, derived(sequences[slot]))
                 for name in ("attribution_status", "target_attribution_status"):
-                    if collection in {"sampling_acquisitions", "specimens"} and name in ENTITY_MODELS[collection].model_fields:
-                        if row.values.get(name) is None and self._attribution(row, name) == "attributed":
+                    if (
+                        collection in {"sampling_acquisitions", "specimens"}
+                        and name in ENTITY_MODELS[collection].model_fields
+                    ):
+                        if (
+                            row.values.get(name) is None
+                            and self._attribution(row, name) == "attributed"
+                        ):
                             emit(prefix, data, name, derived("attributed"))
                 for name, fact in row.values.items():
                     emit(prefix, data, name, fact)
@@ -450,7 +514,9 @@ class Assembler:
             if not proposal["procedures"]:
                 return None, ["no_procedure_component"]
             try:
-                revision = ClinicalRevision.model_validate({**proposal, "event_date": VALIDATION_EVENT_DATE})
+                revision = ClinicalRevision.model_validate(
+                    {**proposal, "event_date": VALIDATION_EVENT_DATE}
+                )
                 return revision, []
             except ValidationError as exc:
                 fixed, errors = False, []
@@ -462,12 +528,20 @@ class Assembler:
                         if len(loc) >= 3 and isinstance(loc[2], str) and loc[2] in row.values:
                             fixed = self._conflict(row, loc[2]) or fixed
                         elif code in ROW_TRIPS:
-                            fixed = any([self._conflict(row, name) for name in ROW_TRIPS[code]]) or fixed
+                            fixed = (
+                                any([self._conflict(row, name) for name in ROW_TRIPS[code]])
+                                or fixed
+                            )
                         else:
                             self._drop(row, code)
                             self._prune()
                             fixed = True
-                    elif loc and loc[0] == "case_details" and len(loc) >= 2 and isinstance(loc[1], str):
+                    elif (
+                        loc
+                        and loc[0] == "case_details"
+                        and len(loc) >= 2
+                        and isinstance(loc[1], str)
+                    ):
                         fixed = self._conflict(self.rows["case_details"][0], loc[1]) or fixed
                     elif not loc:
                         fixed = self._fix_link(code)
@@ -489,7 +563,10 @@ class Assembler:
         revision, errors = self._validate()
         proposal, _ = self.render()
         for item in proposal["field_provenance"]:
-            if "source_start" in item and self.text[item["source_start"] : item["source_end"]] != item["source_excerpt"]:
+            if (
+                "source_start" in item
+                and self.text[item["source_start"] : item["source_end"]] != item["source_excerpt"]
+            ):
                 raise ValueError("proposal_evidence_mismatch")
         return Assembly(
             proposal=proposal,
