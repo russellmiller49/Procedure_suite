@@ -12,6 +12,10 @@ __pycache__/
 
 # Large local artifacts
 procedure_suite_phase2.zip
+# Local deliverables (decks, demo video, candidate tarballs)
+outputs/
+# Synthetic registry workbench database
+registry_workbench.db
 
 # API Keys and sensitive files
 *api_key*
