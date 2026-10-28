@@ -99,6 +99,8 @@ class CBCTFusion(BaseModel):
     overlay_result: str | None = None
     confirmatory_spin_result: str | None = None
     notes: str | None = None
+    # Physician radiologic supervision/interpretation attestation (explicit only).
+    physician_interpreted: bool | None = None
 
 
 class ToolInLesionConfirmation(BaseModel):
@@ -168,6 +170,12 @@ class EBUSStationSample(BaseModel):
     size_mm: float | None = None
     passes: int | None = None
     echo_features: str | None = None
+    # Per-station elastography, e.g. "Type 2". Kept apart from echo_features
+    # so a pattern is never implied for a node it was not documented on.
+    elastography_pattern: str | None = None
+    elastography_strain_ratio: float | None = None
+    # None = not stated; False = inspected only.
+    sampled: bool | None = None
     biopsy_tools: List[str] = Field(default_factory=list)
     rose_result: str | None = None
     comments: str | None = None
@@ -178,9 +186,25 @@ class EBUSTBNA(BaseModel):
     needle_gauge: str | None = None
     stations: List[EBUSStationSample]
     elastography_used: bool | None = None
+    # Record-level pattern: set only when one pattern applies to every station.
     elastography_pattern: str | None = None
     rose_available: bool | None = None
     overall_rose_diagnosis: str | None = None
+    # Explicit survey/sampling rule sentence (never defaulted).
+    survey_technique: str | None = None
+    stations_inspected: List[str] = Field(default_factory=list)
+
+
+class EBUSSurvey(BaseModel):
+    """Linear EBUS nodal survey with no nodal sampling (no CPT implication)."""
+
+    model_config = ConfigDict(extra="ignore")
+    stations: List[EBUSStationSample] = Field(default_factory=list)
+    elastography_used: bool | None = None
+    elastography_pattern: str | None = None
+    survey_technique: str | None = None
+    notes: str | None = None
+    reason_not_sampled: str | None = None
 
 
 class EBUSIntranodalForcepsBiopsy(BaseModel):
@@ -537,6 +561,7 @@ class BronchoscopyShell(BaseModel):
 
 __all__ = [
     "BAL",
+    "EBUSSurvey",
     "AwakeFiberopticIntubation",
     "AirwayStentSurveillance",
     "BLVRDischargeInstructions",

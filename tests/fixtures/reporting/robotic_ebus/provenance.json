@@ -1,0 +1,6 @@
+{
+  "source_filename": "robotic_bronchoscopy_report_DEIDENTIFIED.txt",
+  "source_sha256": "42641ff28b33c69f3f60eec17293efb2f9558ae6b91c6bbc929322a47c5726fb",
+  "case_count": 11,
+  "use": "Reporter development regression examples supplied deidentified by user; not independent validation or model-training gold."
+}

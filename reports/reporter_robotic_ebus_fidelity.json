@@ -1,0 +1,472 @@
+{
+  "schema_version": "reporter_robotic_ebus_fidelity.v1",
+  "source": "tests/fixtures/reporting/robotic_ebus/provenance.json",
+  "scope": "Reporter source-block fidelity; development regression, not independent clinical or model qualification. Registry flags/CPT derivation and model weights unchanged.",
+  "runtime_limitations": [
+    "Granular NER model absent; local baseline used available deterministic/legacy fallback paths.",
+    "Original deidentified reports retain placeholder review blockers and strict preview fallback.",
+    "Four existing reporter snapshot tests fail with both current and main reporter code."
+  ],
+  "summary": {
+    "cases": 11,
+    "before_exact_sampling_counts": 0,
+    "after_exact_sampling_counts": 11
+  },
+  "cases": [
+    {
+      "case_id": "case_01",
+      "expected_tbna_counts": [
+        6
+      ],
+      "expected_cryobiopsy_counts": [
+        8
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RI",
+          "7",
+          "11L"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          6
+        ],
+        "cryobiopsy_counts": [
+          8
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RI",
+          "7",
+          "11L"
+        ]
+      }
+    },
+    {
+      "case_id": "case_02",
+      "expected_tbna_counts": [
+        3,
+        3
+      ],
+      "expected_cryobiopsy_counts": [
+        6,
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          3
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "7",
+          "4R"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryobiopsy_counts": [
+          6,
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 2,
+        "sampled_stations": [
+          "7",
+          "4R"
+        ]
+      }
+    },
+    {
+      "case_id": "case_03",
+      "expected_tbna_counts": [
+        6
+      ],
+      "expected_cryobiopsy_counts": [
+        5,
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RS",
+          "11RI"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          6
+        ],
+        "cryobiopsy_counts": [
+          5,
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 2,
+        "sampled_stations": [
+          "11RS",
+          "11RI"
+        ]
+      }
+    },
+    {
+      "case_id": "case_04",
+      "expected_tbna_counts": [
+        7
+      ],
+      "expected_cryobiopsy_counts": [
+        5
+      ],
+      "before": {
+        "tbna_counts": [],
+        "cryobiopsy_counts": [],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "31629",
+          "1"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          7
+        ],
+        "cryobiopsy_counts": [
+          5
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "31629",
+          "1"
+        ]
+      }
+    },
+    {
+      "case_id": "case_05",
+      "expected_tbna_counts": [
+        6
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RS"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          6
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RS"
+        ]
+      }
+    },
+    {
+      "case_id": "case_06",
+      "expected_tbna_counts": [
+        7
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          7
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "4R",
+          "11L"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          7
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "4R"
+        ]
+      }
+    },
+    {
+      "case_id": "case_07",
+      "expected_tbna_counts": [
+        7
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          7
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11L"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          7
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11L"
+        ]
+      }
+    },
+    {
+      "case_id": "case_08",
+      "expected_tbna_counts": [
+        5
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [],
+        "cryobiopsy_counts": [],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11L",
+          "4L",
+          "7",
+          "4R",
+          "11RS",
+          "11RI"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          5
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": []
+      }
+    },
+    {
+      "case_id": "case_09",
+      "expected_tbna_counts": [
+        5
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          5
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "7",
+          "11L"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          5
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "7"
+        ]
+      }
+    },
+    {
+      "case_id": "case_10",
+      "expected_tbna_counts": [
+        6
+      ],
+      "expected_cryobiopsy_counts": [
+        6
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11L",
+          "7"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          6
+        ],
+        "cryobiopsy_counts": [
+          6
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11L",
+          "7"
+        ]
+      }
+    },
+    {
+      "case_id": "case_11",
+      "expected_tbna_counts": [
+        3
+      ],
+      "expected_cryobiopsy_counts": [
+        7
+      ],
+      "before": {
+        "tbna_counts": [
+          31629
+        ],
+        "cryobiopsy_counts": [
+          3
+        ],
+        "counts_match": false,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RI",
+          "11RS",
+          "7",
+          "11L"
+        ]
+      },
+      "final": {
+        "tbna_counts": [
+          3
+        ],
+        "cryobiopsy_counts": [
+          7
+        ],
+        "counts_match": true,
+        "navigation_records": 1,
+        "sampled_stations": [
+          "11RI",
+          "11RS",
+          "7",
+          "11L"
+        ]
+      }
+    }
+  ],
+  "validation": {
+    "targeted_tests": {
+      "tests": 116,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pr_gate": [
+      {
+        "name": "focused_pytest",
+        "status": "passed"
+      },
+      {
+        "name": "extraction_eval",
+        "status": "passed"
+      }
+    ],
+    "existing_strict_reporter_baseline": {
+      "total_cases": 6,
+      "successful_cases": 6,
+      "failed_cases": 0,
+      "avg_text_similarity": 0.9654,
+      "required_section_coverage": 1.0,
+      "avg_cpt_jaccard": 1.0,
+      "avg_performed_flag_f1": 1.0,
+      "critical_extra_flag_rate": 0.0,
+      "strict_render_fallback_rate": 0.0,
+      "forbidden_artifact_case_rate": 0.0,
+      "blocker_rate": 0.0,
+      "complication_contradiction_rate": 0.0,
+      "unsupported_procedure_add_rate": 0.0,
+      "anatomy_mismatch_rate": 0.0,
+      "generic_pathology_plan_rate": 0.0,
+      "avg_seed_warning_count": 1.6667,
+      "avg_accepted_findings": 0.0,
+      "avg_dropped_findings": 0.0,
+      "drop_reason_counts": {
+        "evidence_substring_fail": 0,
+        "keyword_fail": 0,
+        "anatomy_fail": 0,
+        "action_intent_fail": 0,
+        "procedure_key_not_allowlisted": 0,
+        "other": 0
+      },
+      "fallback_reason_counts": {}
+    },
+    "reproduce_focused": "PROCSUITE_SKIP_DOTENV=1 .venv/bin/python -m pytest -q tests/reporting/test_robotic_ebus_source_fidelity.py",
+    "reproduce_pr_gate": ".venv/bin/python ops/tools/run_quality_gates.py --tier pr --output-dir /tmp/procsuite_quality_pr"
+  }
+}

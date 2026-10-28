@@ -1,0 +1,625 @@
+{
+  "schema_version": "reporter_ebus_warning_review.v1",
+  "summary": {
+    "reviewed": 22,
+    "resolved_pipeline_warnings": 4,
+    "remaining_warnings": 18,
+    "partially_corrected_with_remaining_missing_detail": 1,
+    "remaining_missing_detail_groups": {
+      "sampling_status": 13,
+      "station_labels+sampling_status": 3,
+      "station_labels": 2
+    }
+  },
+  "source_sha256": "1f8ad8662b5db49daec84ade513f4e092453c285cf51d18cd49e232b8d1ccc8e",
+  "principles": [
+    "Evaluate only the individual prompt; do not borrow details from its parent report or neighboring prompts.",
+    "Missing pass counts stay unknown. Generic benign appearance does not establish nodal cytology.",
+    "Explicit station numbers take precedence over adjacent anatomical descriptions."
+  ],
+  "anatomical_reference": {
+    "title": "IASLC Staging Manual, chapter 11: lymph node map",
+    "url": "https://www.iaslc.org/file/10870/download?token=ZdsZFnAS"
+  },
+  "validation": {
+    "focused_tests": [
+      {
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "186"
+      }
+    ],
+    "pr_quality_gate": [
+      {
+        "name": "focused_pytest",
+        "status": "passed"
+      },
+      {
+        "name": "extraction_eval",
+        "status": "passed"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "RB-01-07",
+      "prompt_text": "robotic bronch left upper lobe apical posterior one centimeter eccentric radial signal spin was done target adjusted sampled needle six forceps two cryo eight brush and lavage fiducial went in then EBUS eleven right inferior seven eleven left no issues",
+      "nodal_excerpt_normalized": "EBUS 11RI 7 11L no issues",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-01-08",
+      "prompt_text": "A 1 cm LB1/2 target was reached with Ion; low-dose cone beam localization was used after eccentric radial EBUS. Needle sampling was CBCT guided. ROSE showed no malignant neoplasm. Additional forceps/cryo/brush/BAL and fluoroscopic fiducial, then 3-station EBUS.",
+      "nodal_excerpt_normalized": "EBUS.",
+      "decision": "missing_detail",
+      "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+      "remaining_warning": true,
+      "missing_details": [
+        "station_labels",
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-01-10",
+      "prompt_text": "LUL 1 cm Ion biopsy, CBCT adjusted, fiducial; EBUS 11Ri/7/11L, uncomplicated.",
+      "nodal_excerpt_normalized": "EBUS 11Ri/7/11L, uncomplicated.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-02-04",
+      "prompt_text": "After clearing copious foamy secretions, navigated and biopsied RB2 under radial EBUS and low-dose CBCT. Repeated navigation and biopsies in the lingula; ROSE positive there. Finished with diagnostic linear EBUS biopsies of subcarinal and right paratracheal nodes. Uncomplicated.",
+      "nodal_excerpt_normalized": "linear EBUS biopsies of subcarinal and right paratracheal nodes. Uncomplicated.",
+      "decision": "pipeline_error_and_missing_detail",
+      "reason": "Subcarinal identifies station 7. Right paratracheal lacks an upper/lower designation; preserve the sampled region without selecting 2R or 4R.",
+      "remaining_warning": true,
+      "missing_details": [
+        "station_labels"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {
+        "7": null
+      }
+    },
+    {
+      "id": "RB-02-07",
+      "prompt_text": "did two robotic sites today right upper lobe posterior two cm then superior lingula about one cm both got low dose spins and needle and cryo the right only atypical cells the lingula malignant on ROSE then ebus seven and four right no complications",
+      "nodal_excerpt_normalized": "ebus 7 and 4R no complications",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-02-10",
+      "prompt_text": "Robot biopsies RUL 2 cm and lingula 1 cm; positive lingular ROSE; EBUS 7/4R.",
+      "nodal_excerpt_normalized": "EBUS 7/4R.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-03-07",
+      "prompt_text": "two spots in the right lower lobe little lateral clusters about five millimeters and anterior ground glass about a centimeter lots of spins on the first one needle confirmed in lesion six aspirates five cryos second spot six cryos lavage then EBUS eleven Rs eleven Ri no pneumo",
+      "nodal_excerpt_normalized": "EBUS 11Rs 11Ri no pneumo",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-03-10",
+      "prompt_text": "Two RLL robotic targets, repeat CBCT for small nodules, cryobiopsies, BAL, EBUS 11Rs/11Ri; uncomplicated.",
+      "nodal_excerpt_normalized": "EBUS 11Rs/11Ri; uncomplicated.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-05-10",
+      "prompt_text": "Ion RB8 GGO biopsy, concentric radial, fiducial and BAL, lesional ROSE; 11Rs EBUS.",
+      "nodal_excerpt_normalized": "11Rs EBUS.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-06-10",
+      "prompt_text": "PET-positive LUL Ion nodule biopsy, lesional ROSE, EBUS 4R benign lymphocytes.",
+      "nodal_excerpt_normalized": "EBUS 4R benign lymphocytes.",
+      "decision": "pipeline_error",
+      "reason": "Nodal lymphocytes document a sampling result.",
+      "remaining_warning": false,
+      "remaining_flags": [],
+      "observed_node_passes": {
+        "4R": null
+      }
+    },
+    {
+      "id": "RB-07-04",
+      "prompt_text": "Navigated to the lateral basal LLL lesion, checked with radial EBUS, then used sequential cone-beam spins until needle placement was confirmed. Biopsied, brushed and washed the nodule, deployed a fiducial, and performed 11L needle staging with EBUS. No complications.",
+      "nodal_excerpt_normalized": "11L needle staging with EBUS. No complications.",
+      "decision": "pipeline_error",
+      "reason": "The phrase 11L needle staging with EBUS explicitly documents nodal sampling.",
+      "remaining_warning": false,
+      "remaining_flags": [],
+      "observed_node_passes": {
+        "11L": null
+      }
+    },
+    {
+      "id": "RB-07-10",
+      "prompt_text": "LLL 7 mm Ion lesion, repeat CBCT, biopsies and fiducial; benign 11L EBUS.",
+      "nodal_excerpt_normalized": "11L EBUS.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-09-08",
+      "prompt_text": "Concentric radial EBUS and two low-dose Cios scans confirmed tool-in-lesion in the 3 cm RB3 mass. Five needle and six cryobiopsies were acquired. RUL lavage, 7-node EBUS aspiration, and RML lavage completed; onsite cytology showed acute inflammation.",
+      "nodal_excerpt_normalized": "7-node EBUS aspiration, and RML lavage completed; onsite cytology showed acute inflammation.",
+      "decision": "pipeline_error",
+      "reason": "7-node EBUS aspiration includes both station and sampling action.",
+      "remaining_warning": false,
+      "remaining_flags": [],
+      "observed_node_passes": {
+        "7": null
+      }
+    },
+    {
+      "id": "RB-09-10",
+      "prompt_text": "RUL 3 cm mass Ion biopsy, inflammatory ROSE; EBUS 7 and RUL/RML BAL.",
+      "nodal_excerpt_normalized": "EBUS 7 and RUL/RML BAL.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-10-04",
+      "prompt_text": "After suctioning pale secretions, we advanced Ion to the RB8 mass, verified a concentric radial image and tool-in-lesion on the spin. Needle aspiration yielded purulent material, followed by cryobiopsies and lavage. Linear EBUS then sampled left hilar and subcarinal nodes. No immediate complications.",
+      "nodal_excerpt_normalized": "Linear EBUS then sampled left hilar and subcarinal nodes. No immediate complications.",
+      "decision": "pipeline_error",
+      "reason": "Left hilar and subcarinal are identifiable IASLC station names (10L and 7).",
+      "remaining_warning": false,
+      "remaining_flags": [],
+      "observed_node_passes": {
+        "10L": null,
+        "7": null
+      }
+    },
+    {
+      "id": "RB-10-08",
+      "prompt_text": "Low-dose cone-beam imaging confirmed sampling tool within the RB8 mass following Ion navigation and concentric radial EBUS. Needle aspiration produced pus. Cryobiopsies and BAL followed. Staging EBUS targeted type-2 elastography nodes at 11L and 7.",
+      "nodal_excerpt_normalized": "EBUS targeted type-2 elastography nodes at 11L and 7.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-10-10",
+      "prompt_text": "RLL 3 cm Ion mass biopsy, purulent TBNA, ROSE necrosis; EBUS 11L/7.",
+      "nodal_excerpt_normalized": "EBUS 11L/7.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-11-04",
+      "prompt_text": "Navigated to the apicoposterior LUL opacity but could not identify a definite radial EBUS lesion. Very-high-dose cone-beam was followed by a low-dose acquisition confirming needle location. Completed needle, cryo, brushing, BAL and fiducial placement, then EBUS-guided four-station nodal sampling.",
+      "nodal_excerpt_normalized": "EBUS-guided 4-station nodal sampling.",
+      "decision": "missing_detail",
+      "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling is explicit.",
+      "remaining_warning": true,
+      "missing_details": [
+        "station_labels"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-11-07",
+      "prompt_text": "very small left upper lobe ground glass eight millimeters hard to see radial only white specks high dose spin followed by low dose showed needle in lesion three needles seven cryos brushing lavage fiducial and EBUS 11 Ri 11 Rs seven 11 left atypical ROSE no cancer called",
+      "nodal_excerpt_normalized": "EBUS 11Ri 11Rs 7 11L atypical ROSE no cancer called",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-11-08",
+      "prompt_text": "Subcentimeter LUL opacity not identifiable by radial EBUS. Cios initially used very-high-dose imaging and then a low-dose spin that demonstrated tool-in-lesion. Sampling included needle, cryo, brush and BAL with marker deployment, plus EBUS of four type-2 nodes.",
+      "nodal_excerpt_normalized": "EBUS of 4 type-2 nodes.",
+      "decision": "missing_detail",
+      "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+      "remaining_warning": true,
+      "missing_details": [
+        "station_labels",
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-11-09",
+      "prompt_text": "Draft a procedure note for difficult 8 mm LUL GGO robotic biopsy with CBCT localization and eventual tool-in-lesion, 3 TBNA/7 cryobiopsies/1 brush, BAL, fiducial, atypical nonmalignant ROSE, and EBUS stations 11Ri, 11Rs, 7, 11L.",
+      "nodal_excerpt_normalized": "EBUS stations 11Ri, 11Rs, 7, 11L.",
+      "decision": "missing_detail",
+      "reason": "Station labels are given, but no nodal sampling action, pass count, or station-specific cytologic result establishes biopsy. Generic benign appearance or lung ROSE is insufficient.",
+      "remaining_warning": true,
+      "missing_details": [
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    },
+    {
+      "id": "RB-11-10",
+      "prompt_text": "Hard-to-see 8 mm LUL GGO Ion biopsy, two CBCT spins, marker; four-station EBUS.",
+      "nodal_excerpt_normalized": "EBUS.",
+      "decision": "missing_detail",
+      "reason": "Only a node/station count is supplied; individual stations are not identified. Nodal sampling versus inspection is also unspecified.",
+      "remaining_warning": true,
+      "missing_details": [
+        "station_labels",
+        "sampling_status"
+      ],
+      "remaining_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ],
+      "observed_node_passes": {}
+    }
+  ]
+}

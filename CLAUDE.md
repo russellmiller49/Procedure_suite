@@ -125,6 +125,49 @@ Optional, **disabled by default**. Full guide: `docs/SMART_ON_FHIR.md`.
   - `OPENAI_API_KEY=...`
 - Reporter baseline and challenger evals should share the same machine-readable schema, and `--strict` is the intended render-stability mode.
 
+### Robotic Bronchoscopy + EBUS Reporting (2026-10-11)
+
+- **Dictation order drives the report.** `assign_source_sequence()`
+  (`app/reporting/normalization/source_sequence.py`) sets `ProcedureInput.sequence` from where each
+  step is mentioned, for short peripheral/EBUS prompts and the institutional operative narrative.
+  `ReporterEngine._sorted_procedures` is sequence-dominant when ≥2 procedures carry a sequence
+  (`uses_source_sequence`); the PROCEDURE header list is reordered to match
+  (`pipeline._order_summary_lines`). Clinical constraints per target: navigation first,
+  localization (rEBUS/CBCT/tool-in-lesion) before tissue sampling, fiducial after tissue sampling.
+  Kill switch: `REPORTER_SOURCE_SEQUENCE=0` (legacy type ranking; the fiducial still sorts after
+  sampling, never ahead of navigation).
+- **Elastography is per station.** `EBUSStationSample.elastography_pattern` ("Type 1/2/3"); the
+  record-level `EBUSTBNA.elastography_pattern` is set only when one pattern applies to every
+  station. Parsed from prompts (`_elastography` in `robotic_prompt_fidelity.py`; the class digits
+  are blanked so they are never read as pass counts) and from full notes
+  (`robotic_ebus_fidelity.py`). Do not put elastography in `echo_features`.
+- **Survey-only EBUS** is its own procedure, `ebus_survey` (`EBUSSurvey`, `ebus_survey.j2`), with
+  **no `cpt_hints`**: inspected nodes must never derive 31652/31653.
+- **Institutional prose blocks** render for short prompts *and* for the operative-report layout
+  recognized by `robotic_ebus_fidelity.is_operative_block_note()` (template flag `prose_blocks`).
+  Only short prompts switch the shell to `robotic_prompt_shell.j2` (`source_only`). Every
+  boilerplate sentence is tied to an explicit field (e.g. the CT interpretation attestation needs
+  `CBCTFusion.physician_interpreted`); do not add default assertions to those branches.
+- **Full-note reconciliation** (`reconcile_operative_blocks`) takes each cone-beam CT spin (source
+  wording, one procedure per spin), tool-in-lesion, the fiducial, ventilation parameters, a
+  post-EBUS lavage, and the closing sentence from the source itself.
+- **Foreign body removal** is no longer inferred from "aspiration" + "removed"; it needs
+  "foreign body" or an aspirated object.
+- **Structured seed inputs** (`app/reporting/seed_inputs.py`): enumerated builder dropdowns sent as
+  `structured_inputs` on `POST /report/seed_from_text`; catalog at `GET /report/seed_input_spec`
+  (derived from the Pydantic model, so options cannot drift). `apply_seed_inputs()` runs on the
+  bundle after extraction in **both** the route and `run_reporter_seed_pipeline` (never write the
+  selections into the prompt text: a newline disables short-prompt handling). Unspecified = nothing
+  written; a specified value overrides extraction and is reported in `seed_input_notes`; nodal
+  inputs never create an EBUS-TBNA procedure. No free-text fields (keeps the channel PHI-free).
+- **Eval:** `ops/tools/eval_reporter_robotic_minimal.py` now also checks workflow order
+  (`check_order`), block/station/elastography rendering (`check_rendered`), and structured-input
+  cases (`*-SI-*` rows in `tests/fixtures/reporting/robotic_ebus_minimal_prompts.json`).
+- Tests: `tests/reporting/test_robotic_minimal_prompts.py`, `tests/reporting/test_seed_inputs.py`,
+  `tests/reporting/test_robotic_ebus_source_fidelity.py`, `tests/api/test_fastapi.py` (seed inputs),
+  `tests/api/test_phi_redactor_ui.py` (panel + `phi_redactor`/`phi_redactor_classic` builder files
+  must stay byte-identical).
+
 ## Ancillary Documents & Longitudinal Outcomes (Case Aggregation)
 
 The registry houses more than the procedure note. Ancillary documents append to a case
@@ -342,6 +385,7 @@ python ops/tools/summarize_reporter_seed_fallbacks.py --left-report <left.json> 
 python ml/scripts/eval_golden.py --input tests/fixtures/unified_quality_corpus.json --output /tmp/unified_quality_extraction.json
 python ops/tools/eval_reporter_prompt_baseline.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_registry.json --strict
 python ops/tools/eval_reporter_prompt_llm_findings.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_llm.json --strict
+python ops/tools/eval_reporter_robotic_minimal.py --output /tmp/reporter_robotic_minimal.json --artifacts-dir /tmp/reporter_robotic_minimal
 pytest -q tests/quality/test_unified_quality_matrix.py
 pytest -q tests/quality/test_reporter_seed_dual_path_matrix.py
 pytest -q tests/reporting/test_strict_render_validation.py

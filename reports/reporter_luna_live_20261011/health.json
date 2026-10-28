@@ -1,0 +1,15 @@
+{
+  "/health": {
+    "http_status": 200,
+    "body": {
+      "ok": true
+    }
+  },
+  "/ready": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "ready": true
+    }
+  }
+}

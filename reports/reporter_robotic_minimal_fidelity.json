@@ -1,0 +1,3469 @@
+{
+  "schema_version": "reporter_robotic_minimal_fidelity.v1",
+  "source_sha256": "1f8ad8662b5db49daec84ade513f4e092453c285cf51d18cd49e232b8d1ccc8e",
+  "seed_strategy": "registry_extract_fields",
+  "summary": {
+    "cases": 110,
+    "errors": 0,
+    "strict_render_fallbacks": 0,
+    "slot_checks": 362,
+    "slot_failures": 0,
+    "warning_reviews": 22,
+    "warning_review_failures": 0,
+    "cases_with_slot_failures": 0,
+    "quality_flag_counts": {
+      "EBUS_DETAILS_UNSPECIFIED": 18
+    }
+  },
+  "cases": [
+    {
+      "id": "RB-01-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RI": null,
+          "7": null,
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {
+          "11RI": null,
+          "7": null,
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2 (second target)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-01-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2 (2 targets; allocation unspecified)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-01-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RI": null,
+          "7": null,
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-01-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-02-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB2",
+            null,
+            null
+          ],
+          [
+            "LB4",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null,
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB2",
+            20,
+            10
+          ],
+          [
+            "LB4",
+            20,
+            10
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-02-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null,
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RUL",
+            null,
+            null
+          ],
+          [
+            "Lingula",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4,
+          "4R": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB2",
+            null,
+            null
+          ],
+          [
+            "LB4",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [
+          null,
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-02-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null,
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3,
+          3
+        ],
+        "cryo_counts": [
+          6,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null,
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB2",
+            null,
+            null
+          ],
+          [
+            "LB4",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-02-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-03-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB9",
+            null,
+            null
+          ],
+          [
+            "RB8",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": null,
+          "11RI": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL (second target)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB9",
+            null,
+            null
+          ],
+          [
+            "RB8",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": null,
+          "11RI": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL (second target)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB9",
+            10,
+            5
+          ],
+          [
+            "RB8",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": 5,
+          "11RI": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          5,
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL (second target)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-03-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": null,
+          "11RI": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null,
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11RS": null,
+          "11RI": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-03-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL (2 targets; allocation unspecified)",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-04-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB10",
+            40,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB10",
+            40,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB10",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RLL",
+            21,
+            23
+          ],
+          [
+            "RLL",
+            40,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB10",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB10",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-04-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            10,
+            5
+          ],
+          [
+            "RB8",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RS": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            10,
+            5
+          ],
+          [
+            "RB8",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RS": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RS": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-05-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-06-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            10,
+            5
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            10,
+            5
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": 5
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-06-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {
+          "4R": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB9",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB9",
+            10,
+            5
+          ],
+          [
+            "LB9",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB9",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LLL",
+            10,
+            5
+          ],
+          [
+            "LLL",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11L": 5
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB9",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-07-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-08-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB4",
+            60,
+            20
+          ],
+          [
+            "RML",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB4",
+            10,
+            5
+          ],
+          [
+            "RB4",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB4",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB4",
+            21,
+            23
+          ],
+          [
+            "RB4",
+            10,
+            5
+          ],
+          [
+            "RB4",
+            60,
+            20
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": [
+          [
+            "RB4",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-08-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": true,
+        "bal": []
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            null,
+            null
+          ],
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            70,
+            15
+          ],
+          [
+            "RB4/5",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RUL",
+            null,
+            null
+          ],
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RUL",
+            70,
+            15
+          ],
+          [
+            "RB5",
+            60,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            null,
+            null
+          ],
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          5
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB3",
+            null,
+            null
+          ],
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-09-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "RML",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-10-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": null,
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            70,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "10L": null,
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": 4,
+          "7": 6
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            10,
+            5
+          ],
+          [
+            "RB8",
+            60,
+            10
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": null,
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RLL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-10-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          6
+        ],
+        "brush_counts": [],
+        "node_passes": {
+          "11L": null,
+          "7": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "RB8",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-10-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-11-01",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-11-02",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-11-03",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-11-04",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-11-05",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {
+          "11RI": null,
+          "11RS": null,
+          "7": null,
+          "11L": null
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-11-06",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "11RS": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "survey_only": false,
+        "bal": [
+          [
+            "LB1/2",
+            70,
+            15
+          ]
+        ]
+      },
+      "quality_flags": []
+    },
+    {
+      "id": "RB-11-07",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-11-08",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          null
+        ],
+        "cryo_counts": [
+          null
+        ],
+        "brush_counts": [
+          null
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-11-09",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [
+          3
+        ],
+        "cryo_counts": [
+          7
+        ],
+        "brush_counts": [
+          1
+        ],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": [
+          [
+            "LUL",
+            null,
+            null
+          ]
+        ]
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "RB-11-10",
+      "render_fallback_used": false,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "observed": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "brush_counts": [],
+        "node_passes": {},
+        "survey_only": false,
+        "bal": []
+      },
+      "quality_flags": [
+        {
+          "version": "reporter_seed_flag.v1",
+          "code": "EBUS_DETAILS_UNSPECIFIED",
+          "severity": "warning",
+          "source": "quality_gate.bundle",
+          "message": "EBUS is preserved in the report; the source does not specify individual station identities and whether nodal sampling was performed.",
+          "legacy_warning": null,
+          "metadata": {
+            "family": "EBUS",
+            "missing_details": [
+              "station_labels",
+              "sampling_status"
+            ],
+            "blocking": false
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Source-slot checks cover curated facts; successful rendering is not complete clinical validation.",
+    "Extraction may fall back when model artifacts are unavailable; inspect the runtime log.",
+    "The remaining 18 EBUS warnings reflect source omissions, adjudicated individually in the warning-review report.",
+    "Local runtime used deterministic/legacy fallback because production NER/Torch artifacts were unavailable or incompatible; this is not production-model qualification."
+  ],
+  "previous_summary": {
+    "cases": 110,
+    "errors": 0,
+    "strict_render_fallbacks": 0,
+    "slot_checks": 357,
+    "slot_failures": 0,
+    "cases_with_slot_failures": 0,
+    "quality_flag_counts": {
+      "EBUS_DETAILS_UNSPECIFIED": 22
+    }
+  },
+  "validation": {
+    "focused_tests": [
+      {
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "186"
+      }
+    ],
+    "pr_quality_gate": [
+      {
+        "name": "focused_pytest",
+        "status": "passed"
+      },
+      {
+        "name": "extraction_eval",
+        "status": "passed"
+      }
+    ]
+  },
+  "warning_review_report": "reports/reporter_ebus_warning_review.json"
+}

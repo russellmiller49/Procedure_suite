@@ -11,6 +11,7 @@ from proc_schemas.clinical import OperativeShellInputs, ProcedureBundle, Procedu
 
 from app.reporting.metadata import ProcedureAutocodeResult, ProcedureMetadata, ReportMetadata, StructuredReport
 from app.reporting.normalization.normalize import normalize_bundle
+from app.reporting.normalization.robotic_prompt_fidelity import is_short_peripheral_prompt
 
 from .engine import (
     _dedupe_labels,
@@ -20,6 +21,7 @@ from .engine import (
     _normalize_payload,
     _summarize_cpt_candidates,
     _truthy_env,
+    uses_source_sequence,
     _try_proc_autocode,
 )
 
@@ -71,6 +73,75 @@ def _normalize_target_key(value: Any) -> str | None:
         return None
     text = str(value).strip().lower()
     return text or None
+
+
+# Header-line prefix -> procedure types that own the line, most specific first.
+_SUMMARY_LINE_OWNERS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("Linear EBUS lymph node survey", ("ebus_survey",)),
+    ("Linear Endobronchial Ultrasound", ("ebus_tbna", "ebus_survey")),
+    ("Linear EBUS-TBNA", ("ebus_tbna",)),
+    ("Endobronchial Ultrasound-Guided", ("ebus_tbna",)),
+    ("EUS-B", ("eusb",)),
+    ("Robotic navigational bronchoscopy", ("robotic_navigation",)),
+    ("Electromagnetic Navigation", ("emn_bronchoscopy",)),
+    ("Tool-in-lesion", ("tool_in_lesion_confirmation",)),
+    ("TiLT+", ("tool_in_lesion_confirmation",)),
+    ("Radial EBUS localization", ("radial_ebus_survey", "radial_ebus_sampling")),
+    (
+        "Cone-beam CT imaging",
+        (
+            "cbct_cact_fusion",
+            "cbct_augmented_bronchoscopy",
+            "tool_in_lesion_confirmation",
+            "radial_ebus_survey",
+            "robotic_navigation",
+        ),
+    ),
+    ("Fluoroscopy with", ("cbct_cact_fusion", "tool_in_lesion_confirmation", "robotic_navigation")),
+    ("Transbronchial Cryobiopsy", ("transbronchial_cryobiopsy",)),
+    ("Transbronchial needle aspiration of", ("transbronchial_needle_aspiration",)),
+    ("TBNA of", ("transbronchial_needle_aspiration",)),
+    ("Transbronchial forceps biopsy of", ("transbronchial_lung_biopsy",)),
+    ("Transbronchial biopsy of", ("transbronchial_biopsy",)),
+    ("Bronchial brushings", ("bronchial_brushings",)),
+    ("Bronchoalveolar lavage", ("bal", "bal_variant")),
+    ("Therapeutic aspiration", ("therapeutic_aspiration",)),
+    ("Prophylactic", ("endobronchial_blocker",)),
+    ("Endobronchial biopsy", ("endobronchial_biopsy",)),
+    ("Fiducial marker placement", ("fiducial_marker_placement",)),
+)
+
+
+def _order_summary_lines(lines: list[str], sorted_procs: list[ProcedureInput]) -> list[str]:
+    """Order PROCEDURE header lines like the PROCEDURE IN DETAIL blocks.
+
+    Each line is matched to the procedure that produced it (the n-th line of a
+    type to the n-th procedure of that type). Lines without a known owner stay
+    directly after the line that preceded them.
+    """
+    positions: dict[str, list[int]] = defaultdict(list)
+    for index, proc in enumerate(sorted_procs):
+        positions[proc.proc_type].append(index)
+    seen: dict[str, int] = defaultdict(int)
+    keyed: list[tuple[float, int, str]] = []
+    previous = -1.0
+    for order, line in enumerate(lines):
+        position: float | None = None
+        for prefix, owners in _SUMMARY_LINE_OWNERS:
+            if not line.startswith(prefix):
+                continue
+            owner = next((kind for kind in owners if positions.get(kind)), None)
+            if owner:
+                nth = seen[prefix]
+                seen[prefix] += 1
+                slots = positions[owner]
+                position = float(slots[min(nth, len(slots) - 1)])
+            break
+        if position is None:
+            position = previous + 0.001
+        previous = position
+        keyed.append((position, order, line))
+    return [line for _, _, line in sorted(keyed)]
 
 
 def _target_key_from_proc(proc: ProcedureInput) -> str | None:
@@ -721,7 +792,10 @@ class ReportPipeline:
                                 line += f" ({view})"
                         lines.append(line)
 
-                if "CONE BEAM" in note_upper or "CBCT" in note_upper:
+                has_cbct_proc = bool(
+                    _by_type("cbct_cact_fusion") or _by_type("cbct_augmented_bronchoscopy")
+                )
+                if "CONE BEAM" in note_upper or "CBCT" in note_upper or has_cbct_proc:
                     if has_cbct_tool_confirmation:
                         lines.append("Cone-beam CT imaging with trajectory adjustment and confirmation")
                     else:
@@ -755,7 +829,7 @@ class ReportPipeline:
                     needle_gauge = _as_text(data.get("needle_gauge"))
                     gauge_num = None
                     if needle_gauge:
-                        match = re.search(r"(\d{1,2})", needle_gauge)
+                        match = re.search(r"(\d{1,2}(?:[/+]\d{1,2})*)", needle_gauge)
                         if match:
                             gauge_num = match.group(1)
 
@@ -778,6 +852,16 @@ class ReportPipeline:
                         bx_lines.append(f"Transbronchial biopsy of {target_label} ({count} {suffix})")
                     else:
                         bx_lines.append(f"Transbronchial biopsy of {target_label}")
+
+                for bx_proc in _by_type("transbronchial_lung_biopsy"):
+                    data = _proc_data_dict(bx_proc)
+                    count = data.get("samples_collected")
+                    target_label = _format_target_label(data.get("lung_segment") or primary_nav_target)
+                    target_label = re.sub(r"(?i)\s+target$", "", target_label).strip() or target_label
+                    line = f"Transbronchial forceps biopsy of {target_label}"
+                    if count:
+                        line += f" ({count} samples)"
+                    bx_lines.append(line)
 
                 tbna_pos = note_upper.find("TBNA")
                 forceps_pos = note_upper.find("FORCEPS")
@@ -872,6 +956,20 @@ class ReportPipeline:
                                 "Endobronchial Ultrasound-Guided Transbronchial Needle Aspiration (EBUS-TBNA)"
                             )
 
+                for survey_proc in _by_type("ebus_survey"):
+                    data = _proc_data_dict(survey_proc)
+                    stations = _dedupe_labels(
+                        [
+                            str(st["station_name"])
+                            for st in data.get("stations") or []
+                            if isinstance(st, dict) and st.get("station_name")
+                        ]
+                    )
+                    line = "Linear EBUS lymph node survey"
+                    if stations:
+                        line += f" (Stations {', '.join(stations)})"
+                    lines.append(line + " without nodal sampling")
+
                 for eusb_proc in _by_type("eusb"):
                     data = _proc_data_dict(eusb_proc)
                     stations = _as_text(data.get("stations_sampled"))
@@ -920,11 +1018,21 @@ class ReportPipeline:
                     lines.append(f"{modality} Ablation of {target or 'target'} target")
 
                 if lines:
-                    return "\n".join(_dedupe_labels([str(line).strip() for line in lines if str(line).strip()]))
+                    cleaned = _dedupe_labels([str(line).strip() for line in lines if str(line).strip()])
+                    if uses_source_sequence(sorted_procs):
+                        cleaned = _order_summary_lines(cleaned, sorted_procs)
+                    return "\n".join(cleaned)
 
                 return "\n".join(_dedupe_labels(procedure_labels)) if procedure_labels else "Procedure details documented below"
 
             label_summary = _build_procedure_summary()
+            if is_short_peripheral_prompt(bundle.free_text_hint):
+                label_summary = re.sub(
+                    r"Cone-beam CT imaging with [^\n]+", "Cone-beam CT imaging", label_summary
+                )
+                label_summary = label_summary.replace(
+                    "Linear Endobronchial Ultrasound (EBUS) nodal staging", "Linear EBUS-TBNA"
+                )
             cpt_summary = _summarize_cpt_candidates(state.procedures_metadata, unmatched_autocode)
             shell_indication_text = _clean_shell_text(bundle.indication_text)
             if not shell_indication_text:
@@ -941,6 +1049,7 @@ class ReportPipeline:
                 complications_text=bundle.complications_text,
                 specimens_text=_clean_shell_specimens_text(bundle.specimens_text),
                 impression_plan=_clean_shell_block_text(bundle.impression_plan),
+                closing_text=_clean_shell_text(bundle.closing_text),
             )
             shell_context = {
                 "procedure_details_block": procedure_details_block,

@@ -314,8 +314,9 @@ async def test_seed_from_text_and_patch__ion_nav_tbna_cryo(
 
     bundle = seed_payload["bundle"]
     markdown = seed_payload.get("markdown") or ""
-    assert "Robotic navigation using the Ion platform" in markdown
-    assert "CBCT/CACT spin" in markdown
+    # Policy update: short robotic prompts render the institutional prose branch.
+    assert "Robotic navigation bronchoscopy was performed with the Ion platform" in markdown
+    assert "Cone Beam CT was performed" in markdown
     assert "Tool-in-lesion was confirmed" in markdown
 
     assert bundle.get("procedures"), "Expected at least one procedure to be seeded"
@@ -399,3 +400,159 @@ async def test_shape_registry_payload_prunes_none_and_enriches():
     tbna = payload["procedures_performed"]["tbna_conventional"]
     assert tbna["summary"].startswith("Performed")
     assert payload["evidence"]["clinical_context"][0]["span"] == [0, 5]
+
+
+_ROBOTIC_PROMPT = (
+    "Ion robotic bronch for 1 cm LUL apicoposterior nodule, eccentric radial EBUS, "
+    "low-dose Cios spin and retargeting. 21G TBNA x6, forceps x2, 1.1 cryo x8, brush, BAL, "
+    "fiducial. ROSE no malignancy; EBUS 11Ri/7/11L four passes each. No complications."
+)
+_STRUCTURED_INPUTS = {
+    "airway": {"anesthesia": "General anesthesia via endotracheal tube"},
+    "navigation": {"registration": "Partial", "cbct_attestation": True},
+    "ebus": {
+        "needle_gauges": ["22G"],
+        "rose_available": False,
+        "elastography": {
+            "used": True,
+            "scope": "Specific nodes",
+            "stations_type_2": ["11Ri", "7"],
+            "stations_type_1": ["11L"],
+        },
+    },
+    "closing": {"ebl": "Minimal", "complications_none": True, "plan_items": ["CXR in PACU"]},
+}
+
+
+async def test_report_seed_input_spec(api_client: AsyncClient) -> None:
+    resp = await api_client.get("/report/seed_input_spec")
+    assert resp.status_code == 200
+    spec = resp.json()
+    assert spec["version"] == "reporter_seed_inputs.v1"
+    by_pointer = {field["pointer"]: field for field in spec["fields"]}
+    assert by_pointer["/ebus/elastography/used"]["input_type"] == "boolean"
+    assert by_pointer["/ebus/elastography/uniform_pattern"]["options"] == [
+        "Type 1",
+        "Type 2",
+        "Type 3",
+    ]
+    assert by_pointer["/ebus/elastography/stations_type_1"]["input_type"] == "multiselect"
+    assert {dep["pointer"] for dep in by_pointer["/ebus/elastography/stations_type_1"]["depends_on"]} == {
+        "/ebus/elastography/used",
+        "/ebus/elastography/scope",
+    }
+
+
+async def test_seed_from_text__structured_inputs_render_in_order(api_client: AsyncClient) -> None:
+    resp = await api_client.post(
+        "/report/seed_from_text",
+        json={
+            "text": _ROBOTIC_PROMPT,
+            "already_scrubbed": True,
+            "strict": True,
+            "structured_inputs": _STRUCTURED_INPUTS,
+        },
+    )
+    assert resp.status_code == 200, resp.text
+    payload = resp.json()
+    markdown = payload["markdown"]
+    for expected in [
+        "ANESTHESIA: General anesthesia via endotracheal tube",
+        "Partial registration was used.",
+        "I personally performed and interpreted the CT guidance images",
+        "using a 22G needle",
+        "Overall EBUS TBNA ROSE Diagnosis: Not performed.",
+        "Station 11RI. Type 2 elastographic pattern",
+        "Station 11L. Type 1 elastographic pattern",
+        "ESTIMATED BLOOD LOSS: Minimal",
+        "COMPLICATIONS: None",
+        "- CXR in PACU",
+    ]:
+        assert expected in markdown, expected
+    # Dictated workflow order, with the marker after sampling and EBUS last.
+    positions = [
+        markdown.index(anchor)
+        for anchor in [
+            "Robotic navigation bronchoscopy was performed",
+            "Radial EBUS was performed",
+            "Cone Beam CT was performed",
+            "Transbronchial needle aspiration was performed",
+            "Transbronchial cryobiopsy was performed",
+            "A fiducial marker",
+            "Lymph Nodes Sampled:",
+        ]
+    ]
+    assert positions == sorted(positions)
+    assert any(note.startswith("Elastography: station 7") for note in payload["seed_input_notes"])
+    ebus = next(p for p in payload["bundle"]["procedures"] if p["proc_type"] == "ebus_tbna")
+    assert ebus["data"]["needle_gauge"] == "22G"
+
+    # The selections survive the builder's question/render round trip.
+    render = await api_client.post(
+        "/report/render", json={"bundle": payload["bundle"], "patch": [], "strict": True}
+    )
+    assert render.status_code == 200, render.text
+    assert "Station 11L. Type 1 elastographic pattern" in render.json()["markdown"]
+
+
+async def test_seed_from_text__without_structured_inputs_is_unchanged(
+    api_client: AsyncClient,
+) -> None:
+    plain = await api_client.post(
+        "/report/seed_from_text", json={"text": _ROBOTIC_PROMPT, "already_scrubbed": True}
+    )
+    empty = await api_client.post(
+        "/report/seed_from_text",
+        json={"text": _ROBOTIC_PROMPT, "already_scrubbed": True, "structured_inputs": {}},
+    )
+    assert plain.status_code == empty.status_code == 200
+    assert plain.json()["markdown"] == empty.json()["markdown"]
+    assert plain.json()["seed_input_notes"] == []
+    assert "elastograph" not in plain.json()["markdown"].lower()
+
+
+async def test_seed_from_text__structured_inputs_reject_unknown_and_free_text(
+    api_client: AsyncClient,
+) -> None:
+    for bad in (
+        {"ebus": {"elastography": {"used": True, "uniform_pattern": "Type 9"}}},
+        {"closing": {"plan_items": ["call the patient at home"]}},
+        {"unknown_group": {}},
+    ):
+        resp = await api_client.post(
+            "/report/seed_from_text",
+            json={"text": "EBUS biopsied station 7", "structured_inputs": bad},
+        )
+        assert resp.status_code == 422
+
+
+async def test_seed_from_text__structured_inputs_match_shared_pipeline(
+    api_client: AsyncClient,
+) -> None:
+    """The route and the eval/seed pipeline must apply selections identically."""
+    from app.registry.application.registry_service import RegistryService
+    from app.reporting.seed_inputs import ReporterSeedInputs
+    from app.reporting.seed_pipeline import (
+        run_reporter_seed_pipeline,
+        seed_outcome_from_registry_result,
+    )
+
+    resp = await api_client.post(
+        "/report/seed_from_text",
+        json={
+            "text": _ROBOTIC_PROMPT,
+            "already_scrubbed": True,
+            "structured_inputs": _STRUCTURED_INPUTS,
+        },
+    )
+    assert resp.status_code == 200, resp.text
+    result = RegistryService().extract_fields(_ROBOTIC_PROMPT)
+    pipeline = run_reporter_seed_pipeline(
+        seed_outcome_from_registry_result(result, masked_seed_text=_ROBOTIC_PROMPT),
+        note_text=_ROBOTIC_PROMPT,
+        strict=False,
+        debug_enabled=False,
+        structured_inputs=ReporterSeedInputs.model_validate(_STRUCTURED_INPUTS),
+    )
+    assert resp.json()["markdown"] == pipeline.markdown
+    assert resp.json()["seed_input_notes"] == pipeline.seed_input_notes

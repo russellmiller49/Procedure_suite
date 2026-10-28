@@ -1,2 +1,8 @@
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _loc = (proc.airway_location or "") | trim %}
+A fiducial marker{% if proc.marker_details %} ({{ proc.marker_details }}){% endif %} was placed{% if _loc %}{% if "target" in _loc %} ({{ _loc }}){% elif "(" in _loc %} at the {{ _loc }}{% else %} at the {{ _loc }} target{% endif %}{% endif %}{% if proc.confirmation_method %} under {{ proc.confirmation_method }} guidance{% endif %}.
+{% else %}
 A fiducial marker{% if proc.marker_details %} ({{ proc.marker_details }}){% endif %} was loaded and placed under fluoroscopic guidance at the targeted airway location {{ proc.airway_location }}.
 Placement was confirmed{% if proc.confirmation_method %} using {{ proc.confirmation_method }}{% endif %} and the bronchoscope withdrawn without complication.
+
+{% endif %}

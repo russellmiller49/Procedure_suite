@@ -1,0 +1,158 @@
+DATE OF PROCEDURE: [REDACTED]
+ 
+CC Referred Physician: [REDACTED]
+
+INDICATION FOR OPERATION:  The patient is an adult who presents with pulmonary nodule.  The nature, purpose, risks, benefits and alternatives to Bronchoscopy were discussed with the patient in detail.  Patient indicated a wish to proceed with surgery and informed consent was signed.
+ 
+CONSENT : Obtained before the procedure. Its indications and potential complications and alternatives were discussed with the patient or surrogate. The patient or surrogate read and signed the provided consent form / provided consent over the phone. The consent was witnessed by an assisting medical professional.
+ 
+PREOPERATIVE DIAGNOSIS: R91.1 Solitary Lung Nodule
+ 
+POSTOPERATIVE DIAGNOSIS:  R91.1 Solitary Lung Nodule
+ 
+PROCEDURE:  
+31645 Therapeutic aspiration initial episode
+31623 Dx bronchoscope/brushing    
+31624 Dx bronchoscope/lavage (BAL)    
+31628 TBBX single lobe     
+31629 TBNA single lobe   
+31626 Fiducial marker placements, single or multiple     
+31627 Navigational Bronchoscopy (computer assisted)
+77012 Radiology / radiologic guidance for CT guided needle placement (CIOS)
+76377 3D rendering with interpretation and reporting of CT, US, Tomo modality (ION Planning Station)
+31899NFN BRONCHOSCOPY WITH ENDOBRONCHIAL ULTRASOUND (EBUS) OF MEDIASTINAL AND/OR HILAR LYMPH NODES WITHOUT BIOPSY
+31654 Radial EBUS for peripheral lesion
+76981 Ultrasound Elastography, Parenchyma of Organ
+ 
+22 Substantially greater work than normal (i.e., increased intensity, time, technical difficulty of procedure, and severity of patient's condition, physical and mental effort required)
+ 
+IP CODING MOD DETAILS: 
+Unusual Procedure:
+This patient required a Transbronchial Cryo biopsies. This resulted in >40% increased work due to Technical difficulty of procedure and Physical and mental effort required. Apply to: 31628 TBBX single lobe     . 
+ 
+ATTENDING:  
+[REDACTED]
+ 
+ASSISTANT: [REDACTED]
+ 
+Support Staff: 
+RN: [REDACTED]
+RT: [REDACTED]
+ 
+ANESTHESIA: 
+General Anesthesia
+ 
+MONITORING : Pulse oximetry, heart rate, telemetry, and BP were continuously monitored by an independent trained observer that was present throughout the entire procedure.
+ 
+INSTRUMENT : 
+Linear EBUS 
+Radial EBUS
+Ion Robotic Bronchoscope
+Disposable Bronchoscope
+ 
+ESTIMATED BLOOD LOSS:   None
+ 
+COMPLICATIONS:   None
+ 
+PROCEDURE IN DETAIL:
+After the successful induction of anesthesia, a timeout was performed (confirming the patient's name, procedure type, and procedure location).  Procedure-related images were saved in secure clinical image storage and/or PACS. 
+ 
+PATIENT POSITION: supine. 
+ 
+Initial Airway Examination Findings:
+The patient was intubated fiberoptically using a MAC 3 blade and a 8.5mm endotracheal tube. loaded onto the therapeutic flexible bronchoscope. The bronchoscope was introduced past the vocal cords and into the trachea via Seldinger technique.  
+The endotracheal tube is in good position.
+Pharynx: Not assessed due to bronchoscopy introduction through ETT.
+Larynx: Not assessed due to bronchoscopy introduction through ETT.
+Vocal Cords: Not assessed due to bronchoscopy introduction through ETT.
+Trachea: Distal 1/3 normal.
+Main Carina: Sharp
+Right Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Left Lung Proximal Airways: Normal anatomic branching to segmental level.  No evidence of mass, lesions, bleeding or other endobronchial pathology.
+Mucosa: Normal.
+Secretions: Moderate, thin, clear.   
+ 
+Successful therapeutic aspiration was performed to clean out the Trachea (Distal 1/3), Right Mainstem, Bronchus Intermedius , Left Mainstem, Carina, RUL Carina (RC1), RML Carina (RC2), LUL Lingula Carina (Lc1), and Left Carina (LC2) from mucus. 
+ 
+CT Chest scan was placed on separate planning station to generate 3D rendering of the pathway to target.   The navigational plan was reviewed and verified.  This was then loaded into robotic bronchoscopy platform. 
+ 
+ 
+Ventilation Parameters:
+
+Mode	RR	TV	PEEP	FiO2	Flow Rate	Pmean
+VCV	12	300	14	100%	10 l/min	17
+ 
+Robotic navigation bronchoscopy was performed with Ion platform.  Partial registration was used.    Ion robotic catheter was used to engage the Lateral Segment of RML (RB4).  Target lesion is about 0.5 cm in diameter.   Under navigational guidance the ion robotic catheter was advanced to 1.0 cm away from the planned target. 
+ 
+Radial EBUS was performed to confirm that the location of the nodule is Concentric.  The following features were noted: Heterogeneous echogenicity.
+ 
+Cone Beam CT was performed: 3-D reconstructions were performed on an independent workstation.  Cios Spin system was used for evaluation of nodule location. Regular dose spin was performed to acquire CT imaging.  This was passed on to Ion platform system for reconstruction and nodule location.  The 3D images was interpreted on an independent workstation (Ion).   Using the newly acquired nodule location, the Ion robotic system was adjusted to the new targeted location.  Under cone-beam CT guidance, the needle was advanced into the target lesion. Sequential CT images were obtained to confirm needle position. CT images were recorded and retained in the medical record (PACS system). I personally performed and interpreted the CT guidance images and provided radiologic supervision and interpretation throughout the procedure. 
+ 
+
+ 
+Transbronchial needle aspiration was performed with 21G Needle and 23G Needle through the extended working channel catheter.  Total 5 samples were collected.  Samples sent for Microbiology (Cultures/Viral/Fungal) and Cytology.
+ 
+Transbronchial cryobiopsy was performed with 1.1mm cryoprobe via the extended working channel catheter.  Freeze time of 6 seconds were used.  Total 6 samples were collected.  Samples sent for Pathology.
+ 
+Transbronchial brushing was performed with Protected cytology brush the extended working channel catheter.  Total 1 samples were collected.  Samples sent for Cytology.
+ 
+Fiducial marker (0.8mm x 3mm soft tissue gold CIVCO) was loaded with bone wax and placed under fluoroscopy guidance. Prior to withdraw of the bronchoscope. 
+ 
+Bronchial alveolar lavage was performed the extended working channel catheter.  Instilled 10 cc of NS, suction returned with 5 cc of NS.  Samples sent for Cytology.
+ 
+ 
+ROSE from ION procedure was noted to be:
+Blood only
+ 
+Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding.
+ 
+Bronchial alveolar lavage was performed at Lateral Segment of RML (RB4).  Instilled 60 cc of NS, suction returned with 20 cc of NS.  Samples sent for Cell Count, Microbiology (Cultures/Viral/Fungal), and Cytology.
+ 
+ 
+EBUS-Findings
+Indications: Diagnostic and Staging
+All lymph node stations were assessed. Only those 5 mm or greater in short axis were sampled.
+ 
+Lymph node sizing was performed by EBUS.
+ 
+Lymph Nodes/Sites Inspected: 
+4R (lower paratracheal) node
+4L (lower paratracheal) node
+7 (subcarinal) node
+11Rs lymph node
+11Ri lymph node
+11L lymph node
+ 
+No immediate complications
+ 
+Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. Elastography provided a semi-quantitative classification (Type 1–3), which was used to guide biopsy site selection and sampling strategy. 
+ 
+Lymph Nodes Evaluated:
+Site 1: The 11L lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 2: The 4L (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 3: The 7 (subcarinal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 4: The 4R (lower paratracheal) node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 5: The 11Rs lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Site 6:  The 11Ri lymph node was < 10 mm on CT  and Metabolic activity unknown or PET-CT scan unavailable. The lymph node was photographed. The site was not sampled: Sampling this lymph node was not clinically indicated. Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics. The target lymph node demonstrated a Type 1 elastographic pattern, predominantly soft (green/yellow), suggesting a reactive or benign process. 
+ 
+Topical lidocaine was administered for local anesthesia.
+ 
+The patient tolerated the procedure well.  There were no immediate complications.  At the conclusion of the operation, the patient was was extubated in the operating room and transported to the recovery room in stable condition. 
+ 
+SPECIMEN(S): 
+- RML nodule TBNA (cyto and micro), TBCBx (path), brushing (cyto)
+- RML BAL 
+ 
+ 
+IMPRESSION/PLAN: The patient is an adult who presents for bronchoscopy for RML nodule.
+-Follow up CXR
+-Follow up results
+-Follow up in clinic [DATE REDACTED] as scheduled
+ 
+[REDACTED], MD
+[REDACTED]

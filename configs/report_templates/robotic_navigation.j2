@@ -1,3 +1,8 @@
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _loc = (proc.lesion_location or "") | trim %}
+Robotic navigation bronchoscopy was performed{% if proc.platform %} with the {{ proc.platform }} platform{% endif %}.{% if proc.registration_method %} {{ proc.registration_method }} registration was used.{% endif %}{% if _loc %}{% if "target" in _loc %} Navigation target: {{ _loc }}.{% elif "(" in _loc %} The robotic catheter was used to engage the {{ _loc }}.{% else %} The robotic catheter was advanced to the {{ _loc }} target.{% endif %}{% endif %}{% if proc.registration_error_mm is not none %} Registration error: {{ proc.registration_error_mm }} mm.{% endif %}{% if proc.notes %} {{ proc.notes }}{% endif %}
+
+{% else %}
 {% set _platform = (proc.platform or "") | trim %}
 {% set _target_lobe = (proc.lesion_location or "") | trim %}
 {% set _target_seg = (survey.location if survey is defined and survey else "") | trim %}
@@ -6,8 +11,12 @@
 
 {% if _render_style == "builder" %}
 Robotic navigation{% if _platform %} using the {{ _platform | title }} platform{% endif %}{% if _target_lobe %} to {{ _target_lobe }} target{% endif %}.
+{% if proc.registration_method %}Registration: {{ proc.registration_method }}.{% endif %}
+{% if proc.notes %}{{ proc.notes }}{% endif %}
 {% else %}
-Robotic Navigational Bronchoscopy{% if _platform %} ({{ _platform }}){% endif %}{% if _target_lobe %} — {{ _target_lobe }} Nodule{% endif %} A CT-based navigation plan was loaded and registration was completed{% if proc.registration_error_mm is not none %} with a registration error of {{ proc.registration_error_mm }} mm{% endif %}.{% if _target_lobe or _target_seg %} The robotic catheter was advanced to the planned{% if _target_lobe %} {{ _target_lobe }}{% endif %} target{% if _size is not none %} ({{ _size | fmt_unit("mm") }}){% endif %}{% if _target_seg and _target_seg not in _target_lobe %} in the {{ _target_seg }} segment{% endif %}.{% endif %}
+Robotic Navigational Bronchoscopy{% if _platform %} ({{ _platform }}){% endif %}{% if _target_lobe %} — {{ _target_lobe }} Nodule{% endif %} A CT-based navigation plan was loaded{% if proc.registration_method %}. {{ proc.registration_method }} registration was used{% else %} and registration was completed{% endif %}{% if proc.registration_error_mm is not none %} with a registration error of {{ proc.registration_error_mm }} mm{% endif %}.{% if _target_lobe or _target_seg %} The robotic catheter was advanced to the planned{% if _target_lobe %} {{ _target_lobe }}{% endif %} target{% if _size is not none %} ({{ _size | fmt_unit("mm") }}){% endif %}{% if _target_seg and _target_seg not in _target_lobe %} in the {{ _target_seg }} segment{% endif %}.{% endif %}
 
 {% if proc.notes %}{{ proc.notes }}{% endif %}
+{% endif %}
+
 {% endif %}

@@ -1,3 +1,33 @@
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _elasto_desc = {"Type 1": " (predominantly soft)", "Type 2": " with mixed soft and stiff regions", "Type 3": " (predominantly stiff)"} %}
+{% set _gauge = (proc.needle_gauge or "") | trim %}
+{% set _patterns = proc.stations | map(attribute="elastography_pattern") | select | unique | list %}
+{% set _with_pattern = proc.stations | selectattr("elastography_pattern") | list %}
+{% set _uniform = proc.elastography_pattern or (_patterns[0] if (_patterns | length == 1 and _with_pattern | length == proc.stations | length) else "") %}
+Linear EBUS-TBNA
+
+{% if proc.survey_technique %}{{ proc.survey_technique }}
+
+{% endif %}
+Lymph node sampling by transbronchial needle aspiration was performed{% if _gauge %}{% if "," in _gauge or "/" in _gauge %} using {{ _gauge }} needles{% else %} using a {{ _gauge }} needle{% endif %}{% endif %}.
+
+{% if proc.stations_inspected %}Lymph Nodes/Sites Inspected: {{ proc.stations_inspected | join(", ") }}.
+
+{% endif %}
+{% if proc.overall_rose_diagnosis %}Overall EBUS TBNA ROSE Diagnosis: {{ proc.overall_rose_diagnosis }}.
+
+{% endif %}
+{% if proc.elastography_used or _patterns %}Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics.{% if _uniform %} All sampled nodes demonstrated a {{ _uniform }} elastographic pattern{{ _elasto_desc.get(_uniform, "") }}.{% endif %}
+
+
+{% endif %}
+Lymph Nodes Sampled:
+
+{% for st in proc.stations %}
+Site {{ loop.index }}: Station {{ st.station_name }}.{% if st.size_mm %} The node measured {{ st.size_mm | fmt_unit("mm") }} by EBUS.{% endif %}{% if st.comments %} {{ ("The node was " ~ st.comments) if st.comments[0] in "<=>" else st.comments }}.{% endif %}{% if st.elastography_pattern and not _uniform %} {{ st.elastography_pattern }} elastographic pattern{{ _elasto_desc.get(st.elastography_pattern, "") }}.{% endif %}{% if st.passes is not none %} {{ st.passes }} EBUS-guided transbronchial needle aspiration pass{% if st.passes != 1 %}es were{% else %} was{% endif %} performed.{% else %} Pass count not documented.{% endif %}{% if st.echo_features %} Echo features: {{ st.echo_features }}.{% endif %}{% if st.rose_result %} ROSE: {{ st.rose_result }}.{% endif %}
+
+{% endfor %}
+{% else %}
 {# Golden-ish EBUS staging block (deterministic; no LLM). #}
 
 {% set _note = free_text_hint | default("", true) %}
@@ -32,6 +62,13 @@ A systematic EBUS survey was performed.
 {% if proc.needle_gauge %}
 Needle: {{ proc.needle_gauge }} needle
 {% endif %}
+{% if proc.survey_technique %}
+Technique: {{ proc.survey_technique }}
+{% endif %}
+{% if proc.elastography_used or proc.elastography_pattern %}
+Elastography: performed{% if proc.elastography_pattern %} ({{ proc.elastography_pattern }} pattern, all sampled stations){% endif %}
+
+{% endif %}
 
 {% if proc.stations %}
 {% for st in proc.stations %}
@@ -46,12 +83,16 @@ Size: {{ st.size_mm | fmt_unit("mm") }}
 {% if st.echo_features %}
 Echo Features: {{ st.echo_features }}
 {% endif %}
+{% if st.elastography_pattern %}
+Elastography: {{ st.elastography_pattern }}
+{% endif %}
 {% if st.biopsy_tools %}
 Biopsy Tools: {{ st.biopsy_tools | join(", ") }}
 {% endif %}
 {% if st.rose_result %}
 ROSE Results: {{ st.rose_result }}
 {% endif %}
+{% if st.comments %}{{ st.comments }}.{% endif %}
 
 {% endif %}
 {% endfor %}
@@ -63,6 +104,12 @@ EBUS-TBNA Staging The endobronchial ultrasound-capable bronchoscope was introduc
 
 {% if airway_findings is defined and airway_findings %}
 Airway findings: {{ airway_findings }}.
+{% endif %}
+
+{% if proc.survey_technique %}{{ proc.survey_technique }}{% endif %}
+
+{% if proc.elastography_used or proc.elastography_pattern %}
+Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics.{% if proc.elastography_pattern %} All sampled nodes demonstrated a {{ proc.elastography_pattern }} elastographic pattern.{% endif %}
 {% endif %}
 
 {% if proc.stations %}
@@ -82,6 +129,9 @@ Result: {{ _rose }}.
 {% else %}
 Station {{ _st }}{% if _loc %} ({{ _loc }}){% endif %}:{% if st.size_mm %} The node measured {{ st.size_mm | fmt_unit("mm") }} by EBUS.{% endif %}{% if st.passes %} {{ st.passes }} passes were performed.{% endif %}
 {% if st.biopsy_tools %}Biopsy Tools: {{ st.biopsy_tools | join(", ") }}.{% endif %}
+{% if st.echo_features %}Echo Features: {{ st.echo_features }}.{% endif %}
+{% if st.elastography_pattern %}Elastography: {{ st.elastography_pattern }} pattern.{% endif %}
+{% if st.comments %}{{ st.comments }}.{% endif %}
 {% if _rose %}ROSE Results: {{ _rose }}.{% endif %}
 {% endif %}
 
@@ -92,4 +142,6 @@ Station {{ _st }}{% if _loc %} ({{ _loc }}){% endif %}:{% if st.size_mm %} The n
 Prior to withdrawal of the bronchoscope, inspection demonstrated no evidence of bleeding. The patient tolerated the procedure well. There were no immediate complications.
 
 {% if proc.overall_rose_diagnosis %}ROSE Results (Nodes): {{ proc.overall_rose_diagnosis }}.{% endif %}
+{% endif %}
+
 {% endif %}

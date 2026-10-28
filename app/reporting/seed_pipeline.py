@@ -19,6 +19,7 @@ from app.reporting.inference import InferenceEngine
 from app.reporting.macro_registry import get_macro_registry
 from app.reporting.normalization.normalize import normalize_bundle
 from app.reporting.quality_gate import build_reporter_quality_flags
+from app.reporting.seed_inputs import ReporterSeedInputs, apply_seed_inputs
 from app.reporting.validation import ValidationEngine
 
 logger = logging.getLogger(__name__)
@@ -69,6 +70,7 @@ class ReporterSeedPipelineResult:
     debug_notes: list[dict[str, Any]] | None
     quality_flags: list[dict[str, Any]] = field(default_factory=list)
     needs_manual_review: bool = False
+    seed_input_notes: list[str] = field(default_factory=list)
     render_fallback_used: bool = False
     render_fallback_reason: str | None = None
     render_fallback_category: str | None = None
@@ -562,6 +564,7 @@ def run_reporter_seed_pipeline(
     note_text: str,
     strict: bool,
     debug_enabled: bool,
+    structured_inputs: ReporterSeedInputs | None = None,
 ) -> ReporterSeedPipelineResult:
     debug_notes: list[dict[str, Any]] | None = [] if debug_enabled else None
     if debug_notes is not None:
@@ -580,9 +583,11 @@ def run_reporter_seed_pipeline(
         bundle_payload = bundle.model_dump(exclude_none=False)
         bundle_payload["free_text_hint"] = outcome.masked_seed_text
         bundle = ProcedureBundle.model_validate(bundle_payload)
+    seed_inputs = apply_seed_inputs(bundle, structured_inputs)
+    bundle = seed_inputs.bundle
 
     bundle, issues, warnings = verify_bundle(bundle, debug_notes=debug_notes)
-    warnings = list(outcome.warnings) + list(warnings or [])
+    warnings = list(outcome.warnings) + list(seed_inputs.warnings) + list(warnings or [])
     markdown, render_fallback_used, render_fallback_info = render_bundle_markdown(
         bundle,
         issues=issues,
@@ -605,6 +610,7 @@ def run_reporter_seed_pipeline(
         debug_notes=debug_notes if debug_enabled else None,
         quality_flags=quality_flags,
         needs_manual_review=needs_manual_review,
+        seed_input_notes=list(seed_inputs.applied),
         render_fallback_used=render_fallback_used,
         render_fallback_reason=render_fallback_info.code if render_fallback_info else None,
         render_fallback_category=render_fallback_info.category if render_fallback_info else None,

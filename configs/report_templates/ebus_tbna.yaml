@@ -13,6 +13,9 @@ optional_fields:
   - elastography_pattern
   - rose_available
   - overall_rose_diagnosis
+  - survey_technique
+  - stations_inspected
+  - stations[].elastography_pattern
 proc_types:
   - ebus_tbna
 critical_fields:

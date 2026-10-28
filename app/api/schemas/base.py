@@ -12,6 +12,7 @@ from app.coder.schema import CoderOutput
 from app.common.spans import Span
 from app.registry.schema import RegistryRecord
 from app.reporting import BundlePatch, MissingFieldIssue, ProcedureBundle, QuestionSpec
+from app.reporting.seed_inputs import ReporterSeedInputs, SeedInputSpecResponse
 
 
 class CoderRequest(BaseModel):
@@ -173,6 +174,14 @@ class SeedFromTextRequest(BaseModel):
     text: str
     already_scrubbed: bool = False
     metadata: dict[str, Any] = Field(default_factory=dict)
+    structured_inputs: ReporterSeedInputs | None = Field(
+        default=None,
+        description=(
+            "Enumerated selections that augment the prompt (elastography, navigation, "
+            "closing details). Applied to the bundle after extraction; a specified value "
+            "overrides the extracted one."
+        ),
+    )
     strict: bool = False
     debug: bool = False
     include_debug: bool = False
@@ -191,6 +200,10 @@ class SeedFromTextResponse(BaseModel):
     missing_field_prompts: list[MissingFieldPrompt] = Field(
         default_factory=list,
         description="Suggested missing fields to document (completeness nudges).",
+    )
+    seed_input_notes: list[str] = Field(
+        default_factory=list,
+        description="What the structured seed inputs set or overrode in the bundle.",
     )
     debug_notes: list[dict[str, Any]] | None = None
 

@@ -48,6 +48,18 @@ from app.reporting.metadata import (
 )
 from app.reporting.inference import InferenceEngine, PatchResult
 from app.reporting.normalization.compat_enricher import _add_compat_flat_fields
+from app.reporting.normalization.robotic_ebus_fidelity import (
+    is_operative_block_note,
+    reconcile_operative_blocks,
+)
+from app.reporting.normalization.source_sequence import (
+    assign_source_sequence,
+    source_sequence_enabled,
+)
+from app.reporting.normalization.robotic_prompt_fidelity import (
+    is_short_peripheral_prompt,
+    reconcile_robotic_prompt,
+)
 from app.reporting.normalization.text_enricher import (
     parse_dilation_sizes_mm,
     parse_ebl_ml,
@@ -280,6 +292,7 @@ _APPROVED_REDACTION_PLACEHOLDERS = frozenset(
 )
 _ALLOWED_LITERAL_NONE_LINE_PATTERNS = (
     re.compile(r"(?i)^\s*COMPLICATIONS\s*:?\s*None(?:[\s.;]|$)"),
+    re.compile(r"(?i)^\s*ESTIMATED BLOOD LOSS\s*:?\s*None(?:[\s.;]|$)"),
 )
 
 
@@ -289,6 +302,14 @@ def join_nonempty(values: Iterable[str], sep: str = ", ") -> str:
 
 def _truthy_env(name: str, default: str = "0") -> bool:
     return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "y"}
+
+
+def uses_source_sequence(procedures: Sequence[ProcedureInput]) -> bool:
+    """True when the report should follow dictated order rather than type rank."""
+    return (
+        source_sequence_enabled()
+        and sum(1 for proc in procedures if proc.sequence is not None) >= 2
+    )
 
 
 def _pronoun(sex: str | None, *, subject: bool = True) -> str:
@@ -586,7 +607,7 @@ class ReporterEngine:
             "endobronchial_biopsy",
             "peripheral_ablation",
         }
-        staging_types = {"ebus_tbna", "ebus_ifb", "ebus_19g_fnb", "eusb"}
+        staging_types = {"ebus_tbna", "ebus_survey", "ebus_ifb", "ebus_19g_fnb", "eusb"}
 
         has_navigation = any(proc.proc_type in navigation_types for proc in procs)
         has_localization = any(proc.proc_type in localization_types for proc in procs)
@@ -604,12 +625,18 @@ class ReporterEngine:
             or bool(re.search(r"(?i)\bsegment\s*1\b[^\n]{0,80}\bebus\b", source_text or ""))
         )
 
-        def _group(proc_type: str) -> int:
+        # A marker is deployed after tissue sampling, so it never sorts with
+        # (or ahead of) the navigation block it used to tie with.
+        marker_types = {"fiducial_marker_placement"}
+
+        def _group(proc_type: str) -> float:
             if not has_peripheral_context:
                 return 0
             if ebus_first:
                 if proc_type in staging_types:
                     return 0
+                if proc_type in marker_types:
+                    return 3.5
                 if proc_type in navigation_types:
                     return 1
                 if proc_type in localization_types:
@@ -618,6 +645,8 @@ class ReporterEngine:
                     return 3
                 return 4
             if has_navigation:
+                if proc_type in marker_types:
+                    return 2.5
                 if proc_type in navigation_types:
                     return 0
                 if proc_type in localization_types:
@@ -635,6 +664,47 @@ class ReporterEngine:
             if proc_type in staging_types:
                 return 2
             return 3
+
+        if uses_source_sequence(procs):
+            # Dictation order dominates. A procedure without a sequence (added
+            # later through the builder) is placed after the last sequenced
+            # step of its own or an earlier workflow phase.
+            def _phase(proc_type: str) -> float:
+                if proc_type in {"bronchoscopy_core", "therapeutic_aspiration"}:
+                    return -1
+                if proc_type in marker_types:
+                    return 2.5
+                if proc_type in navigation_types:
+                    return 0
+                if proc_type in localization_types:
+                    return 1
+                if proc_type in sampling_types:
+                    return 2
+                if proc_type in staging_types:
+                    return 3
+                return 4
+
+            sequenced = [proc for proc in procs if proc.sequence is not None]
+            first_sequence = min(proc.sequence for proc in sequenced)
+
+            def _effective(proc: ProcedureInput) -> float:
+                if proc.sequence is not None:
+                    return float(proc.sequence)
+                phase = _phase(proc.proc_type)
+                if phase < 0:
+                    return first_sequence - 1.0
+                earlier = [p.sequence for p in sequenced if _phase(p.proc_type) <= phase]
+                return (max(earlier) + 0.5) if earlier else (first_sequence - 0.5)
+
+            return sorted(
+                procs,
+                key=lambda proc: (
+                    _effective(proc),
+                    self.procedure_order.get(proc.proc_type, 10_000),
+                    proc.proc_type,
+                    proc.proc_id or "",
+                ),
+            )
 
         return sorted(
             procs,
@@ -698,6 +768,12 @@ class ReporterEngine:
             "acknowledged_omissions": bundle.acknowledged_omissions,
             "free_text_hint": bundle.free_text_hint,
             "render_style": self.render_style,
+            "source_only": is_short_peripheral_prompt(bundle.free_text_hint),
+            # Procedure blocks use the institutional prose branch for short prompts
+            # and for the recognized operative-report layout; only short prompts
+            # switch the shell (source_only).
+            "prose_blocks": is_short_peripheral_prompt(bundle.free_text_hint)
+            or is_operative_block_note(bundle.free_text_hint),
         }
         if extra_context:
             context.update(extra_context)
@@ -1111,6 +1187,7 @@ def default_schema_registry() -> SchemaRegistry:
         "cbct_augmented_bronchoscopy_v1": airway_schemas.CBCTAugmentedBronchoscopy,
         "dye_marker_placement_v1": airway_schemas.DyeMarkerPlacement,
         "ebus_tbna_v1": airway_schemas.EBUSTBNA,
+        "ebus_survey_v1": airway_schemas.EBUSSurvey,
         "ebus_ifb_v1": airway_schemas.EBUSIntranodalForcepsBiopsy,
         "ebus_19g_fnb_v1": airway_schemas.EBUS19GFNB,
         "peripheral_ablation_v1": PeripheralAblationPartial,
@@ -1841,6 +1918,10 @@ def _extract_explicit_complications(note_text: str) -> str | None:
     snippets: list[str] = []
     for pattern in patterns:
         for match in re.finditer(pattern, note_text):
+            if re.match(r"(?i)(?:bleeding|oozing)\b", match.group(0)):
+                prefix = note_text[max(0, match.start() - 80):match.start()]
+                if re.search(r"(?i)\b(?:no|without|absence of|no evidence of)\s+(?:(?:active|significant|ongoing)\s+|(?:mass|lesions?)\s*,\s*)*$", prefix):
+                    continue
             snippet = re.sub(r"\s+", " ", match.group(0)).strip().rstrip(".")
             if not snippet:
                 continue
@@ -2295,6 +2376,12 @@ def _extract_planned_not_performed_lines(note_text: str) -> list[str]:
     for sentence in re.split(r"(?<=[\.\n;])\s+", note_text):
         sentence_clean = sentence.strip()
         if not sentence_clean or not _PLANNED_NOT_PERFORMED_PATTERN.search(sentence_clean):
+            continue
+        if re.search(r"(?i)\bROSE\b[^.\n]*\bnot performed\b", sentence_clean) and not re.search(
+            r"(?i)\b(?:bronchoscopy|biopsy|procedure)\s+(?:was\s+)?(?:aborted|not performed)\b",
+            sentence_clean,
+        ):
+            # ROSE availability is independent of whether sampling occurred.
             continue
         code_match = _CPT_CODE_PATTERN.search(sentence_clean)
         if code_match:
@@ -3732,7 +3819,11 @@ def build_procedure_bundle_from_extraction(
 
     # --- Foreign body removal ---
     if "foreign_body_removal" not in {proc.proc_type for proc in procedures} and re.search(
-        r"(?i)\bforeign\s+body\b|\baspirat(?:ion|ed)?\b",
+        # An aspirated *object* qualifies; routine "therapeutic aspiration" plus
+        # "bronchoscope was removed" must not invent a foreign-body retrieval.
+        r"(?i)\bforeign\s+body\b|\baspirat(?:ion|ed)\b[^.\n]{0,40}\b(?:bone|tooth|teeth|pill|"
+        r"tablet|capsule|peanut|nut|seed|food|bean|coin|pin|object|denture)\b|"
+        r"\b(?:bone|tooth|pill|tablet|peanut|food bolus|object|denture)\b[^.\n]{0,40}\baspirat(?:ion|ed)\b",
         note_text,
     ):
         if re.search(r"(?i)\b(?:removed|retriev(?:ed|al)|extract(?:ed|ion))\b", note_text):
@@ -5221,7 +5312,8 @@ def build_procedure_bundle_from_extraction(
         pre_anesthesia=pre_anesthesia,
         free_text_hint=raw.get("source_text") or raw.get("note_text") or raw.get("raw_note"),
     )
-    return bundle
+    bundle = reconcile_robotic_prompt(reconcile_operative_blocks(bundle, note_text), note_text)
+    return assign_source_sequence(bundle, note_text)
 
 
 def _infer_and_validate_bundle(
