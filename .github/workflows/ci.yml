@@ -49,6 +49,8 @@ jobs:
         run: python -m mypy --cache-dir .mypy_cache proc_schemas config observability
       - name: Pytest
         run: pytest -q
+      - name: Registry package tests
+        run: pytest -q packages/tests --rootdir=packages/tests
       - name: Legacy golden eval (optional)
         run: |
           python ml/scripts/eval_golden.py --limit 25
