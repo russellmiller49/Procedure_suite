@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "registry-workbench",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["ops/tools/run_registry_workbench.py", "--port", "8010"],
+      "port": 8010,
+      "url": "http://127.0.0.1:8010"
+    }
+  ]
+}

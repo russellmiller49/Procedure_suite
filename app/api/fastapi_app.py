@@ -64,6 +64,7 @@ from app.api.routes.vault import router as vault_router
 from app.api.routes_registry import router as registry_extract_router
 from app.api.schemas import KnowledgeMeta
 from app.common.knowledge import knowledge_hash, knowledge_version
+from app.registry_workbench.settings import workbench_enabled
 
 
 # ============================================================================
@@ -160,6 +161,12 @@ app.include_router(legacy_coder_router)
 app.include_router(legacy_registry_router)
 app.include_router(reporting_router)
 app.include_router(qa_router)
+
+# Synthetic robotic/EBUS registry workbench: opt-in and never in production.
+if workbench_enabled():
+    from app.registry_workbench.routes import router as workbench_router
+
+    app.include_router(workbench_router, prefix="/api/v1/workbench")
 
 
 def _phi_redactor_response(path: Path) -> FileResponse:
@@ -353,6 +360,11 @@ if os.getenv("DISABLE_STATIC_FILES", "").lower() not in ("true", "1", "yes"):
     # Mount PHI Redactor as the main UI (client-side PHI detection).
     phi_redactor_dir = _phi_redactor_static_dir()
     app.mount("/ui", StaticFiles(directory=str(phi_redactor_dir), html=True), name="ui")
+    workbench_dir = Path(__file__).resolve().parents[2] / "ui" / "static" / "registry_workbench"
+    if workbench_enabled() and workbench_dir.exists():
+        app.mount(
+            "/workbench", StaticFiles(directory=str(workbench_dir), html=True), name="workbench"
+        )
     # Also mount vendor directory for ONNX model files
     vendor_dir = phi_redactor_dir / "vendor"
     if vendor_dir.exists():
