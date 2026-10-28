@@ -242,7 +242,17 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
 - **Eval:** `python ops/tools/eval_registry_llm.py --splits validation --arms deterministic
   claude:opus:medium --output /tmp/registry_llm.json` (`--mode batch` for half price, `--dry-run`
   offline, `--gold` for the 8 reviewed docs; those are exposed, engineering regression only).
-- Tests: `tests/registry_workbench/`, `packages/tests/`.
+- **Workbench (non-EMR registry, synthetic only):** `app/registry_workbench/` (own SQLite file
+  `registry_workbench.db`, tables `wb_*`; append-only revisions, optimistic concurrency, evidence
+  spans re-verified on save, approval only with empty `approval_errors`). API at
+  `/api/v1/workbench` (`routes.py`); review UI `ui/source/registry_workbench` (React 19, built into
+  `ui/static/registry_workbench`, served at `/workbench`). Seed with
+  `make workbench-seed`, run with `python ops/tools/run_registry_workbench.py` (port 8010; the full
+  app also mounts it when `PROCSUITE_WORKBENCH_ENABLED=1`, never when `PROCSUITE_ENV=production` or
+  `CODER_REQUIRE_PHI_REVIEW=true`). Blinded drafts hide model proposals; only blinded reviews are
+  `qualification_eligible` in the gold export. The UI renders against
+  `src/__fixtures__/profile.json`, which a pytest keeps equal to the live profile.
+- Tests: `tests/registry_workbench/`, `packages/tests/`, `make workbench-ui-test`.
 
 ## Recent Updates (2026-07-04)
 
