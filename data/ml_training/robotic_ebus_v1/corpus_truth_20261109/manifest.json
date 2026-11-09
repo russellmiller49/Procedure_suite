@@ -1,0 +1,46 @@
+{
+  "artifacts": {
+    "gold/train.gold.jsonl": "a499244ebd0669ae5ddc88415f6219cb69b8566889ca89cd2a646521a4afa392",
+    "gold/validation.gold.jsonl": "350508f87ae97ad29f5d17f86159bef68cfe0935440ddce155b891e1d2b51943",
+    "test.jsonl": "a8c228a8991950c6714bc838a70b9705de3837297f2b70fd2867ce1290e0fd61",
+    "train.jsonl": "b146b6c913584920fdee72aef416cfdff8c10009746db78c8c9e4dfc41f9ba2a",
+    "validation.jsonl": "d1f23c2287459f5a16d9855fc4196e53474458511fc3fce06b2e99dcf1e31229"
+  },
+  "corpus_kind": "truth_first",
+  "created_at": "2026-11-09T18:11:00.882908+00:00",
+  "documents": {
+    "test": 70,
+    "train": 244,
+    "validation": 86
+  },
+  "families": 200,
+  "generator_version": "truth-first-1",
+  "model": null,
+  "policy": "Synthetic only. Gold is known by construction (stated units with exact spans). sealed/ is opened only by the one-use qualification command, which reserves independent_qualification_use.json first; any other look at test gold ends its use for qualification.",
+  "profile": "robotic_ebus_v1",
+  "rejected_documents": 0,
+  "schema_version": "0.2.0",
+  "sealed": {
+    "sealed/test.gold.jsonl": "ce58cf8e54c1e64dca13359d94b692fdcc1c410d600041bb9a2b72f778462838"
+  },
+  "seed": 20261109,
+  "styles": {
+    "dictation": 45,
+    "fielded": 50,
+    "markdown": 49,
+    "messy": 200,
+    "sectioned": 56
+  },
+  "traps": {
+    "aborted_navigation": 14,
+    "complication_present": 54,
+    "historical_mention": 70,
+    "negated_complications": 62,
+    "per_pass_detail": 32,
+    "planned_only_ebus": 30,
+    "size_in_cm": 28,
+    "surveyed_not_sampled": 54,
+    "til_without_volumetric": 40
+  },
+  "writer": "template"
+}
