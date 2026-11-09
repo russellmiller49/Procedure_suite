@@ -44,6 +44,7 @@ from app.llm_extraction import batch as batches
 from app.registry_workbench.extraction.assembler import VALIDATION_EVENT_DATE
 from app.registry_workbench.extraction.claude_provider import ClaudeRegistryProvider
 from app.registry_workbench.extraction.prompt import prompt_digest
+from app.registry_workbench.scoring import aggregate, score_document
 from ops.tools.eval_robotic_ebus import focused_facts, metrics
 
 CORPUS = ROOT / "data/ml_training/robotic_ebus_v1/corpus_20260914_v2"
@@ -59,10 +60,10 @@ SILVER_FIELDS = (
 )
 
 
-def load_documents(splits, limit=None, platform=None):
+def load_documents(splits, limit=None, platform=None, corpus=CORPUS):
     rows = []
     for split in splits:
-        for line in (CORPUS / f"{split}.jsonl").read_text().splitlines():
+        for line in (corpus / f"{split}.jsonl").read_text().splitlines():
             row = json.loads(line)
             if platform and row.get("platform") != platform:
                 continue
@@ -137,6 +138,7 @@ def summarize(response):
     return {
         "status": response.status,
         "warnings": response.warnings,
+        "proposal": obs.get("proposal"),
         "facts": {
             k: sorted(v) for k, v in focused_facts(obs if obs.get("proposal") else {}).items()
         },
@@ -151,14 +153,14 @@ def summarize(response):
     }
 
 
-def run_online(arm, rows, provider):
+def run_online(arm, rows, provider, source=CORPUS.name):
     results = {}
     for index, row in enumerate(rows, 1):
         try:
             response = (
                 provider.extract(request_for(row))
                 if arm["kind"] == "deterministic"
-                else _extract_synthetic(provider, row)
+                else _extract_synthetic(provider, row, source)
             )
         except Exception as exc:  # recorded per document; the run continues
             response = exc
@@ -170,14 +172,14 @@ def run_online(arm, rows, provider):
     return results
 
 
-def _extract_synthetic(provider, row):
-    with egress_context("synthetic", source=f"corpus:{CORPUS.name}"):
+def _extract_synthetic(provider, row, source):
+    with egress_context("synthetic", source=f"corpus:{source}"):
         return provider.extract(request_for(row))
 
 
-def run_batch(arm, rows, provider, poll_seconds):
+def run_batch(arm, rows, provider, poll_seconds, source=CORPUS.name):
     requests = {f"d{i}": (row, request_for(row)) for i, row in enumerate(rows)}
-    with egress_context("synthetic", source=f"corpus:{CORPUS.name}"):
+    with egress_context("synthetic", source=f"corpus:{source}"):
         sdk = provider.client.sdk
         batch_id = batches.submit(
             sdk, ((cid, provider.build_params(req)) for cid, (_, req) in requests.items())
@@ -268,6 +270,17 @@ def mechanics(results):
     }
 
 
+def contract_scores(results, gold_revisions, traps):
+    """Full-contract scores against truth-first gold, overall and per trap."""
+    scored = {d: score_document(gold_revisions[d], results.get(d, {}).get("proposal")) for d in gold_revisions}
+    by_trap = {}
+    for trap in sorted({t for ts in traps.values() for t in ts}):
+        members = [scored[d] for d in scored if trap in traps.get(d, [])]
+        report = aggregate(members)
+        by_trap[trap] = {"documents": len(members), "overall": report["overall"], "rows": report["rows"]}
+    return {**aggregate(list(scored.values())), "traps": by_trap}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -294,12 +307,31 @@ def main():
     parser.add_argument(
         "--dry-run", action="store_true", help="Build requests and report sizes; no network"
     )
+    parser.add_argument(
+        "--truth-corpus",
+        type=Path,
+        help="Score the full contract against a truth-first corpus (train/validation only)",
+    )
+    parser.add_argument("--keep-proposals", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     gold = json.loads(GOLD.read_text())
     gold_expected = {case["document_id"]: case["expected"] for case in gold["cases"]}
-    if args.gold:
+    corpus, gold_revisions, traps = CORPUS, {}, {}
+    if args.truth_corpus:
+        if "test" in args.splits:
+            raise SystemExit("Truth-corpus test gold is sealed; use robotic_ebus_truth/qualify_truth.py")
+        corpus = args.truth_corpus
+        rows = load_documents(args.splits, args.limit, args.platform, corpus=corpus)
+        wanted = {r["document_id"] for r in rows}
+        for split in args.splits:
+            for line in (corpus / "gold" / f"{split}.gold.jsonl").read_text().splitlines():
+                entry = json.loads(line)
+                if entry["document_id"] in wanted:
+                    gold_revisions[entry["document_id"]] = entry["revision"]
+                    traps[entry["document_id"]] = entry.get("traps", [])
+    elif args.gold:
         rows = [r for r in load_documents(["test"]) if r["document_id"] in gold_expected]
     else:
         if "test" in args.splits and not (args.include_test and args.exposure_ack):
@@ -323,14 +355,20 @@ def main():
         return
 
     report = {
-        "corpus": CORPUS.name,
+        "corpus": corpus.name,
         "splits": ["test(gold)"] if args.gold else args.splits,
         "prompt_digest": prompt_digest(),
         "started_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "qualification_use": "none (engineering evaluation on exposed or development documents)",
         "arms": {},
         "documents": {
-            r["document_id"]: {"split": r["split"], "platform": r.get("platform")} for r in rows
+            r["document_id"]: {
+                "split": r["split"],
+                "platform": r.get("platform"),
+                "style": r.get("style"),
+                "traps": r.get("traps"),
+            }
+            for r in rows
         },
     }
     silver = {
@@ -340,14 +378,14 @@ def main():
     }
     for arm in arms:
         if arm["kind"] == "deterministic":
-            results = run_online(arm, rows, LocalDeterministicProvider())
+            results = run_online(arm, rows, LocalDeterministicProvider(), corpus.name)
         else:
             settings = ClaudeSettings.from_env(model=arm["model"], effort=arm["effort"])
             provider = ClaudeRegistryProvider(ClaudeClient(settings), repair=not args.no_repair)
             results = (
-                run_batch(arm, rows, provider, args.poll_seconds)
+                run_batch(arm, rows, provider, args.poll_seconds, corpus.name)
                 if args.mode == "batch"
-                else run_online(arm, rows, provider)
+                else run_online(arm, rows, provider, corpus.name)
             )
         report["arms"][arm["label"]] = {
             "mechanics": mechanics(results),
@@ -357,7 +395,11 @@ def main():
                 gold["critical_fields"],
             ),
             "silver": score(results, silver, SILVER_FIELDS, known_only=True),
-            "results": results,
+            "contract": contract_scores(results, gold_revisions, traps) if gold_revisions else None,
+            "results": {
+                d: r if args.keep_proposals else {k: v for k, v in r.items() if k != "proposal"}
+                for d, r in results.items()
+            },
         }
         args.output.write_text(json.dumps(report, indent=2, default=list) + "\n")
     summary = {
@@ -365,6 +407,11 @@ def main():
             "mechanics": {k: v for k, v in arm["mechanics"].items() if k != "assembly_stats"},
             "gold_overall": arm["gold"].get("overall"),
             "silver_overall": arm["silver"].get("overall"),
+            "contract_overall": (arm["contract"] or {}).get("overall"),
+            "contract_rows": {
+                k: {m: v[m] for m in ("precision", "recall", "support")}
+                for k, v in ((arm["contract"] or {}).get("rows") or {}).items()
+            },
         }
         for label, arm in report["arms"].items()
     }

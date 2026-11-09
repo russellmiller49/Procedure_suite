@@ -252,6 +252,28 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
   `CODER_REQUIRE_PHI_REVIEW=true`). Blinded drafts hide model proposals; only blinded reviews are
   `qualification_eligible` in the gold export. The UI renders against
   `src/__fixtures__/profile.json`, which a pytest keeps equal to the live profile.
+- **Truth-first corpus** (`ops/tools/robotic_ebus_truth/`): `scenarios.py` samples a case as
+  statement units (each sets contract fields and renders one sentence; nine named traps such as
+  surveyed-not-sampled, TIL claimed from radial EBUS, planned-only EBUS, history-only stations);
+  `gold.py` builds the gold `ClinicalRevision` only from stated units (must validate with no
+  approval errors); `template_writer.py` renders five styles with exact spans; `claude_writer.py`
+  writes notes with verbatim quotes per fact plus an independent verifier call (needs a key);
+  `verify.py` checks every gold value is readable in its quote. `build_split.py` writes
+  `data/ml_training/robotic_ebus_v1/corpus_truth_<date>/` (family-level 60/20/20 split, gold as
+  values + `{field_path: [start, end, assertion]}` evidence, test gold in `sealed/` with its hash in
+  the manifest). Generation is deterministic from `--seed`; corpora are immutable.
+- **Full-contract scorer** (`app/registry_workbench/scoring.py`): rows aligned by natural keys
+  (lobe/station/tool/label; Hungarian on collisions), per-field TP/false-fill/miss, FK accuracy,
+  Wilson lower bounds; defaults and `not_documented` count as no value. Use it via
+  `eval_registry_llm.py --truth-corpus <dir> --splits train validation`. Baseline:
+  `reports/robotic_ebus_truth_deterministic_baseline.json`.
+- **One-use qualification:** `ops/tools/robotic_ebus_truth/qualify_truth.py --corpus <dir> --provider
+  claude:opus:medium` verifies hashes, reserves `independent_qualification_use.json` before any
+  inference, then gates Core-tier fields at P≥0.98/R≥0.95 (sufficient support), FK accuracy, and
+  contract validity. Never open `sealed/` any other way.
+- **Physician anchor set:** `anchor_set.py` picks blinded-review notes (half third-party corpus,
+  half truth-first validation; never test) and seeds them into the workbench under split `anchor`;
+  selection in `data/knowledge/robotic_ebus_v1/anchor_set_20261109.json`.
 - Tests: `tests/registry_workbench/`, `packages/tests/`, `make workbench-ui-test`.
 
 ## Recent Updates (2026-07-04)
