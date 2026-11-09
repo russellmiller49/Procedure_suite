@@ -38,7 +38,12 @@ sys.path[:0] = [
 from ip_registry_contracts.models import ClinicalRevision, ExtractionRequest, approval_errors
 from ip_registry_engine.engine import LocalDeterministicProvider
 
-from app.common.anthropic_client import ClaudeClient, ClaudeSettings, result_from_message
+from app.common.anthropic_client import (
+    ClaudeClient,
+    ClaudeSettings,
+    load_api_key_from_dotenv,
+    result_from_message,
+)
 from app.common.llm_egress import egress_context
 from app.llm_extraction import batch as batches
 from app.registry_workbench.extraction.assembler import VALIDATION_EVENT_DATE
@@ -315,6 +320,7 @@ def main():
     parser.add_argument("--keep-proposals", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    load_api_key_from_dotenv(ROOT / ".env")
 
     gold = json.loads(GOLD.read_text())
     gold_expected = {case["document_id"]: case["expected"] for case in gold["cases"]}

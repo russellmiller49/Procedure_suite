@@ -32,6 +32,7 @@ sys.path[:0] = [
 
 from ip_registry_engine.focused import stable_id
 
+from app.common.anthropic_client import load_api_key_from_dotenv
 from ops.tools.robotic_ebus_truth.gold import build_gold, plan_statements
 from ops.tools.robotic_ebus_truth.scenarios import sample_scenario
 from ops.tools.robotic_ebus_truth.template_writer import render
@@ -198,6 +199,7 @@ def main() -> None:
     parser.add_argument("--effort", default=None)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
+    load_api_key_from_dotenv(ROOT / ".env")
     manifest = build(
         args.out,
         families=args.families,

@@ -31,7 +31,7 @@ sys.path[:0] = [
 
 from ip_registry_engine.engine import LocalDeterministicProvider
 
-from app.common.anthropic_client import ClaudeClient, ClaudeSettings
+from app.common.anthropic_client import ClaudeClient, ClaudeSettings, load_api_key_from_dotenv
 from app.registry_workbench.extraction.claude_provider import ClaudeRegistryProvider
 from app.registry_workbench.extraction.contract_spec import dictionary_fields
 from app.registry_workbench.extraction.prompt import prompt_digest
@@ -174,6 +174,7 @@ def main() -> None:
     parser.add_argument("--poll-seconds", type=float, default=60.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    load_api_key_from_dotenv(ROOT / ".env")
     report = qualify(
         args.corpus, args.provider, args.output, mode=args.mode, poll_seconds=args.poll_seconds
     )

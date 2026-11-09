@@ -358,3 +358,17 @@ def test_non_procedure_documents_use_the_local_engine():
 
 def test_user_message_wraps_the_document():
     assert user_message("note").endswith("<document>\nnote\n</document>")
+
+
+def test_dotenv_loader_takes_only_the_api_key(tmp_path, monkeypatch):
+    from app.common.anthropic_client import load_api_key_from_dotenv
+
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("CODER_REQUIRE_PHI_REVIEW", raising=False)
+    env = tmp_path / ".env"
+    env.write_text("CODER_REQUIRE_PHI_REVIEW=true\nANTHROPIC_API_KEY=test-key-value\n")
+    assert load_api_key_from_dotenv(env) is True
+    import os
+
+    assert os.environ["ANTHROPIC_API_KEY"] == "test-key-value"
+    assert "CODER_REQUIRE_PHI_REVIEW" not in os.environ

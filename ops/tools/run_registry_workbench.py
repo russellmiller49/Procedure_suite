@@ -35,12 +35,9 @@ def main() -> None:
 
     # Take only the API key from .env: the app's .env may carry production flags
     # (e.g. CODER_REQUIRE_PHI_REVIEW) that correctly keep the workbench off.
-    if not os.getenv("ANTHROPIC_API_KEY") and (ROOT / ".env").exists():
-        from dotenv import dotenv_values
+    from app.common.anthropic_client import load_api_key_from_dotenv
 
-        key = dotenv_values(ROOT / ".env").get("ANTHROPIC_API_KEY")
-        if key:
-            os.environ["ANTHROPIC_API_KEY"] = key
+    load_api_key_from_dotenv(ROOT / ".env")
     os.environ.setdefault("PROCSUITE_WORKBENCH_ENABLED", "1")
     if args.database_url:
         os.environ["REGISTRY_WORKBENCH_DATABASE_URL"] = args.database_url

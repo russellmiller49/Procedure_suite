@@ -34,6 +34,21 @@ _CACHE_WRITE_MULTIPLIER = {"5m": 1.25, "1h": 2.0}
 _BATCH_DISCOUNT = 0.5
 
 
+def load_api_key_from_dotenv(path: str | os.PathLike[str]) -> bool:
+    """Set ANTHROPIC_API_KEY from a .env file if the environment lacks it.
+
+    Only that one entry is read: the app's .env may carry production flags that
+    must not leak into CLI tools. Returns whether a key is now available.
+    """
+    if not os.getenv("ANTHROPIC_API_KEY") and os.path.exists(path):
+        from dotenv import dotenv_values
+
+        key = dotenv_values(path).get("ANTHROPIC_API_KEY")
+        if key:
+            os.environ["ANTHROPIC_API_KEY"] = key
+    return bool(os.getenv("ANTHROPIC_API_KEY"))
+
+
 def _pricing() -> dict[str, dict[str, float]]:
     pricing = {model: dict(rates) for model, rates in _DEFAULT_PRICING_PER_MTOK.items()}
     raw = os.getenv("ANTHROPIC_PRICING_JSON", "").strip()
@@ -238,6 +253,7 @@ __all__ = [
     "ClaudeSettings",
     "build_params",
     "estimate_cost_usd",
+    "load_api_key_from_dotenv",
     "result_from_message",
     "usage_dict",
 ]
