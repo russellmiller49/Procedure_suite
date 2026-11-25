@@ -369,6 +369,9 @@ def _lung_target(
         reached = not aborted and index == runs - 1
         sets = [
             ("navigation_runs", run, "target_reached_operational", reached),
+            # Dictionary: "Whether platform/operator declared target reached." The sentence
+            # is that declaration, so it states this field as well.
+            ("navigation_runs", run, "navigation_success_system_reported", reached),
             ("targets", target, "diagnostic_attempted", True),
         ]
         if reached:
@@ -437,6 +440,7 @@ def _lung_target(
             [
                 ("localization_events", event, "localization_modality", "radial_EBUS"),
                 ("localization_events", event, "radial_ebus_view", view),
+                ("localization_events", event, "lesion_visible", True),
             ],
             core=True,
             view=view,
@@ -461,10 +465,15 @@ def _lung_target(
                     ("verified_tool_component", component),
                     ("confirmation_basis", basis),
                     ("final_prebiopsy_confirmation", True),
+                    ("event_phase", "prebiopsy"),
+                    ("lesion_visible", True),
                 )
             ]
         else:
-            sets.append(("localization_events", event, "tool_lesion_relationship", "touching"))
+            sets += [
+                ("localization_events", event, "tool_lesion_relationship", "touching"),
+                ("localization_events", event, "lesion_visible", True),
+            ]
         b.unit(
             f"loc:{event}",
             "volumetric",
@@ -521,7 +530,14 @@ def _lung_target(
                         ("sampling_acquisitions", acquisition, "sampling_tool", tool),
                         ("sampling_acquisitions", acquisition, "needle_gauge", gauge),
                         ("targets", target, "sampling_attempted", True),
-                    ],
+                        # Dictionary: target needle fields apply whenever a needle is used.
+                        ("targets", target, "needle_gauge", gauge),
+                    ]
+                    + (
+                        [("targets", target, "needle_pass_count", index)]
+                        if index == min(passes, 4)
+                        else []
+                    ),
                     core=True,
                     number=index,
                     target=number,
@@ -543,6 +559,7 @@ def _lung_target(
         ]
         if gauge:
             sets.append(("sampling_acquisitions", acquisition, "needle_gauge", gauge))
+            sets.append(("targets", target, "needle_gauge", gauge))
         if size:
             sets.append(("sampling_acquisitions", acquisition, "tool_size_mm", size))
         b.unit(
@@ -559,7 +576,12 @@ def _lung_target(
             f"acq:{acquisition}",
             "acquisition",
             "passes",
-            [("sampling_acquisitions", acquisition, "reported_pass_count", passes)],
+            [("sampling_acquisitions", acquisition, "reported_pass_count", passes)]
+            + (
+                [("targets", target, "needle_pass_count", passes)]
+                if tool == "aspiration_needle"
+                else []
+            ),
             weight=0.85,
             passes=passes,
         )

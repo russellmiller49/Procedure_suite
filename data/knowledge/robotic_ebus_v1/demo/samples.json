@@ -76,7 +76,7 @@
    ],
    "generator": {
     "seed": 20270001,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "fe466cdf-f145-42b7-b858-7ea5c75da29f",
@@ -171,6 +171,11 @@
       1129,
       "active"
      ],
+     "/localization_events/0/lesion_visible": [
+      746,
+      783,
+      "active"
+     ],
      "/localization_events/0/localization_modality": [
       746,
       783,
@@ -182,6 +187,11 @@
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
+      658,
+      745,
+      "active"
+     ],
+     "/navigation_runs/0/navigation_success_system_reported": [
       658,
       745,
       "active"
@@ -634,6 +644,7 @@
      "localization_events": [
       {
        "event_sequence_number": 1,
+       "lesion_visible": true,
        "localization_event_id": "711c45ed-25a2-40bc-b110-c39f1847957f",
        "localization_modality": "radial_EBUS",
        "navigation_run_id": "4d7a7f93-93b5-41e6-bc56-bc40f77185e8",
@@ -646,6 +657,7 @@
       {
        "navigation_run_id": "4d7a7f93-93b5-41e6-bc56-bc40f77185e8",
        "navigation_run_outcome": "reached_and_sampled",
+       "navigation_success_system_reported": true,
        "platform_family": "Monarch",
        "run_sequence_number": 1,
        "target_id": "d6f318df-5a82-4d05-9295-97bb6c526d3b",
@@ -833,7 +845,7 @@
    ],
    "generator": {
     "seed": 20270004,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "94701d0f-ebdb-481a-b300-620cb306afdf",
@@ -1434,7 +1446,7 @@
    ],
    "generator": {
     "seed": 20270015,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "28702b4e-5286-4cff-9481-2b4145833230",
@@ -1499,6 +1511,11 @@
       1159,
       "negated"
      ],
+     "/localization_events/0/lesion_visible": [
+      752,
+      816,
+      "active"
+     ],
      "/localization_events/0/localization_modality": [
       752,
       816,
@@ -1510,6 +1527,11 @@
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
+      662,
+      749,
+      "active"
+     ],
+     "/navigation_runs/0/navigation_success_system_reported": [
       662,
       749,
       "active"
@@ -1649,6 +1671,16 @@
       659,
       "active"
      ],
+     "/targets/0/needle_gauge": [
+      819,
+      902,
+      "active"
+     ],
+     "/targets/0/needle_pass_count": [
+      819,
+      902,
+      "active"
+     ],
      "/targets/0/prespecified_biopsy_target": [
       503,
       659,
@@ -1698,6 +1730,7 @@
      "localization_events": [
       {
        "event_sequence_number": 1,
+       "lesion_visible": true,
        "localization_event_id": "64f23b5f-30fe-4a81-a285-6c76c1f0c2b1",
        "localization_modality": "radial_EBUS",
        "navigation_run_id": "79575ce9-c98e-4586-8081-3ace4f65ddbd",
@@ -1710,6 +1743,7 @@
       {
        "navigation_run_id": "79575ce9-c98e-4586-8081-3ace4f65ddbd",
        "navigation_run_outcome": "reached_and_sampled",
+       "navigation_success_system_reported": true,
        "platform_family": "Monarch",
        "run_sequence_number": 1,
        "target_id": "2b01b67d-be7e-4e91-84b9-03e2feccfc27",
@@ -1787,6 +1821,8 @@
        "diagnostic_attempted": true,
        "lobe": "LLL",
        "max_diameter_mm": 36.0,
+       "needle_gauge": 21,
+       "needle_pass_count": 6,
        "prespecified_biopsy_target": true,
        "sampling_attempted": true,
        "segment": "superior segment (LB6)",
@@ -1816,7 +1852,7 @@
    ],
    "generator": {
     "seed": 20270023,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "1ecdd650-6921-4245-ae3c-f0d0f23dc287",
@@ -1891,6 +1927,11 @@
       1373,
       "negated"
      ],
+     "/localization_events/0/lesion_visible": [
+      791,
+      828,
+      "active"
+     ],
      "/localization_events/0/localization_modality": [
       791,
       828,
@@ -1911,7 +1952,17 @@
       930,
       "active"
      ],
+     "/localization_events/1/event_phase": [
+      829,
+      930,
+      "active"
+     ],
      "/localization_events/1/final_prebiopsy_confirmation": [
+      829,
+      930,
+      "active"
+     ],
+     "/localization_events/1/lesion_visible": [
       829,
       930,
       "active"
@@ -1937,6 +1988,11 @@
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
+      703,
+      790,
+      "active"
+     ],
+     "/navigation_runs/0/navigation_success_system_reported": [
       703,
       790,
       "active"
@@ -2096,6 +2152,16 @@
       702,
       "active"
      ],
+     "/targets/0/needle_gauge": [
+      931,
+      1012,
+      "active"
+     ],
+     "/targets/0/needle_pass_count": [
+      931,
+      1012,
+      "active"
+     ],
      "/targets/0/pet_avid": [
       537,
       702,
@@ -2179,6 +2245,7 @@
      "localization_events": [
       {
        "event_sequence_number": 1,
+       "lesion_visible": true,
        "localization_event_id": "f7332fa3-d20a-44b0-8291-54c8d697e73e",
        "localization_modality": "radial_EBUS",
        "navigation_run_id": "be813daa-e53e-4d41-aadd-50709d031367",
@@ -2188,8 +2255,10 @@
       {
        "actual_lesion_vs_virtual_target": "actual_lesion",
        "confirmation_basis": "tomosynthesis",
+       "event_phase": "prebiopsy",
        "event_sequence_number": 2,
        "final_prebiopsy_confirmation": true,
+       "lesion_visible": true,
        "localization_event_id": "eb20b7c7-8fad-4802-a6bd-3c4618799c67",
        "localization_modality": "digital_tomosynthesis",
        "navigation_run_id": "be813daa-e53e-4d41-aadd-50709d031367",
@@ -2204,6 +2273,7 @@
       {
        "navigation_run_id": "be813daa-e53e-4d41-aadd-50709d031367",
        "navigation_run_outcome": "reached_and_sampled",
+       "navigation_success_system_reported": true,
        "platform_family": "Galaxy",
        "run_sequence_number": 1,
        "target_id": "a5e28d9b-f23c-43a6-8703-4e47903b206d",
@@ -2286,6 +2356,8 @@
        "lesion_attenuation_type": "solid",
        "lobe": "RUL",
        "max_diameter_mm": 25.0,
+       "needle_gauge": 25,
+       "needle_pass_count": 3,
        "pet_avid": true,
        "pet_suv_max": 10.0,
        "prespecified_biopsy_target": true,
@@ -2321,7 +2393,7 @@
    ],
    "generator": {
     "seed": 20270011,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "1efd7f24-1ea3-4b5a-b33d-8bdcea44f825",
@@ -2406,6 +2478,11 @@
       2148,
       "active"
      ],
+     "/localization_events/0/lesion_visible": [
+      690,
+      727,
+      "active"
+     ],
      "/localization_events/0/localization_modality": [
       690,
       727,
@@ -2414,6 +2491,11 @@
      "/localization_events/0/radial_ebus_view": [
       690,
       727,
+      "active"
+     ],
+     "/localization_events/1/lesion_visible": [
+      728,
+      788,
       "active"
      ],
      "/localization_events/1/localization_modality": [
@@ -2427,6 +2509,11 @@
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
+      602,
+      689,
+      "active"
+     ],
+     "/navigation_runs/0/navigation_success_system_reported": [
       602,
       689,
       "active"
@@ -2936,6 +3023,16 @@
       601,
       "active"
      ],
+     "/targets/0/needle_gauge": [
+      789,
+      873,
+      "active"
+     ],
+     "/targets/0/needle_pass_count": [
+      789,
+      873,
+      "active"
+     ],
      "/targets/0/rose_adequate": [
       1055,
       1141,
@@ -3198,6 +3295,7 @@
      "localization_events": [
       {
        "event_sequence_number": 1,
+       "lesion_visible": true,
        "localization_event_id": "f2fcb63a-636f-4e4b-9aaa-b0a09b770f57",
        "localization_modality": "radial_EBUS",
        "navigation_run_id": "46e6f138-e98d-4c4b-a3d6-e7eb577345ab",
@@ -3206,6 +3304,7 @@
       },
       {
        "event_sequence_number": 2,
+       "lesion_visible": true,
        "localization_event_id": "4dc1ad65-2850-4cfb-90bd-40bf406868e6",
        "localization_modality": "mobile_CBCT",
        "navigation_run_id": "46e6f138-e98d-4c4b-a3d6-e7eb577345ab",
@@ -3218,6 +3317,7 @@
       {
        "navigation_run_id": "46e6f138-e98d-4c4b-a3d6-e7eb577345ab",
        "navigation_run_outcome": "reached_and_sampled",
+       "navigation_success_system_reported": true,
        "run_sequence_number": 1,
        "target_id": "c28114d3-8695-42f2-81a5-9ca75bf31024",
        "target_reached_operational": true
@@ -3467,6 +3567,8 @@
        "diagnostic_attempted": true,
        "lobe": "RLL",
        "max_diameter_mm": 23.0,
+       "needle_gauge": 22,
+       "needle_pass_count": 4,
        "rose_adequate": true,
        "rose_result": "benign bronchial cells and macrophages",
        "rose_used": true,
@@ -3556,7 +3658,7 @@
    ],
    "generator": {
     "seed": 20270021,
-    "version": "truth-first-1"
+    "version": "truth-first-2"
    },
    "gold": {
     "document_id": "e954da5e-8e01-411a-bdfc-840bebf3e19a",
@@ -3601,6 +3703,11 @@
       1026,
       "negated"
      ],
+     "/localization_events/0/lesion_visible": [
+      634,
+      670,
+      "active"
+     ],
      "/localization_events/0/localization_modality": [
       634,
       670,
@@ -3621,7 +3728,17 @@
       760,
       "active"
      ],
+     "/localization_events/1/event_phase": [
+      671,
+      760,
+      "active"
+     ],
      "/localization_events/1/final_prebiopsy_confirmation": [
+      671,
+      760,
+      "active"
+     ],
+     "/localization_events/1/lesion_visible": [
       671,
       760,
       "active"
@@ -3647,6 +3764,11 @@
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
+      546,
+      633,
+      "active"
+     ],
+     "/navigation_runs/0/navigation_success_system_reported": [
       546,
       633,
       "active"
@@ -3791,6 +3913,7 @@
      "localization_events": [
       {
        "event_sequence_number": 1,
+       "lesion_visible": true,
        "localization_event_id": "4f0873f7-14f7-4865-8fb7-b0ff7a42f06b",
        "localization_modality": "radial_EBUS",
        "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
@@ -3800,8 +3923,10 @@
       {
        "actual_lesion_vs_virtual_target": "actual_lesion",
        "confirmation_basis": "volumetric_imaging",
+       "event_phase": "prebiopsy",
        "event_sequence_number": 2,
        "final_prebiopsy_confirmation": true,
+       "lesion_visible": true,
        "localization_event_id": "f3612436-c937-4645-b234-e5016de0f871",
        "localization_modality": "CBCT_unspecified",
        "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
@@ -3816,6 +3941,7 @@
       {
        "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
        "navigation_run_outcome": "reached_and_sampled",
+       "navigation_success_system_reported": true,
        "platform_family": "Ion",
        "run_sequence_number": 1,
        "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823",

@@ -262,9 +262,17 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
   `data/ml_training/robotic_ebus_v1/corpus_truth_<date>/` (family-level 60/20/20 split, gold as
   values + `{field_path: [start, end, assertion]}` evidence, test gold in `sealed/` with its hash in
   the manifest). Generation is deterministic from `--seed`; corpora are immutable.
+- **Corpus `corpus_truth_20261125` (generator `truth-first-2`)** supersedes `corpus_truth_20261109`
+  for scoring. Same seed and byte-identical notes; the answer key additionally sets five fields a
+  sentence states under the dictionary's definitions but version 1 left blank
+  (`navigation_runs.navigation_success_system_reported`, `localization_events.event_phase`,
+  `localization_events.lesion_visible`, and `targets.needle_gauge` / `needle_pass_count` on lung
+  targets). Found in the 2026-11-25 five-model smoke run, where those fields were most of the
+  LLM "false fills". Deterministic baseline:
+  `reports/robotic_ebus_truth_deterministic_baseline_20261125.json` (P 0.983, R 0.416).
 - **Full-contract scorer** (`app/registry_workbench/scoring.py`): rows aligned by natural keys
   (lobe/station/tool/label; Hungarian on collisions), per-field TP/false-fill/miss, FK accuracy,
-  Wilson lower bounds; defaults and `not_documented` count as no value. Use it via
+  Wilson lower bounds; defaults and `not_documented` count as no value. Specimens align on a normalised label ("Specimen A" = "A"), and a single-pass row with `reported_pass_count` 1 scores as one without it. Use it via
   `eval_registry_llm.py --truth-corpus <dir> --splits train validation`. Baseline:
   `reports/robotic_ebus_truth_deterministic_baseline.json`.
 - **One-use qualification:** `ops/tools/robotic_ebus_truth/qualify_truth.py --corpus <dir> --provider

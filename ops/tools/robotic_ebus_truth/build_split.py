@@ -38,7 +38,11 @@ from ops.tools.robotic_ebus_truth.scenarios import sample_scenario
 from ops.tools.robotic_ebus_truth.template_writer import render
 from ops.tools.robotic_ebus_truth.verify import unsupported_values
 
-GENERATOR_VERSION = "truth-first-1"
+# truth-first-2 (2026-11-25): the answer key also sets fields a sentence states under the
+# launch dictionary's definitions but version 1 left blank: operator-declared navigation
+# success, pre-biopsy event phase, lesion visibility, and target-level needle gauge and pass
+# count for lung targets. Note text is unchanged for a given seed.
+GENERATOR_VERSION = "truth-first-2"
 CLEAN_TEMPLATE_STYLES = ("sectioned", "markdown", "fielded", "dictation")
 CLEAN_CLAUDE_STYLES = ("narrative", "dictation")
 
