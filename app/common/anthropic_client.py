@@ -10,12 +10,14 @@ from __future__ import annotations
 import json
 import os
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
+from app.common.dotenv_keys import load_api_key_from_dotenv
 from app.common.exceptions import LLMError
 from app.common.llm_egress import assert_egress_allowed
 from app.common.logger import get_logger
+from app.llm_extraction.result import LLMResult
 
 logger = get_logger("common.anthropic_client")
 
@@ -32,21 +34,6 @@ _DEFAULT_PRICING_PER_MTOK: dict[str, dict[str, float]] = {
 }
 _CACHE_WRITE_MULTIPLIER = {"5m": 1.25, "1h": 2.0}
 _BATCH_DISCOUNT = 0.5
-
-
-def load_api_key_from_dotenv(path: str | os.PathLike[str]) -> bool:
-    """Set ANTHROPIC_API_KEY from a .env file if the environment lacks it.
-
-    Only that one entry is read: the app's .env may carry production flags that
-    must not leak into CLI tools. Returns whether a key is now available.
-    """
-    if not os.getenv("ANTHROPIC_API_KEY") and os.path.exists(path):
-        from dotenv import dotenv_values
-
-        key = dotenv_values(path).get("ANTHROPIC_API_KEY")
-        if key:
-            os.environ["ANTHROPIC_API_KEY"] = key
-    return bool(os.getenv("ANTHROPIC_API_KEY"))
 
 
 def _pricing() -> dict[str, dict[str, float]]:
@@ -119,25 +106,8 @@ class ClaudeSettings:
         return cls(**values)
 
 
-@dataclass
-class ClaudeResult:
-    parsed: dict[str, Any] | None
-    text: str
-    stop_reason: str | None
-    model: str
-    requested_model: str
-    request_id: str | None
-    usage: dict[str, int] = field(default_factory=dict)
-    cost_usd: float | None = None
-    latency_s: float | None = None
-
-    @property
-    def fallback_used(self) -> bool:
-        return self.model != self.requested_model
-
-    @property
-    def ok(self) -> bool:
-        return self.parsed is not None and self.stop_reason not in {"refusal", "max_tokens"}
+# Kept so existing imports keep working; results now carry ``provider``.
+ClaudeResult = LLMResult
 
 
 def build_params(
@@ -191,6 +161,7 @@ def result_from_message(
         usage=usage,
         cost_usd=estimate_cost_usd(model, usage, batch=batch),
         latency_s=latency_s,
+        provider=PROVIDER,
     )
 
 

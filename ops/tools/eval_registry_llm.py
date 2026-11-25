@@ -2,10 +2,13 @@
 # ruff: noqa: E402 -- Import the bounded packages from packages/*/src.
 """Compare registry extractors on the synthetic robotic/EBUS corpus.
 
-Arms: ``deterministic`` (the vendored focused engine) and
-``claude:<opus|sonnet|haiku>:<effort>``. Claude arms run online (one request at a
-time, refusal fallbacks on) or through the Message Batches API (half price,
-second batch for repairs).
+Arms: ``deterministic`` (the vendored focused engine),
+``claude:<opus|sonnet|haiku>:<effort>`` and ``openai:<model>:<effort>`` (model one
+of gpt-6.2-astra, gpt-6.2-sol, gpt-6.1-terra, gpt-6-luna). LLM arms run online
+(``--concurrency`` requests at a time after a sequential first document that warms
+the prompt cache; Claude refusal fallbacks on). Claude arms can instead run
+through the Message Batches API (half price, second batch for repairs); OpenAI
+arms are online only.
 
 Scores:
   - gold: the 10 continuity fact types on the reviewed selection
@@ -23,9 +26,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
+import statistics
 import sys
+import threading
 import time
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from uuid import uuid4
 
@@ -38,16 +45,15 @@ sys.path[:0] = [
 from ip_registry_contracts.models import ClinicalRevision, ExtractionRequest, approval_errors
 from ip_registry_engine.engine import LocalDeterministicProvider
 
-from app.common.anthropic_client import (
-    ClaudeClient,
-    ClaudeSettings,
-    load_api_key_from_dotenv,
-    result_from_message,
-)
+from app.common.anthropic_client import ClaudeClient, ClaudeSettings, result_from_message
+from app.common.dotenv_keys import load_api_key_from_dotenv
 from app.common.llm_egress import egress_context
+from app.common.openai_structured_client import MODEL_EFFORTS as OPENAI_MODEL_EFFORTS
+from app.common.openai_structured_client import OpenAISettings, OpenAIStructuredClient
 from app.llm_extraction import batch as batches
 from app.registry_workbench.extraction.assembler import VALIDATION_EVENT_DATE
 from app.registry_workbench.extraction.claude_provider import ClaudeRegistryProvider
+from app.registry_workbench.extraction.openai_provider import OpenAIRegistryProvider
 from app.registry_workbench.extraction.prompt import prompt_digest
 from app.registry_workbench.scoring import aggregate, score_document
 from ops.tools.eval_robotic_ebus import focused_facts, metrics
@@ -55,6 +61,7 @@ from ops.tools.eval_robotic_ebus import focused_facts, metrics
 CORPUS = ROOT / "data/ml_training/robotic_ebus_v1/corpus_20260914_v2"
 GOLD = ROOT / "data/knowledge/robotic_ebus_v1/reviewed_eval_selection.json"
 MODELS = {"opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5", "haiku": "claude-haiku-5-5"}
+API_KEYS = {"claude": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 SILVER_FIELDS = (
     "target.lobe",
     "target.max_diameter_mm",
@@ -101,10 +108,46 @@ def silver_facts(meta):
 def parse_arm(label):
     if label == "deterministic":
         return {"label": label, "kind": "deterministic"}
-    kind, model, effort = label.split(":")
-    if kind != "claude" or model not in MODELS:
+    parts = label.split(":")
+    if len(parts) != 3:
         raise SystemExit(f"unknown arm {label!r}")
-    return {"label": label, "kind": "claude", "model": MODELS[model], "effort": effort}
+    kind, model, effort = parts
+    if kind == "claude" and model in MODELS:
+        return {"label": label, "kind": "claude", "model": MODELS[model], "effort": effort}
+    if kind == "openai" and model in OPENAI_MODEL_EFFORTS:
+        if effort not in OPENAI_MODEL_EFFORTS[model]:
+            allowed = ", ".join(OPENAI_MODEL_EFFORTS[model])
+            raise SystemExit(f"arm {label!r}: effort must be one of {allowed}")
+        return {"label": label, "kind": "openai", "model": model, "effort": effort}
+    raise SystemExit(f"unknown arm {label!r}")
+
+
+def check_mode(arms, mode):
+    """Only Claude arms have a batch path."""
+    if mode == "batch":
+        online_only = [a["label"] for a in arms if a["kind"] == "openai"]
+        if online_only:
+            raise SystemExit(f"--mode batch is not supported for {', '.join(online_only)}")
+
+
+def load_keys(arms, dotenv_path):
+    """Load from .env only the API keys the chosen arms need."""
+    missing = []
+    for name in sorted({API_KEYS[a["kind"]] for a in arms if a["kind"] in API_KEYS}):
+        if not load_api_key_from_dotenv(dotenv_path, name):
+            missing.append(name)
+    if missing:
+        raise SystemExit(f"missing API key(s): {', '.join(missing)}")
+
+
+def llm_provider(arm, *, repair=True, offline=False):
+    if arm["kind"] == "claude":
+        settings = ClaudeSettings.from_env(model=arm["model"], effort=arm["effort"])
+        return ClaudeRegistryProvider(
+            ClaudeClient(settings, sdk=object() if offline else None), repair=repair
+        )
+    settings = OpenAISettings.from_env(model=arm["model"], effort=arm["effort"])
+    return OpenAIRegistryProvider(OpenAIStructuredClient(settings), repair=repair)
 
 
 def request_for(row):
@@ -130,16 +173,24 @@ def contract_check(proposal):
     return True, approval_errors(revision)
 
 
-def summarize(response):
+def error_kind(exc):
+    text = f"{type(exc).__name__} {exc}".lower()
+    return "timeout" if "timeout" in text or "timed out" in text else "error"
+
+
+def summarize(response, wall_s=None):
     if isinstance(response, Exception):
         return {
             "status": "error",
             "error": f"{type(response).__name__}: {response}"[:300],
+            "error_kind": error_kind(response),
             "facts": {},
+            "wall_s": wall_s,
         }
     obs = response.observations
     inference = obs.get("inference") or {}
     valid, approval = contract_check(obs.get("proposal"))
+    signals = obs.get("quality_signals") or []
     return {
         "status": response.status,
         "warnings": response.warnings,
@@ -153,14 +204,23 @@ def summarize(response):
         "assembly_stats": obs.get("assembly_stats") or {},
         "repair_used": inference.get("repair_used", False),
         "fallback_used": inference.get("fallback_used", False),
+        "stop_reason": signals[0].get("stop_reason") if signals else None,
+        "usage": inference.get("usage") or [],
         "cost_usd": inference.get("cost_usd"),
         "latency_s": inference.get("latency_s"),
+        "wall_s": wall_s,
     }
 
 
-def run_online(arm, rows, provider, source=CORPUS.name):
-    results = {}
-    for index, row in enumerate(rows, 1):
+def run_online(arm, rows, provider, source=CORPUS.name, concurrency=1):
+    """First document alone (warms the prompt cache), then up to ``concurrency`` at once.
+
+    The deterministic engine always runs sequentially. Results keep corpus order.
+    """
+    done, lock = [0], threading.Lock()
+
+    def one(row):
+        started = time.monotonic()
         try:
             response = (
                 provider.extract(request_for(row))
@@ -169,15 +229,27 @@ def run_online(arm, rows, provider, source=CORPUS.name):
             )
         except Exception as exc:  # recorded per document; the run continues
             response = exc
-        results[row["document_id"]] = summarize(response)
-        print(
-            f"[{arm['label']}] {index}/{len(rows)} {row['document_id']} {results[row['document_id']]['status']}",
-            file=sys.stderr,
-        )
-    return results
+        summary = summarize(response, wall_s=round(time.monotonic() - started, 3))
+        with lock:
+            done[0] += 1
+            print(
+                f"[{arm['label']}] {done[0]}/{len(rows)} {row['document_id']} {summary['status']}",
+                file=sys.stderr,
+            )
+        return summary
+
+    workers = 1 if arm["kind"] == "deterministic" else max(1, concurrency)
+    summaries = [one(row) for row in rows[:1]]
+    if workers == 1:
+        summaries += [one(row) for row in rows[1:]]
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            summaries += list(pool.map(one, rows[1:]))
+    return {row["document_id"]: summary for row, summary in zip(rows, summaries, strict=True)}
 
 
 def _extract_synthetic(provider, row, source):
+    # Entered per call: context variables do not carry into worker threads.
     with egress_context("synthetic", source=f"corpus:{source}"):
         return provider.extract(request_for(row))
 
@@ -245,6 +317,43 @@ def score(results, references, fields, *, known_only=False):
     return {key: metrics(*value) for key, value in sorted(aggregate.items())}
 
 
+def latency_stats(values):
+    values = sorted(v for v in values if v is not None)
+    if not values:
+        return None
+    p95 = values[math.ceil(0.95 * len(values)) - 1]  # nearest rank
+    return {
+        "n": len(values),
+        "mean": round(statistics.fmean(values), 3),
+        "p50": round(statistics.median(values), 3),
+        "p95": round(p95, 3),
+    }
+
+
+def outcome_counts(values):
+    """Per-document outcomes. First-pass success: usable without a repair call."""
+    return {
+        "first_pass_success": sum(
+            v["status"] in {"proposed", "unsupported"} and not v.get("repair_used", False)
+            for v in values
+        ),
+        "repairs": sum(v.get("repair_used", False) for v in values),
+        "refusals": sum(v.get("stop_reason") == "refusal" for v in values),
+        "timeouts": sum(v.get("error_kind") == "timeout" for v in values),
+        "errors": sum(v["status"] == "error" for v in values),
+        "degraded": sum(v["status"] == "degraded" for v in values),
+    }
+
+
+def usage_totals(values):
+    totals = defaultdict(int)
+    for v in values:
+        for call in v.get("usage") or []:
+            for key, count in call.items():
+                totals[key] += int(count or 0)
+    return dict(sorted(totals.items()))
+
+
 def mechanics(results):
     values = list(results.values())
     n = len(values) or 1
@@ -272,6 +381,10 @@ def mechanics(results):
         "assembly_stats": dict(stats),
         "cost_usd_total": round(sum(costs), 4) if costs else None,
         "cost_usd_per_document": round(sum(costs) / len(costs), 5) if costs else None,
+        "outcomes": outcome_counts(values),
+        "usage_totals": usage_totals(values),
+        "latency_s": latency_stats(v.get("latency_s") for v in values),
+        "wall_s": latency_stats(v.get("wall_s") for v in values),
     }
 
 
@@ -284,6 +397,18 @@ def contract_scores(results, gold_revisions, traps):
         report = aggregate(members)
         by_trap[trap] = {"documents": len(members), "overall": report["overall"], "rows": report["rows"]}
     return {**aggregate(list(scored.values())), "traps": by_trap}
+
+
+def dry_run_requests(arm, rows):
+    """Request bodies an LLM arm would send, built offline (no client, no key)."""
+    provider = llm_provider(arm, offline=True)
+    bodies = [json.dumps(provider.build_params(request_for(r))) for r in rows]
+    return {
+        "provider": provider.provider_name,
+        "model": arm["model"],
+        "effort": arm["effort"],
+        "request_bytes_mean": round(sum(map(len, bodies)) / len(bodies)) if bodies else 0,
+    }
 
 
 def main():
@@ -308,6 +433,12 @@ def main():
     parser.add_argument("--platform")
     parser.add_argument("--mode", choices=["online", "batch"], default="online")
     parser.add_argument("--poll-seconds", type=float, default=60.0)
+    parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=1,
+        help="Online LLM requests in flight after the first (sequential) document",
+    )
     parser.add_argument("--no-repair", action="store_true")
     parser.add_argument(
         "--dry-run", action="store_true", help="Build requests and report sizes; no network"
@@ -320,7 +451,12 @@ def main():
     parser.add_argument("--keep-proposals", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    load_api_key_from_dotenv(ROOT / ".env")
+    if args.concurrency < 1:
+        raise SystemExit("--concurrency must be at least 1")
+    arms = [parse_arm(label) for label in args.arms]
+    check_mode(arms, args.mode)
+    if not args.dry_run:
+        load_keys(arms, ROOT / ".env")
 
     gold = json.loads(GOLD.read_text())
     gold_expected = {case["document_id"]: case["expected"] for case in gold["cases"]}
@@ -343,7 +479,6 @@ def main():
         if "test" in args.splits and not (args.include_test and args.exposure_ack):
             raise SystemExit("test split requires --include-test --exposure-ack")
         rows = load_documents(args.splits, args.limit, args.platform)
-    arms = [parse_arm(label) for label in args.arms]
 
     if args.dry_run:
         provider = ClaudeRegistryProvider(ClaudeClient(ClaudeSettings.from_env(), sdk=object()))
@@ -355,6 +490,9 @@ def main():
             "user_chars_mean": sum(chars) / len(chars) if chars else 0,
             "prompt_digest": prompt_digest(),
             "arms": [a["label"] for a in arms],
+            "requests": {
+                a["label"]: dry_run_requests(a, rows) for a in arms if a["kind"] != "deterministic"
+            },
         }
         args.output.write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps(report, indent=2))
@@ -386,12 +524,11 @@ def main():
         if arm["kind"] == "deterministic":
             results = run_online(arm, rows, LocalDeterministicProvider(), corpus.name)
         else:
-            settings = ClaudeSettings.from_env(model=arm["model"], effort=arm["effort"])
-            provider = ClaudeRegistryProvider(ClaudeClient(settings), repair=not args.no_repair)
+            provider = llm_provider(arm, repair=not args.no_repair)
             results = (
                 run_batch(arm, rows, provider, args.poll_seconds, corpus.name)
                 if args.mode == "batch"
-                else run_online(arm, rows, provider, corpus.name)
+                else run_online(arm, rows, provider, corpus.name, args.concurrency)
             )
         report["arms"][arm["label"]] = {
             "mechanics": mechanics(results),
