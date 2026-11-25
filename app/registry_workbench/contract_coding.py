@@ -55,6 +55,21 @@ CODE_FACT_KEYS: dict[str, tuple[str, ...]] = {
     "31624": ("bal",),
 }
 
+# Plain-language names for the page. The knowledge base's short descriptors for add-on
+# codes are abbreviations ("Bronch ebus ivntj perph les"); the KB text is kept alongside.
+PLAIN_NAMES = {
+    "31623": "Bronchoscopy with brushing",
+    "31624": "Bronchoscopy with bronchoalveolar lavage",
+    "31627": "Navigational bronchoscopy (add-on)",
+    "31628": "Transbronchial lung biopsy, first lobe",
+    "31629": "Transbronchial needle aspiration of a lung lesion, first lobe",
+    "31632": "Transbronchial lung biopsy, each additional lobe (add-on)",
+    "31633": "Transbronchial needle aspiration, each additional lobe (add-on)",
+    "31652": "EBUS-guided sampling, 1 or 2 nodal stations or structures",
+    "31653": "EBUS-guided sampling, 3 or more nodal stations or structures",
+    "31654": "Radial EBUS for a peripheral lesion (add-on)",
+}
+
 SCOPE_NOTE = (
     "Codes are suggested from the extracted registry facts for the linear EBUS and "
     "robotic bronchoscopy code family only, for review by a coder. Other codes are not assessed."
@@ -505,7 +520,8 @@ def suggest_codes(
         out_codes.append(
             {
                 "code": code,
-                "description": line.get("description"),
+                "description": PLAIN_NAMES.get(code) or line.get("description"),
+                "kb_description": line.get("description"),
                 "units": line.get("units"),
                 "modifiers": line.get("modifiers") or [],
                 "role": line.get("role"),
