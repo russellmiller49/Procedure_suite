@@ -272,6 +272,15 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
   "false fills". The key is frozen before any validation run. Deterministic baseline:
   `reports/robotic_ebus_truth_deterministic_baseline_20261125.json` (P 0.983, R 0.407).
   Smoke summary (16 train notes): `reports/robotic_ebus_llm_smoke_train16_summary.json`.
+- **Model comparison (2026-11-25, validation split, 86 notes, key frozen first):**
+  `claude:opus:medium` was the only arm to pass the pre-set rule (P 0.982, R 0.963, links
+  1720/1720, 86/86 usable, about $0.18 and 80 s per note). GPT-6.2 Sol medium (P 0.945, R 0.939),
+  Haiku medium (P 0.962, R 0.887, 84/86 usable), Sonnet medium (P 0.956, R 0.791) and GPT-6 Luna
+  low failed a gate; rules engine P 0.984, R 0.420. Rule and per-arm detail:
+  `ops/tools/select_registry_llm.py`, `reports/robotic_ebus_llm_validation_selection.json`.
+  OpenAI arms run through `app/common/openai_structured_client.py`
+  (`openai:<model>:<effort>` in `eval_registry_llm.py`). The validation split is now exposed to
+  these five arms; the sealed test split is untouched.
 - **Full-contract scorer** (`app/registry_workbench/scoring.py`): rows aligned by natural keys
   (lobe/station/tool/label; Hungarian on collisions), per-field TP/false-fill/miss, FK accuracy,
   Wilson lower bounds; defaults and `not_documented` count as no value. Specimens align on a normalised label ("Specimen A" = "A"), and a single-pass row with `reported_pass_count` 1 scores as one without it. Use it via
