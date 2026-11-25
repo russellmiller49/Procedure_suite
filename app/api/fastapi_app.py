@@ -64,6 +64,7 @@ from app.api.routes.vault import router as vault_router
 from app.api.routes_registry import router as registry_extract_router
 from app.api.schemas import KnowledgeMeta
 from app.common.knowledge import knowledge_hash, knowledge_version
+from app.registry_demo.settings import demo_enabled as robotic_ebus_demo_enabled
 from app.registry_workbench.settings import workbench_enabled
 
 
@@ -168,6 +169,17 @@ if workbench_enabled():
 
     app.include_router(workbench_router, prefix="/api/v1/workbench")
 
+# Public robotic/EBUS sample demo: opt-in, stateless, serves stored results only.
+if robotic_ebus_demo_enabled():
+    try:
+        from app.registry_demo.routes import router as robotic_ebus_demo_router
+    except ImportError as exc:  # a missing package must never break boot
+        logging.getLogger(__name__).warning(
+            "robotic/EBUS demo disabled: %s", type(exc).__name__
+        )
+    else:
+        app.include_router(robotic_ebus_demo_router, prefix="/api/v1/demo/robotic-ebus")
+
 
 def _phi_redactor_response(path: Path) -> FileResponse:
     resp = FileResponse(path)
@@ -251,15 +263,42 @@ def phi_redactor_index_html() -> HTMLResponse:
     return _phi_redactor_index_response(index_path)
 
 
-@app.get("/ui/")
-def ui_index() -> HTMLResponse:
+def _ui_home() -> str:
+    """Which page answers at /ui/: the full dashboard (default) or the focused demo."""
+    raw = os.getenv("PROCSUITE_UI_HOME", "dashboard").strip().lower()
+    return "robotic_ebus_demo" if raw == "robotic_ebus_demo" else "dashboard"
+
+
+def _registry_demo_index() -> Path | None:
+    """The focused demo page, when it is enabled, built, and the atlas UI is in use."""
+    if not robotic_ebus_demo_enabled() or _ui_variant() != "atlas":
+        return None
+    index_path = _phi_redactor_static_dir() / "registry_demo" / "index.html"
+    return index_path if index_path.exists() else None
+
+
+def _ui_home_response() -> HTMLResponse | FileResponse:
     if not _static_files_enabled():
         raise HTTPException(status_code=404, detail="Static files disabled")
+    demo_index = _registry_demo_index() if _ui_home() == "robotic_ebus_demo" else None
+    if demo_index is not None:
+        return _phi_redactor_response(demo_index)
     return _phi_redactor_index_response(_phi_redactor_static_dir() / "index.html")
 
 
-@app.get("/ui/index.html")
-def ui_index_html() -> HTMLResponse:
+@app.get("/ui/", response_model=None)
+def ui_index() -> HTMLResponse | FileResponse:
+    return _ui_home_response()
+
+
+@app.get("/ui/index.html", response_model=None)
+def ui_index_html() -> HTMLResponse | FileResponse:
+    return _ui_home_response()
+
+
+@app.get("/ui/dashboard.html")
+def ui_dashboard() -> HTMLResponse:
+    """The full dashboard, whichever page is the home page. Its assets resolve from /ui/."""
     if not _static_files_enabled():
         raise HTTPException(status_code=404, detail="Static files disabled")
     return _phi_redactor_index_response(_phi_redactor_static_dir() / "index.html")

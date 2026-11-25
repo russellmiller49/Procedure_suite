@@ -19,8 +19,7 @@ from sqlalchemy.orm import Session
 
 from app.registry_workbench import compare as comparison
 from app.registry_workbench.db import Case, Document, Event, ExtractionRun, Revision
-from app.registry_workbench.extraction.contract_spec import dictionary_fields
-from ip_registry_contracts.launch import PROFILE, VERSION
+from app.registry_workbench.profile import profile
 from ip_registry_contracts.measures import launch_measures
 from ip_registry_contracts.models import ClinicalRevision, approval_errors
 from ip_registry_contracts.projection import analysis_tables
@@ -28,21 +27,6 @@ from ip_registry_contracts.projection import analysis_tables
 KINDS = ("procedure", "pathology", "imaging", "clinical_update")
 PROVIDERS = ("deterministic", "claude")
 MODES = ("blinded", "assisted")
-SECTION_TITLES = {
-    "procedures": "Procedure components",
-    "case_details": "Case and anesthesia",
-    "targets": "Lung and nodal targets",
-    "ebus_sessions": "Linear EBUS examination",
-    "station_surveys": "Stations surveyed and sampled",
-    "navigation_runs": "Robotic navigation",
-    "localization_events": "Localization and tool confirmation",
-    "sampling_acquisitions": "Sampling acquisitions",
-    "specimens": "Specimens and attribution",
-    "sampling_specimen_links": "Acquisition-to-specimen links",
-    "pathology_results": "Pathology and amendments",
-    "complications": "Immediate and interval complications",
-    "follow_up": "30-day safety",
-}
 _DATE = re.compile(
     r"(?i)(?:date(?:/time)? of procedure|procedure date|date of service)\s*[:\-]?\s*"
     r"(\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4})"
@@ -86,33 +70,6 @@ def parse_event_date(text: str) -> date | None:
         return date(year + 2000 if year < 100 else year, month, day)
     except ValueError:
         return None
-
-
-# -- profile -------------------------------------------------------------------
-
-
-def profile() -> dict[str, Any]:
-    help_text = {}
-    for path, entry in dictionary_fields().items():
-        help_text[path] = {
-            key: entry.get(source)
-            for key, source in (
-                ("definition", "definition"),
-                ("units", "contract_units"),
-                ("applies", "required_when"),
-                ("notes", "validation_notes"),
-                ("tier", "collection_tier"),
-                ("capture", "capture_method"),
-            )
-            if entry.get(source)
-        }
-    return {
-        "registry_profile": PROFILE,
-        "schema_version": VERSION,
-        "schema": ClinicalRevision.model_json_schema(),
-        "sections": SECTION_TITLES,
-        "help": help_text,
-    }
 
 
 # -- cases and documents -------------------------------------------------------
