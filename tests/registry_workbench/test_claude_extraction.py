@@ -372,3 +372,72 @@ def test_dotenv_loader_takes_only_the_api_key(tmp_path, monkeypatch):
 
     assert os.environ["ANTHROPIC_API_KEY"] == "test-key-value"
     assert "CODER_REQUIRE_PHI_REVIEW" not in os.environ
+
+
+def test_a_denied_complication_is_recorded_as_that_event_absent():
+    text = TEXT.replace(
+        "Immediate complications: none observed.",
+        "Immediate complications: none observed. There was no pneumothorax.",
+    )
+    facts = copy.deepcopy(FACTS)
+    facts["rows"].append(
+        {
+            "collection": "complications",
+            "local_id": "C1",
+            "parents": [],
+            "anchor_quote": "There was no pneumothorax",
+        }
+    )
+    facts["enum_facts"].append(
+        {
+            "local_id": "C1",
+            "field": "complications.category",
+            "value": "pneumothorax",
+            "assertion": "negated",
+            "evidence_quote": "There was no pneumothorax",
+        }
+    )
+    result = assemble(facts, text)
+    assert result.valid
+    assert result.stats.get("denied_events") == 1
+    complications = result.proposal["complications"]
+    assert [(c["category"], c["state"]) for c in complications] == [("pneumothorax", "absent")]
+    state = provenance(result.proposal, "/complications/0/state")
+    assert state["source_excerpt"] == "There was no pneumothorax"
+    assert state["assertion_context"] == "negated"
+    assert not any("pneumothorax" in u["note"] for u in result.unresolved)
+
+
+def test_a_denial_never_overrides_a_stated_complication():
+    text = TEXT.replace(
+        "Immediate complications: none observed.",
+        "A small pneumothorax occurred. There was no pneumothorax requiring a drain.",
+    )
+    facts = copy.deepcopy(FACTS)
+    facts["rows"].append(
+        {
+            "collection": "complications",
+            "local_id": "C1",
+            "parents": [],
+            "anchor_quote": "A small pneumothorax occurred",
+        }
+    )
+    facts["enum_facts"] += [
+        {
+            "local_id": "C1",
+            "field": "complications.state",
+            "value": "present",
+            "assertion": "active",
+            "evidence_quote": "A small pneumothorax occurred",
+        },
+        {
+            "local_id": "C1",
+            "field": "complications.category",
+            "value": "pneumothorax",
+            "assertion": "negated",
+            "evidence_quote": "There was no pneumothorax requiring a drain",
+        },
+    ]
+    result = assemble(facts, text)
+    row = result.proposal["complications"][0]
+    assert row["state"] == "present"

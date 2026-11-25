@@ -36,6 +36,8 @@ from app.registry_workbench.extraction.contract_spec import (
 VALIDATION_EVENT_DATE = date(2000, 1, 1)
 MAX_REPAIR_PASSES = 40
 NEGATED_VALUES = {"present": "absent", "performed": "not_performed"}
+# A negated complication category is an explicit denial of that event.
+DENIED_EVENT_FIELD = "complications.category"
 DEFERRED_ASSERTIONS = {
     "planned": "planned_only",
     "historical": "historical",
@@ -212,7 +214,13 @@ class Assembler:
             self._count("facts_invalid_value")
             self._note("unmapped_detail", str(exc), span)
             return
-        if assertion == "negated":
+        if assertion == "negated" and path == DENIED_EVENT_FIELD:
+            # "No pneumothorax" names an event and denies it. The contract records that
+            # as the category with state=absent, not as a negated category.
+            if row.values.get("state") is None:
+                row.values["state"] = Fact("absent", span, "negated")
+                self._count("denied_events")
+        elif assertion == "negated":
             if spec.kind == "bool":
                 value = False
             elif spec.kind == "enum" and value in NEGATED_VALUES:

@@ -87,6 +87,16 @@ def _tokens(text: str) -> set[str]:
     return set(re.findall(r"[a-z0-9]+", str(text).lower()))
 
 
+def _specimen_label_key(label: Any) -> str | None:
+    """Alignment key for a specimen label: "Specimen A", "specimen a." and "A" are one specimen.
+
+    A note says "Specimen A"; whether an extractor keeps the word is formatting, not
+    content, and must not decide which rows are compared.
+    """
+    tokens = [t for t in re.findall(r"[a-z0-9]+", str(label or "").lower()) if t != "specimen"]
+    return " ".join(tokens) or None
+
+
 def values_match(collection: str, field: str, a: Any, b: Any) -> bool:
     kind = _KINDS.get(f"{collection}.{field}")
     if kind in {"number", "integer"} or (isinstance(a, (int, float)) and not isinstance(a, bool)):
@@ -129,7 +139,10 @@ def _keys(values: dict[str, Any]) -> dict[str, Callable[[dict], Any]]:
         return (target(row), row.get("sampling_tool"), row.get("acquisition_record_granularity"))
 
     def specimen(row: dict) -> Any:
-        return row.get("specimen_label") or (target(row), row.get("specimen_type"))
+        return _specimen_label_key(row.get("specimen_label")) or (
+            target(row),
+            row.get("specimen_type"),
+        )
 
     return {
         "procedures": lambda r: r.get("category"),

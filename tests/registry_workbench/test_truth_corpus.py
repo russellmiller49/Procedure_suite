@@ -273,3 +273,19 @@ def test_writer_prompt_never_leaks_other_cases_details():
     assert "Copy none of its clinical details" in message and all(
         f"[{fid}]" in message for fid, _, _ in facts
     )
+
+
+def test_scorer_aligns_specimens_whether_or_not_the_label_keeps_the_word_specimen():
+    gold = next(
+        g for g in (_document(s)[-1] for s in range(200)) if len(g.get("specimens") or []) >= 2
+    )
+    predicted = copy.deepcopy(gold)
+    for row in predicted["specimens"]:
+        row["specimen_label"] = f"Specimen {row['specimen_label']}"
+    score = score_document(gold, predicted)
+    result = aggregate([score])
+    assert result["overall"]["fp"] == 0 and result["overall"]["fn"] == 0
+    assert score.foreign_keys[0] == score.foreign_keys[1]
+    # A different specimen is still a different specimen.
+    predicted["specimens"][0]["specimen_label"] = "Specimen ZZ"
+    assert aggregate([score_document(gold, predicted)])["overall"]["fp"] > 0
