@@ -58,9 +58,27 @@ def result_for(text: str) -> dict[str, Any] | None:
     return (_read("results.json").get("entries") or {}).get(text_key(text))
 
 
+def reviewed_sample_for(text: str) -> str | None:
+    """Id of the sample whose reviewed redaction is exactly this text, if any."""
+    key = text_key(text)
+    for sample_id, variants in (_read("redactions.json").get("redactions") or {}).items():
+        if any(v.get("sha256") == key for v in variants):
+            return sample_id
+    return None
+
+
 def has_result(sample_id: str) -> bool:
     entries = _read("results.json").get("entries") or {}
     return any(r.get("sha256") in entries for r in redactions(sample_id))
 
 
-__all__ = ["has_result", "normalise", "redactions", "result_for", "sample", "samples", "text_key"]
+__all__ = [
+    "has_result",
+    "normalise",
+    "redactions",
+    "result_for",
+    "reviewed_sample_for",
+    "sample",
+    "samples",
+    "text_key",
+]

@@ -30,8 +30,8 @@
    "source": "handwritten",
    "style": "handwritten",
    "teaching_point": "One peripheral target sampled with two tools, two nodal stations sampled and a third only surveyed. The surveyed station must not count as sampled.",
-   "text": "SYNTHETIC DEMONSTRATION NOTE. FICTIONAL PATIENT. NOT A RECORD OF CARE.\nPatient: Marian Delacroix. MRN: 00481516. Date of birth: 03/14/1957.\nProcedure date: 02/11/2026. Operator: Dr. Alan Whitcombe.\n\nIndication: 22 mm solid nodule in the posterior segment of the right upper lobe with enlarged right paratracheal and subcarinal lymph nodes on CT. Diagnosis and mediastinal staging.\nProcedures performed: robotic bronchoscopy and linear EBUS-TBNA. Both procedures were completed.\nAnesthesia: general anesthesia with an 8.5 mm endotracheal tube. ASA class III.\n\nLinear EBUS: A systematic mediastinal and hilar survey was performed. Station 4R was sampled. The station 4R node measured 12 mm in short axis on ultrasound, and three passes were made with a 22-gauge needle. Station 7 was sampled. The station 7 node measured 14 mm in short axis on ultrasound, and four passes were made with a 22-gauge needle. Station 11L was surveyed and measured 4 mm in short axis on ultrasound. Station 11L was not sampled because it was small with benign sonographic features. ROSE showed lymphocytes at station 4R and at station 7. The station 4R material was sent as specimen C for cytology. The station 7 material was sent as specimen D for cytology.\n\nRobotic bronchoscopy: The Ion platform was used to navigate to target T1, the 22 mm solid nodule in the posterior segment of the right upper lobe. A bronchus sign was present on CT. Navigation to T1 was successful. Radial EBUS showed an eccentric view. Cone-beam CT confirmed the needle within the lesion. T1 was sampled with a 21-gauge needle for four passes. T1 was then sampled with forceps for five biopsies. ROSE of the needle passes from T1 showed atypical cells. The needle material from T1 was sent as specimen A for cytology. The forceps biopsies from T1 were sent as specimen B for histology.\n\nComplications: none. There was no pneumothorax on post-procedure fluoroscopy. The patient was extubated and discharged home after recovery.\n",
-   "text_sha256": "e725407abb3b869ee0daaf4d6b98bebc2c7dbea3209a6f6ec9cf702570ae5b77",
+   "text": "Synthetic note for software demonstration only; no real patient.\nPatient: Marian Delacroix. MRN: 00481516. Date of birth: 03/14/1957.\nProcedure date: 02/11/2026.\n\nIndication: 22 mm solid nodule in the posterior segment of the right upper lobe with enlarged right paratracheal and subcarinal lymph nodes on CT. Diagnosis and mediastinal staging.\nProcedures performed: robotic bronchoscopy and linear EBUS-TBNA. Both procedures were completed.\nAnesthesia: general anesthesia with an 8.5 mm endotracheal tube. ASA class III.\n\nLinear EBUS: A systematic mediastinal and hilar survey was performed. Station 4R was sampled. The station 4R node measured 12 mm in short axis on ultrasound, and three passes were made with a 22-gauge needle. Station 7 was sampled. The station 7 node measured 14 mm in short axis on ultrasound, and four passes were made with a 22-gauge needle. Station 11L was surveyed and measured 4 mm in short axis on ultrasound. Station 11L was not sampled because it was small with benign sonographic features. ROSE showed lymphocytes at station 4R and at station 7. The station 4R material was sent as specimen C for cytology. The station 7 material was sent as specimen D for cytology.\n\nRobotic bronchoscopy: The Ion platform was used to navigate to target T1, the 22 mm solid nodule in the posterior segment of the right upper lobe. A bronchus sign was present on CT. Navigation to T1 was successful. Radial EBUS showed an eccentric view. Cone-beam CT confirmed the needle within the lesion. T1 was sampled with a 21-gauge needle for four passes. T1 was then sampled with forceps for five biopsies. ROSE of the needle passes from T1 showed atypical cells. The needle material from T1 was sent as specimen A for cytology. The forceps biopsies from T1 were sent as specimen B for histology.\n\nComplications: none. There was no pneumothorax on post-procedure fluoroscopy. The patient was extubated and discharged home after recovery.\n",
+   "text_sha256": "54a65ca7c0a2195eb9b6870634ab90b8062e35065ae9fb72a72a5d502c63421b",
    "title": "Combined case: lung nodule biopsy, 4R and 7 sampled, 11L surveyed",
    "traps": [
     "surveyed_not_sampled"
@@ -82,518 +82,518 @@
     "document_id": "fe466cdf-f145-42b7-b858-7ea5c75da29f",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      124,
-      190,
+      142,
+      208,
       "active"
      ],
      "/case_details/airway_device": [
-      285,
-      334,
+      303,
+      352,
       "active"
      ],
      "/case_details/anesthesia_type": [
-      285,
-      334,
+      303,
+      352,
       "active"
      ],
      "/case_details/indication": [
-      191,
-      272,
+      209,
+      290,
       "active"
      ],
      "/case_details/intent": [
-      191,
-      272,
+      209,
+      290,
       "active"
      ],
      "/case_details/pack_years": [
-      124,
-      190,
+      142,
+      208,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      124,
-      190,
+      142,
+      208,
       "active"
      ],
      "/case_details/smoking_status": [
-      124,
-      190,
+      142,
+      208,
       "active"
      ],
      "/complication_assessment": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/category": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/event_time_window": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/pleural_intervention": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/pneumothorax_laterality": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/procedure_component_attribution": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/complications/0/state": [
-      1850,
-      1985,
+      1868,
+      2003,
       "active"
      ],
      "/ebus_sessions/0/performed_sampling_strategy": [
-      969,
-      1111,
+      987,
+      1129,
       "active"
      ],
      "/ebus_sessions/0/primary_purpose": [
-      969,
-      1111,
+      987,
+      1129,
       "active"
      ],
      "/ebus_sessions/0/systematic_exam_complete": [
-      969,
-      1111,
+      987,
+      1129,
       "active"
      ],
      "/localization_events/0/localization_modality": [
-      728,
-      765,
+      746,
+      783,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      728,
-      765,
+      746,
+      783,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      640,
-      727,
+      658,
+      745,
       "active"
      ],
      "/navigation_runs/0/platform_family": [
-      507,
-      560,
+      525,
+      578,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      640,
-      727,
+      658,
+      745,
       "active"
      ],
      "/procedures/0/category": [
-      347,
-      416,
+      365,
+      434,
       "active"
      ],
      "/procedures/0/completion": [
-      347,
-      416,
+      365,
+      434,
       "active"
      ],
      "/procedures/0/performance": [
-      347,
-      416,
+      365,
+      434,
       "active"
      ],
      "/procedures/0/planned": [
-      347,
-      416,
+      365,
+      434,
       "active"
      ],
      "/procedures/1/category": [
-      417,
-      473,
+      435,
+      491,
       "active"
      ],
      "/procedures/1/completion": [
-      417,
-      473,
+      435,
+      491,
       "active"
      ],
      "/procedures/1/performance": [
-      417,
-      473,
+      435,
+      491,
       "active"
      ],
      "/procedures/1/planned": [
-      417,
-      473,
+      435,
+      491,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      766,
-      812,
+      784,
+      830,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      766,
-      812,
+      784,
+      830,
       "active"
      ],
      "/sampling_acquisitions/1/acquisition_record_granularity": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/sampling_acquisitions/1/needle_gauge": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/sampling_acquisitions/1/reported_pass_count": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/sampling_acquisitions/1/sampling_tool": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      900,
-      955,
+      918,
+      973,
       "active"
      ],
      "/sampling_specimen_links/1/link_certainty": [
-      1224,
-      1269,
+      1242,
+      1287,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      900,
-      955,
+      918,
+      973,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      900,
-      955,
+      918,
+      973,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      900,
-      955,
+      918,
+      973,
       "active"
      ],
      "/specimens/1/specimen_label": [
-      1224,
-      1269,
+      1242,
+      1287,
       "active"
      ],
      "/specimens/1/specimen_type": [
-      1224,
-      1269,
+      1242,
+      1287,
       "active"
      ],
      "/specimens/1/target_attribution_status": [
-      1224,
-      1269,
+      1242,
+      1287,
       "active"
      ],
      "/station_surveys/0/iaslc_station": [
-      1112,
-      1159,
+      1130,
+      1177,
       "active"
      ],
      "/station_surveys/0/station_sampled": [
-      1112,
-      1159,
+      1130,
+      1177,
       "active"
      ],
      "/station_surveys/0/station_surveyed": [
-      1112,
-      1159,
+      1130,
+      1177,
       "active"
      ],
      "/station_surveys/0/station_visualized": [
-      1112,
-      1159,
+      1130,
+      1177,
       "active"
      ],
      "/station_surveys/0/survey_modality": [
-      1112,
-      1159,
+      1130,
+      1177,
       "active"
      ],
      "/station_surveys/1/iaslc_station": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/1/reason_not_sampled": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/1/station_sampled": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/1/station_surveyed": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/1/station_visualized": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/1/survey_modality": [
-      1270,
-      1362,
+      1288,
+      1380,
       "negated"
      ],
      "/station_surveys/2/iaslc_station": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/2/largest_short_axis_mm": [
-      1363,
-      1494,
+      1381,
+      1512,
       "active"
      ],
      "/station_surveys/2/reason_not_sampled": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/2/size_axis_explicit": [
-      1363,
-      1494,
+      1381,
+      1512,
       "active"
      ],
      "/station_surveys/2/station_sampled": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/2/station_surveyed": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/2/station_visualized": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/2/survey_modality": [
-      1363,
-      1494,
+      1381,
+      1512,
       "negated"
      ],
      "/station_surveys/3/iaslc_station": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/3/reason_not_sampled": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/3/station_sampled": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/3/station_surveyed": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/3/station_visualized": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/3/survey_modality": [
-      1495,
-      1587,
+      1513,
+      1605,
       "negated"
      ],
      "/station_surveys/4/iaslc_station": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/4/reason_not_sampled": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/4/station_sampled": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/4/station_surveyed": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/4/station_visualized": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/4/survey_modality": [
-      1588,
-      1702,
+      1606,
+      1720,
       "negated"
      ],
      "/station_surveys/5/iaslc_station": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/station_surveys/5/largest_short_axis_mm": [
-      1703,
-      1834,
+      1721,
+      1852,
       "active"
      ],
      "/station_surveys/5/reason_not_sampled": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/station_surveys/5/size_axis_explicit": [
-      1703,
-      1834,
+      1721,
+      1852,
       "active"
      ],
      "/station_surveys/5/station_sampled": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/station_surveys/5/station_surveyed": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/station_surveys/5/station_visualized": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/station_surveys/5/survey_modality": [
-      1703,
-      1834,
+      1721,
+      1852,
       "negated"
      ],
      "/targets/0/anatomic_label": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/bronchus_sign_present": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      640,
-      727,
+      658,
+      745,
       "active"
      ],
      "/targets/0/lesion_attenuation_type": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/lobe": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/max_diameter_mm": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      813,
-      899,
+      831,
+      917,
       "active"
      ],
      "/targets/0/rose_result": [
-      813,
-      899,
+      831,
+      917,
       "active"
      ],
      "/targets/0/rose_used": [
-      813,
-      899,
+      831,
+      917,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      766,
-      812,
+      784,
+      830,
       "active"
      ],
      "/targets/0/site": [
-      561,
-      639,
+      579,
+      657,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      900,
-      955,
+      918,
+      973,
       "active"
      ],
      "/targets/1/iaslc_station": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/needle_gauge": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/needle_pass_count": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/puncture_route": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/sampling_attempted": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/site": [
-      1160,
-      1223,
+      1178,
+      1241,
       "active"
      ],
      "/targets/1/specimen_obtained": [
-      1224,
-      1269,
+      1242,
+      1287,
       "active"
      ]
     },
@@ -819,8 +819,8 @@
    "source": "truth_first",
    "style": "sectioned",
    "teaching_point": "An EBUS station is visualized but not sampled, with a stated reason. A procedural complication occurred.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-01-17\n\nINDICATION\nThe patient is a 64-year-old male, current smoker (10 pack-years). Indication: tissue diagnosis of a peripheral lung lesion and mediastinal staging.\n\nANESTHESIA\nModerate sedation was used with a natural airway.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed. Linear EBUS-TBNA was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Monarch robotic platform was used for navigation. Target 1 was a 38 mm solid lesion in the lingula. A bronchus sign was present. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an eccentric view. Transbronchial forceps biopsies were obtained. ROSE of target 1 showed scant cellularity, nondiagnostic; the sample was not adequate. Specimen A: forceps biopsies from target 1 (histology).\n\nLINEAR EBUS\nLinear EBUS was performed for initial mediastinal staging using a systematic sampling strategy. The systematic nodal examination was complete. Station 10R was visualized on EBUS and sampled. Station 10R: EBUS-guided TBNA with a 25-gauge needle, 2 passes. Specimen B: station 10R aspirates (cytology). Station 11R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R measured 3 mm in short axis. Station 10L was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 4L was visualized on EBUS but not sampled because it measured under 5 mm with benign sonographic features. Station 4R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 4R measured 8 mm in short axis.\n\nCOMPLICATIONS\nA small left pneumothorax occurred immediately after the robotic biopsies and was managed with observation and no pleural intervention.\n",
-   "text_sha256": "cf9c9f5e269ce31837fbaef5728502bc21d20367d15611e3adcbc9892c1d7959",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-01-17\n\nINDICATION\nThe patient is a 64-year-old male, current smoker (10 pack-years). Indication: tissue diagnosis of a peripheral lung lesion and mediastinal staging.\n\nANESTHESIA\nModerate sedation was used with a natural airway.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed. Linear EBUS-TBNA was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Monarch robotic platform was used for navigation. Target 1 was a 38 mm solid lesion in the lingula. A bronchus sign was present. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an eccentric view. Transbronchial forceps biopsies were obtained. ROSE of target 1 showed scant cellularity, nondiagnostic; the sample was not adequate. Specimen A: forceps biopsies from target 1 (histology).\n\nLINEAR EBUS\nLinear EBUS was performed for initial mediastinal staging using a systematic sampling strategy. The systematic nodal examination was complete. Station 10R was visualized on EBUS and sampled. Station 10R: EBUS-guided TBNA with a 25-gauge needle, 2 passes. Specimen B: station 10R aspirates (cytology). Station 11R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R measured 3 mm in short axis. Station 10L was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 4L was visualized on EBUS but not sampled because it measured under 5 mm with benign sonographic features. Station 4R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 4R measured 8 mm in short axis.\n\nCOMPLICATIONS\nA small left pneumothorax occurred immediately after the robotic biopsies and was managed with observation and no pleural intervention.\n",
+   "text_sha256": "808cc3f3c2a720a9554f72b88ae950ae8a178fe00eabd7f763ad8fab776a9cb8",
    "title": "Monarch and EBUS: a station seen but not sampled, and a complication",
    "traps": [
     "surveyed_not_sampled",
@@ -839,413 +839,413 @@
     "document_id": "94701d0f-ebdb-481a-b300-620cb306afdf",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      97,
-      164,
+      115,
+      182,
       "active"
      ],
      "/case_details/airway_device": [
-      235,
-      286,
+      253,
+      304,
       "active"
      ],
      "/case_details/airway_size_unit": [
-      235,
-      286,
+      253,
+      304,
       "active"
      ],
      "/case_details/airway_size_value": [
-      235,
-      286,
+      253,
+      304,
       "active"
      ],
      "/case_details/anesthesia_type": [
-      235,
-      286,
+      253,
+      304,
       "active"
      ],
      "/case_details/asa_physical_status": [
-      220,
-      234,
+      238,
+      252,
       "active"
      ],
      "/case_details/immediate_disposition": [
-      1330,
-      1377,
+      1348,
+      1395,
       "active"
      ],
      "/case_details/indication": [
-      165,
-      218,
+      183,
+      236,
       "active"
      ],
      "/case_details/intent": [
-      165,
-      218,
+      183,
+      236,
       "active"
      ],
      "/case_details/pack_years": [
-      97,
-      164,
+      115,
+      182,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      97,
-      164,
+      115,
+      182,
       "active"
      ],
      "/case_details/smoking_status": [
-      97,
-      164,
+      115,
+      182,
       "active"
      ],
      "/complication_assessment": [
-      1246,
-      1328,
+      1264,
+      1346,
       "negated"
      ],
      "/complications/0/category": [
-      1246,
-      1328,
+      1264,
+      1346,
       "negated"
      ],
      "/complications/0/state": [
-      1246,
-      1328,
+      1264,
+      1346,
       "negated"
      ],
      "/complications/1/category": [
-      1246,
-      1328,
+      1264,
+      1346,
       "negated"
      ],
      "/complications/1/state": [
-      1246,
-      1328,
+      1264,
+      1346,
       "negated"
      ],
      "/ebus_sessions/0/performed_sampling_strategy": [
-      346,
-      436,
+      364,
+      454,
       "active"
      ],
      "/ebus_sessions/0/primary_purpose": [
-      346,
-      436,
+      364,
+      454,
       "active"
      ],
      "/ebus_sessions/0/rose_used": [
-      555,
-      614,
+      573,
+      632,
       "active"
      ],
      "/procedures/0/category": [
-      288,
-      344,
+      306,
+      362,
       "active"
      ],
      "/procedures/0/completion": [
-      288,
-      344,
+      306,
+      362,
       "active"
      ],
      "/procedures/0/performance": [
-      288,
-      344,
+      306,
+      362,
       "active"
      ],
      "/procedures/0/planned": [
-      288,
-      344,
+      306,
+      362,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/sampling_acquisitions/0/needle_gauge": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/sampling_acquisitions/0/rose_performed": [
-      555,
-      614,
+      573,
+      632,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      615,
-      661,
+      633,
+      679,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      615,
-      661,
+      633,
+      679,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      615,
-      661,
+      633,
+      679,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      615,
-      661,
+      633,
+      679,
       "active"
      ],
      "/station_surveys/0/iaslc_station": [
-      437,
-      485,
+      455,
+      503,
       "active"
      ],
      "/station_surveys/0/station_sampled": [
-      437,
-      485,
+      455,
+      503,
       "active"
      ],
      "/station_surveys/0/station_surveyed": [
-      437,
-      485,
+      455,
+      503,
       "active"
      ],
      "/station_surveys/0/station_visualized": [
-      437,
-      485,
+      455,
+      503,
       "active"
      ],
      "/station_surveys/0/survey_modality": [
-      437,
-      485,
+      455,
+      503,
       "active"
      ],
      "/station_surveys/1/iaslc_station": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/1/largest_short_axis_mm": [
-      662,
-      813,
+      680,
+      831,
       "active"
      ],
      "/station_surveys/1/reason_not_sampled": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/1/size_axis_explicit": [
-      662,
-      813,
+      680,
+      831,
       "active"
      ],
      "/station_surveys/1/station_sampled": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/1/station_surveyed": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/1/station_visualized": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/1/survey_modality": [
-      662,
-      813,
+      680,
+      831,
       "negated"
      ],
      "/station_surveys/2/iaslc_station": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/2/reason_not_sampled": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/2/station_sampled": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/2/station_surveyed": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/2/station_visualized": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/2/survey_modality": [
-      814,
-      905,
+      832,
+      923,
       "negated"
      ],
      "/station_surveys/3/iaslc_station": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/3/largest_short_axis_mm": [
-      906,
-      1037,
+      924,
+      1055,
       "active"
      ],
      "/station_surveys/3/reason_not_sampled": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/3/size_axis_explicit": [
-      906,
-      1037,
+      924,
+      1055,
       "active"
      ],
      "/station_surveys/3/station_sampled": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/3/station_surveyed": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/3/station_visualized": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/3/survey_modality": [
-      906,
-      1037,
+      924,
+      1055,
       "negated"
      ],
      "/station_surveys/4/iaslc_station": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/4/reason_not_sampled": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/4/station_sampled": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/4/station_surveyed": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/4/station_visualized": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/4/survey_modality": [
-      1038,
-      1152,
+      1056,
+      1170,
       "negated"
      ],
      "/station_surveys/5/iaslc_station": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/station_surveys/5/reason_not_sampled": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/station_surveys/5/station_sampled": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/station_surveys/5/station_surveyed": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/station_surveys/5/station_visualized": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/station_surveys/5/survey_modality": [
-      1153,
-      1244,
+      1171,
+      1262,
       "negated"
      ],
      "/targets/0/iaslc_station": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/needle_gauge": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/needle_pass_count": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/puncture_route": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      555,
-      614,
+      573,
+      632,
       "active"
      ],
      "/targets/0/rose_result": [
-      555,
-      614,
+      573,
+      632,
       "active"
      ],
      "/targets/0/rose_used": [
-      555,
-      614,
+      573,
+      632,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/site": [
-      486,
-      554,
+      504,
+      572,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      615,
-      661,
+      633,
+      679,
       "active"
      ]
     },
@@ -1421,8 +1421,8 @@
    "source": "truth_first",
    "style": "dictation",
    "teaching_point": "Specific complications are explicitly denied.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nEBUS Procedure Report\nProcedure date: 2026-04-20\n\nThe patient is a 60-year-old female, former smoker (50 pack-years). Indication: mediastinal staging of known lung cancer.\n\nASA class III. General anesthesia via an 8.5 mm endotracheal tube.\n\nLinear EBUS-TBNA was performed as planned and completed.\n\nLinear EBUS was performed for targeted nodal diagnosis using a targeted sampling strategy. Station 11Ri was visualized on EBUS and sampled. Station 11Ri: EBUS-guided TBNA with a 22-gauge needle, three passes. ROSE of station 11Ri: non-necrotizing granulomas, adequate. Specimen A: station 11Ri aspirates (cytology). Station 11L was visualized on EBUS but not sampled because an intervening vessel prevented a safe needle path. Station 11L measured 8 mm in short axis. Station 4R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R measured 8 mm in short axis. Station 4L was visualized on EBUS but not sampled because it measured under 5 mm with benign sonographic features. Station 2L was visualized on EBUS but not sampled because it appeared benign on ultrasound.\n\nNo immediate complications. There was no pneumothorax and no significant bleeding.\n\nThe patient was discharged home after recovery.\n",
-   "text_sha256": "9d85514c264b5685808c0e4c59fd6f01f5ed9587073ab6eaf0126b3ca1c6d15a",
+   "text": "Synthetic note for software demonstration only; no real patient.\nEBUS Procedure Report\nProcedure date: 2026-04-20\n\nThe patient is a 60-year-old female, former smoker (50 pack-years). Indication: mediastinal staging of known lung cancer.\n\nASA class III. General anesthesia via an 8.5 mm endotracheal tube.\n\nLinear EBUS-TBNA was performed as planned and completed.\n\nLinear EBUS was performed for targeted nodal diagnosis using a targeted sampling strategy. Station 11Ri was visualized on EBUS and sampled. Station 11Ri: EBUS-guided TBNA with a 22-gauge needle, three passes. ROSE of station 11Ri: non-necrotizing granulomas, adequate. Specimen A: station 11Ri aspirates (cytology). Station 11L was visualized on EBUS but not sampled because an intervening vessel prevented a safe needle path. Station 11L measured 8 mm in short axis. Station 4R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R was visualized on EBUS but not sampled because it appeared benign on ultrasound. Station 2R measured 8 mm in short axis. Station 4L was visualized on EBUS but not sampled because it measured under 5 mm with benign sonographic features. Station 2L was visualized on EBUS but not sampled because it appeared benign on ultrasound.\n\nNo immediate complications. There was no pneumothorax and no significant bleeding.\n\nThe patient was discharged home after recovery.\n",
+   "text_sha256": "7fdfe9052019b3737d57071257d5164d8aa875155b3b46d55374c95221c9a9d4",
    "title": "EBUS staging only: complications are explicitly denied",
    "traps": [
     "negated_complications"
@@ -1440,238 +1440,238 @@
     "document_id": "28702b4e-5286-4cff-9481-2b4145833230",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      125,
-      182,
+      143,
+      200,
       "active"
      ],
      "/case_details/airway_device": [
-      254,
-      309,
+      272,
+      327,
       "active"
      ],
      "/case_details/airway_size_unit": [
-      254,
-      309,
+      272,
+      327,
       "active"
      ],
      "/case_details/airway_size_value": [
-      254,
-      309,
+      272,
+      327,
       "active"
      ],
      "/case_details/anesthesia_type": [
-      254,
-      309,
+      272,
+      327,
       "active"
      ],
      "/case_details/immediate_disposition": [
-      1156,
-      1207,
+      1174,
+      1225,
       "active"
      ],
      "/case_details/indication": [
-      183,
-      240,
+      201,
+      258,
       "active"
      ],
      "/case_details/intent": [
-      183,
-      240,
+      201,
+      258,
       "active"
      ],
      "/case_details/pack_years": [
-      125,
-      182,
+      143,
+      200,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      125,
-      182,
+      143,
+      200,
       "active"
      ],
      "/case_details/smoking_status": [
-      125,
-      182,
+      143,
+      200,
       "active"
      ],
      "/complication_assessment": [
-      1114,
-      1141,
+      1132,
+      1159,
       "negated"
      ],
      "/localization_events/0/localization_modality": [
-      734,
-      798,
+      752,
+      816,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      734,
-      798,
+      752,
+      816,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      644,
-      731,
+      662,
+      749,
       "active"
      ],
      "/navigation_runs/0/platform_family": [
-      429,
-      482,
+      447,
+      500,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      644,
-      731,
+      662,
+      749,
       "active"
      ],
      "/procedures/0/category": [
-      323,
-      392,
+      341,
+      410,
       "active"
      ],
      "/procedures/0/completion": [
-      323,
-      392,
+      341,
+      410,
       "active"
      ],
      "/procedures/0/performance": [
-      323,
-      392,
+      341,
+      410,
       "active"
      ],
      "/procedures/0/planned": [
-      323,
-      392,
+      341,
+      410,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      801,
-      884,
+      819,
+      902,
       "active"
      ],
      "/sampling_acquisitions/0/needle_gauge": [
-      801,
-      884,
+      819,
+      902,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      801,
-      884,
+      819,
+      902,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      801,
-      884,
+      819,
+      902,
       "active"
      ],
      "/sampling_acquisitions/1/acquisition_record_granularity": [
-      887,
-      944,
+      905,
+      962,
       "active"
      ],
      "/sampling_acquisitions/1/reported_pass_count": [
-      887,
-      944,
+      905,
+      962,
       "active"
      ],
      "/sampling_acquisitions/1/sampling_tool": [
-      887,
-      944,
+      905,
+      962,
       "active"
      ],
      "/sampling_acquisitions/2/acquisition_record_granularity": [
-      947,
-      1022,
+      965,
+      1040,
       "active"
      ],
      "/sampling_acquisitions/2/reported_pass_count": [
-      947,
-      1022,
+      965,
+      1040,
       "active"
      ],
      "/sampling_acquisitions/2/sampling_tool": [
-      947,
-      1022,
+      965,
+      1040,
       "active"
      ],
      "/sampling_acquisitions/2/tool_size_mm": [
-      947,
-      1022,
+      965,
+      1040,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ],
      "/sampling_specimen_links/1/link_certainty": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ],
      "/targets/0/anatomic_label": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/bronchus_sign_present": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      644,
-      731,
+      662,
+      749,
       "active"
      ],
      "/targets/0/lobe": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/max_diameter_mm": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/prespecified_biopsy_target": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      947,
-      1022,
+      965,
+      1040,
       "active"
      ],
      "/targets/0/segment": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/site": [
-      485,
-      641,
+      503,
+      659,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      1025,
-      1097,
+      1043,
+      1115,
       "active"
      ]
     },
@@ -1802,8 +1802,8 @@
    "source": "truth_first",
    "style": "fielded",
    "teaching_point": "Lesion size is given in centimetres. Radial EBUS alone is described as confirming tool-in-lesion; TIL is not recordable.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-03-22\n\nIndication:\nPatient: 76-year-old male, former smoker (20 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nAnesthesia:\nGeneral anesthesia with a size 4 laryngeal mask airway.\n\nProcedures:\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nRobotic navigation and sampling:\n- The Monarch robotic platform was used for navigation.\n- Target 1 was a 3.6 cm lesion in the superior segment (LB6) of the left lower lobe. A bronchus sign was present. Target 1 was the prespecified biopsy target.\n- The robotic catheter was navigated to target 1, and the target was reached and sampled.\n- Radial EBUS showed a concentric view, confirming tool-in-lesion.\n- Transbronchial needle aspiration was performed with a 21-gauge needle (six passes).\n- Transbronchial forceps biopsies were obtained (4 passes).\n- Transbronchial cryobiopsy was performed with a 1.1 mm cryoprobe (4 passes).\n- Specimen B: cryobiopsies and forceps biopsies from target 1 (histology).\n\nComplications:\nNo immediate complications.\n\nDisposition:\nThe patient was admitted for overnight observation.\n",
-   "text_sha256": "38f779c759adaf59c6f531233294b58cd9437a6d823ee1ed55aa48e4445b76c5",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-03-22\n\nIndication:\nPatient: 76-year-old male, former smoker (20 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nAnesthesia:\nGeneral anesthesia with a size 4 laryngeal mask airway.\n\nProcedures:\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nRobotic navigation and sampling:\n- The Monarch robotic platform was used for navigation.\n- Target 1 was a 3.6 cm lesion in the superior segment (LB6) of the left lower lobe. A bronchus sign was present. Target 1 was the prespecified biopsy target.\n- The robotic catheter was navigated to target 1, and the target was reached and sampled.\n- Radial EBUS showed a concentric view, confirming tool-in-lesion.\n- Transbronchial needle aspiration was performed with a 21-gauge needle (six passes).\n- Transbronchial forceps biopsies were obtained (4 passes).\n- Transbronchial cryobiopsy was performed with a 1.1 mm cryoprobe (4 passes).\n- Specimen B: cryobiopsies and forceps biopsies from target 1 (histology).\n\nComplications:\nNo immediate complications.\n\nDisposition:\nThe patient was admitted for overnight observation.\n",
+   "text_sha256": "d96ab109f2bcd822cb4f0ffc02d967322802ce12fe5982be9b146219d1435fca",
    "title": "Monarch: tool-in-lesion claimed from radial EBUS, size given in centimetres",
    "traps": [
     "size_in_cm",
@@ -1822,328 +1822,328 @@
     "document_id": "1ecdd650-6921-4245-ae3c-f0d0f23dc287",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      129,
-      187,
+      147,
+      205,
       "active"
      ],
      "/case_details/airway_device": [
-      205,
-      256,
+      223,
+      274,
       "active"
      ],
      "/case_details/airway_size_unit": [
-      205,
-      256,
+      223,
+      274,
       "active"
      ],
      "/case_details/airway_size_value": [
-      205,
-      256,
+      223,
+      274,
       "active"
      ],
      "/case_details/anesthesia_type": [
-      205,
-      256,
+      223,
+      274,
       "active"
      ],
      "/case_details/immediate_disposition": [
-      1374,
-      1425,
+      1392,
+      1443,
       "active"
      ],
      "/case_details/pack_years": [
-      129,
-      187,
+      147,
+      205,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      129,
-      187,
+      147,
+      205,
       "active"
      ],
      "/case_details/smoking_status": [
-      129,
-      187,
+      147,
+      205,
       "active"
      ],
      "/complication_assessment": [
-      1273,
-      1355,
+      1291,
+      1373,
       "negated"
      ],
      "/complications/0/category": [
-      1273,
-      1355,
+      1291,
+      1373,
       "negated"
      ],
      "/complications/0/state": [
-      1273,
-      1355,
+      1291,
+      1373,
       "negated"
      ],
      "/complications/1/category": [
-      1273,
-      1355,
+      1291,
+      1373,
       "negated"
      ],
      "/complications/1/state": [
-      1273,
-      1355,
+      1291,
+      1373,
       "negated"
      ],
      "/localization_events/0/localization_modality": [
-      773,
-      810,
+      791,
+      828,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      773,
-      810,
+      791,
+      828,
       "active"
      ],
      "/localization_events/1/actual_lesion_vs_virtual_target": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/confirmation_basis": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/final_prebiopsy_confirmation": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/localization_modality": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/sampling_tool_present": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/tool_lesion_relationship": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/localization_events/1/verified_tool_component": [
-      811,
-      912,
+      829,
+      930,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      685,
-      772,
+      703,
+      790,
       "active"
      ],
      "/navigation_runs/0/platform_family": [
-      466,
-      518,
+      484,
+      536,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      685,
-      772,
+      703,
+      790,
       "active"
      ],
      "/procedures/0/category": [
-      274,
-      343,
+      292,
+      361,
       "active"
      ],
      "/procedures/0/completion": [
-      274,
-      343,
+      292,
+      361,
       "active"
      ],
      "/procedures/0/performance": [
-      274,
-      343,
+      292,
+      361,
       "active"
      ],
      "/procedures/0/planned": [
-      274,
-      343,
+      292,
+      361,
       "active"
      ],
      "/procedures/1/category": [
-      344,
-      429,
+      362,
+      447,
       "negated"
      ],
      "/procedures/1/completion": [
-      344,
-      429,
+      362,
+      447,
       "negated"
      ],
      "/procedures/1/performance": [
-      344,
-      429,
+      362,
+      447,
       "negated"
      ],
      "/procedures/1/planned": [
-      344,
-      429,
+      362,
+      447,
       "negated"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      913,
-      994,
+      931,
+      1012,
       "active"
      ],
      "/sampling_acquisitions/0/needle_gauge": [
-      913,
-      994,
+      931,
+      1012,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      913,
-      994,
+      931,
+      1012,
       "active"
      ],
      "/sampling_acquisitions/0/rose_performed": [
-      1053,
-      1141,
+      1071,
+      1159,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      913,
-      994,
+      931,
+      1012,
       "active"
      ],
      "/sampling_acquisitions/1/acquisition_record_granularity": [
-      995,
-      1052,
+      1013,
+      1070,
       "active"
      ],
      "/sampling_acquisitions/1/reported_pass_count": [
-      995,
-      1052,
+      1013,
+      1070,
       "active"
      ],
      "/sampling_acquisitions/1/sampling_tool": [
-      995,
-      1052,
+      1013,
+      1070,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      1142,
-      1196,
+      1160,
+      1214,
       "active"
      ],
      "/sampling_specimen_links/1/link_certainty": [
-      1197,
-      1252,
+      1215,
+      1270,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      1142,
-      1196,
+      1160,
+      1214,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      1142,
-      1196,
+      1160,
+      1214,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      1142,
-      1196,
+      1160,
+      1214,
       "active"
      ],
      "/specimens/1/specimen_label": [
-      1197,
-      1252,
+      1215,
+      1270,
       "active"
      ],
      "/specimens/1/specimen_type": [
-      1197,
-      1252,
+      1215,
+      1270,
       "active"
      ],
      "/specimens/1/target_attribution_status": [
-      1197,
-      1252,
+      1215,
+      1270,
       "active"
      ],
      "/targets/0/anatomic_label": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      685,
-      772,
+      703,
+      790,
       "active"
      ],
      "/targets/0/lesion_attenuation_type": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/lobe": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/max_diameter_mm": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/pet_avid": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/pet_suv_max": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/prespecified_biopsy_target": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      1053,
-      1141,
+      1071,
+      1159,
       "active"
      ],
      "/targets/0/rose_result": [
-      1053,
-      1141,
+      1071,
+      1159,
       "active"
      ],
      "/targets/0/rose_used": [
-      1053,
-      1141,
+      1071,
+      1159,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      995,
-      1052,
+      1013,
+      1070,
       "active"
      ],
      "/targets/0/segment": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/site": [
-      519,
-      684,
+      537,
+      702,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      1197,
-      1252,
+      1215,
+      1270,
       "active"
      ]
     },
@@ -2306,8 +2306,8 @@
    "source": "truth_first",
    "style": "markdown",
    "teaching_point": "Specific complications are explicitly denied. Linear EBUS staging was planned but not performed.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-01-25\n\n**Indication:** Patient: 76-year-old male, current smoker (10 pack-years).\n\n**Anesthesia:** General anesthesia via an 8.0 mm endotracheal tube.\n\n**Procedures:** Robotic-assisted bronchoscopy was performed as planned and completed. Linear EBUS staging was planned but was not started and was not performed (deferred).\n\n## Robotic navigation and sampling\nThe Galaxy robotic platform was used for navigation. Target 1 was a 25 mm solid lesion in the posterior segment (RB2) of the right upper lobe. It was FDG-avid (SUVmax 10.0). Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed a concentric view. Digital tomosynthesis confirmed the biopsy needle within the lesion before sampling (tool-in-lesion). Transbronchial needle aspiration was performed with a 25-gauge needle (3 passes). Transbronchial forceps biopsies were obtained (6 passes). ROSE of target 1 showed benign bronchial cells and macrophages; the sample was adequate. Specimen A: needle aspirates from target 1 (cytology). Specimen B: forceps biopsies from target 1 (histology).\n\n**Complications:** No immediate complications. There was no pneumothorax and no significant bleeding.\n\n**Disposition:** The patient was admitted for overnight observation.\n",
-   "text_sha256": "a70867714c9a995810c29fc24b0d3e93d813518628794f154d82924d4803fefe",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-01-25\n\n**Indication:** Patient: 76-year-old male, current smoker (10 pack-years).\n\n**Anesthesia:** General anesthesia via an 8.0 mm endotracheal tube.\n\n**Procedures:** Robotic-assisted bronchoscopy was performed as planned and completed. Linear EBUS staging was planned but was not started and was not performed (deferred).\n\n## Robotic navigation and sampling\nThe Galaxy robotic platform was used for navigation. Target 1 was a 25 mm solid lesion in the posterior segment (RB2) of the right upper lobe. It was FDG-avid (SUVmax 10.0). Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed a concentric view. Digital tomosynthesis confirmed the biopsy needle within the lesion before sampling (tool-in-lesion). Transbronchial needle aspiration was performed with a 25-gauge needle (3 passes). Transbronchial forceps biopsies were obtained (6 passes). ROSE of target 1 showed benign bronchial cells and macrophages; the sample was adequate. Specimen A: needle aspirates from target 1 (cytology). Specimen B: forceps biopsies from target 1 (histology).\n\n**Complications:** No immediate complications. There was no pneumothorax and no significant bleeding.\n\n**Disposition:** The patient was admitted for overnight observation.\n",
+   "text_sha256": "b877985001544c69f0c175f01391c17ae1213a53e591e690182aad87fbbc9e0b",
    "title": "Galaxy: EBUS staging was planned but not performed",
    "traps": [
     "negated_complications",
@@ -2327,843 +2327,843 @@
     "document_id": "1efd7f24-1ea3-4b5a-b33d-8bdcea44f825",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      113,
-      179,
+      131,
+      197,
       "active"
      ],
      "/case_details/airway_device": [
-      348,
-      403,
+      366,
+      421,
       "active"
      ],
      "/case_details/airway_size_unit": [
-      348,
-      403,
+      366,
+      421,
       "active"
      ],
      "/case_details/airway_size_value": [
-      348,
-      403,
+      366,
+      421,
       "active"
      ],
      "/case_details/anesthesia_type": [
-      348,
-      403,
+      366,
+      421,
       "active"
      ],
      "/case_details/immediate_disposition": [
-      2331,
-      2382,
+      2349,
+      2400,
       "active"
      ],
      "/case_details/indication": [
-      180,
-      259,
+      198,
+      277,
       "active"
      ],
      "/case_details/intent": [
-      180,
-      259,
+      198,
+      277,
       "active"
      ],
      "/case_details/pack_years": [
-      113,
-      179,
+      131,
+      197,
       "active"
      ],
      "/case_details/procedure_duration_minutes": [
-      2299,
-      2330,
+      2317,
+      2348,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      113,
-      179,
+      131,
+      197,
       "active"
      ],
      "/case_details/smoking_status": [
-      113,
-      179,
+      131,
+      197,
       "active"
      ],
      "/complication_assessment": [
-      2270,
-      2297,
+      2288,
+      2315,
       "negated"
      ],
      "/ebus_sessions/0/performed_sampling_strategy": [
-      1265,
-      1360,
+      1283,
+      1378,
       "active"
      ],
      "/ebus_sessions/0/primary_purpose": [
-      1265,
-      1360,
+      1283,
+      1378,
       "active"
      ],
      "/ebus_sessions/0/rose_used": [
-      2087,
-      2130,
+      2105,
+      2148,
       "active"
      ],
      "/localization_events/0/localization_modality": [
-      672,
-      709,
+      690,
+      727,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      672,
-      709,
+      690,
+      727,
       "active"
      ],
      "/localization_events/1/localization_modality": [
-      710,
-      770,
+      728,
+      788,
       "active"
      ],
      "/localization_events/1/tool_lesion_relationship": [
-      710,
-      770,
+      728,
+      788,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      584,
-      671,
+      602,
+      689,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      584,
-      671,
+      602,
+      689,
       "active"
      ],
      "/procedures/0/category": [
-      405,
-      472,
+      423,
+      490,
       "active"
      ],
      "/procedures/0/completion": [
-      405,
-      472,
+      423,
+      490,
       "active"
      ],
      "/procedures/0/performance": [
-      405,
-      472,
+      423,
+      490,
       "active"
      ],
      "/procedures/0/planned": [
-      405,
-      472,
+      423,
+      490,
       "active"
      ],
      "/procedures/1/category": [
-      473,
-      529,
+      491,
+      547,
       "active"
      ],
      "/procedures/1/completion": [
-      473,
-      529,
+      491,
+      547,
       "active"
      ],
      "/procedures/1/performance": [
-      473,
-      529,
+      491,
+      547,
       "active"
      ],
      "/procedures/1/planned": [
-      473,
-      529,
+      491,
+      547,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      771,
-      855,
+      789,
+      873,
       "active"
      ],
      "/sampling_acquisitions/0/needle_gauge": [
-      771,
-      855,
+      789,
+      873,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      771,
-      855,
+      789,
+      873,
       "active"
      ],
      "/sampling_acquisitions/0/rose_performed": [
-      1037,
-      1123,
+      1055,
+      1141,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      771,
-      855,
+      789,
+      873,
       "active"
      ],
      "/sampling_acquisitions/1/acquisition_record_granularity": [
-      856,
-      916,
+      874,
+      934,
       "active"
      ],
      "/sampling_acquisitions/1/reported_pass_count": [
-      856,
-      916,
+      874,
+      934,
       "active"
      ],
      "/sampling_acquisitions/1/sampling_tool": [
-      856,
-      916,
+      874,
+      934,
       "active"
      ],
      "/sampling_acquisitions/2/acquisition_record_granularity": [
-      917,
-      990,
+      935,
+      1008,
       "active"
      ],
      "/sampling_acquisitions/2/reported_pass_count": [
-      917,
-      990,
+      935,
+      1008,
       "active"
      ],
      "/sampling_acquisitions/2/sampling_tool": [
-      917,
-      990,
+      935,
+      1008,
       "active"
      ],
      "/sampling_acquisitions/2/tool_size_mm": [
-      917,
-      990,
+      935,
+      1008,
       "active"
      ],
      "/sampling_acquisitions/3/acquisition_record_granularity": [
-      991,
-      1036,
+      1009,
+      1054,
       "active"
      ],
      "/sampling_acquisitions/3/reported_pass_count": [
-      991,
-      1036,
+      1009,
+      1054,
       "active"
      ],
      "/sampling_acquisitions/3/sampling_tool": [
-      991,
-      1036,
+      1009,
+      1054,
       "active"
      ],
      "/sampling_acquisitions/4/acquisition_record_granularity": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/sampling_acquisitions/4/needle_gauge": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/sampling_acquisitions/4/reported_pass_count": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/sampling_acquisitions/4/rose_performed": [
-      1512,
-      1555,
+      1530,
+      1573,
       "active"
      ],
      "/sampling_acquisitions/4/sampling_tool": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/sampling_acquisitions/5/acquisition_record_granularity": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/sampling_acquisitions/5/needle_gauge": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/sampling_acquisitions/5/reported_pass_count": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/sampling_acquisitions/5/sampling_tool": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/sampling_acquisitions/6/acquisition_record_granularity": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/sampling_acquisitions/6/needle_gauge": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/sampling_acquisitions/6/reported_pass_count": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/sampling_acquisitions/6/rose_performed": [
-      1870,
-      1929,
+      1888,
+      1947,
       "active"
      ],
      "/sampling_acquisitions/6/sampling_tool": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/sampling_acquisitions/7/acquisition_record_granularity": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/sampling_acquisitions/7/needle_gauge": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/sampling_acquisitions/7/reported_pass_count": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/sampling_acquisitions/7/rose_performed": [
-      2087,
-      2130,
+      2105,
+      2148,
       "active"
      ],
      "/sampling_acquisitions/7/sampling_tool": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      1124,
-      1190,
+      1142,
+      1208,
       "active"
      ],
      "/sampling_specimen_links/1/link_certainty": [
-      1124,
-      1190,
+      1142,
+      1208,
       "active"
      ],
      "/sampling_specimen_links/2/link_certainty": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/sampling_specimen_links/3/link_certainty": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/sampling_specimen_links/4/link_certainty": [
-      1556,
-      1600,
+      1574,
+      1618,
       "active"
      ],
      "/sampling_specimen_links/5/link_certainty": [
-      1712,
-      1757,
+      1730,
+      1775,
       "active"
      ],
      "/sampling_specimen_links/6/link_certainty": [
-      1930,
-      1976,
+      1948,
+      1994,
       "active"
      ],
      "/sampling_specimen_links/7/link_certainty": [
-      2131,
-      2175,
+      2149,
+      2193,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      1124,
-      1190,
+      1142,
+      1208,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      1124,
-      1190,
+      1142,
+      1208,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      1124,
-      1190,
+      1142,
+      1208,
       "active"
      ],
      "/specimens/1/specimen_label": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/specimens/1/specimen_type": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/specimens/1/target_attribution_status": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/specimens/2/specimen_label": [
-      1556,
-      1600,
+      1574,
+      1618,
       "active"
      ],
      "/specimens/2/specimen_type": [
-      1556,
-      1600,
+      1574,
+      1618,
       "active"
      ],
      "/specimens/2/target_attribution_status": [
-      1556,
-      1600,
+      1574,
+      1618,
       "active"
      ],
      "/specimens/3/specimen_label": [
-      1712,
-      1757,
+      1730,
+      1775,
       "active"
      ],
      "/specimens/3/specimen_type": [
-      1712,
-      1757,
+      1730,
+      1775,
       "active"
      ],
      "/specimens/3/target_attribution_status": [
-      1712,
-      1757,
+      1730,
+      1775,
       "active"
      ],
      "/specimens/4/specimen_label": [
-      1930,
-      1976,
+      1948,
+      1994,
       "active"
      ],
      "/specimens/4/specimen_type": [
-      1930,
-      1976,
+      1948,
+      1994,
       "active"
      ],
      "/specimens/4/target_attribution_status": [
-      1930,
-      1976,
+      1948,
+      1994,
       "active"
      ],
      "/specimens/5/specimen_label": [
-      2131,
-      2175,
+      2149,
+      2193,
       "active"
      ],
      "/specimens/5/specimen_type": [
-      2131,
-      2175,
+      2149,
+      2193,
       "active"
      ],
      "/specimens/5/target_attribution_status": [
-      2131,
-      2175,
+      2149,
+      2193,
       "active"
      ],
      "/station_surveys/0/iaslc_station": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/largest_short_axis_mm": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/size_axis_explicit": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/station_sampled": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/station_surveyed": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/station_visualized": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/0/survey_modality": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/station_surveys/1/iaslc_station": [
-      1601,
-      1646,
+      1619,
+      1664,
       "active"
      ],
      "/station_surveys/1/station_sampled": [
-      1601,
-      1646,
+      1619,
+      1664,
       "active"
      ],
      "/station_surveys/1/station_surveyed": [
-      1601,
-      1646,
+      1619,
+      1664,
       "active"
      ],
      "/station_surveys/1/station_visualized": [
-      1601,
-      1646,
+      1619,
+      1664,
       "active"
      ],
      "/station_surveys/1/survey_modality": [
-      1601,
-      1646,
+      1619,
+      1664,
       "active"
      ],
      "/station_surveys/2/iaslc_station": [
-      1758,
-      1804,
+      1776,
+      1822,
       "active"
      ],
      "/station_surveys/2/station_sampled": [
-      1758,
-      1804,
+      1776,
+      1822,
       "active"
      ],
      "/station_surveys/2/station_surveyed": [
-      1758,
-      1804,
+      1776,
+      1822,
       "active"
      ],
      "/station_surveys/2/station_visualized": [
-      1758,
-      1804,
+      1776,
+      1822,
       "active"
      ],
      "/station_surveys/2/survey_modality": [
-      1758,
-      1804,
+      1776,
+      1822,
       "active"
      ],
      "/station_surveys/3/iaslc_station": [
-      1977,
-      2023,
+      1995,
+      2041,
       "active"
      ],
      "/station_surveys/3/station_sampled": [
-      1977,
-      2023,
+      1995,
+      2041,
       "active"
      ],
      "/station_surveys/3/station_surveyed": [
-      1977,
-      2023,
+      1995,
+      2041,
       "active"
      ],
      "/station_surveys/3/station_visualized": [
-      1977,
-      2023,
+      1995,
+      2041,
       "active"
      ],
      "/station_surveys/3/survey_modality": [
-      1977,
-      2023,
+      1995,
+      2041,
       "active"
      ],
      "/station_surveys/4/iaslc_station": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/station_surveys/4/reason_not_sampled": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/station_surveys/4/station_sampled": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/station_surveys/4/station_surveyed": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/station_surveys/4/station_visualized": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/station_surveys/4/survey_modality": [
-      2176,
-      2268,
+      2194,
+      2286,
       "negated"
      ],
      "/targets/0/anatomic_label": [
-      531,
-      583,
+      549,
+      601,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      584,
-      671,
+      602,
+      689,
       "active"
      ],
      "/targets/0/lobe": [
-      531,
-      583,
+      549,
+      601,
       "active"
      ],
      "/targets/0/max_diameter_mm": [
-      531,
-      583,
+      549,
+      601,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      1037,
-      1123,
+      1055,
+      1141,
       "active"
      ],
      "/targets/0/rose_result": [
-      1037,
-      1123,
+      1055,
+      1141,
       "active"
      ],
      "/targets/0/rose_used": [
-      1037,
-      1123,
+      1055,
+      1141,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      991,
-      1036,
+      1009,
+      1054,
       "active"
      ],
      "/targets/0/site": [
-      531,
-      583,
+      549,
+      601,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      1191,
-      1263,
+      1209,
+      1281,
       "active"
      ],
      "/targets/1/iaslc_station": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/measurement_modality": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/targets/1/needle_gauge": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/needle_pass_count": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/puncture_route": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/rose_adequate": [
-      1512,
-      1555,
+      1530,
+      1573,
       "active"
      ],
      "/targets/1/rose_result": [
-      1512,
-      1555,
+      1530,
+      1573,
       "active"
      ],
      "/targets/1/rose_used": [
-      1512,
-      1555,
+      1530,
+      1573,
       "active"
      ],
      "/targets/1/sampling_attempted": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/short_axis_mm": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/targets/1/site": [
-      1449,
-      1511,
+      1467,
+      1529,
       "active"
      ],
      "/targets/1/size_axis_explicit": [
-      1361,
-      1448,
+      1379,
+      1466,
       "active"
      ],
      "/targets/1/specimen_obtained": [
-      1556,
-      1600,
+      1574,
+      1618,
       "active"
      ],
      "/targets/2/iaslc_station": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/needle_gauge": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/needle_pass_count": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/puncture_route": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/sampling_attempted": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/site": [
-      1647,
-      1711,
+      1665,
+      1729,
       "active"
      ],
      "/targets/2/specimen_obtained": [
-      1712,
-      1757,
+      1730,
+      1775,
       "active"
      ],
      "/targets/3/iaslc_station": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/needle_gauge": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/needle_pass_count": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/puncture_route": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/rose_adequate": [
-      1870,
-      1929,
+      1888,
+      1947,
       "active"
      ],
      "/targets/3/rose_result": [
-      1870,
-      1929,
+      1888,
+      1947,
       "active"
      ],
      "/targets/3/rose_used": [
-      1870,
-      1929,
+      1888,
+      1947,
       "active"
      ],
      "/targets/3/sampling_attempted": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/site": [
-      1805,
-      1869,
+      1823,
+      1887,
       "active"
      ],
      "/targets/3/specimen_obtained": [
-      1930,
-      1976,
+      1948,
+      1994,
       "active"
      ],
      "/targets/4/iaslc_station": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/needle_gauge": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/needle_pass_count": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/puncture_route": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/rose_adequate": [
-      2087,
-      2130,
+      2105,
+      2148,
       "active"
      ],
      "/targets/4/rose_result": [
-      2087,
-      2130,
+      2105,
+      2148,
       "active"
      ],
      "/targets/4/rose_used": [
-      2087,
-      2130,
+      2105,
+      2148,
       "active"
      ],
      "/targets/4/sampling_attempted": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/site": [
-      2024,
-      2086,
+      2042,
+      2104,
       "active"
      ],
      "/targets/4/specimen_obtained": [
-      2131,
-      2175,
+      2149,
+      2193,
       "active"
      ]
     },
@@ -3543,8 +3543,8 @@
    "source": "truth_first",
    "style": "messy",
    "teaching_point": "A prior procedure and its stations appear only in the history.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-02-02\n\nThe patient is an 87-year-old male, former smoker (20 pack-years). Indiaction: tissue diagnosis of a peripheral lung lesion & mediastinal staging. History: prior bronchoscopy in 2024 with EBUS samlping of station 7 was nondiagnostic.\n\nGeneral anesthesia with a size 4 laryngeal mask airway.\n\nRobotic-assisted bronchosocpy was performed as planned & completed. Linear EBUS-TBNA was performed as planned and completed.\n\nTarget 1 was a 23 mm lesion in the right lower lobe. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an eccentric view. Mobile cone-beam CT showed the catheter touching the lesion. Transbronchial needle aspiartion was performed with a 22-gauge needle (four passes). Transbronchial forceps biopsies were obtanied (five passes). Tranbsronchial cryobiopsy was performed w/ a 2.4 mm cryoprobe (2 passes). Bronchial brushings were obtained (1 passes). ROSE of target 1 showed benign bronchial cells & macrophages; the sample was adequate. Specimen A: needle aspirates & brushings from target 1 (cytology). Specimen B: cryobiopsies and forceps biopsies from target 1 (histoolgy).\n\nLinear EBUS was performed for initial mediastianl staging using a systematic sampling strategy. Station 2R was visualized on EBUS and sampled. Station 2R measured 22 mm in short axis. Station 2R: EBUS-guided TBNA with a 25-gauge needle, 3 passes. ROSE of station 2R: blood only, inadequate. Specimen C: station 2R aspirates (cytology). Station 10L was visualized on EBUS & sampled. Station 10L: EBUS-guided TBNA w/ a 21-gauge needle, four passes. Specimen D: station 10L aspirates (cyotlogy). Station 11Ri was visualized on EBUS & sampled. Station 11Ri: EBUS-guided TBNA with a 22-gauge needle, 2 passes. ROSE of station 11Ri: non-necrotizing granulomas, adequate. Specimen E: station 11Ri apsirates (cytology). Station 4L was visualized on EBUS and sampled. Station 4L: EBUS-guided TBNA with a 22-gauge needle, 3 passes. ROSE of station 4L: blood only, inadequate. Specimen F: station 4L aspirates (cytology). Station 11L was visualized on EBUS but not sampled because it appeared benign on ultrasound.\n\nNo immediate complications.\n\nProcedure duration: 82 minuets. The patient was admitted for overnight observation.\n",
-   "text_sha256": "c647ebc085f8db2c7f5c11495465ce982abc58766d923431ef6cc2b4625f99d4",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-02-02\n\nThe patient is an 87-year-old male, former smoker (20 pack-years). Indiaction: tissue diagnosis of a peripheral lung lesion & mediastinal staging. History: prior bronchoscopy in 2024 with EBUS samlping of station 7 was nondiagnostic.\n\nGeneral anesthesia with a size 4 laryngeal mask airway.\n\nRobotic-assisted bronchosocpy was performed as planned & completed. Linear EBUS-TBNA was performed as planned and completed.\n\nTarget 1 was a 23 mm lesion in the right lower lobe. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an eccentric view. Mobile cone-beam CT showed the catheter touching the lesion. Transbronchial needle aspiartion was performed with a 22-gauge needle (four passes). Transbronchial forceps biopsies were obtanied (five passes). Tranbsronchial cryobiopsy was performed w/ a 2.4 mm cryoprobe (2 passes). Bronchial brushings were obtained (1 passes). ROSE of target 1 showed benign bronchial cells & macrophages; the sample was adequate. Specimen A: needle aspirates & brushings from target 1 (cytology). Specimen B: cryobiopsies and forceps biopsies from target 1 (histoolgy).\n\nLinear EBUS was performed for initial mediastianl staging using a systematic sampling strategy. Station 2R was visualized on EBUS and sampled. Station 2R measured 22 mm in short axis. Station 2R: EBUS-guided TBNA with a 25-gauge needle, 3 passes. ROSE of station 2R: blood only, inadequate. Specimen C: station 2R aspirates (cytology). Station 10L was visualized on EBUS & sampled. Station 10L: EBUS-guided TBNA w/ a 21-gauge needle, four passes. Specimen D: station 10L aspirates (cyotlogy). Station 11Ri was visualized on EBUS & sampled. Station 11Ri: EBUS-guided TBNA with a 22-gauge needle, 2 passes. ROSE of station 11Ri: non-necrotizing granulomas, adequate. Specimen E: station 11Ri apsirates (cytology). Station 4L was visualized on EBUS and sampled. Station 4L: EBUS-guided TBNA with a 22-gauge needle, 3 passes. ROSE of station 4L: blood only, inadequate. Specimen F: station 4L aspirates (cytology). Station 11L was visualized on EBUS but not sampled because it appeared benign on ultrasound.\n\nNo immediate complications.\n\nProcedure duration: 82 minuets. The patient was admitted for overnight observation.\n",
+   "text_sha256": "9db1df788bae8bcd69e22c6d4b887c7ec2ce05ce27b56983d0f610dc231040b6",
    "title": "Ion and EBUS, rough dictation: stations from a prior procedure appear in the history",
    "traps": [
     "historical_mention"
@@ -3562,213 +3562,213 @@
     "document_id": "e954da5e-8e01-411a-bdfc-840bebf3e19a",
     "evidence": {
      "/case_details/age_at_procedure_years": [
-      124,
-      184,
+      142,
+      202,
       "active"
      ],
      "/case_details/indication": [
-      185,
-      242,
+      203,
+      260,
       "active"
      ],
      "/case_details/intent": [
-      185,
-      242,
+      203,
+      260,
       "active"
      ],
      "/case_details/pack_years": [
-      124,
-      184,
+      142,
+      202,
       "active"
      ],
      "/case_details/procedure_duration_minutes": [
-      1022,
-      1054,
+      1040,
+      1072,
       "active"
      ],
      "/case_details/sex_at_birth": [
-      124,
-      184,
+      142,
+      202,
       "active"
      ],
      "/case_details/smoking_status": [
-      124,
-      184,
+      142,
+      202,
       "active"
      ],
      "/complication_assessment": [
-      981,
-      1008,
+      999,
+      1026,
       "negated"
      ],
      "/localization_events/0/localization_modality": [
-      616,
-      652,
+      634,
+      670,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      616,
-      652,
+      634,
+      670,
       "active"
      ],
      "/localization_events/1/actual_lesion_vs_virtual_target": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/confirmation_basis": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/final_prebiopsy_confirmation": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/localization_modality": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/sampling_tool_present": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/tool_lesion_relationship": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/localization_events/1/verified_tool_component": [
-      653,
-      742,
+      671,
+      760,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      528,
-      615,
+      546,
+      633,
       "active"
      ],
      "/navigation_runs/0/platform_family": [
-      358,
-      407,
+      376,
+      425,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      528,
-      615,
+      546,
+      633,
       "active"
      ],
      "/procedures/0/category": [
-      255,
-      324,
+      273,
+      342,
       "active"
      ],
      "/procedures/0/completion": [
-      255,
-      324,
+      273,
+      342,
       "active"
      ],
      "/procedures/0/performance": [
-      255,
-      324,
+      273,
+      342,
       "active"
      ],
      "/procedures/0/planned": [
-      255,
-      324,
+      273,
+      342,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      743,
-      802,
+      761,
+      820,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      743,
-      802,
+      761,
+      820,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      743,
-      802,
+      761,
+      820,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      910,
-      965,
+      928,
+      983,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      910,
-      965,
+      928,
+      983,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      910,
-      965,
+      928,
+      983,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      910,
-      965,
+      928,
+      983,
       "active"
      ],
      "/targets/0/anatomic_label": [
-      408,
-      527,
+      426,
+      545,
       "active"
      ],
      "/targets/0/bronchus_sign_present": [
-      408,
-      527,
+      426,
+      545,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      528,
-      615,
+      546,
+      633,
       "active"
      ],
      "/targets/0/lobe": [
-      408,
-      527,
+      426,
+      545,
       "active"
      ],
      "/targets/0/prespecified_biopsy_target": [
-      408,
-      527,
+      426,
+      545,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      803,
-      909,
+      821,
+      927,
       "active"
      ],
      "/targets/0/rose_result": [
-      803,
-      909,
+      821,
+      927,
       "active"
      ],
      "/targets/0/rose_used": [
-      803,
-      909,
+      821,
+      927,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      743,
-      802,
+      761,
+      820,
       "active"
      ],
      "/targets/0/site": [
-      408,
-      527,
+      426,
+      545,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      910,
-      965,
+      928,
+      983,
       "active"
      ]
     },
@@ -3885,8 +3885,8 @@
    "source": "truth_first",
    "style": "sectioned",
    "teaching_point": "No traps: the facts are stated plainly, so this shows the baseline behaviour.",
-   "text": "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-09-01\n\nINDICATION\nPatient: 72-year-old female, current smoker (50 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Ion robotic platform was used for navigation. Target 1 was a lesion in the left lower lobe. A bronchus sign was present. Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an adjacent view. Cone-beam CT confirmed the needle tip within the lesion before sampling (tool-in-lesion). Transbronchial forceps biopsies were obtained (two passes). ROSE of target 1 showed malignant cells consistent with non-small cell carcinoma; the sample was adequate. Specimen A: forceps biopsies from target 1 (histology).\n\nCOMPLICATIONS\nNo immediate complications.\n\nDISPOSITION\nProcedure duration: 123 minutes.\n",
-   "text_sha256": "f416e8847c0c449d506c257de79eddffe3767391a24616411cb8cdc688832beb",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-09-01\n\nINDICATION\nPatient: 72-year-old female, current smoker (50 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Ion robotic platform was used for navigation. Target 1 was a lesion in the left lower lobe. A bronchus sign was present. Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an adjacent view. Cone-beam CT confirmed the needle tip within the lesion before sampling (tool-in-lesion). Transbronchial forceps biopsies were obtained (two passes). ROSE of target 1 showed malignant cells consistent with non-small cell carcinoma; the sample was adequate. Specimen A: forceps biopsies from target 1 (histology).\n\nCOMPLICATIONS\nNo immediate complications.\n\nDISPOSITION\nProcedure duration: 123 minutes.\n",
+   "text_sha256": "9bfcfe851134c224abdae8ee291ec45fdb9bff16b9a6f16ce222f3d9b7de332e",
    "title": "Ion: a straightforward peripheral nodule case",
    "traps": []
   }

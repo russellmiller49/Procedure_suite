@@ -99,6 +99,15 @@ Tests to keep passing when touching this path:
 - `ui/source/registry_grid/src/__tests__/ocrMetrics.test.js`
 - `ui/source/registry_grid/src/__tests__/provationOcrHardening.test.js`
 
+## Robotic/EBUS Demo Page
+
+- Public sample demo, off by default: `PROCSUITE_ROBOTIC_EBUS_DEMO=1` registers
+  `/api/v1/demo/robotic-ebus/*`; `PROCSUITE_UI_HOME=robotic_ebus_demo` makes it the `/ui/` page
+  (the dashboard stays at `/ui/dashboard.html`).
+- It serves stored results for exact reviewed sample texts only and never calls a provider.
+- Run locally with `make demo-serve`; rebuild the page with `make demo-ui-build`.
+- Details and file map: `CLAUDE.md` ("Robotic/EBUS Demo Page").
+
 ## SMART on FHIR EHR Launch (Epic / Oracle Health–Cerner)
 
 Optional and disabled by default; see `docs/SMART_ON_FHIR.md` for registration + flow details.

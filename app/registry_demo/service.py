@@ -129,6 +129,12 @@ def extract(text: str, sample_id: str | None = None) -> dict[str, Any]:
     if len(text) > MAX_TEXT_CHARS:
         raise DemoError(413, "text_too_long", f"The note is over {MAX_TEXT_CHARS} characters.")
     entry = store.result_for(text)
+    if entry is None and store.reviewed_sample_for(text) is not None:
+        raise DemoError(
+            409,
+            "result_not_generated",
+            "This is a reviewed sample, but its result has not been generated yet.",
+        )
     if entry is None:
         raise DemoError(
             403,

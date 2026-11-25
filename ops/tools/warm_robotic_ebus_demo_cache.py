@@ -68,13 +68,25 @@ def _request(text: str) -> ExtractionRequest:
 
 
 def _gold_response(sample: dict, text: str) -> dict | None:
-    """Development stand-in: the generator gold shaped like an extraction response."""
+    """Development stand-in: the generator gold shaped like an extraction response.
+
+    Evidence is re-anchored to ``text`` (a redacted variant shifts offsets); a quote
+    that a redaction removed is dropped while its value is kept.
+    """
     gold = sample.get("gold")
-    if not gold or normalise(text) != normalise(sample["text"]):
+    if not gold:
         return None
     proposal = dict(gold["revision"])
     proposal.pop("event_date", None)
-    proposal["field_provenance"] = provenance_from_evidence_map(gold["evidence"], text)
+    provenance = []
+    for entry in provenance_from_evidence_map(gold["evidence"], sample["text"]):
+        excerpt = entry["source_excerpt"]
+        near = text.find(excerpt, max(0, entry["source_start"] - 200))
+        found = near if near >= 0 else text.find(excerpt)
+        if found < 0:
+            continue
+        provenance.append({**entry, "source_start": found, "source_end": found + len(excerpt)})
+    proposal["field_provenance"] = provenance
     return {
         "status": "proposed",
         "warnings": ["requires_clinical_review"],

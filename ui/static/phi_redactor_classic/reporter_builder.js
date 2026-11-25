@@ -1732,7 +1732,7 @@ function transferToDashboard() {
     return;
   }
 
-  window.location.href = "./";
+  window.location.href = "./dashboard.html";
 }
 
 function updateControls() {

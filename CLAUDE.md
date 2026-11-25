@@ -276,6 +276,48 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
   selection in `data/knowledge/robotic_ebus_v1/anchor_set_20261109.json`.
 - Tests: `tests/registry_workbench/`, `packages/tests/`, `make workbench-ui-test`.
 
+## Robotic/EBUS Demo Page (2026-11-25)
+
+A focused public demo for robotic bronchoscopy + linear EBUS, separate from the dashboard and
+from the workbench. Release 1 serves **stored, reviewed results for bundled synthetic samples
+only**: no provider call, no API key.
+
+- **API** `app/registry_demo/` (`settings`, `store`, `service`, `routes`), registered at
+  `/api/v1/demo/robotic-ebus` only when `PROCSUITE_ROBOTIC_EBUS_DEMO=1`. `GET /config`,
+  `GET /samples/{id}`, `POST /extract`. It never imports the workbench database modules; the
+  field profile lives in `app/registry_workbench/profile.py`.
+- **Exact match only.** `POST /extract` returns a result only when the submitted text is
+  byte-for-byte (after line-ending normalisation) a reviewed redacted sample
+  (`store.text_key`). No fuzzy matching; anything else is 403 `reviewed_samples_only`
+  (409 `result_not_generated` for a reviewed text with no stored result).
+- **Data** in `data/knowledge/robotic_ebus_v1/demo/`: `samples.json`
+  (`ops/tools/build_robotic_ebus_demo_samples.py`: two hand-written notes plus six from the
+  truth-first generator with seeds outside every eval corpus, each with gold),
+  `redactions.json` (the text the real browser redactor produces, recorded with
+  `ops/tools/import_robotic_ebus_demo_redactions.py`, which re-applies the spans and checks
+  both hashes), `results.json` (`ops/tools/warm_robotic_ebus_demo_cache.py --llm claude`;
+  it also prints the per-sample review checks). `--llm gold` is a development stand-in and
+  refuses to write the shipped file.
+- **Suggested codes** `app/registry_workbench/contract_coding.py`: contract proposal -> minimal
+  `RegistryRecord` -> the existing `derive_all_codes_with_meta` + `derive_units_for_codes` +
+  `build_coding_support_payload`. Every contributing fact keeps its quote; unresolved or
+  unattributed sampling never drives a code and becomes a review flag. Out-of-family codes
+  (fiducial 31626, imaging, EUS-B, sedation) are listed as not assessed.
+- **Page** `ui/source/registry_workbench/src/demo/` (second Vite config `vite.demo.config.ts`,
+  `npm run build:demo` / `make demo-ui-build`), built with fixed file names into
+  `ui/static/phi_redactor/registry_demo/`. It drives the existing redactor worker by URL.
+  `ScanGate` (`phiRedaction.ts`) enables Extract only after a *completed* scan is applied to
+  the current text: the worker posts `done` with partial detections after a cancel, so
+  cancelled or outdated scans are discarded. Redaction writes only `[REDACTED]`.
+- **Field states** (`fields.ts`): value, explicit negative, stated-missing, unresolved
+  conflict, and **"Not extracted"** for a blank. A blank is never shown as "No" or as "not
+  documented", because the extractor stays silent when the note is silent.
+- **Routing** `PROCSUITE_UI_HOME=robotic_ebus_demo` serves the page at `/ui/`;
+  `/ui/dashboard.html` always serves the dashboard, and pages that link to the dashboard name
+  it. `/ui/registry_demo/` is the staging URL. Local: `make demo-serve` (port 8020).
+- Tests: `tests/registry_workbench/test_contract_coding.py`, `test_demo_api.py`,
+  `tests/api/test_registry_demo_ui.py`, `ui/source/registry_workbench/src/demo/demo.test.ts`.
+
 ## Recent Updates (2026-07-04)
 
 - **Location integrity:** intervention locations (mechanical_debulking/cryotherapy/thermal_ablation) are now sentence-scoped around action verbs; normal-anatomy ("trachea was normal") and scope-navigation sentences no longer contribute sites; prose double-spaces no longer count as table rows (`_is_multicell_table_line`).

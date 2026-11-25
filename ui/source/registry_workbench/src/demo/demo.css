@@ -1,0 +1,41 @@
+/* Demo page additions on top of the workbench stylesheet. */
+.headlink { color: #d8ecf1; font-size: .85rem; }
+main.demo { max-width: 1500px; }
+.step { margin: 14px 0 10px; }
+.step h2 { display: flex; align-items: center; gap: 10px; }
+.num { display: inline-grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%; background: var(--accent); color: #fff; font-size: .85rem; }
+.samples { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin: 10px 0; }
+.sample { text-align: left; font-weight: 500; padding: 10px 12px; }
+.sample strong { display: block; font-size: .88rem; }
+.sample small { display: block; margin-top: 5px; font-weight: 400; line-height: 1.35; }
+.sample.selected small { color: var(--muted); }
+.sample .pending { color: #8a5a07; }
+.status-line { font-size: .85rem; color: #275e54; margin: 6px 0; }
+.detections { list-style: none; padding: 0; margin: 8px 0; max-height: 22vh; overflow: auto; font-size: .85rem; }
+.detections li { margin: 4px 0; }
+.result-meta { font-size: .85rem; margin: 4px 0; }
+.tally { margin: 6px 0 12px; }
+.fact-row { padding: 10px 12px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px 16px; margin: 8px 0 0; }
+.fact dt { font-size: .74rem; font-weight: 600; color: var(--muted); }
+.fact dd { margin: 1px 0 0; color: var(--ink); font-size: .9rem; }
+.fact .state { color: var(--muted); font-size: .8rem; }
+.fact.conflict dd { color: var(--alert); }
+.fact.stated_missing strong { font-weight: 500; }
+.fact .units { color: var(--muted); }
+.quote { font-size: .74rem; margin-left: 6px; }
+.blank { border-top: 1px dashed var(--line); margin-top: 10px; padding: 8px 0 0; font-size: .82rem; }
+.blank summary { font-weight: 500; color: var(--muted); }
+.blank p { margin: 6px 0 0; }
+.code { padding: 12px 14px; }
+.code.review { border-color: #e0b36b; }
+.code h4 { font-size: 1.05rem; display: flex; gap: 8px; align-items: center; }
+.code h5 { margin: 10px 0 2px; font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.code p { margin: 4px 0; }
+.passages { margin: 2px 0; padding-left: 18px; font-size: .88rem; }
+@media (max-width: 800px) { .facts { grid-template-columns: 1fr 1fr; } }
+.blank-cell { color: var(--muted); font-style: italic; }
+@media (min-width: 1201px) {
+  .demo .review > section:first-child { position: sticky; top: 8px; align-self: start; }
+  .demo .review > section:first-child .source-text { max-height: calc(100vh - 260px); }
+}

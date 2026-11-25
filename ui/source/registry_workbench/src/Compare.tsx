@@ -6,9 +6,9 @@ export type Comparison = {
   rows: {collection: string; row: string; field: string; values: Record<string, unknown>; agree: boolean}[];
 };
 
-const show = (v: unknown) => (v == null ? "—" : typeof v === "boolean" ? (v ? "yes" : "no") : String(v));
+const show = (v: unknown, blank = "—") => (v == null ? blank : typeof v === "boolean" ? (v ? "yes" : "no") : String(v));
 
-export function Compare({comparison}: {comparison: Comparison}) {
+export function Compare({comparison, blank = "—"}: {comparison: Comparison; blank?: string}) {
   const [onlyDifferences, setOnlyDifferences] = useState(true);
   const rows = comparison.rows.filter(r => !onlyDifferences || !r.agree);
   const differences = comparison.rows.filter(r => !r.agree).length;
@@ -37,7 +37,7 @@ export function Compare({comparison}: {comparison: Comparison}) {
                 <td>{label(r.collection)}</td>
                 <td>{r.row}</td>
                 <td>{label(r.field)}</td>
-                {comparison.sources.map(s => <td key={s}>{show(r.values[s])}</td>)}
+                {comparison.sources.map(s => <td key={s} className={r.values[s] == null ? "blank-cell" : ""}>{show(r.values[s], blank)}</td>)}
               </tr>
             ))}
           </tbody>

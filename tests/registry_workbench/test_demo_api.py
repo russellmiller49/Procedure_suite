@@ -196,3 +196,16 @@ def test_shipped_samples_are_synthetic_safe_for_browser_offsets():
         assert "\r" not in sample["text"]
         assert all(ord(ch) <= 0xFFFF for ch in sample["text"])
         assert store.text_key(sample["text"]) == store.text_key(sample["text"] + "\n")
+
+
+def test_a_reviewed_text_without_a_stored_result_says_so(client, tmp_path):
+    other = BY_ID["ion-plain-peripheral"]
+    redacted = other["text"].replace("2026-09-01", PLACEHOLDER)
+    data = json.loads((tmp_path / "redactions.json").read_text())
+    data["redactions"][other["id"]] = [
+        {"worker": "module", "text": redacted, "sha256": store.text_key(redacted)}
+    ]
+    (tmp_path / "redactions.json").write_text(json.dumps(data))
+    response = client.post("/api/v1/demo/robotic-ebus/extract", json={"text": redacted})
+    assert response.status_code == 409
+    assert response.json()["detail"]["code"] == "result_not_generated"

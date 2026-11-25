@@ -1,6 +1,6 @@
-SYNTHETIC DEMONSTRATION NOTE. FICTIONAL PATIENT. NOT A RECORD OF CARE.
+Synthetic note for software demonstration only; no real patient.
 Patient: Marian Delacroix. MRN: 00481516. Date of birth: 03/14/1957.
-Procedure date: 02/11/2026. Operator: Dr. Alan Whitcombe.
+Procedure date: 02/11/2026.
 
 Indication: 22 mm solid nodule in the posterior segment of the right upper lobe with enlarged right paratracheal and subcarinal lymph nodes on CT. Diagnosis and mediastinal staging.
 Procedures performed: robotic bronchoscopy and linear EBUS-TBNA. Both procedures were completed.

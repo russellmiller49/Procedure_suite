@@ -21,6 +21,11 @@ ui/static
 # Ops entrypoints and runtime tooling
 ops
 
+# Bounded registry packages (source only; app/registry_workbench puts them on sys.path).
+# The robotic/EBUS demo API and the contract-based coding adapter import them.
+packages/ip_registry_contracts/src
+packages/ip_registry_engine/src
+
 # DB migrations
 alembic
 alembic.ini

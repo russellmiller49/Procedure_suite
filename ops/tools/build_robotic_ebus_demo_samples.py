@@ -36,6 +36,11 @@ from ops.tools.robotic_ebus_truth.verify import unsupported_values
 DEMO_DIR = ROOT / "data/knowledge/robotic_ebus_v1/demo"
 CORPORA = ROOT / "data/ml_training/robotic_ebus_v1"
 PLACEHOLDER = "[REDACTED]"
+# The generator's all-caps title line trips the browser redactor's name detector
+# ("SYNTHETIC TRAINING" is flagged as a patient name). The demo samples carry this
+# header instead; evidence offsets are shifted to match.
+GENERATOR_HEADER = "SYNTHETIC TRAINING NOTE - NOT FOR CLINICAL USE"
+DEMO_HEADER = "Synthetic note for software demonstration only; no real patient."
 
 HANDWRITTEN = [
     {
@@ -130,6 +135,22 @@ def _check_text(sample_id: str, text: str) -> str:
     return text
 
 
+def _demo_header(sample_id: str, text: str, evidence: dict) -> tuple[str, dict]:
+    """Swap the generator's title line for the demo header and shift evidence to match."""
+    if not text.startswith(GENERATOR_HEADER + "\n"):
+        raise SystemExit(f"{sample_id}: unexpected generator header")
+    shift = len(DEMO_HEADER) - len(GENERATOR_HEADER)
+    new_text = DEMO_HEADER + text[len(GENERATOR_HEADER) :]
+    shifted = {}
+    for path, (start, end, assertion) in evidence.items():
+        if start < len(GENERATOR_HEADER):
+            raise SystemExit(f"{sample_id}: evidence inside the header line")
+        if new_text[start + shift : end + shift] != text[start:end]:
+            raise SystemExit(f"{sample_id}: evidence shift mismatch at {path}")
+        shifted[path] = [start + shift, end + shift, assertion]
+    return new_text, shifted
+
+
 def _corpus_seed_ranges() -> list[range]:
     """Seed ranges of the truth-first corpora, read from their manifests only."""
     ranges = []
@@ -167,12 +188,13 @@ def generated() -> list[dict]:
         problems = unsupported_values(scenario, stated, spans, text)
         if problems or not text:
             raise SystemExit(f"{sample_id}: generator problems {problems[:5]}")
-        text = _check_text(sample_id, text)
         document_id = stable_id(scenario.family_id, f"demo:doc:{style}")
         revision = build_gold(
             scenario, stated, spans, text, document_id=document_id, digest=_sha(text)
         )
         values, evidence = compact(revision)
+        text, evidence = _demo_header(sample_id, text, evidence)
+        text = _check_text(sample_id, text)
         points = [TRAPS[t] for t in scenario.traps] or [
             "No traps: the facts are stated plainly, so this shows the baseline behaviour."
         ]

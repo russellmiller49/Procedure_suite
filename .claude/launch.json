@@ -4,9 +4,24 @@
     {
       "name": "registry-workbench",
       "runtimeExecutable": ".venv/bin/python",
-      "runtimeArgs": ["ops/tools/run_registry_workbench.py", "--port", "8010"],
+      "runtimeArgs": [
+        "ops/tools/run_registry_workbench.py",
+        "--port",
+        "8010"
+      ],
       "port": 8010,
       "url": "http://127.0.0.1:8010"
+    },
+    {
+      "name": "robotic-ebus-demo",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": [
+        "ops/tools/run_robotic_ebus_demo.py",
+        "--port",
+        "8020"
+      ],
+      "port": 8020,
+      "url": "http://127.0.0.1:8020"
     }
   ]
 }

@@ -52,6 +52,25 @@ Common:
 - `CODER_VERSION` (optional; returned in `/qa/run`)
 - `REPORTER_VERSION` (optional; returned in `/qa/run`)
 
+### Robotic bronchoscopy + EBUS demo page (optional, off by default)
+
+A focused public demo on synthetic sample notes. It serves stored, reviewed results only and
+makes no model-provider call, so it needs no API key.
+
+| Variable | Effect |
+| --- | --- |
+| `PROCSUITE_ROBOTIC_EBUS_DEMO=1` | Registers `/api/v1/demo/robotic-ebus/*`. The page is then reachable at `/ui/registry_demo/`. |
+| `PROCSUITE_UI_HOME=robotic_ebus_demo` | Makes the demo the page at `/ui/`. Default `dashboard`. The dashboard always answers at `/ui/dashboard.html`. |
+
+Go-live order: deploy with only `PROCSUITE_ROBOTIC_EBUS_DEMO=1`, check `/ui/registry_demo/`
+(run a sample through detect, apply, extract) and `/ui/dashboard.html`, then set
+`PROCSUITE_UI_HOME`. Neither variable changes `POST /api/v1/process` or the production
+startup rules, and the registry workbench stays off in production.
+
+The page needs the in-browser redaction model, which the build command above downloads
+(`PHI_REDACTOR_VENDOR_BUNDLE_S3_URI`). The deploy mirror carries `packages/*/src`, which the
+demo API imports. Do not set `PROCSUITE_LLM_EGRESS_APPROVED` for the demo.
+
 ### Troubleshooting: `DuplicateTable` during `alembic upgrade head`
 
 If boot logs show errors like `relation "phi_vault" already exists` while running

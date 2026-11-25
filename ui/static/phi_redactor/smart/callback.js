@@ -13,8 +13,9 @@ const retryEl = document.getElementById("smartCallbackRetry");
     if (statusEl) {
       statusEl.textContent = `Connected to ${session.issuerName}. Opening the dashboard…`;
     }
-    // /ui/smart/callback.html -> /ui/ (index.html); ?smart=1 scrolls the EHR panel into view.
-    window.location.replace("../?smart=1");
+    // /ui/smart/callback.html -> /ui/dashboard.html; ?smart=1 scrolls the EHR panel into view.
+    // (/ui/ may be the focused demo page, so the dashboard is addressed by name.)
+    window.location.replace("../dashboard.html?smart=1");
   } catch (err) {
     if (statusEl) statusEl.textContent = `Sign-in failed: ${err?.message || err}`;
     if (retryEl) retryEl.classList.remove("hidden");
