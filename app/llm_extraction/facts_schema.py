@@ -199,6 +199,61 @@ def schema_complexity(schema: dict[str, Any]) -> dict[str, int]:
     return {"optional_properties": optional, "union_parameters": unions}
 
 
+def strict_schema_stats(schema: dict[str, Any]) -> dict[str, int]:
+    """Measure what OpenAI strict structured outputs limit.
+
+    ``objects`` counts object schemas; ``properties`` the properties across them;
+    ``depth`` the object nesting depth (root object = 1); ``string_chars`` the
+    total length of property names and enum values; ``largest_enum`` and
+    ``largest_enum_chars`` the biggest single enum.
+    """
+    stats = {
+        "objects": 0,
+        "properties": 0,
+        "enums": 0,
+        "enum_values": 0,
+        "largest_enum": 0,
+        "largest_enum_chars": 0,
+        "depth": 0,
+        "string_chars": 0,
+        "unions": 0,
+    }
+
+    def walk(node: Any, depth: int) -> None:
+        if isinstance(node, list):
+            for value in node:
+                walk(value, depth)
+            return
+        if not isinstance(node, dict):
+            return
+        if "anyOf" in node or "oneOf" in node or isinstance(node.get("type"), list):
+            stats["unions"] += 1
+        if node.get("type") == "object":
+            depth += 1
+            stats["objects"] += 1
+            stats["depth"] = max(stats["depth"], depth)
+        enum = node.get("enum")
+        if isinstance(enum, list):
+            chars = sum(len(str(v)) for v in enum)
+            stats["enums"] += 1
+            stats["enum_values"] += len(enum)
+            stats["string_chars"] += chars
+            if len(enum) > stats["largest_enum"]:
+                stats["largest_enum"], stats["largest_enum_chars"] = len(enum), chars
+        props = node.get("properties")
+        if isinstance(props, dict):
+            stats["properties"] += len(props)
+            stats["string_chars"] += sum(len(name) for name in props)
+            for value in props.values():
+                walk(value, depth)
+        for key, value in node.items():
+            if key not in {"properties", "enum"}:
+                walk(value, depth)
+
+    walk(schema, 0)
+    return stats
+
+
 __all__ = [
     "ASSERTIONS",
     "CollectionSpec",
@@ -208,4 +263,5 @@ __all__ = [
     "build_facts_schema",
     "schema_complexity",
     "schema_digest",
+    "strict_schema_stats",
 ]
