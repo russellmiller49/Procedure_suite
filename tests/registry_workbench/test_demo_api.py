@@ -134,6 +134,16 @@ def test_exact_reviewed_text_returns_the_stored_result(client):
     assert body["comparison"]["sources"] == ["LLM", "Rules engine"]
     assert summary["llm_total"] > summary["rules_total"] > 0
     assert summary["llm_only"] > 0
+    # Rules-engine marks: one per model value the rules engine has too, at a real path.
+    marks = body["rules_agreement"]
+    states = [m["state"] for m in marks.values()]
+    assert states.count("agree") == summary["agree"] > 0
+    assert states.count("differ") == summary["differ"]
+    for path in marks:
+        value = llm["proposal"]
+        for part in path.strip("/").split("/"):
+            value = value[int(part)] if part.isdigit() else value[part]
+        assert value is not None, path
     codes = {c["code"]: c for c in body["codes"]["codes"]}
     assert {"31653", "31627", "31654", "31628", "31629", "31623"} == set(codes)
     assert codes["31629"]["modifiers"] == ["59"]

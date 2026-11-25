@@ -24,6 +24,9 @@ main.demo { max-width: 1500px; }
 .fact.stated_missing strong { font-weight: 500; }
 .fact .units { color: var(--muted); }
 .quote { font-size: .74rem; margin-left: 6px; }
+.rules-mark { display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid #9cc7bd; border-radius: 8px; background: #eaf5f2; color: #275e54; font-size: .7rem; font-weight: 600; white-space: nowrap; }
+.tally .rules-mark { margin-left: 0; }
+.rules-differ { display: block; margin-top: 2px; color: #8a5a07; font-size: .76rem; }
 .blank { border-top: 1px dashed var(--line); margin-top: 10px; padding: 8px 0 0; font-size: .82rem; }
 .blank summary { font-weight: 500; color: var(--muted); }
 .blank p { margin: 6px 0 0; }

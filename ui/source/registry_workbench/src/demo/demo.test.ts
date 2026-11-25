@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import profile from "../__fixtures__/profile.json";
 import type {Profile} from "../types";
-import {buildSections, countStates, show, verifiedSpan} from "./fields";
+import {buildSections, countRules, countStates, show, verifiedSpan} from "./fields";
 import {applyRedactions, mergeSpans, PLACEHOLDER, readDetections, ScanGate, type Detection} from "./phiRedaction";
 
 const det = (id: string, start: number, end: number): Detection => ({id, start, end, label: "PATIENT", score: 0.9, source: "auto"});
@@ -133,6 +133,23 @@ describe("field states", () => {
     expect(rows[0].fields.some(f => f.name.endsWith("_id"))).toBe(false);
     expect(show("part_solid")).toBe("part solid");
     expect(show("RUL")).toBe("RUL");
+  });
+
+  it("marks a value the rules engine also extracted, and never a blank or an unresolved field", () => {
+    const withRules = buildSections(profile as unknown as Profile, proposal, {
+      "/station_surveys/0/station_sampled": {state: "agree", other_value: true},
+      "/station_surveys/1/station_sampled": {state: "differ", other_value: true},
+      "/station_surveys/0/station_visualized": {state: "agree", other_value: true},
+      "/targets/0/short_axis_mm": {state: "differ", other_value: 12},
+    });
+    const at = (collection: string, row: number, name: string) =>
+      withRules.find(s => s.collection === collection)!.rows[row].fields.find(f => f.name === name)!;
+    expect(at("station_surveys", 0, "station_sampled").rules).toEqual({state: "agree", display: "Yes"});
+    expect(at("station_surveys", 1, "station_sampled").rules).toEqual({state: "differ", display: "Yes"});
+    expect(at("station_surveys", 0, "station_visualized").rules).toBeUndefined();
+    expect(at("targets", 0, "short_axis_mm").rules).toBeUndefined();
+    expect(countRules(withRules)).toEqual({agree: 1, differ: 1});
+    expect(countRules(sections)).toEqual({agree: 0, differ: 0});
   });
 
   it("only trusts a span whose excerpt is really at that place", () => {

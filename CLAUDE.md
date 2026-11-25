@@ -331,6 +331,15 @@ only**: no provider call, no API key.
 - **Field states** (`fields.ts`): value, explicit negative, stated-missing, unresolved
   conflict, and **"Not extracted"** for a blank. A blank is never shown as "No" or as "not
   documented", because the extractor stays silent when the note is silent.
+- **Rules-engine mark.** `compare.agreement()` pairs each model value with the rules engine's
+  value for the same field of the same row (natural keys, as in the comparison tab); the demo
+  response carries it as `rules_agreement` (computed after the cache lookup). The page shows
+  "✓ rules" on an identical value and "Rules engine read: X" on a different one; a value the
+  rules engine is silent on gets no mark. The outputs are **not merged**: on the 86 validation
+  notes (post hoc, saved outputs) filling Opus's blanks from the rules engine moved precision
+  0.982 -> 0.978 and recall 0.963 -> 0.972, the rules engine lost all 21 disagreements, and 153
+  of Opus's 155 wrong values were in fields the rules engine left blank. Where both agreed Opus
+  was right 3,583 of 3,585 times.
 - **Routing** `PROCSUITE_UI_HOME=robotic_ebus_demo` serves the page at `/ui/`;
   `/ui/dashboard.html` always serves the dashboard, and pages that link to the dashboard name
   it. `/ui/registry_demo/` is the staging URL. Local: `make demo-serve` (port 8020).

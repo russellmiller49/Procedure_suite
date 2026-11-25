@@ -160,6 +160,8 @@ def extract(text: str, sample_id: str | None = None) -> dict[str, Any]:
         "llm": llm,
         "rules": rules,
         "comparison": _comparison(llm, rules),
+        # Which model values the rules engine extracted too, keyed by proposal path.
+        "rules_agreement": comparison.agreement(_values(llm), _values(rules)),
         "codes": codes,
     }
 

@@ -1,5 +1,6 @@
 import type {Profile, Values} from "../types";
 import type {Comparison} from "../Compare";
+import type {RulesAgreement} from "./fields";
 
 export type SampleSummary = {
   id: string;
@@ -63,6 +64,7 @@ export type ExtractResult = {
   llm: Side | null;
   rules: Side | null;
   comparison: Comparison & {summary: Record<string, number>};
+  rules_agreement?: RulesAgreement;
   codes: Codes | null;
 };
 

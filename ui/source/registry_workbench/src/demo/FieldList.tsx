@@ -16,6 +16,14 @@ function Field({field, text, onFocus}: {field: FieldView; text: string; onFocus:
         ) : field.derived ? (
           <span className="provenance-tag"> derived</span>
         ) : null}
+        {field.rules?.state === "agree" && (
+          <span className="rules-mark" title="The rules engine extracted the same value on its own.">✓ rules</span>
+        )}
+        {field.rules?.state === "differ" && (
+          <span className="rules-differ" title="The rules engine extracted a different value for this field.">
+            Rules engine read: {field.rules.display}
+          </span>
+        )}
       </dd>
     </div>
   );

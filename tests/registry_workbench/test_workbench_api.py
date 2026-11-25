@@ -241,3 +241,42 @@ def test_main_app_does_not_expose_the_workbench_by_default():
         for r in main_app.routes
         if getattr(r, "path", "").startswith(("/api/v1/workbench", "/workbench"))
     ]
+
+
+def test_agreement_marks_only_values_the_other_source_has():
+    from app.registry_workbench.compare import agreement, compare
+
+    llm = {
+        "complication_assessment": "none",
+        "case_details": {"asa_class": 3},
+        "targets": [
+            {"target_id": "a", "site": "lung_lesion", "lobe": "RUL", "max_diameter_mm": 22},
+            {"target_id": "b", "site": "lymph_node", "iaslc_station": "7", "short_axis_mm": 14},
+        ],
+        "station_surveys": [
+            {"iaslc_station": "7", "station_sampled": True, "station_surveyed": True}
+        ],
+    }
+    rules = {
+        "complication_assessment": "none",
+        "case_details": {"asa_class": "not_documented"},
+        "targets": [
+            {"target_id": "x", "site": "lymph_node", "iaslc_station": "7", "short_axis_mm": 1},
+            {"target_id": "y", "site": "lung_lesion", "lobe": "RUL", "max_diameter_mm": 22.0},
+        ],
+        "station_surveys": [{"iaslc_station": "7", "station_sampled": True}],
+    }
+    marks = agreement(llm, rules)
+    assert marks["/complication_assessment"] == {"state": "agree", "other_value": "none"}
+    # Rows pair on lobe or station, not on position; 22 and 22.0 are the same reading.
+    assert marks["/targets/0/max_diameter_mm"]["state"] == "agree"
+    # True is not the number 1.
+    assert marks["/targets/1/short_axis_mm"] == {"state": "differ", "other_value": 1}
+    assert marks["/station_surveys/0/station_sampled"]["state"] == "agree"
+    # Silence is not disagreement: no mark where the other source has nothing.
+    assert "/station_surveys/0/station_surveyed" not in marks
+    assert "/case_details/asa_class" not in marks
+    # The side-by-side table uses the same notion of agreement.
+    by_field = {(r["row"], r["field"]): r["agree"] for r in compare({"a": llm, "b": rules})}
+    assert by_field[("lung RUL", "max_diameter_mm")] is True
+    assert by_field[("node 7", "short_axis_mm")] is False

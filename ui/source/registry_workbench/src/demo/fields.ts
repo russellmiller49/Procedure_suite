@@ -13,13 +13,17 @@ export type FieldView = {
   quote?: string;
   span?: [number, number];
   derived: boolean;
+  /** Set only when the rules engine has a value for the same field of the same row. */
+  rules?: {state: "agree" | "differ"; display: string};
 };
+/** Proposal path -> what the rules engine extracted for that value, from the demo API. */
+export type RulesAgreement = Record<string, {state: "agree" | "differ"; other_value: unknown}>;
 export type RowView = {key: string; title: string; fields: FieldView[]; extracted: number};
 export type SectionView = {collection: string; title: string; rows: RowView[]};
 
 const HIDDEN = new Set([
   "target_identity_id", "operator_id", "source_document_id", "adverse_event_id",
-  "run_sequence_number", "event_sequence_number", "pass_sequence_number",
+  "run_sequence_number", "event_sequence_number", "pass_sequence_number", "localization_event_id_before_pass",
 ]);
 export const SECTION_ORDER = [
   "procedures", "case_details", "targets", "ebus_sessions", "station_surveys", "navigation_runs",
@@ -114,10 +118,16 @@ function fieldView(profile: Profile, proposal: Values, collection: string, path:
 }
 
 /** Sections with one entry per extracted row; fields the extractor left blank are kept, marked. */
-export function buildSections(profile: Profile, proposal: Values | null): SectionView[] {
+export function buildSections(profile: Profile, proposal: Values | null, agreement: RulesAgreement = {}): SectionView[] {
   if (!proposal) return [];
   const schema = profile.schema;
   const out: SectionView[] = [];
+  // The mark belongs to a recorded value; a blank or an unresolved field never carries one.
+  const marked = (view: FieldView): FieldView => {
+    const other = agreement[view.path];
+    if (!other || (view.state !== "value" && view.state !== "negative")) return view;
+    return {...view, rules: {state: other.state, display: show(other.other_value)}};
+  };
   for (const collection of SECTION_ORDER) {
     const property = schema.properties[collection];
     if (!property) continue;
@@ -128,7 +138,7 @@ export function buildSections(profile: Profile, proposal: Values | null): Sectio
       const prefix = singleton ? `/${collection}` : `/${collection}/${index}`;
       const fields = Object.keys(entity.properties || {})
         .filter(name => name !== KEYS[collection] && !HIDDEN.has(name) && !name.endsWith("_id"))
-        .map(name => fieldView(profile, proposal, collection, `${prefix}/${name}`, name, row[name]));
+        .map(name => marked(fieldView(profile, proposal, collection, `${prefix}/${name}`, name, row[name])));
       return {
         key: prefix,
         title: singleton ? "Case and anesthesia" : rowTitle(collection, row, index, proposal),
@@ -137,7 +147,7 @@ export function buildSections(profile: Profile, proposal: Values | null): Sectio
       };
     });
     if (collection === "complications") {
-      const overall = fieldView(profile, proposal, "revision", "/complication_assessment", "complication_assessment", proposal.complication_assessment);
+      const overall = marked(fieldView(profile, proposal, "revision", "/complication_assessment", "complication_assessment", proposal.complication_assessment));
       overall.definition = overall.definition || "Whether any complication of the procedure is documented.";
       views.unshift({key: "/complication_assessment", title: "Overall", fields: [overall], extracted: overall.state === "not_extracted" ? 0 : 1});
     }
@@ -149,6 +159,13 @@ export function buildSections(profile: Profile, proposal: Values | null): Sectio
 export function countStates(sections: SectionView[]): Record<FieldState, number> {
   const counts: Record<FieldState, number> = {value: 0, negative: 0, stated_missing: 0, conflict: 0, not_extracted: 0};
   for (const section of sections) for (const row of section.rows) for (const field of row.fields) counts[field.state] += 1;
+  return counts;
+}
+
+/** How many recorded values the rules engine also extracted, and how many of those it read differently. */
+export function countRules(sections: SectionView[]): {agree: number; differ: number} {
+  const counts = {agree: 0, differ: 0};
+  for (const section of sections) for (const row of section.rows) for (const field of row.fields) if (field.rules) counts[field.rules.state] += 1;
   return counts;
 }
 

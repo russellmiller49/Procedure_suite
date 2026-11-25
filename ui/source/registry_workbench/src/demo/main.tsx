@@ -7,7 +7,7 @@ import "./demo.css";
 import {CodesCard} from "./CodesCard";
 import {DemoApiError, extract, getConfig, getSample, type DemoConfig, type ExtractResult, type SampleDetail} from "./demoApi";
 import {FieldList} from "./FieldList";
-import {buildSections, countStates, mentionsView} from "./fields";
+import {buildSections, countRules, countStates, mentionsView} from "./fields";
 import {applyRedactions, Redactor, ScanGate, type Detection} from "./phiRedaction";
 
 type Phase = "original" | "scanning" | "reviewing" | "redacted";
@@ -168,10 +168,11 @@ function App() {
   const reviewedTexts = useMemo(() => new Set((sample?.reviewed_redactions || []).map(r => r.text.trimEnd())), [sample]);
   const matchesReviewed = phase === "redacted" && reviewedTexts.has(text.trimEnd());
   const sections = useMemo(
-    () => (config && result?.llm?.proposal ? buildSections(config.profile, result.llm.proposal) : []),
+    () => (config && result?.llm?.proposal ? buildSections(config.profile, result.llm.proposal, result.rules_agreement) : []),
     [config, result],
   );
   const counts = useMemo(() => countStates(sections), [sections]);
+  const confirmed = useMemo(() => countRules(sections), [sections]);
   const mentions = useMemo(() => mentionsView(result?.llm?.unresolved_mentions || [], text), [result, text]);
   // Before applying, the detected identifiers are marked. After extraction only the passage
   // the reader clicked is marked, so one fact maps to one visible quote.
@@ -298,6 +299,16 @@ function App() {
                     {counts.conflict > 0 && <> · <strong>{counts.conflict}</strong> unclear</>}
                     <br />
                     Side by side, the LLM filled <strong>{summary.llm_total}</strong> fields and the rules engine <strong>{summary.rules_total}</strong>.
+                    {confirmed.agree + confirmed.differ > 0 && (
+                      <>
+                        <br />
+                        <span className="rules-mark">✓ rules</span> marks the <strong>{confirmed.agree}</strong> values shown here that the rules
+                        engine extracted identically on its own
+                        {confirmed.differ > 0 && <>; it read <strong>{confirmed.differ}</strong> differently, shown beside the value</>}.
+                        Agreement between two methods is a reason for more confidence, not proof. An unmarked value is one the rules
+                        engine did not extract.
+                      </>
+                    )}
                   </p>
                 )}
                 <div className="tabs" role="tablist">

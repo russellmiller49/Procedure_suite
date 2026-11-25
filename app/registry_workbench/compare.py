@@ -42,21 +42,31 @@ def _target_key(row: dict[str, Any]) -> str:
     return f"lung {row.get('lobe') or '?'}"
 
 
-def flatten(values: dict[str, Any] | None) -> dict[tuple[str, str, str], Any]:
+def same_value(a: Any, b: Any) -> bool:
+    """Equal as a reviewer reads them: 12 and 12.0 agree, True and 1 do not."""
+    if isinstance(a, bool) or isinstance(b, bool):
+        return isinstance(a, bool) and isinstance(b, bool) and a == b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return abs(float(a) - float(b)) < 1e-6
+    return type(a) is type(b) and a == b
+
+
+def flatten_paths(values: dict[str, Any] | None) -> dict[tuple[str, str, str], tuple[Any, str]]:
+    """Every documented value under its natural key, with its JSON pointer in ``values``."""
     if not values:
         return {}
-    out: dict[tuple[str, str, str], Any] = {}
+    out: dict[tuple[str, str, str], tuple[Any, str]] = {}
 
     def keyed(collection: str, rows: list[dict[str, Any]], key_of) -> dict[str, str]:
         seen: Counter[str] = Counter()
         ids: dict[str, str] = {}
-        for row in rows:
+        for index, row in enumerate(rows):
             base = key_of(row)
             seen[base] += 1
             key = base if seen[base] == 1 else f"{base} #{seen[base]}"
             for field, value in row.items():
                 if field not in ID_FIELDS and _documented(value):
-                    out[(collection, key, field)] = value
+                    out[(collection, key, field)] = (value, f"/{collection}/{index}/{field}")
             primary = {
                 "targets": "target_id",
                 "sampling_acquisitions": "sampling_pass_id",
@@ -69,9 +79,12 @@ def flatten(values: dict[str, Any] | None) -> dict[tuple[str, str, str], Any]:
     keyed("procedures", values.get("procedures") or [], lambda r: r.get("category") or "?")
     for field, value in (values.get("case_details") or {}).items():
         if field not in ID_FIELDS and _documented(value):
-            out[("case_details", "case", field)] = value
+            out[("case_details", "case", field)] = (value, f"/case_details/{field}")
     if _documented(values.get("complication_assessment")):
-        out[("revision", "revision", "complication_assessment")] = values["complication_assessment"]
+        out[("revision", "revision", "complication_assessment")] = (
+            values["complication_assessment"],
+            "/complication_assessment",
+        )
     targets = keyed("targets", values.get("targets") or [], _target_key)
     keyed("ebus_sessions", values.get("ebus_sessions") or [], lambda r: "EBUS session")
     keyed(
@@ -119,6 +132,27 @@ def flatten(values: dict[str, Any] | None) -> dict[tuple[str, str, str], Any]:
     return out
 
 
+def flatten(values: dict[str, Any] | None) -> dict[tuple[str, str, str], Any]:
+    return {key: value for key, (value, _) in flatten_paths(values).items()}
+
+
+def agreement(
+    primary: dict[str, Any] | None, other: dict[str, Any] | None
+) -> dict[str, dict[str, Any]]:
+    """For each value in ``primary`` that ``other`` also has: do the two agree?
+
+    Keyed by the value's JSON pointer in ``primary``. A value ``other`` is silent on is
+    left out: silence is not disagreement.
+    """
+    theirs = flatten(other)
+    out: dict[str, dict[str, Any]] = {}
+    for key, (value, path) in flatten_paths(primary).items():
+        if key in theirs:
+            same = same_value(value, theirs[key])
+            out[path] = {"state": "agree" if same else "differ", "other_value": theirs[key]}
+    return out
+
+
 def compare(sources: dict[str, dict[str, Any] | None]) -> list[dict[str, Any]]:
     flat = {label: flatten(values) for label, values in sources.items()}
     keys = sorted({key for values in flat.values() for key in values})
@@ -132,10 +166,11 @@ def compare(sources: dict[str, dict[str, Any] | None]) -> list[dict[str, Any]]:
                 "row": row_key,
                 "field": field,
                 "values": values,
-                "agree": len(present) == len(values) and len({repr(v) for v in present}) == 1,
+                "agree": len(present) == len(values)
+                and all(same_value(present[0], v) for v in present[1:]),
             }
         )
     return rows
 
 
-__all__ = ["compare", "flatten"]
+__all__ = ["agreement", "compare", "flatten", "flatten_paths", "same_value"]
