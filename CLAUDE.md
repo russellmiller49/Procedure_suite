@@ -266,10 +266,12 @@ The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
   for scoring. Same seed and byte-identical notes; the answer key additionally sets five fields a
   sentence states under the dictionary's definitions but version 1 left blank
   (`navigation_runs.navigation_success_system_reported`, `localization_events.event_phase`,
-  `localization_events.lesion_visible`, and `targets.needle_gauge` / `needle_pass_count` on lung
-  targets). Found in the 2026-11-25 five-model smoke run, where those fields were most of the
-  LLM "false fills". Deterministic baseline:
-  `reports/robotic_ebus_truth_deterministic_baseline_20261125.json` (P 0.983, R 0.416).
+  `localization_events.lesion_visible`, `targets.needle_gauge` / `needle_pass_count` on lung
+  targets) plus a station's ROSE result and adequacy on that station's one needle acquisition.
+  Found in the 2026-11-25 five-model smoke runs, where those fields were most of the LLM
+  "false fills". The key is frozen before any validation run. Deterministic baseline:
+  `reports/robotic_ebus_truth_deterministic_baseline_20261125.json` (P 0.983, R 0.407).
+  Smoke summary (16 train notes): `reports/robotic_ebus_llm_smoke_train16_summary.json`.
 - **Full-contract scorer** (`app/registry_workbench/scoring.py`): rows aligned by natural keys
   (lobe/station/tool/label; Hungarian on collisions), per-field TP/false-fill/miss, FK accuracy,
   Wilson lower bounds; defaults and `not_documented` count as no value. Specimens align on a normalised label ("Specimen A" = "A"), and a single-pass row with `reported_pass_count` 1 scores as one without it. Use it via

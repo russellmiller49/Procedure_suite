@@ -1,13 +1,13 @@
 {
   "artifacts": {
-    "gold/train.gold.jsonl": "0ad9519c276fc5c8a9a39246e0a7fc97a730bb9f9b07250885016c1fe9172105",
-    "gold/validation.gold.jsonl": "91870a82f2475ee58e60099dc71a92bc805881d951d277d0021a082cc9b16f8b",
+    "gold/train.gold.jsonl": "9bfd79284ea3d500bac1ec5de446beefb486656b7e9af43e91328cfa7539b32e",
+    "gold/validation.gold.jsonl": "2d2cbed1082b4a2e36e136325d78bd999fd3335fd3fed31998e6085001ce5876",
     "test.jsonl": "0d44ea2729aba3e53f71d0c77eef532f64df2c2a33884a327691d3a7c3b704c1",
     "train.jsonl": "98f19de04c1bd0d33cf0a8c80dce4db9caa40a8f1b6fe27eb4c50541f884360e",
     "validation.jsonl": "5be87b20eb0dcc0c4b8b465832b6fc7a433377dd003cfe52f89795677e58e8bc"
   },
   "corpus_kind": "truth_first",
-  "created_at": "2026-11-25T20:47:01.352249+00:00",
+  "created_at": "2026-11-25T20:56:21.885145+00:00",
   "documents": {
     "test": 70,
     "train": 244,
@@ -21,7 +21,7 @@
   "rejected_documents": 0,
   "schema_version": "0.2.0",
   "sealed": {
-    "sealed/test.gold.jsonl": "7c586d71c3945c92ec702a62ac6c01f1625f48bce7a62240704b9be1194632d3"
+    "sealed/test.gold.jsonl": "b50d984fd9274916f0ee0b0e9afdd615e7d0a46ef317ecb501aacd5b0ac98de3"
   },
   "seed": 20261109,
   "styles": {

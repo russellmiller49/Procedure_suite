@@ -5,7 +5,7 @@
     "validation"
   ],
   "prompt_digest": "153b83946992eb257df5c65f2c8480d345c5a9e591d3ead9e0e328a1f7e7d2a5",
-  "started_at": "2026-11-25T12:47:26",
+  "started_at": "2026-11-25T12:56:39",
   "qualification_use": "none (engineering evaluation on exposed or development documents)",
   "arms": {
     "deterministic": {
@@ -46,13 +46,13 @@
         "overall": {
           "tp": 14170,
           "fp": 251,
-          "fn": 19888,
-          "support": 34058,
+          "fn": 20628,
+          "support": 34798,
           "precision": 0.9825948269884197,
-          "recall": 0.4160549650596042,
-          "f1": 0.5845830153262238,
+          "recall": 0.4072073107649865,
+          "f1": 0.5757939007293932,
           "precision_lower": 0.9803282767442543,
-          "recall_lower": 0.4108298259150806,
+          "recall_lower": 0.40205558915158873,
           "sufficient_support": true
         },
         "entities": {
@@ -143,8 +143,8 @@
           "sampling_acquisitions": {
             "tp": 0,
             "fp": 0,
-            "fn": 6096,
-            "support": 6096,
+            "fn": 6836,
+            "support": 6836,
             "precision": null,
             "recall": 0.0,
             "f1": null,
@@ -790,11 +790,35 @@
             "recall_lower": 0.0,
             "sufficient_support": true
           },
+          "sampling_acquisitions.rose_adequate": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 370,
+            "support": 370,
+            "precision": null,
+            "recall": 0.0,
+            "f1": null,
+            "precision_lower": null,
+            "recall_lower": 0.0,
+            "sufficient_support": true
+          },
           "sampling_acquisitions.rose_performed": {
             "tp": 0,
             "fp": 0,
             "fn": 582,
             "support": 582,
+            "precision": null,
+            "recall": 0.0,
+            "f1": null,
+            "precision_lower": null,
+            "recall_lower": 0.0,
+            "sufficient_support": true
+          },
+          "sampling_acquisitions.rose_result": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 370,
+            "support": 370,
             "precision": null,
             "recall": 0.0,
             "f1": null,
@@ -1417,13 +1441,13 @@
             "overall": {
               "tp": 447,
               "fp": 16,
-              "fn": 387,
-              "support": 834,
+              "fn": 415,
+              "support": 862,
               "precision": 0.9654427645788337,
-              "recall": 0.5359712230215827,
-              "f1": 0.6892829606784888,
+              "recall": 0.5185614849187935,
+              "f1": 0.6747169811320756,
               "precision_lower": 0.9446064661551711,
-              "recall_lower": 0.5020368799119495,
+              "recall_lower": 0.48519718387238536,
               "sufficient_support": true
             },
             "rows": {
@@ -1578,13 +1602,13 @@
             "overall": {
               "tp": 2119,
               "fp": 18,
-              "fn": 3143,
-              "support": 5262,
+              "fn": 3287,
+              "support": 5406,
               "precision": 0.9915769770706598,
-              "recall": 0.40269859369061195,
-              "f1": 0.5727801054196514,
+              "recall": 0.3919718830928598,
+              "f1": 0.5618454195943258,
               "precision_lower": 0.9867243130102933,
-              "recall_lower": 0.389522648339194,
+              "recall_lower": 0.3790390943648387,
               "sufficient_support": true
             },
             "rows": {
@@ -1739,13 +1763,13 @@
             "overall": {
               "tp": 2385,
               "fp": 82,
-              "fn": 3051,
-              "support": 5436,
+              "fn": 3175,
+              "support": 5560,
               "precision": 0.9667612484799352,
-              "recall": 0.43874172185430466,
-              "f1": 0.6035682652157409,
+              "recall": 0.4289568345323741,
+              "f1": 0.5942444250654042,
               "precision_lower": 0.9589300734811131,
-              "recall_lower": 0.4255978267255052,
+              "recall_lower": 0.4160008063058625,
               "sufficient_support": true
             },
             "rows": {
@@ -1900,13 +1924,13 @@
             "overall": {
               "tp": 2017,
               "fp": 36,
-              "fn": 3623,
-              "support": 5640,
+              "fn": 3735,
+              "support": 5752,
               "precision": 0.9824646858256211,
-              "recall": 0.3576241134751773,
-              "f1": 0.5243728064474197,
+              "recall": 0.3506606397774687,
+              "f1": 0.5168481742472774,
               "precision_lower": 0.9758199973322974,
-              "recall_lower": 0.3452158512611064,
+              "recall_lower": 0.3384322390296317,
               "sufficient_support": true
             },
             "rows": {
@@ -2061,13 +2085,13 @@
             "overall": {
               "tp": 1258,
               "fp": 22,
-              "fn": 2326,
-              "support": 3584,
+              "fn": 2386,
+              "support": 3644,
               "precision": 0.9828125,
-              "recall": 0.3510044642857143,
-              "f1": 0.5172697368421052,
+              "recall": 0.34522502744237105,
+              "f1": 0.5109666937449229,
               "precision_lower": 0.9741129443062383,
-              "recall_lower": 0.3355454996495729,
+              "recall_lower": 0.32995825206475204,
               "sufficient_support": true
             },
             "rows": {
@@ -2383,13 +2407,13 @@
             "overall": {
               "tp": 701,
               "fp": 11,
-              "fn": 1041,
-              "support": 1742,
+              "fn": 1061,
+              "support": 1762,
               "precision": 0.9845505617977528,
-              "recall": 0.4024110218140069,
-              "f1": 0.5713121434392828,
+              "recall": 0.3978433598183882,
+              "f1": 0.5666936135812449,
               "precision_lower": 0.9725485389440134,
-              "recall_lower": 0.37962147131303403,
+              "recall_lower": 0.37523530456800047,
               "sufficient_support": true
             },
             "rows": {
@@ -2544,13 +2568,13 @@
             "overall": {
               "tp": 2448,
               "fp": 45,
-              "fn": 3044,
-              "support": 5492,
+              "fn": 3200,
+              "support": 5648,
               "precision": 0.9819494584837545,
-              "recall": 0.4457392571012382,
-              "f1": 0.6131496556042579,
+              "recall": 0.43342776203966005,
+              "f1": 0.6014003193710846,
               "precision_lower": 0.9759333945856244,
-              "recall_lower": 0.43263588696784144,
+              "recall_lower": 0.4205533913431783,
               "sufficient_support": true
             },
             "rows": {
@@ -2705,13 +2729,13 @@
             "overall": {
               "tp": 1220,
               "fp": 16,
-              "fn": 1992,
-              "support": 3212,
+              "fn": 2032,
+              "support": 3252,
               "precision": 0.9870550161812298,
-              "recall": 0.37982565379825656,
-              "f1": 0.5485611510791367,
+              "recall": 0.3751537515375154,
+              "f1": 0.5436720142602496,
               "precision_lower": 0.979075366447697,
-              "recall_lower": 0.3631937810768033,
+              "recall_lower": 0.3586695097389476,
               "sufficient_support": true
             },
             "rows": {
@@ -2896,7 +2920,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.003
         },
         "5a06d102-d698-47f8-aef9-9f007acf3e6c": {
           "status": "degraded",
@@ -3974,7 +3998,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "c5396c8c-cf33-4902-93b3-7c337186a179": {
           "status": "degraded",
@@ -4021,7 +4045,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "da1abcc8-5a7f-4307-b97b-8c77f30b870a": {
           "status": "degraded",
@@ -4282,7 +4306,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "7c66985d-53c0-49f5-b053-7ed89fa4cd50": {
           "status": "degraded",
@@ -4894,7 +4918,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "289a9960-dc69-46dc-9cae-291f17e3dc27": {
           "status": "degraded",
@@ -4935,7 +4959,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "07a8c7d9-5e78-44fb-be88-a63349a44409": {
           "status": "degraded",
@@ -5330,7 +5354,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "d61b404a-b1fa-4287-847d-5518ece6f3b9": {
           "status": "degraded",
@@ -6587,7 +6611,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "49ecea90-17ba-4df3-b412-e2a909492e67": {
           "status": "degraded",
@@ -6709,7 +6733,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "6363dd09-f481-41a6-a3a0-ad9f64863ddc": {
           "status": "degraded",
@@ -8182,7 +8206,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "d067db84-9827-48d9-a8f1-f60b605b18a8": {
           "status": "degraded",
@@ -8279,7 +8303,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "d2ce74b6-1706-4b18-825b-78a2567dac5f": {
           "status": "degraded",
@@ -8929,7 +8953,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "4aea8471-3ea2-4c58-af89-e3b9fd08e61d": {
           "status": "degraded",
@@ -9469,7 +9493,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.0
+          "wall_s": 0.001
         },
         "79fdd75c-8e9f-45ba-8ca2-ed3dd23f7f72": {
           "status": "degraded",
@@ -9503,7 +9527,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.0
+          "wall_s": 0.001
         },
         "e6da3653-2047-4781-b983-fdd4c749d09f": {
           "status": "degraded",
@@ -10338,7 +10362,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "35f5efb6-d6af-4c88-9008-7c4352a04953": {
           "status": "degraded",
@@ -11155,7 +11179,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "c66dc384-e529-463d-a72b-ef5a706824de": {
           "status": "degraded",
@@ -11524,7 +11548,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "6bfd00dc-1109-42e9-a7ab-c1fdbd38ba52": {
           "status": "degraded",
@@ -11668,7 +11692,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "be60874b-38db-4816-8a8b-14b42a5132a0": {
           "status": "degraded",
@@ -11792,7 +11816,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "a12c0fd5-7f90-47d9-b175-629c59a7eddd": {
           "status": "degraded",
@@ -13554,7 +13578,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "6b8e7196-846f-4c67-9e9d-7bc77e79ff26": {
           "status": "degraded",
@@ -13790,7 +13814,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "9e2aa0b3-30f1-49a2-96a1-713e5364e90f": {
           "status": "degraded",
@@ -14957,7 +14981,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "2b4f49c1-607f-4fa4-a805-53203df7f132": {
           "status": "degraded",
@@ -15191,7 +15215,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "19ed54b3-414c-4947-bf41-3f2bbe09052a": {
           "status": "degraded",
@@ -15280,7 +15304,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "0b54b60b-abea-4ed8-9778-ac0a82c777bb": {
           "status": "degraded",
@@ -15611,7 +15635,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "45adb95b-fb15-44bb-92ac-997cd641964e": {
           "status": "degraded",
@@ -15709,7 +15733,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.002
+          "wall_s": 0.001
         },
         "1e07fa3b-7c01-476e-a750-6b7359042e8d": {
           "status": "degraded",
@@ -16306,7 +16330,7 @@
           "usage": [],
           "cost_usd": null,
           "latency_s": null,
-          "wall_s": 0.001
+          "wall_s": 0.002
         },
         "0485cc89-5f89-47e3-ac63-917f880dbf80": {
           "status": "degraded",

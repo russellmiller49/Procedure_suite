@@ -985,7 +985,17 @@
       572,
       "active"
      ],
+     "/sampling_acquisitions/0/rose_adequate": [
+      573,
+      632,
+      "active"
+     ],
      "/sampling_acquisitions/0/rose_performed": [
+      573,
+      632,
+      "active"
+     ],
+     "/sampling_acquisitions/0/rose_result": [
       573,
       632,
       "active"
@@ -1319,7 +1329,9 @@
        "attribution_status": "attributed",
        "needle_gauge": 22,
        "reported_pass_count": 3,
+       "rose_adequate": true,
        "rose_performed": true,
+       "rose_result": "non-necrotizing granulomas",
        "sampling_pass_id": "934dce58-30ad-41c1-8f28-c137ccb1b4bc",
        "sampling_tool": "aspiration_needle",
        "target_id": "eceb74d0-45ea-4db9-9857-164304c1aae3"
@@ -2653,7 +2665,17 @@
       1529,
       "active"
      ],
+     "/sampling_acquisitions/4/rose_adequate": [
+      1530,
+      1573,
+      "active"
+     ],
      "/sampling_acquisitions/4/rose_performed": [
+      1530,
+      1573,
+      "active"
+     ],
+     "/sampling_acquisitions/4/rose_result": [
       1530,
       1573,
       "active"
@@ -2698,7 +2720,17 @@
       1887,
       "active"
      ],
+     "/sampling_acquisitions/6/rose_adequate": [
+      1888,
+      1947,
+      "active"
+     ],
      "/sampling_acquisitions/6/rose_performed": [
+      1888,
+      1947,
+      "active"
+     ],
+     "/sampling_acquisitions/6/rose_result": [
       1888,
       1947,
       "active"
@@ -2723,7 +2755,17 @@
       2104,
       "active"
      ],
+     "/sampling_acquisitions/7/rose_adequate": [
+      2105,
+      2148,
+      "active"
+     ],
      "/sampling_acquisitions/7/rose_performed": [
+      2105,
+      2148,
+      "active"
+     ],
+     "/sampling_acquisitions/7/rose_result": [
       2105,
       2148,
       "active"
@@ -3380,7 +3422,9 @@
        "attribution_status": "attributed",
        "needle_gauge": 25,
        "reported_pass_count": 3,
+       "rose_adequate": false,
        "rose_performed": true,
+       "rose_result": "blood only, inadequate",
        "sampling_pass_id": "38623b25-83d2-40ee-ad78-e68cf96e79df",
        "sampling_tool": "aspiration_needle",
        "target_id": "8e39b757-54af-4ec9-ae08-0090438a148e"
@@ -3399,7 +3443,9 @@
        "attribution_status": "attributed",
        "needle_gauge": 22,
        "reported_pass_count": 2,
+       "rose_adequate": true,
        "rose_performed": true,
+       "rose_result": "non-necrotizing granulomas",
        "sampling_pass_id": "861fc1ee-4b74-46e2-b7fb-5821e396ba92",
        "sampling_tool": "aspiration_needle",
        "target_id": "59654a8d-73cd-4e97-9793-8a11c4a1e88c"
@@ -3409,7 +3455,9 @@
        "attribution_status": "attributed",
        "needle_gauge": 22,
        "reported_pass_count": 3,
+       "rose_adequate": false,
        "rose_performed": true,
+       "rose_result": "blood only, inadequate",
        "sampling_pass_id": "8a1909f1-23a1-4c6b-8a79-a2e43a41c184",
        "sampling_tool": "aspiration_needle",
        "target_id": "5251a01d-8b69-4ea0-850b-a2509d789b03"

@@ -756,6 +756,12 @@ def _ebus(b: _Builder, rng: random.Random, traps: list[str], specimen_labels: li
                     ("targets", node, "rose_adequate", adequate),
                     ("ebus_sessions", session, "rose_used", True),
                     ("sampling_acquisitions", acquisition, "rose_performed", True),
+                    # A station has one needle acquisition, so the station's ROSE reading is
+                    # that acquisition's reading (dictionary: "Immediate pass-level
+                    # interpretation", "Adequacy explicitly documented at ROSE for this
+                    # acquisition").
+                    ("sampling_acquisitions", acquisition, "rose_result", result),
+                    ("sampling_acquisitions", acquisition, "rose_adequate", adequate),
                 ],
                 weight=1.0,
                 station=station,

@@ -41,7 +41,8 @@ from ops.tools.robotic_ebus_truth.verify import unsupported_values
 # truth-first-2 (2026-11-25): the answer key also sets fields a sentence states under the
 # launch dictionary's definitions but version 1 left blank: operator-declared navigation
 # success, pre-biopsy event phase, lesion visibility, and target-level needle gauge and pass
-# count for lung targets. Note text is unchanged for a given seed.
+# count for lung targets, and a station's ROSE result and adequacy on that station's one
+# needle acquisition. Note text is unchanged for a given seed.
 GENERATOR_VERSION = "truth-first-2"
 CLEAN_TEMPLATE_STYLES = ("sectioned", "markdown", "fielded", "dictation")
 CLEAN_CLAUDE_STYLES = ("narrative", "dictation")
