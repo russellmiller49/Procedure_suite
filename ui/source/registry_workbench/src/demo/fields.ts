@@ -59,6 +59,13 @@ export function show(value: unknown): string {
   return String(value);
 }
 
+/** "A" and "Specimen A" both read as "Specimen A". */
+export function specimenName(labelText: unknown, index: number): string {
+  const text = String(labelText ?? "").trim();
+  if (!text) return `Specimen ${index + 1}`;
+  return /^specimen\b/i.test(text) ? text : `Specimen ${text}`;
+}
+
 /** Short human name for a row, from what a reviewer would call it. */
 export function rowTitle(collection: string, row: Values, index: number, all: Values): string {
   const target = (id: unknown) => {
@@ -67,6 +74,9 @@ export function rowTitle(collection: string, row: Values, index: number, all: Va
     if (t.site === "lymph_node") return `station ${t.iaslc_station ?? "?"}`;
     return [t.anatomic_label, t.lobe].filter(Boolean).join(", ") || label(t.site || "target");
   };
+  // An unlabelled specimen is told apart by where it came from.
+  const specimen = (x: Values, at: number) =>
+    specimenName(x.specimen_label, at) + (x.specimen_label ? "" : ` (${target(x.target_id) || "unattributed"})`);
   switch (collection) {
     case "procedures": return label(row.category || `component ${index + 1}`);
     case "targets":
@@ -76,11 +86,11 @@ export function rowTitle(collection: string, row: Values, index: number, all: Va
     case "navigation_runs": return `Navigation to ${target(row.target_id) || "target"}`;
     case "localization_events": return `${label(row.localization_modality || "localization")} at ${target(row.target_id) || "target"}`;
     case "sampling_acquisitions": return `${label(row.sampling_tool || "sampling")} of ${target(row.target_id) || "an unattributed target"}`;
-    case "specimens": return `Specimen ${row.specimen_label ?? index + 1}`;
+    case "specimens": return specimen(row, index);
     case "sampling_specimen_links": {
       const pass = (all.sampling_acquisitions || []).find((a: Values) => a.sampling_pass_id === row.sampling_pass_id);
-      const specimen = (all.specimens || []).find((s: Values) => s.specimen_id === row.specimen_id);
-      return `${label(pass?.sampling_tool || "sampling")} → specimen ${specimen?.specimen_label ?? "?"}`;
+      const at = (all.specimens || []).findIndex((x: Values) => x.specimen_id === row.specimen_id);
+      return `${label(pass?.sampling_tool || "sampling")} → ${at >= 0 ? specimen(all.specimens[at], at) : "specimen ?"}`;
     }
     case "complications": return label(row.category || `event ${index + 1}`);
     default: return `${label(collection)} ${index + 1}`;
@@ -126,6 +136,11 @@ export function buildSections(profile: Profile, proposal: Values | null): Sectio
         extracted: fields.filter(f => f.state !== "not_extracted").length,
       };
     });
+    if (collection === "complications") {
+      const overall = fieldView(profile, proposal, "revision", "/complication_assessment", "complication_assessment", proposal.complication_assessment);
+      overall.definition = overall.definition || "Whether any complication of the procedure is documented.";
+      views.unshift({key: "/complication_assessment", title: "Overall", fields: [overall], extracted: overall.state === "not_extracted" ? 0 : 1});
+    }
     out.push({collection, title: profile.sections[collection] || label(collection), rows: views});
   }
   return out;
@@ -143,4 +158,39 @@ export function verifiedSpan(text: string, span?: [number, number], quote?: stri
   if (quote == null || text.slice(span[0], span[1]) === quote) return span;
   const found = text.indexOf(quote);
   return found >= 0 ? [found, found + quote.length] : null;
+}
+
+export type MentionView = {label: string; quote: string; span: [number, number] | null; notes: string[]};
+
+const MENTION_LABEL: Record<string, string> = {
+  planned_only: "Planned, not performed",
+  historical: "From the history, not this procedure",
+  uncertain: "Stated, but not recorded as a value",
+  conflicting_statements: "Conflicting statements",
+  unmapped_detail: "No field for this detail",
+};
+const MENTION_ORDER = ["planned_only", "historical", "conflicting_statements", "uncertain", "unmapped_detail"];
+
+/**
+ * Statements the extractor set aside. One entry per passage: the reader sees the passage and a
+ * plain reason; the extractor's own notes are kept for the tooltip.
+ */
+export function mentionsView(
+  mentions: {kind: string; note: string; start?: number; end?: number; excerpt?: string}[],
+  text: string,
+): MentionView[] {
+  const byPassage = new Map<string, {kinds: string[]; quote: string; span: [number, number] | null; notes: string[]}>();
+  for (const m of mentions) {
+    const has = m.start != null && m.end != null;
+    const quote = m.excerpt ?? (has ? text.slice(m.start!, m.end!) : "");
+    const key = has ? `${m.start}-${m.end}` : `note:${m.note}`;
+    const entry = byPassage.get(key) ?? {kinds: [], quote, span: has ? verifiedSpan(text, [m.start!, m.end!], quote || undefined) : null, notes: []};
+    entry.kinds.push(m.kind);
+    if (m.note) entry.notes.push(m.note);
+    byPassage.set(key, entry);
+  }
+  return [...byPassage.values()].map(entry => {
+    const kind = MENTION_ORDER.find(k => entry.kinds.includes(k)) ?? entry.kinds[0];
+    return {label: MENTION_LABEL[kind] ?? label(kind), quote: entry.quote, span: entry.span, notes: entry.notes};
+  });
 }

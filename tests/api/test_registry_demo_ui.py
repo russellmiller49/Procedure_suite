@@ -125,3 +125,60 @@ def test_every_shipped_sample_has_a_reviewed_redaction_that_is_a_real_redaction(
                 assert found >= 0, sample_id
                 position = found + len(fragment)
             assert PLACEHOLDER in variant["text"], f"{sample_id}: nothing was redacted"
+
+
+def test_every_reviewed_redaction_has_a_stored_model_result_whose_quotes_match():
+    import json
+
+    demo_dir = Path(__file__).resolve().parents[2] / "data/knowledge/robotic_ebus_v1/demo"
+    redactions = json.loads((demo_dir / "redactions.json").read_text())["redactions"]
+    entries = json.loads((demo_dir / "results.json").read_text())["entries"]
+    for sample_id, variants in redactions.items():
+        for variant in variants:
+            entry = entries.get(variant["sha256"])
+            assert entry is not None, f"{sample_id}: no stored result"
+            assert entry["sample_id"] == sample_id
+            llm = entry["llm"]
+            observations = llm["observations"]
+            # A public result comes from a real model run, never the development stand-in.
+            assert observations["inference"]["provider"] in {"claude", "openai"}, sample_id
+            assert llm["status"] == "proposed", sample_id
+            assert not observations["inference"]["fallback_used"], sample_id
+            for item in observations["proposal"]["field_provenance"]:
+                if "source_start" in item:
+                    excerpt = variant["text"][item["source_start"] : item["source_end"]]
+                    assert excerpt == item["source_excerpt"], (sample_id, item["field_path"])
+            assert entry["rules"]["observations"].get("proposal") is not None, sample_id
+
+
+def test_stored_results_keep_the_four_public_sample_checks():
+    """Surveyed stays unsampled, planned stays unperformed, a radial view gives no TIL."""
+    import json
+
+    demo_dir = Path(__file__).resolve().parents[2] / "data/knowledge/robotic_ebus_v1/demo"
+    samples = {s["id"]: s for s in json.loads((demo_dir / "samples.json").read_text())["samples"]}
+    redactions = json.loads((demo_dir / "redactions.json").read_text())["redactions"]
+    entries = json.loads((demo_dir / "results.json").read_text())["entries"]
+    for sample_id, variants in redactions.items():
+        proposal = entries[variants[0]["sha256"]]["llm"]["observations"]["proposal"]
+        sample = samples[sample_id]
+        gold = (sample.get("gold") or {}).get("revision")
+        sampled = {
+            s["iaslc_station"] for s in proposal["station_surveys"] if s.get("station_sampled")
+        }
+        if gold:
+            allowed = {
+                s["iaslc_station"] for s in gold["station_surveys"] if s.get("station_sampled")
+            }
+            started = lambda p: {  # noqa: E731
+                x["category"]
+                for x in p["procedures"]
+                if x["performance"] in {"performed", "attempted"}
+            }
+            assert started(proposal) <= started(gold), sample_id
+        else:
+            allowed = set(sample["expected"]["stations_sampled"])
+        assert sampled <= allowed, sample_id
+        for event in proposal["localization_events"]:
+            if event.get("tool_lesion_relationship") == "TIL":
+                assert event["localization_modality"] != "radial_EBUS", sample_id

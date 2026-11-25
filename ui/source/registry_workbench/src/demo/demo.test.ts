@@ -152,3 +152,53 @@ describe("field labels", () => {
     expect(fieldLabel("rose_used")).toBe("ROSE used");
   });
 });
+
+describe("set-aside statements", () => {
+  it("shows one entry per passage with a plain reason and keeps the extractor notes", async () => {
+    const {mentionsView} = await import("./fields");
+    const text = "Prior EBUS in 2024. There was no pneumothorax on fluoroscopy.";
+    const views = mentionsView(
+      [
+        {kind: "uncertain", note: "negated complications.category = 'pneumothorax'", start: 20, end: 61},
+        {kind: "unmapped_detail", note: "complications C1 dropped: missing category", start: 20, end: 61},
+        {kind: "historical", note: "station 7", start: 0, end: 19, excerpt: "Prior EBUS in 2024."},
+      ],
+      text,
+    );
+    expect(views).toHaveLength(2);
+    expect(views[0]).toMatchObject({label: "Stated, but not recorded as a value", quote: "There was no pneumothorax on fluoroscopy.", span: [20, 61]});
+    expect(views[0].notes).toHaveLength(2);
+    expect(views[1].label).toBe("From the history, not this procedure");
+  });
+});
+
+describe("display details from real results", () => {
+  it("names specimens once and shows the overall complications answer with its quote", async () => {
+    const {buildSections, specimenName} = await import("./fields");
+    expect(specimenName("Specimen A", 0)).toBe("Specimen A");
+    expect(specimenName("A", 0)).toBe("Specimen A");
+    expect(specimenName(null, 2)).toBe("Specimen 3");
+    const text = "Complications: none.";
+    const sections = buildSections(profile as unknown as Profile, {
+      procedures: [], case_details: {}, complications: [], complication_assessment: "absent",
+      field_provenance: [{field_path: "/complication_assessment", source_start: 0, source_end: 20, source_excerpt: text, conflict_status: "none", assertion_context: "negated"}],
+    });
+    const overall = sections.find(s => s.collection === "complications")!.rows[0];
+    expect(overall.title).toBe("Overall");
+    expect(overall.fields[0]).toMatchObject({state: "negative", display: "absent", quote: text});
+  });
+});
+
+describe("unlabelled specimens", () => {
+  it("are told apart by their target, in the specimen row and in its link", async () => {
+    const {rowTitle} = await import("./fields");
+    const all = {
+      targets: [{target_id: "t1", site: "lymph_node", iaslc_station: "4R"}, {target_id: "t2", site: "lymph_node", iaslc_station: "7"}],
+      sampling_acquisitions: [{sampling_pass_id: "p2", sampling_tool: "aspiration_needle", target_id: "t2"}],
+      specimens: [{specimen_id: "s1", target_id: "t1"}, {specimen_id: "s2", target_id: "t2"}],
+    };
+    expect(rowTitle("specimens", all.specimens[1], 1, all)).toBe("Specimen 2 (station 7)");
+    expect(rowTitle("sampling_specimen_links", {sampling_pass_id: "p2", specimen_id: "s2"}, 0, all)).toBe("aspiration needle → Specimen 2 (station 7)");
+    expect(rowTitle("specimens", {specimen_id: "s3", specimen_label: "Specimen C"}, 2, all)).toBe("Specimen C");
+  });
+});

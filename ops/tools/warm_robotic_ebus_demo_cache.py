@@ -244,11 +244,12 @@ def main() -> None:
             inference = ((llm_response or {}).get("observations") or {}).get("inference") or {}
             total_cost += inference.get("cost_usd") or 0.0
             reports.append({"sample_id": sample["id"], "variant": variant, "sha256": key, **report})
-            print(json.dumps(reports[-1], indent=1))
+            print(json.dumps(reports[-1], indent=1), flush=True)
+            # Written after every text: a paid result must survive an interrupted run.
+            args.output.write_text(
+                json.dumps({"version": 1, "entries": entries}, indent=1, sort_keys=True) + "\n"
+            )
 
-    args.output.write_text(
-        json.dumps({"version": 1, "entries": entries}, indent=1, sort_keys=True) + "\n"
-    )
     failed = [
         f"{r['sample_id']}:{name}"
         for r in reports

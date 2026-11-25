@@ -7,7 +7,7 @@ import "./demo.css";
 import {CodesCard} from "./CodesCard";
 import {DemoApiError, extract, getConfig, getSample, type DemoConfig, type ExtractResult, type SampleDetail} from "./demoApi";
 import {FieldList} from "./FieldList";
-import {buildSections, countStates} from "./fields";
+import {buildSections, countStates, mentionsView} from "./fields";
 import {applyRedactions, Redactor, ScanGate, type Detection} from "./phiRedaction";
 
 type Phase = "original" | "scanning" | "reviewing" | "redacted";
@@ -172,6 +172,7 @@ function App() {
     [config, result],
   );
   const counts = useMemo(() => countStates(sections), [sections]);
+  const mentions = useMemo(() => mentionsView(result?.llm?.unresolved_mentions || [], text), [result, text]);
   // Before applying, the detected identifiers are marked. After extraction only the passage
   // the reader clicked is marked, so one fact maps to one visible quote.
   const noteSpans: [number, number][] = detections.filter(d => !excluded.has(d.id)).map(d => [d.start, d.end] as [number, number]);
@@ -310,17 +311,18 @@ function App() {
                   result.llm?.proposal ? (
                     <>
                       <FieldList sections={sections} text={text} onFocus={setFocus} />
-                      {result.llm.unresolved_mentions.length > 0 && (
+                      {mentions.length > 0 && (
                         <section>
-                          <h3>Mentioned but not recorded</h3>
-                          <p className="subtle">Planned, historical or uncertain statements are listed here and never turned into values.</p>
+                          <h3>Set aside, not recorded</h3>
+                          <p className="subtle">
+                            Planned, historical, uncertain or unmappable statements are listed here and never turned into values.
+                          </p>
                           <ul className="unresolved">
-                            {result.llm.unresolved_mentions.map((u, i) => (
-                              <li key={i}>
-                                <strong>{label(u.kind)}</strong> {u.note}{" "}
-                                {u.start != null && u.end != null && (
-                                  <button className="link" onClick={() => setFocus([u.start!, u.end!])}>show in note</button>
-                                )}
+                            {mentions.map((m, i) => (
+                              <li key={i} title={m.notes.join("\n")}>
+                                <strong>{m.label}</strong>
+                                {m.quote ? <>: &ldquo;{m.quote}&rdquo; </> : <> {m.notes[0]} </>}
+                                {m.span && <button className="link" onClick={() => setFocus(m.span)}>show in note</button>}
                               </li>
                             ))}
                           </ul>
