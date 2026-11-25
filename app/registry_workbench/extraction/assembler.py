@@ -38,6 +38,12 @@ MAX_REPAIR_PASSES = 40
 NEGATED_VALUES = {"present": "absent", "performed": "not_performed"}
 # A negated complication category is an explicit denial of that event.
 DENIED_EVENT_FIELD = "complications.category"
+# "No complications" denies nothing in particular: that belongs in complication_assessment,
+# not in a row for an unnamed "other" event.
+GENERIC_EVENT = "other_approved"
+# Values that already say "no": a sentence such as "EBUS was not started" states this value,
+# and a model that marks it negated is describing the sentence, not negating the value.
+STATED_NEGATIVES = {*NEGATED_VALUES.values(), "not_started"}
 DEFERRED_ASSERTIONS = {
     "planned": "planned_only",
     "historical": "historical",
@@ -214,7 +220,7 @@ class Assembler:
             self._count("facts_invalid_value")
             self._note("unmapped_detail", str(exc), span)
             return
-        if assertion == "negated" and path == DENIED_EVENT_FIELD:
+        if assertion == "negated" and path == DENIED_EVENT_FIELD and value != GENERIC_EVENT:
             # "No pneumothorax" names an event and denies it. The contract records that
             # as the category with state=absent, not as a negated category.
             if row.values.get("state") is None:
@@ -225,7 +231,7 @@ class Assembler:
                 value = False
             elif spec.kind == "enum" and value in NEGATED_VALUES:
                 value = NEGATED_VALUES[value]
-            elif not (spec.kind == "enum" and value in NEGATED_VALUES.values()):
+            elif not (spec.kind == "enum" and value in STATED_NEGATIVES):
                 self._count("facts_deferred")
                 self._note("uncertain", f"negated {path} = {value!r}", span)
                 return

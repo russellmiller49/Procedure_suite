@@ -289,3 +289,26 @@ def test_scorer_aligns_specimens_whether_or_not_the_label_keeps_the_word_specime
     # A different specimen is still a different specimen.
     predicted["specimens"][0]["specimen_label"] = "Specimen ZZ"
     assert aggregate([score_document(gold, predicted)])["overall"]["fp"] > 0
+
+
+def test_scorer_treats_a_written_out_single_pass_count_as_no_difference():
+    gold = {
+        "procedures": [{"category": "robotic_bronchoscopy", "performance": "performed"}],
+        "targets": [{"target_id": "t", "site": "lung", "lobe": "RUL"}],
+        "sampling_acquisitions": [
+            {
+                "sampling_pass_id": "a",
+                "target_id": "t",
+                "acquisition_record_granularity": "single_pass",
+                "sampling_tool": "aspiration_needle",
+                "attribution_status": "attributed",
+            }
+        ],
+    }
+    predicted = copy.deepcopy(gold)
+    predicted["sampling_acquisitions"][0]["reported_pass_count"] = 1
+    assert aggregate([score_document(gold, predicted)])["overall"]["fp"] == 0
+    # An aggregate row's count is still scored.
+    for rows in (gold, predicted):
+        rows["sampling_acquisitions"][0]["acquisition_record_granularity"] = "aggregate_reported"
+    assert aggregate([score_document(gold, predicted)])["overall"]["fp"] == 1

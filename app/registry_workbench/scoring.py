@@ -171,11 +171,20 @@ def _keys(values: dict[str, Any]) -> dict[str, Callable[[dict], Any]]:
 
 
 def _scored(collection: str, row: dict) -> dict[str, Any]:
-    return {
+    scored = {
         name: v
         for name, raw in row.items()
         if name not in STRUCTURAL and (v := _value(collection, name, raw)) is not None
     }
+    # A single-pass row represents one pass whether or not the count is written out: the
+    # contract accepts only none or 1 there, and the dictionary defines it as one.
+    if (
+        collection == "sampling_acquisitions"
+        and row.get("acquisition_record_granularity") == "single_pass"
+        and scored.get("reported_pass_count") == 1
+    ):
+        del scored["reported_pass_count"]
+    return scored
 
 
 def _agreement(collection: str, a: dict, b: dict) -> int:

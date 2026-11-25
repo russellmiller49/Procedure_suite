@@ -441,3 +441,60 @@ def test_a_denial_never_overrides_a_stated_complication():
     result = assemble(facts, text)
     row = result.proposal["complications"][0]
     assert row["state"] == "present"
+
+
+def test_a_generic_denial_does_not_create_an_unnamed_complication_row():
+    facts = copy.deepcopy(FACTS)
+    facts["rows"].append(
+        {
+            "collection": "complications",
+            "local_id": "C1",
+            "parents": [],
+            "anchor_quote": "Immediate complications: none observed",
+        }
+    )
+    facts["enum_facts"].append(
+        {
+            "local_id": "C1",
+            "field": "complications.category",
+            "value": "other_approved",
+            "assertion": "negated",
+            "evidence_quote": "Immediate complications: none observed",
+        }
+    )
+    result = assemble(facts)
+    assert result.proposal["complications"] == []
+    assert result.proposal["complication_assessment"] == "absent"
+
+
+def test_a_component_stated_as_not_started_keeps_that_value_when_marked_negated():
+    text = TEXT.replace(
+        "Both procedures were completed.",
+        "Robotic bronchoscopy was completed. Linear EBUS was not started.",
+    )
+    facts = copy.deepcopy(FACTS)
+    for item in facts["enum_facts"]:
+        if item["local_id"] == "P_EBUS" and item["field"] == "procedures.performance":
+            item.update(
+                value="not_performed", assertion="negated", evidence_quote="was not started"
+            )
+        if item["local_id"] == "P_RB" and item["field"] == "procedures.performance":
+            item["evidence_quote"] = "Robotic bronchoscopy was completed"
+    facts["enum_facts"] = [
+        f
+        for f in facts["enum_facts"]
+        if not (f["local_id"] in {"P_EBUS", "P_RB"} and f["field"] == "procedures.completion")
+    ]
+    facts["enum_facts"].append(
+        {
+            "local_id": "P_EBUS",
+            "field": "procedures.completion",
+            "value": "not_started",
+            "assertion": "negated",
+            "evidence_quote": "was not started",
+        }
+    )
+    result = assemble(facts, text)
+    ebus = next(p for p in result.proposal["procedures"] if p["category"] == "linear_ebus")
+    assert ebus["performance"] == "not_performed"
+    assert ebus.get("completion") == "not_started"
