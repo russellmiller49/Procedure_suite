@@ -294,6 +294,116 @@ def test_phi_redactor_first_name_rule_still_flags_names(
     assert _first_name_detector(worker)(sentence) == [name]
 
 
+@pytest.mark.parametrize("folder", ["phi_redactor", "phi_redactor_classic"])
+def test_phi_redactor_legacy_veto_is_the_module_veto(folder: str) -> None:
+    """The fallback worker's veto file is the module file minus ``export``, plus a global.
+
+    It had fallen behind once (no guideline-citation rule, four platform names missing), so
+    browsers on the fallback redacted text the main redactor keeps. Regenerate it from
+    protectedVeto.js with exactly these three edits whenever that file changes.
+    """
+    static = Path(__file__).resolve().parents[2] / "ui" / "static"
+    module = (static / "phi_redactor" / "protectedVeto.js").read_text()
+    assert (static / folder / "protectedVeto.js").read_text() == module
+    assert module.count("// Main export\n") == 1
+    assert module.count("\nexport function applyVeto(") == 1
+    expected = (
+        module.replace("// Main export\n", "// Main export (legacy worker attaches to self)\n")
+        .replace("\nexport function applyVeto(", "\nfunction applyVeto(")
+        .rstrip("\n")
+        + "\n\nself.applyVeto = applyVeto;\n"
+    )
+    assert (static / folder / "protectedVeto.legacy.js").read_text() == expected
+
+
+_VETO_RUNNER = """
+const fs = require("fs");
+const vm = require("vm");
+const [vetoPath, termsPath] = process.argv.slice(1);
+const ctx = { self: {}, console: { log() {} } };
+vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(vetoPath, "utf8"), ctx);
+const terms = JSON.parse(fs.readFileSync(termsPath, "utf8"));
+const cases = JSON.parse(fs.readFileSync(0, "utf8"));
+const out = cases.map(([text, word]) => {
+  const start = text.indexOf(word);
+  const span = { start, end: start + word.length, label: "PATIENT", score: 0.95 };
+  return ctx.self.applyVeto([span], text, terms, { protectProviders: false }).length === 1;
+});
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def _still_redacted(cases: list[tuple[str, str]]) -> list[bool]:
+    """Run the fallback veto file (tested equal to the module one) on PATIENT spans in node."""
+    import json
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not installed")
+    redactor = Path(__file__).resolve().parents[2] / "ui" / "static" / "phi_redactor"
+    result = subprocess.run(
+        [
+            node,
+            "-e",
+            _VETO_RUNNER,
+            str(redactor / "protectedVeto.legacy.js"),
+            str(redactor / "vendor" / "phi_distilbert_ner" / "protected_terms.json"),
+        ],
+        input=json.dumps(cases),
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    return json.loads(result.stdout)
+
+
+def test_phi_veto_citation_rule_does_not_release_patient_names() -> None:
+    """Preserve: a year, "chest" or "recommendations" near a name is not a citation.
+
+    The rule used to treat any of those within 90 characters as citation context, so the
+    veto dropped the patient-name detection in ordinary note headers.
+    """
+    cases = [
+        (
+            "Patient: John Smith\nDOB: 01/15/1960\nIndication: abnormal chest CT with a nodule.",
+            "John Smith",
+        ),
+        ("NAME: DARRELL BROOKS: 5/16/1964 DOD#: 51113915741\nIMPRESSION: Mediastinal", "DARRELL"),
+        ("Mr. Smith was seen 3/2/2025 after a chest radiograph showed an effusion.", "Smith"),
+        ("Maria Lopez underwent EBUS on 2026-01-04. Recommendations: clinic.", "Maria Lopez"),
+        ("John Smith was referred in 2025 by the tumor board committee.", "John Smith"),
+    ]
+    assert _still_redacted(cases) == [True] * len(cases)
+
+
+def test_phi_veto_citation_rule_still_keeps_cited_authors_and_societies() -> None:
+    """Suppress: the span that is itself the citation stays visible."""
+    cases = [
+        ("Nodule follow-up per MacMahon et al, 2017 (Fleischner Society).", "MacMahon"),
+        ("Managed per MacMahon H, et al. Radiology 2017.", "MacMahon"),
+        ("Follow-up per Fleischner Society recommendations.", "Fleischner"),
+        ("Follow-up per Fleischner Society recommendations.", "Fleischner Society"),
+        ("Staging followed the CHEST guideline.", "CHEST"),
+    ]
+    assert _still_redacted(cases) == [False] * len(cases)
+
+
+def test_phi_veto_citation_rule_reads_the_span_not_its_surroundings() -> None:
+    """Always-on guard (no node needed) against the two constructs that caused the leak."""
+    body = (
+        Path(__file__).resolve().parents[2] / "ui" / "static" / "phi_redactor" / "protectedVeto.js"
+    ).read_text()
+    rule = body[
+        body.index("function isGuidelineCitation(") : body.index("function isProviderName(")
+    ]
+    assert "getContext(" not in rule
+    assert "CITATION_YEAR_RE" not in body
+
+
 def test_phi_redactor_worker_provider_roles_cover_ebus_headers(client: TestClient) -> None:
     """Regression: provider role regex should include common EBUS header labels."""
     resp = client.get("/ui/phi_redactor/redactor.worker.js")
