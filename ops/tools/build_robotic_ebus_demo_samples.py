@@ -115,8 +115,9 @@ GENERATED = [
     ),
     # Seed 20270021 confirmed the needle tip in the lesion and then took forceps
     # biopsies only; a reader (and the model) cannot tell what was verified. In this
-    # one a needle pass follows the needle check. (Seed 20270037 was passed over:
-    # the browser redactor flags its sentence-initial "Fluoroscopy" as an identifier.)
+    # one a needle pass follows the needle check. (Seed 20270037 was passed over
+    # because the browser redactor then flagged its sentence-initial "Fluoroscopy"
+    # as a name; that rule has since been fixed in redactor.worker.js.)
     (
         20270028,
         "sectioned",

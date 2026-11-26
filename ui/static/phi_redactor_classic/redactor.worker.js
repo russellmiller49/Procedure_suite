@@ -205,8 +205,19 @@ const SINGLE_NAME_CLINICAL_STOPLIST = new Set([
   // Common clinical adjectives that appear after "for"
   "progressive", "inflammation", "newly", "acquired",
   // Specialties (avoid session name amplification)
-  "pulmonology", "critical", "medicine"
+  "pulmonology", "critical", "medicine",
+  // Sentence-initial clinical nouns seen before "was/is/had" ("Fluoroscopy was used ...")
+  "fluoroscopy", "fluoroscopic", "fluoro",
+  "adequacy", "localization", "confirmation", "placement", "position", "location",
+  "coverage", "staging", "debulking", "cryoextraction", "adrenal",
+  "fluid", "material", "purulence", "tract", "vapor", "energy", "attention",
+  "today", "first", "flumazenil", "surgicel", "bonastent"
 ]);
+
+// Word endings that mark a procedure or condition, never a first name
+// ("Mediastinoscopy was performed", "Tracheomalacia was noted").
+const CLINICAL_TERM_SUFFIX_RE =
+  /(?:scopy|graphy|ectomy|otomy|ostomy|plasty|centesis|malacia)$/i;
 
 // Helper: check if a word is in the clinical stoplist (case-insensitive)
 function isInClinicalStoplist(word) {
@@ -1252,7 +1263,8 @@ function runRegexDetectors(text) {
     const nameGroup = match[1];
     if (nameGroup && match.index != null) {
       // Phase 1 gating: Skip if name is a single-word clinical term
-      if (SINGLE_NAME_CLINICAL_STOPLIST.has(nameGroup.toLowerCase())) {
+      if (SINGLE_NAME_CLINICAL_STOPLIST.has(nameGroup.toLowerCase()) ||
+          CLINICAL_TERM_SUFFIX_RE.test(nameGroup)) {
         continue;
       }
 
