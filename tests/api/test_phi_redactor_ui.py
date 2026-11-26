@@ -545,3 +545,90 @@ def test_reporter_builder_variants_stay_identical() -> None:
         assert (static / "phi_redactor" / name).read_bytes() == (
             static / "phi_redactor_classic" / name
         ).read_bytes(), name
+
+
+def test_phi_veto_header_device_and_patient_rules_do_not_release_patient_names() -> None:
+    """Preserve: a name in a patient position survives the header, device and verb rules.
+
+    Each of these was dropped before: a name right after "Indication:" or "IMPRESSION/PLAN:",
+    a surname that is also a manufacturer (Baker, Cook, King, Wang, Young), and a name after
+    the word "patient" that happens to end like a verb (Thomas, James, Helen, Karen).
+    """
+    cases = [
+        ("INDICATION: John Smith is a 65-year-old male with a nodule.", "John Smith"),
+        ("Indication: Helen Carter, a 70 year old female with a mass.", "Helen Carter"),
+        ("IMPRESSION/PLAN: Nira Kaplan is a 85 year old female who presents", "Nira Kaplan"),
+        ("IMPRESSION/PLAN: Elizabeth Larkin is a 89 year old female", "Elizabeth"),
+        ("Indication: Mary Jones underwent prior lobectomy.", "Mary Jones"),
+        ("Diagnosis: Mr. Young has stage IIIA adenocarcinoma.", "Mr. Young"),
+        ("Diagnosis: Mr. Young has stage IIIA adenocarcinoma.", "Young"),
+        ("OPERATIVE NARRATIVE: Mr. Baker presented with an obstruction.", "Baker"),
+        ("Mrs. Cook had a 13mm nodule in the left lower lobe.", "Cook"),
+        ("Patient name: Young, Lori\nMRN: 3419905", "Young"),
+        ("Patient: King, Melissa (F)\nMRN: 4420791", "King"),
+        ("Name: Wang, Li\nDate of procedure: today", "Wang"),
+        ("The requisition lists patient Thomas Cruz with MRN 5395351.", "Thomas Cruz"),
+        ("The requisition lists patient Thomas Cruz with MRN 5395351.", "Thomas"),
+        ("Patient James was intubated with a size 8.0 ETT.", "James"),
+        ("The patient Helen was brought to the suite.", "Helen"),
+        ("The form names patient Will Smith as the signer.", "Will Smith"),
+    ]
+    assert _still_redacted(cases) == [True] * len(cases)
+
+
+def test_phi_veto_header_device_and_patient_rules_still_release_clinical_text() -> None:
+    """Suppress: the same three rules keep clinical values, devices and verbs visible."""
+    cases = [
+        ("Procedure: Bronchoscopy with EBUS-TBNA", "Bronchoscopy"),
+        ("Procedure Name: Thoracoscopy with pleural biopsy", "Thoracoscopy"),
+        ("Indication: Mediastinal adenopathy", "Mediastinal adenopathy"),
+        ("Indication: Lung Nodule\n65 year old male with a nodule.", "Lung Nodule"),
+        ("Findings: Granuloma is a likely cause of the 3 cm lesion.", "Granuloma"),
+        ("A Cook stent was not placed.", "Cook"),
+        ("The Wang needle was used for three passes.", "Wang"),
+        ("An Olympus scope and a Young retractor were available.", "Young"),
+        ("Patient tolerated the procedure well.", "tolerated"),
+        ("The patient remains intubated.", "remains"),
+        ("PATIENT DENIES chest pain.", "DENIES"),
+        ("Patient Status at Conclusion: stable", "Status"),
+        ("PATIENT DEMOGRAPHICS:\nAge: 71", "DEMOGRAPHICS"),
+    ]
+    assert _still_redacted(cases) == [False] * len(cases)
+
+
+def _patient_word_name_detector(worker: str):
+    """The "patient First Last" rule as a worker file defines it."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    name_re = re.search(r"const PATIENT_WORD_NAME_RE =\s*/(.+)/g;", body).group(1)
+    assert "matchAll(PATIENT_WORD_NAME_RE)" in body
+    assert 'source: "regex_patient_word_name"' in body
+    return lambda text: [m.group(1) for m in re.finditer(name_re, text)]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_flags_a_full_name_after_the_word_patient(worker: str) -> None:
+    """Preserve: "... lists patient Michael Baker with MRN" had no detection at all."""
+    flagged = _patient_word_name_detector(worker)
+    assert flagged("The requisition lists patient Michael Baker with MRN=2311352.") == [
+        "Michael Baker"
+    ]
+    assert flagged("The patient Stephen Reyes was brought to the suite.") == ["Stephen Reyes"]
+    assert flagged("Consent was signed by patient Mary A. O'Brien today.") == ["Mary A. O'Brien"]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "The patient tolerated the procedure well.",
+        "The patient was brought to the Bronchoscopy suite.",
+        "With the patient Supine, the scope was advanced.",
+        "Patient Status at Conclusion: stable.",
+        "The patient\nThomas Cruz was the proceduralist.",
+    ],
+)
+def test_phi_redactor_patient_word_rule_needs_two_capitalised_words(
+    worker: str, sentence: str
+) -> None:
+    """Suppress: a verb, one capitalised word, a heading or a line break never matches."""
+    assert _patient_word_name_detector(worker)(sentence) == []
