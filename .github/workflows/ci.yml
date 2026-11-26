@@ -42,7 +42,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e ".[api,dev]"
+          # Constrain to the verified lockfile so CI tests the same versions that deploy.
+          # Unconstrained installs pull pyarrow>=26, which needs NumPy 2 (spaCy pins NumPy 1.x).
+          python -m pip install -c requirements.txt -e ".[api,dev]"
       - name: Ruff
         run: ruff check .
       - name: Mypy
