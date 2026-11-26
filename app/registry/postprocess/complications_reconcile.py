@@ -70,6 +70,27 @@ _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE = re.compile(
     r"(?i)\b(?:control\s+any\s+(?:distal\s+)?bleeding|in\s+case\s+of\s+bleeding|prevent\s+bleeding|"
     r"should\s+bleeding\s+occur|if\s+bleeding\s+occurs?|available\s+to\s+control\b[^.\n]{0,80}\bbleeding)\b"
 )
+# Prophylactic-purpose wording only suppresses a sentence that does not also report established
+# bleeding ("Despite prophylactic balloon placement, brisk bleeding required balloon tamponade").
+_PROPHYLACTIC_PURPOSE_RE = re.compile(
+    r"(?i)\b(?:prophylactic(?:ally)?|pre-?emptive(?:ly)?|in\s+the\s+event\s+of\s+(?:any\s+)?bleeding)\b"
+)
+_BLEEDING_SEVERITY_RE = re.compile(
+    r"(?i)\b(?:brisk|moderate|significant|severe|massive|heavy|persistent|active|copious|substantial|profuse)\b"
+)
+_BLEEDING_LOW_QUALIFIER_RE = re.compile(
+    r"(?i)\b(?:minimal|minor|mild|scant|trace|slight|self[- ]limit\w*|resolv\w*|ooz\w*)\b"
+)
+_BLEEDING_EVENT_CUE_RE = re.compile(
+    r"(?i)\b(?:occurred|occurring|encountered|ensued|developed|required|requiring|persist\w*|"
+    r"controlled|tamponad\w*|inflat\w*)\b"
+)
+_EXPLICIT_HEMOSTATIC_PURPOSE_RE = re.compile(r"(?i)\b(?:tamponad\w*|hemostasis|to\s+(?:control|stop)\s+(?:the\s+)?bleed\w*)\b")
+# Device purposes that are not bleeding control; used only when the bleeding is in the prior sentence.
+_NON_BLEEDING_DEVICE_PURPOSE_RE = re.compile(
+    r"(?i)\b(?:whole\s+lung\s+lavage|wll|lung\s+lavage|(?:one|single|independent)[- ]lung\s+ventilation|"
+    r"(?:prior\s+to|before)\s+(?:the\s+)?(?:cryo)?(?:biops\w*|sampling|lavage))\b"
+)
 _ABORT_FOR_BLEEDING_RE = re.compile(
     r"(?i)\b(?:abort(?:ed|ing)|terminate(?:d|ing)|stop(?:ped|ping))\b[^.\n]{0,120}\b(?:bleed(?:ing)?|hemorrhage|haemorrhage)\b"
 )
@@ -169,19 +190,63 @@ def _has_low_ebl_context(text: str) -> bool:
     )
 
 
+def _sentence_reports_established_bleeding(sentence: str) -> bool:
+    """True when ``sentence`` reports unnegated bleeding that is more than minimal/resolved oozing."""
+    for bleed in _BLEEDING_WORD_RE.finditer(sentence or ""):
+        if _NEGATION_PREFIX_RE.search(sentence[: bleed.start()]):
+            continue
+        if _BLEEDING_SEVERITY_RE.search(sentence[max(0, bleed.start() - 30) : bleed.start()]):
+            return True
+        near = sentence[max(0, bleed.start() - 40) : bleed.end() + 80]
+        if _BLEEDING_LOW_QUALIFIER_RE.search(near):
+            continue
+        if _BLEEDING_EVENT_CUE_RE.search(near):
+            return True
+    return False
+
+
+def _previous_sentence_reports_bleeding(text: str, start: int) -> bool:
+    """True when the sentence just before ``start`` reports established bleeding."""
+    raw = text or ""
+    left_boundary = max(raw.rfind(".", 0, start), raw.rfind("\n", 0, start), raw.rfind(";", 0, start))
+    if left_boundary <= 0:
+        return False
+    previous = _sentence_window(raw, left_boundary - 1, left_boundary - 1)
+    if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(previous):
+        return False
+    if _sentence_reports_established_bleeding(previous):
+        return True
+    # Minor bleeding counts only when the device sentence itself states a hemostatic purpose.
+    device_sentence = _sentence_window(raw, start, start)
+    has_unnegated_bleeding = any(
+        not _NEGATION_PREFIX_RE.search(previous[: bleed.start()]) for bleed in _BLEEDING_WORD_RE.finditer(previous)
+    )
+    return has_unnegated_bleeding and bool(_EXPLICIT_HEMOSTATIC_PURPOSE_RE.search(device_sentence))
+
+
 def _first_match_with_bleeding_context(
     pattern: re.Pattern[str],
     text: str,
     *,
     context_window: int = 180,
+    allow_previous_sentence: bool = False,
 ) -> re.Match[str] | None:
     for match in pattern.finditer(text or ""):
         start = match.start()
         end = match.end()
         sentence = _sentence_window(text, start, end)
         if not _BLEEDING_WORD_RE.search(sentence):
-            continue
+            # Hemostasis devices are often described in the sentence after the bleeding
+            # ("Significant bleeding ... A blocker was placed to prevent blood soiling ...").
+            if not (
+                allow_previous_sentence
+                and _previous_sentence_reports_bleeding(text, start)
+                and not _NON_BLEEDING_DEVICE_PURPOSE_RE.search(sentence)
+            ):
+                continue
         if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(sentence):
+            continue
+        if _PROPHYLACTIC_PURPOSE_RE.search(sentence) and not _sentence_reports_established_bleeding(sentence):
             continue
         prefix = _sentence_prefix(text, start, end)
         if not prefix:
@@ -337,7 +402,7 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
             return 3, abort_match
 
     for pat in (_BALLOON_RE, _BLOCKER_RE):
-        match = _first_match_with_bleeding_context(pat, text)
+        match = _first_match_with_bleeding_context(pat, text, allow_previous_sentence=True)
         if match:
             window = text[max(0, match.start() - 160) : min(len(text), match.end() + 160)]
             # Require explicit bleeding control/tamponade language to avoid
