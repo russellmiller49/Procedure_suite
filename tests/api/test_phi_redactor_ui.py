@@ -343,14 +343,29 @@ def _still_redacted(cases: list[tuple[str, str]]) -> list[bool]:
     node = shutil.which("node")
     if node is None:
         pytest.skip("node is not installed")
-    redactor = Path(__file__).resolve().parents[2] / "ui" / "static" / "phi_redactor"
+    static = Path(__file__).resolve().parents[2] / "ui" / "static"
+    redactor = static / "phi_redactor"
+    # phi_redactor/vendor is a downloaded model bundle (gitignored), so a clean checkout
+    # has only the tracked classic copy of the protected terms.
+    terms = next(
+        (
+            path
+            for folder in ("phi_redactor", "phi_redactor_classic")
+            if (
+                path := static / folder / "vendor" / "phi_distilbert_ner" / "protected_terms.json"
+            ).exists()
+        ),
+        None,
+    )
+    if terms is None:
+        pytest.skip("protected_terms.json is not present")
     result = subprocess.run(
         [
             node,
             "-e",
             _VETO_RUNNER,
             str(redactor / "protectedVeto.legacy.js"),
-            str(redactor / "vendor" / "phi_distilbert_ner" / "protected_terms.json"),
+            str(terms),
         ],
         input=json.dumps(cases),
         capture_output=True,
