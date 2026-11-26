@@ -617,3 +617,94 @@ def test_phi_redactor_patient_word_rule_needs_two_capitalised_words(
 ) -> None:
     """Suppress: a verb, one capitalised word, a heading or a line break never matches."""
     assert _patient_word_name_detector(worker)(sentence) == []
+
+
+_LEADING_NAME_RUNNER = """
+const fs = require("fs");
+const vm = require("vm");
+const body = fs.readFileSync(process.argv[1], "utf8");
+const grab = (re) => {
+  const m = body.match(re);
+  if (!m) throw new Error("missing " + re);
+  return m[0];
+};
+const consts = [
+  "HEADER_NAME_STOPWORDS", "NAME_REGEX_CLINICAL_STOPLIST", "SINGLE_NAME_CLINICAL_STOPLIST",
+  "CLINICAL_TERM_SUFFIX_RE", "LEADING_NAME_STOPWORDS", "LEADING_NAME_VERB_AFTER_RE",
+  "LEADING_NAME_TOKEN_BEFORE_RE",
+].map((name) => grab(new RegExp("const " + name + " =[\\\\s\\\\S]*?;\\\\n")));
+const fn = grab(/function extendPatientSpansForLeadingFirstName[\\s\\S]*?\\n}\\n/);
+const ctx = {};
+const expose = "\\nthis.extend = extendPatientSpansForLeadingFirstName;";
+vm.runInNewContext(consts.join("\\n") + fn + expose, ctx);
+const cases = JSON.parse(fs.readFileSync(0, "utf8"));
+const out = cases.map(([text, word, label]) => {
+  const start = text.indexOf(word);
+  const [span] = ctx.extend([{ start, end: start + word.length, label }], text);
+  return text.slice(span.start, span.end);
+});
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def _leading_first_name(worker: str, cases: list[tuple[str, str, str]]) -> list[str]:
+    """Run a worker file's first-name extension in node on one (text, flagged word, label)."""
+    import json
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not installed")
+    path = Path(__file__).resolve().parents[2] / "ui" / "static" / worker
+    result = subprocess.run(
+        [node, "-e", _LEADING_NAME_RUNNER, str(path)],
+        input=json.dumps(cases),
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    return json.loads(result.stdout)
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_takes_the_first_name_with_a_flagged_surname(worker: str) -> None:
+    """Preserve: "Indication: John Smith presents ..." flagged only "Smith" and left "John"."""
+    cases = [
+        ("Indication: John Smith presents with hemoptysis.", "Smith", "PATIENT", "John Smith"),
+        ("Indication: John Smith has a 2 cm RUL nodule.", "Smith", "PATIENT", "John Smith"),
+        ("HPI: Maria A. Lopez was referred for staging.", "Lopez", "PATIENT", "Maria A. Lopez"),
+        ("65M John Smith underwent EBUS today.", "Smith", "B-PATIENT", "John Smith"),
+    ]
+    got = _leading_first_name(worker, [c[:3] for c in cases])
+    assert got == [c[3] for c in cases]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_first_name_extension_leaves_other_words_alone(worker: str) -> None:
+    """Suppress: only a capitalised, non-clinical word on the same line before a verb is taken."""
+    cases = [
+        ("Patient Smith was seen in clinic.", "Smith", "PATIENT"),
+        ("Indication: Smith has a RUL nodule.", "Smith", "PATIENT"),
+        ("Mr. Smith has a RUL nodule.", "Smith", "PATIENT"),
+        ("The scope was withdrawn. Then Frank was extubated.", "Frank", "PATIENT"),
+        ("Bronchoscopy Frank underwent last year was normal.", "Frank", "PATIENT"),
+        ("Referred by\nSmith was the plan.", "Smith", "PATIENT"),
+        ("Seen with John Smith, who agreed.", "Smith", "PATIENT"),
+        ("Scripps Mercy is the referring site.", "Mercy", "GEO"),
+    ]
+    assert _leading_first_name(worker, cases) == [word for _, word, _ in cases]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_first_name_extension_runs_after_the_veto(worker: str) -> None:
+    """The extension must follow the last veto pass in both merge modes, never precede it."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    after_veto = re.findall(
+        r'log\("\[PHI\] afterSessionVeto:", merged\.length\);\s*'
+        r"(?://[^\n]*\n\s*)?merged = extendPatientSpansForLeadingFirstName\(merged, text\);",
+        body,
+    )
+    assert len(after_veto) == 2
+    assert body.count("extendPatientSpansForLeadingFirstName(merged, text)") == 2
