@@ -272,6 +272,12 @@ const PT_NAME_MRN_RE =
 const PT_STANDALONE_RE =
   /\bPT\s+([A-Z][a-z]+(?:'[A-Z][a-z]+)?(?:\s+[A-Z][a-z]+(?:'[A-Z][a-z]+)?)?)\b/g;
 
+// Matches a full name after the lowercase word "patient" inside a sentence:
+// "the requisition lists patient Thomas Cruz with MRN ...". Two capitalised words on
+// the same line are required, so "patient Left ..." or a lone verb never matches.
+const PATIENT_WORD_NAME_RE =
+  /\bpatient[ \t]+((?:[A-Z][a-z]+(?:'[A-Z][a-z]+)?|[A-Z]'[A-Z][a-z]+)(?:[ \t]+[A-Z]\.)?[ \t]+(?:[A-Z][a-z]+(?:'[A-Z][a-z]+)?|[A-Z]'[A-Z][a-z]+))\b/g;
+
 // Matches: "Mr./Mrs./Ms./Miss Smith" or "Mr. John Smith" or "Mr. O'Brien"
 // IMPORTANT: Case-sensitive for name capture to avoid consuming lowercase verbs like "underwent"
 // Only matches names starting with capital letters, supports apostrophe surnames (O'Brien, D'Angelo)
@@ -1032,6 +1038,24 @@ function runRegexDetectors(text) {
             source: "regex_pt_standalone",
           });
         }
+      }
+    }
+  }
+
+  // 5a2) "patient First Last" inside a sentence
+  for (const match of text.matchAll(PATIENT_WORD_NAME_RE)) {
+    const nameGroup = match[1];
+    if (nameGroup && match.index != null) {
+      const nameStart = match.index + match[0].length - nameGroup.length;
+      const nameEnd = nameStart + nameGroup.length;
+      if (!isFollowedByCredentials(nameEnd) && !isPrecededByProviderContext(match.index)) {
+        spans.push({
+          start: nameStart,
+          end: nameEnd,
+          label: "PATIENT",
+          score: 0.9,
+          source: "regex_patient_word_name",
+        });
       }
     }
   }
