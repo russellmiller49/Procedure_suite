@@ -2680,6 +2680,53 @@ function extendPatientSpansForTrailingNameToken(spans, fullText) {
   });
 }
 
+// Words that can sit directly before a redacted surname without being a first name.
+const LEADING_NAME_STOPWORDS = new Set([
+  "the", "a", "an", "this", "that", "patient", "pt", "subject", "dr", "doctor", "nurse",
+  "and", "but", "or", "then", "when", "while", "after", "before", "since", "because",
+  "although", "if", "as", "per", "for", "with", "on", "in", "at", "by", "to", "from", "of",
+  "however", "today", "yesterday", "also", "once", "our", "his", "her", "their", "who",
+  "attending", "fellow", "resident", "surgeon", "physician", "anesthesiologist", "assistant"
+]);
+const LEADING_NAME_VERB_AFTER_RE =
+  /^[ \t]+(?:came|went|underwent|presents|presented|needs|needed|required|complains|complained|reports|reported|developed|has|had|is|was)\b/;
+const LEADING_NAME_TOKEN_BEFORE_RE =
+  /(?:^|[^A-Za-z0-9'’.-])([A-Z][a-z]+(?:[ \t]+[A-Z]\.?)?[ \t]+)$/;
+
+/**
+ * When a lone surname before a verb is redacted, redact the first name directly before it.
+ * Fixes "Indication: John Smith has a nodule", where only "Smith" was flagged.
+ * Runs after the veto: the decision that "Smith" is a name has already been made.
+ */
+function extendPatientSpansForLeadingFirstName(spans, fullText) {
+  return spans.map((span) => {
+    const label = String(span.label || "").toUpperCase().replace(/^[BI]-/, "");
+    if (label !== "PATIENT") return span;
+    if (!/^[A-Z][a-z]+$/.test(fullText.slice(span.start, span.end))) return span;
+    if (!LEADING_NAME_VERB_AFTER_RE.test(fullText.slice(span.end, span.end + 16))) return span;
+
+    const lineStart = fullText.lastIndexOf("\n", span.start - 1) + 1;
+    const before = fullText.slice(Math.max(lineStart, span.start - 40), span.start);
+    const match = before.match(LEADING_NAME_TOKEN_BEFORE_RE);
+    if (!match) return span;
+
+    const token = match[1].match(/^[A-Za-z]+/)[0];
+    const low = token.toLowerCase();
+    if (
+      LEADING_NAME_STOPWORDS.has(low) ||
+      SINGLE_NAME_CLINICAL_STOPLIST.has(low) ||
+      NAME_REGEX_CLINICAL_STOPLIST.has(low) ||
+      HEADER_NAME_STOPWORDS.has(low) ||
+      CLINICAL_TERM_SUFFIX_RE.test(token)
+    ) {
+      return span;
+    }
+
+    const newStart = span.start - match[1].length;
+    return { ...span, start: newStart, text: fullText.slice(newStart, span.end) };
+  });
+}
+
 // =============================================================================
 // Debug helpers (optional)
 // =============================================================================
@@ -2883,6 +2930,9 @@ self.onmessage = async (e) => {
         merged = applyVeto(merged, text, protectedTerms, vetoOpts);
         if (debug) log("[PHI] afterSessionVeto:", merged.length);
 
+        // A lone surname that survived the veto takes its first name with it.
+        merged = extendPatientSpansForLeadingFirstName(merged, text);
+
         // 10) Final overlap resolution AFTER veto has approved survivors
         merged = finalResolveOverlaps(merged);
         if (debug) log("[PHI] afterFinalResolve:", merged.length);
@@ -2927,6 +2977,9 @@ self.onmessage = async (e) => {
         // 10c) Apply veto to session-propagated spans as well (Phase 1D).
         merged = applyVeto(merged, text, protectedTerms, vetoOpts);
         if (debug) log("[PHI] afterSessionVeto:", merged.length);
+
+        // A lone surname that survived the veto takes its first name with it.
+        merged = extendPatientSpansForLeadingFirstName(merged, text);
       }
 
       merged = attachStableIds(merged, text);
