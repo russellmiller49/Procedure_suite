@@ -161,6 +161,9 @@ def _resolve_format(input_path: Path, requested_format: str) -> str:
         return "legacy_golden"
     if requested_format == "unified_quality_corpus":
         return "unified_quality_corpus"
+    if not input_path.exists():
+        # Legacy fixtures are untracked; the legacy loader reports "no fixture files" and skips.
+        return "legacy_golden"
     detected = detect_input_format(input_path)
     if detected.startswith("legacy_golden"):
         return "legacy_golden"
