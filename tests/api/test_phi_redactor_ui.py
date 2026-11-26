@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -212,6 +213,85 @@ def test_phi_redactor_legacy_worker_has_same_regression_fixes(client: TestClient
         body,
         re.MULTILINE,
     ), "Expected clinical stoplist gating inside legacy PROCEDURE_FOR_NAME_RE loop"
+
+
+_REDACTOR_WORKERS = [
+    f"{folder}/{name}"
+    for folder in ("phi_redactor", "phi_redactor_classic")
+    for name in ("redactor.worker.js", "redactor.worker.legacy.js")
+]
+
+
+def _first_name_detector(worker: str):
+    """The standalone-first-name rule as a worker file defines it: regex, stoplist, suffix gate."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    name_re = re.search(r"const FIRST_NAME_CLINICAL_RE =\s*/(.+)/g;", body).group(1)
+    stoplist = set(
+        re.findall(
+            r'"([^"]+)"',
+            re.search(
+                r"const SINGLE_NAME_CLINICAL_STOPLIST = new Set\(\[([\s\S]*?)\]\);", body
+            ).group(1),
+        )
+    )
+    suffix_re = re.search(r"const CLINICAL_TERM_SUFFIX_RE =\s*/(.+)/i;", body).group(1)
+    assert re.search(
+        r"matchAll\(FIRST_NAME_CLINICAL_RE\)\)\s*\{[\s\S]*?"
+        r"SINGLE_NAME_CLINICAL_STOPLIST\.has\(nameGroup\.toLowerCase\(\)\)\s*\|\|\s*"
+        r"CLINICAL_TERM_SUFFIX_RE\.test\(nameGroup\)\)\s*\{\s*continue;",
+        body,
+    ), "Expected the stoplist and suffix gate inside the FIRST_NAME_CLINICAL_RE loop"
+
+    def flagged(text: str) -> list[str]:
+        return [
+            m.group(1)
+            for m in re.finditer(name_re, text)
+            if m.group(1).lower() not in stoplist
+            and not re.search(suffix_re, m.group(1), re.IGNORECASE)
+        ]
+
+    return flagged
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Fluoroscopy was used during sampling.",
+        "Mediastinoscopy was not performed.",
+        "Elastography was performed at each station.",
+        "Thoracotomy was avoided.",
+        "Tracheomalacia was noted as we advanced the scope.",
+        "Adequacy was confirmed after the third pass.",
+        "Localization was corroborated with radial EBUS.",
+        "Placement was confirmed via ultrasound.",
+        "Fluid was evacuated.",
+        "Flumazenil was administered with immediate effect.",
+    ],
+)
+def test_phi_redactor_first_name_rule_skips_sentence_initial_clinical_nouns(
+    worker: str, sentence: str
+) -> None:
+    """Suppress: "Fluoroscopy was used ..." must not be read as a first name plus a verb."""
+    assert _first_name_detector(worker)(f"The lesion was reached. {sentence}") == []
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    ("sentence", "name"),
+    [
+        ("Frank underwent a procedure.", "Frank"),
+        ("HPI: Susan is a 71-year-old female here for cough.", "Susan"),
+        ("Ms. Chen is a 72-year-old female with a lung mass.", "Chen"),
+        ("Mr. White has a very early stage cancer.", "White"),
+        ("Mr. Fields has a tumor blocking his right mainstem.", "Fields"),
+    ],
+)
+def test_phi_redactor_first_name_rule_still_flags_names(
+    worker: str, sentence: str, name: str
+) -> None:
+    """Preserve: real names in front of the same verbs are still proposed for redaction."""
+    assert _first_name_detector(worker)(sentence) == [name]
 
 
 def test_phi_redactor_worker_provider_roles_cover_ebus_headers(client: TestClient) -> None:
