@@ -57,6 +57,11 @@ jobs:
       - name: vNext golden quote eval (optional)
         run: |
           python ml/scripts/eval_golden_vNext_quotes.py --fail-under 95
+      - name: Tests left tracked files unchanged
+        if: always()
+        run: |
+          git status --porcelain --untracked-files=no
+          git diff --quiet --exit-code
 
   supabase-integration:
     runs-on: ubuntu-latest
