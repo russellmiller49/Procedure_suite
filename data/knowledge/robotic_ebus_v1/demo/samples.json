@@ -3705,268 +3705,383 @@
     "robotic_bronchoscopy"
    ],
    "generator": {
-    "seed": 20270021,
+    "seed": 20270028,
     "version": "truth-first-2"
    },
    "gold": {
-    "document_id": "e954da5e-8e01-411a-bdfc-840bebf3e19a",
+    "document_id": "b9661393-f55a-4246-8e2f-827592e2ba7d",
     "evidence": {
      "/case_details/age_at_procedure_years": [
       142,
-      202,
+      201,
+      "active"
+     ],
+     "/case_details/airway_device": [
+      287,
+      342,
+      "active"
+     ],
+     "/case_details/airway_size_unit": [
+      287,
+      342,
+      "active"
+     ],
+     "/case_details/airway_size_value": [
+      287,
+      342,
+      "active"
+     ],
+     "/case_details/anesthesia_type": [
+      287,
+      342,
+      "active"
+     ],
+     "/case_details/asa_physical_status": [
+      272,
+      286,
+      "active"
+     ],
+     "/case_details/immediate_disposition": [
+      1376,
+      1423,
       "active"
      ],
      "/case_details/indication": [
-      203,
-      260,
+      202,
+      259,
       "active"
      ],
      "/case_details/intent": [
-      203,
-      260,
+      202,
+      259,
       "active"
      ],
      "/case_details/pack_years": [
       142,
-      202,
-      "active"
-     ],
-     "/case_details/procedure_duration_minutes": [
-      1040,
-      1072,
+      201,
       "active"
      ],
      "/case_details/sex_at_birth": [
       142,
-      202,
+      201,
       "active"
      ],
      "/case_details/smoking_status": [
       142,
-      202,
+      201,
       "active"
      ],
      "/complication_assessment": [
-      999,
-      1026,
+      1335,
+      1362,
       "negated"
      ],
      "/localization_events/0/lesion_visible": [
-      634,
-      670,
+      724,
+      760,
       "active"
      ],
      "/localization_events/0/localization_modality": [
-      634,
-      670,
+      724,
+      760,
       "active"
      ],
      "/localization_events/0/radial_ebus_view": [
-      634,
-      670,
+      724,
+      760,
       "active"
      ],
      "/localization_events/1/actual_lesion_vs_virtual_target": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/confirmation_basis": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/event_phase": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/final_prebiopsy_confirmation": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/lesion_visible": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/localization_modality": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/sampling_tool_present": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/tool_lesion_relationship": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/localization_events/1/verified_tool_component": [
-      671,
-      760,
+      761,
+      859,
       "active"
      ],
      "/navigation_runs/0/navigation_run_outcome": [
-      546,
-      633,
+      636,
+      723,
       "active"
      ],
      "/navigation_runs/0/navigation_success_system_reported": [
-      546,
-      633,
+      636,
+      723,
       "active"
      ],
      "/navigation_runs/0/platform_family": [
-      376,
-      425,
+      458,
+      507,
       "active"
      ],
      "/navigation_runs/0/target_reached_operational": [
-      546,
-      633,
+      636,
+      723,
       "active"
      ],
      "/procedures/0/category": [
-      273,
-      342,
+      355,
+      424,
       "active"
      ],
      "/procedures/0/completion": [
-      273,
-      342,
+      355,
+      424,
       "active"
      ],
      "/procedures/0/performance": [
-      273,
-      342,
+      355,
+      424,
       "active"
      ],
      "/procedures/0/planned": [
-      273,
-      342,
+      355,
+      424,
       "active"
      ],
      "/sampling_acquisitions/0/acquisition_record_granularity": [
-      761,
-      820,
+      860,
+      943,
+      "active"
+     ],
+     "/sampling_acquisitions/0/needle_gauge": [
+      860,
+      943,
       "active"
      ],
      "/sampling_acquisitions/0/reported_pass_count": [
-      761,
-      820,
+      860,
+      943,
+      "active"
+     ],
+     "/sampling_acquisitions/0/rose_performed": [
+      1085,
+      1191,
       "active"
      ],
      "/sampling_acquisitions/0/sampling_tool": [
-      761,
-      820,
+      860,
+      943,
+      "active"
+     ],
+     "/sampling_acquisitions/1/acquisition_record_granularity": [
+      944,
+      1004,
+      "active"
+     ],
+     "/sampling_acquisitions/1/reported_pass_count": [
+      944,
+      1004,
+      "active"
+     ],
+     "/sampling_acquisitions/1/sampling_tool": [
+      944,
+      1004,
+      "active"
+     ],
+     "/sampling_acquisitions/2/acquisition_record_granularity": [
+      1005,
+      1084,
+      "active"
+     ],
+     "/sampling_acquisitions/2/reported_pass_count": [
+      1005,
+      1084,
+      "active"
+     ],
+     "/sampling_acquisitions/2/sampling_tool": [
+      1005,
+      1084,
+      "active"
+     ],
+     "/sampling_acquisitions/2/tool_size_mm": [
+      1005,
+      1084,
       "active"
      ],
      "/sampling_specimen_links/0/link_certainty": [
-      928,
-      983,
+      1192,
+      1246,
+      "active"
+     ],
+     "/sampling_specimen_links/1/link_certainty": [
+      1247,
+      1319,
+      "active"
+     ],
+     "/sampling_specimen_links/2/link_certainty": [
+      1247,
+      1319,
       "active"
      ],
      "/specimens/0/specimen_label": [
-      928,
-      983,
+      1192,
+      1246,
       "active"
      ],
      "/specimens/0/specimen_type": [
-      928,
-      983,
+      1192,
+      1246,
       "active"
      ],
      "/specimens/0/target_attribution_status": [
-      928,
-      983,
+      1192,
+      1246,
+      "active"
+     ],
+     "/specimens/1/specimen_label": [
+      1247,
+      1319,
+      "active"
+     ],
+     "/specimens/1/specimen_type": [
+      1247,
+      1319,
+      "active"
+     ],
+     "/specimens/1/target_attribution_status": [
+      1247,
+      1319,
       "active"
      ],
      "/targets/0/anatomic_label": [
-      426,
-      545,
-      "active"
-     ],
-     "/targets/0/bronchus_sign_present": [
-      426,
-      545,
+      508,
+      635,
       "active"
      ],
      "/targets/0/diagnostic_attempted": [
-      546,
-      633,
+      636,
+      723,
       "active"
      ],
      "/targets/0/lobe": [
-      426,
-      545,
+      508,
+      635,
+      "active"
+     ],
+     "/targets/0/max_diameter_mm": [
+      508,
+      635,
+      "active"
+     ],
+     "/targets/0/needle_gauge": [
+      860,
+      943,
+      "active"
+     ],
+     "/targets/0/needle_pass_count": [
+      860,
+      943,
       "active"
      ],
      "/targets/0/prespecified_biopsy_target": [
-      426,
-      545,
+      508,
+      635,
       "active"
      ],
      "/targets/0/rose_adequate": [
-      821,
-      927,
+      1085,
+      1191,
       "active"
      ],
      "/targets/0/rose_result": [
-      821,
-      927,
+      1085,
+      1191,
       "active"
      ],
      "/targets/0/rose_used": [
-      821,
-      927,
+      1085,
+      1191,
       "active"
      ],
      "/targets/0/sampling_attempted": [
-      761,
-      820,
+      1005,
+      1084,
+      "active"
+     ],
+     "/targets/0/segment": [
+      508,
+      635,
       "active"
      ],
      "/targets/0/site": [
-      426,
-      545,
+      508,
+      635,
       "active"
      ],
      "/targets/0/specimen_obtained": [
-      928,
-      983,
+      1247,
+      1319,
       "active"
      ]
     },
     "revision": {
      "case_details": {
-      "age_at_procedure_years": 72.0,
+      "age_at_procedure_years": 66.0,
+      "airway_device": "LMA",
+      "airway_size_unit": "LMA_size",
+      "airway_size_value": 5.0,
+      "anesthesia_type": "general",
+      "asa_physical_status": 3,
+      "immediate_disposition": "home",
       "indication": "tissue diagnosis of a peripheral lung lesion",
       "intent": "diagnosis",
       "pack_years": 50.0,
-      "procedure_duration_minutes": 123.0,
       "sex_at_birth": "female",
-      "smoking_status": "current"
+      "smoking_status": "former"
      },
      "complication_assessment": "absent",
      "complications": [],
      "ebus_sessions": [],
-     "event_date": "2026-09-01",
+     "event_date": "2026-05-30",
      "evidence": [],
      "follow_up": [],
      "localization_events": [
       {
        "event_sequence_number": 1,
        "lesion_visible": true,
-       "localization_event_id": "4f0873f7-14f7-4865-8fb7-b0ff7a42f06b",
+       "localization_event_id": "a9f58c4f-dfc8-4b79-97ef-09f91d953610",
        "localization_modality": "radial_EBUS",
-       "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
+       "navigation_run_id": "b123caa7-fec2-4d25-b65d-da8c54ec0724",
        "radial_ebus_view": "adjacent",
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823"
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
       },
       {
        "actual_lesion_vs_virtual_target": "actual_lesion",
@@ -3975,24 +4090,24 @@
        "event_sequence_number": 2,
        "final_prebiopsy_confirmation": true,
        "lesion_visible": true,
-       "localization_event_id": "f3612436-c937-4645-b234-e5016de0f871",
-       "localization_modality": "CBCT_unspecified",
-       "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
+       "localization_event_id": "3abc64ca-5590-43fb-9037-cc6a19e811d7",
+       "localization_modality": "fixed_CBCT",
+       "navigation_run_id": "b123caa7-fec2-4d25-b65d-da8c54ec0724",
        "sampling_tool_present": true,
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823",
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c",
        "tool_lesion_relationship": "TIL",
-       "verified_tool_component": "needle_tip"
+       "verified_tool_component": "sampling_tool"
       }
      ],
      "manual_fields": [],
      "navigation_runs": [
       {
-       "navigation_run_id": "a1337368-0dc2-4c04-9256-116137a3e851",
+       "navigation_run_id": "b123caa7-fec2-4d25-b65d-da8c54ec0724",
        "navigation_run_outcome": "reached_and_sampled",
        "navigation_success_system_reported": true,
        "platform_family": "Ion",
        "run_sequence_number": 1,
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823",
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c",
        "target_reached_operational": true
       }
      ],
@@ -4010,28 +4125,66 @@
       {
        "acquisition_record_granularity": "aggregate_reported",
        "attribution_status": "attributed",
+       "needle_gauge": 19,
        "reported_pass_count": 2,
-       "sampling_pass_id": "3f131fb2-fe2b-487f-999b-00289c450834",
+       "rose_performed": true,
+       "sampling_pass_id": "5ac51623-779b-4c30-bdd1-f04233db17bb",
+       "sampling_tool": "aspiration_needle",
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
+      },
+      {
+       "acquisition_record_granularity": "aggregate_reported",
+       "attribution_status": "attributed",
+       "reported_pass_count": 4,
+       "sampling_pass_id": "06b4884f-e1be-41f8-912a-baa8d27771e5",
        "sampling_tool": "forceps",
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823"
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
+      },
+      {
+       "acquisition_record_granularity": "aggregate_reported",
+       "attribution_status": "attributed",
+       "reported_pass_count": 3,
+       "sampling_pass_id": "44af2135-72d5-44cc-a846-80d77decc507",
+       "sampling_tool": "cryoprobe",
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c",
+       "tool_size_mm": 1.1
       }
      ],
      "sampling_specimen_links": [
       {
        "link_certainty": "confirmed",
-       "sampling_pass_id": "3f131fb2-fe2b-487f-999b-00289c450834",
-       "sampling_specimen_link_id": "7d5eef6b-e1ef-4425-8b14-5c5d2d062632",
-       "specimen_id": "e55644b5-e397-469b-8a3a-e5bc8a530bb1"
+       "sampling_pass_id": "5ac51623-779b-4c30-bdd1-f04233db17bb",
+       "sampling_specimen_link_id": "9ef2c885-809c-4c46-b9ad-ef22784db00f",
+       "specimen_id": "c45596c8-f5c4-4216-bdf5-6e1fc91c4980"
+      },
+      {
+       "link_certainty": "confirmed",
+       "sampling_pass_id": "06b4884f-e1be-41f8-912a-baa8d27771e5",
+       "sampling_specimen_link_id": "b1fa8f34-21b6-4357-9f98-415c2b1aa5a0",
+       "specimen_id": "f4a5fd0c-de80-4c13-8833-bc7e30b99ce9"
+      },
+      {
+       "link_certainty": "confirmed",
+       "sampling_pass_id": "44af2135-72d5-44cc-a846-80d77decc507",
+       "sampling_specimen_link_id": "9aaaceba-c958-4891-b22e-fb53ba45317f",
+       "specimen_id": "f4a5fd0c-de80-4c13-8833-bc7e30b99ce9"
       }
      ],
      "schema_version": "0.2.0",
      "specimens": [
       {
-       "specimen_id": "e55644b5-e397-469b-8a3a-e5bc8a530bb1",
+       "specimen_id": "c45596c8-f5c4-4216-bdf5-6e1fc91c4980",
        "specimen_label": "A",
+       "specimen_type": "cytology",
+       "target_attribution_status": "attributed",
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
+      },
+      {
+       "specimen_id": "f4a5fd0c-de80-4c13-8833-bc7e30b99ce9",
+       "specimen_label": "B",
        "specimen_type": "histology",
        "target_attribution_status": "attributed",
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823"
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
       }
      ],
      "station_surveys": [],
@@ -4039,17 +4192,20 @@
      "targets": [
       {
        "anatomic_label": "Target 1",
-       "bronchus_sign_present": true,
        "diagnostic_attempted": true,
-       "lobe": "LLL",
+       "lobe": "Lingula",
+       "max_diameter_mm": 16.0,
+       "needle_gauge": 19,
+       "needle_pass_count": 2,
        "prespecified_biopsy_target": true,
        "rose_adequate": true,
        "rose_result": "malignant cells consistent with non-small cell carcinoma",
        "rose_used": true,
        "sampling_attempted": true,
+       "segment": "inferior lingular segment (LB5)",
        "site": "lung",
        "specimen_obtained": true,
-       "target_id": "a1acdb26-a349-440e-8d1e-95e07c44b823"
+       "target_id": "48d66615-453d-4ad8-aa1a-fbe4e785c04c"
       }
      ]
     }
@@ -4059,8 +4215,8 @@
    "source": "truth_first",
    "style": "sectioned",
    "teaching_point": "No traps: the facts are stated plainly, so this shows the baseline behaviour.",
-   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-09-01\n\nINDICATION\nPatient: 72-year-old female, current smoker (50 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Ion robotic platform was used for navigation. Target 1 was a lesion in the left lower lobe. A bronchus sign was present. Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an adjacent view. Cone-beam CT confirmed the needle tip within the lesion before sampling (tool-in-lesion). Transbronchial forceps biopsies were obtained (two passes). ROSE of target 1 showed malignant cells consistent with non-small cell carcinoma; the sample was adequate. Specimen A: forceps biopsies from target 1 (histology).\n\nCOMPLICATIONS\nNo immediate complications.\n\nDISPOSITION\nProcedure duration: 123 minutes.\n",
-   "text_sha256": "9bfcfe851134c224abdae8ee291ec45fdb9bff16b9a6f16ce222f3d9b7de332e",
+   "text": "Synthetic note for software demonstration only; no real patient.\nRobotic Bronchoscopy Procedure Report\nProcedure date: 2026-05-30\n\nINDICATION\nPatient: 66-year-old female, former smoker (50 pack-years). Indication: tissue diagnosis of a peripheral lung lesion.\n\nANESTHESIA\nASA class III. General anesthesia with a size 5 laryngeal mask airway.\n\nPROCEDURES\nRobotic-assisted bronchoscopy was performed as planned and completed.\n\nROBOTIC NAVIGATION AND SAMPLING\nThe Ion robotic platform was used for navigation. Target 1 was a 16 mm lesion in the inferior lingular segment (LB5) of the lingula. Target 1 was the prespecified biopsy target. The robotic catheter was navigated to target 1, and the target was reached and sampled. Radial EBUS showed an adjacent view. Fixed cone-beam CT confirmed the biopsy needle within the lesion before sampling (tool-in-lesion). Transbronchial needle aspiration was performed with a 19-gauge needle (two passes). Transbronchial forceps biopsies were obtained (four passes). Transbronchial cryobiopsy was performed with a 1.1 mm cryoprobe (three passes). ROSE of target 1 showed malignant cells consistent with non-small cell carcinoma; the sample was adequate. Specimen A: needle aspirates from target 1 (cytology). Specimen B: cryobiopsies and forceps biopsies from target 1 (histology).\n\nCOMPLICATIONS\nNo immediate complications.\n\nDISPOSITION\nThe patient was discharged home after recovery.\n",
+   "text_sha256": "870b0d9b1f11daa5c9d8cc8918b323a64a8445756565f2d04bb7427a560eb06e",
    "title": "Ion: a straightforward peripheral nodule case",
    "traps": []
   }

@@ -220,6 +220,12 @@ def main() -> None:
                 f"{sample['id']}: no reviewed redaction yet (capture it in the browser, or --raw)"
             )
             continue
+        # A result stored for an earlier text of this sample can never be served again.
+        current = {text_key(normalise(text)) for _, text in texts}
+        for key in [k for k, v in entries.items() if v.get("sample_id") == sample["id"]]:
+            if key not in current:
+                del entries[key]
+                print(f"{sample['id']}: dropped the result of an earlier text ({key[:10]})")
         for variant, text in texts:
             text = normalise(text)
             key = text_key(text)

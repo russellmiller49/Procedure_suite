@@ -46,6 +46,17 @@ def apply(text: str, spans: list[list[int]]) -> str:
     return text
 
 
+def redacts(source: str, variant: dict) -> bool:
+    """True when the variant is ``source`` with passages replaced by the placeholder."""
+    position = 0
+    for fragment in variant["text"].split(PLACEHOLDER):
+        found = source.find(fragment, position)
+        if found < 0:
+            return False
+        position = found + len(fragment)
+    return True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--capture", type=Path, required=True)
@@ -71,10 +82,15 @@ def main() -> None:
         # The module worker is what most browsers run, so its text is listed first.
         redactions[item["id"]] = [entry, *variants] if "module" in workers else [*variants, entry]
         print(f"{item['id']:44s} {entry['worker']:14s} {len(item['spans'])} span(s)")
-    # Drop variants of samples whose text has since changed.
+    # Drop samples that no longer exist and variants recorded from an earlier sample text.
     for sample_id in list(redactions):
         if sample_id not in samples:
             del redactions[sample_id]
+            continue
+        current = [v for v in redactions[sample_id] if redacts(samples[sample_id]["text"], v)]
+        for stale in (v for v in redactions[sample_id] if v not in current):
+            print(f"{sample_id:44s} dropped a variant of an earlier text ({stale['sha256'][:10]})")
+        redactions[sample_id] = current
     target.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")
     print(f"wrote {target.relative_to(ROOT)}")
 

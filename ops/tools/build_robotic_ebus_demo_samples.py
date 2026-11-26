@@ -113,8 +113,12 @@ GENERATED = [
         "ion-ebus-prior-procedure-in-history",
         "Ion and EBUS, rough dictation: stations from a prior procedure appear in the history",
     ),
+    # Seed 20270021 confirmed the needle tip in the lesion and then took forceps
+    # biopsies only; a reader (and the model) cannot tell what was verified. In this
+    # one a needle pass follows the needle check. (Seed 20270037 was passed over:
+    # the browser redactor flags its sentence-initial "Fluoroscopy" as an identifier.)
     (
-        20270021,
+        20270028,
         "sectioned",
         "ion-plain-peripheral",
         "Ion: a straightforward peripheral nodule case",
