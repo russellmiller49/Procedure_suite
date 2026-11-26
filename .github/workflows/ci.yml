@@ -39,12 +39,19 @@ jobs:
             --output-file="$tmp_file" \
             requirements.in >/dev/null 2>&1
           diff -u "$tmp_file" requirements.txt
+      - name: Free runner disk space
+        # The locked torch wheel pulls several GB of CUDA libraries; some runner images
+        # otherwise fail the install with "No space left on device".
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           # Constrain to the verified lockfile so CI tests the same versions that deploy.
           # Unconstrained installs pull pyarrow>=26, which needs NumPy 2 (spaCy pins NumPy 1.x).
-          python -m pip install -c requirements.txt -e ".[api,dev]"
+          python -m pip install --no-cache-dir -c requirements.txt -e ".[api,dev]"
       - name: Ruff
         run: ruff check .
       - name: Mypy
