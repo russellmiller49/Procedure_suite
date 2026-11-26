@@ -86,10 +86,17 @@ const ROBOTIC_PLATFORMS = new Set([
 ]);
 const ROBOTIC_CONTEXT_RE = /\b(?:robotic|bronchoscopy|system|platform|navigation|robot|catheter|controller|console)\b/i;
 
-// Citation / guideline context: keep author and guideline names visible so references aren't mangled.
-const GUIDELINE_CITATION_CONTEXT_RE =
-  /\b(?:et\s+al|guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?|accp|chest|ats|ers|nccn|uspstf|fleischner)\b/i;
-const CITATION_YEAR_RE = /\b(?:19|20)\d{2}\b/;
+// Citation / guideline references: keep a cited author or a named society visible so
+// references aren't mangled. The span itself must be the citation. Words nearby are not
+// evidence: with "chest", "recommendations" or any year within 90 characters counting as
+// citation context, "Patient: John Smith / DOB 01/15/1960 / abnormal chest CT" kept the
+// patient's name visible.
+const CITATION_AUTHOR_FOLLOW_RE = /^(?:\s+[A-Z]{1,2}\.?)?\s*,?\s*[Ee]t\s+al\b/;
+const GUIDELINE_BODY_RE = /\b(?:accp|chest|ats|ers|nccn|uspstf|fleischner)\b/i;
+const GUIDELINE_WORD_RE =
+  /\b(?:guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?)\b/i;
+const GUIDELINE_WORD_FOLLOW_RE =
+  /^\s+(?:guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?)\b/i;
 
 // Stopwords to prevent "patient [REDACTED] stable" when the model hallucinates a name span
 // - ALWAYS: function words and clinical verbs that are commonly mis-tagged as names
@@ -596,15 +603,15 @@ function isGuidelineCitation(slice, fullText, start, end) {
   const norm = normalizeTerm(sTrim);
   if (!norm || norm.split(" ").length > 3) return false;
 
-  const ctx = getContext(fullText, start, end, 90);
-  if (!GUIDELINE_CITATION_CONTEXT_RE.test(ctx)) return false;
+  const after = fullText.slice(end, Math.min(fullText.length, end + 24));
 
-  // Require a strong citation signal.
-  if (/\bet\s+al\b/i.test(ctx)) return true;
-  if (CITATION_YEAR_RE.test(ctx)) return true;
-  // "Fleischner Society" / "CHEST guideline" type references.
-  if (/\b(?:society|guideline|guidelines|statement|consensus|recommendation|committee|task\s+force)\b/i.test(ctx)) {
-    return true;
+  // Cited author: "MacMahon et al", "MacMahon H, et al."
+  if (CITATION_AUTHOR_FOLLOW_RE.test(after)) return true;
+
+  // Named body with its guideline word, inside the span or directly after it:
+  // "Fleischner Society", "CHEST guideline".
+  if (GUIDELINE_BODY_RE.test(sTrim)) {
+    if (GUIDELINE_WORD_RE.test(sTrim) || GUIDELINE_WORD_FOLLOW_RE.test(after)) return true;
   }
   return false;
 }
