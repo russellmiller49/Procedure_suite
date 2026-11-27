@@ -3328,6 +3328,7 @@ class RegistryService:
                         patch=proposal.json_patch,
                         evidence_quote=proposal.evidence_quote,
                         note_text=masked_note_text,
+                        original_record=record,
                     )
                     if material_warning:
                         self_correct_warnings.append(f"{material_warning} [{pred.cpt}]")

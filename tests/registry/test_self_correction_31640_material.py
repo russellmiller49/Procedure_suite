@@ -14,7 +14,10 @@ import pytest
 
 from app.registry.application.registry_service import RegistryService
 from app.registry.schema import RegistryRecord
-from app.registry.self_correction.material_grounding import ground_material_type_from_quote
+from app.registry.self_correction.material_grounding import (
+    ground_material_type_from_quote,
+    ground_mechanical_debulking_material,
+)
 
 
 class _StubRegistryEngine:
@@ -113,6 +116,38 @@ def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: f
             "The endobronchial tumor was excised with forceps",
             "unknown",
             id="quote_not_in_note",
+        ),
+        # Action on something other than the tumor (review cases 1-3).
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe stent was removed and tumor ingrowth was noted at the distal end.\n",
+            "The stent was removed and tumor ingrowth was noted at the distal end",
+            "unknown",
+            id="stent_removed_tumor_only_noted",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe bronchoscope was removed after the tumor was inspected.\n",
+            "The bronchoscope was removed after the tumor was inspected",
+            "unknown",
+            id="scope_removed_tumor_only_inspected",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nClot was extracted from the right mainstem; the underlying mass was not biopsied.\n",
+            "Clot was extracted from the right mainstem",
+            "unknown",
+            id="clot_extracted_mass_in_other_clause",
+        ),
+        # Conservative misses that must ground to tumor (review cases 5-6).
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe tumor, measuring 2.5 cm, was debulked with forceps.\n",
+            "was debulked with forceps",
+            "tumor",
+            id="decimal_measurement_not_a_sentence_break",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nExophytic tumor was debulked with the microdebrider and specimens will be sent to pathology.\n",
+            "Exophytic tumor was debulked with the microdebrider and specimens will be sent to pathology",
+            "tumor",
+            id="plan_word_after_the_action",
         ),
     ],
 )
@@ -232,3 +267,71 @@ def test_self_correction_31640_requires_grounded_tumor(
 
     assert result.cpt_codes == expected_codes
     assert any(w.startswith("AUTO_CORRECTED: 31640") for w in result.warnings) is bool(expected_codes)
+
+
+# --- pre-patch material is never replaced (review case 4) ----------------------------------
+
+
+def _record(material: str | None) -> RegistryRecord:
+    debulking: dict[str, object] = {"performed": True}
+    if material is not None:
+        debulking["material_type"] = material
+    return RegistryRecord.model_validate({"procedures_performed": {"mechanical_debulking": debulking}})
+
+
+_PERFORMED_PATCH = [{"op": "add", "path": "/procedures_performed/mechanical_debulking/performed", "value": True}]
+_TWO_SENTENCE_NOTE = (
+    "PROCEDURE IN DETAIL:\nThe endobronchial tumor in the left mainstem was debulked with forceps. "
+    "Debulking was completed with the microdebrider.\n"
+)
+
+
+def test_known_tumor_material_is_kept_when_quote_names_no_tissue() -> None:
+    record, warning = ground_mechanical_debulking_material(
+        _record("tumor"),
+        patch=_PERFORMED_PATCH,
+        evidence_quote="Debulking was completed with the microdebrider",
+        note_text=_TWO_SENTENCE_NOTE,
+        original_record=_record("tumor"),
+    )
+    assert record.procedures_performed.mechanical_debulking.material_type == "tumor"
+    assert warning is None
+
+
+def test_judge_written_material_is_reverted_to_known_pre_patch_value() -> None:
+    patch = _PERFORMED_PATCH + [
+        {"op": "add", "path": "/procedures_performed/mechanical_debulking/material_type", "value": "tumor"}
+    ]
+    record, warning = ground_mechanical_debulking_material(
+        _record("tumor"),
+        patch=patch,
+        evidence_quote="Fungal-appearing material was removed with forceps",
+        note_text="PROCEDURE IN DETAIL:\nFungal-appearing material was removed with forceps.\n",
+        original_record=_record("fungal_material"),
+    )
+    assert record.procedures_performed.mechanical_debulking.material_type == "fungal_material"
+    assert warning is not None and warning.startswith("SELF_CORRECT_MATERIAL_GROUNDED: kept pre-patch")
+
+
+def test_conflicting_known_material_keeps_pre_patch_value_and_warns() -> None:
+    record, warning = ground_mechanical_debulking_material(
+        _record("tumor"),
+        patch=_PERFORMED_PATCH,
+        evidence_quote="Granulation tissue was excised with forceps",
+        note_text="PROCEDURE IN DETAIL:\nGranulation tissue was excised with forceps.\n",
+        original_record=_record("tumor"),
+    )
+    assert record.procedures_performed.mechanical_debulking.material_type == "tumor"
+    assert warning is not None and warning.startswith("SELF_CORRECT_MATERIAL_CONFLICT")
+
+
+def test_missing_material_is_filled_from_quote() -> None:
+    record, warning = ground_mechanical_debulking_material(
+        _record(None),
+        patch=_PERFORMED_PATCH,
+        evidence_quote="The endobronchial tumor in the left mainstem was debulked with forceps",
+        note_text=_TWO_SENTENCE_NOTE,
+        original_record=RegistryRecord(),
+    )
+    assert record.procedures_performed.mechanical_debulking.material_type == "tumor"
+    assert warning is not None and "material_type=tumor" in warning
