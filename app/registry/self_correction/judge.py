@@ -42,7 +42,7 @@ These clinical facts are used downstream to deterministically derive billing cod
 
 ### IMPORTANT SCHEMA PATHS (use these exact keys)
 - **BLVR / endobronchial valve**: patch `procedures_performed.blvr` (e.g., `/procedures_performed/blvr/performed`, `/procedures_performed/blvr/procedure_type`).
-- **Tumor excision / mechanical debulking (31640 family)**: patch `/procedures_performed/mechanical_debulking/performed`.
+- **Tumor excision / mechanical debulking (31640 family)**: patch `/procedures_performed/mechanical_debulking/performed`. Quote the procedure sentence that names the tissue removed (e.g. "the endobronchial tumor was debulked with forceps"); the material type is derived from that quote, and 31640 applies only to tumor. Do not set `material_type` yourself.
 - **Airway dilation / balloon bronchoplasty (31630 family)**: patch `procedures_performed.airway_dilation`.
 - **Rigid bronchoscopy**: patch `/procedures_performed/rigid_bronchoscopy/performed`.
 - Do **NOT** invent new fields like `bronchial_valve_insertion`, `balloon_dilation`, `endobronchial_excision`, or `flexible_bronchoscopy`.

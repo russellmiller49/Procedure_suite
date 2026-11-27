@@ -5101,6 +5101,33 @@ def extract_brushings(note_text: str) -> Dict[str, Any]:
     return {"brushings": fallback_brushings} if fallback_brushings else {}
 
 
+def infer_debulking_material_type(raw: str) -> str:
+    """Classify the material removed by mechanical debulking from a text window.
+
+    Non-tumor materials take precedence over tumor wording; returns "unknown" when no
+    material is named. Shared by the deterministic extractor and self-correction grounding.
+    """
+    window = raw or ""
+    lowered = window.lower()
+    if re.search(r"(?i)\bgranulation\b", window):
+        return "granulation"
+    if re.search(r"(?i)\b(?:fungal(?:-appearing)?|fungal\s+ball|mycetoma|aspergill)\b", window):
+        return "fungal_material"
+    if re.search(r"(?i)\bhair\b", window):
+        return "hair"
+    if re.search(r"(?i)\b(?:foreign\s+body|dental\s+fragment|coin|tooth)\b", window):
+        return "foreign_body"
+    if re.search(r"(?i)\b(?:necrotic|slough|debris|necrosis|inflammatory)\b", window):
+        return "necrotic_inflammatory"
+    if re.search(r"(?i)\b(?:mucous?|mucus|secretions?|plug|blood\s+clot)\b", window):
+        return "mucus"
+    if re.search(r"(?i)\b(?:tumou?r|endobronchial\s+tumou?r|mass|fungating|exophytic)\b", window):
+        return "tumor"
+    if re.search(r"(?i)\b(?:scar|web|stenos(?:is|ed)|fibrotic)\b", window):
+        return "other_non_tumor"
+    return "unknown"
+
+
 def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
     """Extract mechanical debulking / excision indicator.
 
@@ -5113,26 +5140,7 @@ def extract_mechanical_debulking(note_text: str) -> Dict[str, Any]:
     if not text_lower.strip():
         return {}
 
-    def _infer_material_type(raw: str) -> str:
-        window = raw or ""
-        lowered = window.lower()
-        if re.search(r"(?i)\bgranulation\b", window):
-            return "granulation"
-        if re.search(r"(?i)\b(?:fungal(?:-appearing)?|fungal\s+ball|mycetoma|aspergill)\b", window):
-            return "fungal_material"
-        if re.search(r"(?i)\bhair\b", window):
-            return "hair"
-        if re.search(r"(?i)\b(?:foreign\s+body|dental\s+fragment|coin|tooth)\b", window):
-            return "foreign_body"
-        if re.search(r"(?i)\b(?:necrotic|slough|debris|necrosis|inflammatory)\b", window):
-            return "necrotic_inflammatory"
-        if re.search(r"(?i)\b(?:mucous?|mucus|secretions?|plug|blood\s+clot)\b", window):
-            return "mucus"
-        if re.search(r"(?i)\b(?:tumou?r|endobronchial\s+tumou?r|mass|fungating|exophytic)\b", window):
-            return "tumor"
-        if re.search(r"(?i)\b(?:scar|web|stenos(?:is|ed)|fibrotic)\b", window):
-            return "other_non_tumor"
-        return "unknown"
+    _infer_material_type = infer_debulking_material_type
 
     def _apply_location(proc: dict[str, Any], raw: str) -> None:
         location = _extract_airway_location_summary(raw)
