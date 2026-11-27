@@ -38,11 +38,20 @@ _LINK_GAP_CHARS = r"(?:(?!\b(?:and|after|before|then|while|but)\b)[^;\n]){0,60}?
 _TUMOR_ACTION_LINK_RE = re.compile(
     rf"(?i)"
     # passive: "the (exophytic) tumor ... was debulked"
-    rf"\b{_TUMOR_NOUN}\b{_LINK_GAP_CHARS}\b(?:was|were|being|been)\s+(?:\w+\s+){{0,2}}?{_ACTION_VERB}\b"
+    rf"(?P<passive>\b{_TUMOR_NOUN}\b{_LINK_GAP_CHARS}\b(?:was|were|being|been)\s+(?:\w+\s+){{0,2}}?{_ACTION_VERB}\b)"
     # active / nominal: "debulking of an obstructing endobronchial tumor", "excised the mass"
-    rf"|\b{_ACTION_VERB}\s+(?:of\s+)?(?:the\s+|an?\s+)?{_LINK_GAP_WORD}{{0,4}}{_TUMOR_NOUN}\b"
+    rf"|(?P<active>\b(?P<action>{_ACTION_VERB})\s+(?:of\s+)?(?:the\s+|an?\s+)?{_LINK_GAP_WORD}{{0,4}}{_TUMOR_NOUN}\b)"
     # compound noun: "tumor excision", "tumor debulking"
-    rf"|\b{_TUMOR_NOUN}\s+(?:excision|debulking|resection|removal|coring|ablation)\b"
+    rf"|(?P<compound>\b{_TUMOR_NOUN}\s+(?:excision|debulking|resection|removal|coring|ablation)\b)"
+)
+_NOMINAL_ACTION_SUFFIXES = ("ing", "ion", "al")
+# First auxiliary/verb governing a nominal action ("tumor debulking was performed / will be ...").
+_GOVERNING_VERB_RE = re.compile(r"(?i)\b(?:will|shall|is|are|was|were)\b")
+_PLANNED_GOVERNING_RE = re.compile(
+    r"(?i)^(?:will|shall)\b"
+    r"|^(?:is|are|was|were)\s+(?:being\s+|now\s+|tentatively\s+)?"
+    r"(?:planned|scheduled|considered|recommended|deferred|offered|discussed|proposed|postponed|"
+    r"cancel+ed|anticipated|pending)\b"
 )
 _NEGATED_TISSUE_RE = re.compile(
     rf"(?i)\b(?:no|not|without|negative\s+for|free\s+of)\b[^;\n]{{0,40}}\b{_TUMOR_NOUN}\b"
@@ -103,7 +112,28 @@ def ground_material_type_from_quote(note_text: str, evidence_quote: str) -> str:
         return "unknown"
     if _NEGATED_TISSUE_RE.search(clause):
         return "unknown"
+    if _is_nominal_link(link) and _nominal_action_is_planned(clause[link.end() :]):
+        return "unknown"
     return "tumor"
+
+
+def _is_nominal_link(link: re.Match[str]) -> bool:
+    if link.group("compound"):
+        return True
+    action = link.group("action")
+    return bool(action) and action.lower().endswith(_NOMINAL_ACTION_SUFFIXES)
+
+
+def _nominal_action_is_planned(after_link: str) -> bool:
+    """True when the verb governing a nominal action ("tumor debulking") is a plan verb.
+
+    No governing verb (procedure-list line) or a completion verb ("was performed")
+    means the action was performed.
+    """
+    verb = _GOVERNING_VERB_RE.search(after_link)
+    if verb is None:
+        return False
+    return bool(_PLANNED_GOVERNING_RE.search(after_link[verb.start() :]))
 
 
 def _debulking(record: RegistryRecord | None) -> Any:

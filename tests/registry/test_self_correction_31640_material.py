@@ -149,6 +149,49 @@ def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: f
             "tumor",
             id="plan_word_after_the_action",
         ),
+        # Nominal actions governed by plan vs completion verbs.
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nTumor debulking will be considered at a later date.\n",
+            "Tumor debulking will be considered at a later date",
+            "unknown",
+            id="nominal_action_will_be_considered",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nDebulking of the tumor is planned for next week.\n",
+            "Debulking of the tumor is planned for next week",
+            "unknown",
+            id="nominal_action_is_planned",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nRepeat bronchoscopy with tumor debulking was scheduled.\n",
+            "Repeat bronchoscopy with tumor debulking was scheduled",
+            "unknown",
+            id="nominal_action_was_scheduled",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nWe recommend tumor debulking if symptoms recur.\n",
+            "We recommend tumor debulking if symptoms recur",
+            "unknown",
+            id="recommend_before_nominal_action",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nTumor debulking was deferred.\n",
+            "Tumor debulking was deferred",
+            "unknown",
+            id="nominal_action_was_deferred",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe tumor was debulked today and repeat debulking will be scheduled in 4 weeks.\n",
+            "The tumor was debulked today and repeat debulking will be scheduled in 4 weeks",
+            "tumor",
+            id="performed_today_repeat_planned",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nTumor debulking was performed with forceps and microdebrider.\n",
+            "Tumor debulking was performed with forceps and microdebrider",
+            "tumor",
+            id="nominal_action_was_performed",
+        ),
     ],
 )
 def test_ground_material_type_from_quote(note_text: str, quote: str, expected: str) -> None:
