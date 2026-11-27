@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -214,6 +215,210 @@ def test_phi_redactor_legacy_worker_has_same_regression_fixes(client: TestClient
     ), "Expected clinical stoplist gating inside legacy PROCEDURE_FOR_NAME_RE loop"
 
 
+_REDACTOR_WORKERS = [
+    f"{folder}/{name}"
+    for folder in ("phi_redactor", "phi_redactor_classic")
+    for name in ("redactor.worker.js", "redactor.worker.legacy.js")
+]
+
+
+def _first_name_detector(worker: str):
+    """The standalone-first-name rule as a worker file defines it: regex, stoplist, suffix gate."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    name_re = re.search(r"const FIRST_NAME_CLINICAL_RE =\s*/(.+)/g;", body).group(1)
+    stoplist = set(
+        re.findall(
+            r'"([^"]+)"',
+            re.search(
+                r"const SINGLE_NAME_CLINICAL_STOPLIST = new Set\(\[([\s\S]*?)\]\);", body
+            ).group(1),
+        )
+    )
+    suffix_re = re.search(r"const CLINICAL_TERM_SUFFIX_RE =\s*/(.+)/i;", body).group(1)
+    assert re.search(
+        r"matchAll\(FIRST_NAME_CLINICAL_RE\)\)\s*\{[\s\S]*?"
+        r"SINGLE_NAME_CLINICAL_STOPLIST\.has\(nameGroup\.toLowerCase\(\)\)\s*\|\|\s*"
+        r"CLINICAL_TERM_SUFFIX_RE\.test\(nameGroup\)\)\s*\{\s*continue;",
+        body,
+    ), "Expected the stoplist and suffix gate inside the FIRST_NAME_CLINICAL_RE loop"
+
+    def flagged(text: str) -> list[str]:
+        return [
+            m.group(1)
+            for m in re.finditer(name_re, text)
+            if m.group(1).lower() not in stoplist
+            and not re.search(suffix_re, m.group(1), re.IGNORECASE)
+        ]
+
+    return flagged
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "Fluoroscopy was used during sampling.",
+        "Mediastinoscopy was not performed.",
+        "Elastography was performed at each station.",
+        "Thoracotomy was avoided.",
+        "Tracheomalacia was noted as we advanced the scope.",
+        "Adequacy was confirmed after the third pass.",
+        "Localization was corroborated with radial EBUS.",
+        "Placement was confirmed via ultrasound.",
+        "Fluid was evacuated.",
+        "Flumazenil was administered with immediate effect.",
+    ],
+)
+def test_phi_redactor_first_name_rule_skips_sentence_initial_clinical_nouns(
+    worker: str, sentence: str
+) -> None:
+    """Suppress: "Fluoroscopy was used ..." must not be read as a first name plus a verb."""
+    assert _first_name_detector(worker)(f"The lesion was reached. {sentence}") == []
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    ("sentence", "name"),
+    [
+        ("Frank underwent a procedure.", "Frank"),
+        ("HPI: Susan is a 71-year-old female here for cough.", "Susan"),
+        ("Ms. Chen is a 72-year-old female with a lung mass.", "Chen"),
+        ("Mr. White has a very early stage cancer.", "White"),
+        ("Mr. Fields has a tumor blocking his right mainstem.", "Fields"),
+    ],
+)
+def test_phi_redactor_first_name_rule_still_flags_names(
+    worker: str, sentence: str, name: str
+) -> None:
+    """Preserve: real names in front of the same verbs are still proposed for redaction."""
+    assert _first_name_detector(worker)(sentence) == [name]
+
+
+@pytest.mark.parametrize("folder", ["phi_redactor", "phi_redactor_classic"])
+def test_phi_redactor_legacy_veto_is_the_module_veto(folder: str) -> None:
+    """The fallback worker's veto file is the module file minus ``export``, plus a global.
+
+    It had fallen behind once (no guideline-citation rule, four platform names missing), so
+    browsers on the fallback redacted text the main redactor keeps. Regenerate it from
+    protectedVeto.js with exactly these three edits whenever that file changes.
+    """
+    static = Path(__file__).resolve().parents[2] / "ui" / "static"
+    module = (static / "phi_redactor" / "protectedVeto.js").read_text()
+    assert (static / folder / "protectedVeto.js").read_text() == module
+    assert module.count("// Main export\n") == 1
+    assert module.count("\nexport function applyVeto(") == 1
+    expected = (
+        module.replace("// Main export\n", "// Main export (legacy worker attaches to self)\n")
+        .replace("\nexport function applyVeto(", "\nfunction applyVeto(")
+        .rstrip("\n")
+        + "\n\nself.applyVeto = applyVeto;\n"
+    )
+    assert (static / folder / "protectedVeto.legacy.js").read_text() == expected
+
+
+_VETO_RUNNER = """
+const fs = require("fs");
+const vm = require("vm");
+const [vetoPath, termsPath] = process.argv.slice(1);
+const ctx = { self: {}, console: { log() {} } };
+vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(vetoPath, "utf8"), ctx);
+const terms = JSON.parse(fs.readFileSync(termsPath, "utf8"));
+const cases = JSON.parse(fs.readFileSync(0, "utf8"));
+const out = cases.map(([text, word]) => {
+  const start = text.indexOf(word);
+  const span = { start, end: start + word.length, label: "PATIENT", score: 0.95 };
+  return ctx.self.applyVeto([span], text, terms, { protectProviders: false }).length === 1;
+});
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def _still_redacted(cases: list[tuple[str, str]]) -> list[bool]:
+    """Run the fallback veto file (tested equal to the module one) on PATIENT spans in node."""
+    import json
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not installed")
+    static = Path(__file__).resolve().parents[2] / "ui" / "static"
+    redactor = static / "phi_redactor"
+    # phi_redactor/vendor is a downloaded model bundle (gitignored), so a clean checkout
+    # has only the tracked classic copy of the protected terms.
+    terms = next(
+        (
+            path
+            for folder in ("phi_redactor", "phi_redactor_classic")
+            if (
+                path := static / folder / "vendor" / "phi_distilbert_ner" / "protected_terms.json"
+            ).exists()
+        ),
+        None,
+    )
+    if terms is None:
+        pytest.skip("protected_terms.json is not present")
+    result = subprocess.run(
+        [
+            node,
+            "-e",
+            _VETO_RUNNER,
+            str(redactor / "protectedVeto.legacy.js"),
+            str(terms),
+        ],
+        input=json.dumps(cases),
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    return json.loads(result.stdout)
+
+
+def test_phi_veto_citation_rule_does_not_release_patient_names() -> None:
+    """Preserve: a year, "chest" or "recommendations" near a name is not a citation.
+
+    The rule used to treat any of those within 90 characters as citation context, so the
+    veto dropped the patient-name detection in ordinary note headers.
+    """
+    cases = [
+        (
+            "Patient: John Smith\nDOB: 01/15/1960\nIndication: abnormal chest CT with a nodule.",
+            "John Smith",
+        ),
+        ("NAME: DARRELL BROOKS: 5/16/1964 DOD#: 51113915741\nIMPRESSION: Mediastinal", "DARRELL"),
+        ("Mr. Smith was seen 3/2/2025 after a chest radiograph showed an effusion.", "Smith"),
+        ("Maria Lopez underwent EBUS on 2026-01-04. Recommendations: clinic.", "Maria Lopez"),
+        ("John Smith was referred in 2025 by the tumor board committee.", "John Smith"),
+    ]
+    assert _still_redacted(cases) == [True] * len(cases)
+
+
+def test_phi_veto_citation_rule_still_keeps_cited_authors_and_societies() -> None:
+    """Suppress: the span that is itself the citation stays visible."""
+    cases = [
+        ("Nodule follow-up per MacMahon et al, 2017 (Fleischner Society).", "MacMahon"),
+        ("Managed per MacMahon H, et al. Radiology 2017.", "MacMahon"),
+        ("Follow-up per Fleischner Society recommendations.", "Fleischner"),
+        ("Follow-up per Fleischner Society recommendations.", "Fleischner Society"),
+        ("Staging followed the CHEST guideline.", "CHEST"),
+    ]
+    assert _still_redacted(cases) == [False] * len(cases)
+
+
+def test_phi_veto_citation_rule_reads_the_span_not_its_surroundings() -> None:
+    """Always-on guard (no node needed) against the two constructs that caused the leak."""
+    body = (
+        Path(__file__).resolve().parents[2] / "ui" / "static" / "phi_redactor" / "protectedVeto.js"
+    ).read_text()
+    rule = body[
+        body.index("function isGuidelineCitation(") : body.index("function isProviderName(")
+    ]
+    assert "getContext(" not in rule
+    assert "CITATION_YEAR_RE" not in body
+
+
 def test_phi_redactor_worker_provider_roles_cover_ebus_headers(client: TestClient) -> None:
     """Regression: provider role regex should include common EBUS header labels."""
     resp = client.get("/ui/phi_redactor/redactor.worker.js")
@@ -325,3 +530,181 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(
         assert stub_registry.seen_note == note
     finally:
         app.dependency_overrides.clear()
+
+
+def test_phi_veto_header_device_and_patient_rules_do_not_release_patient_names() -> None:
+    """Preserve: a name in a patient position survives the header, device and verb rules.
+
+    Each of these was dropped before: a name right after "Indication:" or "IMPRESSION/PLAN:",
+    a surname that is also a manufacturer (Baker, Cook, King, Wang, Young), and a name after
+    the word "patient" that happens to end like a verb (Thomas, James, Helen, Karen).
+    """
+    cases = [
+        ("INDICATION: John Smith is a 65-year-old male with a nodule.", "John Smith"),
+        ("Indication: Helen Carter, a 70 year old female with a mass.", "Helen Carter"),
+        ("IMPRESSION/PLAN: Nira Kaplan is a 85 year old female who presents", "Nira Kaplan"),
+        ("IMPRESSION/PLAN: Elizabeth Larkin is a 89 year old female", "Elizabeth"),
+        ("Indication: Mary Jones underwent prior lobectomy.", "Mary Jones"),
+        ("Diagnosis: Mr. Young has stage IIIA adenocarcinoma.", "Mr. Young"),
+        ("Diagnosis: Mr. Young has stage IIIA adenocarcinoma.", "Young"),
+        ("OPERATIVE NARRATIVE: Mr. Baker presented with an obstruction.", "Baker"),
+        ("Mrs. Cook had a 13mm nodule in the left lower lobe.", "Cook"),
+        ("Patient name: Young, Lori\nMRN: 3419905", "Young"),
+        ("Patient: King, Melissa (F)\nMRN: 4420791", "King"),
+        ("Name: Wang, Li\nDate of procedure: today", "Wang"),
+        ("The requisition lists patient Thomas Cruz with MRN 5395351.", "Thomas Cruz"),
+        ("The requisition lists patient Thomas Cruz with MRN 5395351.", "Thomas"),
+        ("Patient James was intubated with a size 8.0 ETT.", "James"),
+        ("The patient Helen was brought to the suite.", "Helen"),
+        ("The form names patient Will Smith as the signer.", "Will Smith"),
+    ]
+    assert _still_redacted(cases) == [True] * len(cases)
+
+
+def test_phi_veto_header_device_and_patient_rules_still_release_clinical_text() -> None:
+    """Suppress: the same three rules keep clinical values, devices and verbs visible."""
+    cases = [
+        ("Procedure: Bronchoscopy with EBUS-TBNA", "Bronchoscopy"),
+        ("Procedure Name: Thoracoscopy with pleural biopsy", "Thoracoscopy"),
+        ("Indication: Mediastinal adenopathy", "Mediastinal adenopathy"),
+        ("Indication: Lung Nodule\n65 year old male with a nodule.", "Lung Nodule"),
+        ("Findings: Granuloma is a likely cause of the 3 cm lesion.", "Granuloma"),
+        ("A Cook stent was not placed.", "Cook"),
+        ("The Wang needle was used for three passes.", "Wang"),
+        ("An Olympus scope and a Young retractor were available.", "Young"),
+        ("Patient tolerated the procedure well.", "tolerated"),
+        ("The patient remains intubated.", "remains"),
+        ("PATIENT DENIES chest pain.", "DENIES"),
+        ("Patient Status at Conclusion: stable", "Status"),
+        ("PATIENT DEMOGRAPHICS:\nAge: 71", "DEMOGRAPHICS"),
+    ]
+    assert _still_redacted(cases) == [False] * len(cases)
+
+
+def _patient_word_name_detector(worker: str):
+    """The "patient First Last" rule as a worker file defines it."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    name_re = re.search(r"const PATIENT_WORD_NAME_RE =\s*/(.+)/g;", body).group(1)
+    assert "matchAll(PATIENT_WORD_NAME_RE)" in body
+    assert 'source: "regex_patient_word_name"' in body
+    return lambda text: [m.group(1) for m in re.finditer(name_re, text)]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_flags_a_full_name_after_the_word_patient(worker: str) -> None:
+    """Preserve: "... lists patient Michael Baker with MRN" had no detection at all."""
+    flagged = _patient_word_name_detector(worker)
+    assert flagged("The requisition lists patient Michael Baker with MRN=2311352.") == [
+        "Michael Baker"
+    ]
+    assert flagged("The patient Stephen Reyes was brought to the suite.") == ["Stephen Reyes"]
+    assert flagged("Consent was signed by patient Mary A. O'Brien today.") == ["Mary A. O'Brien"]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "The patient tolerated the procedure well.",
+        "The patient was brought to the Bronchoscopy suite.",
+        "With the patient Supine, the scope was advanced.",
+        "Patient Status at Conclusion: stable.",
+        "The patient\nThomas Cruz was the proceduralist.",
+    ],
+)
+def test_phi_redactor_patient_word_rule_needs_two_capitalised_words(
+    worker: str, sentence: str
+) -> None:
+    """Suppress: a verb, one capitalised word, a heading or a line break never matches."""
+    assert _patient_word_name_detector(worker)(sentence) == []
+
+
+_LEADING_NAME_RUNNER = """
+const fs = require("fs");
+const vm = require("vm");
+const body = fs.readFileSync(process.argv[1], "utf8");
+const grab = (re) => {
+  const m = body.match(re);
+  if (!m) throw new Error("missing " + re);
+  return m[0];
+};
+const consts = [
+  "HEADER_NAME_STOPWORDS", "NAME_REGEX_CLINICAL_STOPLIST", "SINGLE_NAME_CLINICAL_STOPLIST",
+  "CLINICAL_TERM_SUFFIX_RE", "LEADING_NAME_STOPWORDS", "LEADING_NAME_VERB_AFTER_RE",
+  "LEADING_NAME_TOKEN_BEFORE_RE",
+].map((name) => grab(new RegExp("const " + name + " =[\\\\s\\\\S]*?;\\\\n")));
+const fn = grab(/function extendPatientSpansForLeadingFirstName[\\s\\S]*?\\n}\\n/);
+const ctx = {};
+const expose = "\\nthis.extend = extendPatientSpansForLeadingFirstName;";
+vm.runInNewContext(consts.join("\\n") + fn + expose, ctx);
+const cases = JSON.parse(fs.readFileSync(0, "utf8"));
+const out = cases.map(([text, word, label]) => {
+  const start = text.indexOf(word);
+  const [span] = ctx.extend([{ start, end: start + word.length, label }], text);
+  return text.slice(span.start, span.end);
+});
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def _leading_first_name(worker: str, cases: list[tuple[str, str, str]]) -> list[str]:
+    """Run a worker file's first-name extension in node on one (text, flagged word, label)."""
+    import json
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not installed")
+    path = Path(__file__).resolve().parents[2] / "ui" / "static" / worker
+    result = subprocess.run(
+        [node, "-e", _LEADING_NAME_RUNNER, str(path)],
+        input=json.dumps(cases),
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    return json.loads(result.stdout)
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_takes_the_first_name_with_a_flagged_surname(worker: str) -> None:
+    """Preserve: "Indication: John Smith presents ..." flagged only "Smith" and left "John"."""
+    cases = [
+        ("Indication: John Smith presents with hemoptysis.", "Smith", "PATIENT", "John Smith"),
+        ("Indication: John Smith has a 2 cm RUL nodule.", "Smith", "PATIENT", "John Smith"),
+        ("HPI: Maria A. Lopez was referred for staging.", "Lopez", "PATIENT", "Maria A. Lopez"),
+        ("65M John Smith underwent EBUS today.", "Smith", "B-PATIENT", "John Smith"),
+    ]
+    got = _leading_first_name(worker, [c[:3] for c in cases])
+    assert got == [c[3] for c in cases]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_first_name_extension_leaves_other_words_alone(worker: str) -> None:
+    """Suppress: only a capitalised, non-clinical word on the same line before a verb is taken."""
+    cases = [
+        ("Patient Smith was seen in clinic.", "Smith", "PATIENT"),
+        ("Indication: Smith has a RUL nodule.", "Smith", "PATIENT"),
+        ("Mr. Smith has a RUL nodule.", "Smith", "PATIENT"),
+        ("The scope was withdrawn. Then Frank was extubated.", "Frank", "PATIENT"),
+        ("Bronchoscopy Frank underwent last year was normal.", "Frank", "PATIENT"),
+        ("Referred by\nSmith was the plan.", "Smith", "PATIENT"),
+        ("Seen with John Smith, who agreed.", "Smith", "PATIENT"),
+        ("Scripps Mercy is the referring site.", "Mercy", "GEO"),
+    ]
+    assert _leading_first_name(worker, cases) == [word for _, word, _ in cases]
+
+
+@pytest.mark.parametrize("worker", _REDACTOR_WORKERS)
+def test_phi_redactor_first_name_extension_runs_after_the_veto(worker: str) -> None:
+    """The extension must follow the last veto pass in both merge modes, never precede it."""
+    body = (Path(__file__).resolve().parents[2] / "ui" / "static" / worker).read_text()
+    after_veto = re.findall(
+        r'log\("\[PHI\] afterSessionVeto:", merged\.length\);\s*'
+        r"(?://[^\n]*\n\s*)?merged = extendPatientSpansForLeadingFirstName\(merged, text\);",
+        body,
+    )
+    assert len(after_veto) == 2
+    assert body.count("extendPatientSpansForLeadingFirstName(merged, text)") == 2
