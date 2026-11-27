@@ -5,26 +5,39 @@ DATE OF PROCEDURE: {{ encounter.date or "Not documented" }}
 INDICATION FOR OPERATION
 {{ proc.indication_text or indication_text or "Not documented" }}
 
+{% if proc.preop_diagnosis_text %}
+PREOPERATIVE DIAGNOSIS: {{ proc.preop_diagnosis_text }}
+
+{% endif %}
+{% if proc.postop_diagnosis_text %}
+POSTOPERATIVE DIAGNOSIS: {{ proc.postop_diagnosis_text }}
+
+{% endif %}
 PROCEDURE
 {{ proc.procedures_summary or procedures_summary or "See documented findings" }}
+
+ANESTHESIA: {% if anesthesia and (anesthesia.description or anesthesia.type) %}{{ anesthesia.description or anesthesia.type }}{% elif sedation and sedation.type %}{{ sedation.type }}{% else %}Not documented{% endif %}
+
 
 {% if proc.findings_text %}
 FINDINGS
 {{ proc.findings_text }}
+
 {% endif %}
-
-ANESTHESIA: {% if anesthesia and anesthesia.type %}{{ anesthesia.type }}{% elif sedation and sedation.type %}{{ sedation.type }}{% else %}Not documented{% endif %}
-
-ESTIMATED BLOOD LOSS: {{ proc.estimated_blood_loss or "Not documented" }}
-COMPLICATIONS: {{ proc.complications_text or "Not documented" }}
-
 PROCEDURE IN DETAIL
 {{ procedure_details_block }}
+
+{% if proc.closing_text %}
+{{ proc.closing_text }}
+
+{% endif %}
+ESTIMATED BLOOD LOSS: {{ proc.estimated_blood_loss or "Not documented" }}
+COMPLICATIONS: {{ proc.complications_text or "Not documented" }}
 
 {% if proc.specimens_text %}
 SPECIMENS
 {{ proc.specimens_text }}
-{% endif %}
 
+{% endif %}
 IMPRESSION AND PLAN
 {{ proc.impression_plan or "Follow-up plan not documented in the supplied text." }}

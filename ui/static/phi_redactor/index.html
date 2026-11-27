@@ -133,6 +133,22 @@
           </div>
         </div>
 
+        <div id="smartEhrCard" class="dash-card hidden">
+          <div class="dash-card-header">
+            <div class="section-title">EHR Connection (SMART on FHIR)</div>
+          </div>
+          <div class="dash-card-body">
+            <div id="smartPatientBanner"></div>
+            <div class="controls">
+              <button id="smartLoadNotesBtn" class="secondary" type="button">Load Notes from EHR</button>
+              <div class="spacer"></div>
+              <button id="smartDisconnectBtn" class="secondary" type="button">Disconnect</button>
+            </div>
+            <div id="smartEhrStatus" class="subtle"></div>
+            <div id="smartNotesHost"></div>
+          </div>
+        </div>
+
         <div class="editor-support-stack">
           <div id="pdfExtractSummary" class="subtle pdf-upload-summary">
             Input options: paste note text directly, or upload a PDF for layout-aware local extraction with safety gating before PHI detection.

@@ -249,9 +249,8 @@ def _complication_contradiction_flags(
             return True
         return False
 
-    if (
-        not any(_has_adverse_match(pattern) for pattern in adverse_patterns)
-        and not _removed_is_adverse(source_text)
+    if not any(_has_adverse_match(pattern) for pattern in adverse_patterns) and not _removed_is_adverse(
+        source_text
     ):
         return []
     existing = str(bundle.complications_text or "").strip()
@@ -286,7 +285,9 @@ def _omitted_major_family_flags(source_text: str, bundle: ProcedureBundle) -> li
         if not all(re.search(pattern, source_text) for pattern in patterns):
             continue
         if family == "EBUS":
-            if re.search(r"\bLinear EBUS survey\b", bundle.findings_text or ""):
+            if "ebus_survey" in proc_types or re.search(
+                r"\bLinear EBUS survey\b", bundle.findings_text or ""
+            ):
                 # An explicitly documented survey without TBNA still preserves
                 # the EBUS family; it must not be promoted to sampling.
                 continue
@@ -522,8 +523,7 @@ def _multi_target_collapse_flags(
         return [_make_flag(
             "MULTI_TARGET_COLLAPSE",
             "The bundle preserves fewer targets than the explicit operative target blocks.",
-            source="quality_gate.bundle",
-            metadata={"target_count": len(operative_targets)}, blocking=False,
+            source="quality_gate.bundle", metadata={"target_count": len(operative_targets)}, blocking=False,
         )]
     targets = [
         f"{match.group(1).upper()} ({str(match.group(2) or '').strip()})".strip()

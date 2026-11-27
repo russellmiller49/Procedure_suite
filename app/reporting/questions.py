@@ -62,6 +62,7 @@ _EBUS_ECHO_FEATURE_OPTIONS: tuple[str, ...] = (
 
 _PROCEDURE_GROUP_LABELS: dict[str, str] = {
     "ebus_tbna": "EBUS-TBNA",
+    "ebus_survey": "Linear EBUS survey",
     "bal": "BAL",
     "bal_variant": "BAL",
     "endobronchial_biopsy": "Endobronchial Biopsy",
@@ -117,6 +118,23 @@ PROMPT_SPEC_REGISTRY: dict[str, tuple[_PromptSpec, ...]] = {
             options=_EBUS_ECHO_FEATURE_OPTIONS,
             help="Select any documented sonographic features.",
             priority=30,
+        ),
+        _PromptSpec(
+            field_pattern="elastography_used",
+            label="Elastography performed",
+            input_type=QuestionInputType.BOOLEAN,
+            required=False,
+            help="Was EBUS elastography used to assess the lymph nodes?",
+            priority=30,
+        ),
+        _PromptSpec(
+            field_pattern="stations[].elastography_pattern",
+            label="Elastography pattern",
+            input_type=QuestionInputType.ENUM,
+            required=False,
+            options=("Type 1", "Type 2", "Type 3"),
+            help="Elastography class for this station (asked only when elastography was performed).",
+            priority=31,
         ),
         _PromptSpec(
             field_pattern="rose_available",
@@ -663,6 +681,9 @@ def _should_include_prompt_spec(prompt_spec: _PromptSpec, proc_data: dict[str, A
     if prompt_spec.field_pattern == "stations[].rose_result":
         rose_available = proc_data.get("rose_available")
         return rose_available is not False
+    if prompt_spec.field_pattern == "stations[].elastography_pattern":
+        # Never prompt for a class on nodes elastography was not used on.
+        return proc_data.get("elastography_used") is True
     return True
 
 

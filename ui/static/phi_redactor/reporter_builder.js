@@ -49,6 +49,15 @@ const questionsHostEl = document.getElementById("questionsHost");
 const validationHostEl = document.getElementById("validationHost");
 const bundleJsonEl = document.getElementById("bundleJson");
 const patchJsonEl = document.getElementById("patchJson");
+const seedInputsBodyEl = document.getElementById("seedInputsBody");
+const seedInputsCountEl = document.getElementById("seedInputsCount");
+const seedInputsResetBtn = document.getElementById("seedInputsResetBtn");
+
+// Structured seed inputs: fixed-choice selections sent beside the dictation.
+// The catalog comes from the server so the options always match validation.
+const SEED_INPUT_SPEC_URL = "/report/seed_input_spec";
+const SEED_INPUT_ID_PREFIX = "si-";
+let seedInputFields = [];
 
 const DASHBOARD_TRANSFER_STORAGE_KEY = "ps.reporter_to_dashboard_note_v1";
 const DASHBOARD_TO_REPORTER_STORAGE_KEY = "ps.dashboard_to_reporter_note_v1";
@@ -1723,7 +1732,7 @@ function transferToDashboard() {
     return;
   }
 
-  window.location.href = "./";
+  window.location.href = "./dashboard.html";
 }
 
 function updateControls() {
@@ -2097,6 +2106,179 @@ function createQuestionInput(question, index) {
   return input;
 }
 
+function seedInputElementId(index) {
+  return `question-input-${SEED_INPUT_ID_PREFIX}${index}`;
+}
+
+function createSeedInput(field, index) {
+  if (field.input_type === "multiselect") {
+    // Check boxes are easier than a multi-select list for station picks.
+    const wrap = document.createElement("div");
+    wrap.id = seedInputElementId(index);
+    wrap.className = "seed-input-choices";
+    (field.options || []).forEach((option) => {
+      const label = document.createElement("label");
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.value = String(option);
+      label.appendChild(box);
+      label.appendChild(document.createTextNode(String(option)));
+      wrap.appendChild(label);
+    });
+    return wrap;
+  }
+  const input = createQuestionInput(field, `${SEED_INPUT_ID_PREFIX}${index}`);
+  const blank = input.querySelector ? input.querySelector('option[value=""]') : null;
+  if (blank) blank.textContent = "Not specified";
+  if (input.tagName === "INPUT") input.placeholder = "Not specified";
+  return input;
+}
+
+function readSeedInput(field, index) {
+  if (field.input_type === "multiselect") {
+    const wrap = document.getElementById(seedInputElementId(index));
+    const values = Array.from(wrap?.querySelectorAll("input:checked") || []).map((box) => box.value);
+    return values.length ? { hasValue: true, value: values } : { hasValue: false, value: null };
+  }
+  return parseQuestionValue(field, `${SEED_INPUT_ID_PREFIX}${index}`);
+}
+
+function clearSeedInput(index) {
+  const el = document.getElementById(seedInputElementId(index));
+  if (!el) return;
+  if (el.classList.contains("seed-input-choices")) {
+    el.querySelectorAll("input").forEach((box) => {
+      box.checked = false;
+    });
+  } else {
+    el.value = "";
+  }
+}
+
+function seedInputRow(index) {
+  return seedInputsBodyEl?.querySelector(`[data-seed-input-index="${index}"]`) || null;
+}
+
+function seedInputDependenciesMet(field) {
+  return (field.depends_on || []).every((dependency) => {
+    const parentIndex = seedInputFields.findIndex((item) => item.pointer === dependency.pointer);
+    if (parentIndex < 0) return false;
+    const parentRow = seedInputRow(parentIndex);
+    if (!parentRow || parentRow.hidden) return false;
+    let parent;
+    try {
+      parent = readSeedInput(seedInputFields[parentIndex], parentIndex);
+    } catch {
+      return false;
+    }
+    return parent.hasValue && parent.value === dependency.equals;
+  });
+}
+
+function updateSeedInputsView() {
+  // Parents precede their dependents in the catalog, so one pass is enough.
+  seedInputFields.forEach((field, index) => {
+    const row = seedInputRow(index);
+    if (!row) return;
+    const visible = seedInputDependenciesMet(field);
+    if (!visible && !row.hidden) clearSeedInput(index); // a hidden value must never be sent
+    row.hidden = !visible;
+  });
+  let count = 0;
+  seedInputFields.forEach((field, index) => {
+    const row = seedInputRow(index);
+    if (!row || row.hidden) return;
+    try {
+      if (readSeedInput(field, index).hasValue) count += 1;
+    } catch {
+      /* reported when seeding */
+    }
+  });
+  if (seedInputsCountEl) seedInputsCountEl.textContent = count ? `${count} selected` : "";
+}
+
+function renderSeedInputsPanel() {
+  if (!seedInputsBodyEl) return;
+  seedInputsBodyEl.innerHTML = "";
+  const grouped = new Map();
+  seedInputFields.forEach((field, index) => {
+    const group = field.group || "Details";
+    if (!grouped.has(group)) grouped.set(group, []);
+    grouped.get(group).push({ field, index });
+  });
+  grouped.forEach((items, groupName) => {
+    const groupWrap = document.createElement("div");
+    groupWrap.className = "question-group";
+    const header = document.createElement("div");
+    header.className = "question-group-header";
+    header.textContent = groupName;
+    groupWrap.appendChild(header);
+    const grid = document.createElement("div");
+    grid.className = "seed-inputs-grid";
+    items.forEach(({ field, index }) => {
+      const row = document.createElement("div");
+      row.className = "question-row";
+      row.dataset.seedInputIndex = String(index);
+      const label = document.createElement("label");
+      label.className = "question-label";
+      label.setAttribute("for", seedInputElementId(index));
+      label.textContent = field.label || field.pointer;
+      row.appendChild(label);
+      row.appendChild(createSeedInput(field, index));
+      if (field.help) {
+        const help = document.createElement("div");
+        help.className = "question-help";
+        help.textContent = field.help;
+        row.appendChild(help);
+      }
+      grid.appendChild(row);
+    });
+    groupWrap.appendChild(grid);
+    seedInputsBodyEl.appendChild(groupWrap);
+  });
+  updateSeedInputsView();
+}
+
+async function loadSeedInputSpec() {
+  if (!seedInputsBodyEl) return;
+  try {
+    const response = await fetch(SEED_INPUT_SPEC_URL);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const spec = await response.json();
+    seedInputFields = Array.isArray(spec?.fields) ? spec.fields : [];
+    renderSeedInputsPanel();
+  } catch {
+    // Seeding from text alone still works without the catalog.
+    seedInputFields = [];
+    seedInputsBodyEl.textContent = "Structured details are unavailable. Seeding from text still works.";
+  }
+}
+
+function collectStructuredInputs() {
+  const payload = {};
+  let any = false;
+  seedInputFields.forEach((field, index) => {
+    const row = seedInputRow(index);
+    if (!row || row.hidden) return;
+    const { hasValue, value } = readSeedInput(field, index);
+    if (!hasValue) return;
+    const parts = String(field.pointer || "").split("/").filter(Boolean);
+    let node = payload;
+    parts.slice(0, -1).forEach((part) => {
+      if (typeof node[part] !== "object" || node[part] === null) node[part] = {};
+      node = node[part];
+    });
+    node[parts[parts.length - 1]] = value;
+    any = true;
+  });
+  return any ? payload : null;
+}
+
+function resetSeedInputs() {
+  seedInputFields.forEach((_field, index) => clearSeedInput(index));
+  updateSeedInputsView();
+}
+
 function renderQuestions() {
   const questions = Array.isArray(state.questions) ? state.questions : [];
   if (!questions.length) {
@@ -2312,10 +2494,13 @@ async function seedBundleFromText() {
 
   await withBusy("Seeding bundle...", async () => {
     const strict = Boolean(strictToggleEl.checked);
+    // Fixed-choice selections travel beside the text; the text itself is unchanged.
+    const structuredInputs = collectStructuredInputs();
     const seed = await postJSON("/report/seed_from_text", {
       text,
       already_scrubbed: true,
       metadata: {},
+      structured_inputs: structuredInputs,
       strict,
     });
 
@@ -2352,7 +2537,11 @@ async function seedBundleFromText() {
       blockerCount ? "warning" : "success",
       blockerCount
         ? `Bundle seeded, but ${blockerCount} blocker flag${blockerCount === 1 ? "" : "s"} require manual review before dashboard transfer.`
-        : `Bundle seeded. ${state.questions.length} follow-up question${state.questions.length === 1 ? "" : "s"} generated.`,
+        : `Bundle seeded. ${state.questions.length} follow-up question${state.questions.length === 1 ? "" : "s"} generated.${
+            Array.isArray(seed.seed_input_notes) && seed.seed_input_notes.length
+              ? ` ${seed.seed_input_notes.length} structured detail${seed.seed_input_notes.length === 1 ? "" : "s"} applied.`
+              : ""
+          }`,
     );
   });
 }
@@ -2446,6 +2635,7 @@ function clearState() {
   state.lastPatch = [];
   completenessPrompts = [];
   completenessValuesByPath = new Map();
+  resetSeedInputs();
   resetSpeechState({ clearText: false });
   resetSpeechStartConfirmation();
   seedTextEl.value = "";
@@ -2734,6 +2924,13 @@ if (dashboardTransfer?.note) {
   setSpeechWarningText("");
   showBanner("success", "Loaded note from dashboard. Run PHI detection, apply redactions, then seed.");
 }
+
+if (seedInputsBodyEl) {
+  seedInputsBodyEl.addEventListener("change", updateSeedInputsView);
+  seedInputsBodyEl.addEventListener("input", updateSeedInputsView);
+}
+if (seedInputsResetBtn) seedInputsResetBtn.addEventListener("click", resetSeedInputs);
+loadSeedInputSpec();
 
 updatePhiSelectionFromTextarea();
 renderPhiDetections();

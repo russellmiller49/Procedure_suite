@@ -102,8 +102,13 @@ def test_two_targets_in_same_segment_do_not_clone_needle_sampling():
 def test_inspected_only_nodes_are_not_rendered_as_tbna():
     bundle = seed(8)
     assert not data(bundle, "ebus_tbna")
-    for station in ["11L", "4L", "7", "4R", "11RS", "11RI"]:
-        assert f"Station {station}: not sampled" in bundle.findings_text
+    # Policy update: inspected-only nodes are a dedicated survey block, not a
+    # findings sentence, and never an EBUS-TBNA procedure.
+    survey = data(bundle, "ebus_survey")[0]
+    assert sorted(s["station_name"] for s in survey["stations"]) == sorted(
+        ["11L", "4L", "7", "4R", "11RS", "11RI"]
+    )
+    assert all(s["sampled"] is False for s in survey["stations"])
     markdown = compose_structured_report(bundle)
     assert "EBUS-TBNA Staging" not in markdown
     assert "Linear EBUS survey" in markdown
@@ -131,7 +136,11 @@ def test_node_rose_not_performed_is_separate_from_target_rose():
 def test_node_specific_counts_and_elastography():
     ebus = data(seed(10), "ebus_tbna")[0]
     assert [(s["station_name"], s["passes"]) for s in ebus["stations"]] == [("11L", 4), ("7", 6)]
-    assert all(s["echo_features"] == "Elastography Type 2" for s in ebus["stations"])
+    # Policy update: elastography has its own per-station field.
+    assert all(s["elastography_pattern"] == "Type 2" for s in ebus["stations"])
+    assert all(not s.get("echo_features") for s in ebus["stations"])
+    assert ebus["elastography_used"] is True
+    assert ebus["elastography_pattern"] == "Type 2"
 
 
 def test_unrecognized_source_does_not_replace_existing_bundle():
@@ -266,3 +275,87 @@ def test_plan_preserved_and_undocumented_technique_not_added():
     markdown = compose_structured_report(bundle)
     assert "withdrawn en bloc" not in markdown
     assert "Post-procedure assessment for pneumothorax was performed" not in markdown
+
+
+# Line-leading source wording for each step of the operative-report layout.
+_SOURCE_STEPS = {
+    "robotic_navigation": r"[ \t]*Robotic navigation bronchoscopy was performed",
+    "radial_ebus_survey": r"[ \t]*Radial EBUS was performed",
+    "cbct_cact_fusion": r"[^\n]*Cone Beam CT was performed",
+    "transbronchial_needle_aspiration": r"[ \t]*Transbronchial needle aspiration was performed",
+    "transbronchial_lung_biopsy": r"[ \t]*Transbronchial biopsy was performed",
+    "transbronchial_cryobiopsy": r"[ \t]*Transbronchial cryobiopsy was performed",
+    "bronchial_brushings": r"[ \t]*Transbronchial brushing was performed",
+    "bal": r"[ \t]*Bronchial alveolar lavage was performed",
+    "fiducial_marker_placement": r"[ \t]*Fiducial marker\b",
+    "ebus": r"[ \t]*EBUS[- ]Findings",
+}
+
+
+@pytest.mark.parametrize("case", range(1, 12))
+def test_full_note_renders_prose_blocks_in_source_order(case):
+    from ops.tools.eval_reporter_robotic_minimal import DETAIL_ANCHORS, _blocks
+
+    text = (FIXTURES / f"case_{case:02}.txt").read_text()
+    markdown = compose_structured_report(seed(case))
+    detail = markdown[markdown.index("PROCEDURE IN DETAIL") :]
+    rendered = [
+        "ebus" if kind.startswith("ebus") else kind
+        for kind in _blocks(detail, DETAIL_ANCHORS)
+        if kind != "tool_in_lesion_confirmation"
+    ]
+    # A sampled block followed by an inspected-only block is one EBUS section.
+    rendered = [k for i, k in enumerate(rendered) if not (i and k == "ebus" == rendered[i - 1])]
+    assert rendered == _blocks(text, _SOURCE_STEPS)
+
+    # The legacy block wording and its unsupported defaults are gone.
+    for legacy in [
+        "updated overlay demonstrated",
+        "Attention was turned to",
+        "Findings & Hemostasis",
+        "EBUS-TBNA Staging",
+        "3-4 passes",
+        "foreign body",
+        "tolerated the imaging without complications",
+    ]:
+        assert legacy not in markdown, legacy
+    # Source-stated closing and attestation are carried, never invented.
+    attested = "I personally performed and interpreted the CT guidance images"
+    assert (attested in markdown) == (attested in text)
+    assert markdown.count(attested) == text.count(attested)
+    assert "At the conclusion of the operation, the patient was" in markdown
+    assert ").I personally" not in markdown and ").Target" not in markdown
+
+
+def test_full_note_spins_tool_in_lesion_and_late_lavage():
+    bundle = seed(3)
+    spins = data(bundle, "cbct_cact_fusion")
+    assert len(spins) == 4
+    assert ["Low dose" in s["notes"] for s in spins] == [True, False, False, True]
+    assert "High dose spin" in spins[1]["notes"] and "Standard dose spin" in spins[2]["notes"]
+    assert all(s["physician_interpreted"] is True for s in spins)
+    assert all("tool-in-lesion" not in s["notes"].lower() for s in spins)
+    assert len(data(bundle, "tool_in_lesion_confirmation")) == 1
+    order = sorted(bundle.procedures, key=lambda p: p.sequence or 0)
+    kinds = [p.proc_type for p in order]
+    # Tool-in-lesion follows the third spin of the first target, before its needle sampling.
+    til = kinds.index("tool_in_lesion_confirmation")
+    assert kinds[til - 1] == "cbct_cact_fusion"
+    assert kinds[til + 1] == "transbronchial_needle_aspiration"
+    assert kinds[:til].count("cbct_cact_fusion") == 3
+
+    late = seed(9)
+    lavages = data(late, "bal")
+    assert lavages[-1]["lung_segment"].startswith("Lateral Segment of RML (RB4)")
+    assert (lavages[-1]["instilled_volume_cc"], lavages[-1]["returned_volume_cc"]) == (60, 15)
+    last = max(late.procedures, key=lambda p: p.sequence or 0)
+    assert last.proc_type == "bal" and last.proc_id == "bal_post_ebus_1"
+
+
+def test_routine_aspiration_and_scope_removal_is_not_foreign_body_retrieval():
+    for case in range(1, 12):
+        assert not data(seed(case), "foreign_body_removal")
+    explicit = build_procedure_bundle_from_extraction(
+        {}, source_text="Flexible bronchoscopy. Foreign body in the right mainstem was removed with forceps."
+    )
+    assert data(explicit, "foreign_body_removal")

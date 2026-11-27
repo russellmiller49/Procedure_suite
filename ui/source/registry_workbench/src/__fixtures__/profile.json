@@ -1,0 +1,3785 @@
+{
+ "help": {
+  "case_details.age_at_procedure_years": {
+   "applies": "All patients",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Age on procedure date.",
+   "notes": "0\u2013120; derive where possible. Snapshot at this procedure; do not overwrite prior procedures.",
+   "tier": "Core",
+   "units": "years"
+  },
+  "case_details.airway_device": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary airway device.",
+   "tier": "Core"
+  },
+  "case_details.airway_size_unit": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "ETT inner diameter is mm; SGA size is a manufacturer size number.",
+   "tier": "Quality"
+  },
+  "case_details.airway_size_value": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Numeric device size.",
+   "tier": "Quality"
+  },
+  "case_details.anesthesia_type": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Sedation/anesthesia delivered.",
+   "tier": "Core"
+  },
+  "case_details.asa_physical_status": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Preprocedure anesthesia classification.",
+   "notes": "Emergency modifier stored separately in asa_emergency_modifier.",
+   "tier": "Core"
+  },
+  "case_details.immediate_disposition": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Disposition after recovery.",
+   "tier": "Core"
+  },
+  "case_details.indication": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary clinical question.",
+   "tier": "Core"
+  },
+  "case_details.intent": {
+   "applies": "Suspected/known malignancy",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Coded purpose of this component/case: diagnosis, staging, combined diagnosis/staging, restaging or molecular rebiopsy. Do not infer from billing codes.",
+   "tier": "Core"
+  },
+  "case_details.operator_id": {
+   "applies": "All records",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent operator record.",
+   "notes": "Must exist in operator.operator_id.",
+   "tier": "Core"
+  },
+  "case_details.pack_years": {
+   "applies": "Ever-smokers",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Best estimate of cumulative cigarette exposure.",
+   "notes": "Nonnegative. Snapshot at this procedure; do not overwrite prior procedures.",
+   "tier": "Core",
+   "units": "years"
+  },
+  "case_details.procedure_duration_minutes": {
+   "applies": "Performed procedure",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Documented total procedure duration in minutes; if calculated, use documented bronchoscope-in and final bronchoscope-out times and retain the derivation. An isolated timestamp is insufficient.",
+   "tier": "Core",
+   "units": "minutes"
+  },
+  "case_details.sex_at_birth": {
+   "applies": "All patients",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Biologic sex used for clinical risk adjustment.",
+   "tier": "Core"
+  },
+  "case_details.smoking_status": {
+   "applies": "All patients",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Smoking status at procedure.",
+   "notes": " Snapshot at this procedure; do not overwrite prior procedures.",
+   "tier": "Core"
+  },
+  "complications.adverse_event_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "complications.category": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Standardized event category.",
+   "tier": "Core"
+  },
+  "complications.event_time_window": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Standardized temporal window.",
+   "tier": "Core"
+  },
+  "complications.event_treatment_summary": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Interventions and clinical course.",
+   "tier": "Core"
+  },
+  "complications.new_hospital_admission": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Unplanned admission caused by event.",
+   "tier": "Core"
+  },
+  "complications.new_icu_admission": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Unplanned ICU admission.",
+   "tier": "Core"
+  },
+  "complications.pleural_intervention": {
+   "applies": "Pneumothorax",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Highest intervention.",
+   "tier": "Core"
+  },
+  "complications.pneumothorax_laterality": {
+   "applies": "Pneumothorax",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Side of pneumothorax.",
+   "tier": "Core"
+  },
+  "complications.procedure_component_attribution": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Component thought responsible; combined cases need not have a certain assignment.",
+   "tier": "Core"
+  },
+  "complications.relatedness_to_procedure": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Causal assessment.",
+   "tier": "Core"
+  },
+  "complications.relative_day_offset": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Documented or locally derived day offset from the procedure, limited to days 0\u201330. Missing timing remains null; do not default to day zero.",
+   "tier": "Core",
+   "units": "day_offset"
+  },
+  "complications.severity_grade": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Grade under selected scale.",
+   "tier": "Core"
+  },
+  "complications.severity_scale": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Scale used.",
+   "tier": "Core"
+  },
+  "complications.state": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Presence, explicit absence, uncertainty or missing documentation of the named immediate/interval event. Absence must be documented for the applicable event/window.",
+   "tier": "Core"
+  },
+  "complications.unplanned_ventilation": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Mechanical ventilation continued unexpectedly.",
+   "tier": "Quality"
+  },
+  "ebus_sessions.ebus_session_id": {
+   "applies": "When this module applies",
+   "capture": "System generated",
+   "definition": "Immutable primary key.",
+   "notes": "Unique and non-null.",
+   "tier": "Core"
+  },
+  "ebus_sessions.eus_b_performed": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether EUS-B was actually performed.",
+   "tier": "Core"
+  },
+  "ebus_sessions.incomplete_exam_reason": {
+   "applies": "systematic_exam_complete != yes",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Why the intended survey/sampling was incomplete.",
+   "tier": "Core"
+  },
+  "ebus_sessions.performed_sampling_strategy": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Actual strategy; document deviations rather than revising the original plan.",
+   "tier": "Core"
+  },
+  "ebus_sessions.planned_sampling_strategy": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Intended strategy before results are known.",
+   "tier": "Core"
+  },
+  "ebus_sessions.primary_purpose": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Keep initial staging, diagnosis and restaging distinct.",
+   "tier": "Core"
+  },
+  "ebus_sessions.rose_used": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Actual use during this session.",
+   "tier": "Core"
+  },
+  "ebus_sessions.systematic_exam_complete": {
+   "applies": "When this module applies",
+   "capture": "Derived with versioned rule and audit",
+   "definition": "Operator-reported completion; audited completeness is separately derived.",
+   "tier": "Core"
+  },
+  "field_provenance.assertion_context": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Distinguish planned, performed, historical and negated mentions.",
+   "tier": "Core"
+  },
+  "field_provenance.conflict_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether another source disagrees with this assertion.",
+   "tier": "Core"
+  },
+  "field_provenance.derivation_rule_version": {
+   "applies": "When this module applies",
+   "capture": "Derived with versioned rule and audit",
+   "definition": "Calculation or reconciliation rule used for derived values.",
+   "tier": "Quality"
+  },
+  "field_provenance.extractor_model_version": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Exact model or parser version, not a generic product name.",
+   "tier": "Quality"
+  },
+  "field_provenance.field_path": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Canonical snake_case field name in that table.",
+   "tier": "Core"
+  },
+  "field_provenance.missingness_reason": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Reason no actual value can be established; not a numeric sentinel.",
+   "tier": "Core"
+  },
+  "field_provenance.raw_value": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Original documented value before normalization.",
+   "tier": "Core"
+  },
+  "field_provenance.review_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Human confirmation state.",
+   "tier": "Core"
+  },
+  "field_provenance.source_digest": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Hash used to detect unexpected changes in the same source version.",
+   "tier": "Quality"
+  },
+  "field_provenance.source_document_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Immutable supporting document; nullable only for generated/derived fields with explicit basis.",
+   "tier": "Core"
+  },
+  "field_provenance.source_end": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Zero-based exclusive end in the exact immutable source text. Whitespace is retained so excerpt and offsets agree.",
+   "tier": "Core"
+  },
+  "field_provenance.source_excerpt": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Minimal necessary evidence supporting the assertion, kept in restricted storage.",
+   "tier": "Quality"
+  },
+  "field_provenance.source_start": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Zero-based character offset in the exact immutable source text; inclusive start. Paired with exclusive end, source ID, SHA-256 and verbatim excerpt.",
+   "tier": "Core"
+  },
+  "field_provenance.value_origin": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Do not confuse an observed clinical fact with a calculation or model inference.",
+   "tier": "Core"
+  },
+  "follow_up.alive": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Status at contact.",
+   "tier": "Core"
+  },
+  "follow_up.complete": {
+   "applies": "All planned contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Explicitly completed ascertainment for the entire selected interval. A contact alone does not establish complete ascertainment or negative outcomes.",
+   "tier": "Core"
+  },
+  "follow_up.contact_datetime": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Actual contact or chart-review time.",
+   "tier": "Core"
+  },
+  "follow_up.ed_visit": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Any ED evaluation since prior contact.",
+   "tier": "Core"
+  },
+  "follow_up.icu_admission": {
+   "applies": "All adverse events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Unplanned ICU admission.",
+   "tier": "Core"
+  },
+  "follow_up.procedure_related_event": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Potential delayed complication.",
+   "tier": "Core"
+  },
+  "follow_up.safety_ascertainment_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "No events can only be asserted if the window was actually assessed.",
+   "tier": "Core"
+  },
+  "follow_up.unplanned_admission": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Any hospitalization since prior contact.",
+   "tier": "Core"
+  },
+  "follow_up.unplanned_ventilation": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Mechanical ventilation continued unexpectedly.",
+   "tier": "Quality"
+  },
+  "follow_up.window": {
+   "applies": "All contacts",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Assessment interval: days 0\u20137 or days 8\u201330. This records the interval assessed, not simply the day a follow-up note was authored.",
+   "tier": "Core"
+  },
+  "localization_events.actual_lesion_vs_virtual_target": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether the sampled tissue lesion or only an overlay is seen.",
+   "tier": "Core"
+  },
+  "localization_events.catheter_or_tool_changed_after_confirmation": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether exchanges/movement occurred before sampling.",
+   "tier": "Quality"
+  },
+  "localization_events.confirmation_basis": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Method underlying the claimed tool-to-lesion confirmation.",
+   "tier": "Core"
+  },
+  "localization_events.event_phase": {
+   "applies": "All localization events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Relationship to sampling workflow.",
+   "tier": "Core"
+  },
+  "localization_events.event_sequence_number": {
+   "applies": "All localization events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Order of confirmation events for lesion.",
+   "notes": "Positive integer.",
+   "tier": "Core"
+  },
+  "localization_events.final_prebiopsy_confirmation": {
+   "applies": "All peripheral sampling",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Marks localization state immediately before acquisition.",
+   "notes": "At most one unless position changes.",
+   "tier": "Quality"
+  },
+  "localization_events.lesion_visible": {
+   "applies": "All localization events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether target itself was distinguishable.",
+   "tier": "Core"
+  },
+  "localization_events.localization_event_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "localization_events.localization_modality": {
+   "applies": "All localization events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Modality used to localize target or tool.",
+   "tier": "Core"
+  },
+  "localization_events.navigation_run_id": {
+   "applies": "All records",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent navigation_run record.",
+   "notes": "Must exist in navigation_run.navigation_run_id.",
+   "tier": "Core"
+  },
+  "localization_events.position_correction_performed": {
+   "applies": "Nonideal localization or adjustment",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether catheter/tool was repositioned based on event.",
+   "tier": "Core"
+  },
+  "localization_events.radial_ebus_view": {
+   "applies": "Radial EBUS",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Probe relationship to lesion.",
+   "tier": "Core"
+  },
+  "localization_events.sampling_tool_present": {
+   "applies": "All localization events",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether the actual sampling tool was in position during imaging.",
+   "tier": "Core"
+  },
+  "localization_events.target_id": {
+   "applies": "All records",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent peripheral_lesion record.",
+   "notes": "Must exist in peripheral_lesion.lesion_id.",
+   "tier": "Core"
+  },
+  "localization_events.tool_lesion_relationship": {
+   "applies": "3D imaging/DT confirmation",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Prespecified relationship of actual sampling tool to segmented lesion.",
+   "notes": "Do not infer TIL from radial probe visualization, virtual distance, ROSE or diagnostic pathology. Require actual sampling tool and actual lesion, documented modality and versioned confirmation rule. Keep modality-stratified results.",
+   "tier": "Core"
+  },
+  "localization_events.verified_tool_component": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "What portion of the actual device was assessed.",
+   "tier": "Core"
+  },
+  "navigation_runs.navigation_failure_reason": {
+   "applies": "Target not reached",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary failure mode.",
+   "tier": "Quality"
+  },
+  "navigation_runs.navigation_run_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "navigation_runs.navigation_run_outcome": {
+   "applies": "All runs",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Final disposition of run.",
+   "tier": "Core"
+  },
+  "navigation_runs.navigation_success_system_reported": {
+   "applies": "Navigation platform used",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether platform/operator declared target reached.",
+   "tier": "Core"
+  },
+  "navigation_runs.platform_family": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Registry grouping, not an inference about which imaging was used.",
+   "tier": "Core"
+  },
+  "navigation_runs.platform_manufacturer": {
+   "applies": "Technology used",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Manufacturer.",
+   "tier": "Core"
+  },
+  "navigation_runs.platform_model": {
+   "applies": "Technology used",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Platform/model.",
+   "tier": "Core"
+  },
+  "navigation_runs.run_sequence_number": {
+   "applies": "All runs",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Ordinal attempt for lesion.",
+   "notes": "Positive integer.",
+   "tier": "Core"
+  },
+  "navigation_runs.target_id": {
+   "applies": "All records",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent peripheral_lesion record.",
+   "notes": "Must exist in peripheral_lesion.lesion_id.",
+   "tier": "Core"
+  },
+  "navigation_runs.target_reached_operational": {
+   "applies": "All runs",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Registry-defined arrival criterion independent of diagnosis.",
+   "notes": "Definition must be versioned.",
+   "tier": "Core"
+  },
+  "pathology_results.adequate_for_molecular_testing": {
+   "applies": "Testing indicated",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Adequacy for guideline-indicated molecular testing.",
+   "tier": "Quality"
+  },
+  "pathology_results.adequate_for_primary_diagnosis": {
+   "applies": "All results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Enough material to establish/exclude a specific diagnosis for intended question.",
+   "tier": "Core"
+  },
+  "pathology_results.diagnosis_text": {
+   "applies": "All final results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Verbatim or normalized interpretation.",
+   "tier": "Core"
+  },
+  "pathology_results.final_result_datetime": {
+   "applies": "All final results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Time final pathology was issued.",
+   "tier": "Core"
+  },
+  "pathology_results.index_result_class": {
+   "applies": "All final results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Index bronchoscopy result before follow-up using strict categories.",
+   "notes": "Atypia, suspicious cells, nonspecific inflammation, normal lung, blood, necrosis, and insufficient tissue do not count as strict diagnostic successes.",
+   "tier": "Core"
+  },
+  "pathology_results.lymphoid_material_adequacy": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Cytopathology's assessment of nodal tissue representation.",
+   "tier": "Core"
+  },
+  "pathology_results.pathology_result_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "pathology_results.result_scope": {
+   "applies": "All results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Level of interpretation.",
+   "tier": "Core"
+  },
+  "pathology_results.result_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Distinguish preliminary, final and amended reports.",
+   "tier": "Core"
+  },
+  "pathology_results.source_document_id": {
+   "applies": "When this module applies",
+   "capture": "System generated",
+   "definition": "Immutable primary key.",
+   "notes": "Unique and non-null.",
+   "tier": "Core"
+  },
+  "pathology_results.specimen_id": {
+   "applies": "All records",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent specimen record.",
+   "notes": "Must exist in specimen.specimen_id.",
+   "tier": "Core"
+  },
+  "pathology_results.supersedes_pathology_result_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Prior result replaced by the current amended report.",
+   "tier": "Quality"
+  },
+  "pathology_results.target_id": {
+   "applies": "All results",
+   "capture": "Deterministic linkage",
+   "definition": "Exact lesion/node to which result applies.",
+   "notes": "Required for multi-target procedures.",
+   "tier": "Core"
+  },
+  "procedures.abort_reason": {
+   "applies": "Not completed",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary reason for abortion/cancellation.",
+   "tier": "Core"
+  },
+  "procedures.category": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Launch component: diagnostic robotic bronchoscopy or transbronchial linear EBUS. Generic peripheral navigation, standalone radial EBUS/EUS-B and robotic ablation are not relabeled as eligible components.",
+   "tier": "Core"
+  },
+  "procedures.completion": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Completion of the named component, recorded independently from whether it was attempted/performed.",
+   "tier": "Core"
+  },
+  "procedures.performance": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Documented component action state, with started attempts retained even when unsuccessful or aborted. Unknown eligibility requires review.",
+   "tier": "Core"
+  },
+  "procedures.planned": {
+   "applies": "All procedures",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Modalities planned before start.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.acquisition_record_granularity": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Actual single pass versus reported aggregate; do not manufacture pass-level data.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.attribution_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether all material in the container comes from one identifiable target.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.localization_event_id_before_pass": {
+   "applies": "Peripheral-lesion sampling",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Best localization evidence immediately preceding activation.",
+   "notes": "Must precede pass time.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.needle_gauge": {
+   "applies": "Needle used",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Nominal needle gauge.",
+   "notes": "Allow 18\u201325 and other.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.pass_sequence_number": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Order for target.",
+   "notes": "Positive integer.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.reported_pass_count": {
+   "applies": "All sampling rows",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Count represented by this row; one for a single-pass row.",
+   "notes": "Positive integer; aggregate counts contribute their actual reported count.",
+   "tier": "Core",
+   "units": "count"
+  },
+  "sampling_acquisitions.rose_adequate": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Adequacy explicitly documented at ROSE for this acquisition. Keep separate from final pathology adequacy.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.rose_performed": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether pass had on-site evaluation.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.rose_result": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Immediate pass-level interpretation.",
+   "tier": "Enhanced"
+  },
+  "sampling_acquisitions.sampling_pass_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.sampling_tool": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Tool used.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.target_id": {
+   "applies": "All sampling actions",
+   "capture": "Deterministic linkage",
+   "definition": "Exact target link.",
+   "notes": "Must match target type.",
+   "tier": "Core"
+  },
+  "sampling_acquisitions.tool_size_mm": {
+   "applies": "Sampling/localization device",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Gauge, diameter, length, angle, or size descriptor.",
+   "tier": "Core",
+   "units": "mm"
+  },
+  "sampling_specimen_links.allocation_purpose": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Purpose of this split of material.",
+   "tier": "Core"
+  },
+  "sampling_specimen_links.link_certainty": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "How reliably the exact pass can be linked to the container.",
+   "tier": "Core"
+  },
+  "sampling_specimen_links.sampling_pass_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign-key linkage using sampling_pass_id.",
+   "notes": "Must resolve to the corresponding parent; match patient and procedure.",
+   "tier": "Core"
+  },
+  "sampling_specimen_links.sampling_specimen_link_id": {
+   "applies": "When this module applies",
+   "capture": "System generated",
+   "definition": "Immutable primary key.",
+   "notes": "Unique and non-null.",
+   "tier": "Core"
+  },
+  "sampling_specimen_links.specimen_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign-key linkage using specimen_id.",
+   "notes": "Must resolve to the corresponding parent; match patient and procedure.",
+   "tier": "Core"
+  },
+  "specimens.container_medium": {
+   "applies": "All specimens",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Collection medium.",
+   "tier": "Core"
+  },
+  "specimens.intended_purpose": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Planned use of acquisition.",
+   "tier": "Core"
+  },
+  "specimens.pathology": {
+   "applies": "All final results",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Optional compatibility summary only. Target diagnostic measures use attributed, non-superseded final/amended pathology_results with explicit index scope.",
+   "notes": "Atypia, suspicious cells, nonspecific inflammation, normal lung, blood, necrosis, and insufficient tissue do not count as strict diagnostic successes.",
+   "tier": "Core"
+  },
+  "specimens.specimen_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "specimens.specimen_label": {
+   "applies": "All specimens",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Label used in laboratory system.",
+   "tier": "Core"
+  },
+  "specimens.specimen_type": {
+   "applies": "All specimens",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary preparation/type.",
+   "tier": "Core"
+  },
+  "specimens.target_attribution_status": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether all material in the container comes from one identifiable target.",
+   "tier": "Core"
+  },
+  "specimens.target_id": {
+   "applies": "All specimens",
+   "capture": "Deterministic linkage",
+   "definition": "Exact source target.",
+   "notes": "Must match target type.",
+   "tier": "Core"
+  },
+  "station_surveys.ebus_session_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Links station or target to the linear EBUS/EUS-B session.",
+   "tier": "Core"
+  },
+  "station_surveys.iaslc_station": {
+   "applies": "All relevant stations",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Station assessed during linear EBUS/EUS-B.",
+   "notes": "Use versioned IASLC map; retain unspecific labels without inventing substation. This vocabulary does not imply access by EBUS/EUS.",
+   "tier": "Core"
+  },
+  "station_surveys.largest_short_axis_mm": {
+   "applies": "Node visualized; capture confirmed short axis or the supported missingness reason.",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Largest confirmed nodal short-axis measurement in the station on EBUS/EUS-B. Record the ultrasound measurement separately from CT.",
+   "notes": "Nonnegative. Populate only when the ultrasound short axis is explicit. Never relabel an unspecified-axis size or substitute a CT dimension.",
+   "tier": "Core",
+   "units": "mm"
+  },
+  "station_surveys.reason_not_sampled": {
+   "applies": "Not sampled",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Primary reason.",
+   "tier": "Quality"
+  },
+  "station_surveys.size_axis_explicit": {
+   "applies": "Node visualized; capture confirmed short axis or the supported missingness reason.",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether the largest ultrasound size is explicitly documented as short axis, without inferring an axis from one or two unlabeled measurements.",
+   "notes": "Nonnegative. Populate only when the ultrasound short axis is explicit. Never relabel an unspecified-axis size or substitute a CT dimension.",
+   "tier": "Core"
+  },
+  "station_surveys.station_sampled": {
+   "applies": "All visualized relevant stations",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether any target in station was sampled.",
+   "tier": "Core"
+  },
+  "station_surveys.station_survey_id": {
+   "applies": "All records",
+   "capture": "System generated",
+   "definition": "Unique immutable identifier for this row.",
+   "notes": "Unique; non-null; never reused.",
+   "tier": "Core"
+  },
+  "station_surveys.station_surveyed": {
+   "applies": "All relevant stations",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether station was deliberately examined.",
+   "tier": "Core"
+  },
+  "station_surveys.station_visualized": {
+   "applies": "Surveyed station",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether recognizable station anatomy was obtained.",
+   "tier": "Core"
+  },
+  "station_surveys.survey_modality": {
+   "applies": "All station rows",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Approach used to inspect station.",
+   "tier": "Core"
+  },
+  "targets.anatomic_label": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Stable clinician-readable label, not a substitute for location fields.",
+   "tier": "Core"
+  },
+  "targets.benign_lymphoid_tissue_present": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Document explicitly; a malignant node need not contain benign lymphocytes.",
+   "tier": "Core"
+  },
+  "targets.bronchus_sign_present": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Bronchus visibly leading to or entering lesion.",
+   "tier": "Core"
+  },
+  "targets.diagnostic_attempted": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Navigation, localization or sampling started for this prespecified biopsy target. Planned-only targets and docking without a diagnostic attempt do not establish this flag; failures remain attempts.",
+   "tier": "Core"
+  },
+  "targets.distance_to_pleura_mm": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Shortest lesion-edge to pleural-surface distance.",
+   "notes": "Use 0 when pleural based.",
+   "tier": "Core",
+   "units": "mm"
+  },
+  "targets.ebus_session_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Links station or target to the linear EBUS/EUS-B session.",
+   "tier": "Core"
+  },
+  "targets.iaslc_station": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Station containing target.",
+   "notes": "Use versioned IASLC map; retain unspecific labels without inventing substation. This vocabulary does not imply access by EBUS/EUS.",
+   "tier": "Core"
+  },
+  "targets.lesion_attenuation_type": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Dominant CT attenuation phenotype.",
+   "tier": "Core"
+  },
+  "targets.lobe": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Anatomic lobe.",
+   "tier": "Core"
+  },
+  "targets.max_diameter_mm": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Maximum cross-sectional diameter on planning study.",
+   "notes": "Must be >0.",
+   "tier": "Core",
+   "units": "mm"
+  },
+  "targets.measurement_modality": {
+   "applies": "Nodal target evaluated; capture confirmed short axis or the supported missingness reason.",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Documented ultrasound route of the explicit short-axis measurement. A CT or unspecified measurement cannot be substituted.",
+   "notes": "Nonnegative. Populate only when the ultrasound short axis is explicit. Never relabel an unspecified-axis size or substitute a CT dimension.",
+   "tier": "Core"
+  },
+  "targets.needle_gauge": {
+   "applies": "Needle used",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Nominal needle gauge.",
+   "notes": "Allow 18\u201325 and other.",
+   "tier": "Core"
+  },
+  "targets.needle_pass_count": {
+   "applies": "Needle sampling",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Number of discrete passes.",
+   "notes": "Derive from sampling-pass rows.",
+   "tier": "Core",
+   "units": "count"
+  },
+  "targets.nodal_adequacy_basis": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Pathologist-supported lymphoid tissue, definitive tumor, or another basis.",
+   "tier": "Core"
+  },
+  "targets.node_interpretation": {
+   "applies": "When this module applies",
+   "capture": "Derived with versioned rule and audit",
+   "definition": "Cached current interpretation from target_outcome; not from ROSE alone.",
+   "tier": "Core"
+  },
+  "targets.pet_avid": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Qualitative FDG avidity.",
+   "tier": "Core"
+  },
+  "targets.pet_description": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Original documented PET assessment. No PET result is inferred from a planned study or from the lesion diagnosis.",
+   "tier": "Core"
+  },
+  "targets.pet_suv_max": {
+   "applies": "PET performed",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Maximum standardized uptake value.",
+   "notes": "Nonnegative.",
+   "tier": "Enhanced"
+  },
+  "targets.prespecified_biopsy_target": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Target selected for biopsy before bronchoscopy starts.",
+   "tier": "Core"
+  },
+  "targets.puncture_route": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Route of access.",
+   "tier": "Core"
+  },
+  "targets.reason_sampling_not_attempted": {
+   "applies": "sampling_attempted=false",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Retain prespecified targets even when their workup is stopped.",
+   "tier": "Core"
+  },
+  "targets.rose_adequate": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Adequacy explicitly documented at rapid on-site evaluation for this target. Final specimen adequacy does not establish ROSE adequacy.",
+   "tier": "Core"
+  },
+  "targets.rose_result": {
+   "applies": "All sampling actions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Immediate pass-level interpretation.",
+   "tier": "Enhanced"
+  },
+  "targets.rose_used": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Rapid on-site evaluation for target.",
+   "tier": "Core"
+  },
+  "targets.sampling_attempted": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Actual effort to sample this target, including failed access.",
+   "tier": "Core"
+  },
+  "targets.segment": {
+   "applies": "All lesions",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Segment containing lesion center.",
+   "tier": "Core"
+  },
+  "targets.short_axis_mm": {
+   "applies": "Nodal target evaluated; capture confirmed short axis or the supported missingness reason.",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Confirmed short-axis diameter of this target on EBUS/EUS-B immediately before sampling. Do not substitute CT measurements.",
+   "notes": "Nonnegative. Populate only when the ultrasound short axis is explicit. Never relabel an unspecified-axis size or substitute a CT dimension.",
+   "tier": "Core",
+   "units": "mm"
+  },
+  "targets.site": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Identity type; do not force nonnodal EUS-B targets into a lymph-node station.",
+   "tier": "Core"
+  },
+  "targets.size_axis_explicit": {
+   "applies": "Nodal target evaluated; capture confirmed short axis or the supported missingness reason.",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "True only when ultrasound measurement is explicitly identified as short axis in the source. Unspecified or long-axis measurements do not populate short_axis_mm.",
+   "notes": "Nonnegative. Populate only when the ultrasound short axis is explicit. Never relabel an unspecified-axis size or substitute a CT dimension.",
+   "tier": "Core"
+  },
+  "targets.specimen_obtained": {
+   "applies": "When this module applies",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Any specimen actually retrieved for this target.",
+   "tier": "Core"
+  },
+  "targets.station_survey_id": {
+   "applies": "Nodal target with a station survey; nullable for nonnodal EUS-B targets",
+   "capture": "Deterministic linkage",
+   "definition": "Foreign key linking this row to its parent ebus_station_survey record.",
+   "notes": "Must exist in ebus_station_survey.station_survey_id.",
+   "tier": "Core"
+  },
+  "targets.target_id": {
+   "applies": "When this module applies",
+   "capture": "System generated",
+   "definition": "Encounter-local target row ID. Station identity and individual-node or longitudinal target identity remain separate.",
+   "notes": "Unique and non-null.",
+   "tier": "Core"
+  },
+  "targets.target_identity_id": {
+   "applies": "When this module applies",
+   "capture": "Deterministic linkage",
+   "definition": "Persistent target identity across repeat procedures.",
+   "notes": "Same patient. Multiple nodes in one station may have distinct identities; do not assume individual-node correspondence from station alone.",
+   "tier": "Core"
+  },
+  "targets.target_molecular_adequacy": {
+   "applies": "Malignancy requiring testing",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Whether tissue met molecular/PD-L1 needs.",
+   "tier": "Quality"
+  },
+  "targets.target_specimen_adequate": {
+   "applies": "All nodal targets",
+   "capture": "Import/abstract; confirm source and context",
+   "definition": "Adequacy for clinical indication.",
+   "tier": "Core"
+  }
+ },
+ "registry_profile": "robotic_ebus_v1",
+ "schema": {
+  "$defs": {
+   "CaseDetails": {
+    "additionalProperties": false,
+    "properties": {
+     "age_at_procedure_years": {
+      "anyOf": [
+       {
+        "maximum": 125,
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Age At Procedure Years"
+     },
+     "airway_device": {
+      "anyOf": [
+       {
+        "enum": [
+         "ETT",
+         "LMA",
+         "natural_airway",
+         "tracheostomy",
+         "rigid_bronchoscope",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Airway Device"
+     },
+     "airway_size_unit": {
+      "anyOf": [
+       {
+        "enum": [
+         "mm",
+         "LMA_size",
+         "Fr",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Airway Size Unit"
+     },
+     "airway_size_value": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Airway Size Value"
+     },
+     "anesthesia_type": {
+      "anyOf": [
+       {
+        "enum": [
+         "general",
+         "moderate",
+         "deep",
+         "local",
+         "none",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Anesthesia Type"
+     },
+     "asa_physical_status": {
+      "anyOf": [
+       {
+        "maximum": 6,
+        "minimum": 1,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Asa Physical Status"
+     },
+     "immediate_disposition": {
+      "anyOf": [
+       {
+        "enum": [
+         "home",
+         "recovery",
+         "observation",
+         "inpatient",
+         "ICU",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Immediate Disposition"
+     },
+     "indication": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Indication"
+     },
+     "intent": {
+      "anyOf": [
+       {
+        "enum": [
+         "diagnosis",
+         "staging",
+         "diagnosis_and_staging",
+         "restaging",
+         "molecular_rebiopsy",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Intent"
+     },
+     "operator_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Operator Id"
+     },
+     "pack_years": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pack Years"
+     },
+     "procedure_duration_minutes": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Procedure Duration Minutes"
+     },
+     "sex_at_birth": {
+      "anyOf": [
+       {
+        "enum": [
+         "female",
+         "male",
+         "intersex",
+         "unknown",
+         "declined"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Sex At Birth"
+     },
+     "smoking_status": {
+      "anyOf": [
+       {
+        "enum": [
+         "never",
+         "former",
+         "current",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Smoking Status"
+     }
+    },
+    "title": "CaseDetails",
+    "type": "object"
+   },
+   "Complication": {
+    "additionalProperties": false,
+    "properties": {
+     "adverse_event_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Adverse Event Id"
+     },
+     "category": {
+      "enum": [
+       "bleeding",
+       "pneumothorax",
+       "respiratory_failure",
+       "infection",
+       "unplanned_admission",
+       "hypoxemia",
+       "bronchospasm",
+       "hypotension",
+       "arrhythmia",
+       "airway_displacement",
+       "death",
+       "other_approved"
+      ],
+      "title": "Category",
+      "type": "string"
+     },
+     "event_time_window": {
+      "anyOf": [
+       {
+        "enum": [
+         "immediate",
+         "days_0_7",
+         "days_8_30",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Event Time Window"
+     },
+     "event_treatment_summary": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Event Treatment Summary"
+     },
+     "new_hospital_admission": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "New Hospital Admission"
+     },
+     "new_icu_admission": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "New Icu Admission"
+     },
+     "pleural_intervention": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pleural Intervention"
+     },
+     "pneumothorax_laterality": {
+      "anyOf": [
+       {
+        "enum": [
+         "left",
+         "right",
+         "bilateral",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pneumothorax Laterality"
+     },
+     "procedure_component_attribution": {
+      "anyOf": [
+       {
+        "enum": [
+         "robotic_bronchoscopy",
+         "linear_ebus",
+         "anesthesia",
+         "combined",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Procedure Component Attribution"
+     },
+     "relatedness_to_procedure": {
+      "anyOf": [
+       {
+        "enum": [
+         "related",
+         "possibly_related",
+         "unrelated",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Relatedness To Procedure"
+     },
+     "relative_day_offset": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Relative Day Offset"
+     },
+     "severity_grade": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Severity Grade"
+     },
+     "severity_scale": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Severity Scale"
+     },
+     "state": {
+      "$ref": "#/$defs/RecordedState"
+     },
+     "unplanned_ventilation": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Unplanned Ventilation"
+     }
+    },
+    "required": [
+     "category",
+     "state"
+    ],
+    "title": "Complication",
+    "type": "object"
+   },
+   "EBUSSession": {
+    "additionalProperties": false,
+    "properties": {
+     "ebus_session_id": {
+      "format": "uuid4",
+      "title": "Ebus Session Id",
+      "type": "string"
+     },
+     "eus_b_performed": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Eus B Performed"
+     },
+     "incomplete_exam_reason": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Incomplete Exam Reason"
+     },
+     "performed_sampling_strategy": {
+      "anyOf": [
+       {
+        "enum": [
+         "systematic",
+         "targeted",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Performed Sampling Strategy"
+     },
+     "planned_sampling_strategy": {
+      "anyOf": [
+       {
+        "enum": [
+         "systematic",
+         "targeted",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Planned Sampling Strategy"
+     },
+     "primary_purpose": {
+      "anyOf": [
+       {
+        "enum": [
+         "initial_staging",
+         "targeted_diagnosis",
+         "restaging",
+         "recurrence",
+         "molecular_rebiopsy",
+         "lymphoma",
+         "sarcoidosis",
+         "infection",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Primary Purpose"
+     },
+     "rose_used": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Used"
+     },
+     "systematic_exam_complete": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Systematic Exam Complete"
+     }
+    },
+    "required": [
+     "ebus_session_id"
+    ],
+    "title": "EBUSSession",
+    "type": "object"
+   },
+   "Evidence": {
+    "additionalProperties": false,
+    "properties": {
+     "confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Confidence",
+      "type": "number"
+     },
+     "end": {
+      "exclusiveMinimum": 0,
+      "title": "End",
+      "type": "integer"
+     },
+     "source_digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+     },
+     "source_document_id": {
+      "format": "uuid4",
+      "title": "Source Document Id",
+      "type": "string"
+     },
+     "start": {
+      "minimum": 0,
+      "title": "Start",
+      "type": "integer"
+     },
+     "text": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "source_document_id",
+     "source_digest",
+     "start",
+     "end",
+     "text",
+     "confidence"
+    ],
+    "title": "Evidence",
+    "type": "object"
+   },
+   "FieldProvenance": {
+    "additionalProperties": false,
+    "properties": {
+     "assertion_context": {
+      "anyOf": [
+       {
+        "enum": [
+         "active",
+         "negated",
+         "planned",
+         "historical",
+         "uncertain"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Assertion Context"
+     },
+     "conflict_status": {
+      "default": "none",
+      "enum": [
+       "none",
+       "unresolved",
+       "resolved"
+      ],
+      "title": "Conflict Status",
+      "type": "string"
+     },
+     "derivation_rule_version": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Derivation Rule Version"
+     },
+     "extractor_model_version": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Extractor Model Version"
+     },
+     "field_path": {
+      "maxLength": 500,
+      "pattern": "^/",
+      "title": "Field Path",
+      "type": "string"
+     },
+     "missingness_reason": {
+      "anyOf": [
+       {
+        "enum": [
+         "not_documented",
+         "unknown",
+         "not_done",
+         "not_applicable",
+         "pending",
+         "technical_failure",
+         "patient_declined",
+         "not_available_at_site",
+         "lost_to_followup"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Missingness Reason"
+     },
+     "raw_value": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Raw Value"
+     },
+     "review_status": {
+      "default": "proposed",
+      "enum": [
+       "proposed",
+       "reviewed",
+       "amended"
+      ],
+      "title": "Review Status",
+      "type": "string"
+     },
+     "source_digest": {
+      "anyOf": [
+       {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source Digest"
+     },
+     "source_document_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source Document Id"
+     },
+     "source_end": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source End"
+     },
+     "source_excerpt": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source Excerpt"
+     },
+     "source_start": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source Start"
+     },
+     "value_origin": {
+      "enum": [
+       "extracted",
+       "manual",
+       "derived",
+       "missing"
+      ],
+      "title": "Value Origin",
+      "type": "string"
+     }
+    },
+    "required": [
+     "field_path",
+     "value_origin"
+    ],
+    "title": "FieldProvenance",
+    "type": "object"
+   },
+   "FollowUp": {
+    "additionalProperties": false,
+    "properties": {
+     "alive": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "unknown"
+     },
+     "complete": {
+      "title": "Complete",
+      "type": "boolean"
+     },
+     "contact_datetime": {
+      "anyOf": [
+       {
+        "format": "date-time",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Contact Datetime"
+     },
+     "ed_visit": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "not_documented"
+     },
+     "icu_admission": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "not_documented"
+     },
+     "procedure_related_event": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "not_documented"
+     },
+     "safety_ascertainment_status": {
+      "anyOf": [
+       {
+        "enum": [
+         "completed_no_events",
+         "completed_events",
+         "partial",
+         "not_completed"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Safety Ascertainment Status"
+     },
+     "unplanned_admission": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "not_documented"
+     },
+     "unplanned_ventilation": {
+      "$ref": "#/$defs/RecordedState",
+      "default": "not_documented"
+     },
+     "window": {
+      "enum": [
+       "days_0_7",
+       "days_8_30"
+      ],
+      "title": "Window",
+      "type": "string"
+     }
+    },
+    "required": [
+     "window",
+     "complete"
+    ],
+    "title": "FollowUp",
+    "type": "object"
+   },
+   "LocalizationEvent": {
+    "additionalProperties": false,
+    "properties": {
+     "actual_lesion_vs_virtual_target": {
+      "anyOf": [
+       {
+        "enum": [
+         "actual_lesion",
+         "virtual_target",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Actual Lesion Vs Virtual Target"
+     },
+     "catheter_or_tool_changed_after_confirmation": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Catheter Or Tool Changed After Confirmation"
+     },
+     "confirmation_basis": {
+      "anyOf": [
+       {
+        "enum": [
+         "volumetric_imaging",
+         "tomosynthesis",
+         "ultrasound",
+         "fluoroscopy",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Confirmation Basis"
+     },
+     "event_phase": {
+      "anyOf": [
+       {
+        "enum": [
+         "initial",
+         "correction",
+         "prebiopsy",
+         "post_sampling",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Event Phase"
+     },
+     "event_sequence_number": {
+      "minimum": 1,
+      "title": "Event Sequence Number",
+      "type": "integer"
+     },
+     "final_prebiopsy_confirmation": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Final Prebiopsy Confirmation"
+     },
+     "lesion_visible": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Lesion Visible"
+     },
+     "localization_event_id": {
+      "format": "uuid4",
+      "title": "Localization Event Id",
+      "type": "string"
+     },
+     "localization_modality": {
+      "enum": [
+       "radial_EBUS",
+       "2D_fluoroscopy",
+       "fixed_CBCT",
+       "mobile_CBCT",
+       "CBCT_unspecified",
+       "digital_tomosynthesis",
+       "augmented_fluoroscopy",
+       "conventional_CT",
+       "cone_beam_overlay",
+       "other"
+      ],
+      "title": "Localization Modality",
+      "type": "string"
+     },
+     "navigation_run_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Navigation Run Id"
+     },
+     "position_correction_performed": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Position Correction Performed"
+     },
+     "radial_ebus_view": {
+      "anyOf": [
+       {
+        "enum": [
+         "concentric",
+         "eccentric",
+         "adjacent",
+         "not_visualized",
+         "indeterminate"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Radial Ebus View"
+     },
+     "sampling_tool_present": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Sampling Tool Present"
+     },
+     "target_id": {
+      "format": "uuid4",
+      "title": "Target Id",
+      "type": "string"
+     },
+     "tool_lesion_relationship": {
+      "anyOf": [
+       {
+        "enum": [
+         "TIL",
+         "touching",
+         "adjacent",
+         "outside",
+         "indeterminate",
+         "not_applicable"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Tool Lesion Relationship"
+     },
+     "verified_tool_component": {
+      "anyOf": [
+       {
+        "enum": [
+         "sampling_tool",
+         "needle_tip",
+         "forceps",
+         "cryoprobe",
+         "catheter",
+         "radial_probe",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Verified Tool Component"
+     }
+    },
+    "required": [
+     "localization_event_id",
+     "target_id",
+     "event_sequence_number",
+     "localization_modality"
+    ],
+    "title": "LocalizationEvent",
+    "type": "object"
+   },
+   "NavigationRun": {
+    "additionalProperties": false,
+    "properties": {
+     "navigation_failure_reason": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Navigation Failure Reason"
+     },
+     "navigation_run_id": {
+      "format": "uuid4",
+      "title": "Navigation Run Id",
+      "type": "string"
+     },
+     "navigation_run_outcome": {
+      "anyOf": [
+       {
+        "enum": [
+         "reached_and_sampled",
+         "reached_not_sampled",
+         "not_reached_sampled_by_rescue",
+         "not_reached_not_sampled",
+         "aborted"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Navigation Run Outcome"
+     },
+     "navigation_success_system_reported": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Navigation Success System Reported"
+     },
+     "platform_family": {
+      "anyOf": [
+       {
+        "enum": [
+         "Ion",
+         "Monarch",
+         "Galaxy",
+         "other",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Platform Family"
+     },
+     "platform_manufacturer": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Platform Manufacturer"
+     },
+     "platform_model": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Platform Model"
+     },
+     "run_sequence_number": {
+      "minimum": 1,
+      "title": "Run Sequence Number",
+      "type": "integer"
+     },
+     "target_id": {
+      "format": "uuid4",
+      "title": "Target Id",
+      "type": "string"
+     },
+     "target_reached_operational": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Reached Operational"
+     }
+    },
+    "required": [
+     "navigation_run_id",
+     "target_id",
+     "run_sequence_number"
+    ],
+    "title": "NavigationRun",
+    "type": "object"
+   },
+   "PathologyResult": {
+    "additionalProperties": false,
+    "properties": {
+     "adequate_for_molecular_testing": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Adequate For Molecular Testing"
+     },
+     "adequate_for_primary_diagnosis": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Adequate For Primary Diagnosis"
+     },
+     "diagnosis_text": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Diagnosis Text"
+     },
+     "final_result_datetime": {
+      "anyOf": [
+       {
+        "format": "date-time",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Final Result Datetime"
+     },
+     "index_result_class": {
+      "anyOf": [
+       {
+        "enum": [
+         "specific_malignant",
+         "specific_benign",
+         "atypical_or_suspicious",
+         "nonspecific_benign",
+         "nondiagnostic",
+         "pending",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Index Result Class"
+     },
+     "lymphoid_material_adequacy": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Lymphoid Material Adequacy"
+     },
+     "pathology_result_id": {
+      "format": "uuid4",
+      "title": "Pathology Result Id",
+      "type": "string"
+     },
+     "result_scope": {
+      "enum": [
+       "index",
+       "followup"
+      ],
+      "title": "Result Scope",
+      "type": "string"
+     },
+     "result_status": {
+      "enum": [
+       "preliminary",
+       "final",
+       "amended",
+       "pending"
+      ],
+      "title": "Result Status",
+      "type": "string"
+     },
+     "source_document_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Source Document Id"
+     },
+     "specimen_id": {
+      "format": "uuid4",
+      "title": "Specimen Id",
+      "type": "string"
+     },
+     "supersedes_pathology_result_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Supersedes Pathology Result Id"
+     },
+     "target_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Id"
+     }
+    },
+    "required": [
+     "pathology_result_id",
+     "specimen_id",
+     "result_scope",
+     "result_status"
+    ],
+    "title": "PathologyResult",
+    "type": "object"
+   },
+   "Performance": {
+    "enum": [
+     "performed",
+     "attempted",
+     "not_performed",
+     "unknown",
+     "not_documented"
+    ],
+    "title": "Performance",
+    "type": "string"
+   },
+   "ProcedureCategory": {
+    "enum": [
+     "robotic_bronchoscopy",
+     "linear_ebus"
+    ],
+    "title": "ProcedureCategory",
+    "type": "string"
+   },
+   "ProcedureEvent": {
+    "additionalProperties": false,
+    "properties": {
+     "abort_reason": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Abort Reason"
+     },
+     "category": {
+      "$ref": "#/$defs/ProcedureCategory"
+     },
+     "completion": {
+      "anyOf": [
+       {
+        "enum": [
+         "completed",
+         "partially_completed",
+         "aborted_after_start",
+         "not_started",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Completion"
+     },
+     "performance": {
+      "$ref": "#/$defs/Performance"
+     },
+     "planned": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Planned"
+     }
+    },
+    "required": [
+     "category",
+     "performance"
+    ],
+    "title": "ProcedureEvent",
+    "type": "object"
+   },
+   "RecordedState": {
+    "enum": [
+     "present",
+     "absent",
+     "unknown",
+     "not_documented"
+    ],
+    "title": "RecordedState",
+    "type": "string"
+   },
+   "SamplingAcquisition": {
+    "additionalProperties": false,
+    "properties": {
+     "acquisition_record_granularity": {
+      "enum": [
+       "single_pass",
+       "aggregate_reported"
+      ],
+      "title": "Acquisition Record Granularity",
+      "type": "string"
+     },
+     "attribution_status": {
+      "default": "unallocated",
+      "enum": [
+       "attributed",
+       "ambiguous",
+       "unallocated"
+      ],
+      "title": "Attribution Status",
+      "type": "string"
+     },
+     "localization_event_id_before_pass": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Localization Event Id Before Pass"
+     },
+     "needle_gauge": {
+      "anyOf": [
+       {
+        "maximum": 30,
+        "minimum": 10,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Needle Gauge"
+     },
+     "pass_sequence_number": {
+      "anyOf": [
+       {
+        "minimum": 1,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pass Sequence Number"
+     },
+     "reported_pass_count": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Reported Pass Count"
+     },
+     "rose_adequate": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Adequate"
+     },
+     "rose_performed": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Performed"
+     },
+     "rose_result": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Result"
+     },
+     "sampling_pass_id": {
+      "format": "uuid4",
+      "title": "Sampling Pass Id",
+      "type": "string"
+     },
+     "sampling_tool": {
+      "anyOf": [
+       {
+        "enum": [
+         "aspiration_needle",
+         "core_needle",
+         "forceps",
+         "mini_forceps",
+         "brush",
+         "curette",
+         "cryoprobe",
+         "BAL",
+         "wash",
+         "lavage_catheter",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Sampling Tool"
+     },
+     "target_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Id"
+     },
+     "tool_size_mm": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Tool Size Mm"
+     }
+    },
+    "required": [
+     "sampling_pass_id",
+     "acquisition_record_granularity"
+    ],
+    "title": "SamplingAcquisition",
+    "type": "object"
+   },
+   "SamplingSpecimenLink": {
+    "additionalProperties": false,
+    "properties": {
+     "allocation_purpose": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Allocation Purpose"
+     },
+     "link_certainty": {
+      "enum": [
+       "confirmed",
+       "uncertain"
+      ],
+      "title": "Link Certainty",
+      "type": "string"
+     },
+     "sampling_pass_id": {
+      "format": "uuid4",
+      "title": "Sampling Pass Id",
+      "type": "string"
+     },
+     "sampling_specimen_link_id": {
+      "format": "uuid4",
+      "title": "Sampling Specimen Link Id",
+      "type": "string"
+     },
+     "specimen_id": {
+      "format": "uuid4",
+      "title": "Specimen Id",
+      "type": "string"
+     }
+    },
+    "required": [
+     "sampling_specimen_link_id",
+     "sampling_pass_id",
+     "specimen_id",
+     "link_certainty"
+    ],
+    "title": "SamplingSpecimenLink",
+    "type": "object"
+   },
+   "Specimen": {
+    "additionalProperties": false,
+    "properties": {
+     "container_medium": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Container Medium"
+     },
+     "intended_purpose": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Intended Purpose"
+     },
+     "pathology": {
+      "anyOf": [
+       {
+        "enum": [
+         "malignant",
+         "benign",
+         "atypical",
+         "suspicious",
+         "nondiagnostic",
+         "pending",
+         "unknown",
+         "not_documented"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pathology"
+     },
+     "specimen_id": {
+      "format": "uuid4",
+      "title": "Specimen Id",
+      "type": "string"
+     },
+     "specimen_label": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Specimen Label"
+     },
+     "specimen_type": {
+      "anyOf": [
+       {
+        "enum": [
+         "cytology",
+         "histology",
+         "microbiology",
+         "flow_cytometry",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Specimen Type"
+     },
+     "target_attribution_status": {
+      "default": "unallocated",
+      "enum": [
+       "attributed",
+       "mixed_target",
+       "ambiguous",
+       "unallocated"
+      ],
+      "title": "Target Attribution Status",
+      "type": "string"
+     },
+     "target_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Id"
+     }
+    },
+    "required": [
+     "specimen_id"
+    ],
+    "title": "Specimen",
+    "type": "object"
+   },
+   "StationSurvey": {
+    "additionalProperties": false,
+    "properties": {
+     "ebus_session_id": {
+      "format": "uuid4",
+      "title": "Ebus Session Id",
+      "type": "string"
+     },
+     "iaslc_station": {
+      "enum": [
+       "2R",
+       "2L",
+       "3A",
+       "3P",
+       "4R",
+       "4L",
+       "5",
+       "6",
+       "7",
+       "8",
+       "9",
+       "10R",
+       "10L",
+       "11R",
+       "11L",
+       "11Rs",
+       "11Ri",
+       "12R",
+       "12L"
+      ],
+      "title": "Iaslc Station",
+      "type": "string"
+     },
+     "largest_short_axis_mm": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Largest Short Axis Mm"
+     },
+     "reason_not_sampled": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Reason Not Sampled"
+     },
+     "size_axis_explicit": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Size Axis Explicit"
+     },
+     "station_sampled": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Station Sampled"
+     },
+     "station_survey_id": {
+      "format": "uuid4",
+      "title": "Station Survey Id",
+      "type": "string"
+     },
+     "station_surveyed": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Station Surveyed"
+     },
+     "station_visualized": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Station Visualized"
+     },
+     "survey_modality": {
+      "anyOf": [
+       {
+        "enum": [
+         "EBUS",
+         "EUS_B"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Survey Modality"
+     }
+    },
+    "required": [
+     "station_survey_id",
+     "ebus_session_id",
+     "iaslc_station"
+    ],
+    "title": "StationSurvey",
+    "type": "object"
+   },
+   "Target": {
+    "additionalProperties": false,
+    "properties": {
+     "anatomic_label": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Anatomic Label"
+     },
+     "benign_lymphoid_tissue_present": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Benign Lymphoid Tissue Present"
+     },
+     "bronchus_sign_present": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Bronchus Sign Present"
+     },
+     "diagnostic_attempted": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Diagnostic Attempted"
+     },
+     "distance_to_pleura_mm": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Distance To Pleura Mm"
+     },
+     "ebus_session_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Ebus Session Id"
+     },
+     "iaslc_station": {
+      "anyOf": [
+       {
+        "enum": [
+         "2R",
+         "2L",
+         "3A",
+         "3P",
+         "4R",
+         "4L",
+         "5",
+         "6",
+         "7",
+         "8",
+         "9",
+         "10R",
+         "10L",
+         "11R",
+         "11L",
+         "11Rs",
+         "11Ri",
+         "12R",
+         "12L"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Iaslc Station"
+     },
+     "lesion_attenuation_type": {
+      "anyOf": [
+       {
+        "enum": [
+         "solid",
+         "part_solid",
+         "ground_glass",
+         "cavitary",
+         "calcified",
+         "other"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Lesion Attenuation Type"
+     },
+     "lobe": {
+      "anyOf": [
+       {
+        "enum": [
+         "RUL",
+         "RML",
+         "RLL",
+         "LUL",
+         "LLL",
+         "Lingula"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Lobe"
+     },
+     "max_diameter_mm": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Max Diameter Mm"
+     },
+     "measurement_modality": {
+      "anyOf": [
+       {
+        "enum": [
+         "EBUS",
+         "EUS_B"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Measurement Modality"
+     },
+     "needle_gauge": {
+      "anyOf": [
+       {
+        "maximum": 30,
+        "minimum": 10,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Needle Gauge"
+     },
+     "needle_pass_count": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Needle Pass Count"
+     },
+     "nodal_adequacy_basis": {
+      "anyOf": [
+       {
+        "enum": [
+         "lymphoid_material",
+         "specific_diagnosis",
+         "pathologist_assessment",
+         "unknown"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Nodal Adequacy Basis"
+     },
+     "node_interpretation": {
+      "anyOf": [
+       {
+        "enum": [
+         "malignant",
+         "adequate_negative",
+         "inadequate",
+         "indeterminate",
+         "pending"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Node Interpretation"
+     },
+     "pet_avid": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pet Avid"
+     },
+     "pet_description": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pet Description"
+     },
+     "pet_suv_max": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Pet Suv Max"
+     },
+     "prespecified_biopsy_target": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Prespecified Biopsy Target"
+     },
+     "puncture_route": {
+      "anyOf": [
+       {
+        "enum": [
+         "EBUS",
+         "EUS_B"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Puncture Route"
+     },
+     "reason_sampling_not_attempted": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Reason Sampling Not Attempted"
+     },
+     "rose_adequate": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Adequate"
+     },
+     "rose_result": {
+      "anyOf": [
+       {
+        "maxLength": 4096,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Result"
+     },
+     "rose_used": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Rose Used"
+     },
+     "sampling_attempted": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Sampling Attempted"
+     },
+     "segment": {
+      "anyOf": [
+       {
+        "maxLength": 500,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Segment"
+     },
+     "short_axis_mm": {
+      "anyOf": [
+       {
+        "minimum": 0,
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Short Axis Mm"
+     },
+     "site": {
+      "enum": [
+       "lung",
+       "lymph_node",
+       "central_mass"
+      ],
+      "title": "Site",
+      "type": "string"
+     },
+     "size_axis_explicit": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Size Axis Explicit"
+     },
+     "specimen_obtained": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Specimen Obtained"
+     },
+     "station_survey_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Station Survey Id"
+     },
+     "target_id": {
+      "format": "uuid4",
+      "title": "Target Id",
+      "type": "string"
+     },
+     "target_identity_id": {
+      "anyOf": [
+       {
+        "format": "uuid4",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Identity Id"
+     },
+     "target_molecular_adequacy": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Molecular Adequacy"
+     },
+     "target_specimen_adequate": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "title": "Target Specimen Adequate"
+     }
+    },
+    "required": [
+     "target_id",
+     "site"
+    ],
+    "title": "Target",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "case_details": {
+    "$ref": "#/$defs/CaseDetails"
+   },
+   "complication_assessment": {
+    "$ref": "#/$defs/RecordedState",
+    "default": "not_documented"
+   },
+   "complications": {
+    "items": {
+     "$ref": "#/$defs/Complication"
+    },
+    "maxItems": 100,
+    "title": "Complications",
+    "type": "array"
+   },
+   "ebus_sessions": {
+    "items": {
+     "$ref": "#/$defs/EBUSSession"
+    },
+    "maxItems": 10,
+    "title": "Ebus Sessions",
+    "type": "array"
+   },
+   "event_date": {
+    "format": "date",
+    "title": "Event Date",
+    "type": "string"
+   },
+   "evidence": {
+    "items": {
+     "$ref": "#/$defs/Evidence"
+    },
+    "maxItems": 1000,
+    "title": "Evidence",
+    "type": "array"
+   },
+   "field_provenance": {
+    "items": {
+     "$ref": "#/$defs/FieldProvenance"
+    },
+    "maxItems": 5000,
+    "title": "Field Provenance",
+    "type": "array"
+   },
+   "follow_up": {
+    "items": {
+     "$ref": "#/$defs/FollowUp"
+    },
+    "maxItems": 2,
+    "title": "Follow Up",
+    "type": "array"
+   },
+   "localization_events": {
+    "items": {
+     "$ref": "#/$defs/LocalizationEvent"
+    },
+    "maxItems": 300,
+    "title": "Localization Events",
+    "type": "array"
+   },
+   "manual_fields": {
+    "items": {
+     "maxLength": 64,
+     "pattern": "^[a-z_]+$",
+     "type": "string"
+    },
+    "maxItems": 50,
+    "title": "Manual Fields",
+    "type": "array"
+   },
+   "navigation_runs": {
+    "items": {
+     "$ref": "#/$defs/NavigationRun"
+    },
+    "maxItems": 100,
+    "title": "Navigation Runs",
+    "type": "array"
+   },
+   "pathology_results": {
+    "items": {
+     "$ref": "#/$defs/PathologyResult"
+    },
+    "maxItems": 500,
+    "title": "Pathology Results",
+    "type": "array"
+   },
+   "procedures": {
+    "items": {
+     "$ref": "#/$defs/ProcedureEvent"
+    },
+    "maxItems": 2,
+    "minItems": 1,
+    "title": "Procedures",
+    "type": "array"
+   },
+   "registry_profile": {
+    "const": "robotic_ebus_v1",
+    "default": "robotic_ebus_v1",
+    "title": "Registry Profile",
+    "type": "string"
+   },
+   "sampling_acquisitions": {
+    "items": {
+     "$ref": "#/$defs/SamplingAcquisition"
+    },
+    "maxItems": 500,
+    "title": "Sampling Acquisitions",
+    "type": "array"
+   },
+   "sampling_specimen_links": {
+    "items": {
+     "$ref": "#/$defs/SamplingSpecimenLink"
+    },
+    "maxItems": 500,
+    "title": "Sampling Specimen Links",
+    "type": "array"
+   },
+   "schema_version": {
+    "const": "0.2.0",
+    "default": "0.2.0",
+    "title": "Schema Version",
+    "type": "string"
+   },
+   "specimens": {
+    "items": {
+     "$ref": "#/$defs/Specimen"
+    },
+    "maxItems": 200,
+    "title": "Specimens",
+    "type": "array"
+   },
+   "station_surveys": {
+    "items": {
+     "$ref": "#/$defs/StationSurvey"
+    },
+    "maxItems": 100,
+    "title": "Station Surveys",
+    "type": "array"
+   },
+   "suggested_codes": {
+    "items": {
+     "pattern": "^[0-9]{5}$",
+     "type": "string"
+    },
+    "maxItems": 40,
+    "title": "Suggested Codes",
+    "type": "array"
+   },
+   "targets": {
+    "items": {
+     "$ref": "#/$defs/Target"
+    },
+    "maxItems": 100,
+    "title": "Targets",
+    "type": "array"
+   }
+  },
+  "required": [
+   "event_date",
+   "procedures"
+  ],
+  "title": "ClinicalRevision",
+  "type": "object"
+ },
+ "schema_version": "0.2.0",
+ "sections": {
+  "case_details": "Case and anesthesia",
+  "complications": "Immediate and interval complications",
+  "ebus_sessions": "Linear EBUS examination",
+  "follow_up": "30-day safety",
+  "localization_events": "Localization and tool confirmation",
+  "navigation_runs": "Robotic navigation",
+  "pathology_results": "Pathology and amendments",
+  "procedures": "Procedure components",
+  "sampling_acquisitions": "Sampling acquisitions",
+  "sampling_specimen_links": "Acquisition-to-specimen links",
+  "specimens": "Specimens and attribution",
+  "station_surveys": "Stations surveyed and sampled",
+  "targets": "Lung and nodal targets"
+ }
+}

@@ -131,6 +131,15 @@ def _line_snippet(text: str, start: int, end: int, *, limit: int = 240) -> str:
     line_end = text.find("\n", e)
     if line_end == -1:
         line_end = len(text)
+    # Prefer sentence boundaries within the line: long single-line paragraphs
+    # would otherwise return their (unrelated) head instead of the matched
+    # sentence.
+    sentence_start = text.rfind(".", line_start, s)
+    if sentence_start != -1:
+        line_start = sentence_start + 1
+    sentence_end = text.find(".", e, line_end)
+    if sentence_end != -1:
+        line_end = sentence_end + 1
     snippet = text[line_start:line_end].strip()
     snippet = re.sub(r"\s+", " ", snippet)
     return snippet[:limit].rstrip()
@@ -180,7 +189,27 @@ def _first_match_with_bleeding_context(
         end = match.end()
         sentence = _sentence_window(text, start, end)
         if not _BLEEDING_WORD_RE.search(sentence):
-            continue
+            # The bleeding statement often sits in the adjacent sentence
+            # ("significant bleeding from biopsy sites. An endobronchial
+            # blocker was placed to prevent blood soiling..."). Fall back to
+            # the char window ONLY when the intervention sentence itself
+            # frames bleeding control and the nearby bleeding word is not
+            # negated — otherwise unrelated mentions (tumor-board surgery,
+            # pre-op transfusion) would fabricate high-grade bleeding.
+            if not _BLEEDING_CONTROL_RE.search(sentence):
+                continue
+            window = text[max(0, start - context_window) : min(len(text), end + context_window)]
+            unnegated_bleeding = None
+            for bleeding_word in _BLEEDING_WORD_RE.finditer(window):
+                prefix = window[max(0, bleeding_word.start() - 40) : bleeding_word.start()]
+                if re.search(r"(?i)\b(?:no|without|minimal|denies)\b[^.\n]{0,30}$", prefix):
+                    continue
+                unnegated_bleeding = bleeding_word
+                break
+            if unnegated_bleeding is None:
+                continue
+            if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(window):
+                continue
         if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(sentence):
             continue
         prefix = _sentence_prefix(text, start, end)

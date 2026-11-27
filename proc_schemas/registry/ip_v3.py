@@ -378,11 +378,19 @@ class ImagingSnapshot(BaseModel):
     """Canonical imaging event summary."""
 
     relative_day_offset: int
-    modality: Literal["ct", "pet_ct", "cta", "mri", "other"]
-    subtype: Literal["preop", "followup", "restaging", "surveillance"] | None = None
+    modality: Literal["ct", "pet_ct", "cta", "mri", "cxr", "us", "other"]
+    subtype: Literal["preop", "followup", "restaging", "surveillance", "post_procedure"] | None = None
     event_title: str | None = None
     response: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
     overall_impression_text: str | None = None
+    # Structured post-procedure findings (primarily CXR/US; additive 2026-07).
+    pneumothorax: bool | None = None
+    pneumothorax_side: Literal["Left", "Right", "Bilateral"] | None = None
+    pneumothorax_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = None
+    pleural_effusion: bool | None = None
+    effusion_side: Literal["Left", "Right", "Bilateral"] | None = None
+    effusion_trend: Literal["New", "Stable", "Decreased", "Increased", "Resolved"] | None = None
+    device_position_text: str | None = None
     qa_flags: List[str] = Field(default_factory=list)
 
 
@@ -400,6 +408,15 @@ class ClinicalUpdate(BaseModel):
     treatment_change_text: str | None = None
     complication_text: str | None = None
     summary_text: str | None = None
+    # Longitudinal follow-up markers (additive 2026-07). These were previously
+    # emitted by the aggregation extractors but silently dropped on validation.
+    hospital_admission: bool | None = None
+    icu_admission: bool | None = None
+    ed_visit: bool | None = None
+    readmission: bool | None = None
+    deceased: bool | None = None
+    disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    complication_types: List[str] = Field(default_factory=list)
     qa_flags: List[str] = Field(default_factory=list)
 
 
@@ -412,11 +429,33 @@ class ClinicalState(BaseModel):
     treatment_change_text: str | None = None
     complication_text: str | None = None
     summary_text: str | None = None
+    hospital_admission: bool | None = None
+    icu_admission: bool | None = None
+    ed_visit: bool | None = None
+    readmission: bool | None = None
+    deceased: bool | None = None
+    disease_status: Literal["Progression", "Stable", "Response", "Mixed", "Indeterminate"] | None = None
+    complication_types: List[str] = Field(default_factory=list)
 
 
 class ClinicalCourse(BaseModel):
     updates: List[ClinicalUpdate] = Field(default_factory=list)
     current_state: ClinicalState | None = None
+
+
+class LongitudinalOutcomes(BaseModel):
+    """Case-level outcome rollup derived from appended follow-up events (additive 2026-07)."""
+
+    day30_complication: bool | None = None
+    day30_readmission: bool | None = None
+    day30_ed_visit: bool | None = None
+    day30_mortality: bool | None = None
+    survival_status: Literal["Alive", "Deceased", "Unknown"] | None = None
+    last_known_status_day_offset: int | None = None
+    diagnostic_yield: Literal["Malignant", "Benign-specific", "Nondiagnostic", "Pending", "Unknown"] | None = None
+    reintervention_within_30d: bool | None = None
+    complication_types: List[str] = Field(default_factory=list)
+    qa_flags: List[str] = Field(default_factory=list)
 
 
 class IPRegistryV3(BaseModel):
@@ -451,6 +490,7 @@ class IPRegistryV3(BaseModel):
     targets: CaseTargets = Field(default_factory=CaseTargets)
     imaging_summary: ImagingSummary = Field(default_factory=ImagingSummary)
     clinical_course: ClinicalCourse = Field(default_factory=ClinicalCourse)
+    longitudinal_outcomes: LongitudinalOutcomes = Field(default_factory=LongitudinalOutcomes)
 
     established_tracheostomy_route: bool = Field(
         False,

@@ -50,6 +50,7 @@ Procedure Suite is a **stateless clinical logic engine**: **(scrubbed) procedure
 ### API and UI
 
 - [`docs/Registry_API.md`](Registry_API.md) — legacy registry endpoints + mode descriptions.
+- [`docs/SMART_ON_FHIR.md`](SMART_ON_FHIR.md) — SMART on FHIR EHR launch (Epic / Oracle Health–Cerner): browser-only OAuth + FHIR note retrieval into the PHI workflow.
 - [`docs/phi_review_system/README.md`](phi_review_system/README.md) — PHI review workflow and storage.
 - UI static app lives in `ui/static/phi_redactor/` and is served at `/ui/`.
 

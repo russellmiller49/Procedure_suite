@@ -49,6 +49,11 @@ from app.reporting.macro_registry import get_macro_registry
 from app.reporting.normalization.normalize import normalize_bundle
 from app.reporting.normalization.robotic_prompt_fidelity import has_source_supported_ebus_stations
 from app.reporting.quality_gate import build_reporter_quality_flags
+from app.reporting.seed_inputs import (
+    SeedInputSpecResponse,
+    apply_seed_inputs,
+    build_seed_input_spec,
+)
 from app.reporting.seed_pipeline import (
     seed_outcome_from_llm_findings_seed,
     seed_outcome_from_registry_result,
@@ -598,9 +603,12 @@ async def report_seed_from_text(
         bundle_payload = bundle.model_dump(exclude_none=False)
         bundle_payload["free_text_hint"] = seed_text_for_bundle
         bundle = ProcedureBundle.model_validate(bundle_payload)
+    # Structured selections are applied to the bundle, never to the text.
+    seed_inputs = apply_seed_inputs(bundle, req.structured_inputs)
+    bundle = seed_inputs.bundle
 
     bundle, issues, warnings, suggestions, notes = _verify_bundle(bundle, debug_notes=debug_notes)
-    warnings = list(seed_warnings) + list(warnings or [])
+    warnings = list(seed_warnings) + list(seed_inputs.warnings) + list(warnings or [])
     missing_field_prompts: list[dict[str, object]] = []
     try:
         from app.registry.completeness import generate_missing_field_prompts
@@ -661,8 +669,15 @@ async def report_seed_from_text(
         quality_flags=quality_flags,
         needs_manual_review=needs_manual_review,
         missing_field_prompts=missing_field_prompts,
+        seed_input_notes=seed_inputs.applied,
         debug_notes=debug_notes if debug_enabled else None,
     )
+
+
+@router.get("/report/seed_input_spec", response_model=SeedInputSpecResponse)
+async def report_seed_input_spec() -> SeedInputSpecResponse:
+    """Dropdown catalog for the structured seed inputs (no patient data)."""
+    return build_seed_input_spec()
 
 
 @router.post("/report/transcribe_audio", response_model=ReporterSpeechTranscriptionResponse)

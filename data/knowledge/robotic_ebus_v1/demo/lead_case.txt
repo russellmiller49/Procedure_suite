@@ -1,0 +1,13 @@
+Synthetic note for software demonstration only; no real patient.
+Patient: Marian Delacroix. MRN: 00481516. Date of birth: 03/14/1957.
+Procedure date: 02/11/2026.
+
+Indication: 22 mm solid nodule in the posterior segment of the right upper lobe with enlarged right paratracheal and subcarinal lymph nodes on CT. Diagnosis and mediastinal staging.
+Procedures performed: robotic bronchoscopy and linear EBUS-TBNA. Both procedures were completed.
+Anesthesia: general anesthesia with an 8.5 mm endotracheal tube. ASA class III.
+
+Linear EBUS: A systematic mediastinal and hilar survey was performed. Station 4R was sampled. The station 4R node measured 12 mm in short axis on ultrasound, and three passes were made with a 22-gauge needle. Station 7 was sampled. The station 7 node measured 14 mm in short axis on ultrasound, and four passes were made with a 22-gauge needle. Station 11L was surveyed and measured 4 mm in short axis on ultrasound. Station 11L was not sampled because it was small with benign sonographic features. ROSE showed lymphocytes at station 4R and at station 7. The station 4R material was sent as specimen C for cytology. The station 7 material was sent as specimen D for cytology.
+
+Robotic bronchoscopy: The Ion platform was used to navigate to target T1, the 22 mm solid nodule in the posterior segment of the right upper lobe. A bronchus sign was present on CT. Navigation to T1 was successful. Radial EBUS showed an eccentric view. Cone-beam CT confirmed the needle within the lesion. T1 was sampled with a 21-gauge needle for four passes. T1 was then sampled with forceps for five biopsies. ROSE of the needle passes from T1 showed atypical cells. The needle material from T1 was sent as specimen A for cytology. The forceps biopsies from T1 were sent as specimen B for histology.
+
+Complications: none. There was no pneumothorax on post-procedure fluoroscopy. The patient was extubated and discharged home after recovery.

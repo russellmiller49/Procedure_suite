@@ -1,0 +1,12 @@
+SYNTHETIC REGISTRY DEMO REBUS-20181221-01
+FICTIONAL SANDBOX DATA ONLY. This note was created for software testing and is not a record of care.
+Patient: Henry Clin Doc (Epic synthetic patient). Age at procedure: 68 years. Sex: male.
+Procedure date: 2018-12-21.
+Indication: diagnostic evaluation of an 18 mm solid right upper lobe lung nodule and mediastinal staging.
+Planned and performed: diagnostic robotic bronchoscopy and linear EBUS-TBNA. Both procedures were completed.
+General anesthesia; ASA III; oral endotracheal tube 8.5 mm. Procedure duration 65 minutes.
+Robotic bronchoscopy: The Monarch platform was used to navigate to prespecified target T1, an 18 mm solid lesion in the posterior segment of the right upper lobe. CT bronchus sign was present. Navigation to T1 was successful. Radial EBUS showed a concentric pattern. Mobile cone-beam CT then confirmed the biopsy needle within the lesion. No repositioning was required after confirmation.
+Sampling T1: A 21-gauge needle was used for four passes in total. These are aggregate acquisition counts; individual pass records were not documented. All material was submitted as specimen A, right upper lobe target T1. ROSE showed atypical cells; adequacy was indeterminate. Final pathology was pending at the end of the procedure.
+Linear EBUS: The mediastinum was surveyed for staging. Station 7 was visualized and sampled. A station 7 node measured 10 mm in ultrasound short axis. Three passes were performed with a 22-gauge needle and submitted as specimen B, station 7. ROSE showed lymphocytes and was adequate. Station 4R was visualized but not sampled because an intervening vessel prevented a safe needle path. No short-axis measurement was documented for 4R.
+Immediate complications: none observed. No complication treatment was required. The patient was extubated and discharged home after recovery.
+Follow-up: 0-7 day and 8-30 day safety outcomes were not yet assessed. Final diagnosis and molecular adequacy were pending.

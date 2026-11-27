@@ -1,0 +1,1295 @@
+{
+ "arms": {
+  "claude:haiku:medium": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [
+     {
+      "count": 1,
+      "document_id": "524f8136-fb28-44f9-9b2a-b60fb4e0f7ac"
+     },
+     {
+      "count": 2,
+      "document_id": "1ef113db-4b9d-4352-b627-2cf0d06f0c17"
+     },
+     {
+      "count": 1,
+      "document_id": "0d0119c4-db63-4da3-9d9e-f507f9cff99c"
+     }
+    ],
+    "surveyed_station_recorded_as_sampled": [
+     {
+      "document_id": "1ef113db-4b9d-4352-b627-2cf0d06f0c17",
+      "stations": [
+       "2R"
+      ]
+     }
+    ],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 3,
+    "surveyed_station_recorded_as_sampled": 1,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": 0.00779,
+   "cost_usd_total": 0.6698,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": 0.9408,
+    "sampling_specimen_links": 0.9138,
+    "specimens": 0.9756
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.8783,
+    "sampling_specimen_links": 0.743,
+    "specimens": 0.9392
+   },
+   "fallback_rate": 0.0,
+   "fn": 991,
+   "fp": 305,
+   "latency_mean_s": 49.476,
+   "latency_p50_s": 45.371,
+   "latency_p95_s": 82.177,
+   "links_correct": 1484,
+   "links_total": 1488,
+   "outcomes": {
+    "degraded": 0,
+    "errors": 0,
+    "first_pass_success": 86,
+    "refusals": 0,
+    "repairs": 0,
+    "timeouts": 0
+   },
+   "precision": 0.9621,
+   "precision_interval_95": [
+    0.9407,
+    0.9755
+   ],
+   "recall": 0.8866,
+   "recall_interval_95": [
+    0.8475,
+    0.9175
+   ],
+   "repair_rate": 0.0,
+   "top_misses": [
+    [
+     "localization_events.lesion_visible",
+     92
+    ],
+    [
+     "navigation_runs.navigation_success_system_reported",
+     80
+    ],
+    [
+     "sampling_specimen_links.link_certainty",
+     55
+    ],
+    [
+     "targets.anatomic_label",
+     54
+    ],
+    [
+     "localization_events.localization_modality",
+     39
+    ],
+    [
+     "sampling_acquisitions.rose_performed",
+     39
+    ],
+    [
+     "sampling_acquisitions.rose_result",
+     34
+    ],
+    [
+     "targets.needle_pass_count",
+     32
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "targets.pet_description",
+     25
+    ],
+    [
+     "targets.specimen_obtained",
+     25
+    ],
+    [
+     "sampling_acquisitions.rose_result",
+     21
+    ],
+    [
+     "sampling_acquisitions.rose_adequate",
+     20
+    ],
+    [
+     "ebus_sessions.planned_sampling_strategy",
+     16
+    ],
+    [
+     "targets.diagnostic_attempted",
+     13
+    ],
+    [
+     "complications.event_time_window",
+     12
+    ],
+    [
+     "sampling_acquisitions.rose_performed",
+     12
+    ]
+   ],
+   "tp": 7747,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.9550827423167849,
+     "recall": 0.8782608695652174
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.9602053915275995,
+     "recall": 0.8841607565011821
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9792043399638336,
+     "recall": 0.886252045826514
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9650283553875236,
+     "recall": 0.8847487001733102
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.9845360824742269,
+     "recall": 0.9307992202729045
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.9666666666666667,
+     "recall": 0.8463035019455253
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.9662027833001988,
+     "recall": 0.9418604651162791
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9321357285429142,
+     "recall": 0.8389221556886227
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.9490909090909091,
+     "recall": 0.8207547169811321
+    }
+   },
+   "unusable": [
+    {
+     "document_id": "9b9d3666-adcc-4e95-bcb5-792a5ed3aca7",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "9cd80dd9-ee51-4d93-a30b-fdb20a0f0976",
+     "status": "unsupported"
+    }
+   ],
+   "usable": 84
+  },
+  "claude:opus:medium": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [],
+    "surveyed_station_recorded_as_sampled": [],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 0,
+    "surveyed_station_recorded_as_sampled": 0,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": 0.1813,
+   "cost_usd_total": 15.5922,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": 0.9851,
+    "sampling_specimen_links": 0.9813,
+    "specimens": 0.9842
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.9786,
+    "sampling_specimen_links": 0.9813,
+    "specimens": 0.9765
+   },
+   "fallback_rate": 0.0,
+   "fn": 327,
+   "fp": 155,
+   "latency_mean_s": 79.474,
+   "latency_p50_s": 74.714,
+   "latency_p95_s": 138.515,
+   "links_correct": 1720,
+   "links_total": 1720,
+   "outcomes": {
+    "degraded": 0,
+    "errors": 0,
+    "first_pass_success": 86,
+    "refusals": 0,
+    "repairs": 0,
+    "timeouts": 0
+   },
+   "precision": 0.9819,
+   "precision_interval_95": [
+    0.977,
+    0.986
+   ],
+   "recall": 0.9626,
+   "recall_interval_95": [
+    0.9557,
+    0.9691
+   ],
+   "repair_rate": 0.0,
+   "top_misses": [
+    [
+     "localization_events.lesion_visible",
+     67
+    ],
+    [
+     "station_surveys.station_surveyed",
+     48
+    ],
+    [
+     "targets.needle_gauge",
+     32
+    ],
+    [
+     "navigation_runs.navigation_success_system_reported",
+     31
+    ],
+    [
+     "targets.needle_pass_count",
+     27
+    ],
+    [
+     "sampling_acquisitions.rose_performed",
+     24
+    ],
+    [
+     "station_surveys.largest_short_axis_mm",
+     13
+    ],
+    [
+     "station_surveys.size_axis_explicit",
+     13
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "targets.pet_description",
+     35
+    ],
+    [
+     "localization_events.verified_tool_component",
+     18
+    ],
+    [
+     "navigation_runs.platform_model",
+     11
+    ],
+    [
+     "sampling_acquisitions.rose_result",
+     11
+    ],
+    [
+     "sampling_acquisitions.rose_adequate",
+     10
+    ],
+    [
+     "complications.event_treatment_summary",
+     8
+    ],
+    [
+     "navigation_runs.platform_family",
+     8
+    ],
+    [
+     "procedures.abort_reason",
+     7
+    ]
+   ],
+   "tp": 8411,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.973741794310722,
+     "recall": 0.967391304347826
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.9654761904761905,
+     "recall": 0.958628841607565
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9847972972972973,
+     "recall": 0.9541734860883797
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9883303411131059,
+     "recall": 0.9540727902946274
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.992992992992993,
+     "recall": 0.9668615984405458
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.943089430894309,
+     "recall": 0.9027237354085603
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.9742063492063492,
+     "recall": 0.9515503875968992
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9926873857404022,
+     "recall": 0.9754491017964072
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.972176759410802,
+     "recall": 0.9339622641509434
+    }
+   },
+   "unusable": [],
+   "usable": 86
+  },
+  "claude:sonnet:medium": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [],
+    "surveyed_station_recorded_as_sampled": [],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 0,
+    "surveyed_station_recorded_as_sampled": 0,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": 0.06866,
+   "cost_usd_total": 5.9044,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": 0.9495,
+    "sampling_specimen_links": 0.5286,
+    "specimens": 0.8133
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.5469,
+    "sampling_specimen_links": 0.1729,
+    "specimens": 0.7176
+   },
+   "fallback_rate": 0.0,
+   "fn": 1824,
+   "fp": 320,
+   "latency_mean_s": 29.241,
+   "latency_p50_s": 27.821,
+   "latency_p95_s": 49.367,
+   "links_correct": 1182,
+   "links_total": 1182,
+   "outcomes": {
+    "degraded": 0,
+    "errors": 0,
+    "first_pass_success": 86,
+    "refusals": 0,
+    "repairs": 0,
+    "timeouts": 0
+   },
+   "precision": 0.9558,
+   "precision_interval_95": [
+    0.9463,
+    0.9638
+   ],
+   "recall": 0.7913,
+   "recall_interval_95": [
+    0.7719,
+    0.8103
+   ],
+   "repair_rate": 0.0,
+   "top_misses": [
+    [
+     "sampling_specimen_links.link_certainty",
+     177
+    ],
+    [
+     "sampling_acquisitions.acquisition_record_granularity",
+     104
+    ],
+    [
+     "sampling_acquisitions.attribution_status",
+     104
+    ],
+    [
+     "sampling_acquisitions.sampling_tool",
+     104
+    ],
+    [
+     "sampling_acquisitions.needle_gauge",
+     102
+    ],
+    [
+     "sampling_acquisitions.reported_pass_count",
+     96
+    ],
+    [
+     "sampling_acquisitions.rose_performed",
+     93
+    ],
+    [
+     "targets.specimen_obtained",
+     86
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "navigation_runs.platform_model",
+     58
+    ],
+    [
+     "specimens.specimen_type",
+     42
+    ],
+    [
+     "specimens.target_attribution_status",
+     42
+    ],
+    [
+     "sampling_specimen_links.link_certainty",
+     33
+    ],
+    [
+     "sampling_acquisitions.rose_result",
+     18
+    ],
+    [
+     "sampling_acquisitions.rose_adequate",
+     16
+    ],
+    [
+     "localization_events.verified_tool_component",
+     10
+    ],
+    [
+     "sampling_acquisitions.rose_performed",
+     10
+    ]
+   ],
+   "tp": 6914,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.9635922330097088,
+     "recall": 0.8630434782608696
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.9371345029239766,
+     "recall": 0.7576832151300237
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9676767676767677,
+     "recall": 0.7839607201309329
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9733924611973392,
+     "recall": 0.7608318890814558
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.9554285714285714,
+     "recall": 0.8148148148148148
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.8855140186915887,
+     "recall": 0.7373540856031129
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.9439655172413793,
+     "recall": 0.8488372093023255
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9736644093303235,
+     "recall": 0.7748502994011977
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.9371428571428572,
+     "recall": 0.7735849056603774
+    }
+   },
+   "unusable": [],
+   "usable": 86
+  },
+  "deterministic": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [
+     {
+      "count": 1,
+      "document_id": "6b6450a8-346e-4e29-87da-fa28041428ca"
+     },
+     {
+      "count": 1,
+      "document_id": "1294f9e0-7c37-4cd3-aae0-f7557b76d07f"
+     },
+     {
+      "count": 4,
+      "document_id": "9cd80dd9-ee51-4d93-a30b-fdb20a0f0976"
+     },
+     {
+      "count": 4,
+      "document_id": "1a20d207-bc7c-4153-8609-db6b4ff54b74"
+     },
+     {
+      "count": 2,
+      "document_id": "81ad0d43-84d2-46f9-b7d4-4efccc48ae8f"
+     },
+     {
+      "count": 2,
+      "document_id": "5b5138e1-bd71-49db-95a2-b357ea96717b"
+     }
+    ],
+    "surveyed_station_recorded_as_sampled": [],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 6,
+    "surveyed_station_recorded_as_sampled": 0,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": null,
+   "cost_usd_total": null,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": null,
+    "sampling_specimen_links": null,
+    "specimens": null
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.0,
+    "sampling_specimen_links": 0.0,
+    "specimens": 0.0
+   },
+   "fallback_rate": 0.0,
+   "fn": 5069,
+   "fp": 61,
+   "latency_mean_s": null,
+   "latency_p50_s": null,
+   "latency_p95_s": null,
+   "links_correct": 782,
+   "links_total": 796,
+   "outcomes": {
+    "degraded": 86,
+    "errors": 0,
+    "first_pass_success": 0,
+    "refusals": 0,
+    "repairs": 0,
+    "timeouts": 0
+   },
+   "precision": 0.9836,
+   "precision_interval_95": [
+    0.9799,
+    0.9869
+   ],
+   "recall": 0.4199,
+   "recall_interval_95": [
+    0.4032,
+    0.4354
+   ],
+   "repair_rate": 0.0,
+   "top_misses": [
+    [
+     "sampling_acquisitions.acquisition_record_granularity",
+     292
+    ],
+    [
+     "sampling_acquisitions.attribution_status",
+     292
+    ],
+    [
+     "sampling_acquisitions.sampling_tool",
+     292
+    ],
+    [
+     "sampling_acquisitions.reported_pass_count",
+     240
+    ],
+    [
+     "sampling_specimen_links.link_certainty",
+     214
+    ],
+    [
+     "sampling_acquisitions.needle_gauge",
+     204
+    ],
+    [
+     "targets.needle_gauge",
+     184
+    ],
+    [
+     "specimens.specimen_label",
+     170
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "targets.prespecified_biopsy_target",
+     32
+    ],
+    [
+     "localization_events.verified_tool_component",
+     11
+    ],
+    [
+     "navigation_runs.navigation_failure_reason",
+     6
+    ],
+    [
+     "navigation_runs.target_reached_operational",
+     4
+    ],
+    [
+     "complications.event_treatment_summary",
+     2
+    ],
+    [
+     "station_surveys.iaslc_station",
+     2
+    ],
+    [
+     "station_surveys.station_surveyed",
+     2
+    ],
+    [
+     "station_surveys.survey_modality",
+     2
+    ]
+   ],
+   "tp": 3669,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.9745762711864406,
+     "recall": 0.5
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.9933774834437086,
+     "recall": 0.3546099290780142
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9717514124293786,
+     "recall": 0.42225859247135844
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9856262833675564,
+     "recall": 0.41594454072790293
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.9854721549636803,
+     "recall": 0.3966861598440546
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.9659574468085106,
+     "recall": 0.44163424124513617
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.9741379310344828,
+     "recall": 0.437984496124031
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9947916666666666,
+     "recall": 0.45748502994011975
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.9748953974895398,
+     "recall": 0.3663522012578616
+    }
+   },
+   "unusable": [],
+   "usable": 86
+  },
+  "openai:gpt-6-luna:low": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [
+     {
+      "count": 1,
+      "document_id": "5a3c6610-16a9-47bf-8986-a8d373b4d634"
+     },
+     {
+      "count": 1,
+      "document_id": "1294f9e0-7c37-4cd3-aae0-f7557b76d07f"
+     },
+     {
+      "count": 1,
+      "document_id": "41f92131-d9ab-4561-ae53-15df736dc63f"
+     },
+     {
+      "count": 1,
+      "document_id": "c53ea2ee-6da9-4099-9d86-be317a6f772d"
+     },
+     {
+      "count": 1,
+      "document_id": "40993a39-26c4-4cba-963b-44bb02a59192"
+     },
+     {
+      "count": 2,
+      "document_id": "6b8e7196-846f-4c67-9e9d-7bc77e79ff26"
+     },
+     {
+      "count": 2,
+      "document_id": "222accd5-8b1d-45bd-b65d-3b8e25e47d81"
+     },
+     {
+      "count": 1,
+      "document_id": "2d9560ba-e768-4692-aafc-06c4cbc38743"
+     },
+     {
+      "count": 2,
+      "document_id": "79f94a81-3f83-4fb8-84e4-6ad4a67f3051"
+     },
+     {
+      "count": 2,
+      "document_id": "a1b907ac-d48b-45ee-9b7a-00566561e7eb"
+     },
+     {
+      "count": 1,
+      "document_id": "0b54b60b-abea-4ed8-9778-ac0a82c777bb"
+     },
+     {
+      "count": 1,
+      "document_id": "208690db-f618-4240-a852-46f8e7133030"
+     },
+     {
+      "count": 1,
+      "document_id": "0d0119c4-db63-4da3-9d9e-f507f9cff99c"
+     }
+    ],
+    "surveyed_station_recorded_as_sampled": [],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 13,
+    "surveyed_station_recorded_as_sampled": 0,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": 0.00237,
+   "cost_usd_total": 0.2039,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": 0.7996,
+    "sampling_specimen_links": 0.4605,
+    "specimens": 0.5281
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.4857,
+    "sampling_specimen_links": 0.1636,
+    "specimens": 0.3686
+   },
+   "fallback_rate": 0.0,
+   "fn": 3624,
+   "fp": 743,
+   "latency_mean_s": 22.687,
+   "latency_p50_s": 22.334,
+   "latency_p95_s": 32.278,
+   "links_correct": 884,
+   "links_total": 901,
+   "outcomes": {
+    "degraded": 0,
+    "errors": 0,
+    "first_pass_success": 85,
+    "refusals": 0,
+    "repairs": 1,
+    "timeouts": 0
+   },
+   "precision": 0.8731,
+   "precision_interval_95": [
+    0.855,
+    0.8907
+   ],
+   "recall": 0.5853,
+   "recall_interval_95": [
+    0.5329,
+    0.6382
+   ],
+   "repair_rate": 0.011627906976744186,
+   "top_misses": [
+    [
+     "sampling_specimen_links.link_certainty",
+     179
+    ],
+    [
+     "sampling_acquisitions.acquisition_record_granularity",
+     150
+    ],
+    [
+     "sampling_acquisitions.attribution_status",
+     150
+    ],
+    [
+     "sampling_acquisitions.sampling_tool",
+     150
+    ],
+    [
+     "targets.needle_gauge",
+     131
+    ],
+    [
+     "targets.needle_pass_count",
+     121
+    ],
+    [
+     "specimens.specimen_type",
+     115
+    ],
+    [
+     "sampling_acquisitions.reported_pass_count",
+     113
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "specimens.specimen_type",
+     79
+    ],
+    [
+     "specimens.target_attribution_status",
+     75
+    ],
+    [
+     "localization_events.event_phase",
+     42
+    ],
+    [
+     "sampling_specimen_links.link_certainty",
+     40
+    ],
+    [
+     "sampling_acquisitions.acquisition_record_granularity",
+     38
+    ],
+    [
+     "sampling_acquisitions.sampling_tool",
+     38
+    ],
+    [
+     "ebus_sessions.planned_sampling_strategy",
+     36
+    ],
+    [
+     "targets.prespecified_biopsy_target",
+     34
+    ]
+   ],
+   "tp": 5114,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.92,
+     "recall": 0.4
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.8432835820895522,
+     "recall": 0.5342789598108747
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9035187287173666,
+     "recall": 0.6513911620294599
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9105914718019257,
+     "recall": 0.5736568457538995
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.7732656514382402,
+     "recall": 0.44541910331384016
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.8829268292682927,
+     "recall": 0.7042801556420234
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.8466453674121406,
+     "recall": 0.5135658914728682
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9025787965616046,
+     "recall": 0.5658682634730539
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.8463251670378619,
+     "recall": 0.5974842767295597
+    }
+   },
+   "unusable": [
+    {
+     "document_id": "1200a3ac-3593-4ed2-8597-4e6da9397f3c",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "5a3c6610-16a9-47bf-8986-a8d373b4d634",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "ad2892a3-0b42-44d7-9c3c-8f1e7bde3b28",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "54e1182d-7107-4b83-b8a7-0ce17cf341de",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "40993a39-26c4-4cba-963b-44bb02a59192",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "4e2c513f-ddcd-4709-8adf-813c0b238f87",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "f09529a4-7ab8-4f9f-8ade-fa660c99fc12",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "2d9560ba-e768-4692-aafc-06c4cbc38743",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "a1b907ac-d48b-45ee-9b7a-00566561e7eb",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "d6b235c8-d74d-4803-be58-28dada00e634",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "9a8a6956-9593-4048-942f-25dedd615e61",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "d39346d1-fb94-42a1-9ca4-51b081bfaa0d",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "9cd80dd9-ee51-4d93-a30b-fdb20a0f0976",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "3f1594ee-c5b5-468c-bf73-9bf436e79ad6",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "50ecd51e-2898-4b07-aa23-65767a9db9c9",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "7c002589-21da-4531-adcd-3b9d579e2d5f",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "45adb95b-fb15-44bb-92ac-997cd641964e",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "0d0119c4-db63-4da3-9d9e-f507f9cff99c",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "0be8b0fd-7c23-4e80-aba6-3847e7c2daf6",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "c223c6c0-45fb-459e-9683-57fa3ff533df",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "88f7a25d-9da1-424d-b3e1-ccd33c93093a",
+     "status": "unsupported"
+    },
+    {
+     "document_id": "cd60f42f-be49-48e7-9dc7-1b60da710e26",
+     "status": "unsupported"
+    }
+   ],
+   "usable": 64
+  },
+  "openai:gpt-6.2-sol:medium": {
+   "consequential": {
+    "component_started_that_key_says_was_not": [],
+    "link_to_wrong_parent": [],
+    "surveyed_station_recorded_as_sampled": [],
+    "tool_in_lesion_beyond_key": []
+   },
+   "consequential_counts": {
+    "component_started_that_key_says_was_not": 0,
+    "link_to_wrong_parent": 0,
+    "surveyed_station_recorded_as_sampled": 0,
+    "tool_in_lesion_beyond_key": 0
+   },
+   "cost_usd_per_document": 0.05655,
+   "cost_usd_total": 4.8631,
+   "documents": 86,
+   "entity_precision": {
+    "sampling_acquisitions": 1.0,
+    "sampling_specimen_links": 0.9372,
+    "specimens": 1.0
+   },
+   "entity_recall": {
+    "sampling_acquisitions": 0.807,
+    "sampling_specimen_links": 0.9065,
+    "specimens": 1.0
+   },
+   "fallback_rate": 0.0,
+   "fn": 533,
+   "fp": 481,
+   "latency_mean_s": 61.523,
+   "latency_p50_s": 58.23,
+   "latency_p95_s": 95.233,
+   "links_correct": 1716,
+   "links_total": 1716,
+   "outcomes": {
+    "degraded": 0,
+    "errors": 0,
+    "first_pass_success": 86,
+    "refusals": 0,
+    "repairs": 0,
+    "timeouts": 0
+   },
+   "precision": 0.9446,
+   "precision_interval_95": [
+    0.9372,
+    0.9517
+   ],
+   "recall": 0.939,
+   "recall_interval_95": [
+    0.9326,
+    0.9451
+   ],
+   "repair_rate": 0.0,
+   "top_misses": [
+    [
+     "sampling_acquisitions.rose_performed",
+     127
+    ],
+    [
+     "sampling_acquisitions.rose_adequate",
+     99
+    ],
+    [
+     "sampling_acquisitions.rose_result",
+     99
+    ],
+    [
+     "targets.needle_gauge",
+     52
+    ],
+    [
+     "targets.needle_pass_count",
+     42
+    ],
+    [
+     "sampling_specimen_links.link_certainty",
+     20
+    ],
+    [
+     "localization_events.lesion_visible",
+     15
+    ],
+    [
+     "procedures.planned",
+     12
+    ]
+   ],
+   "top_wrong_fills": [
+    [
+     "localization_events.confirmation_basis",
+     66
+    ],
+    [
+     "targets.specimen_obtained",
+     56
+    ],
+    [
+     "localization_events.verified_tool_component",
+     51
+    ],
+    [
+     "targets.diagnostic_attempted",
+     42
+    ],
+    [
+     "targets.pet_description",
+     38
+    ],
+    [
+     "localization_events.event_phase",
+     35
+    ],
+    [
+     "navigation_runs.platform_model",
+     29
+    ],
+    [
+     "targets.anatomic_label",
+     22
+    ]
+   ],
+   "tp": 8205,
+   "traps": {
+    "aborted_navigation": {
+     "documents": 6,
+     "precision": 0.9340659340659341,
+     "recall": 0.9239130434782609
+    },
+    "complication_present": {
+     "documents": 8,
+     "precision": 0.9281575898030128,
+     "recall": 0.9468085106382979
+    },
+    "historical_mention": {
+     "documents": 14,
+     "precision": 0.9476744186046512,
+     "recall": 0.9337152209492635
+    },
+    "negated_complications": {
+     "documents": 10,
+     "precision": 0.9191489361702128,
+     "recall": 0.9358752166377816
+    },
+    "per_pass_detail": {
+     "documents": 8,
+     "precision": 0.9597644749754661,
+     "recall": 0.9532163742690059
+    },
+    "planned_only_ebus": {
+     "documents": 10,
+     "precision": 0.9343936381709742,
+     "recall": 0.914396887159533
+    },
+    "size_in_cm": {
+     "documents": 6,
+     "precision": 0.9650485436893204,
+     "recall": 0.9631782945736435
+    },
+    "surveyed_not_sampled": {
+     "documents": 14,
+     "precision": 0.9594345421020283,
+     "recall": 0.9347305389221557
+    },
+    "til_without_volumetric": {
+     "documents": 8,
+     "precision": 0.9100609756097561,
+     "recall": 0.9386792452830188
+    }
+   },
+   "unusable": [],
+   "usable": 86
+  }
+ },
+ "corpus": "corpus_truth_20261125",
+ "rule": {
+  "entity_recall_min": {
+   "sampling_acquisitions": 0.7,
+   "sampling_specimen_links": 0.7,
+   "specimens": 0.7
+  },
+  "precision_min": 0.975,
+  "recall_gain_over_rules_min": 0.25,
+  "tie_break": [
+   "latency_p95_s",
+   "cost_usd_per_document"
+  ],
+  "tie_margin": 0.02,
+  "usable_results": "at most one unusable"
+ },
+ "selection": {
+  "gates": {
+   "claude:haiku:medium": {
+    "entity_recall": true,
+    "passes": false,
+    "precision": false,
+    "recall_gain_over_rules": true,
+    "usable_results": false
+   },
+   "claude:opus:medium": {
+    "entity_recall": true,
+    "passes": true,
+    "precision": true,
+    "recall_gain_over_rules": true,
+    "usable_results": true
+   },
+   "claude:sonnet:medium": {
+    "entity_recall": false,
+    "passes": false,
+    "precision": false,
+    "recall_gain_over_rules": true,
+    "usable_results": true
+   },
+   "openai:gpt-6-luna:low": {
+    "entity_recall": false,
+    "passes": false,
+    "precision": false,
+    "recall_gain_over_rules": false,
+    "usable_results": false
+   },
+   "openai:gpt-6.2-sol:medium": {
+    "entity_recall": true,
+    "passes": false,
+    "precision": false,
+    "recall_gain_over_rules": true,
+    "usable_results": true
+   }
+  },
+  "passing": [
+   "claude:opus:medium"
+  ],
+  "tied_on_recall": [
+   "claude:opus:medium"
+  ],
+  "winner": "claude:opus:medium"
+ },
+ "split": "validation"
+}

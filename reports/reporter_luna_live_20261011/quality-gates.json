@@ -1,0 +1,50 @@
+{
+  "schema_version": "procedure_suite.quality_gate.run.v1",
+  "tier": "pr",
+  "output_dir": "/private/tmp/reporter_luna_release/detail-quality-pr",
+  "steps": [
+    {
+      "name": "focused_pytest",
+      "status": "passed",
+      "command": [
+        "/Users/russellmiller/Projects/Procedure_suite/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/registry/test_regression_pack.py",
+        "tests/registry/test_header_evidence_integrity.py",
+        "tests/common/test_path_redaction.py",
+        "tests/common/test_quality_gate_reports.py",
+        "tests/reporting/test_reporter_clinical_fidelity.py",
+        "tests/quality/test_reporter_seed_dual_path_matrix.py",
+        "tests/scripts/test_eval_golden.py",
+        "tests/scripts/test_reporter_seed_eval_tools.py",
+        "tests/scripts/test_run_quality_gates.py"
+      ],
+      "stdout_path": "/private/tmp/reporter_luna_release/detail-quality-pr/focused_pytest.stdout.txt",
+      "stderr_path": "/private/tmp/reporter_luna_release/detail-quality-pr/focused_pytest.stderr.txt",
+      "output_path": null,
+      "returncode": 0,
+      "error": null
+    },
+    {
+      "name": "extraction_eval",
+      "status": "passed",
+      "command": [
+        "/Users/russellmiller/Projects/Procedure_suite/.venv/bin/python",
+        "/Users/russellmiller/.codex/worktrees/reporter-luna-release/Procedure_suite/ml/scripts/eval_golden.py",
+        "--input",
+        "/Users/russellmiller/.codex/worktrees/reporter-luna-release/Procedure_suite/tests/fixtures/unified_quality_corpus.json",
+        "--output",
+        "/private/tmp/reporter_luna_release/detail-quality-pr/unified_quality_corpus_extraction.json",
+        "--fail-under",
+        "100"
+      ],
+      "stdout_path": "/private/tmp/reporter_luna_release/detail-quality-pr/extraction_eval.stdout.txt",
+      "stderr_path": "/private/tmp/reporter_luna_release/detail-quality-pr/extraction_eval.stderr.txt",
+      "output_path": "/private/tmp/reporter_luna_release/detail-quality-pr/unified_quality_corpus_extraction.json",
+      "returncode": 0,
+      "error": null
+    }
+  ]
+}

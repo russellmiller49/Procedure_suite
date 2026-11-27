@@ -81,6 +81,33 @@ Hard constraints for this path:
 - OCR/model assets are same-origin vendored files.
 - Debug logging is metrics-only (no raw clinical text).
 
+## SMART on FHIR (Epic / Oracle Health–Cerner) EHR Launch
+
+Optional, **disabled by default**. Full guide: `docs/SMART_ON_FHIR.md`.
+
+- Launch pages: `/ui/smart/launch.html` (register as the EHR's SMART launch URL) and
+  `/ui/smart/callback.html` (OAuth redirect URI). Standalone launch (issuer picker) is
+  supported for sandbox testing.
+- **Browser-only** OAuth (authorization-code + PKCE S256) and FHIR reads; EHR tokens and
+  unredacted note text never reach the server. The server's sole surface is the public
+  issuer allowlist at `GET /api/v1/smart/config` (`app/api/routes/smart.py`, settings in
+  `config/smart_settings.py`, fail-soft `config_errors`).
+- Env: `SMART_ENABLED=1` + `SMART_ISSUERS` (inline JSON) or `SMART_ISSUERS_FILE`
+  (see `configs/smart/issuers.example.json`); optional `SMART_DEFAULT_SCOPES`.
+  Issuers are exact-`iss` allowlisted (https required; http only on localhost); Cerner
+  issuers get `online_access` appended (short-lived tokens → in-session refresh).
+- Dashboard: `#smartEhrCard` (index.html) renders only when a SMART session exists
+  (`ui/static/phi_redactor/smart/smartPanel.js`). Loading a note resolves the best
+  DocumentReference attachment (text → HTML → RTF best-effort → PDF via the local
+  `pdf_local` pipeline), inserts it with `note_source_type=ehr_fhir`, then the normal
+  detect → redact → submit PHI flow applies unchanged.
+- Hard constraints: never send the Bearer token off the issuer origin; SMART pages load
+  same-origin assets only; panel DOM is built via `textContent` (no innerHTML with EHR
+  data); logging stays metrics/status-only.
+- Tests: `tests/api/test_smart_config.py` (endpoint) and
+  `ui/source/registry_grid/src/__tests__/smartCore.test.js` (PKCE/scopes/parsing/RTF-HTML
+  conversion, Vitest).
+
 ## Reporter Module (Builder + Seeding)
 
 - Reporter Builder UI: `http://localhost:8000/ui/reporter_builder.html`
@@ -97,6 +124,254 @@ Hard constraints for this path:
   - `OPENAI_MODEL_STRUCTURER=gpt-5-mini`
   - `OPENAI_API_KEY=...`
 - Reporter baseline and challenger evals should share the same machine-readable schema, and `--strict` is the intended render-stability mode.
+
+### Robotic Bronchoscopy + EBUS Reporting (2026-10-11)
+
+- **Dictation order drives the report.** `assign_source_sequence()`
+  (`app/reporting/normalization/source_sequence.py`) sets `ProcedureInput.sequence` from where each
+  step is mentioned, for short peripheral/EBUS prompts and the institutional operative narrative.
+  `ReporterEngine._sorted_procedures` is sequence-dominant when ≥2 procedures carry a sequence
+  (`uses_source_sequence`); the PROCEDURE header list is reordered to match
+  (`pipeline._order_summary_lines`). Clinical constraints per target: navigation first,
+  localization (rEBUS/CBCT/tool-in-lesion) before tissue sampling, fiducial after tissue sampling.
+  Kill switch: `REPORTER_SOURCE_SEQUENCE=0` (legacy type ranking; the fiducial still sorts after
+  sampling, never ahead of navigation).
+- **Elastography is per station.** `EBUSStationSample.elastography_pattern` ("Type 1/2/3"); the
+  record-level `EBUSTBNA.elastography_pattern` is set only when one pattern applies to every
+  station. Parsed from prompts (`_elastography` in `robotic_prompt_fidelity.py`; the class digits
+  are blanked so they are never read as pass counts) and from full notes
+  (`robotic_ebus_fidelity.py`). Do not put elastography in `echo_features`.
+- **Survey-only EBUS** is its own procedure, `ebus_survey` (`EBUSSurvey`, `ebus_survey.j2`), with
+  **no `cpt_hints`**: inspected nodes must never derive 31652/31653.
+- **Institutional prose blocks** render for short prompts *and* for the operative-report layout
+  recognized by `robotic_ebus_fidelity.is_operative_block_note()` (template flag `prose_blocks`).
+  Only short prompts switch the shell to `robotic_prompt_shell.j2` (`source_only`). Every
+  boilerplate sentence is tied to an explicit field (e.g. the CT interpretation attestation needs
+  `CBCTFusion.physician_interpreted`); do not add default assertions to those branches.
+- **Full-note reconciliation** (`reconcile_operative_blocks`) takes each cone-beam CT spin (source
+  wording, one procedure per spin), tool-in-lesion, the fiducial, ventilation parameters, a
+  post-EBUS lavage, and the closing sentence from the source itself.
+- **Foreign body removal** is no longer inferred from "aspiration" + "removed"; it needs
+  "foreign body" or an aspirated object.
+- **Structured seed inputs** (`app/reporting/seed_inputs.py`): enumerated builder dropdowns sent as
+  `structured_inputs` on `POST /report/seed_from_text`; catalog at `GET /report/seed_input_spec`
+  (derived from the Pydantic model, so options cannot drift). `apply_seed_inputs()` runs on the
+  bundle after extraction in **both** the route and `run_reporter_seed_pipeline` (never write the
+  selections into the prompt text: a newline disables short-prompt handling). Unspecified = nothing
+  written; a specified value overrides extraction and is reported in `seed_input_notes`; nodal
+  inputs never create an EBUS-TBNA procedure. No free-text fields (keeps the channel PHI-free).
+- **Eval:** `ops/tools/eval_reporter_robotic_minimal.py` now also checks workflow order
+  (`check_order`), block/station/elastography rendering (`check_rendered`), and structured-input
+  cases (`*-SI-*` rows in `tests/fixtures/reporting/robotic_ebus_minimal_prompts.json`).
+- Tests: `tests/reporting/test_robotic_minimal_prompts.py`, `tests/reporting/test_seed_inputs.py`,
+  `tests/reporting/test_robotic_ebus_source_fidelity.py`, `tests/api/test_fastapi.py` (seed inputs),
+  `tests/api/test_phi_redactor_ui.py` (panel + `phi_redactor`/`phi_redactor_classic` builder files
+  must stay byte-identical).
+
+## Ancillary Documents & Longitudinal Outcomes (Case Aggregation)
+
+The registry houses more than the procedure note. Ancillary documents append to a case
+(`POST` via `app/api/routes/registry_append.py`, stored in `registry_appended_documents`)
+and `CaseAggregator` (`app/registry/application/case_aggregator.py`) merges them into the
+canonical case snapshot (`registry_case_records`), deterministic-first with optional LLM fallback:
+
+- **Imaging** (`event_type=imaging`): CT + PET-CT (targets, sizes, SUV, response) and — new 2026-07 —
+  **CXR/US** (`app/registry/aggregation/imaging/extract_cxr.py`): pneumothorax presence/side/trend,
+  effusion presence/side/trend, device position, `subtype=post_procedure`. Free-text
+  `source_modality` is canonicalized by `normalize_modality()` (e.g. "portable chest x-ray" → `cxr`).
+  Snapshots land in `imaging_summary.baseline/followups`.
+- **Pathology** (`event_type=pathology`): final diagnosis, staging, biomarkers (PD-L1), micro;
+  per-station results are checked against `stations_sampled` (QA flags
+  `path_station_not_in_stations_sampled` / `sampled_station_missing_from_path`).
+  Per-specimen yield (`app/registry/aggregation/pathology/specimen_yield.py`) parses specimen
+  blocks into `pathology_results.specimen_results[]` — sampling modality (tbna / brushing /
+  washing / bal / transbronchial_biopsy / endobronchial_biopsy / cryobiopsy / pleural_biopsy…),
+  station, and result category — so the registry can answer "which modality made the diagnosis".
+- **Clinical follow-up** (`event_type=clinical_update|treatment_update|complication`):
+  admission/ICU/deceased/disease status plus — new 2026-07 — `ed_visit`, `readmission`, and
+  structured `complication_types` (pneumothorax, bleeding, infection, respiratory_failure,
+  effusion_recurrence, stent_migration_or_obstruction, drain_malfunction). Updates land in
+  `clinical_course.updates` (+ distilled `current_state`).
+- **Longitudinal rollup** (new 2026-07): after event patching, `derive_longitudinal_outcomes()`
+  (`app/registry/aggregation/outcomes_rollup.py`) computes `registry.longitudinal_outcomes`:
+  day-30 complication/readmission/ED-visit/mortality flags, survival status,
+  last-known-status day offset, `diagnostic_yield` (Malignant / Benign-specific / Nondiagnostic /
+  Pending — classified from `pathology_results.final_diagnosis`, falling back to the best
+  per-specimen result), and `reintervention_within_30d` (procedure/procedure_addendum events
+  at day 1–30). Manual-override locks on `/longitudinal_outcomes` are honored; the block is
+  omitted until any longitudinal signal exists.
+- **LLM fallbacks** mirror per event type (pathology / imaging / clinical): CXR/US events fall
+  back to `CxrFindingsLLM` only when deterministic extraction produced no structured findings
+  (`llm_cxr_fallback` / `llm_cxr_failed` QA flags).
+- **Dashboard**: the workflow UI's Flattened Tables render "Longitudinal Outcomes (Case Rollup)"
+  and "Pathology Specimen Yield" (when present), plus pneumothorax/effusion/device rows in the
+  Imaging Summary and ED-visit/readmission/complication-type rows in Clinical Follow-up
+  (`ui/static/phi_redactor/app.js:buildFlattenedTables`).
+- Schema notes: sections are declared in `data/knowledge/IP_Registry.json` +
+  `proc_schemas/registry/ip_v3.py` + mirrored in `app/registry/schema/v2_dynamic.py`
+  (attach hand-written models via `CUSTOM_FIELD_TYPES`). All changes are additive.
+- Tests: `tests/registry/test_longitudinal_extension.py`, `tests/registry/test_case_aggregator_*.py`.
+
+## Robotic/EBUS Registry: Claude Extractor (2026-10-28)
+
+The robotic_ebus_v1 0.2.0 contract (`packages/ip_registry_contracts`, dictionary
+`data/knowledge/robotic_ebus_v1/launch_dictionary.json`) is the same one the Epic app
+(`ip-registry-clinical`) vendors. The packages stay local-only: no LLM/network/app imports
+(`packages/tests/test_registry_package_imports.py`). Cloud extraction lives in `app/`.
+
+- **Sparse facts, not a nullable record.** Claude structured outputs cap a request at 24 optional
+  and 16 union-typed parameters, so `ClinicalRevision` cannot be the output schema. Claude returns
+  rows + typed facts (`app/llm_extraction/facts_schema.py`); the schema is generated from the
+  contract (`app/registry_workbench/extraction/contract_spec.py`): all properties required, no unions.
+- **Prompt from the dictionary** (`extraction/prompt.py`): definitions, values, units, applicability
+  and the extraction-relevant QA rules; every dictionary QA rule is prompted or explicitly excluded
+  (tested). Deterministic text so the 1-hour prompt cache holds; the note goes in the user turn.
+- **Deterministic assembly** (`extraction/assembler.py`): every value needs an anchored verbatim
+  quote (`app/llm_extraction/anchoring.py`, no fuzzy matches); planned/historical/uncertain facts
+  become unresolved mentions; validator trips become `conflict_status=unresolved` (approval blocked);
+  link errors are fixed deterministically, then at most one stateless repair call.
+- **Provider** `ClaudeRegistryProvider` (`extraction/claude_provider.py`) implements the engine's
+  `ExtractionProvider` and returns the same proposal shape as `LocalDeterministicProvider`.
+  Non-procedure documents still go to the local engine.
+- **Egress gate** (`app/common/llm_egress.py`): callers declare text provenance with
+  `egress_context(...)`; only `synthetic` passes unless `PROCSUITE_LLM_EGRESS_APPROVED` +
+  `PROCSUITE_LLM_EGRESS_PROVIDERS` are set. Client: `app/common/anthropic_client.py` (streams,
+  never sends temperature/top_p/top_k, refusal fallbacks online, cache/batch-aware cost).
+- Env: `ANTHROPIC_API_KEY`, `PROCSUITE_ANTHROPIC_MODEL` (default `claude-opus-5-5`),
+  `PROCSUITE_ANTHROPIC_EFFORT` (default `medium`), `PROCSUITE_ANTHROPIC_FALLBACKS=default|off`.
+- **Eval:** `python ops/tools/eval_registry_llm.py --splits validation --arms deterministic
+  claude:opus:medium --output /tmp/registry_llm.json` (`--mode batch` for half price, `--dry-run`
+  offline, `--gold` for the 8 reviewed docs; those are exposed, engineering regression only).
+- **Workbench (non-EMR registry, synthetic only):** `app/registry_workbench/` (own SQLite file
+  `registry_workbench.db`, tables `wb_*`; append-only revisions, optimistic concurrency, evidence
+  spans re-verified on save, approval only with empty `approval_errors`). API at
+  `/api/v1/workbench` (`routes.py`); review UI `ui/source/registry_workbench` (React 19, built into
+  `ui/static/registry_workbench`, served at `/workbench`). Seed with
+  `make workbench-seed`, run with `python ops/tools/run_registry_workbench.py` (port 8010; the full
+  app also mounts it when `PROCSUITE_WORKBENCH_ENABLED=1`, never when `PROCSUITE_ENV=production` or
+  `CODER_REQUIRE_PHI_REVIEW=true`). Blinded drafts hide model proposals; only blinded reviews are
+  `qualification_eligible` in the gold export. The UI renders against
+  `src/__fixtures__/profile.json`, which a pytest keeps equal to the live profile.
+- **Truth-first corpus** (`ops/tools/robotic_ebus_truth/`): `scenarios.py` samples a case as
+  statement units (each sets contract fields and renders one sentence; nine named traps such as
+  surveyed-not-sampled, TIL claimed from radial EBUS, planned-only EBUS, history-only stations);
+  `gold.py` builds the gold `ClinicalRevision` only from stated units (must validate with no
+  approval errors); `template_writer.py` renders five styles with exact spans; `claude_writer.py`
+  writes notes with verbatim quotes per fact plus an independent verifier call (needs a key);
+  `verify.py` checks every gold value is readable in its quote. `build_split.py` writes
+  `data/ml_training/robotic_ebus_v1/corpus_truth_<date>/` (family-level 60/20/20 split, gold as
+  values + `{field_path: [start, end, assertion]}` evidence, test gold in `sealed/` with its hash in
+  the manifest). Generation is deterministic from `--seed`; corpora are immutable.
+- **Corpus `corpus_truth_20261125` (generator `truth-first-2`)** supersedes `corpus_truth_20261109`
+  for scoring. Same seed and byte-identical notes; the answer key additionally sets five fields a
+  sentence states under the dictionary's definitions but version 1 left blank
+  (`navigation_runs.navigation_success_system_reported`, `localization_events.event_phase`,
+  `localization_events.lesion_visible`, `targets.needle_gauge` / `needle_pass_count` on lung
+  targets) plus a station's ROSE result and adequacy on that station's one needle acquisition.
+  Found in the 2026-11-25 five-model smoke runs, where those fields were most of the LLM
+  "false fills". The key is frozen before any validation run. Deterministic baseline:
+  `reports/robotic_ebus_truth_deterministic_baseline_20261125.json` (P 0.983, R 0.407).
+  Smoke summary (16 train notes): `reports/robotic_ebus_llm_smoke_train16_summary.json`.
+- **Model comparison (2026-11-25, validation split, 86 notes, key frozen first):**
+  `claude:opus:medium` was the only arm to pass the pre-set rule (P 0.982, R 0.963, links
+  1720/1720, 86/86 usable, about $0.18 and 80 s per note). GPT-6.2 Sol medium (P 0.945, R 0.939),
+  Haiku medium (P 0.962, R 0.887, 84/86 usable), Sonnet medium (P 0.956, R 0.791) and GPT-6 Luna
+  low failed a gate; rules engine P 0.984, R 0.420. Rule and per-arm detail:
+  `ops/tools/select_registry_llm.py`, `reports/robotic_ebus_llm_validation_selection.json`.
+  OpenAI arms run through `app/common/openai_structured_client.py`
+  (`openai:<model>:<effort>` in `eval_registry_llm.py`). The validation split is now exposed to
+  these five arms; the sealed test split is untouched.
+- **Full-contract scorer** (`app/registry_workbench/scoring.py`): rows aligned by natural keys
+  (lobe/station/tool/label; Hungarian on collisions), per-field TP/false-fill/miss, FK accuracy,
+  Wilson lower bounds; defaults and `not_documented` count as no value. Specimens align on a normalised label ("Specimen A" = "A"), and a single-pass row with `reported_pass_count` 1 scores as one without it. Use it via
+  `eval_registry_llm.py --truth-corpus <dir> --splits train validation`. Baseline:
+  `reports/robotic_ebus_truth_deterministic_baseline.json`.
+- **One-use qualification:** `ops/tools/robotic_ebus_truth/qualify_truth.py --corpus <dir> --provider
+  claude:opus:medium` verifies hashes, reserves `independent_qualification_use.json` before any
+  inference, then gates Core-tier fields at P≥0.98/R≥0.95 (sufficient support), FK accuracy, and
+  contract validity. Never open `sealed/` any other way.
+- **Physician anchor set:** `anchor_set.py` picks blinded-review notes (half third-party corpus,
+  half truth-first validation; never test) and seeds them into the workbench under split `anchor`;
+  selection in `data/knowledge/robotic_ebus_v1/anchor_set_20261109.json`.
+- Tests: `tests/registry_workbench/`, `packages/tests/`, `make workbench-ui-test`.
+
+## Robotic/EBUS Demo Page (2026-11-25)
+
+A focused public demo for robotic bronchoscopy + linear EBUS, separate from the dashboard and
+from the workbench. Release 1 serves **stored, reviewed results for bundled synthetic samples
+only**: no provider call, no API key.
+
+- **API** `app/registry_demo/` (`settings`, `store`, `service`, `routes`), registered at
+  `/api/v1/demo/robotic-ebus` only when `PROCSUITE_ROBOTIC_EBUS_DEMO=1`. `GET /config`,
+  `GET /samples/{id}`, `POST /extract`. It never imports the workbench database modules; the
+  field profile lives in `app/registry_workbench/profile.py`.
+- **Exact match only.** `POST /extract` returns a result only when the submitted text is
+  byte-for-byte (after line-ending normalisation) a reviewed redacted sample
+  (`store.text_key`). No fuzzy matching; anything else is 403 `reviewed_samples_only`
+  (409 `result_not_generated` for a reviewed text with no stored result).
+- **Data** in `data/knowledge/robotic_ebus_v1/demo/`: `samples.json`
+  (`ops/tools/build_robotic_ebus_demo_samples.py`: two hand-written notes plus six from the
+  truth-first generator with seeds outside every eval corpus, each with gold),
+  `redactions.json` (the text the real browser redactor produces, recorded with
+  `ops/tools/import_robotic_ebus_demo_redactions.py`, which re-applies the spans and checks
+  both hashes), `results.json` (`ops/tools/warm_robotic_ebus_demo_cache.py --llm claude`;
+  it also prints the per-sample review checks). `--llm gold` is a development stand-in and
+  refuses to write the shipped file.
+- **Suggested codes** `app/registry_workbench/contract_coding.py`: contract proposal -> minimal
+  `RegistryRecord` -> the existing `derive_all_codes_with_meta` + `derive_units_for_codes` +
+  `build_coding_support_payload`. Every contributing fact keeps its quote; unresolved or
+  unattributed sampling never drives a code and becomes a review flag. Out-of-family codes
+  (fiducial 31626, imaging, EUS-B, sedation) are listed as not assessed.
+- **Page** `ui/source/registry_workbench/src/demo/` (second Vite config `vite.demo.config.ts`,
+  `npm run build:demo` / `make demo-ui-build`), built with fixed file names into
+  `ui/static/phi_redactor/registry_demo/`. It drives the existing redactor worker by URL.
+  `ScanGate` (`phiRedaction.ts`) enables Extract only after a *completed* scan is applied to
+  the current text: the worker posts `done` with partial detections after a cancel, so
+  cancelled or outdated scans are discarded. Redaction writes only `[REDACTED]`.
+- **Field states** (`fields.ts`): value, explicit negative, stated-missing, unresolved
+  conflict, and **"Not extracted"** for a blank. A blank is never shown as "No" or as "not
+  documented", because the extractor stays silent when the note is silent.
+- **Rules-engine mark.** `compare.agreement()` pairs each model value with the rules engine's
+  value for the same field of the same row (natural keys, as in the comparison tab); the demo
+  response carries it as `rules_agreement` (computed after the cache lookup). The page shows
+  "✓ rules" on an identical value and "Rules engine read: X" on a different one; a value the
+  rules engine is silent on gets no mark. The outputs are **not merged**: on the 86 validation
+  notes (post hoc, saved outputs) filling Opus's blanks from the rules engine moved precision
+  0.982 -> 0.978 and recall 0.963 -> 0.972, the rules engine lost all 21 disagreements, and 153
+  of Opus's 155 wrong values were in fields the rules engine left blank. Where both agreed Opus
+  was right 3,583 of 3,585 times.
+- **Tester notes (2026-11-27, off by default).** `PROCSUITE_DEMO_ACCESS_CODE` (comma-separated
+  passwords) switches on "Your own note": `POST /unlock`, then `POST /extract` with
+  `access_code`, `note_kind` (`synthetic` | `real_redacted`) and `attested`. `app/registry_demo/live.py`
+  reads the note in memory: the rules engine always; Claude only with a key, room under
+  `PROCSUITE_DEMO_DAILY_USD_CAP` (`budget.py`, file-locked ledger of amounts) and an egress pass.
+  A real redacted note is `client_asserted`, so it reaches Claude only when the owner has set all
+  three egress switches; otherwise the response says it was read by the rules engine only
+  (`reader.reason`). Nothing is stored or cached and logs carry metrics only. An exact reviewed
+  sample text is still answered from the stored result, whatever else is sent.
+- **Confirm and correct** (`src/demo/reviewState.ts`, `FieldList.tsx`): every finding can be
+  confirmed, corrected (input type from the contract schema), removed, or added from a blank;
+  whole rows can be removed. The review lives in React state only. `POST /codes` re-derives
+  suggested codes from the corrected record (stateless, no note text). Own notes also get
+  "Redact selected text" for identifiers the scan missed (`ScanGate.markManualEdit`).
+- **Routing** `PROCSUITE_UI_HOME=robotic_ebus_demo` serves the page at `/ui/`;
+  `/ui/dashboard.html` always serves the dashboard, and pages that link to the dashboard name
+  it. `/ui/registry_demo/` is the staging URL. Local: `make demo-serve` (port 8020).
+- Tests: `tests/registry_workbench/test_contract_coding.py`, `test_demo_api.py`,
+  `tests/api/test_registry_demo_ui.py`, `ui/source/registry_workbench/src/demo/demo.test.ts`.
+
+## Recent Updates (2026-07-04)
+
+- **Location integrity:** intervention locations (mechanical_debulking/cryotherapy/thermal_ablation) are now sentence-scoped around action verbs; normal-anatomy ("trachea was normal") and scope-navigation sentences no longer contribute sites; prose double-spaces no longer count as table rows (`_is_multicell_table_line`).
+- **PR1 completion:** consent scrub covers "consent was obtained"/"explanation in lay terms"; percent-reopened/partial-opening language yields `Partial success` (negation-aware); chest-tube-removal has an IPC-placement-mechanics veto; lidocaine-with-epinephrine and hemostasis-context instillations are not therapeutic injection.
+- **EBUS:** `reconcile_ebus_node_event_consistency` enforces inspected-only nodes carry no ROSE and granular `sampled` flags match `stations_sampled`; ROSE sentence capture fixed (`[^.\\n]` typo truncated "identified" to "ide"); 31652/31653 count "stations or structures" — non-station targets count only when no station was identified, deduped against peripheral-TBNA targets (no 31629+31652 double-bill, no alias upcoding).
+- **Stents:** placement/removal classification is subject-aware (scope removal ≠ stent removal; scope-as-instrument removal still counts); bullet-style "Deployed under direct vision" lines detect placement (Y-stent → 31631); first-time SEMS deployment no longer misreads as revision.
+- **Endobronchial biopsy:** menu/mod-22 text can't force 31625; forceps biopsies with the lesion in the previous sentence are recovered; transbronchial/guide-sheath forceps biopsies are excluded.
+- **Pleural:** thoracoscopy with pleural biopsies derives **32609** (32604 is pericardial and was wrong); biopsy enrichment re-runs after the thoracoscopy backstop; IPC "catheter ... with tunneling" phrasing verifies; pleural-needle "aspiration of air/fluid to verify placement" is not 31645 (airway anchors override).
+- **Header hierarchy:** the ≤3-code header-authoritative shortcut applies only when there is no substantive narrative (narrative supersedes header codes).
+- **Complications:** bleeding-context window fallback requires control-language + unnegated bleeding (blocker-for-blood-soiling = grade 3 without fabricating grade 4 from tumor-board/pre-op mentions); event notes are sentence-scoped, not paragraph heads.
+- **Reporter:** tracheostomy route requires stoma language (`via/through ... tracheostom-`, not "through the trachea"); CHEST ULTRASOUND FINDINGS renders only when an ultrasound exam is documented; quality-gate "removed"/"required" adverse cues exclude routine fluid-removal and "no further intervention was required" idioms only; pleural fluid appearance and intercostal-space ordinals render correctly. Reporter seed eval: cpt_jaccard/F1 1.0, zero blockers/contradictions/extra flags.
+- Stale tests updated to current policy: fungal debulking ≠ 31640, pleural biopsy = 32609, non-station EBUS structures derive 31652 (see tests with "Policy update" comments).
 
 ## Recent Updates (2026-03-09)
 
@@ -258,6 +533,7 @@ python ops/tools/summarize_reporter_seed_fallbacks.py --left-report <left.json> 
 python ml/scripts/eval_golden.py --input tests/fixtures/unified_quality_corpus.json --output /tmp/unified_quality_extraction.json
 python ops/tools/eval_reporter_prompt_baseline.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_registry.json --strict
 python ops/tools/eval_reporter_prompt_llm_findings.py --input tests/fixtures/reporter_seed_eval_samples.json --output /tmp/reporter_seed_llm.json --strict
+python ops/tools/eval_reporter_robotic_minimal.py --output /tmp/reporter_robotic_minimal.json --artifacts-dir /tmp/reporter_robotic_minimal
 pytest -q tests/quality/test_unified_quality_matrix.py
 pytest -q tests/quality/test_reporter_seed_dual_path_matrix.py
 pytest -q tests/reporting/test_strict_render_validation.py

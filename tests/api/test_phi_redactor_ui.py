@@ -532,6 +532,36 @@ def test_unified_process_already_scrubbed_bypasses_server_scrubber(
         app.dependency_overrides.clear()
 
 
+def test_reporter_builder_has_structured_seed_inputs_panel(client: TestClient) -> None:
+    html = client.get("/ui/reporter_builder.html").text
+    panel_ids = ("seedInputsPanel", "seedInputsBody", "seedInputsCount", "seedInputsResetBtn")
+    for element_id in panel_ids:
+        assert f'id="{element_id}"' in html
+
+    js = client.get("/ui/reporter_builder.js").text
+    assert "/report/seed_input_spec" in js
+    assert "structured_inputs: structuredInputs" in js
+    # Selections are sent beside the dictation; they are never written into the
+    # note text (that would bypass the PHI gate and short-prompt handling).
+    start, end = js.index("function collectStructuredInputs"), js.index("function resetSeedInputs")
+    collect = js[start:end]
+    assert "seedTextEl" not in collect
+
+    spec = client.get("/report/seed_input_spec")
+    assert spec.status_code == 200
+    assert any(f["pointer"] == "/ebus/elastography/used" for f in spec.json()["fields"])
+
+
+def test_reporter_builder_variants_stay_identical() -> None:
+    from pathlib import Path
+
+    static = Path(__file__).resolve().parents[2] / "ui" / "static"
+    for name in ("reporter_builder.html", "reporter_builder.js"):
+        assert (static / "phi_redactor" / name).read_bytes() == (
+            static / "phi_redactor_classic" / name
+        ).read_bytes(), name
+
+
 def test_phi_veto_header_device_and_patient_rules_do_not_release_patient_names() -> None:
     """Preserve: a name in a patient position survives the header, device and verb rules.
 
