@@ -22,6 +22,33 @@
       ],
       "port": 8020,
       "url": "http://127.0.0.1:8020"
+    },
+    {
+      "name": "robotic-ebus-demo-testers",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": [
+        "ops/tools/run_robotic_ebus_demo.py",
+        "--port",
+        "8021",
+        "--tester-code",
+        "local-tester-only"
+      ],
+      "port": 8021,
+      "url": "http://127.0.0.1:8021"
+    },
+    {
+      "name": "robotic-ebus-demo-testers-model",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": [
+        "ops/tools/run_robotic_ebus_demo.py",
+        "--port",
+        "8022",
+        "--tester-code",
+        "local-tester-only",
+        "--with-model"
+      ],
+      "port": 8022,
+      "url": "http://127.0.0.1:8022"
     }
   ]
 }

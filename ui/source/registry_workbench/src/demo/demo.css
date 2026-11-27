@@ -42,3 +42,39 @@ main.demo { max-width: 1500px; }
   .demo .review > section:first-child { position: sticky; top: 8px; align-self: start; }
   .demo .review > section:first-child .source-text { max-height: calc(100vh - 260px); }
 }
+
+/* Note source, tester entry and manual redaction. */
+.source-tabs { margin: 8px 0 4px; }
+.own-note { background: var(--panel); border: 1px solid #dae4e7; border-radius: 7px; padding: 12px 14px; margin: 10px 0; max-width: 900px; }
+.own-note.unlock input { min-width: 260px; }
+.own-note textarea { font-weight: 400; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; line-height: 1.45; resize: vertical; }
+.kind { border: 0; padding: 0; margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.kind legend { font-size: .82rem; font-weight: 600; padding: 0; margin-bottom: 4px; }
+.attest { margin: 8px 0 2px; font-size: .88rem; }
+.editor-problem { color: var(--alert); font-size: .82rem; }
+
+/* Confirm, correct and remove on each finding. */
+.review-bar { margin: 6px 0 10px; padding: 8px 12px; background: var(--accent-soft); border-left: 4px solid var(--accent); font-size: .88rem; line-height: 1.5; }
+button.mini { padding: 1px 7px; font-size: .72rem; font-weight: 600; border-radius: 4px; line-height: 1.5; }
+.review-actions { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 3px; }
+/* Quiet text actions: three boxed buttons under every value made the list hard to read. */
+.review-actions button.mini { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 500; }
+.review-actions button.mini:hover { text-decoration: underline; background: none; }
+.fact.reviewed .review-actions button.mini { color: var(--muted); }
+.row-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.review-tag { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 8px; font-size: .7rem; font-weight: 650; white-space: nowrap; }
+.review-tag.ok { background: #e1f2ea; color: var(--ok); }
+.review-tag.edit { background: #fff1d6; color: #8a5a07; white-space: normal; }
+.review-tag.gone { background: var(--alert-soft); color: #813426; }
+.struck { text-decoration: line-through; color: var(--muted); font-weight: 500; }
+.fact.reviewed.confirmed dt::before { content: "✓ "; color: var(--ok); }
+.removed-row { opacity: .8; }
+.editor { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 5px; }
+.editor select, .editor input { width: auto; min-width: 120px; max-width: 100%; margin: 0; padding: 3px 6px; font-size: .85rem; }
+.blank-list { display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start; }
+button.mini.add { font-weight: 500; color: var(--muted); border-style: dashed; }
+.blank-editor { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 5px; }
+.blank-name { font-size: .78rem; font-weight: 600; }
+input[type=radio] { width: auto; display: inline; margin: 0 6px 0 0; }
+.kind label.check { white-space: nowrap; }
+@media (max-width: 640px) { .kind label.check { white-space: normal; } }

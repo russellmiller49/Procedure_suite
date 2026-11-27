@@ -340,6 +340,20 @@ only**: no provider call, no API key.
   0.982 -> 0.978 and recall 0.963 -> 0.972, the rules engine lost all 21 disagreements, and 153
   of Opus's 155 wrong values were in fields the rules engine left blank. Where both agreed Opus
   was right 3,583 of 3,585 times.
+- **Tester notes (2026-11-27, off by default).** `PROCSUITE_DEMO_ACCESS_CODE` (comma-separated
+  passwords) switches on "Your own note": `POST /unlock`, then `POST /extract` with
+  `access_code`, `note_kind` (`synthetic` | `real_redacted`) and `attested`. `app/registry_demo/live.py`
+  reads the note in memory: the rules engine always; Claude only with a key, room under
+  `PROCSUITE_DEMO_DAILY_USD_CAP` (`budget.py`, file-locked ledger of amounts) and an egress pass.
+  A real redacted note is `client_asserted`, so it reaches Claude only when the owner has set all
+  three egress switches; otherwise the response says it was read by the rules engine only
+  (`reader.reason`). Nothing is stored or cached and logs carry metrics only. An exact reviewed
+  sample text is still answered from the stored result, whatever else is sent.
+- **Confirm and correct** (`src/demo/reviewState.ts`, `FieldList.tsx`): every finding can be
+  confirmed, corrected (input type from the contract schema), removed, or added from a blank;
+  whole rows can be removed. The review lives in React state only. `POST /codes` re-derives
+  suggested codes from the corrected record (stateless, no note text). Own notes also get
+  "Redact selected text" for identifiers the scan missed (`ScanGate.markManualEdit`).
 - **Routing** `PROCSUITE_UI_HOME=robotic_ebus_demo` serves the page at `/ui/`;
   `/ui/dashboard.html` always serves the dashboard, and pages that link to the dashboard name
   it. `/ui/registry_demo/` is the staging URL. Local: `make demo-serve` (port 8020).

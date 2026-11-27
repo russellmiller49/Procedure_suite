@@ -219,3 +219,124 @@ describe("unlabelled specimens", () => {
     expect(rowTitle("specimens", {specimen_id: "s3", specimen_label: "Specimen C"}, 2, all)).toBe("Specimen C");
   });
 });
+
+describe("manual redaction", () => {
+  it("lists a hand-picked span as a detection and replaces it like any other", async () => {
+    const {manualDetection, redactSpan} = await import("./phiRedaction");
+    const text = "Seen with Dr. Okonkwo-Reyes at the bedside. Station 7 was sampled.";
+    const added = manualDetection(14, 27);
+    expect(added).toMatchObject({source: "manual", start: 14, end: 27});
+    expect(applyRedactions(text, [added], new Set())).toBe(`Seen with Dr. ${PLACEHOLDER} at the bedside. Station 7 was sampled.`);
+    expect(redactSpan(text, [14, 27])).toBe(`Seen with Dr. ${PLACEHOLDER} at the bedside. Station 7 was sampled.`);
+    expect(redactSpan(text, [70, 900])).toBe(text);
+  });
+
+  it("keeps the text cleared after a manual redaction, but only once redactions were applied", () => {
+    const gate = new ScanGate();
+    gate.textChanged();
+    expect(() => gate.markManualEdit()).toThrow();
+    gate.accept(gate.begin());
+    gate.markApplied();
+    gate.markManualEdit();
+    expect(gate.readyToExtract).toBe(true);
+    gate.textChanged();
+    expect(gate.readyToExtract).toBe(false);
+  });
+});
+
+describe("confirm and correct", () => {
+  const proposal = {
+    procedures: [{category: "linear_ebus", performance: "performed"}],
+    case_details: {},
+    ebus_sessions: [{ebus_session_id: "e"}],
+    station_surveys: [
+      {station_survey_id: "s1", ebus_session_id: "e", iaslc_station: "4R", station_sampled: true},
+      {station_survey_id: "s2", ebus_session_id: "e", iaslc_station: "11L", station_sampled: true},
+      {station_survey_id: "s3", ebus_session_id: "e", iaslc_station: "7", station_sampled: true},
+    ],
+    targets: [{target_id: "t1", site: "lymph_node", iaslc_station: "4R", short_axis_mm: null}],
+    field_provenance: [
+      {field_path: "/station_surveys/0/station_sampled", source_start: 0, source_end: 5, source_excerpt: "a", conflict_status: "none"},
+      {field_path: "/station_surveys/1/station_sampled", source_start: 6, source_end: 9, source_excerpt: "b", conflict_status: "none"},
+      {field_path: "/station_surveys/2/station_sampled", source_start: 10, source_end: 12, source_excerpt: "c", conflict_status: "none"},
+      {field_path: "/targets/0/short_axis_mm", conflict_status: "unresolved", raw_value: "[12, 14]"},
+    ],
+  };
+  const sections = buildSections(profile as unknown as Profile, proposal);
+  const row = (collection: string, index: number) => sections.find(s => s.collection === collection)!.rows[index];
+
+  it("gives every field the right kind of input", () => {
+    const at = (collection: string, name: string) => row(collection, 0).fields.find(f => f.name === name)!;
+    expect(at("station_surveys", "station_sampled").input).toEqual({kind: "boolean"});
+    expect(at("targets", "short_axis_mm").input.kind).toBe("number");
+    expect(at("station_surveys", "iaslc_station").input.kind).toMatch(/enum|text/);
+    const site = at("targets", "site").input;
+    expect(site.kind).toBe("enum");
+    expect(site.kind === "enum" && site.options).toContain("lymph_node");
+  });
+
+  it("checks what the reviewer typed against the field type", async () => {
+    const {parseInput} = await import("./reviewState");
+    expect(parseInput({kind: "boolean"}, "false")).toEqual({ok: true, value: false});
+    expect(parseInput({kind: "integer"}, "3")).toEqual({ok: true, value: 3});
+    expect(parseInput({kind: "integer"}, "3.5").ok).toBe(false);
+    expect(parseInput({kind: "number"}, "12.5")).toEqual({ok: true, value: 12.5});
+    expect(parseInput({kind: "number"}, "twelve").ok).toBe(false);
+    expect(parseInput({kind: "enum", options: ["lung", "lymph_node"]}, "pleura").ok).toBe(false);
+    expect(parseInput({kind: "text"}, "  Specimen A ")).toEqual({ok: true, value: "Specimen A"});
+    expect(parseInput({kind: "text"}, "   ").ok).toBe(false);
+  });
+
+  it("applies corrections, removals and additions to a copy and leaves the extraction untouched", async () => {
+    const {decide, EMPTY_REVIEW, reviewedRecord, changesRecord} = await import("./reviewState");
+    let review = decide(EMPTY_REVIEW, "/station_surveys/1/station_sampled", {status: "corrected", value: false});
+    review = decide(review, "/station_surveys/0/station_sampled", {status: "confirmed"});
+    review = decide(review, "/targets/0/short_axis_mm", {status: "corrected", value: 12});
+    review = decide(review, "/station_surveys/0/station_visualized", {status: "added", value: true});
+    review = decide(review, "/targets/0/iaslc_station", {status: "removed"});
+    review = decide(review, "/case_details/asa_class", {status: "added", value: 3});
+    const out = reviewedRecord(proposal, review);
+    expect(out.station_surveys[1].station_sampled).toBe(false);
+    expect(out.station_surveys[0]).toMatchObject({station_sampled: true, station_visualized: true});
+    expect(out.targets[0]).toMatchObject({short_axis_mm: 12, iaslc_station: null});
+    expect(out.case_details.asa_class).toBe(3);
+    const settled = out.field_provenance.find((p: {field_path: string}) => p.field_path === "/targets/0/short_axis_mm");
+    expect(settled).toMatchObject({conflict_status: "none", value_origin: "reviewer"});
+    expect(proposal.station_surveys[1].station_sampled).toBe(true);
+    expect(proposal.field_provenance[3].conflict_status).toBe("unresolved");
+    expect(changesRecord(review)).toBe(true);
+    expect(changesRecord(decide(EMPTY_REVIEW, "/x", {status: "confirmed"}))).toBe(false);
+    expect(decide(review, "/case_details/asa_class", null).decisions["/case_details/asa_class"]).toBeUndefined();
+  });
+
+  it("drops a removed row and keeps each passage with the row it belongs to", async () => {
+    const {EMPTY_REVIEW, reviewedRecord, toggleRow} = await import("./reviewState");
+    const review = toggleRow(EMPTY_REVIEW, "/station_surveys/1");
+    const out = reviewedRecord(proposal, review);
+    expect(out.station_surveys.map((r: {iaslc_station: string}) => r.iaslc_station)).toEqual(["4R", "7"]);
+    const passages = Object.fromEntries(out.field_provenance.map((p: {field_path: string; source_excerpt?: string}) => [p.field_path, p.source_excerpt]));
+    expect(passages["/station_surveys/0/station_sampled"]).toBe("a");
+    expect(passages["/station_surveys/1/station_sampled"]).toBe("c");
+    expect(passages["/station_surveys/2/station_sampled"]).toBeUndefined();
+    expect(toggleRow(review, "/station_surveys/1").removedRows).toEqual([]);
+  });
+
+  it("confirms a whole row except an unresolved field, and counts progress over kept rows", async () => {
+    const {confirmRow, countReview, decide, EMPTY_REVIEW, reviewedDisplay, toggleRow} = await import("./reviewState");
+    const target = row("targets", 0);
+    const confirmed = confirmRow(EMPTY_REVIEW, target);
+    expect(confirmed.decisions["/targets/0/site"]).toEqual({status: "confirmed"});
+    expect(confirmed.decisions["/targets/0/short_axis_mm"]).toBeUndefined();
+    let review = decide(confirmed, "/station_surveys/0/station_sampled", {status: "corrected", value: false});
+    review = toggleRow(review, "/station_surveys/2");
+    const counts = countReview(review, sections);
+    expect(counts).toMatchObject({corrected: 1, rowsRemoved: 1, removed: 0, added: 0});
+    expect(counts.confirmed).toBe(Object.keys(confirmed.decisions).length);
+    expect(counts.reviewed).toBe(counts.confirmed + 1);
+    const all = countReview(EMPTY_REVIEW, sections);
+    expect(all.total - counts.total).toBe(row("station_surveys", 2).fields.filter(f => f.state !== "not_extracted").length);
+    const sampled = row("station_surveys", 0).fields.find(f => f.name === "station_sampled")!;
+    expect(reviewedDisplay(sampled, {status: "corrected", value: false})).toEqual({state: "negative", display: "No"});
+    expect(reviewedDisplay(sampled, {status: "confirmed"})).toEqual({state: "value", display: "Yes"});
+  });
+});

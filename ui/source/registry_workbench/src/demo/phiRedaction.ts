@@ -51,6 +51,31 @@ export function applyRedactions(text: string, detections: Detection[], excluded:
   return out;
 }
 
+/** A detection the reader added by selecting text the scan missed. */
+export function manualDetection(start: number, end: number): Detection {
+  return {id: `manual:${start}-${end}`, start, end, label: "MANUAL", score: null, source: "manual"};
+}
+
+/** Replace one span with the placeholder (a manual redaction after the scan was applied). */
+export function redactSpan(text: string, span: [number, number]): string {
+  const [start, end] = mergeSpans([span], text.length)[0] ?? [0, 0];
+  return end > start ? text.slice(0, start) + PLACEHOLDER + text.slice(end) : text;
+}
+
+/** Character offsets of the current selection inside ``root``, or null when there is none. */
+export function selectionSpan(root: HTMLElement | null): [number, number] | null {
+  const selection = typeof window === "undefined" ? null : window.getSelection();
+  if (!root || !selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  if (!root.contains(range.startContainer) || !root.contains(range.endContainer)) return null;
+  const before = document.createRange();
+  before.selectNodeContents(root);
+  before.setEnd(range.startContainer, range.startOffset);
+  const start = before.toString().length;
+  const end = start + range.toString().length;
+  return end > start ? [start, end] : null;
+}
+
 /** Normalise what the worker reports into detections with stable ids. */
 export function readDetections(raw: unknown): Detection[] {
   if (!Array.isArray(raw)) return [];
@@ -117,6 +142,13 @@ export class ScanGate {
 
   /** Use a reviewed redacted text as-is (the reviewed redaction of a bundled sample). */
   markReviewedText(): void {
+    this.revision += 1;
+    this.applied = this.revision;
+  }
+
+  /** The reader redacted more text by hand after applying; the new text stays cleared. */
+  markManualEdit(): void {
+    if (!this.readyToExtract) throw new Error("a manual redaction needs applied redactions first");
     this.revision += 1;
     this.applied = this.revision;
   }

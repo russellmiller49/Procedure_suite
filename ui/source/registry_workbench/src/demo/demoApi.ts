@@ -54,6 +54,19 @@ export type Codes = {
   not_assessed: {codes: string[]; label: string; reason: string}[];
   scope_note: string;
 };
+export type NoteKind = "synthetic" | "real_redacted";
+/** Whether the model read a tester's note and, if not, why. */
+export type Reader = {model_used: boolean; sent_to_provider: boolean; reason: string | null; message: string | null};
+export type TesterAccess = {
+  ok: boolean;
+  model_configured: boolean;
+  real_notes_to_model: boolean;
+  model: string;
+  effort: string;
+  provider: string;
+  max_text_chars: number;
+};
+export type LiveParams = {access_code: string; note_kind: NoteKind; attested: boolean};
 export type ExtractResult = {
   status: string;
   source: string;
@@ -61,6 +74,10 @@ export type ExtractResult = {
   sample_id: string | null;
   generated_at: string | null;
   notice: string;
+  /** Which reading the fields and codes come from. */
+  primary?: "llm" | "rules";
+  note_kind?: NoteKind;
+  reader?: Reader;
   llm: Side | null;
   rules: Side | null;
   comparison: Comparison & {summary: Record<string, number>};
@@ -92,4 +109,8 @@ async function call<T>(path: string, body?: unknown): Promise<T> {
 
 export const getConfig = () => call<DemoConfig>("/config");
 export const getSample = (id: string) => call<SampleDetail>(`/samples/${encodeURIComponent(id)}`);
-export const extract = (text: string, sampleId: string | null) => call<ExtractResult>("/extract", {text, sample_id: sampleId});
+export const extract = (text: string, sampleId: string | null, live?: LiveParams) =>
+  call<ExtractResult>("/extract", {text, sample_id: sampleId, ...(live || {})});
+export const unlock = (accessCode: string) => call<TesterAccess>("/unlock", {access_code: accessCode});
+/** Codes for a record as corrected by the reviewer. The note text is not sent. */
+export const recode = (proposal: Values, unresolved: Mention[]) => call<Codes>("/codes", {proposal, unresolved});

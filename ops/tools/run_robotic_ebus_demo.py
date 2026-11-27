@@ -4,10 +4,15 @@
 
     python ops/tools/run_robotic_ebus_demo.py                # http://127.0.0.1:8020/ui/
     python ops/tools/run_robotic_ebus_demo.py --data-dir DIR  # alternate samples/results
+    # "Your own note" on, read by the rules engine only:
+    python ops/tools/run_robotic_ebus_demo.py --tester-code CODE
+    # ...and read by Claude as well (paid):
+    python ops/tools/run_robotic_ebus_demo.py --tester-code CODE --with-model
 
 The full app needs the extraction model bundle to boot, so this runs it without
-the startup lifespan and marks it ready, the way the API tests do. The demo API
-serves stored results only; nothing here calls a model provider.
+the startup lifespan and marks it ready, the way the API tests do. Bundled samples
+are answered from stored results. A model provider is called only with
+``--with-model``, for a tester's own note; without it any key in the shell is ignored.
 """
 
 from __future__ import annotations
@@ -35,6 +40,15 @@ def main() -> None:
         choices=["robotic_ebus_demo", "dashboard"],
         help="Which page answers at /ui/",
     )
+    parser.add_argument(
+        "--tester-code",
+        help="Tester password(s), comma separated; switches on 'Your own note'",
+    )
+    parser.add_argument(
+        "--with-model",
+        action="store_true",
+        help="Let tester notes be read by Claude using ANTHROPIC_API_KEY (shell or .env). Paid.",
+    )
     args = parser.parse_args()
 
     # The app's .env may carry production flags and keys; none are needed here.
@@ -48,6 +62,16 @@ def main() -> None:
     os.environ["PROCSUITE_UI_HOME"] = args.home
     if args.data_dir:
         os.environ["PROCSUITE_DEMO_DATA_DIR"] = str(Path(args.data_dir).resolve())
+    if args.tester_code:
+        os.environ["PROCSUITE_DEMO_ACCESS_CODE"] = args.tester_code
+    if args.with_model:
+        from app.common.dotenv_keys import load_api_key_from_dotenv
+
+        if not load_api_key_from_dotenv(ROOT / ".env"):
+            raise SystemExit("--with-model needs ANTHROPIC_API_KEY in the shell or in .env")
+    else:
+        # A key left in the shell must not turn a local run into a paid one.
+        os.environ.pop("ANTHROPIC_API_KEY", None)
 
     import uvicorn
 

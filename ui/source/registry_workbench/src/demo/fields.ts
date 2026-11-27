@@ -1,13 +1,18 @@
-/** Read-only view model: every contract field of every extracted row, with an honest state. */
+/** View model: every contract field of every extracted row, with an honest state. */
 import {KEYS, label} from "../review";
 import type {Profile, Schema, Values} from "../types";
 
 export type FieldState = "value" | "negative" | "stated_missing" | "conflict" | "not_extracted";
+/** How a reviewer enters a value for the field, from its contract type. */
+export type FieldInput = {kind: "enum"; options: string[]} | {kind: "boolean" | "integer" | "number" | "text"};
 export type FieldView = {
   path: string;
   name: string;
   state: FieldState;
   display: string;
+  /** The extracted value itself; null for a blank, a stated-missing or an unresolved field. */
+  value: unknown;
+  input: FieldInput;
   units?: string;
   definition?: string;
   quote?: string;
@@ -57,6 +62,19 @@ export function fieldLabel(name: string, units?: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+export function inputFor(schema: Schema, property: Schema): FieldInput {
+  const resolved = resolve(schema, property);
+  if (Array.isArray(resolved.enum)) return {kind: "enum", options: resolved.enum.map(String)};
+  if (resolved.type === "boolean") return {kind: "boolean"};
+  if (resolved.type === "integer" || resolved.type === "number") return {kind: resolved.type};
+  return {kind: "text"};
+}
+
+/** Whether a recorded value reads as "no / absent / not done". */
+export function isNegative(value: unknown, assertion?: string): boolean {
+  return value === false || assertion === "negated" || value === "absent" || value === "not_performed";
+}
+
 export function show(value: unknown): string {
   if (typeof value === "boolean") return value ? "Yes" : "No";
   if (typeof value === "string") return /^[a-z0-9_]+$/.test(value) ? label(value) : value;
@@ -101,11 +119,16 @@ export function rowTitle(collection: string, row: Values, index: number, all: Va
   }
 }
 
-function fieldView(profile: Profile, proposal: Values, collection: string, path: string, name: string, value: unknown): FieldView {
+function fieldView(
+  profile: Profile, proposal: Values, collection: string, path: string, name: string, value: unknown, property: Schema,
+): FieldView {
   const help = profile.help[`${collection}.${name}`] || {};
   const prov = (proposal.field_provenance || []).find((p: Values) => p.field_path === path);
   const span = prov?.source_start != null ? ([prov.source_start, prov.source_end] as [number, number]) : undefined;
-  const base = {path, name, units: help.units, definition: help.definition, quote: prov?.source_excerpt, span, derived: prov?.value_origin === "derived"};
+  const base = {
+    path, name, units: help.units, definition: help.definition, quote: prov?.source_excerpt, span,
+    derived: prov?.value_origin === "derived", value: null as unknown, input: inputFor(profile.schema, property),
+  };
   if (prov?.conflict_status === "unresolved") {
     return {...base, state: "conflict", display: prov.raw_value ? String(prov.raw_value) : ""};
   }
@@ -113,8 +136,7 @@ function fieldView(profile: Profile, proposal: Values, collection: string, path:
     if (prov?.missingness_reason) return {...base, state: "stated_missing", display: label(prov.missingness_reason)};
     return {...base, state: "not_extracted", display: ""};
   }
-  const negative = value === false || prov?.assertion_context === "negated" || value === "absent" || value === "not_performed";
-  return {...base, state: negative ? "negative" : "value", display: show(value)};
+  return {...base, value, state: isNegative(value, prov?.assertion_context) ? "negative" : "value", display: show(value)};
 }
 
 /** Sections with one entry per extracted row; fields the extractor left blank are kept, marked. */
@@ -138,7 +160,7 @@ export function buildSections(profile: Profile, proposal: Values | null, agreeme
       const prefix = singleton ? `/${collection}` : `/${collection}/${index}`;
       const fields = Object.keys(entity.properties || {})
         .filter(name => name !== KEYS[collection] && !HIDDEN.has(name) && !name.endsWith("_id"))
-        .map(name => marked(fieldView(profile, proposal, collection, `${prefix}/${name}`, name, row[name])));
+        .map(name => marked(fieldView(profile, proposal, collection, `${prefix}/${name}`, name, row[name], entity.properties[name])));
       return {
         key: prefix,
         title: singleton ? "Case and anesthesia" : rowTitle(collection, row, index, proposal),
@@ -147,7 +169,10 @@ export function buildSections(profile: Profile, proposal: Values | null, agreeme
       };
     });
     if (collection === "complications") {
-      const overall = marked(fieldView(profile, proposal, "revision", "/complication_assessment", "complication_assessment", proposal.complication_assessment));
+      const overall = marked(fieldView(
+        profile, proposal, "revision", "/complication_assessment", "complication_assessment",
+        proposal.complication_assessment, schema.properties.complication_assessment || {},
+      ));
       overall.definition = overall.definition || "Whether any complication of the procedure is documented.";
       views.unshift({key: "/complication_assessment", title: "Overall", fields: [overall], extracted: overall.state === "not_extracted" ? 0 : 1});
     }
