@@ -13,7 +13,8 @@ _BATCH4_RESULTS_PATH = Path(__file__).resolve().parents[2] / "extraction_test_3_
 
 def _load_batch4_note(note_name: str) -> str:
     if not _BATCH4_RESULTS_PATH.is_file():
-        raise FileNotFoundError(_BATCH4_RESULTS_PATH)
+        # The batch-4 results file was removed from git (1da34f14); run only when present locally.
+        pytest.skip(f"untracked fixture not present: {_BATCH4_RESULTS_PATH.name}")
 
     text = _BATCH4_RESULTS_PATH.read_text(encoding="utf-8")
     match = re.search(
