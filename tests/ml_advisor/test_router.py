@@ -55,7 +55,7 @@ def make_override_config(
         "enabled": enabled,
         "backend": backend,
         "trace_enabled": trace_enabled,
-        "trace_path": trace_path or Path("data/coding_traces.jsonl"),
+        "trace_path": trace_path or Path(os.environ["TRACE_FILE_PATH"]),
         "pipeline_version": "test-v1",
     }
 
