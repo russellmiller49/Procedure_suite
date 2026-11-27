@@ -44,6 +44,17 @@ _TUMOR_ACTION_LINK_RE = re.compile(
     # compound noun: "tumor excision", "tumor debulking"
     rf"|(?P<compound>\b{_TUMOR_NOUN}\s+(?:excision|debulking|resection|removal|coring|ablation)\b)"
 )
+# Fail closed: any non-performance cue in the sub-clause holding the tumor action -> "unknown".
+_SUBCLAUSE_SPLIT_RE = re.compile(r"(?i),?\s+(?:and|but)\s+")
+_BENIGN_NEGATION_RE = re.compile(
+    r"(?i)\b(?:no|without)\s+(?:\w+\s+)?(?:complications?|bleeding|difficulty|incident|issues?)\b"
+)
+_NON_PERFORMANCE_CUE_RE = re.compile(
+    r"(?i)\b(?:not|no|never|without|unable|cannot|can't|couldn't|failed\s+to|"
+    r"attempt\w*|abort\w*|abandon\w*|terminat\w*|unsuccessful\w*|"
+    r"may|might|would|could|should|need\w*|if|future|later|will|shall|"
+    r"consider\w*|plan\w*|schedul\w*|recommend\w*|defer\w*|declin\w*|offer\w*|discuss\w*)\b"
+)
 _NOMINAL_ACTION_SUFFIXES = ("ing", "ion", "al")
 # First auxiliary/verb governing a nominal action ("tumor debulking was performed / will be ...").
 _GOVERNING_VERB_RE = re.compile(r"(?i)\b(?:will|shall|is|are|was|were)\b")
@@ -114,7 +125,22 @@ def ground_material_type_from_quote(note_text: str, evidence_quote: str) -> str:
         return "unknown"
     if _is_nominal_link(link) and _nominal_action_is_planned(clause[link.end() :]):
         return "unknown"
+    action_part = _BENIGN_NEGATION_RE.sub(" ", _subclause_containing(clause, link.start()))
+    if _NON_PERFORMANCE_CUE_RE.search(action_part):
+        return "unknown"
     return "tumor"
+
+
+def _subclause_containing(clause: str, position: int) -> str:
+    """The part of ``clause`` between the "and"/"but" separators around ``position``."""
+    start, end = 0, len(clause)
+    for separator in _SUBCLAUSE_SPLIT_RE.finditer(clause):
+        if separator.end() <= position:
+            start = separator.end()
+        elif separator.start() > position:
+            end = separator.start()
+            break
+    return clause[start:end]
 
 
 def _is_nominal_link(link: re.Match[str]) -> bool:

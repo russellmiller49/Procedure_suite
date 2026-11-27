@@ -192,6 +192,31 @@ def _stub_raw_ml_high_conf(monkeypatch: pytest.MonkeyPatch, *, cpt: str, prob: f
             "tumor",
             id="nominal_action_was_performed",
         ),
+        # Fail closed on non-performance cues in the action sub-clause.
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nExcision of the mass was not attempted due to bleeding risk.\n",
+            "Excision of the mass was not attempted due to bleeding risk",
+            "unknown",
+            id="not_attempted",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nAn attempt to debulk the tumor was aborted.\n",
+            "An attempt to debulk the tumor was aborted",
+            "unknown",
+            id="attempt_aborted",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe patient may need tumor debulking in the future.\n",
+            "The patient may need tumor debulking in the future",
+            "unknown",
+            id="may_need_in_future",
+        ),
+        pytest.param(
+            "PROCEDURE IN DETAIL:\nThe endobronchial tumor was debulked with forceps without complications.\n",
+            "The endobronchial tumor was debulked with forceps without complications",
+            "tumor",
+            id="benign_without_complications",
+        ),
     ],
 )
 def test_ground_material_type_from_quote(note_text: str, quote: str, expected: str) -> None:
