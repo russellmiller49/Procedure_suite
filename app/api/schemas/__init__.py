@@ -47,6 +47,10 @@ from app.api.schemas.qa import (
     RegistryData,
     ReporterData,
 )
+from app.api.schemas.smart import (
+    SmartConfigResponse,
+    SmartIssuerOut,
+)
 from app.api.schemas.vault import (
     CRYPTO_VERSION_V1,
     VaultDeleteResponse,
@@ -96,6 +100,9 @@ __all__ = [
     "QARunResponse",
     "RegistryData",
     "ReporterData",
+    # SMART on FHIR schemas
+    "SmartConfigResponse",
+    "SmartIssuerOut",
     # Vault schemas
     "CRYPTO_VERSION_V1",
     "VaultDeleteResponse",

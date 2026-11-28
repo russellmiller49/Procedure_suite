@@ -345,8 +345,14 @@ def test_masked_fungal_material_debulking_is_preserved_and_low_grade_bleeding_cl
     assert updated.complications.bleeding.bleeding_grade_nashville == 0
 
     codes, _rationales, _warnings = derive_all_codes_with_meta(updated)
-    assert "31640" in codes
+    # Policy update (2026-04): mechanical clearance of fungal/necrotic material is
+    # preserved in the registry but is not billable as tumor excision (31640).
+    assert "31640" not in codes
     assert "31624" in codes
+    assert updated.procedures_performed.mechanical_debulking.material_type in (
+        "fungal_material",
+        "necrotic_inflammatory",
+    )
 
 
 def test_eus_b_passes_parser_ignores_station_number_artifact() -> None:

@@ -195,6 +195,10 @@ COMPLICATIONS {{ proc.complications_text or complications_text or "None" }}
 PROCEDURE IN DETAIL {% if _ga_explicit %}After induction of general anesthesia,{% elif sedation %}After adequate sedation was achieved,{% else %}After appropriate local anesthesia and preparation,{% endif %} a timeout was performed confirming patient identity, planned procedures, and laterality. Relevant procedural images were saved to the medical record.
 
 {{ procedure_details_block }}
+{% if proc.closing_text %}
+
+{{ proc.closing_text }}
+{% endif %}
 
 {% if proc.specimens_text or specimens_text %}
 SPECIMENS

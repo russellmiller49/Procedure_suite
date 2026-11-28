@@ -1,0 +1,29 @@
+{% set _elasto_desc = {"Type 1": " (predominantly soft)", "Type 2": " with mixed soft and stiff regions", "Type 3": " (predominantly stiff)"} %}
+{% set _names = proc.stations | map(attribute="station_name") | list %}
+{% set _patterns = proc.stations | map(attribute="elastography_pattern") | select | unique | list %}
+{% set _with_pattern = proc.stations | selectattr("elastography_pattern") | list %}
+{% set _uniform = proc.elastography_pattern or (_patterns[0] if (_patterns | length == 1 and _with_pattern | length == proc.stations | length) else "") %}
+Linear EBUS survey
+
+A linear EBUS lymph node survey was performed. No lymph nodes were sampled.
+
+{% if proc.survey_technique %}{{ proc.survey_technique }}
+
+{% endif %}
+{% if _names %}Lymph Nodes/Sites Inspected: {{ _names | join(", ") }}.
+
+{% endif %}
+{% if proc.elastography_used or _patterns %}Endobronchial ultrasound (EBUS) elastography was performed to assess lymph node stiffness and tissue characteristics.{% if _uniform %} All inspected nodes demonstrated a {{ _uniform }} elastographic pattern{{ _elasto_desc.get(_uniform, "") }}.{% endif %}
+
+
+{% endif %}
+{% for st in proc.stations %}
+{% if (st.elastography_pattern and not _uniform) or st.size_mm or st.comments %}
+Station {{ st.station_name }}:{% if st.size_mm %} {{ st.size_mm | fmt_unit("mm") }} by EBUS.{% endif %}{% if st.comments %} {{ ("The node was " ~ st.comments) if st.comments[0] in "<=>" else st.comments }}.{% endif %}{% if st.elastography_pattern and not _uniform %} {{ st.elastography_pattern }} elastographic pattern{{ _elasto_desc.get(st.elastography_pattern, "") }}.{% endif %} Not sampled.
+
+{% endif %}
+{% endfor %}
+{% if proc.reason_not_sampled %}Reason nodal sampling was not performed: {{ proc.reason_not_sampled }}.
+
+{% endif %}
+{% if proc.notes %}{{ proc.notes }}{% endif %}

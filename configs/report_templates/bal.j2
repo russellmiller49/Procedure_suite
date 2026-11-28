@@ -1,5 +1,6 @@
-{% if source_only | default(false) %}
-BAL performed{% if proc.lung_segment %} at {{ proc.lung_segment }}{% endif %}.{% if proc.instilled_volume_cc is not none %} Instilled: {{ proc.instilled_volume_cc }} mL.{% endif %}{% if proc.returned_volume_cc is not none %} Returned: {{ proc.returned_volume_cc }} mL.{% endif %}
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _loc = (proc.lung_segment or "") | trim %}
+Bronchoalveolar lavage was performed{% if _loc %}{% if "target" in _loc %} ({{ _loc }}){% elif "(" in _loc %} at the {{ _loc }}{% else %} at the {{ _loc }} target{% endif %}{% endif %}.{% if proc.instilled_volume_cc is not none %} Instilled {{ proc.instilled_volume_cc }} mL{% if proc.returned_volume_cc is not none %}, with return of {{ proc.returned_volume_cc }} mL{% endif %}.{% elif proc.returned_volume_cc is not none %} Return of {{ proc.returned_volume_cc }} mL.{% endif %}
 {% if proc.tests %}Samples sent for {{ proc.tests | join(', ') }}.{% endif %}
 {% else %}
 BAL: Bronchoalveolar lavage was performed{% if proc.lung_segment %} in the {{ proc.lung_segment }}{% endif %} with saline instilled and returned. Specimens were submitted.

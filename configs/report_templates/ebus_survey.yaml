@@ -1,0 +1,18 @@
+id: ebus_survey
+label: Linear EBUS Lymph Node Survey (No Sampling)
+category: ebus
+# Inspection only: this block must never contribute an EBUS-TBNA code.
+cpt_hints: []
+schema_id: ebus_survey_v1
+output_section: PROCEDURE_DETAILS
+template_path: ebus_survey.j2
+required_fields: []
+optional_fields:
+  - stations
+  - elastography_used
+  - elastography_pattern
+  - survey_technique
+  - notes
+  - reason_not_sampled
+proc_types:
+  - ebus_survey

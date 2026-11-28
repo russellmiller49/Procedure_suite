@@ -1,0 +1,1631 @@
+{
+  "base_url": "https://proceduresuite.interventionalpulm.com",
+  "summary": {
+    "cases": 110,
+    "errors": 0,
+    "empty_drafts": 0,
+    "slot_checks": 364,
+    "slot_failures": 0,
+    "warning_reviews": 22,
+    "warning_review_failures": 0,
+    "strict_render_fallbacks": 0,
+    "extraction_backstop_cases": 13,
+    "stale_station_prompts": 0,
+    "stale_station_flags": 0,
+    "quality_flags": {
+      "EBUS_DETAILS_UNSPECIFIED": 18
+    }
+  },
+  "cases": [
+    {
+      "id": "RB-01-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 1.29
+    },
+    {
+      "id": "RB-01-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 1.29
+    },
+    {
+      "id": "RB-01-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.52
+    },
+    {
+      "id": "RB-01-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-01-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.51
+    },
+    {
+      "id": "RB-01-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.78
+    },
+    {
+      "id": "RB-01-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-01-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.53
+    },
+    {
+      "id": "RB-01-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-01-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.64
+    },
+    {
+      "id": "RB-02-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.53
+    },
+    {
+      "id": "RB-02-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.84
+    },
+    {
+      "id": "RB-02-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.73
+    },
+    {
+      "id": "RB-02-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.53
+    },
+    {
+      "id": "RB-02-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-02-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-02-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.62
+    },
+    {
+      "id": "RB-02-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.57
+    },
+    {
+      "id": "RB-02-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-02-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-03-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-03-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.6
+    },
+    {
+      "id": "RB-03-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.52
+    },
+    {
+      "id": "RB-03-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.93
+    },
+    {
+      "id": "RB-03-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 1.05
+    },
+    {
+      "id": "RB-03-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.52
+    },
+    {
+      "id": "RB-03-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.41
+    },
+    {
+      "id": "RB-03-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.85
+    },
+    {
+      "id": "RB-03-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.73
+    },
+    {
+      "id": "RB-03-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.71
+    },
+    {
+      "id": "RB-04-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.78
+    },
+    {
+      "id": "RB-04-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-04-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-04-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-04-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-04-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.53
+    },
+    {
+      "id": "RB-04-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.59
+    },
+    {
+      "id": "RB-04-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.56
+    },
+    {
+      "id": "RB-04-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.53
+    },
+    {
+      "id": "RB-04-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.54
+    },
+    {
+      "id": "RB-05-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.64
+    },
+    {
+      "id": "RB-05-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-05-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-05-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.64
+    },
+    {
+      "id": "RB-05-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-05-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.69
+    },
+    {
+      "id": "RB-05-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-05-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.57
+    },
+    {
+      "id": "RB-05-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-05-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.58
+    },
+    {
+      "id": "RB-06-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.57
+    },
+    {
+      "id": "RB-06-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.74
+    },
+    {
+      "id": "RB-06-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.75
+    },
+    {
+      "id": "RB-06-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-06-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.62
+    },
+    {
+      "id": "RB-06-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.68
+    },
+    {
+      "id": "RB-06-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-06-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.62
+    },
+    {
+      "id": "RB-06-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-06-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "stale_station_prompt": false,
+      "stale_station_flag": false,
+      "seconds": 0.68
+    },
+    {
+      "id": "RB-07-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-07-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.59
+    },
+    {
+      "id": "RB-07-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.8
+    },
+    {
+      "id": "RB-07-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "stale_station_prompt": false,
+      "stale_station_flag": false,
+      "seconds": 0.84
+    },
+    {
+      "id": "RB-07-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.69
+    },
+    {
+      "id": "RB-07-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.62
+    },
+    {
+      "id": "RB-07-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.75
+    },
+    {
+      "id": "RB-07-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 1.18
+    },
+    {
+      "id": "RB-07-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.99
+    },
+    {
+      "id": "RB-07-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 2.54
+    },
+    {
+      "id": "RB-08-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 2.61
+    },
+    {
+      "id": "RB-08-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.74
+    },
+    {
+      "id": "RB-08-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.64
+    },
+    {
+      "id": "RB-08-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 3.26
+    },
+    {
+      "id": "RB-08-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 3.32
+    },
+    {
+      "id": "RB-08-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-08-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-08-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.59
+    },
+    {
+      "id": "RB-08-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.56
+    },
+    {
+      "id": "RB-08-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.62
+    },
+    {
+      "id": "RB-09-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-09-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.69
+    },
+    {
+      "id": "RB-09-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.6
+    },
+    {
+      "id": "RB-09-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.54
+    },
+    {
+      "id": "RB-09-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.6
+    },
+    {
+      "id": "RB-09-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-09-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.65
+    },
+    {
+      "id": "RB-09-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "stale_station_prompt": false,
+      "stale_station_flag": false,
+      "seconds": 0.57
+    },
+    {
+      "id": "RB-09-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.61
+    },
+    {
+      "id": "RB-09-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.54
+    },
+    {
+      "id": "RB-10-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.56
+    },
+    {
+      "id": "RB-10-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.74
+    },
+    {
+      "id": "RB-10-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 1.97
+    },
+    {
+      "id": "RB-10-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "stale_station_prompt": false,
+      "stale_station_flag": false,
+      "seconds": 1.88
+    },
+    {
+      "id": "RB-10-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.55
+    },
+    {
+      "id": "RB-10-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [
+        "EBUS_REGEX_FALLBACK"
+      ],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.58
+    },
+    {
+      "id": "RB-10-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-10-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.59
+    },
+    {
+      "id": "RB-10-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-10-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.66
+    },
+    {
+      "id": "RB-11-01",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.6
+    },
+    {
+      "id": "RB-11-02",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.67
+    },
+    {
+      "id": "RB-11-03",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.69
+    },
+    {
+      "id": "RB-11-04",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.7
+    },
+    {
+      "id": "RB-11-05",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.71
+    },
+    {
+      "id": "RB-11-06",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.8
+    },
+    {
+      "id": "RB-11-07",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.72
+    },
+    {
+      "id": "RB-11-08",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.58
+    },
+    {
+      "id": "RB-11-09",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 0.63
+    },
+    {
+      "id": "RB-11-10",
+      "status": 200,
+      "markdown_present": true,
+      "slot_failures": [],
+      "warning_review_failures": [],
+      "quality_codes": [
+        "EBUS_DETAILS_UNSPECIFIED"
+      ],
+      "fallback_flags": [],
+      "extraction_backstop_flags": [],
+      "seed_strategies": [
+        "registry_extract_fields"
+      ],
+      "seconds": 2.05
+    }
+  ]
+}

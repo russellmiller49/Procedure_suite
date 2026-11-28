@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Epic on FHIR Sandbox (R4)",
+    "iss": "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4",
+    "client_id": "REPLACE-WITH-EPIC-NON-PRODUCTION-CLIENT-ID",
+    "vendor": "epic"
+  },
+  {
+    "name": "Oracle Health (Cerner) Sandbox (R4)",
+    "iss": "https://fhir-ehr-code.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d",
+    "client_id": "REPLACE-WITH-CERNER-CLIENT-ID",
+    "vendor": "cerner"
+  },
+  {
+    "name": "SMART Health IT Launcher (local dev)",
+    "iss": "https://launch.smarthealthit.org/v/r4/fhir",
+    "client_id": "procedure-suite-local",
+    "vendor": "smart_launcher"
+  }
+]

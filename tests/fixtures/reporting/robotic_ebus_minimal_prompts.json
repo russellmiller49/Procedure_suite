@@ -19,6 +19,20 @@
           "7": 4,
           "11L": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_lung_biopsy",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -53,6 +67,20 @@
             15
           ]
         ]
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_lung_biopsy",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -80,6 +108,20 @@
           "7": 4,
           "11L": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_lung_biopsy",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -98,6 +140,12 @@
           "11RI": 4,
           "7": 4,
           "11L": 4
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "11RI": "Type 2",
+          "7": "Type 2",
+          "11L": "Type 2"
         }
       }
     },
@@ -193,6 +241,22 @@
           "7": 4,
           "4R": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -229,6 +293,20 @@
           "7": 4,
           "4R": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "robotic_navigation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -315,7 +393,12 @@
         "cryo_counts": [
           6,
           6
-        ]
+        ],
+        "elastography_used": true,
+        "node_elastography": {
+          "7": "Type 1",
+          "4R": "Type 1"
+        }
       }
     },
     {
@@ -369,6 +452,21 @@
           "11RS": 5,
           "11RI": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "robotic_navigation",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -403,6 +501,20 @@
           "11RS": 5,
           "11RI": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "radial_ebus_survey",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -532,7 +644,20 @@
         "cryo_counts": [
           5
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_survey"
+        ]
       }
     },
     {
@@ -571,7 +696,9 @@
       "prompt_text": "Navigated Ion to posterior basal RLL, verified an eccentric radial signal, then spun and adjusted the planned target. Sampled with needles and cryoprobe and lavaged. Linear EBUS with elastography showed only very small soft nodes, so none were biopsied. Extubated without issue.",
       "expected": {
         "no_stent": true,
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -625,7 +752,9 @@
       "prompt_text": "CT-based targeting of 15 mm RB10 nodule: radial image eccentric, CBCT correction, needle location guided in three orthogonal planes. Biopsies and lavage performed. EBUS elastography survey without node puncture because nodes were <4 mm.",
       "expected": {
         "no_stent": true,
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -640,7 +769,9 @@
         "cryo_counts": [
           5
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -673,6 +804,19 @@
         "node_passes": {
           "11RS": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -712,6 +856,24 @@
             60,
             15
           ]
+        ],
+        "elastography_used": true,
+        "node_elastography": {
+          "11RS": "Type 1"
+        }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
         ]
       }
     },
@@ -827,6 +989,14 @@
         "missing_details": [
           "sampling_status"
         ]
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "fiducial_marker_placement",
+          "bal"
+        ]
       }
     },
     {
@@ -923,7 +1093,11 @@
             10,
             5
           ]
-        ]
+        ],
+        "elastography_used": true,
+        "node_elastography": {
+          "4R": "Type 1"
+        }
       }
     },
     {
@@ -954,7 +1128,9 @@
         ],
         "cryo_counts": [
           6
-        ]
+        ],
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -1007,6 +1183,20 @@
         "node_passes": {
           "11L": 5
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -1117,7 +1307,9 @@
       "style": "Imaging/target-first",
       "prompt_text": "Two Cios spins during Ion localization of the 0.7 cm LB9 nodule, the second confirming needle location in all three orthogonal planes. Needle/cryo/brush sampling and fiducial followed. Linear EBUS elastography and TBNA of 11L.",
       "expected": {
-        "no_stent": true
+        "no_stent": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -1167,7 +1359,23 @@
         "cryo_counts": [
           6
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_survey"
+        ]
       }
     },
     {
@@ -1191,7 +1399,13 @@
         "cryo_counts": [
           6
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {
+          "4R": "Type 1",
+          "11RS": "Type 1",
+          "11L": "Type 1"
+        }
       }
     },
     {
@@ -1200,7 +1414,9 @@
       "prompt_text": "After airway suctioning, navigated to RB4, confirmed a concentric radial ultrasound target, then performed cone-beam-guided sampling. Brushed, lavaged and marked the lesion. Onsite cytology showed only blood. Linear EBUS examination and elastography identified no nodes requiring biopsy.",
       "expected": {
         "no_stent": true,
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -1230,7 +1446,9 @@
         "cryo_counts": [
           6
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -1272,7 +1490,9 @@
         "cryo_counts": [
           6
         ],
-        "survey_only": true
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
       }
     },
     {
@@ -1343,6 +1563,23 @@
             60,
             15
           ]
+        ],
+        "elastography_used": true,
+        "node_elastography": {
+          "7": "Type 2"
+        }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna",
+          "bal"
         ]
       }
     },
@@ -1385,7 +1622,20 @@
         ],
         "node_passes": {
           "7": 4
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "7": "Type 2"
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna",
+          "bal"
+        ]
       }
     },
     {
@@ -1474,7 +1724,24 @@
         "node_passes": {
           "11L": 4,
           "7": 6
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "11L": "Type 2",
+          "7": "Type 2"
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -1566,6 +1833,11 @@
         "node_passes": {
           "11L": 4,
           "7": 6
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "11L": "Type 2",
+          "7": "Type 2"
         }
       }
     },
@@ -1647,6 +1919,20 @@
           "7": 4,
           "11L": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -1681,6 +1967,19 @@
           "7": 4,
           "11L": 4
         }
+      },
+      "expected_order": {
+        "detail_order": [
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
       }
     },
     {
@@ -1814,6 +2113,203 @@
           "station_labels",
           "sampling_status"
         ]
+      }
+    },
+    {
+      "id": "RB-01-01-SI-A",
+      "style": "Structured inputs",
+      "prompt_text": "Ion robotic bronch for 1 cm LUL apicoposterior nodule, eccentric radial EBUS, low-dose Cios spin and retargeting. 21G TBNA x6, forceps x2, 1.1 cryo x8, brush, BAL, fiducial. ROSE no malignancy; EBUS 11Ri/7/11L four passes each. No complications.",
+      "structured_inputs": {
+        "airway": {
+          "anesthesia": "General anesthesia via endotracheal tube"
+        },
+        "navigation": {
+          "registration": "Partial",
+          "cbct_attestation": true
+        },
+        "ebus": {
+          "needle_gauges": [
+            "22G"
+          ],
+          "elastography": {
+            "used": true,
+            "scope": "Specific nodes",
+            "stations_type_2": [
+              "11Ri",
+              "7"
+            ],
+            "stations_type_1": [
+              "11L"
+            ]
+          }
+        },
+        "closing": {
+          "ebl": "Minimal",
+          "complications_none": true,
+          "disposition": "Extubated in the operating room and transported to the recovery room in stable condition"
+        }
+      },
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "11RI": "Type 2",
+          "7": "Type 2",
+          "11L": "Type 1"
+        },
+        "ebus_needle_gauge": [
+          "22G"
+        ],
+        "registration": [
+          "Partial"
+        ],
+        "ct_attestation": true,
+        "anesthesia": "General anesthesia via endotracheal tube",
+        "ebl": "Minimal",
+        "complications": "None",
+        "closing_text": "The patient tolerated the procedure well. There were no immediate complications. At the conclusion of the operation, the patient was extubated in the operating room and transported to the recovery room in stable condition."
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_lung_biopsy",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement",
+          "ebus_tbna"
+        ]
+      }
+    },
+    {
+      "id": "RB-01-01-SI-B",
+      "style": "Structured inputs",
+      "prompt_text": "Ion robotic bronch for 1 cm LUL apicoposterior nodule, eccentric radial EBUS, low-dose Cios spin and retargeting. 21G TBNA x6, forceps x2, 1.1 cryo x8, brush, BAL, fiducial. ROSE no malignancy; EBUS 11Ri/7/11L four passes each. No complications.",
+      "structured_inputs": {
+        "sequence": "EBUS first, then peripheral target",
+        "ebus": {
+          "elastography": {
+            "used": true,
+            "scope": "All sampled/inspected nodes",
+            "uniform_pattern": "Type 1"
+          }
+        }
+      },
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          6
+        ],
+        "cryo_counts": [
+          8
+        ],
+        "node_passes": {
+          "11RI": 4,
+          "7": 4,
+          "11L": 4
+        },
+        "elastography_used": true,
+        "node_elastography": {
+          "11RI": "Type 1",
+          "7": "Type 1",
+          "11L": "Type 1"
+        },
+        "first_block": "ebus_tbna"
+      },
+      "expected_order": {
+        "detail_order": [
+          "ebus_tbna",
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "transbronchial_needle_aspiration",
+          "transbronchial_lung_biopsy",
+          "transbronchial_cryobiopsy",
+          "bronchial_brushings",
+          "bal",
+          "fiducial_marker_placement"
+        ],
+        "ebus_first": true
+      }
+    },
+    {
+      "id": "RB-04-01-SI-A",
+      "style": "Structured inputs",
+      "prompt_text": "Ion RLL posterior basal RB10 1.5 cm lesion, eccentric rEBUS, low-dose Cios spin and 3-plane CBCT needle guidance. TBNA 21/23G x7, 1.1 cryo x5, BAL 40 in/15 out, ROSE lesional. EBUS node survey/elastography, all tiny/soft, no nodal biopsies. No complications.",
+      "structured_inputs": {
+        "ebus": {
+          "technique": "All stations assessed; nodes 5 mm or larger sampled",
+          "elastography": {
+            "used": true,
+            "scope": "All sampled/inspected nodes",
+            "uniform_pattern": "Type 1"
+          }
+        },
+        "navigation": {
+          "tool_in_lesion_confirmed": true
+        }
+      },
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [
+          7
+        ],
+        "cryo_counts": [
+          5
+        ],
+        "survey_only": true,
+        "elastography_used": true,
+        "node_elastography": {}
+      },
+      "expected_order": {
+        "detail_order": [
+          "robotic_navigation",
+          "radial_ebus_survey",
+          "cbct_cact_fusion",
+          "tool_in_lesion_confirmation",
+          "transbronchial_needle_aspiration",
+          "transbronchial_cryobiopsy",
+          "bal",
+          "ebus_survey"
+        ]
+      }
+    },
+    {
+      "id": "RB-01-10-SI-A",
+      "style": "Structured inputs",
+      "prompt_text": "LUL 1 cm Ion biopsy, CBCT adjusted, fiducial; EBUS 11Ri/7/11L, uncomplicated.",
+      "structured_inputs": {
+        "ebus": {
+          "needle_gauges": [
+            "22G"
+          ],
+          "elastography": {
+            "used": true,
+            "scope": "All sampled/inspected nodes",
+            "uniform_pattern": "Type 2"
+          }
+        }
+      },
+      "expected": {
+        "no_stent": true,
+        "tbna_counts": [],
+        "cryo_counts": [],
+        "elastography_used": false,
+        "node_elastography": {}
       }
     }
   ],

@@ -201,6 +201,47 @@
         font-weight: 600;
       }
 
+      .seed-inputs-panel {
+        margin-top: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 8px 12px;
+      }
+
+      .seed-inputs-panel > summary {
+        cursor: pointer;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      .seed-inputs-intro {
+        margin: 8px 0 10px;
+      }
+
+      .seed-inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      }
+
+      .seed-inputs-grid .question-row {
+        border-bottom: none;
+      }
+
+      .seed-input-choices {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 12px;
+      }
+
+      .seed-input-choices label {
+        color: var(--text-primary);
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
       .question-group {
         margin-bottom: 14px;
         border: 1px solid var(--border-color);
@@ -319,7 +360,7 @@
         <div class="subtle">Text to bundle, questions, JSON Patch, and re-render loop.</div>
       </div>
       <div class="topbar-links">
-        <a class="topbar-link" href="./">Dashboard</a>
+        <a class="topbar-link" href="./dashboard.html">Dashboard</a>
         <a class="topbar-link" href="./workflow.html">Workflow</a>
       </div>
       <div class="status">
@@ -436,6 +477,23 @@
             </div>
           </aside>
         </div>
+        <details id="seedInputsPanel" class="seed-inputs-panel">
+          <summary>
+            Structured details (optional)
+            <span id="seedInputsCount" class="question-meta"></span>
+          </summary>
+          <div class="subtle seed-inputs-intro">
+            Selections add to the dictation and override what was extracted from it. Leave a field on
+            “Not specified” when it was not done or is not known; nothing is assumed. These are fixed
+            choices only, so no patient information is entered here.
+          </div>
+          <div id="seedInputsBody" class="seed-inputs-body">
+            <div class="subtle">Loading structured details…</div>
+          </div>
+          <div class="builder-toolbar">
+            <button id="seedInputsResetBtn" class="secondary" type="button">Reset details</button>
+          </div>
+        </details>
         <div class="builder-toolbar">
           <button id="seedBtn" class="primary">Seed Bundle</button>
           <button id="refreshBtn" class="secondary" disabled>Refresh Questions</button>

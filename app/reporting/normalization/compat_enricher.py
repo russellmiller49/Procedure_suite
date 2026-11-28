@@ -9,6 +9,14 @@ from .compat_types import BillingCodeItem, RegistryBillingPayload, RegistryRecor
 from .types import NormalizationNote
 
 
+_ELASTOGRAPHY_PATTERN_LABELS = {
+    "predominantly_blue": "predominantly blue",
+    "blue_green": "mixed blue/green",
+    "green": "green",
+    "predominantly_green": "predominantly green",
+}
+
+
 def _extract_cpt_codes_from_billing_payload(billing: RegistryBillingPayload) -> list[str]:
     billing_codes = billing.get("cpt_codes") or []
     extracted: list[str] = []
@@ -558,9 +566,14 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
         if not text:
             return None
         verbs = r"(?:drained|removed|aspirated|obtained|withdrawn|evacuated|extracted|tapped|yield(?:ed)?|collected)"
+        # The precise "<amount> of <appearance> fluid" form runs first so the looser
+        # verb-anchored captures cannot swallow the leading "of" or trailing
+        # auxiliaries ("was"/"were"); the punctuation-terminated "of" form stays
+        # last as a fallback since it can capture non-appearance words.
         patterns = [
-            rf"(?i)\b{verbs}\b[^.\n]{{0,30}}?\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b|[.,;]|$)",
-            rf"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b)?\s+\b{verbs}\b",
+            r"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+of\s+([a-z][a-z\s/-]{0,40}?)\s+fluid\b",
+            rf"(?i)\b{verbs}\b[^.\n]{{0,30}}?\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+(?:of\s+)?([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b|[.,;]|$)",
+            rf"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+(?:of\s+)?([a-z][a-z\s/-]{{0,40}}?)(?:\s+fluid\b)?\s+(?:(?:was|were)\s+)?\b{verbs}\b",
             r"(?i)\b\d+(?:\.\d+)?\s*(?:L|mL|ml|cc)\s+of\s+([a-z][a-z\s/-]{0,40}?)(?:\s+fluid\b|[.,;]|$)",
         ]
         for pattern in patterns:
@@ -759,7 +772,26 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                         entry["rose_result"] = "Adequate lymphocytes"
                     elif item.get("lymphocytes_present") is False:
                         entry["rose_result"] = "Nondiagnostic"
+                    # Station-level elastography stays with its own station.
+                    pattern = item.get("elastography_pattern")
+                    if pattern not in (None, "", [], {}):
+                        entry["elastography_pattern"] = _ELASTOGRAPHY_PATTERN_LABELS.get(
+                            str(pattern), str(pattern)
+                        )
+                    if item.get("elastography_strain_ratio") not in (None, "", [], {}):
+                        entry["elastography_strain_ratio"] = item.get("elastography_strain_ratio")
+                    if item.get("sampled") is False:
+                        entry["sampled"] = False
                     converted.append(entry)
+                if any(
+                    isinstance(item, dict)
+                    and (
+                        item.get("elastography_performed") is True
+                        or item.get("elastography_pattern") not in (None, "", [], {})
+                    )
+                    for item in granular_detail
+                ) and raw.get("ebus_elastography_used") in (None, "", [], {}):
+                    raw["ebus_elastography_used"] = True
                 if converted:
                     raw["ebus_stations_detail"] = converted
 
@@ -3149,6 +3181,18 @@ def _add_compat_flat_fields(raw: dict[str, Any]) -> dict[str, Any]:
                 if appearance:
                     raw["pleural_fluid_appearance"] = appearance
 
+            if raw.get("pleural_intercostal_space") in (None, "", [], {}) and source_text:
+                # Ordinal formatting mirrors the registry-side parser (app/registry/engine.py).
+                ics_match = re.search(
+                    r"(?i)\b(\d{1,2})(?:st|nd|rd|th)?\s*(?:intercostal\s*space|ics)\b", source_text
+                )
+                if ics_match:
+                    num = int(ics_match.group(1))
+                    if 10 <= num % 100 <= 20:
+                        suffix = "th"
+                    else:
+                        suffix = {1: "st", 2: "nd", 3: "rd"}.get(num % 10, "th")
+                    raw["pleural_intercostal_space"] = f"{num}{suffix}"
             raw.setdefault("pleural_intercostal_space", "unspecified")
             raw.setdefault("entry_location", "mid-axillary")
 

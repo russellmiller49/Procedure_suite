@@ -369,7 +369,12 @@ class EBUSTBNAAdapter(ExtractionAdapter):
                     "station_name": station,
                     "size_mm": detail.get("size_mm") if has_detail else station_size,
                     "passes": detail.get("passes") if has_detail else passes_global,
-                    "echo_features": source.get("ebus_echo_features") or source.get("ebus_elastography_pattern"),
+                    # Elastography has its own fields; echo features are B-mode only.
+                    "echo_features": source.get("ebus_echo_features"),
+                    "elastography_pattern": detail.get("elastography_pattern") if has_detail else None,
+                    "elastography_strain_ratio": (
+                        detail.get("elastography_strain_ratio") if has_detail else None
+                    ),
                     "biopsy_tools": tools,
                     "rose_result": detail.get("rose_result") if has_detail else None,
                 }

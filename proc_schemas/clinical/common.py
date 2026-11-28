@@ -58,6 +58,7 @@ class OperativeShellInputs(BaseModel):
     complications_text: str | None = None
     specimens_text: str | None = None
     impression_plan: str | None = None
+    closing_text: str | None = None
 
 
 class ProcedureInput(BaseModel):
@@ -106,6 +107,8 @@ class ProcedureBundle(BaseModel):
     estimated_blood_loss: str | None = None
     complications_text: str | None = None
     specimens_text: str | None = None
+    # Closing/disposition sentence rendered after PROCEDURE IN DETAIL (explicit only).
+    closing_text: str | None = None
     free_text_hint: str | None = None
     acknowledged_omissions: dict[str, list[str]] = Field(default_factory=dict)
     # Addon slugs for supplementary templates (rare events, complications, etc.)

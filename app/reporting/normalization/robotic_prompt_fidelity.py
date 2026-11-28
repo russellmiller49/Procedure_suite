@@ -34,7 +34,12 @@ _REPLACED = set(_MODALITIES) | {
     "bal",
     "bronchial_washing",
     "ebus_tbna",
+    "ebus_survey",
+    "cbct_cact_fusion",
+    "tool_in_lesion_confirmation",
 }
+_CBCT = r"(?i)\b(?:CBCT|cone[- ]?beam|Cios|CT spin|spins?|spun)\b"
+_TOOL_IN_LESION = r"(?i)\btool[- ]in[- ]lesion\b|\bTIL\b|\bneedle in (?:the )?lesion\b"
 
 
 def normalize_prompt(text: str) -> str:
@@ -225,6 +230,10 @@ def _targets(text: str) -> list[tuple[str, str]]:
         r"Then navigated|For the anterior)",
         text,
     )
+    if second_clause and candidates[0][1] > second_clause.start() and len(candidates) < 2:
+        # "then navigated to <target>" after a non-target opening step names the
+        # only target; it does not start a second one.
+        return [(candidates[0][0], text)]
     if first_clause and second_clause and len(candidates) > 1:
         return [
             (candidates[0][0], text[first_clause.end() : second_clause.start()]),
@@ -248,6 +257,56 @@ def _new(kind: str, index: int, data: dict) -> ProcedureInput:
     )
 
 
+def _imaging(text: str) -> list[ProcedureInput]:
+    """Cone-beam CT and tool-in-lesion steps stated in the prompt itself."""
+    if not re.search(_CBCT, text) or re.search(
+        r"(?i)\b(?:no|without)\s+(?:CBCT|cone[- ]?beam|spin)\b", text
+    ):
+        cbct = False
+    else:
+        cbct = True
+    procs = []
+    if cbct:
+        notes = []
+        if re.search(r"(?i)\bCios\b", text):
+            notes.append("Cios Spin system was used for evaluation of nodule location.")
+        doses = {
+            m.lower().replace(" ", "-")
+            for m in re.findall(r"(?i)\b(very[- ]high|high|standard|regular|low)[- ]dose\b", text)
+        }
+        # Mixed dose lists ("low/high/standard-dose") are left to the source wording.
+        if len(doses) == 1 and not re.search(r"(?i)\b(?:low|high|standard)/", text):
+            notes.append(f"{doses.pop().capitalize()} dose spin was performed to acquire CT imaging.")
+        count = re.search(
+            r"(?i)\b(\d)\s+(?:[\w-]+\s+){0,3}?(?:spins|scans)\b|"
+            r"\b(?:CBCT|spins?)\s+(?:low\s+)?x\s*(\d)\b",
+            text,
+        )
+        if count:
+            notes.append(f"{count[1] or count[2]} spins were performed.")
+        if re.search(
+            r"(?i)retarget\w*|re-?regist\w*|reposition\w*|fine-tune|"
+            r"(?:target|location|trajectory)\s+(?:was\s+)?(?:adjust|correct|updat)\w*|"
+            r"(?:adjust|correct|updat|mov)\w*\s+(?:the\s+|our\s+|its\s+|planned\s+)*(?:target|location)|"
+            r"\b(?:correction|adjustment|update)\b",
+            text,
+        ):
+            notes.append(
+                "Using the newly acquired nodule location, the robotic system was adjusted "
+                "to the new targeted location."
+            )
+        procs.append(_new("cbct_cact_fusion", 1, {"notes": " ".join(notes) or None}))
+    if re.search(_TOOL_IN_LESION, text):
+        procs.append(
+            _new(
+                "tool_in_lesion_confirmation",
+                1,
+                {"confirmation_method": "cone-beam CT" if cbct else "imaging"},
+            )
+        )
+    return procs
+
+
 def _node_data(text: str) -> tuple[list[dict], bool]:
     text = re.sub(r"(?i)\b\d{2}\s*-?(?:G|gauge)\b", "", text)
     text = re.sub(r"(?i)\bneedle\s+", "", text)
@@ -255,7 +314,7 @@ def _node_data(text: str) -> tuple[list[dict], bool]:
         re.search(
             r"(?i)\b(?:survey (?:only|without)|inspection only|scanned only|"
             r"no (?:nodal (?:biopsies|specimens)|(?:node |nodal )?TBNA|bx)|"
-            r"zero TBNA|without (?:lymph[- ]node |node )?(?:biopsy|puncture|sampling)|"
+            r"zero TBNA|without (?:lymph[- ]node |node |nodal )?(?:biops(?:y|ies)|puncture|sampling|TBNA)|"
             r"none (?:were biopsied|aspirated)|did not sample|no nodes requiring biopsy|"
             r"no nodal specimens)",
             text,
@@ -331,8 +390,45 @@ def _has_adjacent_station(text: str, start: int, end: int) -> bool:
     )
 
 
+# In a nodal EBUS clause "type 2" / "T1" / "type-2" is the elastography class.
+_ELASTO_TYPE = r"(?i)(?<![\w.])(?:type|T)[\s-]*([123])(?!\w|\.\d)"
+_NOT_SAMPLED_REASON = (
+    r"(?i)too small and soft to stick|"
+    r"(?:\b(?:all|only)\s+)?(?:\bvery\s+)?\b(?:tiny|small)(?:\s*/\s*|\s+(?:and\s+)?)soft(?:\s+nodes)?|"
+    r"(?:\bnodes?\s+(?:were\s+)?)?<\s*\d+\s*mm(?:\s+soft)?"
+)
+
+
+def _strip_elastography(text: str) -> str:
+    """Blank elastography classes so their digits are never read as pass counts."""
+    return re.sub(_ELASTO_TYPE, lambda m: " " * len(m[0]), text)
+
+
+def _elastography(nodal: str) -> tuple[bool, str | None, dict[str, str]]:
+    """Return (documented, pattern shared by all stations, station-specific patterns).
+
+    A single class in the clause describes the nodes named in that clause. When
+    different classes are given, each is bound to the station it follows.
+    """
+    types = list(re.finditer(_ELASTO_TYPE, nodal))
+    used = bool(types or re.search(r"(?i)\belastograph\w*", nodal))
+    distinct = {m[1] for m in types}
+    if len(distinct) == 1:
+        return used, "Type " + types[0][1], {}
+    by_station: dict[str, str] = {}
+    if len(distinct) > 1:
+        labels = list(re.finditer(r"(?i)(?<![\w])" + _STATION_LABEL + r"(?=\b|\d)", nodal))
+        for index, label in enumerate(labels):
+            end = labels[index + 1].start() if index + 1 < len(labels) else len(nodal)
+            match = re.search(_ELASTO_TYPE, nodal[label.end() : end])
+            if match:
+                by_station[label[0].upper()] = "Type " + match[1]
+    return used, None, by_station
+
+
 def _assess_nodal(text: str) -> tuple[list[dict], bool, list[str], list[str]]:
     """Separate documented sampling from missing station identity/status."""
+    text = _strip_elastography(text)
     alias_pattern = r"(?i)\b(?:" + "|".join(map(re.escape, _NODE_ALIASES)) + r")\b"
     canonical = re.sub(
         alias_pattern,
@@ -474,6 +570,11 @@ def reconcile_robotic_prompt(bundle: ProcedureBundle, source: str) -> ProcedureB
         ]
     if not re.search(r"(?i)\bIndication:", source):
         bundle.indication_text = None
+    # Diagnoses are not derived from a procedural fragment; explicit seed
+    # metadata is applied after this step and still supplies them.
+    if not re.search(r"(?i)\bdiagnos[ei]s\s*:", source):
+        bundle.preop_diagnosis_text = None
+        bundle.postop_diagnosis_text = None
     # Preserve an explicitly named marker even when a short synonym was missed.
     if re.search(r"(?i)\bfiducial\b|\b(?:gold )?marker\b", peripheral) and not re.search(
         r"(?i)no fiducial|no marker|marker not", peripheral
@@ -482,6 +583,7 @@ def reconcile_robotic_prompt(bundle: ProcedureBundle, source: str) -> ProcedureB
             p for p in bundle.procedures if p.proc_type != "fiducial_marker_placement"
         ]
         new.append(_new("fiducial_marker_placement", 1, {"airway_location": targets[0][0]}))
+    new.extend(_imaging(normalized))
     for index, (location, local) in enumerate(targets, 1):
         # Explicit lesion dimensions survive even when the source has no
         # indication field. Reject measurements tied to a sampling probe.
@@ -639,15 +741,38 @@ def reconcile_robotic_prompt(bundle: ProcedureBundle, source: str) -> ProcedureB
         new.extend(_lavages("BAL", "RML", 910))
     stations, survey_only, nodal_gaps, ambiguous = _assess_nodal(nodal)
     if nodal:
-        labels = ", ".join(st["station_name"] for st in stations)
+        elasto_used, elasto_pattern, elasto_by_station = _elastography(nodal)
+        for st in stations:
+            pattern = elasto_by_station.get(st["station_name"]) or elasto_pattern
+            if pattern:
+                st["elastography_pattern"] = pattern
+        elasto = {"elastography_used": True} if elasto_used else {}
+        if elasto_pattern:
+            elasto["elastography_pattern"] = elasto_pattern
         if survey_only:
-            observations.append(
-                "Linear EBUS survey without nodal sampling."
-                + (" Stations inspected: " + labels + "." if stations else "")
+            # A survey is its own documented step; it never implies sampling.
+            reason = re.search(_NOT_SAMPLED_REASON, nodal)
+            new.append(
+                _new(
+                    "ebus_survey",
+                    1,
+                    {
+                        "stations": [
+                            {
+                                **{k: v for k, v in st.items() if k == "elastography_pattern"},
+                                "station_name": st["station_name"],
+                                "sampled": False,
+                            }
+                            for st in stations
+                        ],
+                        "reason_not_sampled": reason[0].strip() if reason else None,
+                        **elasto,
+                    },
+                )
             )
         else:
             if stations and "sampling_status" not in nodal_gaps:
-                new.append(_new("ebus_tbna", 1, {"stations": stations}))
+                new.append(_new("ebus_tbna", 1, {"stations": stations, **elasto}))
             if nodal_gaps:
                 details = []
                 if "station_labels" in nodal_gaps:

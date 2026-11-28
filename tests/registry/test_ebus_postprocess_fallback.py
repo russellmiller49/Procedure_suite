@@ -61,10 +61,12 @@ def test_populate_ebus_node_events_fallback_adds_placeholder_when_sampling_docum
     span = evidence["procedures_performed.linear_ebus.node_events.0.evidence_quote"][0]
     assert "EBUS-TBNA" in note_text[span.start:span.end].upper()
 
+    # Policy update (2026-07): documented EBUS-TBNA sampling of one target
+    # ("stations or structures") derives 31652 with a documentation-review signal.
     codes, _rationales, warnings = derive_all_codes_with_meta(record)
-    assert "31652" not in codes
+    assert "31652" in codes
     assert "31653" not in codes
-    assert any("non-station" in str(w).lower() for w in warnings)
+    assert any("nonstation_ebus_structures_counted_for_nodal_cpt" in str(w) for w in warnings)
 
 
 def test_populate_ebus_node_events_fallback_captures_passes_and_rose_with_evidence() -> None:

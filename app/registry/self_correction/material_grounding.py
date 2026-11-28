@@ -17,7 +17,7 @@ from typing import Any
 from app.registry.deterministic_extractors import (
     _preferred_procedure_detail_text,
     _strip_cpt_definition_lines,
-    infer_debulking_material_type,
+    infer_mechanical_debulking_material_type,
 )
 from app.registry.schema import RegistryRecord
 
@@ -109,7 +109,7 @@ def ground_material_type_from_quote(note_text: str, evidence_quote: str) -> str:
     if span is None:
         return "unknown"
     clause = _clause_span(procedure_text, *span)
-    material = infer_debulking_material_type(clause)
+    material = infer_mechanical_debulking_material_type(clause)
     if material != "tumor":
         return material
 

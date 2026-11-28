@@ -13,5 +13,6 @@ optional_fields:
   - overlay_result
   - confirmatory_spin_result
   - notes
+  - physician_interpreted
 proc_types:
   - cbct_cact_fusion
