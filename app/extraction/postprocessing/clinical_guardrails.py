@@ -730,8 +730,8 @@ class ClinicalGuardrails:
             )
             explicit_airway_biopsy_context = bool(
                 re.search(
-                    r"(?i)\b(?:trachea|carina|main(?:\s*|-)?stem|bronchus\s+intermedius|airway|endobronch(?:ial)?)\b[^.\n]{0,120}\bbiops(?:y|ies|ied)\b"
-                    r"|\bbiops(?:y|ies|ied)\b[^.\n]{0,120}\b(?:trachea|carina|main(?:\s*|-)?stem|bronchus\s+intermedius|airway|endobronch(?:ial)?)\b",
+                    r"(?i)\b(?:trachea|carina|main(?:\s*|-)?stem|bronchus\s+intermedius|airway|endobronch(?:ial)?|cavit(?:y|ary)|mycetoma|fungal\s+ball)\b[^.\n]{0,120}\bbiops(?:y|ies|ied)\b"
+                    r"|\bbiops(?:y|ies|ied)\b[^.\n]{0,120}\b(?:trachea|carina|main(?:\s*|-)?stem|bronchus\s+intermedius|airway|endobronch(?:ial)?|cavit(?:y|ary)|mycetoma|fungal\s+ball)\b",
                     note_text or "",
                 )
             )

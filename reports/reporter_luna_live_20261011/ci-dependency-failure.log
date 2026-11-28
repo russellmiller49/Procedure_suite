@@ -1,0 +1,51 @@
+tests (3.11)	Pytest	﻿2026-10-11T07:34:07.9804187Z ##[group]Run pytest -q
+tests (3.11)	Pytest	2026-10-11T07:34:07.9804432Z ^[[36;1mpytest -q^[[0m
+tests (3.11)	Pytest	2026-10-11T07:34:07.9860649Z shell: /usr/bin/bash -e {0}
+tests (3.11)	Pytest	2026-10-11T07:34:07.9860866Z env:
+tests (3.11)	Pytest	2026-10-11T07:34:07.9861085Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+tests (3.11)	Pytest	2026-10-11T07:34:07.9861435Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+tests (3.11)	Pytest	2026-10-11T07:34:07.9861770Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+tests (3.11)	Pytest	2026-10-11T07:34:07.9862061Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+tests (3.11)	Pytest	2026-10-11T07:34:07.9862355Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+tests (3.11)	Pytest	2026-10-11T07:34:07.9862650Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+tests (3.11)	Pytest	2026-10-11T07:34:07.9862905Z ##[endgroup]
+tests (3.11)	Pytest	2026-10-11T07:34:27.9483533Z 
+tests (3.11)	Pytest	2026-10-11T07:34:27.9484253Z ==================================== ERRORS ====================================
+tests (3.11)	Pytest	2026-10-11T07:34:27.9485386Z _______ ERROR collecting tests/scripts/test_train_distilbert_ner_cli.py ________
+tests (3.11)	Pytest	2026-10-11T07:34:27.9486368Z ImportError while importing test module '/home/runner/work/Procedure_suite/Procedure_suite/tests/scripts/test_train_distilbert_ner_cli.py'.
+tests (3.11)	Pytest	2026-10-11T07:34:27.9487247Z Hint: make sure your test modules/packages have valid Python names.
+tests (3.11)	Pytest	2026-10-11T07:34:27.9487672Z Traceback:
+tests (3.11)	Pytest	2026-10-11T07:34:27.9488139Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py:126: in import_module
+tests (3.11)	Pytest	2026-10-11T07:34:27.9489027Z     return _bootstrap._gcd_import(name[level:], package, level)
+tests (3.11)	Pytest	2026-10-11T07:34:27.9489447Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests (3.11)	Pytest	2026-10-11T07:34:27.9489855Z tests/scripts/test_train_distilbert_ner_cli.py:6: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9490249Z     from ml.scripts import train_distilbert_ner
+tests (3.11)	Pytest	2026-10-11T07:34:27.9490602Z ml/scripts/train_distilbert_ner.py:32: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9490939Z     from transformers import (
+tests (3.11)	Pytest	2026-10-11T07:34:27.9491518Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:2154: in __getattr__
+tests (3.11)	Pytest	2026-10-11T07:34:27.9492206Z     module = self._get_module(self._class_to_module[name])
+tests (3.11)	Pytest	2026-10-11T07:34:27.9492522Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests (3.11)	Pytest	2026-10-11T07:34:27.9493097Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:2184: in _get_module
+tests (3.11)	Pytest	2026-10-11T07:34:27.9493709Z     raise e
+tests (3.11)	Pytest	2026-10-11T07:34:27.9494258Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:2182: in _get_module
+tests (3.11)	Pytest	2026-10-11T07:34:27.9494994Z     return importlib.import_module("." + module_name, self.__name__)
+tests (3.11)	Pytest	2026-10-11T07:34:27.9495429Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests (3.11)	Pytest	2026-10-11T07:34:27.9495977Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py:126: in import_module
+tests (3.11)	Pytest	2026-10-11T07:34:27.9496587Z     return _bootstrap._gcd_import(name[level:], package, level)
+tests (3.11)	Pytest	2026-10-11T07:34:27.9496990Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests (3.11)	Pytest	2026-10-11T07:34:27.9497607Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/trainer.py:192: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9498168Z     import datasets
+tests (3.11)	Pytest	2026-10-11T07:34:27.9498863Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/datasets/__init__.py:17: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9499425Z     from .arrow_dataset import Column, Dataset
+tests (3.11)	Pytest	2026-10-11T07:34:27.9499984Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/datasets/arrow_dataset.py:59: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9500528Z     import pyarrow as pa
+tests (3.11)	Pytest	2026-10-11T07:34:27.9501021Z /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pyarrow/__init__.py:59: in <module>
+tests (3.11)	Pytest	2026-10-11T07:34:27.9501781Z     from pyarrow.lib import (BuildInfo, CppBuildInfo, RuntimeInfo, set_timezone_db_path,
+tests (3.11)	Pytest	2026-10-11T07:34:27.9502351Z pyarrow/lib.pyx:42: in init pyarrow.lib
+tests (3.11)	Pytest	2026-10-11T07:34:27.9502662Z     ???
+tests (3.11)	Pytest	2026-10-11T07:34:27.9503350Z E   ImportError: pyarrow requires NumPy 2.0 or newer, found 1.26.4
+tests (3.11)	Pytest	2026-10-11T07:34:27.9503804Z =========================== short test summary info ============================
+tests (3.11)	Pytest	2026-10-11T07:34:27.9504549Z SKIPPED [1] tests/api/test_qa_reporter_prompt_seed.py:13: Reporter prompt seed tests are opt-in (set RUN_REPORTER_PROMPT_SEED_TESTS=1).
+tests (3.11)	Pytest	2026-10-11T07:34:27.9505221Z ERROR tests/scripts/test_train_distilbert_ner_cli.py
+tests (3.11)	Pytest	2026-10-11T07:34:27.9505648Z !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+tests (3.11)	Pytest	2026-10-11T07:34:29.7740746Z ##[error]Process completed with exit code 2.

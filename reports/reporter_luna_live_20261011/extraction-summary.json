@@ -1,0 +1,18 @@
+{
+  "total_cases": 14,
+  "passed_cases": 14,
+  "failed_cases": 0,
+  "pass_rate": 1.0,
+  "metrics": {
+    "exact_code_match_cases": 14,
+    "exact_code_match_rate": 1.0,
+    "needs_manual_review_cases": 1,
+    "coder_difficulty_counts": {
+      "low_confidence": 8,
+      "high_confidence": 3,
+      "gray_zone": 3
+    }
+  },
+  "exact_code_match_cases": 14,
+  "exact_code_match_rate": 1.0
+}

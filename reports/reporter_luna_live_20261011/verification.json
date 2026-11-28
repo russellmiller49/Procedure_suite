@@ -1,0 +1,90 @@
+{
+  "status": "deployed_and_live_workflow_verified",
+  "verified_at": "2026-10-11T07:37:24.393105+00:00",
+  "site": "https://proceduresuite.interventionalpulm.com/ui/reporter_builder.html",
+  "source_commit": "5bfda9fb0d0965a06b35dd7620458a618eabe66c",
+  "mirror_commit": "74103602db175ac609f08675b6a8d0c471675353",
+  "deployment": {
+    "id": "417d4ab2-d91c-4c9e-9572-31f29e2bd796",
+    "status": "SUCCESS"
+  },
+  "pull_requests": [
+    "https://github.com/russellmiller49/Procedure_suite/pull/26",
+    "https://github.com/russellmiller49/Procedure_suite/pull/27",
+    "https://github.com/russellmiller49/Procedure_suite/pull/28"
+  ],
+  "models": {
+    "OPENAI_MODEL_STRUCTURER": "gpt-6-luna",
+    "OPENAI_MODEL_JUDGE": "gpt-6-luna",
+    "OPENAI_MODEL": "gpt-5.2",
+    "OPENAI_MODEL_SUMMARIZER": "gpt-5-mini",
+    "REPORTER_SEED_STRATEGY": "(default)",
+    "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+    "REGISTRY_SELF_CORRECT_ENABLED": "1",
+    "PROCSUITE_PIPELINE_MODE": "extraction_first"
+  },
+  "seed_strategy": "registry_extract_fields (production default retained; llm_findings not promoted)",
+  "live_checks": {
+    "cases": 110,
+    "errors": 0,
+    "empty_drafts": 0,
+    "slot_checks": 364,
+    "slot_failures": 0,
+    "warning_reviews": 22,
+    "warning_review_failures": 0,
+    "strict_render_fallbacks": 0,
+    "extraction_backstop_cases": 13,
+    "stale_station_prompts": 0,
+    "stale_station_flags": 0,
+    "quality_flags": {
+      "EBUS_DETAILS_UNSPECIFIED": 18
+    }
+  },
+  "health": {
+    "/health": {
+      "http_status": 200,
+      "body": {
+        "ok": true
+      }
+    },
+    "/ready": {
+      "http_status": 200,
+      "body": {
+        "status": "ok",
+        "ready": true
+      }
+    }
+  },
+  "browser_checks": {
+    "client_side_phi_detection_and_redaction": true,
+    "strict_seed": true,
+    "recovered_11L_station_has_no_stale_station_question": true,
+    "missing_pass_size_and_gauge_questions_preserved": true,
+    "user_entered_three_passes_rendered": true,
+    "biopsy_and_cone_beam_details_survive_rerender": true,
+    "screenshot": "live-reporter.png"
+  },
+  "validation": {
+    "initial_release_focused_tests": 232,
+    "final_followup_focused_tests": 159,
+    "subsequent_additional_negative_imaging_cases": 2,
+    "pr_quality_gate_steps": "all passed",
+    "extraction_cases_passed": 14,
+    "repository_lint": "passed",
+    "production_openai_responses_log": "HTTP 200 observed after final deployment"
+  },
+  "limitations": [
+    "Full GitHub CI fails during collection of unchanged tests/scripts/test_train_distilbert_ner_cli.py because installed PyArrow requires NumPy >=2 while NumPy is 1.26.4; focused tests and live checks passed.",
+    "Existing production sklearn serialized-estimator version warnings (trained 1.7.2, runtime 1.5.2) remain; no deployment crash or live request failure in the completed 110-case run.",
+    "One browser request during startup returned 502 before readiness; after ready=true, all 110 live requests and browser seed/patch checks succeeded.",
+    "18 EBUS_DETAILS_UNSPECIFIED warnings reflect genuine gaps in the reviewed prompts; other extraction/coding audit flags remain separate.",
+    "Source-slot checks include deterministic reporter reconciliation and do not independently establish raw LLM clinical accuracy."
+  ],
+  "rollback": {
+    "pre_release_deployment": "d47f54fb-5f61-4b42-8e85-c14437c3957b",
+    "previous_model_overrides": {
+      "OPENAI_MODEL_STRUCTURER": "gpt-5.2",
+      "OPENAI_MODEL_JUDGE": "gpt-5.2"
+    }
+  }
+}

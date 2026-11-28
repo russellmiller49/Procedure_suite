@@ -86,10 +86,17 @@ const ROBOTIC_PLATFORMS = new Set([
 ]);
 const ROBOTIC_CONTEXT_RE = /\b(?:robotic|bronchoscopy|system|platform|navigation|robot|catheter|controller|console)\b/i;
 
-// Citation / guideline context: keep author and guideline names visible so references aren't mangled.
-const GUIDELINE_CITATION_CONTEXT_RE =
-  /\b(?:et\s+al|guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?|accp|chest|ats|ers|nccn|uspstf|fleischner)\b/i;
-const CITATION_YEAR_RE = /\b(?:19|20)\d{2}\b/;
+// Citation / guideline references: keep a cited author or a named society visible so
+// references aren't mangled. The span itself must be the citation. Words nearby are not
+// evidence: with "chest", "recommendations" or any year within 90 characters counting as
+// citation context, "Patient: John Smith / DOB 01/15/1960 / abnormal chest CT" kept the
+// patient's name visible.
+const CITATION_AUTHOR_FOLLOW_RE = /^(?:\s+[A-Z]{1,2}\.?)?\s*,?\s*[Ee]t\s+al\b/;
+const GUIDELINE_BODY_RE = /\b(?:accp|chest|ats|ers|nccn|uspstf|fleischner)\b/i;
+const GUIDELINE_WORD_RE =
+  /\b(?:guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?)\b/i;
+const GUIDELINE_WORD_FOLLOW_RE =
+  /^\s+(?:guideline(?:s)?|statement|consensus|society|task\s+force|committee|recommendation(?:s)?)\b/i;
 
 // Stopwords to prevent "patient [REDACTED] stable" when the model hallucinates a name span
 // - ALWAYS: function words and clinical verbs that are commonly mis-tagged as names
@@ -596,18 +603,64 @@ function isGuidelineCitation(slice, fullText, start, end) {
   const norm = normalizeTerm(sTrim);
   if (!norm || norm.split(" ").length > 3) return false;
 
-  const ctx = getContext(fullText, start, end, 90);
-  if (!GUIDELINE_CITATION_CONTEXT_RE.test(ctx)) return false;
+  const after = fullText.slice(end, Math.min(fullText.length, end + 24));
 
-  // Require a strong citation signal.
-  if (/\bet\s+al\b/i.test(ctx)) return true;
-  if (CITATION_YEAR_RE.test(ctx)) return true;
-  // "Fleischner Society" / "CHEST guideline" type references.
-  if (/\b(?:society|guideline|guidelines|statement|consensus|recommendation|committee|task\s+force)\b/i.test(ctx)) {
-    return true;
+  // Cited author: "MacMahon et al", "MacMahon H, et al."
+  if (CITATION_AUTHOR_FOLLOW_RE.test(after)) return true;
+
+  // Named body with its guideline word, inside the span or directly after it:
+  // "Fleischner Society", "CHEST guideline".
+  if (GUIDELINE_BODY_RE.test(sTrim)) {
+    if (GUIDELINE_WORD_RE.test(sTrim) || GUIDELINE_WORD_FOLLOW_RE.test(after)) return true;
   }
   return false;
 }
+
+// -----------------------------------------------------------------------------
+// Person mentions. The header-value and device rules release whatever follows
+// "Indication:" or matches a manufacturer name, so they must first rule out a
+// patient: "Indication: John Smith is a 65-year-old", "Diagnosis: Mr. Young has".
+// Read from the span and the same line after it; never from a wider window.
+// -----------------------------------------------------------------------------
+const PERSON_HONORIFIC_RE = /^(?:mr|mrs|ms|miss|mx|mister|missus)\b\.?[ \t]+[A-Z]/i;
+const PERSON_HONORIFIC_BEFORE_RE = /\b(?:mr|mrs|ms|miss|mx|mister|missus)\.?[ \t]+$/i;
+const PERSON_NAME_FIELD_BEFORE_RE = /\b(?:patient(?:[ \t]+name)?|pt(?:[ \t]+name)?|name)[ \t]*:[ \t]*$/i;
+// One to four capitalised name tokens, with an optional middle initial ("Smith, John A.").
+const PERSON_NAME_PREFIX_RES = [3, 2, 1, 0].map(
+  (n) =>
+    new RegExp(
+      `^[A-Z][A-Za-z'\u2019-]+(?:,?[ \\t]+[A-Z]\\.?)?(?:,?[ \\t]+[A-Z][A-Za-z'\u2019-]+){${n}}(?![A-Za-z])`
+    )
+);
+// What follows a patient's name and not a diagnosis: an age, or a verb only a person takes.
+const PERSON_FOLLOW_RE =
+  /^[ \t]*,?[ \t]*(?:(?:(?:is|was)[ \t]+)?(?:an?[ \t]+)?(?:\d{1,3}[ \t]*-?[ \t]*(?:years?|yrs?|y\/?o|yo|y\.o\.?)(?![a-z])|aged?[ \t]+\d{1,3}\b)|who\b|presents\b|presented\b|underwent\b|(?:is|was)[ \t]+(?:an?[ \t]+)?(?:pleasant|referred|admitted|brought)\b)/i;
+
+function isPersonMention(trimmed, fullText, end) {
+  if (PERSON_HONORIFIC_RE.test(trimmed)) return true;
+  const combined = trimmed + fullText.slice(end, Math.min(fullText.length, end + 60));
+  for (const re of PERSON_NAME_PREFIX_RES) {
+    const m = combined.match(re);
+    if (m && PERSON_FOLLOW_RE.test(combined.slice(m[0].length))) return true;
+  }
+  return false;
+}
+
+// Verbs that follow the word "patient" ("Patient denies ..."). Listed so the rule
+// below can recognise them in capitals without guessing from a word ending:
+// "Thomas", "James", "Helen" and "Karen" end like verbs too.
+const PATIENT_VERB_WORDS = new Set([
+  "tolerated", "tolerating", "tolerates", "intubated", "extubated", "sedated", "positioned",
+  "placed", "transferred", "returned", "received", "required", "requires", "remains",
+  "remained", "denies", "denied", "reports", "reported", "presents", "presented", "states",
+  "stated", "underwent", "needs", "needed", "appears", "appeared", "developed",
+  "desaturated", "coughed", "awoke", "continues", "continued", "agreed", "consented",
+  "understands", "verbalized", "has", "had", "was", "is",
+  // Heading words: "Patient Status at Conclusion:", "PATIENT DEMOGRAPHICS:", "Patient Positioning:"
+  "status", "demographics", "positioning", "position", "instructions", "information",
+  "identification", "identifiers", "details", "monitoring", "education", "disposition",
+  "condition", "consent", "safety", "following"
+]);
 
 /**
  * Detect “clinician/provider/staff name” context so we can KEEP these names visible.
@@ -830,10 +883,25 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     if (!veto) {
       const beforeWindow = fullText.slice(Math.max(0, start - 12), start).toLowerCase();
       if (/\bpatient\s*$/.test(beforeWindow)) {
-        // Check first word of span - if it's a verb or function word, veto the whole span
-        const firstWord = trimmed.split(/\s+/)[0].toLowerCase();
-        if (STOPWORDS_ALWAYS.has(firstWord) || /^[a-z]+(?:ed|en|ing|s)$/i.test(firstWord)) {
-          veto = true; reason = "patient_followed_by_verb";
+        // Check first word of span - if it's a verb or function word, veto the whole span.
+        // A verb ending (-ed/-en/-ing/-s) counts only on a lowercase word: a capitalised
+        // one after "patient" is as likely a name ("patient Thomas Cruz", "patient James").
+        const tokens = trimmed.split(/\s+/);
+        const rawFirst = tokens[0];
+        const firstWord = rawFirst.toLowerCase();
+        if (/^[a-z]/.test(rawFirst)) {
+          if (STOPWORDS_ALWAYS.has(firstWord) || /^[a-z]+(?:ed|en|ing|s)$/.test(rawFirst)) {
+            veto = true; reason = "patient_followed_by_verb";
+          }
+        } else if (STOPWORDS_ALWAYS.has(firstWord) || PATIENT_VERB_WORDS.has(firstWord)) {
+          // "Patient Will Smith": a capitalised word after a capitalised stopword is a surname.
+          const second = tokens[1] || "";
+          const surnameFollows =
+            /^[A-Z][a-z'\u2019-]+,?$/.test(second) &&
+            !STOPWORDS_ALWAYS.has(second.replace(/,$/, "").toLowerCase());
+          if (!surnameFollows) {
+            veto = true; reason = "patient_followed_by_verb";
+          }
         }
       }
     }
@@ -885,7 +953,8 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
       const beforeWindow = fullText.slice(Math.max(0, start - 30), start).toLowerCase();
       if (/\b(?:procedure(?:\s+name)?|service|technique|indication|diagnosis|impression|findings)\s*:\s*$/i.test(beforeWindow)) {
         // The span following a safe field header is likely a procedure name, not PHI
-        if (/^[a-z]/i.test(trimmed) && trimmed.length < 50) {
+        if (/^[a-z]/i.test(trimmed) && trimmed.length < 50 &&
+            !isPersonMention(trimmed, fullText, end)) {
           veto = true; reason = "safe_field_value";
         }
       }
@@ -968,8 +1037,9 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     if (!veto && NAME_LIKE_LABELS.has(label)) {
       const beforeWindow = fullText.slice(Math.max(0, start - 50), start);
       // Check for bracketed clinical headers or colon-delimited headers
-      if (/\[(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\]\s*\n?\s*$/i.test(beforeWindow) ||
-          /(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\s*:\s*$/i.test(beforeWindow)) {
+      if ((/\[(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\]\s*\n?\s*$/i.test(beforeWindow) ||
+          /(?:indication|diagnosis|findings|impression|assessment|plan|anesthesia|description)\s*:\s*$/i.test(beforeWindow)) &&
+          !isPersonMention(trimmed, fullText, end)) {
         veto = true; reason = "clinical_header_field";
       }
     }
@@ -1076,7 +1146,17 @@ export function applyVeto(spans, fullText, protectedTerms, opts = {}) {
     // -------------------------------------------------------------------------
     if (!veto && activeIndex.deviceSet && activeIndex.deviceSet.size) {
       if (activeIndex.deviceSet.has(norm)) {
-        veto = true; reason = "device_set_allow";
+        // Baker, Cook, King, Wang and Young are manufacturers and surnames. After a
+        // title or in a name field, or followed by an age, the word is the patient.
+        const before = fullText.slice(Math.max(0, start - 24), start);
+        const personContext =
+          NAME_LIKE_LABELS.has(label) &&
+          (PERSON_HONORIFIC_BEFORE_RE.test(before) ||
+            PERSON_NAME_FIELD_BEFORE_RE.test(before) ||
+            isPersonMention(trimmed, fullText, end));
+        if (!personContext) {
+          veto = true; reason = "device_set_allow";
+        }
       }
     }
 

@@ -1,7 +1,7 @@
-{% if source_only | default(false) %}
-Robotic navigation{% if proc.platform %} using {{ proc.platform }}{% endif %} to {{ proc.lesion_location }}.
-{% if proc.registration_method %}Registration: {{ proc.registration_method }}.{% endif %}
-{% if proc.notes %}{{ proc.notes }}{% endif %}
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _loc = (proc.lesion_location or "") | trim %}
+Robotic navigation bronchoscopy was performed{% if proc.platform %} with the {{ proc.platform }} platform{% endif %}.{% if proc.registration_method %} {{ proc.registration_method }} registration was used.{% endif %}{% if _loc %}{% if "target" in _loc %} Navigation target: {{ _loc }}.{% elif "(" in _loc %} The robotic catheter was used to engage the {{ _loc }}.{% else %} The robotic catheter was advanced to the {{ _loc }} target.{% endif %}{% endif %}{% if proc.registration_error_mm is not none %} Registration error: {{ proc.registration_error_mm }} mm.{% endif %}{% if proc.notes %} {{ proc.notes }}{% endif %}
+
 {% else %}
 {% set _platform = (proc.platform or "") | trim %}
 {% set _target_lobe = (proc.lesion_location or "") | trim %}

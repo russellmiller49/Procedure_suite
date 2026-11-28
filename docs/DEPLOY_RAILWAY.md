@@ -52,6 +52,46 @@ Common:
 - `CODER_VERSION` (optional; returned in `/qa/run`)
 - `REPORTER_VERSION` (optional; returned in `/qa/run`)
 
+### Robotic bronchoscopy + EBUS demo page (optional, off by default)
+
+A focused public demo on synthetic sample notes. It serves stored, reviewed results only and
+makes no model-provider call, so it needs no API key.
+
+| Variable | Effect |
+| --- | --- |
+| `PROCSUITE_ROBOTIC_EBUS_DEMO=1` | Registers `/api/v1/demo/robotic-ebus/*`. The page is then reachable at `/ui/registry_demo/`. |
+| `PROCSUITE_UI_HOME=robotic_ebus_demo` | Makes the demo the page at `/ui/`. Default `dashboard`. The dashboard always answers at `/ui/dashboard.html`. |
+
+### Tester notes on the demo page (optional, off by default)
+
+The bundled samples need none of this. These switch on "Your own note", where an approved
+tester pastes a note, redacts it in the browser, and confirms or corrects the findings.
+Nothing a tester enters is stored: not the note, not the result, not the review.
+
+| Variable | Effect |
+| --- | --- |
+| `PROCSUITE_DEMO_ACCESS_CODE` | Tester password(s), comma separated. Unset = tester notes off. Use long random values; remove one to withdraw one tester. |
+| `ANTHROPIC_API_KEY` | Lets the model read tester notes. Without it they are read by the rules engine only. Use a dedicated key with a provider-side spend limit. |
+| `PROCSUITE_DEMO_DAILY_USD_CAP` | Daily model spend for tester notes (default `10`). When reached, notes are read by the rules engine only until the next UTC day. |
+| `PROCSUITE_DEMO_STATE_DIR` | Where the spend ledger lives (amounts only). Point it at a volume if the total must survive a redeploy. |
+| `PROCSUITE_ANTHROPIC_MODEL`, `PROCSUITE_ANTHROPIC_EFFORT` | Model and effort (defaults `claude-opus-5-5`, `medium`). |
+
+A tester declares each note synthetic or real. A **synthetic** note goes to the model. A
+**real, browser-redacted** note stays on this server (rules engine only) unless all three of
+these are set by the owner: `PROCSUITE_LLM_EGRESS_APPROVED=1`,
+`PROCSUITE_LLM_EGRESS_PROVIDERS=anthropic`, `PROCSUITE_TRUST_CLIENT_SCRUB=1`. Setting them
+means redacted real text is sent to Anthropic on the browser redactor's word alone; that is
+an institutional decision, not a technical one.
+
+Go-live order: deploy with only `PROCSUITE_ROBOTIC_EBUS_DEMO=1`, check `/ui/registry_demo/`
+(run a sample through detect, apply, extract) and `/ui/dashboard.html`, then set
+`PROCSUITE_UI_HOME`. Neither variable changes `POST /api/v1/process` or the production
+startup rules, and the registry workbench stays off in production.
+
+The page needs the in-browser redaction model, which the build command above downloads
+(`PHI_REDACTOR_VENDOR_BUNDLE_S3_URI`). The deploy mirror carries `packages/*/src`, which the
+demo API imports. Do not set `PROCSUITE_LLM_EGRESS_APPROVED` for the demo.
+
 ### Troubleshooting: `DuplicateTable` during `alembic upgrade head`
 
 If boot logs show errors like `relation "phi_vault" already exists` while running

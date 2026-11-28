@@ -1,0 +1,10 @@
+{
+  "OPENAI_MODEL_STRUCTURER": "gpt-6-luna",
+  "OPENAI_MODEL_JUDGE": "gpt-6-luna",
+  "OPENAI_MODEL": "gpt-5.2",
+  "OPENAI_MODEL_SUMMARIZER": "gpt-5-mini",
+  "REPORTER_SEED_STRATEGY": "(default)",
+  "REGISTRY_EXTRACTION_ENGINE": "parallel_ner",
+  "REGISTRY_SELF_CORRECT_ENABLED": "1",
+  "PROCSUITE_PIPELINE_MODE": "extraction_first"
+}

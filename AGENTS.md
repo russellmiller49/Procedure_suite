@@ -99,6 +99,32 @@ Tests to keep passing when touching this path:
 - `ui/source/registry_grid/src/__tests__/ocrMetrics.test.js`
 - `ui/source/registry_grid/src/__tests__/provationOcrHardening.test.js`
 
+## Robotic/EBUS Demo Page
+
+- Public sample demo, off by default: `PROCSUITE_ROBOTIC_EBUS_DEMO=1` registers
+  `/api/v1/demo/robotic-ebus/*`; `PROCSUITE_UI_HOME=robotic_ebus_demo` makes it the `/ui/` page
+  (the dashboard stays at `/ui/dashboard.html`).
+- It serves stored results for exact reviewed sample texts only and never calls a provider.
+- Run locally with `make demo-serve`; rebuild the page with `make demo-ui-build`.
+- Details and file map: `CLAUDE.md` ("Robotic/EBUS Demo Page").
+
+## SMART on FHIR EHR Launch (Epic / Oracle Health–Cerner)
+
+Optional and disabled by default; see `docs/SMART_ON_FHIR.md` for registration + flow details.
+
+- Env: `SMART_ENABLED=1` plus `SMART_ISSUERS` (inline JSON array) or `SMART_ISSUERS_FILE`
+  (example: `configs/smart/issuers.example.json`); optional `SMART_DEFAULT_SCOPES`.
+- Server surface is a single public endpoint: `GET /api/v1/smart/config`
+  (`app/api/routes/smart.py`; settings `config/smart_settings.py`, fail-soft validation).
+- The browser does the whole OAuth (PKCE) + FHIR read path
+  (`ui/static/phi_redactor/smart/`); tokens and unredacted EHR note text must never
+  transit the server, and the Bearer token must never be sent off the issuer origin.
+- EHR-loaded notes enter the editor as `note_source_type=ehr_fhir` and follow the
+  unchanged client-side detect → redact → submit workflow (PDF attachments go through
+  the local `pdf_local` pipeline).
+- Tests to keep passing: `tests/api/test_smart_config.py`,
+  `ui/source/registry_grid/src/__tests__/smartCore.test.js`.
+
 ## Reporter Seed Strategy (Reporter Builder Only)
 
 - Endpoint: `POST /report/seed_from_text` (`app/api/routes/reporting.py`)

@@ -9,7 +9,13 @@ import pytest
 
 from app.reporting import build_procedure_bundle_from_extraction, compose_structured_report
 from app.reporting.normalization.robotic_prompt_fidelity import reconcile_robotic_prompt
-from ops.tools.eval_reporter_robotic_minimal import check_slots
+from app.reporting.seed_inputs import ReporterSeedInputs, apply_seed_inputs
+from ops.tools.eval_reporter_robotic_minimal import (
+    check_order,
+    check_rendered,
+    check_slots,
+    observed_order,
+)
 from proc_schemas.clinical import ProcedureBundle, ProcedureInput
 
 CORPUS = json.loads(
@@ -32,15 +38,30 @@ def offline(monkeypatch):
 @pytest.mark.parametrize("row", CORPUS, ids=lambda row: row["id"])
 def test_source_reviewed_short_prompt_slots(row):
     bundle = build_procedure_bundle_from_extraction({}, source_text=row["prompt_text"])
+    if row.get("structured_inputs"):
+        # Builder dropdown selections travel beside the prompt, never inside it.
+        bundle = apply_seed_inputs(
+            bundle, ReporterSeedInputs.model_validate(row["structured_inputs"])
+        ).bundle
     assert not check_slots(bundle.model_dump(mode="json"), row["expected"])
     rendered = compose_structured_report(bundle, strict=True)
-    for unsupported in [
-        "informed consent was obtained",
-        "3-4 passes",
-        "ESTIMATED BLOOD LOSS: Minimal",
-        "Post-procedure monitoring per protocol",
-    ]:
+    unsupported_phrases = ["informed consent was obtained", "3-4 passes"]
+    if not row.get("structured_inputs"):
+        # These appear only when a builder selection explicitly supplies them.
+        unsupported_phrases += [
+            "ESTIMATED BLOOD LOSS: Minimal",
+            "Post-procedure monitoring per protocol",
+            "under fluoroscopic guidance",
+            "I personally performed and interpreted",
+            "COMPLICATIONS: None",
+            "registration was used",
+            "ANESTHESIA: General",
+        ]
+    for unsupported in unsupported_phrases:
         assert unsupported not in rendered
+    # The report follows the dictated workflow and renders what the bundle holds.
+    assert not check_order(rendered, row.get("expected_order"))
+    assert not check_rendered(bundle.model_dump(mode="json"), rendered)
 
 
 def test_sparse_prompt_does_not_borrow_parent_case_counts_or_techniques():
@@ -183,6 +204,8 @@ def test_anatomical_node_names_preserve_uncertainty_and_source_labels():
         "EBUS station 4R looked benign.",
         "EBUS station 4R; lung ROSE showed benign lymphocytes.",
         "EBUS inspection of station 4R without sampling.",
+        "EBUS survey of 4R, 7 and 11L without nodal sampling.",
+        "EBUS survey of 4R and 7 without nodal biopsies.",
     ],
 )
 def test_nodal_inspection_and_lung_cytology_do_not_imply_tbna(nodal):
@@ -208,6 +231,82 @@ def test_explicit_station_label_takes_precedence_over_named_region():
     assert nodes == ["11L", "7"]
 
 
+def test_detail_and_header_follow_dictation_order():
+    row = next(r for r in CORPUS if r["id"] == "RB-01-01")
+    bundle = build_procedure_bundle_from_extraction({}, source_text=row["prompt_text"])
+    rendered = compose_structured_report(bundle, strict=True)
+    order = observed_order(rendered)
+    assert order["detail_blocks"] == [
+        "robotic_navigation",
+        "radial_ebus_survey",
+        "cbct_cact_fusion",
+        "transbronchial_needle_aspiration",
+        "transbronchial_lung_biopsy",
+        "transbronchial_cryobiopsy",
+        "bronchial_brushings",
+        "bal",
+        "fiducial_marker_placement",
+        "ebus_tbna",
+    ]
+    assert order["header_lines"] == order["detail_blocks"]
+    assert [p.sequence for p in bundle.procedures if p.sequence is None] == []
+
+
+def test_source_sequence_can_be_disabled(monkeypatch):
+    monkeypatch.setenv("REPORTER_SOURCE_SEQUENCE", "0")
+    row = next(r for r in CORPUS if r["id"] == "RB-01-01")
+    bundle = build_procedure_bundle_from_extraction({}, source_text=row["prompt_text"])
+    assert all(p.sequence is None for p in bundle.procedures)
+    # Even the legacy ranking no longer places the marker ahead of navigation.
+    blocks = observed_order(compose_structured_report(bundle, strict=True))["detail_blocks"]
+    assert blocks.index("fiducial_marker_placement") > blocks.index("transbronchial_cryobiopsy")
+
+
+def test_single_target_then_navigated_is_not_split_into_two_targets():
+    row = next(r for r in CORPUS if r["id"] == "RB-01-04")
+    bundle = build_procedure_bundle_from_extraction({}, source_text=row["prompt_text"])
+    nav = [p for p in bundle.procedures if p.proc_type == "robotic_navigation"]
+    assert [p.data["lesion_location"] for p in nav] == ["LB1/2"]
+
+
+@pytest.mark.parametrize(
+    "nodal,used,by_station",
+    [
+        ("EBUS-TBNA 4 each at 11Ri, 7 and 11L; elastography mixed type 2.", True, {"11RI": "Type 2", "7": "Type 2", "11L": "Type 2"}),
+        ("EBUS 11Rs x4, elastography T1.", True, {"11RS": "Type 1"}),
+        ("EBUS 7 type 1 x4, 4R type 3 x5.", True, {"7": "Type 1", "4R": "Type 3"}),
+        ("EBUS 7 x4.", False, {}),
+    ],
+)
+def test_elastography_class_is_bound_to_stations_and_never_a_pass_count(nodal, used, by_station):
+    bundle = build_procedure_bundle_from_extraction({}, source_text="Ion LUL nodule cryo x4. " + nodal)
+    ebus = next(p.data for p in bundle.procedures if p.proc_type == "ebus_tbna")
+    assert bool(ebus.get("elastography_used")) is used
+    assert {
+        s["station_name"]: s["elastography_pattern"]
+        for s in ebus["stations"]
+        if s.get("elastography_pattern")
+    } == by_station
+    assert all(s["passes"] in (4, 5) for s in ebus["stations"])
+    rendered = compose_structured_report(bundle, strict=True)
+    for pattern in set(by_station.values()):
+        assert f"{pattern} elastographic pattern" in rendered
+    assert ("elastography" in rendered) is used
+
+
+def test_survey_only_ebus_is_a_block_without_sampling_or_codes():
+    row = next(r for r in CORPUS if r["id"] == "RB-08-03")
+    bundle = build_procedure_bundle_from_extraction({}, source_text=row["prompt_text"])
+    assert not any(p.proc_type == "ebus_tbna" for p in bundle.procedures)
+    survey = next(p for p in bundle.procedures if p.proc_type == "ebus_survey")
+    assert all(s["sampled"] is False for s in survey.data["stations"])
+    assert not survey.cpt_candidates
+    rendered = compose_structured_report(bundle, strict=True)
+    assert "No lymph nodes were sampled." in rendered
+    assert "Type 1 elastographic pattern" in rendered
+    assert "31652" not in rendered and "31653" not in rendered
+
+
 @pytest.mark.parametrize(
     "sampling",
     ["Brushed the nodule. No biopsy.", "Brush biopsy only.", "Nodule not biopsied; brushed only."],
@@ -230,7 +329,7 @@ def test_sequential_cone_beam_and_biopsy_survive_brushing_and_render_patch():
     rendered = compose_structured_report(patched, strict=True)
     assert "Peripheral lung biopsy at LLL; sampling technique unspecified" in rendered
     assert "used sequential cone-beam spins until needle placement was confirmed" in rendered
-    assert "Station 11L: 3 passes" in rendered
+    assert "Station 11L. 3 EBUS-guided transbronchial needle aspiration passes were performed." in rendered
 
 
 @pytest.mark.parametrize(

@@ -748,6 +748,14 @@ python ops/tools/run_reporter_random_seeds.py \
   --output reporter_tests.txt \
   --include-metadata-json
 ```
+for mac run:
+python ops/tools/run_reporter_random_seeds.py \
+  --input-dir /Users/russellmiller/Projects/proc_suite_notes/reporter_training/reporter_training \
+  --count 20 \
+  --seed 42 \
+  --output reporter_tests.txt \
+  --include-metadata-json
+
 
 Outputs:
 

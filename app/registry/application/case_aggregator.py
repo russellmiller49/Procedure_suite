@@ -12,16 +12,28 @@ from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
 
 from app.common.llm import LLMService
-from app.registry.aggregation.llm_models import ClinicalFollowupLLM, ImagingSnapshotLLM, PathologyResultsLLM
+from app.registry.aggregation.llm_models import (
+    ClinicalFollowupLLM,
+    CxrFindingsLLM,
+    ImagingSnapshotLLM,
+    PathologyResultsLLM,
+)
 from app.registry.aggregation.clinical.extract_clinical_update import extract_clinical_update_event
 from app.registry.aggregation.clinical.patch_clinical_update import patch_clinical_update
 from app.registry.aggregation.imaging.extract_ct import extract_ct_event
+from app.registry.aggregation.imaging.extract_cxr import extract_cxr_event
 from app.registry.aggregation.imaging.extract_pet_ct import extract_pet_ct_event
+from app.registry.aggregation.imaging.normalize import normalize_modality
 from app.registry.aggregation.imaging.patch_imaging import patch_imaging_update
 from app.registry.aggregation.pathology.extract_pathology import extract_pathology_event
 from app.registry.aggregation.pathology.extract_pathology_results import extract_pathology_results
+from app.registry.aggregation.outcomes_rollup import (
+    derive_longitudinal_outcomes,
+    station_concordance_flags,
+)
 from app.registry.aggregation.pathology.patch_pathology import patch_pathology_update
 from app.registry.aggregation.pathology.patch_pathology_results import patch_pathology_results
+from app.registry.aggregation.pathology.specimen_yield import extract_specimen_yields
 from app.registry.aggregation.sanitize import compact_text
 from app.registry.application.pathology_extraction import apply_pathology_extraction
 from app.registry.schema import RegistryRecord
@@ -222,6 +234,43 @@ def _llm_extract_imaging_snapshot(note_text: str) -> dict[str, Any] | None:
     return {k: v for k, v in cleaned.items() if v is not None}
 
 
+def _llm_extract_cxr_findings(note_text: str) -> dict[str, Any] | None:
+    if not (note_text or "").strip():
+        return None
+
+    system_prompt = (
+        "You extract structured findings from SCRUBBED chest radiograph or pleural "
+        "ultrasound report text.\n"
+        "Return a JSON object only. Use null when not explicitly documented. Do not infer.\n"
+        "Sides: Left, Right, Bilateral. Trends: New, Stable, Decreased, Increased, Resolved."
+    )
+    user_prompt = (
+        "Extract:\n"
+        "- pneumothorax (true|false|null; false only when explicitly absent/resolved)\n"
+        "- pneumothorax_side, pneumothorax_trend\n"
+        "- pleural_effusion (true|false|null), effusion_side, effusion_trend\n"
+        "- device_position_text (verbatim sentence about tube/stent/catheter position, or null)\n"
+        "- overall_impression_text (string|null)\n\n"
+        f"TEXT:\n{note_text}"
+    )
+
+    llm = LLMService(task="structurer")
+    result = llm.generate_json(
+        system_prompt=system_prompt,
+        user_prompt=user_prompt,
+        response_model=CxrFindingsLLM,
+        temperature=0.0,
+    )
+    data = result.model_dump(exclude_none=True, mode="json")
+    if not isinstance(data, dict) or not data:
+        return None
+    cleaned: dict[str, Any] = dict(data)
+    for key in ("device_position_text", "overall_impression_text"):
+        if isinstance(cleaned.get(key), str):
+            cleaned[key] = compact_text(str(cleaned[key]), max_chars=220) or None
+    return {k: v for k, v in cleaned.items() if v is not None}
+
+
 def _safe_row_text(row: RegistryAppendedDocument) -> str:
     note = str(row.note_text or "")
     if note.strip():
@@ -327,6 +376,38 @@ class CaseAggregator:
                     ",".join(sorted(set(qa_flags))),
                 )
 
+        # Longitudinal outcomes rollup: derive from the merged snapshot plus the
+        # full event history (reintervention detection needs prior events too).
+        all_event_rows = list(
+            db.execute(
+                select(RegistryAppendedDocument)
+                .where(RegistryAppendedDocument.registry_uuid == registry_uuid)
+                .order_by(RegistryAppendedDocument.created_at.asc())
+            )
+            .scalars()
+            .all()
+        )
+        rollup_changed, rollup_flags = derive_longitudinal_outcomes(
+            registry_json,
+            event_rows=all_event_rows,
+            manual_overrides=manual_overrides,
+        )
+        if rollup_changed:
+            try:
+                validated = RegistryRecord(**registry_json)
+                registry_json = validated.model_dump(exclude_none=True, mode="json")
+            except Exception:  # noqa: BLE001
+                logger.warning("case_aggregator longitudinal rollup failed validation; skipping")
+                registry_json.pop("longitudinal_outcomes", None)
+                rollup_changed = False
+        if rollup_flags:
+            logger.info(
+                "case_aggregator rollup_qa_flags registry_uuid=%s qa_flags=%s",
+                registry_uuid,
+                ",".join(sorted(set(rollup_flags))),
+            )
+        changed = changed or rollup_changed
+
         if changed:
             case_record.registry_json = registry_json
             case_record.version = int(case_record.version or 1) + 1
@@ -422,6 +503,8 @@ class CaseAggregator:
         if event_type == "pathology":
             payload = extract_pathology_event(note_text)
             results = extract_pathology_results(note_text)
+            specimen_payload = extract_specimen_yields(note_text)
+            payload["specimen_results"] = specimen_payload.get("specimen_results") or []
 
             results_update: dict[str, Any] = {}
             if isinstance(results.get("pathology_results_update"), dict):
@@ -459,11 +542,19 @@ class CaseAggregator:
 
         if event_type == "imaging":
             source_modality = str(row.source_modality or "").strip().lower()
-            if "pet" in source_modality:
+            normalized_modality = normalize_modality(source_modality)
+            if normalized_modality == "pet_ct":
                 payload = extract_pet_ct_event(
                     note_text,
                     relative_day_offset=row.relative_day_offset,
                     event_subtype=row.event_subtype,
+                )
+            elif normalized_modality in {"cxr", "us"}:
+                payload = extract_cxr_event(
+                    note_text,
+                    relative_day_offset=row.relative_day_offset,
+                    event_subtype=row.event_subtype,
+                    modality=normalized_modality,
                 )
             else:
                 payload = extract_ct_event(
@@ -472,7 +563,19 @@ class CaseAggregator:
                     event_subtype=row.event_subtype,
                 )
 
-            if use_llm:
+            if use_llm and normalized_modality in {"cxr", "us"}:
+                snapshot = payload.get("imaging_snapshot")
+                if isinstance(snapshot, dict) and "cxr_no_structured_findings" in (
+                    snapshot.get("qa_flags") or []
+                ):
+                    try:
+                        llm_update = _llm_extract_cxr_findings(note_text)
+                        if isinstance(llm_update, dict) and llm_update:
+                            payload["imaging_snapshot"] = _merge_fill_missing(snapshot, llm_update)
+                            payload.setdefault("qa_flags", []).append("llm_cxr_fallback")
+                    except Exception:  # noqa: BLE001
+                        payload.setdefault("qa_flags", []).append("llm_cxr_failed")
+            elif use_llm:
                 snapshot = payload.get("imaging_snapshot")
                 if isinstance(snapshot, dict):
                     response = str(snapshot.get("response") or "").strip().lower()
@@ -491,7 +594,7 @@ class CaseAggregator:
                             payload.setdefault("qa_flags", []).append("llm_imaging_failed")
 
             payload["event_type"] = event_type
-            payload["source_modality"] = source_modality or "ct"
+            payload["source_modality"] = normalized_modality or source_modality or "ct"
             return payload
 
         clinical_type = {
@@ -578,7 +681,11 @@ class CaseAggregator:
                 extracted=extracted,
                 manual_overrides=manual_overrides,
             )
-            return (changed1 or changed2), sorted(set(flags1 + flags2))
+            concordance_flags = station_concordance_flags(
+                registry_json,
+                extracted.get("node_updates") if isinstance(extracted.get("node_updates"), list) else None,
+            )
+            return (changed1 or changed2), sorted(set(flags1 + flags2 + concordance_flags))
 
         if event_type == "imaging":
             return patch_imaging_update(

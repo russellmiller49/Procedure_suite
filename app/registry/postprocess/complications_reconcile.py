@@ -85,12 +85,6 @@ _BLEEDING_EVENT_CUE_RE = re.compile(
     r"(?i)\b(?:occurred|occurring|encountered|ensued|developed|required|requiring|persist\w*|"
     r"controlled|tamponad\w*|inflat\w*)\b"
 )
-_EXPLICIT_HEMOSTATIC_PURPOSE_RE = re.compile(r"(?i)\b(?:tamponad\w*|hemostasis|to\s+(?:control|stop)\s+(?:the\s+)?bleed\w*)\b")
-# Device purposes that are not bleeding control; used only when the bleeding is in the prior sentence.
-_NON_BLEEDING_DEVICE_PURPOSE_RE = re.compile(
-    r"(?i)\b(?:whole\s+lung\s+lavage|wll|lung\s+lavage|(?:one|single|independent)[- ]lung\s+ventilation|"
-    r"(?:prior\s+to|before)\s+(?:the\s+)?(?:cryo)?(?:biops\w*|sampling|lavage))\b"
-)
 _ABORT_FOR_BLEEDING_RE = re.compile(
     r"(?i)\b(?:abort(?:ed|ing)|terminate(?:d|ing)|stop(?:ped|ping))\b[^.\n]{0,120}\b(?:bleed(?:ing)?|hemorrhage|haemorrhage)\b"
 )
@@ -152,6 +146,15 @@ def _line_snippet(text: str, start: int, end: int, *, limit: int = 240) -> str:
     line_end = text.find("\n", e)
     if line_end == -1:
         line_end = len(text)
+    # Prefer sentence boundaries within the line: long single-line paragraphs
+    # would otherwise return their (unrelated) head instead of the matched
+    # sentence.
+    sentence_start = text.rfind(".", line_start, s)
+    if sentence_start != -1:
+        line_start = sentence_start + 1
+    sentence_end = text.find(".", e, line_end)
+    if sentence_end != -1:
+        line_end = sentence_end + 1
     snippet = text[line_start:line_end].strip()
     snippet = re.sub(r"\s+", " ", snippet)
     return snippet[:limit].rstrip()
@@ -205,44 +208,37 @@ def _sentence_reports_established_bleeding(sentence: str) -> bool:
     return False
 
 
-def _previous_sentence_reports_bleeding(text: str, start: int) -> bool:
-    """True when the sentence just before ``start`` reports established bleeding."""
-    raw = text or ""
-    left_boundary = max(raw.rfind(".", 0, start), raw.rfind("\n", 0, start), raw.rfind(";", 0, start))
-    if left_boundary <= 0:
-        return False
-    previous = _sentence_window(raw, left_boundary - 1, left_boundary - 1)
-    if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(previous):
-        return False
-    if _sentence_reports_established_bleeding(previous):
-        return True
-    # Minor bleeding counts only when the device sentence itself states a hemostatic purpose.
-    device_sentence = _sentence_window(raw, start, start)
-    has_unnegated_bleeding = any(
-        not _NEGATION_PREFIX_RE.search(previous[: bleed.start()]) for bleed in _BLEEDING_WORD_RE.finditer(previous)
-    )
-    return has_unnegated_bleeding and bool(_EXPLICIT_HEMOSTATIC_PURPOSE_RE.search(device_sentence))
-
-
 def _first_match_with_bleeding_context(
     pattern: re.Pattern[str],
     text: str,
     *,
     context_window: int = 180,
-    allow_previous_sentence: bool = False,
 ) -> re.Match[str] | None:
     for match in pattern.finditer(text or ""):
         start = match.start()
         end = match.end()
         sentence = _sentence_window(text, start, end)
         if not _BLEEDING_WORD_RE.search(sentence):
-            # Hemostasis devices are often described in the sentence after the bleeding
-            # ("Significant bleeding ... A blocker was placed to prevent blood soiling ...").
-            if not (
-                allow_previous_sentence
-                and _previous_sentence_reports_bleeding(text, start)
-                and not _NON_BLEEDING_DEVICE_PURPOSE_RE.search(sentence)
-            ):
+            # The bleeding statement often sits in the adjacent sentence
+            # ("significant bleeding from biopsy sites. An endobronchial
+            # blocker was placed to prevent blood soiling..."). Fall back to
+            # the char window ONLY when the intervention sentence itself
+            # frames bleeding control and the nearby bleeding word is not
+            # negated — otherwise unrelated mentions (tumor-board surgery,
+            # pre-op transfusion) would fabricate high-grade bleeding.
+            if not _BLEEDING_CONTROL_RE.search(sentence):
+                continue
+            window = text[max(0, start - context_window) : min(len(text), end + context_window)]
+            unnegated_bleeding = None
+            for bleeding_word in _BLEEDING_WORD_RE.finditer(window):
+                prefix = window[max(0, bleeding_word.start() - 40) : bleeding_word.start()]
+                if re.search(r"(?i)\b(?:no|without|minimal|denies)\b[^.\n]{0,30}$", prefix):
+                    continue
+                unnegated_bleeding = bleeding_word
+                break
+            if unnegated_bleeding is None:
+                continue
+            if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(window):
                 continue
         if _PROPHYLACTIC_BLEEDING_SUPPRESSOR_RE.search(sentence):
             continue
@@ -402,7 +398,7 @@ def _infer_nashville_bleeding_grade(text: str) -> tuple[int | None, re.Match[str
             return 3, abort_match
 
     for pat in (_BALLOON_RE, _BLOCKER_RE):
-        match = _first_match_with_bleeding_context(pat, text, allow_previous_sentence=True)
+        match = _first_match_with_bleeding_context(pat, text)
         if match:
             window = text[max(0, match.start() - 160) : min(len(text), match.end() + 160)]
             # Require explicit bleeding control/tamponade language to avoid

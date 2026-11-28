@@ -248,13 +248,33 @@ def _find_therapeutic_aspiration_anchor(full_text: str) -> tuple[str, int, int] 
         ]
     )
 
+    def _pleural_needle_context(match: re.Match[str]) -> bool:
+        # "aspiration of air / fluid to verify placement" during pleural access
+        # is not bronchoscopic therapeutic aspiration (31645). An explicit
+        # airway anchor in the same window (e.g. "mucus plug aspirated from the
+        # bronchus intermedius. No pneumothorax was seen.") outranks incidental
+        # pleural tokens.
+        window = full_text[max(0, match.start() - 160) : min(len(full_text), match.end() + 120)]
+        if re.search(
+            r"(?i)\b(?:bronch(?:us|ial|oscop\w*)|airway|trachea|carina|main\s?stem|endobronch\w*)\b",
+            window,
+        ):
+            return False
+        return bool(
+            re.search(
+                r"(?i)\b(?:pleural\s+space|pleura(?:l)?|thoracostomy|yueh|pneumothorax|"
+                r"verify\s+placement|intercostal|chest\s+tube|seldinger|guide\s?wire)\b",
+                window,
+            )
+        )
+
     for pattern in contextual_patterns:
-        match = re.search(pattern, full_text, re.IGNORECASE)
-        if not match:
-            continue
-        if _match_negated(match):
-            continue
-        return (match.group(0).strip(), match.start(), match.end())
+        for match in re.finditer(pattern, full_text, re.IGNORECASE):
+            if _match_negated(match):
+                continue
+            if _pleural_needle_context(match):
+                continue
+            return (match.group(0).strip(), match.start(), match.end())
 
     return None
 

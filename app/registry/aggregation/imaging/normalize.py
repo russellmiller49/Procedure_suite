@@ -71,9 +71,31 @@ def build_target_key(*, lobe: str | None, laterality: str | None, segment: str |
     return "target_unknown"
 
 
+_MODALITY_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"pet", re.IGNORECASE), "pet_ct"),
+    (re.compile(r"\bcta\b|angiogra", re.IGNORECASE), "cta"),
+    (re.compile(r"\bmri?\b|magnetic", re.IGNORECASE), "mri"),
+    (re.compile(r"c\.?xr|x[-\s]?ray|radiograph|\bxr\b|portable\s+(?:chest|film)|\bpa\s+and\s+lateral\b", re.IGNORECASE), "cxr"),
+    (re.compile(r"\bus\b|ultraso(?:und|nogra)", re.IGNORECASE), "us"),
+    (re.compile(r"\bct\b|computed\s+tomogra", re.IGNORECASE), "ct"),
+)
+
+
+def normalize_modality(raw: str | None) -> str | None:
+    """Map free-text modality labels to the canonical ImagingSnapshot modality."""
+    value = str(raw or "").strip()
+    if not value:
+        return None
+    for pattern, label in _MODALITY_PATTERNS:
+        if pattern.search(value):
+            return label
+    return None
+
+
 __all__ = [
     "build_target_key",
     "extract_laterality",
     "normalize_lobe",
+    "normalize_modality",
     "normalize_segment",
 ]

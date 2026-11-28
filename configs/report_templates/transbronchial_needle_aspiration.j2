@@ -1,4 +1,13 @@
+{% if prose_blocks | default(source_only | default(false)) %}
+{% set _loc = (proc.lung_segment or "") | trim %}
+{% set _gauge = (proc.needle_gauge or "") | trim %}
+Transbronchial needle aspiration was performed{% if _gauge %}{% if "/" in _gauge or "," in _gauge or "+" in _gauge %} with {{ _gauge }} needles{% else %} with a {{ _gauge }} needle{% endif %}{% endif %}{% if _loc %}{% if "target" in _loc %} ({{ _loc }}){% elif "(" in _loc %} at the {{ _loc }}{% else %} at the {{ _loc }} target{% endif %}{% endif %}.{% if proc.samples_collected is not none %} Total {{ proc.samples_collected }} sample{% if proc.samples_collected != 1 %}s were{% else %} was{% endif %} collected.{% endif %}
+{% if proc.tests %}Samples sent for {{ proc.tests | join(', ') }}.{% endif %}
+{% if proc.rose_result %}ROSE: {{ proc.rose_result }}.{% endif %}
+{% if proc.notes %}{{ proc.notes }}{% endif %}
+{% else %}
 TBNA: Transbronchial needle aspiration was performed{% if proc.needle_gauge %} using a {{ proc.needle_gauge }} needle{% endif %}.{% if proc.samples_collected is not none %} A total of {{ proc.samples_collected }} pass{% if proc.samples_collected != 1 %}es{% endif %} were obtained{% if proc.lung_segment %} from the {{ proc.lung_segment }} target{% endif %}.{% elif proc.lung_segment %} Sampling was obtained from the {{ proc.lung_segment }} target.{% endif %}
 {% if proc.tests %}Samples were sent for {{ proc.tests | join(', ') }}.{% endif %}
 {% if proc.rose_result %}ROSE: {{ proc.rose_result }}.{% endif %}
 {% if proc.notes %}Notes: {{ proc.notes }}.{% endif %}
+{% endif %}

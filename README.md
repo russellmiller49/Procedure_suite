@@ -54,6 +54,7 @@ This toolkit enables:
     Then open:
     - UI (Clinical Dashboard / PHI Redactor): `http://localhost:8000/ui/`
     - Workflow overview: `http://localhost:8000/ui/workflow.html`
+    - Robotic bronchoscopy + EBUS sample demo (optional, synthetic samples only): `make demo-serve`, then `http://127.0.0.1:8020/ui/` (see `docs/DEPLOY_RAILWAY.md`)
 
     The UI flow is: paste note -> run PHI detection -> apply redactions -> submit scrubbed note -> review results.
     Optional: edit values in **Flattened Tables (Editable)** (generates **Edited JSON (Training)**) and export JSON/tables.

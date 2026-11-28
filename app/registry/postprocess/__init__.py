@@ -2905,6 +2905,19 @@ def sanitize_ebus_events(record: RegistryRecord, full_text: str) -> list[str]:
         if reason:
             original_quote = existing_quote
             setattr(event, "action", "inspected_only")
+            # An inspected-only node cannot carry a needle-cytology result, and
+            # granular detail must not keep claiming the station was sampled.
+            if getattr(event, "rose_result", None) is not None:
+                setattr(event, "rose_result", None)
+            if isinstance(stations_detail, list):
+                for detail in stations_detail:
+                    detail_station = getattr(detail, "station", None)
+                    if (
+                        isinstance(detail_station, str)
+                        and detail_station.strip().upper() == station_token
+                        and getattr(detail, "sampled", None) is True
+                    ):
+                        setattr(detail, "sampled", False)
 
             # Evidence must remain verifiable (note-derived). Prefer the line that triggered
             # the correction (negation or criteria-only context) over internal debug markers.
@@ -3805,6 +3818,75 @@ _PROCEDURE_DETAIL_SECTION_PATTERN = re.compile(
 _LINEAR_EBUS_MARKER_RE = re.compile(r"(?i)\b(?:ebus|endobronchial\s+ultrasound)\b")
 
 
+def reconcile_ebus_node_event_consistency(record: RegistryRecord, full_text: str = "") -> list[str]:
+    """Final EBUS consistency pass after all reconcile/demote steps.
+
+    Invariants enforced:
+    - an inspected-only node event carries no ROSE cytology result;
+    - granular_data.linear_ebus_stations_detail.sampled cannot claim True for a
+      station whose node event says inspected_only;
+    - linear_ebus.stations_sampled contains exactly the stations with sampling
+      actions in node_events.
+    """
+    warnings: list[str] = []
+    procedures = getattr(record, "procedures_performed", None)
+    linear = getattr(procedures, "linear_ebus", None) if procedures is not None else None
+    node_events = getattr(linear, "node_events", None) if linear is not None else None
+    if not isinstance(node_events, list) or not node_events:
+        return warnings
+
+    sampling_actions = {"needle_aspiration", "core_biopsy", "forceps_biopsy"}
+    granular = getattr(record, "granular_data", None)
+    stations_detail = getattr(granular, "linear_ebus_stations_detail", None) if granular is not None else None
+
+    inspected_only: set[str] = set()
+    sampled: set[str] = set()
+    fixed_rose: list[str] = []
+    for event in node_events:
+        station = str(getattr(event, "station", "") or "").strip().upper()
+        action = getattr(event, "action", None)
+        if action in sampling_actions:
+            if station:
+                sampled.add(station)
+            continue
+        if action == "inspected_only":
+            if station:
+                inspected_only.add(station)
+            if getattr(event, "rose_result", None) is not None:
+                setattr(event, "rose_result", None)
+                if station:
+                    fixed_rose.append(station)
+
+    demoted_detail: list[str] = []
+    if isinstance(stations_detail, list):
+        for detail in stations_detail:
+            station = str(getattr(detail, "station", "") or "").strip().upper()
+            if station and station in inspected_only and station not in sampled and getattr(detail, "sampled", None) is True:
+                setattr(detail, "sampled", False)
+                demoted_detail.append(station)
+
+    if linear is not None and hasattr(linear, "stations_sampled"):
+        rebuilt = sort_ebus_stations(sampled)
+        current = getattr(linear, "stations_sampled", None)
+        if (rebuilt or None) != (list(current) if isinstance(current, list) else current):
+            setattr(linear, "stations_sampled", rebuilt or None)
+
+    if fixed_rose or demoted_detail:
+        warnings.append(
+            make_quality_signal_warning(
+                "EBUS_NODE_EVENT_CONSISTENCY",
+                field="procedures_performed.linear_ebus.node_events",
+                action="reconciled",
+                detail=(
+                    f"cleared ROSE on inspected-only stations {sorted(set(fixed_rose))}; "
+                    f"granular sampled flags corrected for {sorted(set(demoted_detail))}"
+                ),
+                source="postprocess",
+            )
+        )
+    return warnings
+
+
 def cull_hollow_ebus_claims(record: RegistryRecord, full_text: str) -> list[str]:
     """Cull hallucinated linear EBUS when no station evidence exists.
 
@@ -4688,7 +4770,9 @@ def populate_ebus_node_events_fallback(record: RegistryRecord, full_text: str) -
     station_list_seen_station = False
 
     passes_re = re.compile(r"(?i)\b(\d{1,2})\s*(?:pass|passes)\b")
-    rose_re = re.compile(r"(?i)\brose\s*(?:showed|revealed|:|was)?\s*([^.\\n]{1,180})")
+    rose_re = re.compile(
+        r"(?i)\brose\s*(?:showed|revealed|identified|demonstrated|indicated|was)?\s*:?\s*([^.\n]{1,180})"
+    )
     sampling_order_header_re = re.compile(r"(?i)^\s*sampling(?:\s+order)?\s*:?\s*$")
     each_station_passes_re = re.compile(
         r"(?i)\b(?P<n>\d{1,2})\s+(?:passes?|biops(?:y|ies))\b[^.\n]{0,40}\beach\s+station\b"
@@ -5934,6 +6018,30 @@ def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> l
     )
     completion_language_present = bool(_OUTCOMES_COMPLETION_RE.search(text))
 
+    # Explicit partial therapeutic achievement (e.g. "complete opening of the LUL",
+    # "opened to approximately 70% of normal") outranks a "could not completely..."
+    # sentence: the case is a partial success, not a failure. The achievement
+    # phrase itself must not be negated ("could not reopen", "unable to open").
+    partial_achievement_present = False
+    for _achievement in re.finditer(
+        r"(?i)\b(?:"
+        r"(?:complete|full)\s+(?:re)?open(?:ing)?\s+of"
+        r"|(?:re)?open(?:ed)?\b[^.\n]{0,60}\b\d{1,3}\s*%"
+        r"|\d{1,3}\s*%\s*(?:of\s+normal|patent|open(?:ed)?|reopened|luminal)"
+        r"|partial(?:ly)?\s+(?:re)?open(?:ed|ing)?"
+        r"|partial\s+recanaliz\w*"
+        r")",
+        text,
+    ):
+        _achievement_prefix = text[max(0, _achievement.start() - 60) : _achievement.start()]
+        if re.search(
+            r"(?i)\b(?:could\s+not|cannot|unable\s+to|failed\s+to|not|no|without)\b[^.\n]{0,40}$",
+            _achievement_prefix,
+        ):
+            continue
+        partial_achievement_present = True
+        break
+
     aborted_match = _OUTCOMES_ABORT_RE.search(text)
     if aborted_match:
         status = "Aborted"
@@ -6006,7 +6114,12 @@ def enrich_procedure_success_status(record: RegistryRecord, full_text: str) -> l
                 ev_start, ev_end = s, e
             # If the note documents a failed sub-step but the overall procedure
             # is completed, classify as partial success instead of full failure.
-            if procedure_completed_flag or completion_language_present or strong_progressed_after:
+            if (
+                procedure_completed_flag
+                or completion_language_present
+                or strong_progressed_after
+                or partial_achievement_present
+            ):
                 status = "Partial success"
             elif local_substep_limitation and not re.search(
                 r"(?i)\b(?:procedure\s+failed|unable\s+to\s+complete|could\s+not\s+complete)\b",
