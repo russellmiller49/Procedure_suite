@@ -2656,6 +2656,7 @@ class RegistryService:
         from app.coder.domain_rules.registry_to_cpt.engine import apply as derive_registry_to_cpt
         from app.registry.audit.compare import build_audit_compare_report
         from app.registry.self_correction.apply import SelfCorrectionApplyError, apply_patch_to_record
+        from app.registry.self_correction.material_grounding import ground_mechanical_debulking_material
         from app.registry.self_correction.judge import RegistryCorrectionJudge
         from app.registry.self_correction.keyword_guard import (
             apply_required_overrides,
@@ -3343,6 +3344,17 @@ class RegistryService:
                     except SelfCorrectionApplyError as exc:
                         self_correct_warnings.append(f"SELF_CORRECT_SKIPPED: {pred.cpt}: apply failed ({exc})")
                         continue
+
+                    # 31640 needs material_type=tumor; derive it from the anchored quote, never the judge.
+                    patched_record, material_warning = ground_mechanical_debulking_material(
+                        patched_record,
+                        patch=proposal.json_patch,
+                        evidence_quote=proposal.evidence_quote,
+                        note_text=masked_note_text,
+                        original_record=record,
+                    )
+                    if material_warning:
+                        self_correct_warnings.append(f"{material_warning} [{pred.cpt}]")
 
                     if patched_record.model_dump() == record.model_dump():
                         self_correct_warnings.append(
